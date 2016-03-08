@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Table(name = "zhl_user")
 public class User {
+	
     @Id
     private Integer userid;
 

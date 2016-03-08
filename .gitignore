@@ -3,3 +3,6 @@ target/
 bin/
 logs/
 doc/
+zhl-core/src/main/java/net/tfedu/zhl/cloud/generator/*
+zhl-core/src/main/resources/generator.properties
+zhl-core/src/main/resources/jdbc.properties
