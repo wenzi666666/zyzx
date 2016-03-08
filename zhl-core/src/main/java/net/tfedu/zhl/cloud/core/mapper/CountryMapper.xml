@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tfedu.zhl.cloud.core.dao.CountryMapper">
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.core.entity.Country">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="ccode" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="cname" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  
+  <!-- 放多表及综合查询 -->
+   <select id="selectAllTest" resultMap="BaseResultMap">
+    select * from zhl_country
+  </select>
+</mapper>
