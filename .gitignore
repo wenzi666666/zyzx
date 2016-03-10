@@ -3,8 +3,8 @@ target/
 bin/
 logs/
 doc/
-# 忽略 generator/ 目录下的所有文件
-generator/*
+# 忽略 多层上级文件，generator/ 目录下的所有文件
+**/generator/*
 # 忽略掉所有文件名是 foo.txt的文件.
 generator.properties
 jdbc.properties

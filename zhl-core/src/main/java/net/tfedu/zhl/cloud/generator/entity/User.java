@@ -7,6 +7,7 @@ public class User {
 	
     @Id
     private Integer userid;
+    
     /**
      * 用户名
      */
