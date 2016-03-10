@@ -8,3 +8,7 @@ mvn mybatis-generator:generate
 
 表和字段，统一都用小写，容易阅读。
 
+所有的java entity对象，都必须使用封装类型，而不是基本类型。
+比如：private Integer userid; 这个是正确的写法；
+      private int userid;    这个是错误的写法，会自动赋值一个缺省值，不利于更新。
+      
