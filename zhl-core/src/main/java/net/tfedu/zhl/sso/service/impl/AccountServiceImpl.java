@@ -24,11 +24,6 @@ public class AccountServiceImpl implements AccountService {
 	public User getUserByUserName(String username) {
 		//查用户
 		User user = userMapper.getUserByName(username);
-		
-		//查角色
-		if (user == null) {  
-            return null;  
-        }
 		return user;
 	}
 
