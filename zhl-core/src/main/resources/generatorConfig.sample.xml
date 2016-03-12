@@ -34,7 +34,7 @@
 		<javaModelGenerator targetPackage="${modelPackage}"
 			targetProject="${targetProject}">
 			<!-- 是否对model添加 构造函数 -->
-			<property name="constructorBased" value="false" />
+			<property name="constructorBased" value="true" />
 			<!-- 是否允许子包，即targetPackage.schemaName.tableName -->
 			<property name="enableSubPackages" value="false" />
 			<!-- 建立的Model对象是否 不可改变 即生成的Model对象不会有 setter方法，只有构造方法 -->
@@ -53,15 +53,6 @@
 		</javaClientGenerator>
 
 		<table tableName="sys_user" domainObjectName="User">
-			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
-		</table>
-		<table tableName="sys_role" domainObjectName="Role">
-			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
-		</table>
-		<table tableName="sys_user_role" domainObjectName="UserRole">
-			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
-		</table>
-		<table tableName="sys_permission" domainObjectName="Permission">
 			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
 		</table>
 	</context>
