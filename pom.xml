@@ -128,7 +128,7 @@
 		<plugin.maven-resources>2.5</plugin.maven-resources>
 		<skipTests>true</skipTests>
 
-		<junit.version>4.12</junit.version>
+		<!-- db 与 business -->
 		<spring.version>4.2.1.RELEASE</spring.version>
 		<mybatis.version>3.3.0</mybatis.version>
 		<mybatis-spring.version>1.2.3</mybatis-spring.version>
@@ -141,6 +141,10 @@
 		<mapper.version>3.3.6</mapper.version>
 		<pagehelper.version>4.1.2</pagehelper.version>
 		<jsqlparser.version>0.9.4</jsqlparser.version>
+		<oauth2.version>1.0.1</oauth2.version>
+		
+		<!-- tools -->
+		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.12</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
 		<servlet.version>3.0.1</servlet.version>
@@ -149,6 +153,7 @@
 		<ehcache.version>2.10.1</ehcache.version>
 		<ehcache-core.version>2.6.11</ehcache-core.version>
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
+		<shiro.version>1.2.4</shiro.version>
 	</properties>
 
 	<dependencies>
@@ -322,6 +327,41 @@
 		</dependency>
 
 		<!-- start apache -->
+		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+			<version>${oauth2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.client</artifactId>
+			<version>${oauth2.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.common</artifactId>
+			<version>${oauth2.version}</version>
+		</dependency>	
+		<dependency>
+			<groupId>org.apache.oltu.oauth2</groupId>
+			<artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
+			<version>${oauth2.version}</version>
+		</dependency>		
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-web</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-spring</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>

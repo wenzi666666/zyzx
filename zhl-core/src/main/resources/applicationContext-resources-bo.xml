@@ -63,7 +63,7 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" /> 
 		<property name="properties">
 	        <value>
-	            mappers=net.tfedu.zhl.cloud.core.helper.CoreMapper
+	            mappers=net.tfedu.zhl.helper.CoreMapper
 	        </value>
     	</property>
 	</bean>

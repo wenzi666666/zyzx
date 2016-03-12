@@ -34,7 +34,7 @@
 		<javaModelGenerator targetPackage="${modelPackage}"
 			targetProject="${targetProject}">
 			<!-- 是否对model添加 构造函数 -->
-			<property name="constructorBased" value="true" />
+			<property name="constructorBased" value="false" />
 			<!-- 是否允许子包，即targetPackage.schemaName.tableName -->
 			<property name="enableSubPackages" value="false" />
 			<!-- 建立的Model对象是否 不可改变 即生成的Model对象不会有 setter方法，只有构造方法 -->

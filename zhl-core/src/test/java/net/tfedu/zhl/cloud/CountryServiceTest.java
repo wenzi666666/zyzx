@@ -9,7 +9,7 @@ import org.springframework.util.Assert;
 
 import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.core.service.CountryService;
-import net.tfedu.zhl.core.tests.BaseServiceTestCase;
+import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 public class CountryServiceTest  extends BaseServiceTestCase {
 	
@@ -21,7 +21,7 @@ public class CountryServiceTest  extends BaseServiceTestCase {
 		Country c = new Country();
 		c.setCname("china");
 		c.setCcode("1000");
-		int i = countryService.save(c);
+		int i = countryService.insert(c);
 		Assert.isTrue(i>0);
 	}
 	

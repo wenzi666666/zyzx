@@ -11,12 +11,12 @@ import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.core.service.CountryService;
 
 @Service("countryService")
-public class CountryServiceImpl extends BaseServiceImpl<Country> implements CountryService {
+public class CountryServiceImpl implements CountryService {
 	
 	@Resource CountryMapper countryMapper;
 	
-	public int save(Country c){
-		return super.save(c);
+	public int insert(Country c){
+		return countryMapper.insert(c);
 	}
 
 	@Override

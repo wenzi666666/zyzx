@@ -62,9 +62,14 @@
 
 	<!-- 自动扫描 mybatis mapper接口 -->
 	<!-- 由sqlSessionFactoryBeanName指定数据源，包扫描路径一定不能重复 -->
-	<bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="net.tfedu.zhl.sso.dao" />
 		<property name="sqlSessionFactoryBeanName" value="ssoSqlSessionFactory" />
+		<property name="properties">
+	        <value>
+	            mappers=net.tfedu.zhl.helper.CoreMapper
+	        </value>
+    	</property>
 	</bean>
 
 	<bean id="ssoSqlSession" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">

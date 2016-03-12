@@ -13,7 +13,7 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 扫描controller（controller层注入） -->
-    <context:component-scan base-package="net.tfedu.zhl.cloud.**.controller"/>
+    <context:component-scan base-package="net.tfedu.zhl.**.controller"/>
 
     <!-- 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的 -->
 
