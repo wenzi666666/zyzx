@@ -12,8 +12,4 @@
     </constructor>
   </resultMap>
   
-  <!-- 放多表及综合查询 -->
-   <select id="selectAllTest" resultMap="BaseResultMap">
-    select * from zhl_country
-  </select>
 </mapper>

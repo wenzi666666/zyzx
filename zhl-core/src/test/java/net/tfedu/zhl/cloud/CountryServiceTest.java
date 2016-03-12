@@ -27,7 +27,7 @@ public class CountryServiceTest  extends BaseServiceTestCase {
 	
 	@Test
 	public void testGetAll() {
-		List<Country> list = countryService.selectAllTest();
+		List<Country> list = countryService.selectAll();
 		Assert.notEmpty(list);
 	}
 

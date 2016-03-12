@@ -6,5 +6,5 @@ import net.tfedu.zhl.cloud.core.entity.Country;
 
 public interface CountryService {
 	public int insert(Country c);
-	public List<Country> selectAllTest();
+	public List<Country> selectAll();
 }

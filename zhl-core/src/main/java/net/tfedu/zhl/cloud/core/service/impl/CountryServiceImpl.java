@@ -20,8 +20,8 @@ public class CountryServiceImpl implements CountryService {
 	}
 
 	@Override
-	public List<Country> selectAllTest() {
-		return countryMapper.selectAllTest();
+	public List<Country> selectAll() {
+		return countryMapper.selectAll();
 	}
 	
 }
