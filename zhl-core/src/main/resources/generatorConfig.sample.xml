@@ -15,7 +15,7 @@
 		<plugin type="tk.mybatis.mapper.generator.MapperPlugin">
 			<property name="mappers" value="net.tfedu.zhl.cloud.core.helper.CoreMapper" />
 			<!-- caseSensitive默认false，当数据库表名区分大小写时，可以将该属性设置为true -->
-			<property name="caseSensitive" value="true" />
+			<property name="caseSensitive" value="false" />
 		</plugin>
 
 		<!-- optional，旨在创建class时，对注释进行控制 -->
