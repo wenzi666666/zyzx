@@ -35,6 +35,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${plugin.maven-surefire}</version>
 				<configuration>
+					<forkMode>once</forkMode> 
+               		<argLine>-Dfile.encoding=UTF-8</argLine>
 					<skipTests>${skipTests}</skipTests>
 				</configuration>
 			</plugin>

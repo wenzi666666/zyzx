@@ -85,6 +85,6 @@
 
 
 	<!-- 启用对事务注解的支持 -->
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<tx:annotation-driven transaction-manager="ssoTransactionManager" />
 
 </beans>

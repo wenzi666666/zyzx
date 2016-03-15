@@ -1,12 +1,14 @@
 package net.tfedu.zhl.sso.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import net.tfedu.zhl.sso.entity.User;
 import net.tfedu.zhl.sso.service.AccountService;
@@ -18,22 +20,17 @@ import net.tfedu.zhl.sso.service.AccountService;
  *  
  */  
 @Controller 
+@RequestMapping("/security*")
 public class LoginController {
     // 处理用户业务类  
     @Autowired  
     private AccountService accountService;  
 
-	/*** 
-     * 跳转到登录页面 
-     *  
-     * @return 
-     */  
-    @RequestMapping(value = "toLogin")  
-    public String toLogin() {  
-        // 跳转到/page/login.jsp页面  
-        return "login";  
-    }  
-  
+    @RequestMapping(value = "/tologin")  
+    public String tologin() {  
+    	String result = "login";
+    	return result;
+    }
     /*** 
      * 实现用户登录 
      *  
@@ -41,28 +38,25 @@ public class LoginController {
      * @param password 
      * @return 
      */  
-    @RequestMapping(value = "login")  
-    public ModelAndView Login(String username, String password) {  
-        ModelAndView mav = new ModelAndView();  
+    @RequestMapping(value = "/dologin")  
+    public String Login(HttpServletRequest request, HttpServletResponse response) { 
+    	String username = request.getParameter("username");
+    	String password = request.getParameter("password");
+    	String result = "login";
         User user = accountService.getUserByUserName(username);  
         if (user == null) {  
-            mav.setViewName("toLogin");  
-            mav.addObject("msg", "用户不存在");  
-            return mav;  
+            return result;  
         }  
         if (!user.getPassword().equals(password)) {  
-            mav.setViewName("toLogin");  
-            mav.addObject("msg", "账号密码错误");  
-            return mav;  
+            return result;  
         }  
         SecurityUtils.getSecurityManager().logout(SecurityUtils.getSubject());  
         // 登录后存放进shiro token  
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());  
         Subject subject = SecurityUtils.getSubject();  
         subject.login(token);  
-        // 登录成功后会跳转到successUrl配置的链接，不用管下面返回的链接。  
-        mav.setViewName("redirect:/home");  
-        return mav;  
+        result = "index";//验证成功
+        return result;  
     }  
   
 }

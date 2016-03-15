@@ -12,6 +12,10 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+	<mvc:annotation-driven />
+	
+	<mvc:default-servlet-handler/>
+	
     <!-- 扫描controller（controller层注入） -->
     <context:component-scan base-package="net.tfedu.zhl.**.controller"/>
 
@@ -63,4 +67,7 @@
         <property name="maxInMemorySize" value="40960"/>
     </bean>
 
+	<!-- 默认访问跳转到登录页面 -->
+  	<mvc:view-controller path="/" view-name="forward:/views/login.jsp"/>
+  	
 </beans>
