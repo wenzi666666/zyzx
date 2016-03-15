@@ -1,10 +1,17 @@
 package net.tfedu.zhl.sso.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "sys_user_role")
-public class UserRole {
-    @Id
+public class UserRole implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6130424229899734936L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 

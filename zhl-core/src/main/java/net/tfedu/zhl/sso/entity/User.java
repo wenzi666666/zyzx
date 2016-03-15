@@ -1,5 +1,6 @@
 package net.tfedu.zhl.sso.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -11,8 +12,13 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Table(name = "sys_user")
-public class User {
+public class User implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 3508900201566884322L;
+
+	/**
      * 编号
      */
     @Id
@@ -40,6 +46,8 @@ public class User {
      */
     @Column(name = "isDelete")
     private Integer isdelete;
+    
+    private String salt;
     
     @Transient
     List<UserRole> userRoles; 
@@ -144,7 +152,16 @@ public class User {
         return isdelete;
     }
 
-    /**
+    
+    public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	/**
      * 设置是否删除
      *
      * @param isdelete 是否删除

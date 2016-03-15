@@ -1,11 +1,17 @@
 package net.tfedu.zhl.cloud.core.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name="zhl_country")
-public class Country {
-    @Id
+public class Country implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 8160030266758656476L;
+	@Id
     private Integer id;
     private String ccode;
     private String cname;

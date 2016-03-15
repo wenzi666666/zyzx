@@ -1,10 +1,17 @@
 package net.tfedu.zhl.sso.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "sys_permission")
-public class Permission {
-    @Id
+public class Permission implements Serializable {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 6556629915035500331L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
