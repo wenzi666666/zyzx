@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-03-12 20:37:32
+Date: 2016-03-18 19:21:09
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -60,6 +60,7 @@ CREATE TABLE `sys_user` (
   `id` int(15) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `username` varchar(50) NOT NULL DEFAULT ' ' COMMENT '用户名',
   `password` varchar(50) NOT NULL DEFAULT ' ' COMMENT '密码',
+  `salt` varchar(50) NOT NULL DEFAULT ' ' COMMENT '加密盐',
   `create_date` datetime NOT NULL DEFAULT '2000-10-01 08:08:08' COMMENT '创建日期',
   `isDelete` int(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
   PRIMARY KEY (`id`),
@@ -69,8 +70,8 @@ CREATE TABLE `sys_user` (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'aaa', '000000', '2000-10-01 08:08:08', '0');
-INSERT INTO `sys_user` VALUES ('2', 'bruce', '000000', '2000-10-01 08:08:08', '0');
+INSERT INTO `sys_user` VALUES ('1', 'aaa', '000000', ' ', '2000-10-01 08:08:08', '0');
+INSERT INTO `sys_user` VALUES ('2', 'bruce', '000000', ' ', '2000-10-01 08:08:08', '0');
 
 -- ----------------------------
 -- Table structure for `sys_user_role`
