@@ -6,16 +6,21 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
 	    "classpath:/applicationContext.xml",
-	    "classpath*:/applicationContext-*.xml"
+	    "classpath*:/applicationContext-*.xml",
+	    "classpath:/spring-mvc.xml"
 })
 public abstract class BaseControllerTestCase {
+	
 	protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
+	protected MockHttpServletRequest request;
+	protected MockHttpServletResponse response =  new MockHttpServletResponse();
     
     protected long startTime,endTime;
 
