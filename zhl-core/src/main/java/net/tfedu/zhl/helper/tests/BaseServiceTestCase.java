@@ -15,7 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 	})
 public abstract class BaseServiceTestCase {
 
-protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
+	protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
     
     protected long startTime,endTime;
 
