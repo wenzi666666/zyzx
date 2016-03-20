@@ -1,7 +1,5 @@
 package net.tfedu.zhl.sso.service.impl;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.cache.CacheManager;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import net.tfedu.zhl.sso.dao.PermissionMapper;
 import net.tfedu.zhl.sso.dao.UserMapper;
 import net.tfedu.zhl.sso.dao.UserRoleMapper;
-import net.tfedu.zhl.sso.entity.Permission;
 import net.tfedu.zhl.sso.entity.User;
 import net.tfedu.zhl.sso.service.AccountService;
 
