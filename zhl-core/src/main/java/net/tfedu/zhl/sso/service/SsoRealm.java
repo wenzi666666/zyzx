@@ -36,19 +36,23 @@ public class SsoRealm extends AuthorizingRealm {
 		String username = (String) pc.fromRealm(getName()).iterator().next();
 		if (username != null) {
 			User user = accountService.getUserByUserName(username);
+			if (user == null)
+				return null;
+			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			List<Permission> pers = user.getUserPermissions();
-			if (pers != null && !pers.isEmpty()) {
-				SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+			if (pers != null) {
 				for (Permission each : pers) {
 					// 将权限资源添加到用户信息中
 					info.addStringPermission(each.getUrl());
 				}
-				List<Role> roles = user.getRoles();
-				for(Role r: roles){
+			}
+			List<Role> roles = user.getRoles();
+			if (roles != null) {
+				for (Role r : roles) {
 					info.addRole(r.getName());
 				}
-				return info;
 			}
+			return info;
 		}
 		return null;
 	}
