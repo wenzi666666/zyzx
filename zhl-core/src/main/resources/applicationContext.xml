@@ -29,9 +29,9 @@
 
 	<!-- Cache配置 -->
 	<cache:annotation-driven cache-manager="cacheManager" />
-	<bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+	<bean id="cacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
 		p:configLocation="classpath:appilcationContext-cache.xml" />
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
-		p:cacheManager-ref="ehCacheManagerFactory" />
+		p:cacheManager-ref="cacheManagerFactory" />
 
 </beans>
