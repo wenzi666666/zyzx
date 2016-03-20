@@ -84,4 +84,11 @@ public class Role implements Serializable {
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Role [id=" + id + ", name=" + name + ", description=" + description + "]";
+	}
+    
+    
 }
