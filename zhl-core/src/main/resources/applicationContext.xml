@@ -21,7 +21,6 @@
 	<!-- 包自动扫描 -->
 	<context:component-scan base-package="net.tfedu.zhl.**.dao" />
 	<context:component-scan base-package="net.tfedu.zhl.**.service" />
-	<context:component-scan base-package="net.tfedu.zhl.**.controller" />
 
 	<!-- enable autowire -->  
     <context:annotation-config /> 
@@ -31,7 +30,7 @@
 	<!-- Cache配置 -->
 	<cache:annotation-driven cache-manager="cacheManager" />
 	<bean id="ehCacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-		p:configLocation="classpath:ehcache.xml" />
+		p:configLocation="classpath:appilcationContext-cache.xml" />
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager"
 		p:cacheManager-ref="ehCacheManagerFactory" />
 
