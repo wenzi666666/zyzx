@@ -1,5 +1,6 @@
 package net.tfedu.zhl.sso.service.impl;
 
+import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.sso.dao.SCardMapper;
 import net.tfedu.zhl.sso.dao.SRegisterMapper;
 import net.tfedu.zhl.sso.entity.SRegister;
@@ -39,12 +40,17 @@ public class RegisterServiceImpl implements RegisterService {
 		return rMapper.selectOne(r);
 	}
 	
-	public SRegister login(String userName,String password){
-		
-		
-		
-		
-		return null;
+	
+	/**
+	 * 修改用户密码
+	 * @param userId
+	 * @param password
+	 */
+	public void modifyRegisterPassword(long userId,String password ){
+		SRegister r = new SRegister();
+		r.setId(userId);
+		r.setPwd(PWDEncrypt.doEncryptByte(password));
+		rMapper.updateByPrimaryKey(r);
 	}
 	
 	
