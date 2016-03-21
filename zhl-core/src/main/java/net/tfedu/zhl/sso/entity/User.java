@@ -50,7 +50,7 @@ public class User implements Serializable {
     private String salt;
     
     @Transient
-    List<UserRole> userRoles; 
+    List<Role> roles; 
     
     @Transient
     List<Permission> userPermissions;
@@ -170,12 +170,13 @@ public class User implements Serializable {
         this.isdelete = isdelete;
     }
 
-	public List<UserRole> getUserRoles() {
-		return userRoles;
+
+	public List<Role> getRoles() {
+		return roles;
 	}
 
-	public void setUserRoles(List<UserRole> userRoles) {
-		this.userRoles = userRoles;
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
 	}
 
 	public List<Permission> getUserPermissions() {
@@ -186,10 +187,13 @@ public class User implements Serializable {
 		this.userPermissions = userPermissions;
 	}
 
+	/**
+	 * 提供toString方法，方便单元测试时，直接输出对象。
+	 */
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createDate=" + createDate
-				+ ", isdelete=" + isdelete + ", userRoles=" + userRoles + ", userPermissions=" + userPermissions + "]";
+				+ ", isdelete=" + isdelete + ", roles=" + roles + ", userPermissions=" + userPermissions + "]";
 	}
     
     

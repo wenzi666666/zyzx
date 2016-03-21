@@ -6,10 +6,9 @@
 		<result column="username" property="username" />
 		<result column="password" property="password" />
 		<result column="create_date" property="createDate" />
-		<collection property="userRoles" ofType="UserRole">
-			<id column="ur_id" property="id" />
-			<result column="user_id" property="userId" />
-			<result column="rRoleId" property="roleId" />
+		<collection property="roles" ofType="Role">
+			<id column="r_id" property="id" />
+			<result column="name" property="name" />
 		</collection>
 		<collection property="userPermissions" ofType="Permission">
 			<id column="p_id" property="id" />
@@ -20,22 +19,14 @@
 		</collection>
 	</resultMap>
 	
-	<select id="getUserById" parameterType="int" resultMap="userMap">
-		select u.id u_id,u.username,u.password,u.create_date,
-		   ur.id ur_id,ur.user_id,ur.role_id rRoleId,
-           p.id p_id,p.token,p.url,p.description,p.role_id pRoleId 
-		from sys_user u
-		LEFT JOIN sys_user_role ur on u.id=ur.user_id
-        LEFT JOIN sys_permission p on ur.role_id=p.role_id
-		where u.id=#{userId}
-	</select>
 	<select id="getUserByName" parameterType="String" resultMap="userMap">
 		select u.id u_id,u.username,u.password,u.create_date,
-		   ur.id ur_id,ur.user_id,ur.role_id rRoleId,
+		   r.id r_id,r.`name`,
            p.id p_id,p.token,p.url,p.description,p.role_id pRoleId 
 		from sys_user u
 		LEFT JOIN sys_user_role ur on u.id=ur.user_id
-        LEFT JOIN sys_permission p on ur.role_id=p.role_id
+    LEFT JOIN sys_role r on ur.role_id=r.id
+    LEFT JOIN sys_permission p on ur.role_id=p.role_id
 		where u.username=#{username}
 	</select>
 </mapper>
