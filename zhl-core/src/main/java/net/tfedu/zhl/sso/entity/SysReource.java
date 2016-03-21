@@ -1,21 +1,24 @@
 package net.tfedu.zhl.sso.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
-@Table(name = "sys_permission")
-public class Permission implements Serializable {
+@Table(name = "sys_resource")
+public class SysReource implements Serializable {
     /**
 	 * 
 	 */
-	private static final long serialVersionUID = 6556629915035500331L;
+	private static final long serialVersionUID = 8441843226590192063L;
 
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
-    private String token;
 
     /**
      * 资源url
@@ -23,25 +26,20 @@ public class Permission implements Serializable {
     private String url;
 
     /**
-     * 所属角色编号
-     */
-    @Column(name = "role_id")
-    private Integer roleId;
-
-    /**
      * 权限说明
      */
     private String description;
+    
+    @Transient
+    private List<Role> roles;
 
-    public Permission(Integer id, String token, String url, Integer roleId, String description) {
+    public SysReource(Integer id, String url, String description) {
         this.id = id;
-        this.token = token;
         this.url = url;
-        this.roleId = roleId;
         this.description = description;
     }
 
-    public Permission() {
+    public SysReource() {
         super();
     }
 
@@ -57,20 +55,6 @@ public class Permission implements Serializable {
      */
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    /**
-     * @return token
-     */
-    public String getToken() {
-        return token;
-    }
-
-    /**
-     * @param token
-     */
-    public void setToken(String token) {
-        this.token = token == null ? null : token.trim();
     }
 
     /**
@@ -92,24 +76,6 @@ public class Permission implements Serializable {
     }
 
     /**
-     * 获取所属角色编号
-     *
-     * @return roleId - 所属角色编号
-     */
-    public Integer getRoleId() {
-        return roleId;
-    }
-
-    /**
-     * 设置所属角色编号
-     *
-     * @param roleid 所属角色编号
-     */
-    public void setRoleId(Integer roleId) {
-        this.roleId = roleId;
-    }
-
-    /**
      * 获取权限说明
      *
      * @return description - 权限说明
@@ -127,11 +93,19 @@ public class Permission implements Serializable {
         this.description = description == null ? null : description.trim();
     }
 
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
 	@Override
 	public String toString() {
-		return "Permission [id=" + id + ", token=" + token + ", url=" + url + ", roleId=" + roleId + ", description="
-				+ description + "]";
+		return "SysReource [id=" + id + ", url=" + url + ", description=" + description + ", roles=" + roles + "]";
 	}
-    
+
+	
     
 }

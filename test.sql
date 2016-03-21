@@ -10,29 +10,27 @@ Target Server Type    : MYSQL
 Target Server Version : 50528
 File Encoding         : 65001
 
-Date: 2016-03-18 19:21:09
+Date: 2016-03-21 14:48:51
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `sys_permission`
+-- Table structure for `sys_resource`
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_permission`;
-CREATE TABLE `sys_permission` (
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource` (
   `id` int(15) NOT NULL AUTO_INCREMENT,
-  `token` varchar(60) NOT NULL DEFAULT ' ',
-  `url` varchar(600) NOT NULL DEFAULT ' ' COMMENT '资源url',
-  `role_id` int(15) NOT NULL DEFAULT '0' COMMENT '所属角色编号',
+  `url` varchar(120) NOT NULL DEFAULT ' ' COMMENT '资源url',
   `description` varchar(60) NOT NULL DEFAULT ' ' COMMENT '权限说明',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_permission
+-- Records of sys_resource
 -- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', ' ', ' add', '1', ' ');
-INSERT INTO `sys_permission` VALUES ('2', ' ', ' list', '1', ' ');
+INSERT INTO `sys_resource` VALUES ('1', ' /user/add', ' ');
+INSERT INTO `sys_resource` VALUES ('2', ' /user/list', ' ');
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -51,6 +49,24 @@ CREATE TABLE `sys_role` (
 INSERT INTO `sys_role` VALUES ('1', ' admin', ' ');
 INSERT INTO `sys_role` VALUES ('2', ' teacher', ' ');
 INSERT INTO `sys_role` VALUES ('3', ' student', ' ');
+
+-- ----------------------------
+-- Table structure for `sys_role_permisson`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_role_permisson`;
+CREATE TABLE `sys_role_permisson` (
+  `id` int(15) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `role_id` int(15) NOT NULL DEFAULT '0' COMMENT '角色编号',
+  `resource_id` int(15) NOT NULL COMMENT '资源编号',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_sys_role_permission_0` (`role_id`,`resource_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of sys_role_permisson
+-- ----------------------------
+INSERT INTO `sys_role_permisson` VALUES ('1', '1', '1');
+INSERT INTO `sys_role_permisson` VALUES ('2', '1', '2');
 
 -- ----------------------------
 -- Table structure for `sys_user`
@@ -81,7 +97,8 @@ CREATE TABLE `sys_user_role` (
   `id` int(15) NOT NULL AUTO_INCREMENT,
   `user_id` int(15) NOT NULL DEFAULT '0',
   `role_id` int(15) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_sys_user_role_1` (`user_id`,`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------

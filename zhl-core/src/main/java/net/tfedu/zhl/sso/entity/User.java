@@ -53,7 +53,7 @@ public class User implements Serializable {
     List<Role> roles; 
     
     @Transient
-    List<Permission> userPermissions;
+    List<SysReource> resources;
 
     public User(Integer id, String username, String password, Date createDate, Integer isdelete) {
         this.id = id;
@@ -179,13 +179,14 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	public List<Permission> getUserPermissions() {
-		return userPermissions;
+	public List<SysReource> getResources() {
+		return resources;
 	}
 
-	public void setUserPermissions(List<Permission> userPermissions) {
-		this.userPermissions = userPermissions;
+	public void setResources(List<SysReource> resources) {
+		this.resources = resources;
 	}
+
 
 	/**
 	 * 提供toString方法，方便单元测试时，直接输出对象。
@@ -193,7 +194,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createDate=" + createDate
-				+ ", isdelete=" + isdelete + ", roles=" + roles + ", userPermissions=" + userPermissions + "]";
+				+ ", isdelete=" + isdelete + ", roles=" + roles + ", resources=" + resources + "]";
 	}
     
     

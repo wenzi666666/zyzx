@@ -6,7 +6,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
-import net.tfedu.zhl.sso.dao.PermissionMapper;
 import net.tfedu.zhl.sso.dao.UserMapper;
 import net.tfedu.zhl.sso.dao.UserRoleMapper;
 import net.tfedu.zhl.sso.entity.User;
@@ -19,8 +18,6 @@ public class AccountServiceImpl implements AccountService {
 	UserMapper userMapper;
 	@Resource
 	UserRoleMapper userRoleMapper;
-	@Resource
-	PermissionMapper permissionMapper;
 	@Resource
 	CacheManager cacheManager;
 
