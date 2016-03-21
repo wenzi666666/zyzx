@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Table(name = "sys_resource")
-public class SysReource implements Serializable {
+public class SysResource implements Serializable {
     /**
 	 * 
 	 */
@@ -33,13 +33,13 @@ public class SysReource implements Serializable {
     @Transient
     private List<Role> roles;
 
-    public SysReource(Integer id, String url, String description) {
+    public SysResource(Integer id, String url, String description) {
         this.id = id;
         this.url = url;
         this.description = description;
     }
 
-    public SysReource() {
+    public SysResource() {
         super();
     }
 

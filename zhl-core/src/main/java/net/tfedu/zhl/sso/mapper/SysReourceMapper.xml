@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.sso.dao.SysReourceMapper" >
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.entity.SysReource" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.entity.SysResource" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -12,7 +12,7 @@
     </constructor>
   </resultMap>
   
-  <resultMap id="resourceMap" type="SysReource">
+  <resultMap id="resourceMap" type="SysResource">
 		<id column="rs_id" property="id" />
 		<result column="url" property="url" />
 		<collection property="roles" ofType="Role">

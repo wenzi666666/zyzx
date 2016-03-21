@@ -1,13 +1,18 @@
 package net.tfedu.zhl.sso.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import net.tfedu.zhl.sso.dao.SysReourceMapper;
 import net.tfedu.zhl.sso.dao.UserMapper;
 import net.tfedu.zhl.sso.dao.UserRoleMapper;
+import net.tfedu.zhl.sso.entity.SysResource;
 import net.tfedu.zhl.sso.entity.User;
 import net.tfedu.zhl.sso.service.AccountService;
 
@@ -20,6 +25,8 @@ public class AccountServiceImpl implements AccountService {
 	UserRoleMapper userRoleMapper;
 	@Resource
 	CacheManager cacheManager;
+	@Autowired
+	private SysReourceMapper sysReourceMapper;
 
 	@Cacheable(value = "usernamesCache", key = "#username")
 	@Override
@@ -47,5 +54,12 @@ public class AccountServiceImpl implements AccountService {
 			return getUserByUserName(simple.getUsername());
 		}
 	}
+
+
+	@Override
+	public List<SysResource> selectAllPermission() {
+		return sysReourceMapper.selectAllPermission();
+	}
+	
 
 }

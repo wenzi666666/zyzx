@@ -1,7 +1,5 @@
 package net.tfedu.zhl.sso;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,11 +7,8 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
-import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
+import net.tfedu.zhl.sso.entity.SysResource;
 import net.tfedu.zhl.sso.entity.User;
 import net.tfedu.zhl.sso.service.AccountService;
 
@@ -31,6 +26,13 @@ public class AccountServiceTest extends BaseServiceTestCase {
 		// logger.info("值："+user.getUserName());
 		Assert.notNull(user);
 		log.info(user.toString());
+	}
+	
+	@Test
+	public void testAllSysResource() {
+		List<SysResource> list = accountService.selectAllPermission();
+		Assert.notNull(list);
+		log.info(list.toString());
 	}
 	
 //	@Test

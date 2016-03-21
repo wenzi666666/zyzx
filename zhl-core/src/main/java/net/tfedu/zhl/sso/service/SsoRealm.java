@@ -15,7 +15,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import net.tfedu.zhl.sso.entity.Role;
-import net.tfedu.zhl.sso.entity.SysReource;
+import net.tfedu.zhl.sso.entity.SysResource;
 import net.tfedu.zhl.sso.entity.User;
 
 public class SsoRealm extends AuthorizingRealm {
@@ -39,9 +39,9 @@ public class SsoRealm extends AuthorizingRealm {
 			if (user == null)
 				return null;
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-			List<SysReource> pers = user.getResources();
+			List<SysResource> pers = user.getResources();
 			if (pers != null) {
-				for (SysReource each : pers) {
+				for (SysResource each : pers) {
 					// 将权限资源添加到用户信息中
 					info.addStringPermission(each.getUrl());
 				}

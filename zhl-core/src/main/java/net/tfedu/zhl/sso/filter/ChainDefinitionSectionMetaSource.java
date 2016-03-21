@@ -13,7 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.sso.dao.SysReourceMapper;
 import net.tfedu.zhl.sso.entity.Role;
-import net.tfedu.zhl.sso.entity.SysReource;
+import net.tfedu.zhl.sso.entity.SysResource;
 
 /**
  * 动态配置权限
@@ -35,7 +35,7 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Section> {
 	public Section getObject() throws BeansException {
 
 		// 获取所有SysReource
-		List<SysReource> list = sysReourceMapper.selectAllPermission();
+		List<SysResource> list = sysReourceMapper.selectAllPermission();
 
 		Ini ini = new Ini();
 		// 加载默认的url
@@ -43,9 +43,9 @@ public class ChainDefinitionSectionMetaSource implements FactoryBean<Section> {
 		Ini.Section section = ini.getSection(Ini.DEFAULT_SECTION_NAME);
 		// 循环SysReource的url,逐个添加到section中。section就是filterChainDefinitionMap,
 		// 里面的键就是链接URL,值就是存在什么条件才能访问该链接
-		for (Iterator<SysReource> it = list.iterator(); it.hasNext();) {
+		for (Iterator<SysResource> it = list.iterator(); it.hasNext();) {
 
-			SysReource resource = it.next();
+			SysResource resource = it.next();
 			// 如果不为空值添加到section中
 			if (StringUtils.isNotEmpty(resource.getUrl())) {
 				// /admin/** = authc, roles[admin]

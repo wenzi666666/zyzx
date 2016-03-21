@@ -53,7 +53,7 @@ public class User implements Serializable {
     List<Role> roles; 
     
     @Transient
-    List<SysReource> resources;
+    List<SysResource> resources;
 
     public User(Integer id, String username, String password, Date createDate, Integer isdelete) {
         this.id = id;
@@ -179,11 +179,11 @@ public class User implements Serializable {
 		this.roles = roles;
 	}
 
-	public List<SysReource> getResources() {
+	public List<SysResource> getResources() {
 		return resources;
 	}
 
-	public void setResources(List<SysReource> resources) {
+	public void setResources(List<SysResource> resources) {
 		this.resources = resources;
 	}
 

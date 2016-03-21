@@ -10,7 +10,7 @@
 			<id column="r_id" property="id" />
 			<result column="name" property="name" />
 		</collection>
-		<collection property="resource" ofType="SysReource">
+		<collection property="resources" ofType="SysResource">
 			<id column="rs_id" property="id" />
 			<result column="url" property="url" />
 		</collection>
