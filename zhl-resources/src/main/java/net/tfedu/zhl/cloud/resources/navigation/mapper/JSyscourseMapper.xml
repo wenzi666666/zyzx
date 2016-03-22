@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resources.navigation.dao.JSyscourseMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="SubjectId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="TermId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="PnodeId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="Name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="TFcode" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IsArea" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FirstPage" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="EndPage" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ResourceId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="EbookPath" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="EbookDic" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="typeFlag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="orderNum" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="visible" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="Grade" jdbcType="SMALLINT" javaType="java.lang.Short" />
+      <arg column="UpdateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="CreateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="isSpec" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="enabled" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="createman" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="scopeType" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  
+   <!-- 根据学段、学科，获得所有教材版本 -->
+   <resultMap id="EditionResultMap" type="net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse" >
+		<id column="e_id" property="id" />
+		<result column="e_name" property="name" />
+		<result column="tfcode" property="tfcode" />
+  </resultMap>
+  <select id="getAllEditions" parameterType="HashMap" resultMap="EditionResultMap">
+		select id e_id,SUBSTRING(name,5) e_name,tfcode from j_syscourse 
+		where termid =#{termId} and subjectid =#{subjectId} and flag = false and pnodeid = 0
+  </select>
+  
+  <!-- 获得特定版本下的所有教材 -->
+  <resultMap id="BooksResultMap" type="net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="tfcode" property="tfcode" />
+  </resultMap>
+  <select id="getAllBooks" parameterType="Long" resultMap="BooksResultMap">
+		select id,name,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false 
+  </select>
+</mapper>

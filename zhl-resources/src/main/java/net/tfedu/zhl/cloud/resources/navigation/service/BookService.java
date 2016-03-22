@@ -1,0 +1,16 @@
+package net.tfedu.zhl.cloud.resources.navigation.service;
+
+import java.util.List;
+
+import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
+
+/**
+ * 获得特定版本下的所有教材
+ * @author WeiCuicui
+ *
+ */
+public interface BookService {
+
+	//根据特定版本，获得版本下的所有教材
+	public List<JSyscourse> getAllBooks(long pnodeId);
+}
