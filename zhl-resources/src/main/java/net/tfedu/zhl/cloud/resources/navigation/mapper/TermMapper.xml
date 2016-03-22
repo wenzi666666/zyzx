@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resources.navigation.dao.TermMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.core.term.entity.JTerm" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="Name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Notes" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="code" jdbcType="CHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  
+  <resultMap id="SubjectResultMap" type="net.tfedu.zhl.cloud.core.subject.entity.JSubject" >
+		<id column="s_id" property="id" />
+		<result column="s_name" property="name" />
+		<result column="s_flag" property="flag" />
+  </resultMap>
+  <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
+		select s.id s_id,s.name s_name,s.flag s_flag
+		from j_term t 
+		left join j_term_subject ts on ts.termId = t.id 
+		left join j_subject s on s.id = ts.subjectId
+		where t.flag = false and ts.flag = false and s.flag = false and t.id=#{termId}
+	</select>
+</mapper>
