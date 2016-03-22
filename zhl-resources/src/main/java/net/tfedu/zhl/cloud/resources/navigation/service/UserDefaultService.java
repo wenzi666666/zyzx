@@ -1,16 +1,16 @@
-package net.tfedu.zhl.cloud.resources.navigation.dao;
+package net.tfedu.zhl.cloud.resources.navigation.service;
 
 import java.util.HashMap;
 
-import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault;
+
 /**
  * 查询用户历史选择的学段、学科、版本、教材
  * @author WeiCuicui
  *
  */
-public interface JUserDefaultMapper extends CoreMapper<JUserDefault> {
-	
+public interface UserDefaultService {
+
 	//查询用户历史选择的学段、学科、版本、教材
 	public JUserDefault getUserHistoryDefault(HashMap<String, Object> map);
 	

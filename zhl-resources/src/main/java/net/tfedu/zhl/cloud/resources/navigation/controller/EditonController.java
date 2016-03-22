@@ -26,7 +26,7 @@ public class EditonController {
 		long termId = request.getParameter("termId") != null ? Long.parseLong(request.getParameter("termId").toString().trim()) : 0;
 		long subjectId = request.getParameter("subjectId") != null ? Long.parseLong(request.getParameter("subjectId").toString().trim()) : 0;
 		
-		HashMap<String, Long> map = new HashMap<String, Long>();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("termId", termId);
 		map.put("subjectId", subjectId);
 		

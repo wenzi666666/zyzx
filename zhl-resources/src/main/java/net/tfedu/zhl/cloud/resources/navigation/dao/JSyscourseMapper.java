@@ -13,7 +13,7 @@ import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
 public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
 	
 	//根据学段、学科，获得所有教材版本
-	public List<JSyscourse> getAllEditions(HashMap<String, Long> map);
+	public List<JSyscourse> getAllEditions(HashMap<String, Object> map);
 	
 	//获得特定版本下的所有教材
 	public List<JSyscourse> getAllBooks(long pnodeId);

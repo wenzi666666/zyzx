@@ -23,7 +23,7 @@ public class EditionServiceImpl implements EditionService {
 
 	//参数 map中存放 termId，subjectId
 	@Override
-	public List<JSyscourse> getAllEditionsByTermAndSub(HashMap<String, Long> map){
+	public List<JSyscourse> getAllEditionsByTermAndSub(HashMap<String, Object> map){
 		return jSyscourseMapper.getAllEditions(map);
 	}
 	
