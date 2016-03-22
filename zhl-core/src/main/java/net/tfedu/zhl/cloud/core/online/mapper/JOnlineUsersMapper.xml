@@ -22,13 +22,13 @@
   </resultMap>
   
   
-  <select id="getOnlineByToken" parameterType="String">
-  	SELECT * from  j_online_users where token = #{token} and status= 1
+  <select id="getOnlineByToken" parameterType="String" resultMap="BaseResultMap">
+  	SELECT * from  j_online_users where token = #{token} and status= 1 and token is not null 
   </select>
   
     
-  <select id="getOnlineByUserId" parameterType="Long">
-  	SELECT * from  j_online_users where userId = #{userId} and status= 1
+  <select id="getOnlineByUserId" parameterType="Long"  resultMap="BaseResultMap">
+  	SELECT * from  j_online_users where userId = #{userId} and status= 1 and token is not null 
   </select>
   
   
