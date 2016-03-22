@@ -70,4 +70,12 @@ public class ResultJSON {
 		this.sign = sign;
 	}
 
+	
+	
+	@Override
+	public String toString(){
+		return "[code :"+code+"  ;message:"+message+";data:"+data.toString()+";sign:"+sign+"]";
+	}
+	
+	
 }
