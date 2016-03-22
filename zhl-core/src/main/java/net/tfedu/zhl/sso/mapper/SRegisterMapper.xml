@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="net.tfedu.zhl.sso.dao.SRegisterMapper">
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.entity.SRegister">
+  <resultMap id="registerMap" type="net.tfedu.zhl.sso.entity.SRegister">
     <!--
       WARNING - @mbggenerated
     -->
@@ -18,4 +18,17 @@
       <arg column="Pwd" javaType="byte[]" jdbcType="BINARY" />
     </constructor>
   </resultMap>
+  
+
+
+
+  
+  <update id="modifyPassword" > 
+  		update  s_register set pwd=#{1}  where id =#{0} 
+  </update>
+  
+  
+  
+  
+  
 </mapper>

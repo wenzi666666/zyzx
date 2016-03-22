@@ -6,7 +6,7 @@ public interface RegisterService {
 	/**
 	 * id获取注册用户
 	 */
-	public SRegister getRegister(long id);
+	public SRegister getRegister(Long id);
 	/**
 	 * name获取注册用户
 	 */
@@ -18,7 +18,17 @@ public interface RegisterService {
 	 * @param userId
 	 * @param password
 	 */
-	public void modifyRegisterPassword(long userId,String password );
+	public void modifyRegisterPassword(Long userId,String password );
+	
+	
+	
+	/**
+	 * 登录
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public SRegister login(String userName,String password);
 	
 	
 	

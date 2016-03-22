@@ -9,4 +9,16 @@ import net.tfedu.zhl.sso.entity.SRegister;
  *
  */
 public interface SRegisterMapper extends CoreMapper<SRegister> {
+	
+	
+	/**
+	 * 修改密码
+	 * @param pwd
+	 * @param id
+	 */
+	public void modifyPassword(Long id,byte[]pwd);
+	
+	
+	
+	
 }

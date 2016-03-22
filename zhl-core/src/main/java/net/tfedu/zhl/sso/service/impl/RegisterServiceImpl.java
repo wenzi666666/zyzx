@@ -1,7 +1,11 @@
 package net.tfedu.zhl.sso.service.impl;
 
+
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
-import net.tfedu.zhl.sso.dao.SCardMapper;
 import net.tfedu.zhl.sso.dao.SRegisterMapper;
 import net.tfedu.zhl.sso.entity.SRegister;
 import net.tfedu.zhl.sso.service.RegisterService;
@@ -17,16 +21,15 @@ import org.springframework.stereotype.Service;
 public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired 
-	SRegisterMapper rMapper;
+	SRegisterMapper rMapper;	
 	
-	@Autowired 
-	SCardMapper cMapper;
 	
+
 	
 	/**
 	 * id获取注册用户
 	 */
-	public SRegister getRegister(long id){
+	public SRegister getRegister(Long id){
 		SRegister r = new SRegister();
 		r.setId(id);
 		return rMapper.selectOne(r);
@@ -46,14 +49,45 @@ public class RegisterServiceImpl implements RegisterService {
 	 * @param userId
 	 * @param password
 	 */
-	public void modifyRegisterPassword(long userId,String password ){
+	public void modifyRegisterPassword(Long userId,String password ){
 		SRegister r = new SRegister();
 		r.setId(userId);
-		r.setPwd(PWDEncrypt.doEncryptByte(password));
-		rMapper.updateByPrimaryKey(r);
+		byte[] pwd = PWDEncrypt.doEncryptByte(password);
+		r.setPwd(pwd);
+		rMapper.modifyPassword(userId, pwd);
 	}
 	
 	
 	
+	
+	/**
+	 * 登录
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public SRegister login(String userName,String password){
+		
+		byte[] pwd = PWDEncrypt.doEncryptByte(password);
+		SRegister r = new SRegister();
+		r.setName(userName);
+		r = rMapper.selectOne(r);
+		if(r!=null){
+			//存在 检测是密码正确
+			if(!Arrays.equals(pwd,r.getPwd())){
+				throw new RuntimeException("WrongPassWord");
+			}
+			//存在 检测是否过期
+			Date endTime =  r.getReendtime();
+			Calendar c = Calendar.getInstance();
+			//如果之前已经过期
+			if(endTime.before(c.getTime())){
+				throw new RuntimeException("OutOfDate");
+			}
+		}else{
+			throw new RuntimeException("WithoutUser");
+		}
+		return r;
+	}
 	
 }
