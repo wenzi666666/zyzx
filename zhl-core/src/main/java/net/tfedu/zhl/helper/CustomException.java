@@ -15,6 +15,7 @@ public enum CustomException {
 	WRONGPASSWORD("WrongPassWord","密码错误",401),
 	OUTOFDATE("OutOfDate","卡号过期",401),
 	UNUSUALERROR("UnusualError","用户信息异常",401),
+	UNCUSTOM("ERROR","系统异常",500),
 	;
 
 	
@@ -42,7 +43,50 @@ public enum CustomException {
 	
 	
 	
-	
+	public static CustomException getCustomExceptionByCode(String code){
+		CustomException e = code.equalsIgnoreCase(CustomException.OUTOFDATE.code)?CustomException.OUTOFDATE
+				:code.equalsIgnoreCase(CustomException.UNUSUALERROR.code)?CustomException.UNUSUALERROR
+				:code.equalsIgnoreCase(CustomException.WITHOUTUSER.code)?CustomException.WITHOUTUSER
+				:code.equalsIgnoreCase(CustomException.WRONGPASSWORD.code)?CustomException.WRONGPASSWORD
+				:CustomException.UNCUSTOM;
+		return e;
+	}
+
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+
+	public String getMessage() {
+		return message;
+	}
+
+
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+
+
+	public Integer getStatus() {
+		return status;
+	}
+
+
+
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 	
 	
 	
