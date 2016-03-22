@@ -8,9 +8,11 @@ import org.junit.Test;
 import org.springframework.util.Assert;
 import net.tfedu.zhl.cloud.core.subject.entity.JSubject;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
+import net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resources.navigation.service.BookService;
 import net.tfedu.zhl.cloud.resources.navigation.service.EditionService;
 import net.tfedu.zhl.cloud.resources.navigation.service.TermSubjectService;
+import net.tfedu.zhl.cloud.resources.navigation.service.UserDefaultService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 /**
@@ -21,18 +23,25 @@ import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 public class TermSubjectServiceTest extends BaseServiceTestCase{
 
 	@Resource 
-	private BookService bookService = null;
+	private UserDefaultService userDefaultService = null;
 	
 	@Test
 	public void testGetAllSubjectsByTerm() throws IOException{
-		long pnodeId = 67527;
-	
-		List<JSyscourse> bookes = bookService.getAllBooks(pnodeId);
-		Assert.isTrue(bookes.size() > 1);
 		
-		for (int i = 0; i < bookes.size(); i++) {
-			System.out.println(bookes.get(i).getId() + ":" + bookes.get(i).getName() + ":" + bookes.get(i).getTfcode());
-		}
+		long userId = 699230735;
+		int type = 1;
+		String tfcode = "RJCZ010109";
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("userId", userId);
+		map.put("type", type);
+		map.put("tfcode", tfcode);
+		
+		
+		
+		userDefaultService.addUserHistoryDefault(map);
+	
+		
 		
 	}
 	

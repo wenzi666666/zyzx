@@ -22,6 +22,23 @@ public class JUserDefault {
      * 默认资源目录code
      */
     private String tfcode;
+    
+    //用户历史选择学段
+    @Transient
+    private Long termId;
+
+	//用户历史选择学科
+    @Transient
+    private Long subjectId;
+    
+    //用户历史选择版本
+    @Transient
+    private Long editionId;
+    
+    //用户历史选择教材
+    @Transient
+    private Long bookId;
+    
 
     /**
      * 资源目录类型  1、系统教学资源目录  2、自建目录
@@ -145,4 +162,37 @@ public class JUserDefault {
     public void setFlag(Boolean flag) {
         this.flag = flag;
     }
+    
+    
+    public Long getTermId() {
+		return termId;
+	}
+
+	public void setTermId(Long termId) {
+		this.termId = termId;
+	}
+
+	public Long getSubjectId() {
+		return subjectId;
+	}
+
+	public void setSubjectId(Long subjectId) {
+		this.subjectId = subjectId;
+	}
+
+	public Long getEditionId() {
+		return editionId;
+	}
+
+	public void setEditionId(Long editionId) {
+		this.editionId = editionId;
+	}
+
+	public Long getBookId() {
+		return bookId;
+	}
+
+	public void setBookId(Long bookId) {
+		this.bookId = bookId;
+	}
 }
