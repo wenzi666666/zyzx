@@ -6,6 +6,7 @@ import java.util.Calendar;
 import javax.servlet.http.HttpServletRequest;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.fileservice.MD5;
 
 /**
  * 在线用户工具
@@ -14,7 +15,7 @@ import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
  * @author wangwr
  *
  */
-public class TtfeduOnlineUtil {
+public class ZhlOnlineUtil {
 	
 	/**
 	 * 获token的有效时间，从登录时间时间开始计时
@@ -23,7 +24,7 @@ public class TtfeduOnlineUtil {
 	 * @return
 	 */
 	public static int getTokenValidTime(HttpServletRequest request){
-		int timeout = 120;//有效时间两个小时 
+		int timeout = 2;//有效时间两个小时 单位为小时 
 		String time = request.getServletContext().getInitParameter("TOKEN_VALID_TIME");
 		if(StringUtils.isNotEmpty(time)&& Integer.parseInt(time)>0){
 			timeout = Integer.parseInt(time);
