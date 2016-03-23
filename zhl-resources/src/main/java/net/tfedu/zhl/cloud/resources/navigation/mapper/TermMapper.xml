@@ -14,12 +14,12 @@
     </constructor>
   </resultMap>
   
+  <!-- 选择特定学段下的学科  -->
   <resultMap id="SubjectResultMap" type="net.tfedu.zhl.cloud.core.subject.entity.JSubject" >
 		<id column="s_id" property="id" />
 		<result column="s_name" property="name" />
 		<result column="s_flag" property="flag" />
   </resultMap>
-  <!-- 选择特定学段下的学科 -->
   <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
 		select s.id s_id,s.name s_name,s.flag s_flag
 		from j_term t 

@@ -88,11 +88,13 @@ public class UserDefaultController {
 			map.put("type", type);
 			map.put("tfcode", tfcode);
 			
-			if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.equals(_method)) {//修改用户历史选择
-				
+			if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.equals(_method)) {
+				//修改用户历史选择
+				userDefaultService.updateUserHistoryDefault(map);
 				exception = CustomException.SUCCESS;
-			} else if(StringUtils.isNotEmpty(_method) && RequestMethod.POST.name().equals(_method)){//增加用户历史选择
-				
+			} else if(StringUtils.isNotEmpty(_method) && RequestMethod.POST.name().equals(_method)){
+				//增加用户历史选择
+				userDefaultService.addUserHistoryDefault(map);
 				exception = CustomException.SUCCESS;
 			} 
 		} catch (Exception e) {

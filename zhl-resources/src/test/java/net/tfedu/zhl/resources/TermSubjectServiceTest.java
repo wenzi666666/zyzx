@@ -1,12 +1,18 @@
 package net.tfedu.zhl.resources;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.security.auth.Subject;
+import javax.xml.soap.Node;
+
 import org.junit.Test;
 import org.springframework.util.Assert;
 import net.tfedu.zhl.cloud.core.subject.entity.JSubject;
+import net.tfedu.zhl.cloud.resources.navigation.entity.TreeNode;
+import net.tfedu.zhl.cloud.resources.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resources.navigation.service.BookService;
@@ -23,26 +29,22 @@ import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 public class TermSubjectServiceTest extends BaseServiceTestCase{
 
 	@Resource 
-	private UserDefaultService userDefaultService = null;
+	private TermSubjectService termSubjectService = null;
 	
 	@Test
 	public void testGetAllSubjectsByTerm() throws IOException{
 		
-		long userId = 699230735;
-		int type = 1;
-		String tfcode = "RJCZ010109";
+		long termId = 1;
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("userId", userId);
-		map.put("type", type);
-		map.put("tfcode", tfcode);
+		List<JSubject> subjects = termSubjectService.getAllSubjectsByTerm(termId);
 		
+		Assert.isTrue(subjects.size() > 1);
 		
-		
-		userDefaultService.addUserHistoryDefault(map);
-	
-		
-		
+		for (int i = 0; i < subjects.size(); i++) {
+			
+			System.out.println(subjects.get(i).getId() + ":" + subjects.get(i).getName());
+		}
+
 	}
 	
 }

@@ -53,4 +53,14 @@
   <select id="getAllBooks" parameterType="Long" resultMap="BooksResultMap">
 		select id,name,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false 
   </select>
+  
+  <!-- 查询某父节点下的直接子节点(即不包含孙子节点等) -->
+  <resultMap id="TopChildrenResultMap" type="net.tfedu.zhl.cloud.resources.navigation.entity.TreeNode" >
+		<id column="id" property="id" />
+		<result column="label" property="label" />
+  </resultMap>
+  <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
+		select id,name label from j_syscourse where pnodeid =#{pnodeId} and flag = false 
+  </select>
+ 
 </mapper>
