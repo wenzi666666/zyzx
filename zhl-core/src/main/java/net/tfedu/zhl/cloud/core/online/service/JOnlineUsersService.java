@@ -2,6 +2,8 @@ package net.tfedu.zhl.cloud.core.online.service;
 
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.tfedu.zhl.cloud.core.online.entity.JOnlineUsers;
 
 
@@ -14,7 +16,15 @@ public interface JOnlineUsersService {
 	 * @param userId
 	 * @return
 	 */
-	public JOnlineUsers getUserOnlines(Long userId);
+	public JOnlineUsers getUserOnlines(Long userId,HttpServletRequest request);
+	
+	
+	/**
+	 * 根据token获取用户的在线信息
+	 * @param token
+	 * @return
+	 */
+	public JOnlineUsers  getUserOnlinesByToken(String token);
 	
 	
 	
@@ -30,7 +40,7 @@ public interface JOnlineUsersService {
 	 * @param token
 	 * @param status
 	 */
-	public void updateOnlineStatus(String token,Long status);
+	public void updateOnlineStatus(String token,Integer status);
 	
 	
 	
@@ -40,6 +50,14 @@ public interface JOnlineUsersService {
 	 */
 	public void updateLastOperTime(String token,Date date);
 	
+	
+	
+	
+	/**
+	 * 设置用户退出
+	 * @param token
+	 */
+	public void logout(String token);
 	
 	
 	
