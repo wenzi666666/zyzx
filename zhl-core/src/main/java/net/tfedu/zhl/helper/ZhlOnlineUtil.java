@@ -17,6 +17,37 @@ import net.tfedu.zhl.fileservice.MD5;
  */
 public class ZhlOnlineUtil {
 	
+	
+	/**
+	 * 客户端web浏览器方式
+	 */
+	public static final int ONLINE_CLIENTTYPE_BROWSER = 1 ;	
+	/**
+	 * 客户端ANDROID方式
+	 */
+	public static final int ONLINE_CLIENTTYPE_ANDROID = 2 ;	
+	/**
+	 * 客户端WINPAD方式
+	 */
+	public static final int ONLINE_CLIENTTYPE_WINPAD = 3 ;	
+	
+	/**
+	 * 在线
+	 */
+	public static final int ONLINE_STATUS_ONLINE = 1 ;
+	/**
+	 * 离线
+	 */
+	public static final int ONLINE_STATUS_LOGOUT = 2 ;
+	/**
+	 * 超时
+	 */
+	public static final int ONLINE_STATUS_TIMEOUT = 3 ;
+	/**
+	 * 被踢
+	 */
+	public static final int ONLINE_STATUS_OTHERLOG = 4 ;
+	
 	/**
 	 * 获token的有效时间，从登录时间时间开始计时
 	 * 默认是两个小时 可以在web.xml中配置
@@ -32,6 +63,14 @@ public class ZhlOnlineUtil {
 		return timeout ;
 	}
 	
+	/**
+	 * 获取设备信息(浏览器的)
+	 * @param request
+	 * @param userid
+	 * @param nodeid
+	 * @param clientType
+	 * @return
+	 */
 	public static String getDeviceInfoWeb(HttpServletRequest request,long userid,long nodeid,int clientType) {
 		//由request获取浏览器版本、ip地址
 		String clientVersion = request.getHeader("user-agent");
