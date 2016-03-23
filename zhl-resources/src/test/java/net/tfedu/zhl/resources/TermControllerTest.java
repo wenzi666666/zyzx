@@ -16,7 +16,7 @@ public class TermControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testGetAllEditons() throws IOException{
 		request = newGet("/resRestAPI/v1.0/editions");
-		List<JSyscourse> editions = editonController.getAllEditions(request, response);
+		List<JSyscourse> editions = (List<JSyscourse>)editonController.getAllEditions(request, response).getData();
 		Assert.isTrue(editions.size() > 1);
 		
 	}

@@ -33,12 +33,12 @@
         where ude.userId = #{userId} and ude.type = #{type} and ude.flag = false 
   </select>
   <!-- 增加用户历史选择 记录 -->
-   <insert id="addUserHistoryDefault" parameterType="net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault" useGeneratedKeys="true" keyProperty="id">
+   <insert id="addUserHistoryDefault" parameterType="HashMap" useGeneratedKeys="true" keyProperty="id">
         insert into j_syscourse_user_default(userId,tfcode,type,createtime,flag) values(#{userid},#{tfcode},#{type},now(),false)
    </insert>
-   <!-- 修改用户历史选择 记录 -->
-   <update id="addUserHistoryDefault" parameterType="HashMap" >
+   <!-- 更新用户历史选择 记录 -->
+   <update id="updateUserHistoryDefault" parameterType="HashMap" >
         update j_syscourse_user_default set tfcode = #{tfcode} where userId = #{userId} and type = #{type} and flag = false
-    </update>
+   </update>
 
 </mapper>

@@ -20,6 +20,6 @@ public class TermServiceImpl implements TermService {
 	 */
 	@Override
 	public List<JTerm> selectAll(){
-		return termMapper.selectAll();
+		return termMapper.getAllTerms();
 	}
 }
