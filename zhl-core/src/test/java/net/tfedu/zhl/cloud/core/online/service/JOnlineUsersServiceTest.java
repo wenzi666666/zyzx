@@ -27,7 +27,8 @@ public class JOnlineUsersServiceTest extends BaseControllerTestCase {
 	
 	@Test
 	public void testgetUserOnlines(){
-		service.getUserOnlines(1l,request);
+//		service.getUserOnlines(1l,null);
+		
 	}
 	
 	
@@ -55,7 +56,7 @@ public class JOnlineUsersServiceTest extends BaseControllerTestCase {
 	
 	@Test
 	public void testupdateOnlineStatus(){
-		//service.updateOnlineStatus("", 4);
+		service.updateOnlineStatus("xxxxxxxtoken", 4);
 	}
 	
 	
@@ -63,7 +64,14 @@ public class JOnlineUsersServiceTest extends BaseControllerTestCase {
 	@Test
 	public void testupdateLastOperTime(){
 		
-//		service.updateLastOperTime("", "");
+		service.updateLastOperTime("xxxxxxxtoken", Calendar.getInstance().getTime());
+	}
+	
+
+	@Test
+	public void testuplogout(){
+		
+		service.logout("xxxxxxxtoken");
 	}
 	
 }

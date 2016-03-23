@@ -12,4 +12,13 @@
       <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  
+  
+  
+  <update id="updateUserTerm">
+		update j_userterm set termid =#{1} where userid = #{0}
+  </update>
+  
+  
+  
 </mapper>

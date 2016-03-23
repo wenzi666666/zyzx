@@ -15,7 +15,7 @@ public class UserSimple {
 	String male;
 	String termName;
 	String userImage ;
-	
+	Long roleId;
     /**
      * 获取用户学科ids
      */
@@ -85,6 +85,12 @@ public class UserSimple {
 	}
 	public void setUserImage(String userImage) {
 		this.userImage = userImage;
+	}
+	public Long getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 	
 

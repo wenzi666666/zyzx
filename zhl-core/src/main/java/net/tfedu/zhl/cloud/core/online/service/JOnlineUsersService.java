@@ -10,13 +10,16 @@ import net.tfedu.zhl.cloud.core.online.entity.JOnlineUsers;
 public interface JOnlineUsersService {
 	
 	
+
 	
 	/**
-	 * 获取用户的有效的在线信息
+	 * 新建或获取用户的有效的在线信息
 	 * @param userId
+	 * @param request
+	 * @param repeatLoginValidFlag  重复登录是否有效的标识：  资源中心不允许重复登登录(同一个用户、同一种登录client、同一个站点)
 	 * @return
 	 */
-	public JOnlineUsers getUserOnlines(Long userId,HttpServletRequest request);
+	public JOnlineUsers getUserOnlines(Long userId,HttpServletRequest request,Boolean repeatLoginValidFlag);
 	
 	
 	/**
@@ -61,6 +64,7 @@ public interface JOnlineUsersService {
 	
 	
 	
+
 	
 	
 

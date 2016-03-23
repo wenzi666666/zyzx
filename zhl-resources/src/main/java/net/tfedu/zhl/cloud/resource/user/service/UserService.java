@@ -51,7 +51,24 @@ public interface UserService {
 	
 	
 	
+	/**
+	 * 修改用户的信息
+	 * @param userId
+	 * @param trueName
+	 * @param male
+	 * @param termId
+	 * @param subjectId
+	 */
+	public void updateUserInfo(Long userId,String trueName,Boolean male,Long termId,Long subjectId);
 	
+	
+	
+	/**
+	 * 修改用户头像
+	 * @param userId
+	 * @param userImage
+	 */
+	public void updateUserImage(Long userId,String userImage);
 	
 	
 	

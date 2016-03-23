@@ -17,6 +17,17 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	public JOnlineUsers getOnlineByToken(String token);
 	
 	
+	
+	
+	/**
+	 * 踢出相同方式的用户登录((同一个用户、同一种登录client、同一个站点))
+	 * @param userId
+	 * @param clientType
+	 * @param nodeId
+	 */
+	public void clearRepeatUserLogin(Long userId,Integer clientType,Long nodeId);
+	
+	
 	/**
 	 * 根据userId 获取当前的登录用户的有效的在线信息
 	 * @param id

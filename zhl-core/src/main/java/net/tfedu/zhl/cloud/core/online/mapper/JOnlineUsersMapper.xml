@@ -54,7 +54,9 @@
   </update>
 
 
-
+ <update id="clearRepeatUserLogin">
+ 	update j_online_users set status = 4 where userid=#{0} and flag= false and status =1 and clientType =#{1} and loginNodeId=#{2}
+ </update>
   
   
   
