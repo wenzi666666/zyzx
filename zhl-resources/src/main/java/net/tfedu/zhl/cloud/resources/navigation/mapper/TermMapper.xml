@@ -19,11 +19,17 @@
 		<result column="s_name" property="name" />
 		<result column="s_flag" property="flag" />
   </resultMap>
+  <!-- 选择特定学段下的学科 -->
   <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
 		select s.id s_id,s.name s_name,s.flag s_flag
 		from j_term t 
 		left join j_term_subject ts on ts.termId = t.id 
 		left join j_subject s on s.id = ts.subjectId
 		where t.flag = false and ts.flag = false and s.flag = false and t.id=#{termId}
-	</select>
+  </select>
+  
+  <!-- 获得所有学段 -->
+  <select id="getAllTerms" resultMap="SubjectResultMap">
+		select id,name from j_term where name not like '其他%' and flag = false 
+  </select>
 </mapper>
