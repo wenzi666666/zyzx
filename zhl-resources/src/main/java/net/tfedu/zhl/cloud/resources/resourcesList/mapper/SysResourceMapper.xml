@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resources.resourceList.dao.SysResourceMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resources.resourceList.entity.SysResource" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ResCode" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Provider" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Title" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="keyWord" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FPath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Fname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Creator" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Author" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CreateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="UpdateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="FSize" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="TypeLean" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="oldMType" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="IsLocal" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="Editor" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ThumbnailName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ThumbnailNote" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ThumbnailPath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="EduPlace" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="SuitTerm" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Copyright" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="UpLoadScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="DLoadTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="DLoadScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ClickTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="SCTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Rdes" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="fromflag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="isDWJ" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="FileExt" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="authorunit" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="displayLevel" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="NewTeachingtype" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="MType" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="displayIndex" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Fullpath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="speaker" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="speakerUnit" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Resolution" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="unifyTypeid" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Des" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  
+
+  <select id="getAllResourceIdsByPtfcode" parameterType="HashMap" resultType="Long">
+      select a.Id sys_id from z_resource a 
+      left join z_resnav c on a.ResCode=c.ResCode 
+      left join j_syscourse d on c.StructCode=d.tfcode  
+      where a.flag=0 and c.flag=0 and d.flag=0 and a.fromFlag in (#{fromFlag}) and c.StructCode like '#{pTfcode}%'
+  </select>
+</mapper>

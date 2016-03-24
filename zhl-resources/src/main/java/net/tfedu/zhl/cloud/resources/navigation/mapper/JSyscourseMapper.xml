@@ -41,7 +41,7 @@
   </resultMap>
   <select id="getAllEditions" parameterType="HashMap" resultMap="EditionResultMap">
 		select id e_id,SUBSTRING(name,5) e_name,tfcode from j_syscourse 
-		where termid =#{termId} and subjectid =#{subjectId} and flag = false and pnodeid = 0
+		where termid =#{termId} and subjectid =#{subjectId} and flag = false and pnodeid = 0 ORDER BY id DESC
   </select>
   
   <!-- 获得特定版本下的所有教材 -->

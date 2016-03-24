@@ -18,10 +18,24 @@
   <resultMap id="SubjectResultMap" type="net.tfedu.zhl.cloud.core.subject.entity.JSubject" >
 		<id column="s_id" property="id" />
 		<result column="s_name" property="name" />
-		<result column="s_flag" property="flag" />
   </resultMap>
   <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
-		select s.id s_id,s.name s_name,s.flag s_flag
+		select s.id s_id,s.name s_name
+		from j_term_subject ts 
+		left join j_subject s on s.id = ts.subjectId
+		where ts.flag = false and s.flag = false and ts.termId=#{termId}
+  </select>
+  
+  <!-- 根据学段，查询学科  collection 关联查询 （测试用） -->
+  <resultMap id="SubjectResultMap1" type="net.tfedu.zhl.cloud.resources.navigation.entity.Term">
+		
+		<collection property="subjects" ofType="net.tfedu.zhl.cloud.core.subject.entity.JSubject">
+			<id column="id" property="id" />
+			<result column="name" property="name" />
+		</collection>
+  </resultMap>
+  <select id="getSubjectsByTermId"  parameterType="Long" resultMap="SubjectResultMap1">
+        select s.id,s.name
 		from j_term t 
 		left join j_term_subject ts on ts.termId = t.id 
 		left join j_subject s on s.id = ts.subjectId
