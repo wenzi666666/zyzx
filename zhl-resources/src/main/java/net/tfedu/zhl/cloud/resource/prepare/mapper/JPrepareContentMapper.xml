@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareContentMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="preId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="contId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="contType" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="orderIdx" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+</mapper>

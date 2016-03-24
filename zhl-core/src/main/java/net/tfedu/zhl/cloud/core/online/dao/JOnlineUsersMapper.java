@@ -11,9 +11,21 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	/**
 	 * 根据token获取online记录
 	 * @param token
+	 * @param validTime
 	 * @return
 	 */
 	public JOnlineUsers getOnlineByToken(String token);
+	
+	
+	
+	
+	/**
+	 * 踢出相同方式的用户登录((同一个用户、同一种登录client、同一个站点))
+	 * @param userId
+	 * @param clientType
+	 * @param nodeId
+	 */
+	public void clearRepeatUserLogin(Long userId,Integer clientType,Long nodeId);
 	
 	
 	/**
@@ -21,7 +33,7 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	 * @param id
 	 * @return
 	 */
-	public JOnlineUsers getOnlineByUserId(Long userId);
+	public JOnlineUsers getOnlineByUserId(Long userId,Integer validTime);
 	
 	
 	/**
@@ -29,7 +41,7 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	 * @param token
 	 * @param status
 	 */
-	public void updateOnlineStatus(String token,Long status);
+	public void updateOnlineStatus(String token,Integer status);
 	
 	
 	
@@ -38,6 +50,16 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	 * @param token
 	 */
 	public void updateLastOperTime(String token,Date date);
+	
+	
+	
+	
+	/**
+	 * 将超时的用户在线记录的状态设为超时 
+	 */
+	public void setTimeOut();
+	
+	
 	
 	
 	

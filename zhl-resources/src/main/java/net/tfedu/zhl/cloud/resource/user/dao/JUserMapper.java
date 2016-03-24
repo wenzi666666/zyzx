@@ -42,4 +42,16 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	public UserSimple getUserSimpleByName(String name);
 	
 	
+	
+	/**
+	 * 修改用户头像信息
+	 * @param userId
+	 * @param userImage用户头像的相对路径
+	 */
+	public void updateUserImage(Long userId,String userImage);
+	
+
+	
+	
+	
 }

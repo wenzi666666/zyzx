@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.sso.dao.SRegisterMapper;
 import net.tfedu.zhl.sso.entity.SRegister;
 import net.tfedu.zhl.sso.service.RegisterService;
@@ -75,17 +76,18 @@ public class RegisterServiceImpl implements RegisterService {
 		if(r!=null){
 			//存在 检测是密码正确
 			if(!Arrays.equals(pwd,r.getPwd())){
-				throw new RuntimeException("WrongPassWord");
+				throw new RuntimeException(CustomException.WRONGPASSWORD.getCode());
 			}
 			//存在 检测是否过期
 			Date endTime =  r.getReendtime();
 			Calendar c = Calendar.getInstance();
 			//如果之前已经过期
 			if(endTime.before(c.getTime())){
-				throw new RuntimeException("OutOfDate");
+				throw new RuntimeException(CustomException.OUTOFDATE.getCode());
 			}
 		}else{
-			throw new RuntimeException("WithoutUser");
+			//用户不存在
+			throw new RuntimeException(CustomException.WITHOUTUSER.getCode());
 		}
 		return r;
 	}

@@ -1,11 +1,13 @@
 package net.tfedu.zhl.cloud.resource.user.entity;
 
+import java.io.Serializable;
+
 /**
  * 用户信息简易版
  * @author wangwr
  *
  */
-public class UserSimple {
+public class UserSimple   implements Serializable{
 	
 	String userName;
 	Long userId;
@@ -15,7 +17,7 @@ public class UserSimple {
 	String male;
 	String termName;
 	String userImage ;
-	
+	Long roleId;
     /**
      * 获取用户学科ids
      */
@@ -85,6 +87,12 @@ public class UserSimple {
 	}
 	public void setUserImage(String userImage) {
 		this.userImage = userImage;
+	}
+	public Long getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(Long roleId) {
+		this.roleId = roleId;
 	}
 	
 

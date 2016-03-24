@@ -16,6 +16,11 @@ public enum CustomException {
 	OUTOFDATE("OutOfDate","卡号过期",401),
 	UNUSUALERROR("UnusualError","用户信息异常",401),
 	UNCUSTOM("ERROR","系统异常",500),
+	NOTOKEN("NoAccessToken","缺少token令牌",500),
+	PARAMSERROR("ParamsERROR","参数异常",500),
+	INVALIDACCESSTOKEN("InvalidAccessToken","提供的token无效",404),
+	INVALIDPASSWORD("InvalidPassword","原始密码无效",401)
+	
 	;
 
 	
