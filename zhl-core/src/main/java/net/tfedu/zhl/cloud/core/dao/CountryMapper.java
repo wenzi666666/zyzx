@@ -8,8 +8,7 @@ import net.tfedu.zhl.helper.CoreMapper;
 
 public interface CountryMapper extends CoreMapper<Country>{
 
-	@SuppressWarnings("rawtypes")
-	List<Map> queryMaps();
+	List<Map<?,?>> queryMaps();
 
 	List<Long> queryIds();
 

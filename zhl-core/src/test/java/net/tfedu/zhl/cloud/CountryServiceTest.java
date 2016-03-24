@@ -63,7 +63,7 @@ public class CountryServiceTest  extends BaseServiceTestCase {
 	
 	@Test
 	public void testgetSelective() {
-		List<Map> list = countryService.getSelective();
+		List<Map<?,?>> list = countryService.getSelective();
 		JsonUtil.toJsonString(list);
 		Assert.notEmpty(list);
 	}

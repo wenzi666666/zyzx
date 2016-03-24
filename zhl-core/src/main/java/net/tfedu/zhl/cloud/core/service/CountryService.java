@@ -9,8 +9,7 @@ public interface CountryService {
 	public int insert(Country c);
 	public List<Country> selectAll();
 	int insert(List<Country> datas);
-	@SuppressWarnings("rawtypes")
-	List<Map> getSelective();
+	List<Map<?,?>> getSelective();
 	List<Country> getPage(int pageNum, int pageSize);
 	int update(int id, String cname);
 	List<Long> queryIds();

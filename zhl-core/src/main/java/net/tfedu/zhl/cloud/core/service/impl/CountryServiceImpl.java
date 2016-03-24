@@ -49,8 +49,7 @@ public class CountryServiceImpl implements CountryService {
 	}
 	
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List<Map> getSelective(){
+	public List<Map<?,?>> getSelective(){
 		return countryMapper.queryMaps();
 	}
 	
