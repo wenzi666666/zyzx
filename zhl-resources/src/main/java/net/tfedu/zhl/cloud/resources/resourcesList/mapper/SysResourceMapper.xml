@@ -52,11 +52,5 @@
     </constructor>
   </resultMap>
   
-
-  <select id="getAllResourceIdsByPtfcode" parameterType="HashMap" resultType="HashMap">
-      select a.Id sys_id from z_resource a 
-      left join z_resnav c on a.ResCode=c.ResCode 
-      left join j_syscourse d on c.StructCode=d.tfcode  
-      where a.flag=0 and c.flag=0 and d.flag=0 and a.fromFlag in (#{fromFlag}) and c.StructCode like '#{pTfcode}%'
-  </select>
+ 
 </mapper>

@@ -22,8 +22,22 @@ public class ResPoolType {
      */
     @Column(name = "resTypeId")
     private Long restypeid;
-
+    
     /**
+     * 资源库下的资源类型
+     */
+    @Transient
+    private ResType types;
+
+    public ResType getTypes() {
+		return types;
+	}
+
+	public void setTypes(ResType types) {
+		this.types = types;
+	}
+
+	/**
      * 删除标记
      */
     private Boolean flag;
@@ -109,5 +123,14 @@ public class ResPoolType {
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
+    }
+    
+    /**
+     * 重写toString方法，方便单元测试输出
+     */
+    @Override
+    public String toString(){
+    	
+    	return "PoolType [id = "+ id +",poolId = "+ poolid +",types = "+ types +"]";   
     }
 }

@@ -48,6 +48,15 @@ public class ResPoolController {
 		List<ResPool> pools = null;
 		try {
 			pools = resPoolService.getAllPools();
+			
+			//添加上 全部  库类型
+			ResPool all = new ResPool();
+			long id = 0;
+			all.setId(id);
+			all.setName("全部");
+			
+			//添加“全部”这个资源库类型
+			pools.add(0, all);
 			exception = CustomException.SUCCESS;
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -302,4 +302,13 @@ public class ResType {
     public void setDisplayindex(Byte displayindex) {
         this.displayindex = displayindex;
     }
+    
+    /**
+     * 重写toString方法，方便单元测试输出
+     */
+    @Override
+    public String toString(){
+    	
+    	return "Type [id = "+ id +",pid = "+ pid +",mtype = "+ mtype +"]";   
+    }
 }
