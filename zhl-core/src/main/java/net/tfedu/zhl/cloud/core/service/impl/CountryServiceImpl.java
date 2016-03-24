@@ -50,6 +50,7 @@ public class CountryServiceImpl implements CountryService {
 	
 	@Override
 	public List<Map<?,?>> getSelective(){
+		//返回List(Map<字段名称，字段值>, Map<字段名称，字段值>,Map<字段名称，字段值>...)集合
 		return countryMapper.queryMaps();
 	}
 	
