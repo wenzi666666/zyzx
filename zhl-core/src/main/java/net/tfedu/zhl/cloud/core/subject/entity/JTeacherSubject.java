@@ -1,9 +1,11 @@
 package net.tfedu.zhl.cloud.core.subject.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "j_teachersubject")
-public class JTeacherSubject {
+public class JTeacherSubject   implements Serializable{
     /**
      * 自增id
      */

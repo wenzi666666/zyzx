@@ -1,10 +1,11 @@
 package net.tfedu.zhl.cloud.core.online.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "j_online_users")
-public class JOnlineUsers {
+public class JOnlineUsers   implements Serializable{
     /**
      * ID
      */

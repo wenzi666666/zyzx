@@ -1,9 +1,11 @@
 package net.tfedu.zhl.cloud.core.term.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "j_userterm")
-public class JUserTerm {
+public class JUserTerm   implements Serializable{
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

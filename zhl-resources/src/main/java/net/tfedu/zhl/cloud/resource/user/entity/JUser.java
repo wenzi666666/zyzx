@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.user.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import net.tfedu.zhl.cloud.core.term.entity.JTerm;
  *
  */
 @Table(name = "j_user")
-public class JUser {
+public class JUser   implements Serializable{
     /**
      * 非自增的主键id，来保存sso中registerId
      */
