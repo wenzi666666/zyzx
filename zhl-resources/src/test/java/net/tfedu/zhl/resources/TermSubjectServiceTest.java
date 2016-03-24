@@ -15,10 +15,13 @@ import net.tfedu.zhl.cloud.resources.navigation.entity.TreeNode;
 import net.tfedu.zhl.cloud.resources.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault;
+import net.tfedu.zhl.cloud.resources.navigation.entity.Term;
 import net.tfedu.zhl.cloud.resources.navigation.service.BookService;
 import net.tfedu.zhl.cloud.resources.navigation.service.EditionService;
 import net.tfedu.zhl.cloud.resources.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resources.navigation.service.UserDefaultService;
+import net.tfedu.zhl.cloud.resources.poolTypeFormats.service.ResTypeService;
+import net.tfedu.zhl.cloud.resources.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 /**
@@ -28,23 +31,14 @@ import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
  */
 public class TermSubjectServiceTest extends BaseServiceTestCase{
 
-	@Resource 
-	private TermSubjectService termSubjectService = null;
 	
+	@Resource ResTypeService resTypeService;
 	@Test
-	public void testGetAllSubjectsByTerm() throws IOException{
-		
-		long termId = 1;
-		
-		List<JSubject> subjects = termSubjectService.getAllSubjectsByTerm(termId);
-		
-		Assert.isTrue(subjects.size() > 1);
-		
-		for (int i = 0; i < subjects.size(); i++) {
-			
-			System.out.println(subjects.get(i).getId() + ":" + subjects.get(i).getName());
-		}
-
+	public void testSysIds() throws IOException{
+		int fromFlag = 0;
+		String pTfcode = "RJXX020103";
+		HashMap<String, Object> map = resTypeService.getAllResourceIdsByPtfcode(fromFlag, pTfcode);
+		Assert.isTrue(map.size() > 1);
 	}
 	
 }

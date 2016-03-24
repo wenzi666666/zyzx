@@ -53,7 +53,7 @@
   </resultMap>
   
 
-  <select id="getAllResourceIdsByPtfcode" parameterType="HashMap" resultType="Long">
+  <select id="getAllResourceIdsByPtfcode" parameterType="HashMap" resultType="HashMap">
       select a.Id sys_id from z_resource a 
       left join z_resnav c on a.ResCode=c.ResCode 
       left join j_syscourse d on c.StructCode=d.tfcode  

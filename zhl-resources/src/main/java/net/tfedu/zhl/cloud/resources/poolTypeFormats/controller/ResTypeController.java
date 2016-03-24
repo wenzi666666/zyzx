@@ -45,7 +45,7 @@ public class ResTypeController {
 			String tfcode = request.getParameter("tfcode");
 			
 			//查询当前结点下的所有资源Id
-			List<>
+			//List<>
 			
 			
 		} catch (Exception e) {

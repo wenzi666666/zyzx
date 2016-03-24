@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resources.poolTypeFormats.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ public class ResTypeServiceImpl implements ResTypeService{
 	
 	//获取当前节点下所有资源id，pTfcode为父结点的tfcode
 	@Override
-	public List<SysResource> getAllResourceIdsByPtfcode(int fromFlag,String pTfcode){
+	public HashMap<String, Object> getAllResourceIdsByPtfcode(int fromFlag,String pTfcode){
 		return sysResourceMapper.getAllResourceIdsByPtfcode(fromFlag, pTfcode);
 	}
 
