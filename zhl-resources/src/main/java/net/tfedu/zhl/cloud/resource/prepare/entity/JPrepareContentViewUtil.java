@@ -23,10 +23,10 @@ public class JPrepareContentViewUtil {
 	 * 将 JPrepareContentView 转换生成有效数据
 	 * 注意网络资源的处理
 	 * @param list
-	 * @param resLocalUrl  文件服务器的内网地址
+	 * @param resUrlLocal  文件服务器的内网地址
 	 * @param currnetResUrl    浏览器上的当前的（可用内、外网文件服务器）地址
 	 */
-	public static void convertToPurpose(List<JPrepareContentView> list,String resLocalUrl,String currnetResUrl){
+	public static void convertToPurpose(List<JPrepareContentView> list,String resUrlLocal,String currnetResUrl){
 		
 		if(list!=null && list.size()>0){
 			for (int i = 0; i < list.size(); i++) {
@@ -38,21 +38,21 @@ public class JPrepareContentViewUtil {
 						&&
 						( imgPath.startsWith("http")|| imgPath.startsWith("HTTP"))
 				   ){
+					//设置文件后缀  html
 					view.setFileSuffix("html");
 				}else{
-					imgPath = "";
-					
-					
+					//设置文件后缀
 					view.setFileSuffix(imgPath.substring(imgPath.lastIndexOf(".")+1,imgPath.length()));
-					String temp_path = ZhlResourceCenterWrap.getDownUrl(resLocalUrl, imgPath);
-					
+					//组装缩略图路径(约定)
+					imgPath = imgPath.substring(0, imgPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+					//获取缩略图的地址（内网）
+					imgPath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, imgPath);
+					//替换
+					imgPath = imgPath.replace(resUrlLocal, currnetResUrl);
+					view.setImgPath(imgPath);
 				}
 			}
-		}
-		
-		
-		
-		
+		}		
 	}
 	
 	
