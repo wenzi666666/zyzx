@@ -20,6 +20,11 @@ public class CountryServiceImpl implements CountryService {
 	@Resource CountryMapper countryMapper;
 	
 	@Override
+	public Country get(int id) {
+		return countryMapper.selectByPrimaryKey(id);
+	}
+	
+	@Override
 	public int insert(Country c){
 		return countryMapper.insert(c);
 	}
@@ -31,18 +36,10 @@ public class CountryServiceImpl implements CountryService {
 	 * 更新部分属性
 	 */
 	@Override
-	public int update(int id, String cname){
-		Country entity = new Country();
-		entity.setId(id);
-		entity.setCname(cname);
-		return countryMapper.updateByPrimaryKeySelective(entity);
+	public int update(Country c){
+		return countryMapper.updateByPrimaryKeySelective(c);
 	}
 
-	@Override
-	public List<Country> selectAll() {
-		return countryMapper.selectAll();
-	}
-	
 	/**
 	 * 批量插入
 	 */
@@ -82,4 +79,5 @@ public class CountryServiceImpl implements CountryService {
 	public List<Long> queryIds(){
 		return countryMapper.queryIds();
 	}
+
 }

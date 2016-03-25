@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class BaseControllerTestCase {
 	
 	protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
-	protected MockHttpServletRequest request;
+	protected MockHttpServletRequest request = new MockHttpServletRequest("GET", "/any");
 	protected MockHttpServletResponse response =  new MockHttpServletResponse();
     
     protected long startTime,endTime;

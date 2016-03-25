@@ -8,6 +8,8 @@ import com.github.pagehelper.PageInfo;
 import net.tfedu.zhl.cloud.core.entity.Country;
 
 public interface CountryService {
+	
+	public Country get(int id);
 	/**
 	 * 增加
 	 */
@@ -17,8 +19,6 @@ public interface CountryService {
 	 */
 	int delete(int id);
 
-	public List<Country> selectAll();
-	
 	/**
 	 * 批量插入
 	 */
@@ -34,7 +34,7 @@ public interface CountryService {
 	/**
 	 * 更新部分属性
 	 */
-	int update(int id, String cname);
+	int update(Country c);
 	/**
 	 * 根据单个属性查询
 	 */
