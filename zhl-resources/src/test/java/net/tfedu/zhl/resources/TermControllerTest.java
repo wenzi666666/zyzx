@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.util.Assert;
-import net.tfedu.zhl.cloud.resources.navigation.controller.EditonController;
-import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
+import net.tfedu.zhl.cloud.resource.navigation.controller.EditonController;
+import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 public class TermControllerTest extends BaseControllerTestCase {

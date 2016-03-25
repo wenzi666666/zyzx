@@ -11,17 +11,17 @@ import javax.xml.soap.Node;
 import org.junit.Test;
 import org.springframework.util.Assert;
 import net.tfedu.zhl.cloud.core.subject.entity.JSubject;
-import net.tfedu.zhl.cloud.resources.navigation.entity.TreeNode;
-import net.tfedu.zhl.cloud.resources.navigation.service.TreeService;
-import net.tfedu.zhl.cloud.resources.navigation.entity.JSyscourse;
-import net.tfedu.zhl.cloud.resources.navigation.entity.JUserDefault;
-import net.tfedu.zhl.cloud.resources.navigation.entity.Term;
-import net.tfedu.zhl.cloud.resources.navigation.service.BookService;
-import net.tfedu.zhl.cloud.resources.navigation.service.EditionService;
-import net.tfedu.zhl.cloud.resources.navigation.service.TermSubjectService;
-import net.tfedu.zhl.cloud.resources.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.resources.poolTypeFormats.service.ResTypeService;
-import net.tfedu.zhl.cloud.resources.resourceList.dao.SysResourceMapper;
+import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
+import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
+import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
+import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
+import net.tfedu.zhl.cloud.resource.navigation.entity.Term;
+import net.tfedu.zhl.cloud.resource.navigation.service.BookService;
+import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
+import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
+import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 /**

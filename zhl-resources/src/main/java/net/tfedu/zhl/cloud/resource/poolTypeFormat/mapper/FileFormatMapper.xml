@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="FormatCode" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="FileFormat" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="TypeDesc" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="OrderNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+    </constructor>
+  </resultMap>
+  
+  <!-- 查询资源列表格式统计 -->
+  <resultMap id="FileFormatsResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat">
+       <id column="id" property="id" />
+       <result column="FormatCode" property="formatcode" />
+       <result column="FileFormat" property="fileformat" />
+  </resultMap>
+  <select id="getFormatsByMType"  resultMap="FileFormatsResultMap">
+      SELECT a.id,FormatCode,FileFormat from z_resource a 
+      left join j_filetypedetail b on fileExt = b.FormatCode 
+      left join x_resourcetype c on a.MType = c.id 
+      left join x_resourcetype pb on pb.Id=c.pid  
+      WHERE 1=1 and a.flag = 0 and b.flag = 0 and c.flag = 0 
+     
+      and a.mtype in  <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                       </foreach>
+     <if test="resourceIds = null">
+         and a.id in ('')
+     </if>
+     
+     <if test="resourceIds != null ">
+         and a.id in
+                <foreach item="item" index="index" collection="resourceIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+         group by FormatCode
+     </if>
+    
+     
+  </select>
+  
+</mapper>
