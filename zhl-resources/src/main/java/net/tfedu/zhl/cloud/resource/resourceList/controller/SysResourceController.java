@@ -40,6 +40,16 @@ public class SysResourceController {
 	public ResultJSON getSysResources(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		List<SysResource> sysRes = null;
 		try {
+			//资源来源
+			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+			//资源库id
+			long poolId = Long.parseLong(request.getParameter("poolId"));
+			//类型Id
+			long mtypeId = Long.parseLong(request.getParameter("mtypeId"));
+			//资源格式id
+			long formatId = Long.parseLong(request.getParameter("formatId"));
+			//课程tfcode
+			String tfcode = request.getParameter("tfcode");
 			
 		} catch (Exception e) {
 			// TODO: handle exception
