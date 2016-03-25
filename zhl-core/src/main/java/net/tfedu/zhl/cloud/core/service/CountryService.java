@@ -8,11 +8,35 @@ import com.github.pagehelper.PageInfo;
 import net.tfedu.zhl.cloud.core.entity.Country;
 
 public interface CountryService {
+	/**
+	 * 增加
+	 */
 	public int insert(Country c);
+	/**
+	 * 删除
+	 */
+	int delete(int id);
+
 	public List<Country> selectAll();
+	
+	/**
+	 * 批量插入
+	 */
 	int insert(List<Country> datas);
+	/**
+	 * 自由查询，万能的map，最佳伙伴是lambda
+	 */
 	List<Map<?,?>> getSelective();
+	/**
+	 * 分页查询
+	 */
 	PageInfo<Country> getPage(int pageNum, int pageSize);
+	/**
+	 * 更新部分属性
+	 */
 	int update(int id, String cname);
+	/**
+	 * 根据单个属性查询
+	 */
 	List<Long> queryIds();
 }

@@ -19,8 +19,23 @@ public class CountryServiceImpl implements CountryService {
 	
 	@Resource CountryMapper countryMapper;
 	
+	@Override
 	public int insert(Country c){
 		return countryMapper.insert(c);
+	}
+	@Override
+	public int delete(int id){
+		return countryMapper.deleteByPrimaryKey(id);
+	}
+	/**
+	 * 更新部分属性
+	 */
+	@Override
+	public int update(int id, String cname){
+		Country entity = new Country();
+		entity.setId(id);
+		entity.setCname(cname);
+		return countryMapper.updateByPrimaryKeySelective(entity);
 	}
 
 	@Override
@@ -34,17 +49,6 @@ public class CountryServiceImpl implements CountryService {
 	@Override
 	public int insert(List<Country> datas) {
 		return countryMapper.insertList(datas);
-	}
-	
-	/**
-	 * 更新部分属性
-	 */
-	@Override
-	public int update(int id, String cname){
-		Country c = new Country();
-		c.setId(id);
-		c.setCname(cname);
-		return countryMapper.updateByPrimaryKeySelective(c);
 	}
 	
 	/**
