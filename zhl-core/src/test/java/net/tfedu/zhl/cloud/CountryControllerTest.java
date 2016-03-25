@@ -23,7 +23,7 @@ public class CountryControllerTest extends BaseControllerTestCase {
 		c.setCname("china");
 		c.setCcode("1000");
 		Map<?, ?> map = countryController.create(request, response, c);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
@@ -37,7 +37,7 @@ public class CountryControllerTest extends BaseControllerTestCase {
 		}
 
 		Map<?, ?> map = countryController.addArray(request, response, list);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
@@ -45,13 +45,13 @@ public class CountryControllerTest extends BaseControllerTestCase {
 		Country entity = new Country();
 		entity.setCname("china");
 		Map<?, ?> map = countryController.update(request, response, entity);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 	
 	@Test
 	public void testDelete() throws Exception {
 		Map<?, ?> map = countryController.delete(request, 2);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
@@ -60,20 +60,20 @@ public class CountryControllerTest extends BaseControllerTestCase {
 		request.addParameter("pageSize", "10");
 		Map<?, ?> map = countryController.getPage(request, response);
 		JsonUtil.toJsonString(map);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
 	public void testGetSelective() {
 		Map<?, ?> map = countryController.queryMaps(request, response);
 		JsonUtil.toJsonString(map);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
 	public void testGetByProperty() {
 		Map<?, ?> map = countryController.queryIds(request, response);
 		JsonUtil.toJsonString(map);
-		Assert.isTrue(map.containsKey("code"));
+		Assert.isTrue(map.containsKey("message"));
 	}
 }

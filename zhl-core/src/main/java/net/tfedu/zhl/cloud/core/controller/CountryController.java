@@ -64,7 +64,7 @@ public class CountryController {
 			throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.insert(entity);
-		map.put("code", 200);
+		map.put("message", "success");
 		return map;
 	}
 	
@@ -83,7 +83,7 @@ public class CountryController {
 			throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.insert(ArrayUtil.arrayToList(entity));
-		map.put("code", 200);
+		map.put("message", "success");
 		return map;
 	}
 
@@ -102,7 +102,7 @@ public class CountryController {
 			throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.update(entity);
-		map.put("code", 200);
+		map.put("message", "success");
 		return map;
 	}
 
@@ -137,7 +137,7 @@ public class CountryController {
 		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
 		PageInfo<Country> list = countryService.getPage(pageNum, pageSize);
 		map.put("data", list);
-		map.put("code", "添加成功。");
+		map.put("message", "success");
 		return map;
 	}
 	
@@ -156,7 +156,7 @@ public class CountryController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Map<?,?>> list = countryService.queryMaps();
 		map.put("data", list);
-		map.put("code", "添加成功。");
+		map.put("message", "success");
 		return map;
 	}
 	
@@ -175,7 +175,7 @@ public class CountryController {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Long> list = countryService.queryIds();
 		map.put("data", list);
-		map.put("code", "添加成功。");
+		map.put("message", "success");
 		return map;
 	}
 }
