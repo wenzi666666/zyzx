@@ -58,7 +58,7 @@
 
   
   <!-- 当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型   -->
-  <resultMap id="FirstTypeResultMap"  type="net.tfedu.zhl.cloud.resources.poolTypeFormats.entity.ResType">
+  <resultMap id="FirstTypeResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType">
        <id column="id" property="id" />
 	   <result column="mtype" property="mtype" />
   </resultMap>
@@ -90,7 +90,7 @@
   <!-- 当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。
               当资源库为“理化生实验”时，只显示“全部”。
      -->
-  <resultMap id="SecondTypeResultMap"  type="net.tfedu.zhl.cloud.resources.poolTypeFormats.entity.ResType">
+  <resultMap id="SecondTypeResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType">
        <id column="id" property="id" />
 	   <result column="mtype" property="mtype" />
   </resultMap>

@@ -1,4 +1,4 @@
-package net.tfedu.zhl.resources;
+package net.tfedu.zhl.cloud.resource.sysRes.controller;
 
 import java.io.IOException;
 import java.util.List;
