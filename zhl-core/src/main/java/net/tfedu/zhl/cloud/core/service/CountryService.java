@@ -26,7 +26,7 @@ public interface CountryService {
 	/**
 	 * 自由查询，万能的map，最佳伙伴是lambda
 	 */
-	List<Map<?,?>> getSelective();
+	List<Map<?,?>> queryMaps();
 	/**
 	 * 分页查询
 	 */

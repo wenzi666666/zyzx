@@ -151,10 +151,10 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/collection/", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getSelective(HttpServletRequest request,
+	public Map<String, Object> queryMaps(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<?,?>> list = countryService.getSelective();
+		List<Map<?,?>> list = countryService.queryMaps();
 		map.put("data", list);
 		map.put("code", "添加成功。");
 		return map;
@@ -170,7 +170,7 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/collection/property", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getByProperty(HttpServletRequest request,
+	public Map<String, Object> queryIds(HttpServletRequest request,
 			HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Long> list = countryService.queryIds();

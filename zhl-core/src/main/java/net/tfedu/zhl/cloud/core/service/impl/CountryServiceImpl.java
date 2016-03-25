@@ -67,7 +67,7 @@ public class CountryServiceImpl implements CountryService {
 	 * 自由查询，万能的map，最佳伙伴是lambda
 	 */
 	@Override
-	public List<Map<?,?>> getSelective(){
+	public List<Map<?,?>> queryMaps(){
 		//返回List(Map<字段名称，字段值>, Map<字段名称，字段值>,Map<字段名称，字段值>...)集合
 		return countryMapper.queryMaps();
 	}

@@ -65,14 +65,14 @@ public class CountryControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testGetSelective() {
-		Map<?, ?> map = countryController.getSelective(request, response);
+		Map<?, ?> map = countryController.queryMaps(request, response);
 		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("code"));
 	}
 
 	@Test
 	public void testGetByProperty() {
-		Map<?, ?> map = countryController.getByProperty(request, response);
+		Map<?, ?> map = countryController.queryIds(request, response);
 		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("code"));
 	}
