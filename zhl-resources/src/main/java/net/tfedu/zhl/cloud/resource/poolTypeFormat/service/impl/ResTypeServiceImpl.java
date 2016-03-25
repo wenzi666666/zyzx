@@ -26,28 +26,61 @@ public class ResTypeServiceImpl implements ResTypeService{
 	//资源库、资源类型的关联表的mapper
 	@Resource ResPoolTypeMapper resPoolTypeMapper;
 	
-	//获取当前节点下所有资源id，pTfcode为父结点的tfcode
+	/**
+	 * 系统资源
+	 * 获取当前节点下所有资源id，pTfcode为父结点的tfcode
+	 * @param map
+	 * @return
+	 */
 	@Override
-	public List<Long> getAllResourceIdsByPtfcode(HashMap<String, Object> map){
-		return resTypeMapper.getAllResourceIdsByPtfcode(map);
+	public List<Long> getAllSysResIds(HashMap<String, Object> map){
+		return resTypeMapper.getAllSysResIds(map);
 	}
 	
-	//根据库id、资源ids查询所有资源类型id
+	/**
+	 * 区本校本资源
+	 * 获取当前节点下所有资源id，pTfcode为父结点的tfcode
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<Long> getAllDisResIds(HashMap<String, Object> map){
+		return resTypeMapper.getAllDisResIds(map);
+	}
+	
+	/**
+	 * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
+	 */
 	@Override
 	public List<ResPoolType> getAllTypeIdsByPool(long poolId){
 		return resPoolTypeMapper.getAllTypeIdsByPool(poolId);
 	}
 	
 	@Override
-	//当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型  
-	public List<ResType> getFirstLevelType(List<Long> resourceIds,List<Integer> typeIds){
-		return resTypeMapper.getFirstLevelType(resourceIds, typeIds);
+	/**
+	 * 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型    
+	 */
+	public List<ResType> getSysFirstLevelType(List<Long> resourceIds,List<Integer> typeIds){
+		return resTypeMapper.getSysFirstLevelType(resourceIds, typeIds);
 	}
 	
-	//当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
+	/**
+	 * 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
+	 */
 	@Override
-	public List<ResType> getSecondLevelType(List<Long> resourceIds, List<Integer> typeIds){
-		return resTypeMapper.getSecondLevelType(resourceIds, typeIds);
+	public List<ResType> getSysSecondLevelType(List<Long> resourceIds, List<Integer> typeIds){
+		return resTypeMapper.getSysSecondLevelType(resourceIds, typeIds);
+	}
+	
+	/**
+	 * 区本校本资源：根据资源ids和fromFlag（区本/校本），查询资源类型
+	 * @param resourceIds
+	 * @param fromFlag
+	 * @return
+	 */
+	@Override
+	public List<ResType> getDisResType(List<Long> resourceIds,int fromFlag){
+		return resTypeMapper.getDisResType(resourceIds, fromFlag);
 	}
 
 }

@@ -29,7 +29,7 @@ public class TermSubjectServiceTest extends BaseServiceTestCase{
 		map.put("fromFlag", fromFlag);
 		map.put("pTfcode", pTfcode);
 		
-		List<Long> resourceIds = resTypeService.getAllResourceIdsByPtfcode(map);
+		List<Long> resourceIds = resTypeService.getAllSysResIds(map);
 		Assert.isTrue(resourceIds.size() > 1);
 		for (int i = 0; i < resourceIds.size(); i++) {
 			System.out.print(resourceIds.get(i) + ",");

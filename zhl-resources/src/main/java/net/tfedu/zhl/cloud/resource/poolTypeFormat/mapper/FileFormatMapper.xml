@@ -15,14 +15,12 @@
     </constructor>
   </resultMap>
   
-  <!-- 查询资源列表格式统计 -->
-  <resultMap id="FileFormatsResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat">
-       <id column="id" property="id" />
-       <result column="FormatCode" property="formatcode" />
+  <!-- 系统资源，查询资源列表格式统计，查询结果例如：文本，图片... -->
+  <resultMap id="FileFormatsResultMap"  type="String">
        <result column="FileFormat" property="fileformat" />
   </resultMap>
-  <select id="getFormatsByMType"  resultMap="FileFormatsResultMap">
-      SELECT a.id,FormatCode,FileFormat from z_resource a 
+  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
+      SELECT DISTINCT FileFormat from z_resource a 
       left join j_filetypedetail b on fileExt = b.FormatCode 
       left join x_resourcetype c on a.MType = c.id 
       left join x_resourcetype pb on pb.Id=c.pid  
@@ -42,10 +40,34 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-         group by FormatCode
      </if>
-    
-     
   </select>
   
+  
+  <!-- 区本校本资源，查询资源列表格式统计，查询结果例如：文本，图片... -->
+  <select id="getDisResFormatsByMType"  resultMap="FileFormatsResultMap">
+      SELECT DISTINCT FileFormat from z_districts_resource 
+      a left join j_filetypedetail b on LOWER(fileExt) = b.FormatCode
+      WHERE 1=1 and a.flag = 0 and b.flag = 0
+      and a.fromFlag in (#{fromFlag})
+      <if test="resourceIds = null">
+         and a.id in ('')
+     </if>
+     
+     <if test="resourceIds != null ">
+         and a.id in
+                <foreach item="item" index="index" collection="resourceIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+     </if>
+  </select>
+  
+  <!-- 根据资源格式，查询所有后缀，结果例如：.png，jpg... -->
+  <resultMap id="FileExtsByFormatMap"  type="String">
+       <result column="formatcode" property="formatcode" />
+  </resultMap>
+  <select id="getExtsByFormat"  parameterType="String"  resultMap="FileExtsByFormatMap">
+     select distinct formatcode from j_filetypedetail where FileFormat = #{fileFormat}
+  </select>
 </mapper>

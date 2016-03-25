@@ -16,16 +16,51 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
  */
 public interface ResTypeMapper extends CoreMapper<ResType> {
 	
-	//获取当前节点下所有资源id，pTfcode为父结点的tfcode
-	public List<Long> getAllResourceIdsByPtfcode(HashMap<String, Object> map);
 	
-	//当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型  
-	public List<ResType> getFirstLevelType(@Param("resourceIds") List<Long> resourceIds,@Param("typeIds") List<Integer> typeIds);
+	/**
+	 * 
+	 * 系统资源ids
+	 * @param map
+	 * @return
+	 */
+	public List<Long> getAllSysResIds(HashMap<String, Object> map);
 	
-	//当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
-	public List<ResType> getSecondLevelType(@Param("resourceIds") List<Long> resourceIds,@Param("typeIds") List<Integer> typeIds);
+	/**
+	 * 区本、校本资源ids
+	 * @param map
+	 * @return
+	 */
+	public List<Long> getAllDisResIds(HashMap<String, Object> map);
 	
-	//根据资源库id，得到父类型的所有子类型及其自身
+	/**
+	 * 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型  
+	 * @param resourceIds
+	 * @param typeIds
+	 * @return
+	 */
+	public List<ResType> getSysFirstLevelType(@Param("resourceIds") List<Long> resourceIds,@Param("typeIds") List<Integer> typeIds);
+	
+	/**
+	 * 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
+	 * @param resourceIds
+	 * @param typeIds
+	 * @return
+	 */
+	public List<ResType> getSysSecondLevelType(@Param("resourceIds") List<Long> resourceIds,@Param("typeIds") List<Integer> typeIds);
+	
+	/**
+	 * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
+	 * @param poolId
+	 * @param MType
+	 * @return
+	 */
 	public List<ResPoolType> getTypesByPMTypeAndPool(@Param("poolId") long poolId,@Param("MType") long MType);
+	
+	/**
+	 * 区本校本资源：查询资源类型
+	 * @return
+	 */
+	public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds,@Param("fromFlag") int fromFlag);
+	
 
 }
