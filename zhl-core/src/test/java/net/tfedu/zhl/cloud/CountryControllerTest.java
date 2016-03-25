@@ -71,7 +71,7 @@ public class CountryControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testQueryIds() {
+	public void testGetByProperty() {
 		Map<?, ?> map = countryController.getByProperty(request, response);
 		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("code"));
