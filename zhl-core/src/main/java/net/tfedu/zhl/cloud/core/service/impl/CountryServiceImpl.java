@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.cloud.core.dao.CountryMapper;
 import net.tfedu.zhl.cloud.core.entity.Country;
@@ -50,11 +51,15 @@ public class CountryServiceImpl implements CountryService {
 	 * 分页查询
 	 */
 	@Override
-	public List<Country> getPage(int pageNum,int pageSize){
+	public PageInfo<Country> getPage(int pageNum,int pageSize){
 		//Page插件必须放在查询语句之前紧挨的第一个位置
 		PageHelper.startPage(pageNum, pageSize);
+		PageHelper.orderBy("id desc");
 		//这里不能放其它语句
-		return countryMapper.selectAll();
+		List<Country> list =  countryMapper.selectAll();
+		//用PageInfo对结果进行包装
+		PageInfo<Country> page = new PageInfo<Country>(list);
+		return page;
 	}
 	
 	/**

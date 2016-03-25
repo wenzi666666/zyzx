@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
+import com.github.pagehelper.PageInfo;
+
 import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.core.service.CountryService;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
@@ -56,9 +58,9 @@ public class CountryServiceTest  extends BaseServiceTestCase {
 
 	@Test
 	public void testgetPage() {
-		List<Country> list = countryService.getPage(1,10);
+		PageInfo<Country> list = countryService.getPage(1,10);
 		JsonUtil.toJsonString(list);
-		Assert.notEmpty(list);
+		Assert.isTrue(list.getSize()>0);;
 	}
 	
 	@Test
