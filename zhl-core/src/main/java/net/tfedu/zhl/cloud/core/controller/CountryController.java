@@ -117,6 +117,7 @@ public class CountryController {
 	public Map<String, Object> delete(HttpServletRequest request, @RequestParam int id) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.delete(id);
+		map.put("message", "success");
 		return map;
 	}
 	

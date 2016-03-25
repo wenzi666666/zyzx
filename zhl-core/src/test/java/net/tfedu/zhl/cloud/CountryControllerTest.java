@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import net.tfedu.zhl.cloud.core.controller.CountryController;
@@ -12,6 +14,13 @@ import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
+/**
+ * @Transactional 注释标签是表明此测试类的事务启用，这样所有的测试方案都会自动的 rollback，
+ * 即您不用自己清除自己所做的任何对数据库的变更了
+ * @author bruce
+ *
+ */
+@Transactional
 public class CountryControllerTest extends BaseControllerTestCase {
 
 	@Resource
@@ -49,8 +58,9 @@ public class CountryControllerTest extends BaseControllerTestCase {
 	}
 	
 	@Test
+//	@Rollback(true)
 	public void testDelete() throws Exception {
-		Map<?, ?> map = countryController.delete(request, 2);
+		Map<?, ?> map = countryController.delete(request, 6);
 		Assert.isTrue(map.containsKey("message"));
 	}
 
