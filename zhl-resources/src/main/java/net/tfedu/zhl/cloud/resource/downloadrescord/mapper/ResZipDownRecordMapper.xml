@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResZipDownRecordMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="userid" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="fromflags" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zippath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="ids" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+</mapper>
