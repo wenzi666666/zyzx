@@ -27,15 +27,18 @@ public class CountryControllerTest extends BaseControllerTestCase {
 	CountryController countryController;
 
 	@Test
+//	@Rollback(false)
 	public void testAdd() throws Exception {
 		Country c = new Country();
 		c.setCname("china");
 		c.setCcode("1000");
 		Map<?, ?> map = countryController.create(request, response, c);
+		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
+//	@Rollback(false)
 	public void testAddArray() throws Exception {
 		Country[] list = new Country[10];
 		for (int i = 0; i < 10; i++) {
@@ -46,21 +49,25 @@ public class CountryControllerTest extends BaseControllerTestCase {
 		}
 
 		Map<?, ?> map = countryController.addArray(request, response, list);
+		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("message"));
 	}
 
 	@Test
+//	@Rollback(false)
 	public void testUpdate() throws Exception {
 		Country entity = new Country();
 		entity.setCname("china");
 		Map<?, ?> map = countryController.update(request, response, entity);
+		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("message"));
 	}
 	
 	@Test
-//	@Rollback(true)
+//	@Rollback(false)
 	public void testDelete() throws Exception {
 		Map<?, ?> map = countryController.delete(request, 6);
+		JsonUtil.toJsonString(map);
 		Assert.isTrue(map.containsKey("message"));
 	}
 
