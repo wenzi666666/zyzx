@@ -1,12 +1,14 @@
 package net.tfedu.zhl.cloud.resource.resourceList.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
@@ -42,15 +44,39 @@ public class SysResourceController {
 		try {
 			//资源来源
 			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+			
 			//资源库id
 			long poolId = Long.parseLong(request.getParameter("poolId"));
+			
 			//类型Id
-			long mtypeId = Long.parseLong(request.getParameter("mtypeId"));
-			//资源格式id
-			long formatId = Long.parseLong(request.getParameter("formatId"));
+			int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
+			
+			//资源格式
+			String fileFormat = request.getParameter("fileFormat");
+			
 			//课程tfcode
 			String tfcode = request.getParameter("tfcode");
 			
+			//排序方式（综合排序；最多下载；最新发布）
+			int orderBy = Integer.parseInt(request.getParameter("orderBy"));
+			
+			//页码
+			int page = Integer.parseInt(request.getParameter("page"));
+			
+			//每页的记录数
+			int perPage = Integer.parseInt(request.getParameter("perPage"));
+
+			
+			//根据fileFormat去查询该格式下的所有 后缀
+			List<String> fileExts = sysResourceService.getFileExtsByFormat(fileFormat);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			map.put("sys_from", SysFrom.sys_from);
+			map.put("pTfcode", tfcode);
+			List<Long> resourceIds = sysResourceService.getAllSysResourceIds(map);
+			
+			
+ 			
 		} catch (Exception e) {
 			// TODO: handle exception
 		} finally {

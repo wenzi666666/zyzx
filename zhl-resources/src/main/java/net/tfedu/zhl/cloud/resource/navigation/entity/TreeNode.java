@@ -25,7 +25,16 @@ public class TreeNode {
     //当前层的第几个结点
     private int i;
     
-    public Long getId() {
+    //结点的tfcode
+    private String tfcode;
+    
+    public String getTfcode() {
+		return tfcode;
+	}
+	public void setTfcode(String tfcode) {
+		this.tfcode = tfcode;
+	}
+	public Long getId() {
 		return id;
 	}
 	public void setId(Long id) {

@@ -16,11 +16,11 @@
   
   <!-- 选择特定学段下的学科  -->
   <resultMap id="SubjectResultMap" type="net.tfedu.zhl.cloud.core.subject.entity.JSubject" >
-		<id column="s_id" property="id" />
-		<result column="s_name" property="name" />
+		<id column="id" property="id" />
+		<result column="name" property="name" />
   </resultMap>
   <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
-		select s.id s_id,s.name s_name
+		select s.id,s.name
 		from j_term_subject ts 
 		left join j_subject s on s.id = ts.subjectId
 		where ts.flag = false and s.flag = false and ts.termId=#{termId}
@@ -41,9 +41,13 @@
 		left join j_subject s on s.id = ts.subjectId
 		where t.flag = false and ts.flag = false and s.flag = false and t.id=#{termId}
   </select>
-  
+
   <!-- 获得所有学段 -->
-  <select id="getAllTerms" resultMap="SubjectResultMap">
+  <resultMap id="AllTermsMap" type="net.tfedu.zhl.cloud.core.term.entity.JTerm" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+  </resultMap>
+  <select id="getAllTerms" resultMap="AllTermsMap">
 		select id,name from j_term where name not like '其他%' and flag = false 
   </select>
 </mapper>
