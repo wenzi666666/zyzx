@@ -82,5 +82,34 @@ public class ResTypeServiceImpl implements ResTypeService{
 	public List<ResType> getDisResType(List<Long> resourceIds,int fromFlag){
 		return resTypeMapper.getDisResType(resourceIds, fromFlag);
 	}
+	
+	
+	/**
+	 * 根据资源库id，得到父类型的所有子类型及其自身
+	 * @param map
+	 * @return
+	 */
+	@Override
+	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId,int MType){
+		return resTypeMapper.getTypesByPMTypeAndPool(poolId,MType);
+	}
+	
+	/**
+	 * 区本校本资源：根据父类型，查询所有类型
+	 * @param typeId
+	 * @return
+	 */
+	@Override
+	public List<Long> getAllDisTypeByPType(int typeId){
+		return resTypeMapper.getAllDisTypeByPType(typeId);
+	}
+	
+	/**
+	 * 查询所有资源类型
+	 * @return
+	 */
+	public List<Long> getAllDisType(){
+		return resTypeMapper.getAllDisType();
+	}
 
 }

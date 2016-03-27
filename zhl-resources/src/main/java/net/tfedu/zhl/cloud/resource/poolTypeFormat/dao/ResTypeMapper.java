@@ -54,7 +54,7 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	 * @param MType
 	 * @return
 	 */
-	public List<ResPoolType> getTypesByPMTypeAndPool(@Param("poolId") long poolId,@Param("MType") long MType);
+	public List<ResPoolType> getTypesByPMTypeAndPool(@Param("poolId") long poolId,@Param("MType") int MType);
 	
 	/**
 	 * 区本校本资源：查询资源类型
@@ -63,4 +63,17 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds,@Param("fromFlag") int fromFlag);
 	
 
+	/**
+	 * 区本校本资源：根据父类型，查询所有类型
+	 * @param typeId
+	 * @return
+	 */
+	public List<Long> getAllDisTypeByPType(int typeId);
+	
+	/**
+	 * 查询所有资源类型
+	 * @return
+	 */
+	public List<Long> getAllDisType();
+	
 }
