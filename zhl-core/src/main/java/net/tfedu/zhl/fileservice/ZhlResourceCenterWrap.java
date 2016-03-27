@@ -298,4 +298,17 @@ public class ZhlResourceCenterWrap {
 		//回调函数action
 		new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileConvertTask(fileName, "rename&userId=" + userId, returnUrl);
 	}
+	
+	
+	/**
+	 * 发送打包任务给文件服务
+	 * @return
+	 */
+	public static boolean  sendZipTask(ZipTaskContent Content,String resSerPath){
+		
+		return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendZipPackageTask(Content);
+	}
+	
+	
+	
 }
