@@ -6,6 +6,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.helper.CoreMapper;
 
 public interface JPrepareMapper extends CoreMapper<JPrepare> {
@@ -78,6 +79,33 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
 	 * @param resCode
 	 */
 	public FirstNavigationInfo getFirstNavigationForSysResource(String resCode);
+	
+	
+	
+	/**
+	 * 获取自建资源的信息
+	 * @param id
+	 * @return
+	 */
+	public ResourceSimpleInfo getAssetInfo(Long id);
+	
+	/**
+	 * 获取系统资源的信息
+	 * @param id
+	 * @return
+	 */
+	public ResourceSimpleInfo getResourceInfo(Long id);
+
+	
+	/**
+	 * 获取区校本资源的信息
+	 * @param id
+	 * @return
+	 */
+	public ResourceSimpleInfo getDistrictORSchoolResInfo(Long id);
+
+	
+	
 	
 	
 	

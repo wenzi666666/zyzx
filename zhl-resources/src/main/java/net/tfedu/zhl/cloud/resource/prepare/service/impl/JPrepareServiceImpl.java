@@ -1,11 +1,9 @@
 package net.tfedu.zhl.cloud.resource.prepare.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareContentMapper;
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareMapper;
@@ -14,8 +12,12 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 
@@ -143,5 +145,51 @@ public class JPrepareServiceImpl implements JPrepareService {
 			}
 		}
 	}
+
+	@Override
+	public void exchangeContOrderIdx(long prevId, long nextId) {
+		JPrepareContent  p = contMapper.selectByPrimaryKey(prevId);
+		JPrepareContent  n = contMapper.selectByPrimaryKey(nextId);
+		
+		int prev_idx = p.getOrderidx();
+		int next_idx = n.getOrderidx();
+		
+		p.setOrderidx(next_idx);
+		n.setOrderidx(prev_idx);
+		
+		contMapper.updateByPrimaryKey(p);
+		contMapper.updateByPrimaryKey(n);
+		
+	}
+
+	@Override
+	public List<ResourceSimpleInfo> getResourceSimpleInfo(String[] ids,
+			String[] fromFlags) {
+		List<ResourceSimpleInfo> list = new ArrayList<ResourceSimpleInfo>();
+		for (int i = 0; i < fromFlags.length; i++) {
+			ResourceSimpleInfo info = null;
+			switch(Integer.parseInt(fromFlags[i])){
+				case JPrepareConstant.fromFlag_localRes:
+				case JPrepareConstant.fromFlag_sharedRes:
+					info = mapper.getAssetInfo(Long.parseLong(ids[i]));
+					break;
+					
+				case JPrepareConstant.fromFlag_sysRes:
+					
+					info = mapper.getResourceInfo(Long.parseLong(ids[i]));
+					break;
+
+				case JPrepareConstant.fromFlag_districtRes:
+				case JPrepareConstant.fromFlag_schoolRes:
+					info = mapper.getDistrictORSchoolResInfo(Long.parseLong(ids[i]));
+					break;
+			}
+			list.add(info);
+		}
+		return list;
+	}
+	
+	
+	
 
 }

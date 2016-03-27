@@ -2,13 +2,16 @@ package net.tfedu.zhl.cloud.resource.prepare.controller;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
+import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
@@ -36,6 +39,9 @@ public class PrepareController {
 	
 	@Resource
 	JPrepareService jPrepareService;
+	
+	@Resource
+	ResZipDownloadService resZipDownloadService;
 	
 	/**
 	 * 返回json的结果对象
@@ -390,5 +396,105 @@ public class PrepareController {
 	   }
 	
 	
+	  /**
+	   * 打包下载请求
+	   * 返回 一个打包下载记录的id
+	   * @param request
+	   * @param response
+	   * @return
+	   */
+	  @RequestMapping(value="/v1.0/prepareZip" ,method=RequestMethod.GET) 
+	  public ResultJSON prepareZip(HttpServletRequest request, HttpServletResponse response){
+		  
+		  
+		  
+		  
+		  
+		  return null ;
+	  }
+	  
+	  
+	  /**
+	   * 更新历史的打包下载的状态
+	   * @param request
+	   * @param response
+	   * @return
+	   */
+	  @RequestMapping(value="/v1.0/zipDownload_status" ,method=RequestMethod.GET) 
+	  public void updateZipDownloadStatus(HttpServletRequest request, HttpServletResponse response){
+		  
+		  
+
+		  
+		  
+		  
+	  
+	  }
+	  
+	  
+	  
+	  /**
+	   * 获取指定的下载的zip打包 是否完成
+	   * @param request
+	   * @param response
+	   * @return
+	   */
+	  @RequestMapping(value="/v1.0/prepareZip_staus" ,method=RequestMethod.GET) 
+	  public ResultJSON getZipDownloadStatus(HttpServletRequest request, HttpServletResponse response){
+		  
+		  
+		  return null ;
+	  }
+	  
+	  
+	  
+	  
+	  
+	  
+	  /**
+	   * 
+	   * 获取资源 的播放地址 
+	   * @param request
+	   * @param response
+	   * @return
+	   */
+	  @RequestMapping(value="/v1.0/resViewUrl" ,method=RequestMethod.GET) 
+	  public ResultJSON getResViewUrl(HttpServletRequest request, HttpServletResponse response){
+			String resIds   =  request.getParameter("resIds");
+			String fromFlags = request.getParameter("fromFlags");
+
+		try{
+			//参数传递有问题
+			if(StringUtils.isEmpty(fromFlags)||StringUtils.isEmpty(resIds)){
+				exception = CustomException.PARAMSERROR;
+			}else{
+				String ids[] = resIds.split(",");
+				String fromFlag[] =fromFlags.split(",");
+				if(ids.length==0 || fromFlag.length!=ids.length ){
+					exception = CustomException.PARAMSERROR;
+				}else{
+					List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfo(ids, fromFlag);
+					
+					
+					
+					exception = CustomException.SUCCESS;
+				}
+			}
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
+		  
+		  
+	  }
 
 }

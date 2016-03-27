@@ -2,10 +2,12 @@ package net.tfedu.zhl.cloud.resource.prepare.service;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 
 public interface JPrepareService {
 	
@@ -110,6 +112,24 @@ public interface JPrepareService {
 	
 	
 	
+	/**
+	 * 相互交换内容的排序字段
+	 * @param prevId
+	 * @param nextId
+	 */
+	public void exchangeContOrderIdx(long prevId,long nextId);
 	
+	
+	
+	
+	
+
+	/**
+	 * 根据资源fromflag获取相应的资源信息
+	 * @param ids
+	 * @param fromFlags
+	 * @return
+	 */
+	public List<ResourceSimpleInfo> getResourceSimpleInfo(String[] ids,String[] fromFlags);
 
 }

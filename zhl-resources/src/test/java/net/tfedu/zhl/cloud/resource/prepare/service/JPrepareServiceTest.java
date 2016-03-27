@@ -10,6 +10,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
@@ -228,6 +229,23 @@ public class JPrepareServiceTest extends BaseControllerTestCase{
 	public void testaddToPrepareWithOnlySysResource(){
 		jPrepareService.addToPrepareWithOnlySysResource("newzy020101806612", userId);
 	}
+	
+	
+	
+	
+	@Test
+	public void testGetAssetInfo(){
+		
+		String ids[] = new String[]{"661","661","50126"};
+		String fromFlags[] = new String[]{"3","0","1"};
+		List<ResourceSimpleInfo> list =  jPrepareService.getResourceSimpleInfo(ids, fromFlags);
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).toString());
+			
+		}
+	}
+	
+	
 	
 	
 

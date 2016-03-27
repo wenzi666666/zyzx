@@ -163,5 +163,11 @@ public class JPrepareContentView  implements Serializable{
 			this.fileSuffix = fileSuffix;
 		}
 
+		
+		@Override
+		public String toString(){
+			return "[prepareContentView:{id:"+id+";title:"+title+";resId:"+resId+";fromFlag:"
+					+fromFlag+";unifyType:"+unifyType+";imgPath:"+imgPath+";fileSuffix:"+fileSuffix+"}]";
+		}
 	
 }

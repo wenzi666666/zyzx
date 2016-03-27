@@ -53,8 +53,10 @@ public class JPrepareView   implements Serializable{
 		this.timeLabel = timeLabel;
 	}
 	
-	
-	
+	@Override
+	public String toString(){
+		return "[ prepareView: { id:"+this.id+"; title:"+title+";timeLabel:"+timeLabel+" } ]";
+	}
 	
 	
 }

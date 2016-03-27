@@ -166,6 +166,34 @@
   
   
   
+    
+   <!-- 简版资源的信息，用于获取播放或下载路径 -->
+   <resultMap id="simpleResInfo" type="net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo"> 		
+      <result column="rescode"  property="rescode" />
+      <result column="fromflag" property="fromflag" />
+      <result column="isnet" property="isnet" />
+      <result column="isdwj" property="isdwj" />
+      <result column="path"  property="path" />
+   </resultMap>
+  
+  
+  <!--  获取自建资源的信息 -->
+  <select id="getAssetInfo" resultMap="simpleResInfo">
+  	select  resourceid as rescode, 1 as fromflag,islocal as isnet,iswjb as isdwj,assetpath as path  from z_asset 
+  	where id = #{0} and filetype = 'A' and flag = false 
+  </select>
+  <!--  获取系统资源的信息 -->
+  <select id="getResourceInfo" resultMap="simpleResInfo">
+  	select rescode,0 as fromflag , 0 isnet ,isdwj ,concat(fpath,'\\',fname) as path from z_resource
+  	  where flag = false and id = #{0}
+  </select>
+  <!-- 获取区校本资源的信息 -->
+  <select id="getDistrictORSchoolResInfo" resultMap="simpleResInfo">
+  	select rescode,fromflag, islocal as  isnet ,isdwj as isdwj ,fullpath  as path 
+  	from z_districts_resource  where flag = false and id = #{0}  
+  </select>
+  
+  
   
   
   

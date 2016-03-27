@@ -17,6 +17,12 @@ public class ZhlResourceCenterWrap {
 
 	// 历史上IIS服务器的虚拟目录
 	public static final String MTDATA = "mtdata";
+	
+	
+	/**
+	 * 加密的文件格式
+	 */
+	public static final String FileType_encrypt = ".swf.mp4";
 
 	/**
 	 * 缩略图图片格式后缀
