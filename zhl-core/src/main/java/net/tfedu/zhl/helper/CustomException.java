@@ -59,6 +59,11 @@ public enum CustomException {
 				:code.equalsIgnoreCase(CustomException.UNUSUALERROR.code)?CustomException.UNUSUALERROR
 				:code.equalsIgnoreCase(CustomException.WITHOUTUSER.code)?CustomException.WITHOUTUSER
 				:code.equalsIgnoreCase(CustomException.WRONGPASSWORD.code)?CustomException.WRONGPASSWORD
+				:code.equalsIgnoreCase(CustomException.UNUSUALERROR.code)?CustomException.UNUSUALERROR
+				:code.equalsIgnoreCase(CustomException.NOTOKEN.code)?CustomException.NOTOKEN
+				:code.equalsIgnoreCase(CustomException.PARAMSERROR.code)?CustomException.PARAMSERROR
+				:code.equalsIgnoreCase(CustomException.INVALIDACCESSTOKEN.code)?CustomException.INVALIDACCESSTOKEN
+				:code.equalsIgnoreCase(CustomException.INVALIDPASSWORD.code)?CustomException.INVALIDPASSWORD
 				:CustomException.UNCUSTOM;
 		return e;
 	}
