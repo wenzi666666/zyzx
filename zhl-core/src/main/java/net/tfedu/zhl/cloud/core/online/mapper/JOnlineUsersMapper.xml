@@ -24,15 +24,14 @@
   
   <select id="getOnlineByToken" resultMap="BaseResultMap">
   <![CDATA[ 
-  	SELECT * from  j_online_users where token = #{0} and status= 1 and flag =false and loginTime > DATE_ADD(NOW(),INTERVAL -${1} HOUR)
-
+  	SELECT * from  j_online_users where token = #{0} and status= 1 and flag =false and loginTime > DATE_ADD(NOW(),INTERVAL -2 HOUR)
   ]]>
   </select>
   
     
   <select id="getOnlineByUserId" resultMap="BaseResultMap">
   <![CDATA[ 	
-  SELECT * from  j_online_users where userId = #{0} and status= 1 and flag =false  and token is not null and loginTime > DATE_ADD(NOW(),INTERVAL -${1} HOUR)
+  SELECT * from  j_online_users where userId = #{0} and status= 1 and flag =false  and token is not null and loginTime > DATE_ADD(NOW(),INTERVAL -2 HOUR)
   ]]>
   </select>
   
@@ -49,7 +48,7 @@
   
   <update id="setTimeOut">
   	<![CDATA[ 
-  	update  j_online_users set status=2 where loginTime < DATE_ADD(NOW(),INTERVAL -${1} HOUR) and status = 1
+  	update  j_online_users set status=2 where loginTime < DATE_ADD(NOW(),INTERVAL -2 HOUR) and status = 1
   	]]>
   </update>
 
