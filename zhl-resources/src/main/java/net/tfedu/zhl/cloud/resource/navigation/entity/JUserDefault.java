@@ -3,6 +3,8 @@ package net.tfedu.zhl.cloud.resource.navigation.entity;
 import java.util.Date;
 import javax.persistence.*;
 
+import net.tfedu.zhl.cloud.resource.navigation.controller.EditonController;
+
 @Table(name = "j_syscourse_user_default")
 public class JUserDefault {
     /**
@@ -194,5 +196,10 @@ public class JUserDefault {
 
 	public void setBookId(Long bookId) {
 		this.bookId = bookId;
+	}
+	
+	@Override
+	public String toString(){
+		return "userDefault[userId: + "+userid+" + ,tfcode: + "+tfcode+" + ,termId: + "+termId+" + ,subjectId: + "+subjectId+" + ,editionid: + "+editionId+" + ,bookId: + "+bookId+"]";
 	}
 }

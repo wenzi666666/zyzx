@@ -34,7 +34,7 @@
   </select>
   <!-- 增加用户历史选择 记录 -->
    <insert id="addUserHistoryDefault" parameterType="HashMap" useGeneratedKeys="true" keyProperty="id">
-        insert into j_syscourse_user_default(userId,tfcode,type,createtime,flag) values(#{userid},#{tfcode},#{type},now(),false)
+        insert into j_syscourse_user_default(userId,tfcode,type,createtime,flag) values(#{userId},#{tfcode},#{type},now(),false)
    </insert>
    <!-- 更新用户历史选择 记录 -->
    <update id="updateUserHistoryDefault" parameterType="HashMap" >

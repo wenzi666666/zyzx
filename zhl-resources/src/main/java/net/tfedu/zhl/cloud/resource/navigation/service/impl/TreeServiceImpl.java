@@ -42,7 +42,7 @@ public class TreeServiceImpl implements TreeService{
 			resultTrees.add(node);
 			
 			//设置当前结点属于第几个结点
-			node.setI(i);
+			node.setI(i + 1);
 			
 			//如果当前节点是叶子节点，跳过不进行递归查询子节点
             if(node.isLeaf()){
