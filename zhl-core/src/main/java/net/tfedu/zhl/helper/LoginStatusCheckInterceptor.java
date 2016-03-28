@@ -109,7 +109,10 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor  {
 			if(token == null){
 				customException = CustomException.NOTOKEN;
 			}else{
-				JOnlineUsers user =  jOnlineUsersService.getUserOnlinesByToken(token);
+				//token的有效时间
+				int validTime =ZhlOnlineUtil.getTokenValidTime(request) ;
+				
+				JOnlineUsers user =  jOnlineUsersService.getUserOnlinesByToken(token,validTime);
 				currentUserId = user.getUserid();
 			}
 		} catch (Exception e) {
