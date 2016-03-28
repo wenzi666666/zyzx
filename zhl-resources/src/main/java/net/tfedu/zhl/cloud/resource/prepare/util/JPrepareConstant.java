@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 
 /**
  * （资源中心）备课夹 常量
@@ -134,12 +135,12 @@ public class JPrepareConstant {
 	
 	
 	/**
-	 * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径  加密文件
+	 * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的相对路径  加密文件为exe的相对路径
 	 * @param list
 	 */
-	public static void resetResourceDownLoadUrl(List<ResourceSimpleInfo> list,String resServiceLocal,String currentResService){
+	public static void resetResourceDownLoadUrl(List<ResourceSimpleInfo> list,String resServiceLocal){
 		for (int i = 0; i < list.size(); i++) {
-			resetResourceDownLoadUrl(list.get(i),resServiceLocal,currentResService);
+			resetResourceDownLoadUrl(list.get(i),resServiceLocal);
 		}
 	}
 	
@@ -166,9 +167,10 @@ public class JPrepareConstant {
 	
 	/**
 	 * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径
+	 * 用于打包下载
 	 * @param info
 	 */
-	public static void resetResourceDownLoadUrl(ResourceSimpleInfo info,String resServiceLocal,String currentResService){
+	public static void resetResourceDownLoadUrl(ResourceSimpleInfo info,String resServiceLocal){
 	    String rescode = info.getRescode();
 	    Integer fromflag= info.getFromflag();		
 	    Boolean isnet = info.getIsnet();	    
@@ -183,18 +185,15 @@ public class JPrepareConstant {
 	    		path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
 	    	}else{
 	    		//如果是加密的文件
-//				if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
-//					
-//					path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal,path,"");
-//				}else{
-//		    		path = ZhlResourceCenterWrap.getDownUrlForSysRes(resServiceLocal, path);
-//				}
+				if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+					path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal,path,"");
+				}
 	    	}
-	    }else{
-	    	
 	    }
-	    
 		
+	    
+	    //重新赋值path
+	    info.setPath(path);
 		
 	}
 	

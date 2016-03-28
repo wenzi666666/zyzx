@@ -8,12 +8,26 @@ package net.tfedu.zhl.cloud.resource.prepare.entity;
  *
  */
 public class ResourceSimpleInfo {
+	
+	
+	/**
+	 * 资源id
+	 */
+	private Long resid ;
+	
+	
 
 	/**
 	 * 资源code
 	 */
     private String rescode;
     
+    
+    
+    /**
+     * 文件名称
+     */
+    private String title ;
     
     /**
      * 资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
@@ -31,9 +45,15 @@ public class ResourceSimpleInfo {
     private Boolean isdwj;
     
     /**
-     * 文件名称
+     * 文件路径
      */
     private String path;
+    
+    
+    
+    
+    
+    
 
 	public String getRescode() {
 		return rescode;
@@ -76,10 +96,30 @@ public class ResourceSimpleInfo {
 	}
     
 	
+	
+	
+	public Long getResid() {
+		return resid;
+	}
+
+	public void setResid(Long resid) {
+		this.resid = resid;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	@Override
 	public String toString(){
 		return new StringBuffer().append("[\"ResourceSimpleInfo\":{")
+				.append("\"resid\":\""+resid+"\";")
 				.append("\"rescode\":\""+rescode+"\";")
+				.append("\"title\":\""+title+"\";")
 				.append("\"fromflag\":\""+fromflag+"\";")
 				.append("\"isnet\":\""+isnet+"\";")
 				.append("\"isdwj\":\""+isdwj+"\";")

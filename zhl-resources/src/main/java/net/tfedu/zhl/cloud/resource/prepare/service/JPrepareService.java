@@ -125,11 +125,21 @@ public interface JPrepareService {
 	
 
 	/**
-	 * 根据资源fromflag获取相应的资源信息
+	 * 根据资源fromflag获取相应的 info
+	 * 
 	 * @param ids
 	 * @param fromFlags
 	 * @return
 	 */
 	public List<ResourceSimpleInfo> getResourceSimpleInfo(String[] ids,String[] fromFlags);
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

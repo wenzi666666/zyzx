@@ -142,5 +142,23 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 		System.out.println(result.getData());
 		
 	}
+	
+	
+	
+	@Test
+	public void testgetViewUrl(){
+		long prepareId = 140252;
+		String url = "http://192.168.111.22:8099/down";
+		request =  this.newPost("/resRestAPI/v1.0/resViewUrl");
+		request.addParameter("resIds", "4319500105,212992,212991");
+		request.addParameter("fromFlags", "0,0,0");
+		request.setAttribute("resServiceLocal", url);
+		request.setAttribute("currentResService", url);
+		result =  controller.getResViewUrl(request, response);
+		request.getServletContext().setInitParameter("hostLocal", "http://192.168.111.160/resources/");
+		System.out.println(result.getCode());
+		System.out.println(result.getData());
+
+	}
 
 }
