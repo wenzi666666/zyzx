@@ -4,51 +4,50 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
+import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 /**
- * 系统资源 列表 controller
+ * 区本校本资源的controller
  * @author WeiCuicui
  *
  */
-
 @Controller
-@RequestMapping("resRestAPI")
-public class SysResourceController {
+@RequestMapping("/resRestAPI")
+public class DisResourceController {
 
+	@Resource DisResService disResService;
 	@Resource SysResourceService sysResourceService;
 	@Resource ResTypeService resTypeService;
 	
 	//封装的返回结果
 	private ResultJSON resultJSON = new ResultJSON();
-	
+		
 	//异常
 	private CustomException exception;
 	
-	@RequestMapping(value = "/v1.0/sysResource",method = RequestMethod.GET)
+	@RequestMapping("/v1.0/districtResource")
 	@ResponseBody
-	public ResultJSON getSysResources(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		Pagination<SysResourceEntity> pagination = null;
+	public ResultJSON getDisResource(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		Pagination<DisResourceEntity> pagination = null;
 		try {
 			
-			//资源库id
-			long poolId = Long.parseLong(request.getParameter("poolId"));
-			
+			long userId = 699230375;
 			//类型Id
 			int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
 			
@@ -66,40 +65,38 @@ public class SysResourceController {
 			
 			//每页的记录数
 			int perPage = Integer.parseInt(request.getParameter("perPage"));
-
+			
+			//资源来源
+			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
 			
 			//根据fileFormat去查询该格式下的所有 后缀
 			List<String> fileExts = sysResourceService.getFileExtsByFormat(fileFormat);
 			
-			//根据当前结点tfcode，以及sys_from，查询系统资源id
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("sys_from", SysFrom.sys_from);
-			map.put("pTfcode", tfcode);
-			List<Long> resourceIds = resTypeService.getAllSysResIds(map);
-			
-			//根据资源库id和父类型id，得到父类型的所有子类型及其自身
-			HashMap<String, Object> map1 = new HashMap<String, Object>();
-			map1.put("poolId", poolId);
-			map1.put("MType", mTypeId);
-			List<ResPoolType> typeIdsByPool = resTypeService.getTypesByPMTypeAndPool(poolId, mTypeId);
-			
-			List<Long> typeIds = new ArrayList<Long>();
-			for (int i = 0; i < typeIdsByPool.size(); i++) {
-				typeIds.add(typeIdsByPool.get(i).getRestypeid());
+			//查询资源类型的子类型
+			List<Long> typeIds = null;
+			if(mTypeId == 0)
+				typeIds = resTypeService.getAllDisType();
+			else {
+				typeIds = resTypeService.getAllDisTypeByPType(mTypeId);
 			}
 			
-			//查询出的系统资源信息
-			pagination = sysResourceService.getSysResList(SysFrom.sys_from, fileExts, resourceIds, tfcode, orderBy, typeIds, page, perPage);
+			long schoolId = 0;
+			long districtId = 0;
+			
+			List<HashMap<?, ?>> disAndSchoolIds = disResService.getDisAndSchool(userId);
+			if(disAndSchoolIds != null){
+				//获得schoolId,districtId？？？？？？
+			}
+			
+			pagination = disResService.selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
 			
 			exception = CustomException.SUCCESS;
-			
- 			
+				
 		} catch (Exception e) {
 			// TODO: handle exception
 			//捕获异常信息
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			e.printStackTrace();
-			
 		} finally {
 			//封装结果集
 			resultJSON.setCode(exception.getCode());
@@ -109,5 +106,8 @@ public class SysResourceController {
 		}
 		
 		return resultJSON;
+		
+		
 	}
+	
 }

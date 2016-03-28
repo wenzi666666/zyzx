@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper" >
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -13,18 +13,17 @@
       <arg column="keyWord" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="FPath" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="Fname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="Creator" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Author" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="CreatorId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="AuthorId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="CreateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="UpdateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="FSize" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="TypeLean" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="oldMType" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="IsLocal" jdbcType="BIT" javaType="java.lang.Boolean" />
-      <arg column="Editor" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="ThumbnailName" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="IsLocal" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="EditorId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ThumbnailName" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="ThumbnailNote" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="ThumbnailPath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="ThumbnailPath" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="EduPlace" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="SuitTerm" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="Copyright" jdbcType="CHAR" javaType="java.lang.String" />
@@ -32,10 +31,11 @@
       <arg column="DLoadTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="DLoadScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="ClickTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="assetId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="SCTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="Rdes" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
-      <arg column="fromflag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="fromFlag" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="isDWJ" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="FileExt" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="authorunit" jdbcType="VARCHAR" javaType="java.lang.String" />
@@ -47,15 +47,24 @@
       <arg column="speaker" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="speakerUnit" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="Resolution" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="unifyTypeid" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="AuthorFromFlag" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Scope" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="ScopeId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="State" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="AuditOpinion" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="isFinished" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="unifyTypeId" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="Des" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  <!-- 根据用户id获得区、校信息 -->
+  <select id="getDisAndSchool" resultType="HashMap">
+      select u.schoolid ,s.districtId from  j_user u  LEFT JOIN j_school s ON s.id = u.SchoolId WHERE u.id = #{userId}
+  </select>
   
- 
- <!-- 分页查询系统资源信息的每一条记录信息 -->
- <resultMap id="SysResourceMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity" >
-       <result column="Id" property="Id" />
+  <!-- 查询区本校本资源信息 -->
+  <resultMap id="DisResMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity" >
+      <result column="Id" property="Id" />
        <result column="ResCode" property="ResCode" />
        <result column="Title" property="Title" />
        <result column="Fpath" property="Fpath" />
@@ -69,53 +78,53 @@
        <result column="res_time" property="res_time" />
        <result column="FileExt" property="FileExt" />
        <result column="resolution" property="resolution" />
-       <result column="diskorder" property="diskorder" />
-       <result column="Displayindex" property="Displayindex" />
        <result column="isDWj" property="isDWj" />
        <result column="UpdateDT" property="UpdateDT" />
        <result column="orderNum" property="orderNum" />
        <result column="avgScore" property="avgScore" />
-        <result column="fromFlag" property="fromFlag" />
- </resultMap>
- <!-- 分页查询系统资源信息的所有记录 -->
- <select id="SelectSysResources"  resultMap="SysResourceMap">
-   
-    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
-	m.res_time,a.UpdateDT,a.FileExt,a.resolution,k.diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
-	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
-	from z_resource a left join x_resourcetype b on a.MType = b.id 
+       <result column="fromFlag" property="fromFlag" />
+       <result column="isLocal" property="isLocal" />
+       <result column="state" property="state" />
+       <result column="fromFlag" property="fromFlag" />
+       
+  </resultMap>
+  <select id="selectDisRes" resultMap="DisResMap">
+   select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+   m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
+	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
-	left join z_resnav c on a.ResCode=c.ResCode left join j_syscourse d on  c.StructCode=d.TFcode 
-	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and b.flag = 0  and c.flag=0 and d.flag=0  and a.fromflag in 
-	
-	            <foreach item="item" index="index" collection="sys_from" 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
+
+    and a.FileExt in  <foreach item="item" index="index" collection="formats" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-	
-	and d.typeFlag in (0,1) 
-	
-	and a.FileExt in <foreach item="item" index="index" collection="formats" 
+
+     <if test="typeIds != null">
+         and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                     </foreach>
-    and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+                </foreach>
+                
+                or pb.id in (
+                <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                     </foreach>
-                     
-     <if test="resourceIds == null">
-         and a.id in ('')
+                </foreach>
+                ))
      </if>
-     <if test="resourceIds != null ">
-         and a.id in <foreach item="item" index="index" collection="resourceIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                     </foreach>
-     </if>
-     and c.StructCode like  CONCAT(#{pTfcode},'%')               
-     <if test="orderBy == 0"><!-- 综合排序 -->
+     
+    and c.StructCode like  CONCAT(#{tfcode},'%')    
+    <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId}
+    </if>
+    <if test="orderBy == 0"><!-- 综合排序 -->
         order by avgScore desc
      </if>
      <if test="orderBy == 1"><!-- 最多下载 -->
@@ -124,6 +133,7 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-                                      
- </select>
+     ,b.DisplayIndex asc,orderNum asc,id
+  </select>
+  
 </mapper>

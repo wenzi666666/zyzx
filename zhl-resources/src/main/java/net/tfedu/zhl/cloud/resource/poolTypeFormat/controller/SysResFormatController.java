@@ -48,7 +48,7 @@ public class SysResFormatController {
 			//传递的参数
 			long poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
 			String pTfcode = request.getParameter("tfcode");
-			long typeId = Long.parseLong(request.getParameter("typeId").toString().trim());
+			int typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
 			
 			//根据poolId和typeId，查询父类型下所有子类型及其自身
 			List<ResPoolType> poolTypes = resFormatService.getTypesByPMTypeAndPool(poolId, typeId);

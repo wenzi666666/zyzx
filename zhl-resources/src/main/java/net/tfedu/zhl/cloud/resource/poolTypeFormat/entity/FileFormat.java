@@ -1,9 +1,15 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "j_filetypedetail")
-public class FileFormat {
+public class FileFormat implements Serializable{
+	/**
+	 * 序列号
+	 */
+	private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 自增id
      */

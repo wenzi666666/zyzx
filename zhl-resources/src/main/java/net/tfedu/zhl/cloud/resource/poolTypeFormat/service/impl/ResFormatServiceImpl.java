@@ -24,7 +24,7 @@ public class ResFormatServiceImpl implements ResFormatService{
 	
 	//根据资源库id，得到父类型的所有子类型及其自身
 	@Override
-	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId, long MType){
+	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId, int MType){
 		return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
 	}
 	

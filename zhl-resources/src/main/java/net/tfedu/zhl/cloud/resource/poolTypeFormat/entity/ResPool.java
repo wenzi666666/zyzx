@@ -1,9 +1,15 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "z_res_pool")
-public class ResPool {
+public class ResPool implements Serializable{
+	/**
+	 * 序列号
+	 */
+	private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 资源库id
      */
