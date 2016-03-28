@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,17 +30,26 @@ public class DistrictResTypeController {
 
 	@Resource ResTypeService resTypeService;
 	
-	//封装返回结果
-	private ResultJSON resultJSON = new ResultJSON();
-	
-	//异常
-	private CustomException exception;
 	
 	@RequestMapping(value = "/v1.0/districtResource/types",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getDisResTypesByPool(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		List<ResType> types = null;
+		//封装返回结果
+		ResultJSON resultJSON = new ResultJSON();
+		
+		//异常
+		CustomException exception = null;
+		
+		//定义类型结果集
+		List<ResType> types = new ArrayList<ResType>();
 		try {
+			
+			//资源类型中增加一个“全部”
+			ResType all = new ResType();
+			all.setId(0);
+			all.setMtype("全部");
+			types.add(all);
+			
 			
 			//传递参数
 			String tfcode = request.getParameter("tfcode");
@@ -52,14 +62,10 @@ public class DistrictResTypeController {
 			map.put("pTfcode", tfcode);
 			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
 			
+			
 			types = resTypeService.getDisResType(resourceIds, fromFlag);
 			
-			//资源类型中增加一个“全部”
-			ResType all = new ResType();
-			all.setId(0);
-			all.setMtype("全部");
-			types.add(all);
-			
+		
 			exception = CustomException.SUCCESS;
 			
 		} catch (Exception e) {

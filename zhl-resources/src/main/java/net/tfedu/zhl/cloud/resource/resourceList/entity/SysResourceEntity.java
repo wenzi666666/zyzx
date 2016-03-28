@@ -292,5 +292,10 @@ public class SysResourceEntity implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	@Override
+	public String toString(){
+		return "sysResEntity[id="+Id+" fpath="+Fpath+" fname= "+Fname+" fileExt="+FileExt+" fzise = "+FSize+"]";
+	}
 
 }

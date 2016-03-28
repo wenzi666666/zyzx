@@ -2,13 +2,13 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+
 import javax.annotation.Resource;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
-
 
 import org.springframework.stereotype.Service;
 
@@ -52,7 +52,7 @@ public class ResTypeServiceImpl implements ResTypeService{
 	 * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
 	 */
 	@Override
-	public List<ResPoolType> getAllTypeIdsByPool(long poolId){
+	public List<Integer> getAllTypeIdsByPool(long poolId){
 		return resPoolTypeMapper.getAllTypeIdsByPool(poolId);
 	}
 	
@@ -90,26 +90,17 @@ public class ResTypeServiceImpl implements ResTypeService{
 	 * @return
 	 */
 	@Override
-	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId,int MType){
+	public List<Integer> getTypesByPMTypeAndPool(long poolId,int MType){
 		return resTypeMapper.getTypesByPMTypeAndPool(poolId,MType);
 	}
 	
 	/**
-	 * 区本校本资源：根据父类型，查询所有类型
-	 * @param typeId
+	 *  区本校本资源：查询父类型及其所有子类型
+	 * @param MType
 	 * @return
 	 */
 	@Override
-	public List<Long> getAllDisTypeByPType(int typeId){
-		return resTypeMapper.getAllDisTypeByPType(typeId);
+	public List<Integer> getDisResTypesByPMType(int MType){
+		return resTypeMapper.getDisResTypesByPMType(MType);
 	}
-	
-	/**
-	 * 查询所有资源类型
-	 * @return
-	 */
-	public List<Long> getAllDisType(){
-		return resTypeMapper.getAllDisType();
-	}
-
 }

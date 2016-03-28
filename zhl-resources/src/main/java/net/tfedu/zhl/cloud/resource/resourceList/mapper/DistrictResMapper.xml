@@ -58,13 +58,17 @@
     </constructor>
   </resultMap>
   <!-- 根据用户id获得区、校信息 -->
-  <select id="getDisAndSchool" resultType="HashMap">
+  <resultMap id = "DisAndSchoolMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity">
+       <result column="schoolid" property="schoolId" />
+       <result column="districtId" property="districtId" />
+  </resultMap>
+  <select id="getDisAndSchool" resultMap="DisAndSchoolMap">
       select u.schoolid ,s.districtId from  j_user u  LEFT JOIN j_school s ON s.id = u.SchoolId WHERE u.id = #{userId}
   </select>
   
   <!-- 查询区本校本资源信息 -->
   <resultMap id="DisResMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity" >
-      <result column="Id" property="Id" />
+       <result column="Id" property="Id" />
        <result column="ResCode" property="ResCode" />
        <result column="Title" property="Title" />
        <result column="Fpath" property="Fpath" />
@@ -78,7 +82,7 @@
        <result column="res_time" property="res_time" />
        <result column="FileExt" property="FileExt" />
        <result column="resolution" property="resolution" />
-       <result column="isDWj" property="isDWj" />
+       <result column="isDWj" property="isDWJ" />
        <result column="UpdateDT" property="UpdateDT" />
        <result column="orderNum" property="orderNum" />
        <result column="avgScore" property="avgScore" />
@@ -108,13 +112,7 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-                
-                or pb.id in (
-                <foreach item="item" index="index" collection="typeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-                ))
+              )
      </if>
      
     and c.StructCode like  CONCAT(#{tfcode},'%')    

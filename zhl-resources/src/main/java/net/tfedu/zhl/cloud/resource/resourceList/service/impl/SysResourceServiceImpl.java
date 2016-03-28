@@ -3,11 +3,10 @@ package net.tfedu.zhl.cloud.resource.resourceList.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-
 import java.util.List;
+
 import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
-import com.github.pagehelper.PageHelper;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
@@ -15,6 +14,10 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
+
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 /**
  * 系统资源 serviceImpl
@@ -39,7 +42,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 	 */
 	@Override
 	//分页查询系统资源信息
-	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Long> typeIds,int page,int perPage){
+	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage){
 		
 		//Page插件必须放在查询语句之前紧挨的第一个位置
 		PageHelper.startPage(page, perPage);

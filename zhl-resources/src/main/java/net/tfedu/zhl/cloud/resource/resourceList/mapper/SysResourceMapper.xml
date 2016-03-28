@@ -71,7 +71,7 @@
        <result column="resolution" property="resolution" />
        <result column="diskorder" property="diskorder" />
        <result column="Displayindex" property="Displayindex" />
-       <result column="isDWj" property="isDWj" />
+       <result column="isDWj" property="isDWJ" />
        <result column="UpdateDT" property="UpdateDT" />
        <result column="orderNum" property="orderNum" />
        <result column="avgScore" property="avgScore" />
@@ -96,15 +96,20 @@
 	
 	and d.typeFlag in (0,1) 
 	
-	and a.FileExt in <foreach item="item" index="index" collection="formats" 
+	 <if test="formats != null">
+        and a.FileExt in <foreach item="item" index="index" collection="formats" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-    and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+     </if>
+	
+     <if test="typeIds != null">
+          and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-                     
+     </if>
+               
      <if test="resourceIds == null">
          and a.id in ('')
      </if>
@@ -124,6 +129,6 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-                                      
+     ,DisplayIndex asc,orderNum asc,id                                  
  </select>
 </mapper>

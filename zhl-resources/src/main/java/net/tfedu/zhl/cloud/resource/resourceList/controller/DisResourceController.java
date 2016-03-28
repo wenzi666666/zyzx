@@ -1,23 +1,21 @@
 package net.tfedu.zhl.cloud.resource.resourceList.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,15 +33,14 @@ public class DisResourceController {
 	@Resource SysResourceService sysResourceService;
 	@Resource ResTypeService resTypeService;
 	
-	//封装的返回结果
-	private ResultJSON resultJSON = new ResultJSON();
-		
-	//异常
-	private CustomException exception;
-	
 	@RequestMapping("/v1.0/districtResource")
 	@ResponseBody
 	public ResultJSON getDisResource(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		//封装的返回结果
+		ResultJSON resultJSON = new ResultJSON();
+			
+		//异常
+		CustomException exception = null;
 		Pagination<DisResourceEntity> pagination = null;
 		try {
 			
@@ -72,20 +69,17 @@ public class DisResourceController {
 			//根据fileFormat去查询该格式下的所有 后缀
 			List<String> fileExts = sysResourceService.getFileExtsByFormat(fileFormat);
 			
-			//查询资源类型的子类型
-			List<Long> typeIds = null;
-			if(mTypeId == 0)
-				typeIds = resTypeService.getAllDisType();
-			else {
-				typeIds = resTypeService.getAllDisTypeByPType(mTypeId);
-			}
+			//根据父类型，查询所有的子类型
+			List<Integer> typeIds = resTypeService.getDisResTypesByPMType(mTypeId);
 			
 			long schoolId = 0;
 			long districtId = 0;
 			
-			List<HashMap<?, ?>> disAndSchoolIds = disResService.getDisAndSchool(userId);
+			//根据userId查询schoolId 和 districtId
+			DisAndSchoolEntity disAndSchoolIds = disResService.getDisAndSchool(userId);
 			if(disAndSchoolIds != null){
-				//获得schoolId,districtId？？？？？？
+				schoolId = disAndSchoolIds.getSchoolId();
+				districtId = disAndSchoolIds.getDistrictId();
 			}
 			
 			pagination = disResService.selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);

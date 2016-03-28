@@ -3,7 +3,6 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service;
 import java.util.HashMap;
 import java.util.List;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 
 
@@ -36,7 +35,7 @@ public interface ResTypeService {
 	 * @param poolId
 	 * @return
 	 */
-	public List<ResPoolType> getAllTypeIdsByPool(long poolId);
+	public List<Integer> getAllTypeIdsByPool(long poolId);
 	
 	
 	/**
@@ -66,19 +65,13 @@ public interface ResTypeService {
 	 * @param map
 	 * @return
 	 */
-	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId,int MType);
+	public List<Integer> getTypesByPMTypeAndPool(long poolId,int MType);
 	
 	/**
-	 * 区本校本资源：根据父类型，查询所有类型
-	 * @param typeId
+	 *  区本校本资源：查询父类型及其所有子类型
+	 * @param MType
 	 * @return
 	 */
-	public List<Long> getAllDisTypeByPType(int typeId);
-	
-	/**
-	 * 查询所有资源类型
-	 * @return
-	 */
-	public List<Long> getAllDisType();
+	public List<Integer> getDisResTypesByPMType(int MType);
 	
 }

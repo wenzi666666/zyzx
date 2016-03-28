@@ -2,17 +2,16 @@ package net.tfedu.zhl.cloud.resource.resourceList.service.impl;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
-
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 
 import org.springframework.stereotype.Service;
@@ -32,13 +31,13 @@ public class DisResServiceImpl implements DisResService{
 	
 	//获得区、校id
 	@Override
-	public List<HashMap<?, ?>> getDisAndSchool(long userId){
+	public DisAndSchoolEntity getDisAndSchool(long userId){
 		return districtResMapper.getDisAndSchool(userId);
 	}
 	
 	//查询区本、校本资源信息
 	@Override
-	public Pagination<DisResourceEntity> selectDisRes(int fromFlag,List<String> formats, List<Long> typeIds, String tfcode,int orderBy,long schoolId,long districtId,int page,int perPage){
+	public Pagination<DisResourceEntity> selectDisRes(int fromFlag,List<String> formats, List<Integer> typeIds, String tfcode,int orderBy,long schoolId,long districtId,int page,int perPage){
 		//Page插件必须放在查询语句之前紧挨的第一个位置
 		PageHelper.startPage(page, perPage);
 		

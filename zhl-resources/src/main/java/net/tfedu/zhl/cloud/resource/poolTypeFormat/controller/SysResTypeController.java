@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
@@ -33,7 +32,7 @@ public class SysResTypeController {
 @Resource ResTypeService resTypeService;
 	
 	//封装的返回结果
-	private ResultJSON resultJSON = new ResultJSON();
+	private final ResultJSON resultJSON = new ResultJSON();
 	
 	
 	//异常
@@ -42,8 +41,15 @@ public class SysResTypeController {
 	@RequestMapping(value = "/v1.0/sysResource/types",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getSysResTypesByPool(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		List<ResType> types = null;
+		List<ResType> types = new ArrayList<ResType>();
 		try {
+			
+			//资源类型中增加一个“全部”
+			ResType all = new ResType();
+			all.setId(0);
+			all.setMtype("全部");
+			types.add(all);
+			
 			//传递的三个参数
 			long poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
 
@@ -56,15 +62,9 @@ public class SysResTypeController {
 			map.put("sys_from", SysFrom.sys_from);
 			List<Long> resourceIds = resTypeService.getAllSysResIds(map);
 			
-			//根据资源库，查询所有一级、二级的资源类型id
-			List<ResPoolType> poolTypeIds = resTypeService.getAllTypeIdsByPool(poolId);
-			
-			List<Integer> typeIds = new ArrayList<Integer>();
-			
-			for (int i = 0; i < poolTypeIds.size(); i++) {
-				typeIds.add(poolTypeIds.get(i).getTypes().getId());
-			}
-			
+			//根据资源库，查询所有资源类型id
+			List<Integer> typeIds = resTypeService.getAllTypeIdsByPool(poolId);
+					
 			/**
 			 * 当资源库选择  “全部” 或  “教学素材” 时
 			 * 显示所有一级类型
@@ -76,12 +76,6 @@ public class SysResTypeController {
 			} else {  //当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
 				types = resTypeService.getSysSecondLevelType(resourceIds, typeIds);
 			}
-			
-			//资源类型中增加一个“全部”
-			ResType all = new ResType();
-			all.setId(0);
-			all.setMtype("全部");
-			types.add(all);
 			
 			exception = CustomException.SUCCESS;
 			
