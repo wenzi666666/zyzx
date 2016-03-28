@@ -27,7 +27,10 @@
      SELECT * from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     where poolid = #{poolId}
+     <if test="poolId != 0"><!-- poolId == 0时，查询全部资源库下的资源类型 -->
+          where poolid = #{poolId}
+     </if>
+    
   </select>
   
 </mapper>
