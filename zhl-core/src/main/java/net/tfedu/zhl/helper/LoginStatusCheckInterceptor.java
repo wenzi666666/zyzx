@@ -89,6 +89,8 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor  {
 		//如果内网地址有多个的话 取第一个
 		if(host_local.indexOf(",")>0){
 			request.setAttribute("hostLocal", host_local.split(",")[0]);
+		}else{
+			request.setAttribute("hostLocal", host_local);
 		}
 		//指定资源服务器的内网地址和当前地址
 		request.setAttribute("resServiceLocal", resServiceLocal);
@@ -121,7 +123,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor  {
 			logger.debug("------------token-------------------"+token);
 			logger.debug("------------currentUserId-------------------"+currentUserId);
 			request.setAttribute("currentUserId", currentUserId);
-			request.setAttribute("customException", customException);
+			request.setAttribute(CustomException.request_key, customException);
 		}
 		
 		
