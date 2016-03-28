@@ -388,7 +388,8 @@ public class PrepareController {
 						 if(StringUtils.isNotEmpty(_prevId)&& StringUtils.isNotEmpty(_nextId)){
 							 nextId = Long.parseLong(_nextId);
 							 prevId = Long.parseLong(_prevId);
-							 
+							 jPrepareService.exchangeContOrderIdx(prevId, nextId);
+							 exception = CustomException.SUCCESS;
 						 }else{
 							 exception = CustomException.PARAMSERROR;					 
 						 }
@@ -681,7 +682,7 @@ public class PrepareController {
 			String fromFlags = request.getParameter("fromFlags");
 			
 			String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-			String currentResService = (String)request.getAttribute("currentResService");
+			String currentResService = (String)request.getAttribute("currentResPath");
 			
 			//返回json的结果对象
 			ResultJSON result = new ResultJSON();
