@@ -108,7 +108,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor  {
 				customException = CustomException.NOTOKEN;
 			}else{
 				JOnlineUsers user =  jOnlineUsersService.getUserOnlinesByToken(token);
-				currentUserId = user.getId();
+				currentUserId = user.getUserid();
 			}
 		} catch (Exception e) {
 			customException = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -118,6 +118,8 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor  {
 			}
 		}finally{
 			//传递  currentUserId customException 判断正常登录的条件为 currentUserId!=null && customException==null;
+			logger.debug("------------token-------------------"+token);
+			logger.debug("------------currentUserId-------------------"+currentUserId);
 			request.setAttribute("currentUserId", currentUserId);
 			request.setAttribute("customException", customException);
 		}
