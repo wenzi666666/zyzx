@@ -2,18 +2,14 @@ package net.tfedu.zhl.cloud.resource.user.service;
 
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpUtils;
-
-import org.junit.Test;
-import org.springframework.http.HttpMethod;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.mock.web.MockHttpServletResponse;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import net.tfedu.zhl.cloud.resource.user.controller.UserController;
-import net.tfedu.zhl.cloud.resource.user.entity.JUser;
+import net.tfedu.zhl.helper.LoginStatusCheckInterceptor;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+
+import org.apache.log4j.Logger;
+import org.junit.Test;
 
 
 public class UserControllerTest extends BaseControllerTestCase {
@@ -24,11 +20,13 @@ public class UserControllerTest extends BaseControllerTestCase {
 	
 	
 
+
 	@Test
 	public void testGetUserInfo() {
 		
 		request = newGet("/resRestAPI/v1.0/users/{id}");
-		ResultJSON result = controller.getUserInfo(1l);
+		request.addHeader("Authorization", "f07b6038-f339-4ace-bf69-460e61d4e8e7");
+		ResultJSON result = controller.getUserInfo(1l,request,response);
 		System.out.println(result.toString());
 		
 	}
