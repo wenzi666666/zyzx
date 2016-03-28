@@ -14,7 +14,7 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 	 * @param validTime
 	 * @return
 	 */
-	public JOnlineUsers getOnlineByToken(String token);
+	public JOnlineUsers getOnlineByToken(String token,Integer validTime);
 	
 	
 	

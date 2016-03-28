@@ -27,8 +27,13 @@ public interface JOnlineUsersService {
 	 * @param token
 	 * @return
 	 */
+	public JOnlineUsers  getUserOnlinesByToken(String token,Integer validTime);
+	/**
+	 * 根据token获取用户的在线信息
+	 * @param token
+	 * @return
+	 */
 	public JOnlineUsers  getUserOnlinesByToken(String token);
-	
 	
 	
 	/**

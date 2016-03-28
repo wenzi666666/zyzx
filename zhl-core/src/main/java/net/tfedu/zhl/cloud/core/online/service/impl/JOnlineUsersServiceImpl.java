@@ -110,15 +110,19 @@ public class JOnlineUsersServiceImpl implements JOnlineUsersService {
 	}
 
 	@Override
-	public JOnlineUsers getUserOnlinesByToken(String token) {
+	public JOnlineUsers getUserOnlinesByToken(String token,Integer validTime) {
 
-		JOnlineUsers obj = mapper.getOnlineByToken(token);
+		JOnlineUsers obj = mapper.getOnlineByToken(token,validTime);
 		if(obj==null){
 			throw new RuntimeException(CustomException.INVALIDACCESSTOKEN.getCode());
 		}
 		return obj;
 	}
 
+	@Override
+	public JOnlineUsers getUserOnlinesByToken(String token) {
+		return getUserOnlinesByToken(token,2);
+	}
 
 
 }
