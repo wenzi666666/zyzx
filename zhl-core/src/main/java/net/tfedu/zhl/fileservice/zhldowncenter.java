@@ -10,6 +10,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.HashMap;
 
 
 import com.alibaba.fastjson.JSONObject;
@@ -749,8 +750,15 @@ public class zhldowncenter {
 		zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
 				"http://219.239.146.213/down");
 		
-		String res = down.InvokeExePackageTaskURL("test\\wt.mp4", null);
-		System.out.println(res);
+		String url = down.InvokeExePackageTaskURL("test\\wt.mp4", null);
+		System.out.println(url);
+		String result =  HttpUtil.PostHttpWebRequest(url);
+		result =result.replace("\\", "\\\\");
+		HashMap obj =  JSONObject.parseObject(result, HashMap.class);
+		
+		System.out.println(obj.toString());
+		System.out.println(obj.get("filename"));
+		
 		//zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
 		//"http://192.168.111.22:8099/down/");
 		

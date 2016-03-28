@@ -342,6 +342,20 @@ public class ZhlResourceCenterWrap {
 		return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendZipPackageTask(Content);
 	}
 	
+	/**
+	 * 获取执行打包任务URL地址
+	 * 
+	 * @param FileName
+	 *            文件名（单文件时为文件全路径，多文件时为不带路径的主文件名）
+	 * @param FilePath
+	 *            文件路径（多文件时有效，多文件存放路径）
+	 * @return
+	 */
+	public static String InvokeExePackageTaskURL(String FileName, String FilePath,String resSerPath){
+		return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).InvokeExePackageTaskURL(FileName, FilePath);
+	}
+	
+	
 	
 	
 }
