@@ -21,6 +21,31 @@
     </constructor>
   </resultMap>
   
+   <!-- 系统资源：得到父类型的所有子类型及其自身  -->
+  <select id="getTypesByPMTypeAndPool"  resultType="Integer">
+      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
+     
+     <if test="poolId != 0 and MType == 0">
+         where poolId = #{poolId}
+     </if>
+     <if test="MType != 0">
+         where type_id = #{MType} or type_pid = #{MType}
+     </if>
+  </select>
+  
+   <!-- 区本校本资源：得到父类型的所有子类型及其自身  -->
+  <select id="getDisResTypesByPMType"  resultType="Integer">
+      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
+     <if test="MType != 0">
+         where type_id = #{MType} or type_pid = #{MType}
+     </if>
+  </select>
+  
+  
   <!-- 根据sys_from, 父结点tfcode，查询系统资源的所有id -->
   <resultMap id="SysResIdsMap"  type="Long">
        <result column="sys_id" property="id" />
@@ -46,7 +71,7 @@
 	select a.Id dis_id from z_districts_resource a 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	LEFT JOIN j_syscourse d on c.StructCode=d.tfcode
-    where a.flag=0 and c.flag=0 and d.flag=0 
+    where a.flag=0 and c.flag=0 and d.flag=0 and
     c.StructCode like CONCAT(#{pTfcode},'%')
   </select>
   
@@ -57,7 +82,7 @@
 	   <result column="mtype" property="mtype" />
   </resultMap>
   <select id="getSysFirstLevelType"  resultMap="FirstTypeResultMap">
-    select case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
+    select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
     from z_resource a 
     left join x_resourcetype b on a.MType = b.id 
     left join x_resourcetype pb on pb.Id=b.pid 
@@ -89,7 +114,7 @@
 	   <result column="mtype" property="mtype" />
   </resultMap>
   <select id="getSysSecondLevelType"  resultMap="SecondTypeResultMap">
-     select b.mtype,b.id from z_resource a 
+     select distinct b.mtype,b.id from z_resource a 
      left join x_resourcetype b on a.MType = b.id 
      where a.flag = 0 and b.flag = 0 and b.level = 2 
      <if test="resourceIds == null">
@@ -118,7 +143,7 @@
      left join x_resourcetype pb on pb.Id = b.pid 
      where a.flag = 0 and b.flag = 0 and (pb.flag = 0 or pb.flag is null)
      and a.fromFlag in (#{fromFlag})
-      <if test="resourceIds == null">
+     <if test="resourceIds == null">
          and a.id in ('')
      </if>
      <if test="resourceIds != null ">
@@ -130,42 +155,5 @@
      </if>  
      group by MType order by b.displayIndex asc
   </select>
-  
-  <!-- 区本校本资源，类型选择为全部时，查询资源类型 ？？？-->
-  <select id="getAllDisType" resultType="Long">
-      select id from x_resourcetype where flag=0
-  </select>
-  
-   <!-- 区本校本资源，选择具体某个资源类型时，查询所有资源类型 ？？？-->
-  <select id="getAllDisTypeByPType" resultType="Long">
-    select st.id from x_resourcetype st where  st.flag=0 and 
-    exists(select st1.id from x_resourcetype st1 where st1.flag=0 and st1.id=st.pid and st1.id=#{typeId})
-    and EXISTS(select st2.resTypeId from z_res_pooltype st2 where st2.flag=0 and st2.resTypeId = st.id)
-  </select>
-  
-  
-   <!-- 得到父类型的所有子类型及其自身，根据资源库id和父类型id-->
-  <resultMap id="MTypeEndMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType">
-       <id column="id" property="id" />
-       <result column="poolId" property="poolid" />
-       <!-- 一对多关系，一个资源库下，对应多个资源类型 -->
-       <collection property="types" ofType="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType">
-           <id column="type_id" property="id" />
-           <result column="type_pid" property="pid" />
-       </collection>
-  </resultMap>
-  <select id="getTypesByPMTypeAndPool"  resultMap="MTypeEndMap">
-      SELECT * from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     
-     <if test="poolId != 0 and MType == 0">
-         where poolId = #{poolId}
-     </if>
-     <if test="MType != 0">
-         where type_id = #{MType} or type_pid = #{MType}
-     </if>
-  </select>
-  
   
 </mapper>

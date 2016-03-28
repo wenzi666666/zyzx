@@ -3,11 +3,10 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
+import net.tfedu.zhl.helper.CoreMapper;
+
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 查询资源类型 mapper
@@ -54,7 +53,7 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	 * @param MType
 	 * @return
 	 */
-	public List<ResPoolType> getTypesByPMTypeAndPool(@Param("poolId") long poolId,@Param("MType") int MType);
+	public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId,@Param("MType") int MType);
 	
 	/**
 	 * 区本校本资源：查询资源类型
@@ -62,18 +61,14 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	 */
 	public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds,@Param("fromFlag") int fromFlag);
 	
-
-	/**
-	 * 区本校本资源：根据父类型，查询所有类型
-	 * @param typeId
-	 * @return
-	 */
-	public List<Long> getAllDisTypeByPType(int typeId);
 	
 	/**
-	 * 查询所有资源类型
-	 * @return
+	 * 
+	 * 区本校本资源：查询父类型及其所有子类型
 	 */
-	public List<Long> getAllDisType();
+	public List<Integer> getDisResTypesByPMType(@Param("MType") int MType);
+	
+
+
 	
 }

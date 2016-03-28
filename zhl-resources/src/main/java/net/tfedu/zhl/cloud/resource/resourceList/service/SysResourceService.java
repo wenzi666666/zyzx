@@ -17,5 +17,5 @@ public interface SysResourceService {
 	public List<String> getFileExtsByFormat(String fileFormat);
 
 	//分页查询系统资源信息
-	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Long> typeIds,int page,int perPage);
+	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage);
 }

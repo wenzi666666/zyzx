@@ -1,13 +1,13 @@
 package net.tfedu.zhl.cloud.resource.resourceList.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -15,6 +15,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,16 +34,19 @@ public class SysResourceController {
 
 	@Resource SysResourceService sysResourceService;
 	@Resource ResTypeService resTypeService;
-	
-	//封装的返回结果
-	private ResultJSON resultJSON = new ResultJSON();
-	
-	//异常
-	private CustomException exception;
+
 	
 	@RequestMapping(value = "/v1.0/sysResource",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getSysResources(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		
+		//封装的返回结果
+		ResultJSON resultJSON = new ResultJSON();
+		
+		//异常
+		CustomException exception = null;
+		
+		//查询结果，封装为pagination
 		Pagination<SysResourceEntity> pagination = null;
 		try {
 			
@@ -81,12 +85,7 @@ public class SysResourceController {
 			HashMap<String, Object> map1 = new HashMap<String, Object>();
 			map1.put("poolId", poolId);
 			map1.put("MType", mTypeId);
-			List<ResPoolType> typeIdsByPool = resTypeService.getTypesByPMTypeAndPool(poolId, mTypeId);
-			
-			List<Long> typeIds = new ArrayList<Long>();
-			for (int i = 0; i < typeIdsByPool.size(); i++) {
-				typeIds.add(typeIdsByPool.get(i).getRestypeid());
-			}
+			List<Integer> typeIds = resTypeService.getTypesByPMTypeAndPool(poolId, mTypeId);
 			
 			//查询出的系统资源信息
 			pagination = sysResourceService.getSysResList(SysFrom.sys_from, fileExts, resourceIds, tfcode, orderBy, typeIds, page, perPage);

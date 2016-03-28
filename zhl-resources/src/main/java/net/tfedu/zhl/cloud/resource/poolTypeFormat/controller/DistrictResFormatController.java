@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,20 +25,23 @@ public class DistrictResFormatController {
 
 	@Resource ResFormatService resFormatService;
 	@Resource ResTypeService resTypeService;
-	
 
-	//封装的返回结果
-	private ResultJSON resultJSON = new ResultJSON();
-	
-	
-	//异常
-	private CustomException exception;
 	
 	@RequestMapping(value = "/v1.0/districtResource/formats",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getDisFormats(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		List<String> formats = null;
+
+		//封装的返回结果
+		ResultJSON resultJSON = new ResultJSON();
+		
+		//异常
+		CustomException exception = null;
+		
+		//格式
+		List<String> formats = new ArrayList<String>();
 		try {
+			//查询结果中增加一个 “全部”
+			formats.add("全部");
 			
 			//资源类型id
 			String tfcode = request.getParameter("tfcode");
@@ -50,8 +54,7 @@ public class DistrictResFormatController {
 			
 			formats = resFormatService.getDisResFormatsByMType(resourceIds, fromFlag);
 			
-			//查询结果中增加一个 “全部”
-			formats.add("全部");
+			
 			exception = CustomException.SUCCESS;
 		} catch (Exception e) {
 			// TODO: handle exception

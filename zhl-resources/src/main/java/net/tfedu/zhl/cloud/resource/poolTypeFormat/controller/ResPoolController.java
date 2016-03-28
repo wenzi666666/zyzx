@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,7 +14,6 @@ import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +30,7 @@ public class ResPoolController {
 	@Resource ResPoolService resPoolService;
 	
 	//封装返回结果
-	private ResultJSON resultJSON = new ResultJSON();
+	private final ResultJSON resultJSON = new ResultJSON();
 	
 	//异常
 	private CustomException exception;
@@ -45,18 +45,19 @@ public class ResPoolController {
 	@RequestMapping(value = "/v1.0/pools",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getAllPools(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		List<ResPool> pools = null;
+		List<ResPool> pools = new ArrayList<ResPool>();
 		try {
-			pools = resPoolService.getAllPools();
 			
-			//添加上 全部  库类型
+			//添加“全部”这个资源库类型
 			ResPool all = new ResPool();
 			long id = 0;
 			all.setId(id);
 			all.setName("全部");
-			
-			//添加“全部”这个资源库类型
 			pools.add(0, all);
+			
+			//查询所有资源库
+			pools = resPoolService.getAllPools();
+
 			exception = CustomException.SUCCESS;
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class ResFormatServiceImpl implements ResFormatService{
 	
 	//根据资源库id，得到父类型的所有子类型及其自身
 	@Override
-	public List<ResPoolType> getTypesByPMTypeAndPool(long poolId, int MType){
+	public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType){
 		return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
 	}
 	
