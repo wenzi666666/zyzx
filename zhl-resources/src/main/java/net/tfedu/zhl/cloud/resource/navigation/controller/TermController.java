@@ -28,20 +28,27 @@ public class TermController  {
 
 	@Resource TermService termService;
 	
-	//restful风格的返回结果
-	private ResultJSON result = new ResultJSON();
-	
-	//异常信息
-	private CustomException exception;
-	
 	//查询所有学段
     @RequestMapping(value = "/v1.0/terms",method = RequestMethod.GET)  
     @ResponseBody
     public ResultJSON selectAllTerms(HttpServletRequest request,HttpServletResponse response) throws IOException{
+    	/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON result = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
     	List<JTerm> terms = null;
     	try {
-			terms = termService.selectAll();
-			exception = CustomException.SUCCESS;
+    		//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			terms = termService.selectAll();
+    			exception = CustomException.SUCCESS;
+    		}
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception

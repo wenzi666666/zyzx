@@ -28,13 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ResPoolController {
 
 	@Resource ResPoolService resPoolService;
-	
-	//封装返回结果
-	private final ResultJSON resultJSON = new ResultJSON();
-	
-	//异常
-	private CustomException exception;
-	
+
 	/**
 	 * 查询所有的资源库
 	 * @param request
@@ -45,20 +39,32 @@ public class ResPoolController {
 	@RequestMapping(value = "/v1.0/pools",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getAllPools(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON resultJSON = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		List<ResPool> pools = new ArrayList<ResPool>();
 		try {
-			
-			//添加“全部”这个资源库类型
-			ResPool all = new ResPool();
-			long id = 0;
-			all.setId(id);
-			all.setName("全部");
-			pools.add(0, all);
-			
-			//查询所有资源库
-			pools = resPoolService.getAllPools();
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			//添加“全部”这个资源库类型
+    			ResPool all = new ResPool();
+    			long id = 0;
+    			all.setId(id);
+    			all.setName("全部");
+    			pools.add(0, all);
+    			
+    			//查询所有资源库
+    			pools = resPoolService.getAllPools();
 
-			exception = CustomException.SUCCESS;
+    			exception = CustomException.SUCCESS;
+    		}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());

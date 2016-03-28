@@ -34,39 +34,45 @@ public class DistrictResTypeController {
 	@RequestMapping(value = "/v1.0/districtResource/types",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getDisResTypesByPool(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		//封装返回结果
+		/**
+		 * 返回json的结果对象
+		 */
 		ResultJSON resultJSON = new ResultJSON();
 		
 		//异常
-		CustomException exception = null;
-		
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		//定义类型结果集
 		List<ResType> types = new ArrayList<ResType>();
 		try {
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			//资源类型中增加一个“全部”
+    			ResType all = new ResType();
+    			all.setId(0);
+    			all.setMtype("全部");
+    			types.add(all);
+    			
+    			
+    			//传递参数
+    			String tfcode = request.getParameter("tfcode");
+    			//3校本 4区本
+    			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+    		
+    			
+    			//根据tfcode获得区本校本资源ids
+    			HashMap<String, Object> map = new HashMap<String, Object>();
+    			map.put("pTfcode", tfcode);
+    			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
+    			
+    			
+    			types = resTypeService.getDisResType(resourceIds, fromFlag);
+    			
+    		
+    			exception = CustomException.SUCCESS;
+    		}
 			
-			//资源类型中增加一个“全部”
-			ResType all = new ResType();
-			all.setId(0);
-			all.setMtype("全部");
-			types.add(all);
-			
-			
-			//传递参数
-			String tfcode = request.getParameter("tfcode");
-			//3校本 4区本
-			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-		
-			
-			//根据tfcode获得区本校本资源ids
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("pTfcode", tfcode);
-			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
-			
-			
-			types = resTypeService.getDisResType(resourceIds, fromFlag);
-			
-		
-			exception = CustomException.SUCCESS;
 			
 		} catch (Exception e) {
 			// TODO: handle exception

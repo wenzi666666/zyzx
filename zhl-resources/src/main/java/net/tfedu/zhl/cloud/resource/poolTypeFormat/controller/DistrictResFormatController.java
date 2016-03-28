@@ -30,32 +30,39 @@ public class DistrictResFormatController {
 	@RequestMapping(value = "/v1.0/districtResource/formats",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getDisFormats(HttpServletRequest request,HttpServletResponse response) throws IOException{
-
-		//封装的返回结果
+		/**
+		 * 返回json的结果对象
+		 */
 		ResultJSON resultJSON = new ResultJSON();
 		
 		//异常
-		CustomException exception = null;
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		
 		//格式
 		List<String> formats = new ArrayList<String>();
 		try {
-			//查询结果中增加一个 “全部”
-			formats.add("全部");
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			//查询结果中增加一个 “全部”
+    			formats.add("全部");
+    			
+    			//资源类型id
+    			String tfcode = request.getParameter("tfcode");
+    			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+    			
+    			//获得资源id
+    			HashMap<String, Object> map = new HashMap<String, Object>();
+    			map.put("pTfcode", tfcode);
+    			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
+    			
+    			formats = resFormatService.getDisResFormatsByMType(resourceIds, fromFlag);
+    			
+    			
+    			exception = CustomException.SUCCESS;
+    		}
 			
-			//资源类型id
-			String tfcode = request.getParameter("tfcode");
-			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-			
-			//获得资源id
-			HashMap<String, Object> map = new HashMap<String, Object>();
-			map.put("pTfcode", tfcode);
-			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
-			
-			formats = resFormatService.getDisResFormatsByMType(resourceIds, fromFlag);
-			
-			
-			exception = CustomException.SUCCESS;
 		} catch (Exception e) {
 			// TODO: handle exception
 			//捕获异常信息

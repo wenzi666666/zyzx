@@ -36,55 +36,61 @@ public class DisResourceController {
 	@RequestMapping("/v1.0/districtResource")
 	@ResponseBody
 	public ResultJSON getDisResource(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		//封装的返回结果
+		/**
+		 * 返回json的结果对象
+		 */
 		ResultJSON resultJSON = new ResultJSON();
-			
+		
 		//异常
-		CustomException exception = null;
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		Pagination<DisResourceEntity> pagination = null;
 		try {
-			
-			long userId = 699230375;
-			//类型Id
-			int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
-			
-			//资源格式
-			String fileFormat = request.getParameter("fileFormat");
-			
-			//课程tfcode
-			String tfcode = request.getParameter("tfcode");
-			
-			//排序方式（综合排序；最多下载；最新发布）
-			int orderBy = Integer.parseInt(request.getParameter("orderBy"));
-			
-			//页码
-			int page = Integer.parseInt(request.getParameter("page"));
-			
-			//每页的记录数
-			int perPage = Integer.parseInt(request.getParameter("perPage"));
-			
-			//资源来源
-			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-			
-			//根据fileFormat去查询该格式下的所有 后缀
-			List<String> fileExts = sysResourceService.getFileExtsByFormat(fileFormat);
-			
-			//根据父类型，查询所有的子类型
-			List<Integer> typeIds = resTypeService.getDisResTypesByPMType(mTypeId);
-			
-			long schoolId = 0;
-			long districtId = 0;
-			
-			//根据userId查询schoolId 和 districtId
-			DisAndSchoolEntity disAndSchoolIds = disResService.getDisAndSchool(userId);
-			if(disAndSchoolIds != null){
-				schoolId = disAndSchoolIds.getSchoolId();
-				districtId = disAndSchoolIds.getDistrictId();
-			}
-			
-			pagination = disResService.selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
-			
-			exception = CustomException.SUCCESS;
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			long userId = currentUserId; //获得用户id
+    			//类型Id
+    			int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
+    			
+    			//资源格式
+    			String fileFormat = request.getParameter("fileFormat");
+    			
+    			//课程tfcode
+    			String tfcode = request.getParameter("tfcode");
+    			
+    			//排序方式（综合排序；最多下载；最新发布）
+    			int orderBy = Integer.parseInt(request.getParameter("orderBy"));
+    			
+    			//页码
+    			int page = Integer.parseInt(request.getParameter("page"));
+    			
+    			//每页的记录数
+    			int perPage = Integer.parseInt(request.getParameter("perPage"));
+    			
+    			//资源来源
+    			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+    			
+    			//根据fileFormat去查询该格式下的所有 后缀
+    			List<String> fileExts = sysResourceService.getFileExtsByFormat(fileFormat);
+    			
+    			//根据父类型，查询所有的子类型
+    			List<Integer> typeIds = resTypeService.getDisResTypesByPMType(mTypeId);
+    			
+    			long schoolId = 0;
+    			long districtId = 0;
+    			
+    			//根据userId查询schoolId 和 districtId
+    			DisAndSchoolEntity disAndSchoolIds = disResService.getDisAndSchool(userId);
+    			if(disAndSchoolIds != null){
+    				schoolId = disAndSchoolIds.getSchoolId();
+    				districtId = disAndSchoolIds.getDistrictId();
+    			}
+    			
+    			pagination = disResService.selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
+    			
+    			exception = CustomException.SUCCESS;
+    		}
 				
 		} catch (Exception e) {
 			// TODO: handle exception
