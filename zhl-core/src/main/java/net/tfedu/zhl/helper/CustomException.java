@@ -40,6 +40,12 @@ public enum CustomException {
 	private Integer status;
 	
 	
+	/**
+	 * request中缓存的key 主要用于拦截器向后传递 CustomException
+	 */
+	public static final String request_key = "request_key_CustomException";
+	
+	
 	private CustomException(String code,String message,Integer status){
 		this.code = code;
 		this.message = message;

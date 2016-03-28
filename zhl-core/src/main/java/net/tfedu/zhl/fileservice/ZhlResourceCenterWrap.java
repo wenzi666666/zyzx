@@ -1,5 +1,8 @@
 package net.tfedu.zhl.fileservice;
 
+import java.io.File;
+import java.util.Calendar;
+
 import javax.servlet.http.HttpServletRequest;
 /**
  * 访问IIS文件服务器的工具类
@@ -40,6 +43,36 @@ public class ZhlResourceCenterWrap {
 	public static final String STUDYRES_LIMIT = ".mp4";
 
 	public static final int default_diskOrder = 1;
+	
+	
+	
+	/**
+	 * 打包文件路径前缀
+	 */
+	public static final String zipPath_prefix = "zipPath";
+	
+	
+	
+	/**
+	 * 获取用户的打包文件
+	 * @param userId
+	 * @return
+	 */
+	public static String getUserZipPath(Long userId){
+		Calendar time =  Calendar.getInstance();
+		
+		return  new StringBuffer()
+		.append(zipPath_prefix)
+		.append(File.separator)
+		.append(time.get(Calendar.YEAR))
+		.append(File.separator)
+		.append(userId)
+		.append(File.separator)
+		.append(time.getTimeInMillis())
+		.append(".zip")
+		.toString();
+	}
+	
 
 	/**
 	 * 返回 资源的播放路径

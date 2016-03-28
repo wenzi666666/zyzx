@@ -712,6 +712,33 @@ public class zhldowncenter {
         
         return value;
     }
+	
+	
+	/**
+	 * 获取执行打包任务URL地址
+	 * 
+	 * @param FileName
+	 *            文件名（单文件时为文件全路径，多文件时为不带路径的主文件名）
+	 * @param FilePath
+	 *            文件路径（多文件时有效，多文件存放路径）
+	 * @return
+	 */
+	public String InvokeExePackageTaskURL(String FileName, String FilePath) {
+		String sign = GetApplySignCode("onlypackage", FileName, CustomerID,
+				CustomerKey);
+		
+		try {
+			return DownloadCenterURL
+					+ ApplyMethod
+					+ GetApplyQueryString("onlypackage", FileName, sign,
+							CustomerID) + "&path="
+					+ (FilePath==null?"":URLEncoder.encode(FilePath, "utf-8"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "";
+		}
+	}
+	
 	public static void main(String[] args) {
 
 		// 资源服务器客户信息 云平台学习资源访问
@@ -719,10 +746,13 @@ public class zhldowncenter {
 		String CustomerKey = "JWJ83OPR0985LJL";
 
 		// 用客户信息和资源服务器地址初始化接口类实例
-		/*zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
-				"http://219.239.146.213/down");*/
 		zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
-		"http://192.168.111.22:8099/down/");
+				"http://219.239.146.213/down");
+		
+		String res = down.InvokeExePackageTaskURL("test\\wt.mp4", null);
+		System.out.println(res);
+		//zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
+		//"http://192.168.111.22:8099/down/");
 		
 		// 请求加密资源播放地址，格式为 EncryptMaterial\ + FPath + FName
 //		String res = down
@@ -751,7 +781,7 @@ public class zhldowncenter {
 		//转换完成后通知格式  url?uid=xxx&file=xxx&convert=xxx&ext=cmVuYW1lJnVpZD0yMzQyMyZwcD3nsbvkvLznmoTnqbrpl7TliIblvIDkuoY=
 		//其中ext为编码后数据，解码操作调用 zhldowncenter.GetOriginQueryString()
 		
-		/**/
+		/*
 		FileOperate operate = new FileOperate();
 		operate.setOperateType("copy");
 		String[] src = new String[1];
@@ -767,7 +797,7 @@ public class zhldowncenter {
 			System.out.println("success");
 		else
 			System.out.println(down.LastError);
-		
+		*/
 		/*
 		 * ZipTaskContent task = new ZipTaskContent();
 		 * task.setZipFileName("GZ\\1602.zip"); String[] src = new String[4];

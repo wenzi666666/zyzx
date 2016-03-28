@@ -16,24 +16,31 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 	    "classpath*:/applicationContext-*.xml",
 	    "classpath:/spring-mvc.xml"
 })
-public abstract class BaseControllerTestCase {
+public abstract class BaseControllerTestCase{
 	
 	protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
 	protected MockHttpServletRequest request;
 	protected MockHttpServletResponse response =  new MockHttpServletResponse();
-    
+
+
     protected long startTime,endTime;
 
     @Before
     public void onSetUp() {
 
         startTime=System.currentTimeMillis();
+        
+        
+
+    
     }
     
 	@After
 	public void tearDown() throws Exception {
         endTime=System.currentTimeMillis();
         log.info("执行时长：" + (endTime - startTime) + "ms");
+        
+
 	}
 
 
