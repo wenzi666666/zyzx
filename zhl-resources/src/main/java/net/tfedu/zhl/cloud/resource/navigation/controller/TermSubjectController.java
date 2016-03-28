@@ -27,23 +27,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class TermSubjectController {
 
 	@Resource TermSubjectService termSubjectService;
-	
-	//restful风格的返回结果
-	private ResultJSON result = new ResultJSON();
-	
-	//异常信息
-	private CustomException exception;
+
 	
 	//查询学段下的所有学科
     @RequestMapping(value = "/v1.0/subjects",method = RequestMethod.GET)  
     @ResponseBody
 	public ResultJSON getAllSubjectsByTerm(HttpServletRequest request,HttpServletResponse response) throws IOException{
+    	/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON result = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
     	List<JSubject> subjects = null;
     	try {
-    		//接收到的termId参数
-        	long termId = Long.parseLong(request.getParameter("termId").toString().trim());
-        	subjects = termSubjectService.getAllSubjectsByTerm(termId);
-        	exception = CustomException.SUCCESS;
+    		
+    		if(exception == null && currentUserId != null){
+    			//接收到的termId参数
+            	long termId = Long.parseLong(request.getParameter("termId").toString().trim());
+            	subjects = termSubjectService.getAllSubjectsByTerm(termId);
+            	exception = CustomException.SUCCESS;
+    		}
+    		
         	
 		} catch (Exception e) {
 			// TODO: handle exception

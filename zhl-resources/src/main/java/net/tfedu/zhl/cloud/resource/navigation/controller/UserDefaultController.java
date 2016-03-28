@@ -30,40 +30,37 @@ public class UserDefaultController {
 	@Resource
 	UserDefaultService userDefaultService;
 
-	/**
-	 * 返回json的结果对象
-	 */
-	private final ResultJSON result = new ResultJSON();
-
-	/**
-	 * 异常
-	 */
-	private CustomException exception;
-
-	/**
-	 * 定义全局map，用于向mybatis传递参数
-	 */
-	private final HashMap<String, Object> map = new HashMap<String, Object>();
-
 	// 查询用户历史选择 使用GET方法
 	@RequestMapping(value = "/v1.0/history", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getUserDefault(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
+		/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON result = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 
 		// 定义用户历史选择
 		JUserDefault userDefault = null;
 		try {
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			long userId = Long.parseLong(request.getParameter("userId").toString().trim());
+				
+    			int type = Integer.parseInt(request.getParameter("type").toString().trim());
+    					
+    			HashMap<String, Object> map = new HashMap<String, Object>();
+    			map.put("userId", userId);
+    			map.put("type", type);
+    			userDefault = userDefaultService.getUserHistoryDefault(map);
 
-			long userId = Long.parseLong(request.getParameter("userId")
-					.toString().trim());
-			int type = Integer.parseInt(request.getParameter("type").toString()
-					.trim());
-			map.put("userId", userId);
-			map.put("type", type);
-			userDefault = userDefaultService.getUserHistoryDefault(map);
-
-			exception = CustomException.SUCCESS;
+    			exception = CustomException.SUCCESS;
+    		}
 
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -85,31 +82,45 @@ public class UserDefaultController {
 	// 修改、增加用户历史选择
 	@RequestMapping(value = "/v1.0/history", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON updateUserDefault(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public ResultJSON updateUserDefault(HttpServletRequest request,HttpServletResponse response) throws IOException {
+			
+		/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON result = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+
 		try {
-			long userId = Long.parseLong(request.getParameter("userId")
-					.toString().trim());
-			int type = Integer.parseInt(request.getParameter("type").toString()
-					.trim());
-			String tfcode = request.getParameter("tfcode");
-			String _method = request.getParameter("_method");
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			long userId = Long.parseLong(request.getParameter("userId").toString().trim());
+				
+    			int type = Integer.parseInt(request.getParameter("type").toString().trim());
+    					
+    			String tfcode = request.getParameter("tfcode");
+    			String _method = request.getParameter("_method");
+    			HashMap<String, Object> map = new HashMap<String, Object>();
+    			map.put("userId", userId);
+    			map.put("type", type);
+    			map.put("tfcode", tfcode);
 
-			map.put("userId", userId);
-			map.put("type", type);
-			map.put("tfcode", tfcode);
-
-			if (StringUtils.isNotEmpty(_method)
-					&& RequestMethod.PATCH.name().equals(_method)) {
-				// 修改用户历史选择
-				userDefaultService.updateUserHistoryDefault(map);
-				exception = CustomException.SUCCESS;
-			} else if (StringUtils.isNotEmpty(_method)
-					&& RequestMethod.POST.name().equals(_method)) {
-				// 增加用户历史选择
-				userDefaultService.addUserHistoryDefault(map);
-				exception = CustomException.SUCCESS;
-			}
+    			if (StringUtils.isNotEmpty(_method)
+    					&& RequestMethod.PATCH.name().equals(_method)) {
+    				// 修改用户历史选择
+    				userDefaultService.updateUserHistoryDefault(map);
+    				exception = CustomException.SUCCESS;
+    			} else if (StringUtils.isNotEmpty(_method)
+    					&& RequestMethod.POST.name().equals(_method)) {
+    				// 增加用户历史选择
+    				userDefaultService.addUserHistoryDefault(map);
+    				exception = CustomException.SUCCESS;
+    			}
+    		}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			// 获得异常信息，并打印

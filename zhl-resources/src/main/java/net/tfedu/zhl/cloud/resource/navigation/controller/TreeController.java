@@ -12,6 +12,7 @@ import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,7 +31,7 @@ public class TreeController {
 	/**
 	 * 返回json的结果对象
 	 */
-	private ResultJSON result = new ResultJSON();
+	private final ResultJSON result = new ResultJSON();
 	
 	/**
 	 * 异常
@@ -46,18 +47,31 @@ public class TreeController {
 	 */
 	@RequestMapping(value = "/v1.0/contents",method = RequestMethod.GET)
 	public ResultJSON getTreeNodes(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		/**
+		 * 返回json的结果对象
+		 */
+		ResultJSON result = new ResultJSON();
+		
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		List<TreeNode> resultNodes = new ArrayList<TreeNode>();
 		try {
-			//接收传递过来的父结点id
-			Long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+			//当前用户已经登录系统
+    		if(exception == null && currentUserId != null){
+    			//接收传递过来的父结点id
+    			Long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+    			
+    			//查询父结点下的直接子结点
+    			List<TreeNode> topChildren = treeService.getTopChildren(pnodeId);
+    			
+    			//查询所有的子结点
+    			resultNodes = treeService.getAllChildren(topChildren, resultNodes);
+    			
+    			exception = CustomException.SUCCESS;
+    		}
 			
-			//查询父结点下的直接子结点
-			List<TreeNode> topChildren = treeService.getTopChildren(pnodeId);
-			
-			//查询所有的子结点
-			resultNodes = treeService.getAllChildren(topChildren, resultNodes);
-			
-			exception = CustomException.SUCCESS;
 		
 		} catch (Exception e) {
 			// TODO: handle exception
