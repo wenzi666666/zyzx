@@ -6,11 +6,9 @@ import java.util.Arrays;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.DefaultEditorKit.CutAction;
 
 import net.tfedu.zhl.cloud.core.online.entity.JOnlineUsers;
 import net.tfedu.zhl.cloud.core.online.service.JOnlineUsersService;
-import net.tfedu.zhl.cloud.resource.user.entity.JUser;
 import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
 import net.tfedu.zhl.cloud.resource.user.service.UserControllerTest;
 import net.tfedu.zhl.cloud.resource.user.service.UserService;
@@ -47,30 +45,10 @@ public class UserController {
 	@Resource
 	private JOnlineUsersService jOnlineUsersService;
 	
-	/**
-	 * 返回json的结果对象
-	 */
-	private ResultJSON result = new ResultJSON();
-	
-	/**
-	 * 异常
-	 */
-	private CustomException exception ;
 	
 	
-	/**
-	 * 当前登录用户id 
-	 */
-	private Long currentUserId ;
 	
-	
-	/**
-	 * 返回的有效信息
-	 */
-	private Object data;
-	
-	
-	Logger logger = Logger.getLogger(UserControllerTest.class);
+	Logger logger = Logger.getLogger(UserController.class);
 	
 	/**
 	 * 登陆、注销
@@ -81,12 +59,17 @@ public class UserController {
 	@RequestMapping("/v1.0/users/login")
 	@ResponseBody
     public ResultJSON Login(HttpServletRequest request, HttpServletResponse response) { 
+		
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		
     	String _method = request.getParameter("_method");
     	//注销
 		if(StringUtils.isNotEmpty(_method)&&HttpMethod.DELETE.name().equals(_method)){
-				exception = (CustomException)request.getAttribute(CustomException.request_key);
-				currentUserId = (Long)request.getAttribute("currentUserId");
-				
 				
 					try {
 						
@@ -111,7 +94,7 @@ public class UserController {
 					String userName = request.getParameter("user_name");
 					String userPwd = request.getParameter("user_pwd");
 					//返回用户的信息
-					UserLoginResultInfo  data  = new UserLoginResultInfo();
+					UserLoginResultInfo data  = new UserLoginResultInfo();
 					try {
 						//用户登录
 						SRegister reg =  registerService.login(userName, userPwd);
@@ -150,8 +133,14 @@ public class UserController {
 	@RequestMapping(value="/v1.0/users/{id}",method=RequestMethod.GET) 
 	@ResponseBody	
 	public ResultJSON getUserInfo(@PathVariable Long id,HttpServletRequest request, HttpServletResponse response){
-		exception = (CustomException)request.getAttribute(CustomException.request_key);
-		currentUserId = (Long)request.getAttribute("currentUserId");
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
 
 		try{
 			if(currentUserId!=null && exception==null){
@@ -182,8 +171,15 @@ public class UserController {
 	@RequestMapping(value="/v1.0/users/{id}",method=RequestMethod.POST) 
 	@ResponseBody	
 	public ResultJSON updateUserInfo(@PathVariable Long id,HttpServletRequest request, HttpServletResponse response){
-		exception = (CustomException)request.getAttribute(CustomException.request_key);
-		currentUserId = (Long)request.getAttribute("currentUserId");
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
 		try{
 			if(currentUserId!=null && exception==null){
 				long userId = currentUserId ;
@@ -211,6 +207,7 @@ public class UserController {
 				}else{					
 					userService.updateUserInfo(userId, trueName, male, termId, subjectId);					
 					exception = CustomException.SUCCESS;
+					data = "";
 				}
 			}
 			
@@ -238,17 +235,23 @@ public class UserController {
 	@ResponseBody	
 	public ResultJSON updateUserImage(@PathVariable Long userid,HttpServletRequest request, HttpServletResponse response){
 		
-
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
+		
 		try{
-			
-			exception = (CustomException)request.getAttribute(CustomException.request_key);
-			currentUserId = (Long)request.getAttribute("currentUserId");
-			
 			if(currentUserId!=null && exception==null){
 				long userId = currentUserId;
 				String  userImage = request.getParameter("userImage");
 				userService.updateUserImage(userId, userImage);
 				exception = CustomException.SUCCESS;
+				data= "";
 			}
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -277,43 +280,55 @@ public class UserController {
 	@RequestMapping(value="/v1.0/users/password",method=RequestMethod.POST) 
 	@ResponseBody	
 	public ResultJSON updateUserPwd(HttpServletRequest request, HttpServletResponse response){
+
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
 		try{
-			
-			exception = (CustomException)request.getAttribute(CustomException.request_key);
-			currentUserId = (Long)request.getAttribute("currentUserId");
 			
 			if(currentUserId!=null && exception==null){
 				long userId = currentUserId;
 				String oldPassword =  request.getParameter("oldPassword");
 				String newPassword =  request.getParameter("newPassword");
 				String _method =  request.getParameter("_method");
+				byte[] temp = PWDEncrypt.doEncryptByte(oldPassword);
 				
 				
 				if(!RequestMethod.PATCH.name().equals(_method)){//_method!=patch
 					exception = CustomException.PARAMSERROR;
 				}else{
 					SRegister register =  registerService.getRegister(userId);
-					byte[] pwd = register.getPwd();
 					
-					byte[] temp = PWDEncrypt.doEncryptByte(oldPassword);
-					//旧密码是否匹配
-					if(register!=null&&!Arrays.equals(register.getPwd(), PWDEncrypt.doEncryptByte(oldPassword))){
-						exception = CustomException.INVALIDPASSWORD;
+					if(register!=null){
+						byte[] pwd = register.getPwd();					
+						//旧密码是否匹配
+						if(register!=null&&!Arrays.equals(register.getPwd(), temp)){
+							exception = CustomException.INVALIDPASSWORD;
+						}else{
+							registerService.modifyRegisterPassword(userId, newPassword);
+							exception = CustomException.SUCCESS;
+							data= "";
+						}
 					}else{
-						registerService.modifyRegisterPassword(userId, newPassword);
-						exception = CustomException.SUCCESS;
+						exception = CustomException.INVALIDPASSWORD;
 					}
+					
 				}
 			}
 		}catch(Exception e){
+			e.printStackTrace();
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
-			//如果是普通的异常
-			if(exception.getStatus()==500){
-				e.printStackTrace();
-			}
+			
 		}finally{
 			result.setCode(exception.getCode());
 			result.setMessage(exception.getMessage());
+			System.out.println("----data-----"+data.toString());
 			result.setData(data==null?"":data);
 			result.setSign("");			
 		}

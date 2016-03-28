@@ -1,9 +1,15 @@
 package net.tfedu.zhl.cloud.resource.prepare.util;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 
+import com.alibaba.druid.util.HttpClientUtils;
+import com.alibaba.fastjson.JSONObject;
+
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.fileservice.HttpUtil;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 
 /**
@@ -134,6 +140,24 @@ public class JPrepareConstant {
 	}
 	
 	
+	
+	/**
+	 * 将备课夹资源的imgpath 更新为最终的url
+	 * @param list
+	 * @param resServiceLocal
+	 * @param currentResService
+	 */
+	public static void resetPrepareContImageView(List<JPrepareContentView> list,String resServiceLocal,String currentResService ){
+		for (int i = 0; i < list.size(); i++) {
+			resetPrepareContImageViewONE(list.get(i),resServiceLocal,currentResService );
+		}
+		
+	}
+	
+	
+	
+	
+	
 	/**
 	 * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的相对路径  加密文件为exe的相对路径
 	 * @param list
@@ -180,15 +204,28 @@ public class JPrepareConstant {
 	    //如果是系统资源 
 	    if(fromflag==fromFlag_sysRes){
 			String flag = path.substring(path.lastIndexOf("."),path.length());
-	    	//如果是多文件
-	    	if(isdwj){
-	    		path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
-	    	}else{
-	    		//如果是加密的文件
-				if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
-					path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal,path,"");
+			
+			
+			//如果是加密swf\mp4的文件
+			if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+				String  url = "";
+				if(isdwj){
+					String _path =  path.replaceAll("\\\\", "/");
+					String _name = _path.substring(_path.lastIndexOf("/")+1,_path.length());
+					_path = _path.substring(0,_path.lastIndexOf("/"));
+					url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name,_path, resServiceLocal);
+				}else{
+					url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(path, "", resServiceLocal);
 				}
-	    	}
+				//获取exe文件的路径
+				String result =  HttpUtil.PostHttpWebRequest(url);
+				HashMap obj =  JSONObject.parseObject(result, HashMap.class);
+				path = (String)obj.get("filename");
+			}else{
+				if(isdwj){
+					path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
+				}
+			}
 	    }
 		
 	    
@@ -197,6 +234,24 @@ public class JPrepareConstant {
 		
 	}
 	
+	
+	
+	/**
+	 * 更新缩略图的url
+	 * @param view
+	 * @param resServiceLocal
+	 * @param currentResService
+	 */
+	public static void 	resetPrepareContImageViewONE(JPrepareContentView view,String resServiceLocal,String currentResService ){
+		
+		String imagePath = view.getImgPath();
+		
+		imagePath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imagePath);
+		
+		imagePath  = imagePath.replace(resServiceLocal, currentResService);
+		
+		view.setImgPath(imagePath);
+	}
 	
 	
 }
