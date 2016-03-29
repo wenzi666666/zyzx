@@ -1,11 +1,15 @@
 package net.tfedu.zhl.cloud.resource.navigation.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
+
+import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
-import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
+
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -63,5 +67,22 @@ public class TreeServiceImpl implements TreeService{
 		}
 		
         return resultTrees;
+	}
+	
+	/**
+	 * 加载父结点及其所有的子结点
+	 * @return
+	 */
+	@Override
+	public List<TreeNode> geTreeNodes(long pnodeId){
+		
+		//查询父结点下的直接子结点
+		List<TreeNode> topChildren = getTopChildren(pnodeId);
+		
+		List<TreeNode> resultNodes = new ArrayList<TreeNode>();
+		
+		//查询所有的子结点
+		return getAllChildren(topChildren, resultNodes);
+		
 	}
 }

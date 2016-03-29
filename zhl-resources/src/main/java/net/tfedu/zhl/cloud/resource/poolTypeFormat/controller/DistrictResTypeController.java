@@ -2,7 +2,6 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -48,28 +47,14 @@ public class DistrictResTypeController {
 		try {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			//资源类型中增加一个“全部”
-    			ResType all = new ResType();
-    			all.setId(0);
-    			all.setMtype("全部");
-    			types.add(all);
-    			
     			
     			//传递参数
     			String tfcode = request.getParameter("tfcode");
     			//3校本 4区本
     			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-    		
     			
-    			//根据tfcode获得区本校本资源ids
-    			HashMap<String, Object> map = new HashMap<String, Object>();
-    			map.put("pTfcode", tfcode);
-    			List<Long> resourceIds = resTypeService.getAllDisResIds(map);
+    			types = resTypeService.getDisResTypes(tfcode, fromFlag);
     			
-    			
-    			types = resTypeService.getDisResType(resourceIds, fromFlag);
-    			
-    		
     			exception = CustomException.SUCCESS;
     		}
 			

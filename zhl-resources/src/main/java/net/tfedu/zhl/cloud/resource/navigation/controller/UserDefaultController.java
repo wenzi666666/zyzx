@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -33,8 +32,8 @@ public class UserDefaultController {
 	// 查询用户历史选择 使用GET方法
 	@RequestMapping(value = "/v1.0/history", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getUserDefault(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
+	public ResultJSON getUserDefault(HttpServletRequest request,HttpServletResponse response) throws IOException {
+			
 		/**
 		 * 返回json的结果对象
 		 */
@@ -95,37 +94,28 @@ public class UserDefaultController {
 		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 
 		try {
+			
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
+    			
     			long userId = Long.parseLong(request.getParameter("userId").toString().trim());
 				
     			int type = Integer.parseInt(request.getParameter("type").toString().trim());
     					
     			String tfcode = request.getParameter("tfcode");
     			String _method = request.getParameter("_method");
-    			HashMap<String, Object> map = new HashMap<String, Object>();
-    			map.put("userId", userId);
-    			map.put("type", type);
-    			map.put("tfcode", tfcode);
+    			
+    			//更新用户历史选择
+    			userDefaultService.updateUserDefault(userId, type, tfcode, _method);
 
-    			if (StringUtils.isNotEmpty(_method)
-    					&& RequestMethod.PATCH.name().equals(_method)) {
-    				// 修改用户历史选择
-    				userDefaultService.updateUserHistoryDefault(map);
-    				exception = CustomException.SUCCESS;
-    			} else if (StringUtils.isNotEmpty(_method)
-    					&& RequestMethod.POST.name().equals(_method)) {
-    				// 增加用户历史选择
-    				userDefaultService.addUserHistoryDefault(map);
-    				exception = CustomException.SUCCESS;
-    			}
+    			exception = CustomException.SUCCESS;
+    			
     		}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
 			// 获得异常信息，并打印
-			exception = CustomException
-					.getCustomExceptionByCode(e.getMessage());
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			e.printStackTrace();
 		} finally {
 			// 封装result
