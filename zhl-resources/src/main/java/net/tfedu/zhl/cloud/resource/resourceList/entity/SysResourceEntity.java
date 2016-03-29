@@ -3,6 +3,11 @@ package net.tfedu.zhl.cloud.resource.resourceList.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 系统资源查询结果的一条记录实体类
+ * @author WeiCuicui
+ *
+ */
 public class SysResourceEntity implements Serializable{
 	private static final long serialVersionUID = 8160030266758656476L;
 	

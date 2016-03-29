@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.navigation.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -8,7 +9,8 @@ import java.util.List;
  * @author WeiCuicui
  *
  */
-public class TreeNode {
+public class TreeNode implements Serializable{
+	private static final long serialVersionUID = 8160030266758656476L;
 
 	//主键id
     private Long id;
@@ -72,7 +74,7 @@ public class TreeNode {
 	 */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", label=" + label + ", i="+ i +", leaf=" + leaf + ", children=" + children + "]";
+		return "TreeNode [id=" + id + ", label=" + label + ", i="+ i +", leaf=" + leaf + ", children=" + children + "]";
 	}
 }
 

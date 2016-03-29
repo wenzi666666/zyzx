@@ -1,12 +1,18 @@
 package net.tfedu.zhl.cloud.resource.navigation.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
 
-import net.tfedu.zhl.cloud.resource.navigation.controller.EditonController;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Table(name = "j_syscourse_user_default")
-public class JUserDefault {
+public class JUserDefault implements Serializable {
+	private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 主键id
      */
