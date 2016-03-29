@@ -156,4 +156,13 @@
      group by MType order by b.displayIndex asc
   </select>
   
+  
+  <resultMap type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType" id="firstLevelResTypeMap">
+        <id column="id" property="id" />
+	   <result column="mtype" property="mtype" />
+	   <result column="code" property="code" />
+  </resultMap>
+  <select id="getAllFirstLevelResType" resultMap="firstLevelResTypeMap">
+  		select  id,mtype,code from x_resourcetype where flag =false and flag =false and pid = 0 order by displayindex
+  </select>
 </mapper>

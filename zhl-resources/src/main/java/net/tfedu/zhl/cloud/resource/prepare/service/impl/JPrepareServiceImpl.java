@@ -15,6 +15,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -189,7 +190,35 @@ public class JPrepareServiceImpl implements JPrepareService {
 		return list;
 	}
 	
+	/**
+	 * 分页获取我的备课资源
+	 * @param userId
+	 * @param unifyTypeId
+	 * @param fileFormat
+	 * @param page
+	 * @param prePage
+	 * @return
+	 */
+	public Pagination getPrepareContentListByUserId(Long userId,Long unifyTypeId,String fileFormat ,Integer page,Integer prePage){
+		
+		
+		
+		
+		return null ;
+	}
 	
+	
+	
+	/**
+	 * 将指定资源从我的备课夹中清除
+	 * @param userId
+	 * @param resIds
+	 * @param fromFlags
+	 */
+	public void removeMyPrepareContentResource(Long userId,String resIds,String fromFlags){
+		
+		
+	}
 	
 
 }

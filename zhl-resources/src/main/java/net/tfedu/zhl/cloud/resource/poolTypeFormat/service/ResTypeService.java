@@ -85,4 +85,13 @@ public interface ResTypeService {
 	 */
 	public List<ResType> getSysResTypes(long poolId,String pTfcode);
 	
+	
+	/**
+	 *  自建资源 ： 查询全部一级资源类型
+	 */
+	public List<ResType> getAllFirstLevelResType();
+	
+	
+	
+	
 }

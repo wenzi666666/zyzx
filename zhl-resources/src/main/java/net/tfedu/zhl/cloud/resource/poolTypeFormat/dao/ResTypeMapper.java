@@ -70,5 +70,8 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	
 
 
-	
+	/**
+	 *  自建资源 ： 查询全部一级资源类型
+	 */
+	public List<ResType> getAllFirstLevelResType();
 }

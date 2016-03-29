@@ -168,4 +168,10 @@ public class ResTypeServiceImpl implements ResTypeService{
 		
 		return types;
 	}
+	
+	
+	@Override
+	public List<ResType> getAllFirstLevelResType(){
+		 return resTypeMapper.getAllFirstLevelResType();
+	}
 }

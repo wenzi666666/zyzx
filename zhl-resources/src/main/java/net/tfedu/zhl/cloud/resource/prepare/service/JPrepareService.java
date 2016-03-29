@@ -8,6 +8,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 public interface JPrepareService {
 	
@@ -137,8 +138,26 @@ public interface JPrepareService {
 	
 	
 	
+	/**
+	 * 分页获取我的备课资源
+	 * @param userId
+	 * @param unifyTypeId
+	 * @param fileFormat
+	 * @param page
+	 * @param prePage
+	 * @return
+	 */
+	public Pagination getPrepareContentListByUserId(Long userId,Long unifyTypeId,String fileFormat ,Integer page,Integer prePage); 
 	
 	
+	
+	/**
+	 * 将指定资源从我的备课夹中清除
+	 * @param userId
+	 * @param resIds
+	 * @param fromFlags
+	 */
+	public void removeMyPrepareContentResource(Long userId,String resIds,String fromFlags);
 	
 	
 

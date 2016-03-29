@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.asset.entity.ZAssetValuate" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="AssetId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="UserId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="Atime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="Acontent" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="Ascore" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Atype" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="IsScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+</mapper>
