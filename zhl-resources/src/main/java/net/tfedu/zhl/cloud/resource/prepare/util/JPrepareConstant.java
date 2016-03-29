@@ -141,20 +141,6 @@ public class JPrepareConstant {
 	
 	
 	
-	/**
-	 * 将备课夹资源的imgpath 更新为最终的url
-	 * @param list
-	 * @param resServiceLocal
-	 * @param currentResService
-	 */
-	public static void resetPrepareContImageView(List<JPrepareContentView> list,String resServiceLocal,String currentResService ){
-		for (int i = 0; i < list.size(); i++) {
-			resetPrepareContImageViewONE(list.get(i),resServiceLocal,currentResService );
-		}
-		
-	}
-	
-	
 	
 	
 	
@@ -233,25 +219,7 @@ public class JPrepareConstant {
 	    info.setPath(path);
 		
 	}
-	
-	
-	
-	/**
-	 * 更新缩略图的url
-	 * @param view
-	 * @param resServiceLocal
-	 * @param currentResService
-	 */
-	public static void 	resetPrepareContImageViewONE(JPrepareContentView view,String resServiceLocal,String currentResService ){
-		
-		String imagePath = view.getImgPath();
-		
-		imagePath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imagePath);
-		
-		imagePath  = imagePath.replace(resServiceLocal, currentResService);
-		
-		view.setImgPath(imagePath);
-	}
+
 	
 	
 }

@@ -17,4 +17,56 @@
       <arg column="IsScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+  
+  	
+  	<resultMap type="net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview" id="resourceReviewMap">
+  		<id column="id" property="id"/>
+  		<result column="resid" property="resId"/>
+  		<result column="rescode" property="resCode"/>
+  		<result column="title" property="title"/>
+  		<result column="fromflag" property="fromFlag"/>
+  		<result column="content" property="content"/>
+  		<result column="time" property="time"/>
+  		<result column="imgpath" property="imgPath"/>
+  		<result column="filesuffix" property="fileSuffix"/>
+  	
+  	</resultMap>
+  	
+  <!-- reviewType 评论级别 0 全部 1 好 2 中3 差 -->
+  <select id='getMyReview' resultMap="resourceReviewMap">
+		select  id,resid,rescode,title,fromflag,time,content,imgpath,filesuffix from (
+			select t.id,t.assetid as resid,t.atime as time ,t.acontent as content,t.isscore as score,if(atype=0,2,1) as fromflag 
+			,a.name as title,a.resourceid as rescode,a.assetpath as imgpath ,reverse(left(reverse(assetpath),locate('.',reverse(assetpath))-1))  as filesuffix
+			from z_assetevaluate t 
+			left join z_asset a on a.id = t.assetid 
+			where t.atype in (0,2)   and t.flag =false and a.flag =false and t.userid = #{userId}
+			
+			union all 
+					
+			select t.id,t.assetid as resid,t.atime as time ,t.acontent as content,t.isscore as score,0 as fromflag 
+			,z.title,z.rescode,concat(z.fpath,'\\\\',z.fname) as imgpath,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as filesuffix
+			from z_assetevaluate t 
+			left join z_resource z on z.id = t.assetid 
+			where t.atype = 1   and t.flag =false and z.flag =false  and t.userid = #{userId}
+			
+			union all 
+			
+			select t.id,t.assetid as resid,t.atime as time ,t.acontent as content,t.isscore as score,t.atype as fromflag 
+			,r.title,r.rescode,r.fullpath as imgpath ,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as filesuffix
+			from z_assetevaluate t 
+			left join z_districts_resource r on r.id = t.assetid
+			where t.atype in(3,4)   and t.flag =false and r.flag =false  and t.userid = #{userId}
+		)temp_tab
+		where 1 =1 
+		<if test="reviewType==1">
+			and score in (4,5)
+		</if>
+		<if test="reviewType==2">
+			and score =3
+		</if>
+		<if test="reviewType==3">
+			and score in (1,2)
+		</if>
+		order by time desc
+  </select>
 </mapper>

@@ -12,6 +12,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
@@ -244,6 +245,39 @@ public class JPrepareServiceTest extends BaseControllerTestCase{
 			
 		}
 	}
+	
+	
+	
+	
+	@Test
+	public void testGetPrepareContentListByUserId(){
+		
+		long userId = 390330126;
+		long unifyTypeId = 0 ;
+		String  fileFormat = "图片";
+		int page = 1;
+		int prePage = 10 ;
+		
+		Pagination   p  = jPrepareService.getPrepareContentListByUserId(userId, unifyTypeId, fileFormat, page, prePage);
+		
+		System.out.println("getTotal:"+p.getTotal()+";getPage:"+p.getPage()
+				+";getPerPage:"+p.getPerPage()+";list.size:"+p.getList().size());
+		
+		
+	}
+	
+	@Test
+	public void testremoveMyPrepareContentResource(){
+		long userId = 390330126;
+		 String resIds = "4319500105,212992,212991";
+		 String fromFlags = "0,0,0";
+
+		jPrepareService.removeMyPrepareContentResource(userId, resIds, fromFlags);
+		
+		
+	}
+	
+	
 	
 	
 	

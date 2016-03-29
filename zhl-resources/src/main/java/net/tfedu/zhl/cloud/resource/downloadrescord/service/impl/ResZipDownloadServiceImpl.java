@@ -1,11 +1,23 @@
 package net.tfedu.zhl.cloud.resource.downloadrescord.service.impl;
 
+import java.util.Calendar;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+
+import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
 import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResZipDownRecordMapper;
+import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.helper.CustomException;
 
 @Service("resZipDownloadService")
 public class ResZipDownloadServiceImpl implements ResZipDownloadService {
@@ -14,9 +26,32 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
 	@Autowired
 	ResZipDownRecordMapper mapper ;
 	
+	@Autowired
+	ResDownRecordMapper  mapper1; 
+	
 	
 	@Override
 	public void addZipDownRecord(ResZipDownRecord obj) {
+		
+		String resIds = obj.getIds();
+		String fromflags = obj.getFromflags();
+		if(StringUtils.isNotEmpty(resIds)&&StringUtils.isNotEmpty(fromflags)){
+			String ids[] = resIds.split(",");
+			String flags[] = fromflags.split(",");
+			if(ids.length!=flags.length){
+				throw new RuntimeException(CustomException.PARAMSERROR.getCode());
+			}
+			Calendar c = Calendar.getInstance();
+			for (int i = 0; i < flags.length; i++) {
+				ResDownRecord r = new ResDownRecord();
+				r.setResid(Long.parseLong(ids[i]));
+				r.setFromflag(Integer.parseInt(flags[i]));
+				r.setDowndate(c.getTime());
+				r.setDowntime(c.getTime());
+				mapper1.insert(r);
+			}
+			
+		}
 		mapper.insert(obj);
 	}
 
@@ -29,6 +64,15 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
 	public ResZipDownRecord getZipDownRecord(Long id) {
 		// TODO Auto-generated method stub
 		return mapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public Pagination getMydownload(Long userId, Long unifyTypeId,
+			String fileFormat, Integer page, Integer prePage) {
+		PageHelper.startPage(page, prePage);
+		List<JPrepareContentView> list  = mapper.getMydownload(userId, unifyTypeId, fileFormat);
+		Pagination p = new PageInfoToPagination().transfer(list);
+		return p ;
 	}
 
 }
