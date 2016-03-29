@@ -21,4 +21,9 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
 	
 	//根据资源格式，查询所有后缀
 	public List<String> getExtsByFormat(String fileFormat);
+	
+	
+	//查询全部资源格式
+	public List<String> getAllFileFormat();
+	
 }

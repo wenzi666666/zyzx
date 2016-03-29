@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
@@ -171,7 +172,7 @@ public class ResTypeServiceImpl implements ResTypeService{
 	
 	
 	@Override
-	public List<ResType> getAllFirstLevelResType(){
+	public List<FirstLevelResType> getAllFirstLevelResType(){
 		 return resTypeMapper.getAllFirstLevelResType();
 	}
 }

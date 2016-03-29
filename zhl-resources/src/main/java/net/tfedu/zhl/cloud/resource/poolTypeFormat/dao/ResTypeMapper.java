@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -73,5 +74,5 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
 	/**
 	 *  自建资源 ： 查询全部一级资源类型
 	 */
-	public List<ResType> getAllFirstLevelResType();
+	public List<FirstLevelResType> getAllFirstLevelResType();
 }

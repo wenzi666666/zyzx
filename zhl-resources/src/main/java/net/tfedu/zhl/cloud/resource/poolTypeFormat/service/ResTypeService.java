@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service;
 import java.util.HashMap;
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 
 
@@ -89,7 +90,7 @@ public interface ResTypeService {
 	/**
 	 *  自建资源 ： 查询全部一级资源类型
 	 */
-	public List<ResType> getAllFirstLevelResType();
+	public List<FirstLevelResType> getAllFirstLevelResType();
 	
 	
 	

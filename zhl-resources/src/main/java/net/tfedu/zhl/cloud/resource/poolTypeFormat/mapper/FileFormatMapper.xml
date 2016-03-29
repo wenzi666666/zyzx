@@ -70,4 +70,10 @@
   <select id="getExtsByFormat"  parameterType="String"  resultMap="FileExtsByFormatMap">
      select distinct formatcode from j_filetypedetail where FileFormat = #{fileFormat}
   </select>
+  
+  
+  <select id="getAllFileFormat" resultType="String">
+  		select  distinct fileformat as fileformat  from j_filetypedetail where flag = false order by ordernum 
+  </select>
+  
 </mapper>
