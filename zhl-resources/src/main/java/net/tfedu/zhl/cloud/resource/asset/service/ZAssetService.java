@@ -2,7 +2,10 @@ package net.tfedu.zhl.cloud.resource.asset.service;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 public interface ZAssetService {
 	
@@ -22,8 +25,24 @@ public interface ZAssetService {
 	
 	
 
+	/**
+	 * 查询用户的 评论
+	 * @param userId
+	 * @param reviewType 评论级别 0 全部 1 好 2 中3 差
+	 * @param page
+	 * @param perPage
+	 * @return
+	 */
+	public Pagination getMyReview(Long userId,Integer reviewType,Integer page,Integer perPage);
 	
 	
+	
+	
+	/**
+	 * 删除我的资源评论
+	 * @param ids   评论id的复数
+	 */
+	public void removeMyReview(String ids);
 	
 	
 	

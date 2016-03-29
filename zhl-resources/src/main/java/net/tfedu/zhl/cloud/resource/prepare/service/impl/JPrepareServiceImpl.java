@@ -11,14 +11,21 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.helper.CustomException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 
 
@@ -93,7 +100,9 @@ public class JPrepareServiceImpl implements JPrepareService {
 	@Override
 	public List<JPrepareContentView> queryPrepareContentList(Long prepareId) {
 		// TODO Auto-generated method stub
-		return mapper.queryPrepareContentList(prepareId);
+		
+		List<JPrepareContentView>  list = mapper.queryPrepareContentList(prepareId);
+		return list;
 	}
 
 	@Override
@@ -199,12 +208,12 @@ public class JPrepareServiceImpl implements JPrepareService {
 	 * @param prePage
 	 * @return
 	 */
+	@Override
 	public Pagination getPrepareContentListByUserId(Long userId,Long unifyTypeId,String fileFormat ,Integer page,Integer prePage){
-		
-		
-		
-		
-		return null ;
+		PageHelper.startPage(page, prePage);
+		List<JPrepareContentView> list  = contMapper.getPrepareContentListByUserId(userId, unifyTypeId, fileFormat);
+		Pagination p = new PageInfoToPagination().transfer(list);
+		return p ;
 	}
 	
 	
@@ -215,9 +224,22 @@ public class JPrepareServiceImpl implements JPrepareService {
 	 * @param resIds
 	 * @param fromFlags
 	 */
+	@Override
 	public void removeMyPrepareContentResource(Long userId,String resIds,String fromFlags){
-		
-		
+		//非空判断
+		if(StringUtils.isEmpty(resIds)|| StringUtils.isEmpty(fromFlags)){
+			throw new RuntimeException(CustomException.PARAMSERROR.getCode());
+		}
+		String[] resId = resIds.split(",");
+		String[] fromFlag = fromFlags.split(",");
+		if(resId.length!=fromFlag.length){
+			throw new RuntimeException(CustomException.PARAMSERROR.getCode());
+		}
+		for (int i = 0; i < fromFlag.length; i++) {
+			long _resId = Long.parseLong(resId[i]);
+			int  _contType = JPrepareConstant.getContTypeByFromFlag(Integer.parseInt(fromFlag[i]));
+			contMapper.removeMyPrepareContentResource(userId, _resId, _contType);
+		}
 	}
 	
 

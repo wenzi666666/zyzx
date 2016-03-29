@@ -9,11 +9,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
@@ -48,6 +50,7 @@ public class PrepareController {
 	
 	@Resource
 	ResZipDownloadService resZipDownloadService;
+	
 	
 	
 	/**
@@ -248,9 +251,8 @@ public class PrepareController {
 				if(prepareId>0){
 					//获取备课夹内容
 					List<JPrepareContentView> list   = jPrepareService.queryPrepareContentList(prepareId);
-					//将缩略图的path换成url
-					JPrepareConstant.resetPrepareContImageView(list, resServiceLocal, currentResPath);
-					
+					JPrepareContentViewUtil.convertToPurpose(list, resServiceLocal, currentResPath);
+
 					data = list ; 
 					
 					exception = CustomException.SUCCESS;
@@ -549,6 +551,7 @@ public class PrepareController {
 										name = name.replace(name.substring(0, name.lastIndexOf(".")), title);
 										src[i] = path;
 										end[i] = name;
+										
 									}
 									
 									content.setSourceFile(src);
@@ -705,6 +708,7 @@ public class PrepareController {
 								}else{
 									List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfo(ids, fromFlag);
 									//将原始的path重置为可用的web链接
+									
 									JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResService);
 									data = list; 
 									exception = CustomException.SUCCESS;

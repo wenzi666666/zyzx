@@ -1,8 +1,5 @@
 package net.tfedu.zhl.cloud.resource.asset.service;
 
-import static org.junit.Assert.fail;
-
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
