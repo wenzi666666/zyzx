@@ -114,12 +114,12 @@
 <!-- 资源应用访问路径   为此web服务的访问方式   一般为 http://ip:端口/    必须以‘/’结尾  -->
 	<context-param>
 		<param-name>host</param-name>
-			<param-value>http://192.168.111.160:8080/zhl-resources/</param-value>
+			<param-value>http://192.168.111.101:8080/zhl-resources/</param-value>
 	</context-param>
 <!-- 资源应用访问LOCAL   为此web服务的访问方式   一般为 http://ip:端口/    必须以‘/’结尾  -->
 	<context-param>
 		<param-name>hostLocal</param-name>
-		<param-value>http://192.168.111.160:8080/zhl-resources/</param-value>
+		<param-value>http://192.168.111.101:8080/zhl-resources/</param-value>
 	</context-param>
   <!-- 文件服务器 （IIS服务器地址 传、下载、访问）    一般为 http://ip:端口/down/    必须以‘/’结尾 其中down为文件服务     --> 
   <context-param>
