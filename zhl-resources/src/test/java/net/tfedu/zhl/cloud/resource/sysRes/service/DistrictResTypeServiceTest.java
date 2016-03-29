@@ -2,7 +2,6 @@ package net.tfedu.zhl.cloud.resource.sysRes.service;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -24,34 +23,18 @@ public class DistrictResTypeServiceTest extends BaseServiceTestCase{
 	@Resource ResTypeService resTypeService;
 	@Test
 	public void testDisResTypeService()throws IOException{
-		//定义类型结果集
-	    List<ResType> types = new ArrayList<ResType>();
-	    
-		//资源类型中增加一个“全部”
-		ResType all = new ResType();
-		all.setId(0);
-		all.setMtype("全部");
-		types.add(all);
 		
-	    
 		//传递参数
 		String tfcode = "RJGZ040101";
 		//3校本 4区本
 		int fromFlag = 3;
 		
-		//根据tfcode获得区本校本资源ids
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("pTfcode", tfcode);
-		List<Long> resourceIds = resTypeService.getAllDisResIds(map);
-		
-		Assert.isTrue(resourceIds.size() > 0);
-		System.out.println(resourceIds.size());
-		for(int i = 0; i < resourceIds.size(); i++)
-			System.out.print(resourceIds.get(i) + ",");
-		
+		//定义类型结果集
+	    List<ResType> types = new ArrayList<ResType>();
+	    
 		//查询类型id
-		types = resTypeService.getDisResType(resourceIds, fromFlag);
-		
+		types = resTypeService.getDisResTypes(tfcode, fromFlag);
+	    
 		Assert.isTrue(types.size() > 0);
 		System.out.println(types.size());
 		for(int i = 0; i < types.size(); i++)

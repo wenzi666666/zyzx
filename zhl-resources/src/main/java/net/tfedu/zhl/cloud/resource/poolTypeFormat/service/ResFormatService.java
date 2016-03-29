@@ -18,4 +18,10 @@ public interface ResFormatService {
 	
 	//区本校本资源，根据资源ids和typeIds，查询得到资源格式
 	public List<String> getDisResFormatsByMType(List<Long> resourceIds,int fromFlag);
+	
+	//查询区本校本资源格式
+	public List<String> getDisResFormats(String tfcode,int fromFlag);
+	
+	//获得系统资源格式
+    public List<String> getSysResFormats(long poolId,String pTfcode,int typeId);
 }

@@ -25,4 +25,10 @@ public interface TreeService {
 	 * @return
 	 */
 	public List<TreeNode> getAllChildren(List<TreeNode> topChildren,List<TreeNode> resultTrees);
+	
+	/**
+	 * 加载父结点及其所有的子结点
+	 * @return
+	 */
+	public List<TreeNode> geTreeNodes(long pnodeId);
 }

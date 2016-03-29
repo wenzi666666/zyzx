@@ -27,17 +27,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TreeController {
 
 	@Resource TreeService treeService;
-	
-	/**
-	 * 返回json的结果对象
-	 */
-	private final ResultJSON result = new ResultJSON();
-	
-	/**
-	 * 异常
-	 */
-	private CustomException exception;
-	
 	/**
 	 * 查询所有树结点
 	 * @param request
@@ -63,11 +52,8 @@ public class TreeController {
     			//接收传递过来的父结点id
     			Long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
     			
-    			//查询父结点下的直接子结点
-    			List<TreeNode> topChildren = treeService.getTopChildren(pnodeId);
-    			
-    			//查询所有的子结点
-    			resultNodes = treeService.getAllChildren(topChildren, resultNodes);
+    			//加载父结点的所有子结点（递归）
+    			resultNodes = treeService.geTreeNodes(pnodeId);
     			
     			exception = CustomException.SUCCESS;
     		}

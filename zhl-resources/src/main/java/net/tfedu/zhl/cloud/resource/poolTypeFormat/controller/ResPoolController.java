@@ -52,13 +52,7 @@ public class ResPoolController {
 		try {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			//添加“全部”这个资源库类型
-    			ResPool all = new ResPool();
-    			long id = 0;
-    			all.setId(id);
-    			all.setName("全部");
-    			pools.add(0, all);
-    			
+    		
     			//查询所有资源库
     			pools = resPoolService.getAllPools();
 

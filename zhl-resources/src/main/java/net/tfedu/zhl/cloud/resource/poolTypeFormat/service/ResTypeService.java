@@ -74,4 +74,15 @@ public interface ResTypeService {
 	 */
 	public List<Integer> getDisResTypesByPMType(int MType);
 	
+	/**
+	 * 区本校本资源：查询资源类型
+	 * @return
+	 */
+	public List<ResType> getDisResTypes(String tfcode,int fromFlag);
+	
+	/**
+	 * 系统资源：查询资源类型
+	 */
+	public List<ResType> getSysResTypes(long poolId,String pTfcode);
+	
 }

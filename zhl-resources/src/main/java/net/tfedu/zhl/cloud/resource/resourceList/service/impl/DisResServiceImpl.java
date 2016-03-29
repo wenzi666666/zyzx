@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
@@ -27,6 +29,8 @@ import com.github.pagehelper.PageHelper;
 public class DisResServiceImpl implements DisResService{
 
 	@Resource DistrictResMapper districtResMapper;
+	@Resource ResTypeMapper resTypeMapper;
+	@Resource FileFormatMapper fileFormatMapper;
 	
 	
 	//获得区、校id
@@ -62,6 +66,29 @@ public class DisResServiceImpl implements DisResService{
 		
 		return transfer.transfer(list);
 
+	}
+	
+	//查询区本、校本资源信息
+	@Override
+	public Pagination<DisResourceEntity> selectAllDisRes(long userId,int mTypeId,String fileFormat,String tfcode,int orderBy,int page,int perPage,int fromFlag){
+		//根据fileFormat去查询该格式下的所有 后缀
+		List<String> fileExts = fileFormatMapper.getExtsByFormat(fileFormat);
+		
+		//根据父类型，查询所有的子类型
+		List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
+		
+		long schoolId = 0;
+		long districtId = 0;
+		
+		//根据userId查询schoolId 和 districtId
+		DisAndSchoolEntity disAndSchoolIds = getDisAndSchool(userId);
+		if(disAndSchoolIds != null){
+			schoolId = disAndSchoolIds.getSchoolId();
+			districtId = disAndSchoolIds.getDistrictId();
+		}
+		
+		return selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
+		
 	}
 					
 }

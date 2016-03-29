@@ -17,9 +17,12 @@ public class UserDefaultControllerTest extends BaseControllerTestCase {
 	@Resource
 	UserDefaultController userDefaultController;
 
-	
-	  @Test 
-	  public void testGetUserDefaultController() throws IOException {
+	/**
+	 * 查询用户历史记录
+	 * @throws IOException
+	 */
+	@Test 
+	public void testGetUserDefaultController() throws IOException {
 		  request = newGet("/resRestAPI/v1.0/history");
 		  request.setParameter("type", "1"); 
 		  request.setParameter("userId", "699230735");
@@ -27,9 +30,13 @@ public class UserDefaultControllerTest extends BaseControllerTestCase {
 		  Assert.isTrue(resultJSON != null); 
 		  JUserDefault userDefault = (JUserDefault) resultJSON.getData(); Assert.isTrue(userDefault != null);
 		  log.info(userDefault.toString());
-	  }
+	}
 	 
 
+	/**
+	 * 修改用户历史记录
+	 * @throws IOException
+	 */
 	@Test
 	public void testUpdateUserDefaultController() throws IOException {
 		request = newGet("/resRestAPI/v1.0/history");
@@ -44,8 +51,8 @@ public class UserDefaultControllerTest extends BaseControllerTestCase {
 		// 修改
 		request.setParameter("_method", "PATCH");
 
-		ResultJSON resultJSON = userDefaultController.updateUserDefault(
-				request, response);
+		ResultJSON resultJSON = userDefaultController.updateUserDefault(request, response);
+				
 		Assert.isTrue(resultJSON != null);
 		String userDefault = (String) resultJSON.getData();
 		Assert.isTrue(userDefault != null);
