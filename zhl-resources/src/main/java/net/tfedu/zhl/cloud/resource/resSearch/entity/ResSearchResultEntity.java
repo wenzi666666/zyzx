@@ -1,15 +1,17 @@
-package net.tfedu.zhl.cloud.resource.resourceList.entity;
+package net.tfedu.zhl.cloud.resource.resSearch.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 区本校本资源记录实体
+ * 资源跨库检索结果的记录
  * @author WeiCuicui
  *
  */
-public class DisResourceEntity implements Serializable{
+public class ResSearchResultEntity implements Serializable{
+
 	private static final long serialVersionUID = 8160030266758656476L;
+	
 	/**
 	 * 资源id
 	 */
@@ -102,25 +104,34 @@ public class DisResourceEntity implements Serializable{
 	private boolean isNew;
 	
 	/**
+	 *（系统资源）
+	 * 盘符序号
+	 */
+	private int diskorder;
+	
+	/**
+	 *（区本校本资源）
 	 * 是否为本地资源（0 否；1 是）
 	 */
 	private boolean isLocal;
 	
 	/**
+	 * （区本校本资源）
 	 * 资源审核状态
 	 * 资源状态 1 教师未答复 2 教师拒绝 3教师同意 4 待审核 5 审核失败 6 审核成功 7 存疑
 	 */
 	private int state;
 	
 	/**
+	 * （区本校本资源）
 	 * 资源来源
 	 * 0 系统资源；1 自建资源；2 共享资源；3 校本资源；4 区本资源
 	 */
 	private int fromFlag;
 	
 	/**
+	 * （区本校本资源）
 	 * 地区id 或  学校id
-	 * 
 	 */
 	private int scopeId;
 
@@ -276,6 +287,14 @@ public class DisResourceEntity implements Serializable{
 		this.isNew = isNew;
 	}
 
+	public int getDiskorder() {
+		return diskorder;
+	}
+
+	public void setDiskorder(int diskorder) {
+		this.diskorder = diskorder;
+	}
+
 	public boolean isLocal() {
 		return isLocal;
 	}
@@ -311,11 +330,4 @@ public class DisResourceEntity implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	@Override
-	public String toString(){
-		return "sysResEntity[id="+Id+" fpath="+Fpath+" fname= "+Fname+" fileExt="+FileExt+" fzise = "+FSize+"]";
-	}
 }
-
-

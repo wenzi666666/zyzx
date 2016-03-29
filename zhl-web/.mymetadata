@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="zhl-web"
+  id="myeclipse.1459073527061"
+  context-root="/resources"
+  j2ee-spec="6.0"
+  archive="zhl-web.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

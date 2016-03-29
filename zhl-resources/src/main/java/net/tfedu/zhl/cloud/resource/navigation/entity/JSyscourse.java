@@ -1,10 +1,19 @@
 package net.tfedu.zhl.cloud.resource.navigation.entity;
 
+import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "j_syscourse")
-public class JSyscourse {
+public class JSyscourse implements Serializable{
+	
+	private static final long serialVersionUID = 8160030266758656476L;
+
     /**
      * 自增id
      */

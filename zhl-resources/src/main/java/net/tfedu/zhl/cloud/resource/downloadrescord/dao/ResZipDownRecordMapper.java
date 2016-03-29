@@ -20,5 +20,5 @@ public interface ResZipDownRecordMapper extends CoreMapper<ResZipDownRecord> {
 	 */
 	public List<JPrepareContentView> getMydownload(@Param("userId")Long userId,@Param("unifyTypeId")Long unifyTypeId,@Param("fileFormat")String fileFormat); 
 	
-	
+
 }

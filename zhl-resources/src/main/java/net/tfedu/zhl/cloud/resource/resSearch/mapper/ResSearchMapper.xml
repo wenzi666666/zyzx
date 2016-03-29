@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper" >
+
+  <!-- 根据检索的关键词，搜索满足条件的系统资源 -->
+  <select id="getAllSysResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity">
+    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+	m.res_time,a.UpdateDT,a.FileExt,a.resolution,k.diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
+	from z_resource a left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
+	left join z_resnav c on a.ResCode=c.ResCode left join j_syscourse d on  c.StructCode=d.TFcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code LEFT JOIN z_res_disk k on k.rescode = a.rescode 
+	where a.flag = 0 and b.flag = 0  and c.flag=0 and d.flag=0  
+	
+	
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+	
+	
+	 and d.typeFlag in (0,1) 
+
+     and a.FileExt in <foreach item="item" index="index" collection="formats" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+
+    <if test="searchKeyword != null">
+         and title like #{searchKeyword} or keyWord like #{searchKeyword} or Des like #{searchKeyword}
+     </if>
+    order by avgScore desc
+     
+  </select>
+  
+   <!-- 根据检索的关键词，搜索满足条件的区本、校本资源 -->
+  <select id="getAllDisResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity">
+      
+    select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+    m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
+	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
+	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+
+    and a.FileExt in <foreach item="item" index="index" collection="formats" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     
+     <if test="searchKeyword != null">
+         and title like #{searchKeyword} or keyWord like #{searchKeyword} or Des like #{searchKeyword}
+     </if>
+     
+     and fromFlag = #{fromFlag}
+
+     order by avgScore desc
+  </select>
+  
+  <!-- 当资源来源为全部时，查询所有满足条件的系统资源、区本校本资源 -->
+  <select id="getAllResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity">
+   select * from (select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+	m.res_time,a.UpdateDT,a.FileExt,a.resolution,k.diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
+	from z_resource a left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
+	left join z_resnav c on a.ResCode=c.ResCode left join j_syscourse d on  c.StructCode=d.TFcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code LEFT JOIN z_res_disk k on k.rescode = a.rescode 
+	where a.flag = 0 and b.flag = 0  and c.flag=0 and d.flag=0  
+	
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+	
+	and d.typeFlag in (0,1) 
+
+     and a.FileExt in <foreach item="item" index="index" collection="formats" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+
+    <if test="searchKeyword != null">
+         and title like #{searchKeyword} or keyWord like #{searchKeyword} or Des like #{searchKeyword}
+     </if>) sysTmp
+    union all
+    
+    select * from (
+    select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+    m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 3) avgScore 
+	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
+	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+
+    and a.FileExt in <foreach item="item" index="index" collection="formats" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     
+     <if test="searchKeyword != null">
+         and title like #{searchKeyword} or keyWord like #{searchKeyword} or Des like #{searchKeyword}
+     </if>
+     
+     and fromFlag = 3
+    ) schoolTmp
+    
+    union all
+    select * from (
+     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+    m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 4) avgScore 
+	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
+	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+
+    and a.FileExt in <foreach item="item" index="index" collection="formats" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+                     
+     <if test="searchKeyword != null">
+         and title like #{searchKeyword} or keyWord like #{searchKeyword} or Des like #{searchKeyword}
+     </if>
+     
+     and fromFlag = 4
+    ) disTmp
+    order by avgScore desc
+  
+  </select>
+  
+</mapper>

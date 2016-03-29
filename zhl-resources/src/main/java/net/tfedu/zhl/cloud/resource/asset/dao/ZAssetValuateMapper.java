@@ -19,7 +19,5 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
 	 */
 	public List<ResourceReview> getMyReview(@Param("userId")Long userId,@Param("reviewType")Integer reviewType);
 	
-	
-	
-	
+
 }

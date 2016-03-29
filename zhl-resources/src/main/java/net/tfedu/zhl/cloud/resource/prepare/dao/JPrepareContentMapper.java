@@ -32,4 +32,5 @@ public interface JPrepareContentMapper extends CoreMapper<JPrepareContent> {
 	 * @param fromFlags
 	 */
 	public void removeMyPrepareContentResource(Long userId,Long contId,Integer contType);
+
 }

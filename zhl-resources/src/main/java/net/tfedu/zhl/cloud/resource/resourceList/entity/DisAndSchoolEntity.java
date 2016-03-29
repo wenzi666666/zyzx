@@ -1,8 +1,22 @@
 package net.tfedu.zhl.cloud.resource.resourceList.entity;
 
-public class DisAndSchoolEntity {
+import java.io.Serializable;
+/**
+ * 用户所在区、校的id
+ * @author WeiCuicui
+ *
+ */
+public class DisAndSchoolEntity implements Serializable{
+	private static final long serialVersionUID = 8160030266758656476L;
 
+	/**
+	 * 学校id
+	 */
 	private long schoolId;
+	
+	/**
+	 * 区id
+	 */
 	private long districtId;
 	public long getSchoolId() {
 		return schoolId;

@@ -149,7 +149,7 @@ public class ZAsset {
     private String filecode;
 
     /**
-     * 是否为文件包，0---不
+     * 是否为文件包，0---不
 是；1---是）
      */
     @Column(name = "IsWjb")
@@ -668,10 +668,10 @@ public class ZAsset {
     }
 
     /**
-     * 获取是否为文件包，0---不
+     * 获取是否为文件包，0---不
 是；1---是）
      *
-     * @return IsWjb - 是否为文件包，0---不
+     * @return IsWjb - 是否为文件包，0---不
 是；1---是）
      */
     public Boolean getIswjb() {
@@ -679,10 +679,10 @@ public class ZAsset {
     }
 
     /**
-     * 设置是否为文件包，0---不
+     * 设置是否为文件包，0---不
 是；1---是）
      *
-     * @param iswjb 是否为文件包，0---不
+     * @param iswjb 是否为文件包，0---不
 是；1---是）
      */
     public void setIswjb(Boolean iswjb) {
