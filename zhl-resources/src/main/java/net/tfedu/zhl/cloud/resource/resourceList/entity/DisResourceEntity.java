@@ -3,6 +3,11 @@ package net.tfedu.zhl.cloud.resource.resourceList.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 区本校本资源记录实体
+ * @author WeiCuicui
+ *
+ */
 public class DisResourceEntity implements Serializable{
 	private static final long serialVersionUID = 8160030266758656476L;
 	/**
@@ -97,7 +102,6 @@ public class DisResourceEntity implements Serializable{
 	private boolean isNew;
 	
 	/**
-	 * 是否为本地资源
 	 * 是否为本地资源（0 否；1 是）
 	 */
 	private boolean isLocal;
@@ -115,7 +119,7 @@ public class DisResourceEntity implements Serializable{
 	private int fromFlag;
 	
 	/**
-	 * 区本、校本的id
+	 * 地区id 或  学校id
 	 * 
 	 */
 	private int scopeId;

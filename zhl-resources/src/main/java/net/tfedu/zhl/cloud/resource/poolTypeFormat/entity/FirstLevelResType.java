@@ -1,5 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.entity;
 
+import java.io.Serializable;
+
 
 
 /**
@@ -7,7 +9,8 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.entity;
  * @author wangwr
  *
  */
-public class FirstLevelResType {
+public class FirstLevelResType implements Serializable{
+	private static final long serialVersionUID = 8160030266758656476L;
 
 	Long id;
 	

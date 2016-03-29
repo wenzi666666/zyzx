@@ -1,15 +1,15 @@
-package net.tfedu.zhl.cloud.resource.resourceList.entity;
+package net.tfedu.zhl.cloud.resource.resSearch.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 系统资源查询结果的一条记录实体类
+ * 资源跨库检索结果的记录
  * @author WeiCuicui
  *
  */
+public class ResSearchResultEntity implements Serializable{
 
-public class SysResourceEntity implements Serializable{
 	private static final long serialVersionUID = 8160030266758656476L;
 	
 	/**
@@ -77,16 +77,7 @@ public class SysResourceEntity implements Serializable{
      */
 	private Integer resolution;
 	
-	/**
-	 * 盘符序号
-	 */
-	private int diskorder;
-	
-	 /**
-     * 搜索结果的素材显示顺序，增序，数小的排在前面
-     */
-	private Integer Displayindex;
-	
+
 	/**
 	 * 是否为多文件
 	 */
@@ -113,27 +104,36 @@ public class SysResourceEntity implements Serializable{
 	private boolean isNew;
 	
 	/**
+	 *（系统资源）
+	 * 盘符序号
+	 */
+	private int diskorder;
+	
+	/**
+	 *（区本校本资源）
+	 * 是否为本地资源（0 否；1 是）
+	 */
+	private boolean isLocal;
+	
+	/**
+	 * （区本校本资源）
+	 * 资源审核状态
+	 * 资源状态 1 教师未答复 2 教师拒绝 3教师同意 4 待审核 5 审核失败 6 审核成功 7 存疑
+	 */
+	private int state;
+	
+	/**
+	 * （区本校本资源）
 	 * 资源来源
+	 * 0 系统资源；1 自建资源；2 共享资源；3 校本资源；4 区本资源
 	 */
 	private int fromFlag;
-
 	
-	
-	public int getFromFlag() {
-		return fromFlag;
-	}
-
-	public void setFromFlag(int fromFlag) {
-		this.fromFlag = fromFlag;
-	}
-
-	public boolean isNew() {
-		return isNew;
-	}
-
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
-	}
+	/**
+	 * （区本校本资源）
+	 * 地区id 或  学校id
+	 */
+	private int scopeId;
 
 	public Long getId() {
 		return Id;
@@ -247,22 +247,6 @@ public class SysResourceEntity implements Serializable{
 		this.resolution = resolution;
 	}
 
-	public int getDiskorder() {
-		return diskorder;
-	}
-
-	public void setDiskorder(int diskorder) {
-		this.diskorder = diskorder;
-	}
-
-	public Integer getDisplayindex() {
-		return Displayindex;
-	}
-
-	public void setDisplayindex(Integer displayindex) {
-		Displayindex = displayindex;
-	}
-
 	public Boolean getIsDWJ() {
 		return isDWJ;
 	}
@@ -295,13 +279,55 @@ public class SysResourceEntity implements Serializable{
 		this.avgScore = avgScore;
 	}
 
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
+	public int getDiskorder() {
+		return diskorder;
+	}
+
+	public void setDiskorder(int diskorder) {
+		this.diskorder = diskorder;
+	}
+
+	public boolean isLocal() {
+		return isLocal;
+	}
+
+	public void setLocal(boolean isLocal) {
+		this.isLocal = isLocal;
+	}
+
+	public int getState() {
+		return state;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public int getFromFlag() {
+		return fromFlag;
+	}
+
+	public void setFromFlag(int fromFlag) {
+		this.fromFlag = fromFlag;
+	}
+
+	public int getScopeId() {
+		return scopeId;
+	}
+
+	public void setScopeId(int scopeId) {
+		this.scopeId = scopeId;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	@Override
-	public String toString(){
-		return "sysResEntity[id="+Id+" fpath="+Fpath+" fname= "+Fname+" fileExt="+FileExt+" fzise = "+FSize+"]";
-	}
-
 }

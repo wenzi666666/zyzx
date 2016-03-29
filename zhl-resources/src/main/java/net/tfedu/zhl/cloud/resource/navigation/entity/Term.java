@@ -1,13 +1,21 @@
 package net.tfedu.zhl.cloud.resource.navigation.entity;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import net.tfedu.zhl.cloud.core.subject.entity.JSubject;
 
 @Table(name = "j_term")
-public class Term {
+public class Term implements Serializable{
+	private static final long serialVersionUID = 8160030266758656476L;
+
     /**
      * 自增id
      */
