@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.core.online.entity.JOnlineUsers;
 import net.tfedu.zhl.cloud.core.online.service.JOnlineUsersService;
 import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
-import net.tfedu.zhl.cloud.resource.user.service.UserControllerTest;
 import net.tfedu.zhl.cloud.resource.user.service.UserService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
