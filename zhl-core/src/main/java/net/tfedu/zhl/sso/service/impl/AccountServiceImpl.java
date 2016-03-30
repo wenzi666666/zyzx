@@ -19,47 +19,46 @@ import net.tfedu.zhl.sso.service.AccountService;
 @Service("accountService")
 public class AccountServiceImpl implements AccountService {
 
-	@Resource
-	UserMapper userMapper;
-	@Resource
-	UserRoleMapper userRoleMapper;
-	@Resource
-	CacheManager cacheManager;
-	@Autowired
-	private SysReourceMapper sysReourceMapper;
+    @Resource
+    UserMapper userMapper;
+    @Resource
+    UserRoleMapper userRoleMapper;
+    @Resource
+    CacheManager cacheManager;
+    @Autowired
+    private SysReourceMapper sysReourceMapper;
 
-	@Cacheable(value = "usernamesCache", key = "#username")
-	@Override
-	public User getUserByUserName(String username) {
-		// 查用户
-		User user = userMapper.getUserByName(username);
-		return user;
-	}
+    @Cacheable(value = "usernamesCache", key = "#username")
+    @Override
+    public User getUserByUserName(String username) {
+        // 查用户
+        User user = userMapper.getUserByName(username);
+        return user;
+    }
 
+    /**
+     * 业务类常用。
+     */
+    @Override
+    public User getUserById(int userId) {
+        Object object = cacheManager.getCache("userIdsCache").get(userId);
+        if (object != null) {
+            return getUserByUserName(object.toString());
+        } 
+        else {
+            User simple = userMapper.selectByPrimaryKey(userId);
+            if (simple == null) {
+                return null;
+            }
+            // 手动缓存，只缓存id，name，节约内存
+            cacheManager.getCache("userIdsCache").put(userId, simple.getUsername());
+            return getUserByUserName(simple.getUsername());
+        }
+    }
 
-	/**
-	 * 业务类常用。
-	 */
-	@Override
-	public User getUserById(int userId) {
-		Object object = cacheManager.getCache("userIdsCache").get(userId);
-		if (object != null) {
-			return getUserByUserName(object.toString());
-		} else {
-			User simple = userMapper.selectByPrimaryKey(userId);
-			if (simple == null)
-				return null;
-			// 手动缓存，只缓存id，name，节约内存
-			cacheManager.getCache("userIdsCache").put(userId, simple.getUsername());
-			return getUserByUserName(simple.getUsername());
-		}
-	}
-
-
-	@Override
-	public List<SysResource> selectAllPermission() {
-		return sysReourceMapper.selectAllPermission();
-	}
-	
+    @Override
+    public List<SysResource> selectAllPermission() {
+        return sysReourceMapper.selectAllPermission();
+    }
 
 }
