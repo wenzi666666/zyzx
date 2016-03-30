@@ -2,10 +2,10 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat;
+import net.tfedu.zhl.helper.CoreMapper;
+
+import org.apache.ibatis.annotations.Param;
 /**
  * 查询格式
  * @author WeiCuicui
@@ -20,7 +20,7 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
 	public List<String> getDisResFormatsByMType(@Param("resourceIds") List<Long> resourceIds,@Param("fromFlag") int fromFlag);
 	
 	//根据资源格式，查询所有后缀
-	public List<String> getExtsByFormat(String fileFormat);
+	public List<String> getExtsByFormat(@Param("fileFormat")String fileFormat);
 	
 	
 	//查询全部资源格式

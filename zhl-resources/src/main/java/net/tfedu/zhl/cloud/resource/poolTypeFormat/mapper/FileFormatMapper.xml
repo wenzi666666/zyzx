@@ -64,13 +64,13 @@
   </select>
   
   <!-- 根据资源格式，查询所有后缀，结果例如：.png，jpg... -->
-  <resultMap id="FileExtsByFormatMap"  type="String">
-       <result column="formatcode" property="formatcode" />
-  </resultMap>
-  <select id="getExtsByFormat"  parameterType="String"  resultMap="FileExtsByFormatMap">
-     select distinct formatcode from j_filetypedetail where FileFormat = #{fileFormat}
+  <select id="getExtsByFormat" resultType="String">
+     select distinct formatcode from j_filetypedetail 
+     where flag = false 
+      <if test="fileFormat != '全部'">
+           and FileFormat = #{fileFormat}
+      </if>
   </select>
-  
   
   <select id="getAllFileFormat" resultType="String">
   		select  distinct fileformat as fileformat  from j_filetypedetail where flag = false order by ordernum 
