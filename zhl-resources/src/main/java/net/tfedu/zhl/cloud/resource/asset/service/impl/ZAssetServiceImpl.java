@@ -102,5 +102,4 @@ public class ZAssetServiceImpl implements ZAssetService {
 		obj.setUnReviewNumber(unReviewNumber);
 		return obj;
 	}
-
 }

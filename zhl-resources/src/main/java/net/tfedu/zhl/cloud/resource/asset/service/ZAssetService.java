@@ -54,16 +54,5 @@ public interface ZAssetService {
 	public ReviewResultStatis getReviewStatis(Long userId);
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }

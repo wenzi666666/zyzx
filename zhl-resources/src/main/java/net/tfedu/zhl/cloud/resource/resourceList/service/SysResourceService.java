@@ -13,11 +13,9 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
  */
 public interface SysResourceService {
 
-	//根据资源格式，查询所有后缀
-	public List<String> getFileExtsByFormat(String fileFormat);
 
 	//分页查询系统资源信息
-	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage);
+	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,String fileFormat,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage);
 	
 	//查询系统资源列表
 	public Pagination<SysResourceEntity> getAllSysRes(long poolId,int mTypeId,String fileFormat,String tfcode,int orderBy,int page,int perPage);

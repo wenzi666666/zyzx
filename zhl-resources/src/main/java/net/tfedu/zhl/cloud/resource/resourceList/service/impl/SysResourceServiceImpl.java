@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
@@ -28,31 +27,24 @@ import com.github.pagehelper.PageHelper;
  */
 @Service("sysResourceService")
 public class SysResourceServiceImpl implements SysResourceService{
-
-	@Resource FileFormatMapper fileFormatMapper;
 	
 	@Resource SysResourceMapper sysResourceMapper;
 	
 	@Resource ResTypeMapper resTypeMapper;
-	
-	//根据资源格式，查询所有后缀
-	@Override
-	public List<String> getFileExtsByFormat(String fileFormat){
-		return fileFormatMapper.getExtsByFormat(fileFormat);
-	}
+
 	/**
 	 * 分页查询系统资源
 	 * @return
 	 */
 	@Override
 	//分页查询系统资源信息
-	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,List<String> formats,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage){
+	public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from,String fileFormat,List<Long> resourceIds,String tfcode,int orderBy,List<Integer> typeIds,int page,int perPage){
 		
 		//Page插件必须放在查询语句之前紧挨的第一个位置
 		PageHelper.startPage(page, perPage);
 		
 		//查询系统资源
-		List<SysResourceEntity> list = sysResourceMapper.SelectSysResources(sys_from, formats, resourceIds, tfcode, orderBy, typeIds);
+		List<SysResourceEntity> list = sysResourceMapper.SelectSysResources(sys_from, fileFormat, resourceIds, tfcode, orderBy, typeIds);
 	  
 		//判断资源是否为最新
 		for(int i = 0; i < list.size(); i++){
@@ -79,10 +71,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 	public Pagination<SysResourceEntity> getAllSysRes(long poolId,int mTypeId,String fileFormat,String tfcode,int orderBy,int page,int perPage){
 		//查询结果，封装为pagination
 		Pagination<SysResourceEntity> pagination = null;
-		
-		//根据fileFormat去查询该格式下的所有 后缀
-		List<String> fileExts = getFileExtsByFormat(fileFormat);
-		
+
 		//根据当前结点tfcode，以及sys_from，查询系统资源id
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("sys_from", SysFrom.sys_from);
@@ -95,7 +84,7 @@ public class SysResourceServiceImpl implements SysResourceService{
 		map1.put("MType", mTypeId);
 		List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, mTypeId);
 		
-		pagination = getSysResList(SysFrom.sys_from, fileExts, resourceIds, tfcode, orderBy, typeIds, page, perPage);
+		pagination = getSysResList(SysFrom.sys_from, fileFormat, resourceIds, tfcode, orderBy, typeIds, page, perPage);
 		
 		return pagination;
 		

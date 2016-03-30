@@ -42,13 +42,13 @@ public class DistrictResListServiceTest extends BaseServiceTestCase{
 		int orderBy = 0;
 		
 		//页码
-		int page = 3;
+		int page = 1;
 		
 		//每页的记录数
 		int perPage = 10;
 		
 		//资源来源 校本资源
-		int fromFlag = 3;
+		int fromFlag = 4;
 		
 		pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag);
 		if(pagination != null){

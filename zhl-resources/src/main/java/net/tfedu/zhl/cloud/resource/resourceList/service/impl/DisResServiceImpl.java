@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
@@ -30,7 +29,6 @@ public class DisResServiceImpl implements DisResService{
 
 	@Resource DistrictResMapper districtResMapper;
 	@Resource ResTypeMapper resTypeMapper;
-	@Resource FileFormatMapper fileFormatMapper;
 	
 	
 	//获得区、校id
@@ -41,12 +39,12 @@ public class DisResServiceImpl implements DisResService{
 	
 	//查询区本、校本资源信息
 	@Override
-	public Pagination<DisResourceEntity> selectDisRes(int fromFlag,List<String> formats, List<Integer> typeIds, String tfcode,int orderBy,long schoolId,long districtId,int page,int perPage){
+	public Pagination<DisResourceEntity> selectDisRes(int fromFlag,String fileFormat, List<Integer> typeIds, String tfcode,int orderBy,long schoolId,long districtId,int page,int perPage){
 		//Page插件必须放在查询语句之前紧挨的第一个位置
 		PageHelper.startPage(page, perPage);
 		
 		//查询系统资源
-		List<DisResourceEntity> list = districtResMapper.selectDisRes(fromFlag, formats, typeIds, tfcode, orderBy, schoolId, districtId);
+		List<DisResourceEntity> list = districtResMapper.selectDisRes(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId);
 	  
 		//判断资源是否为最新
 		for(int i = 0; i < list.size(); i++){
@@ -71,9 +69,7 @@ public class DisResServiceImpl implements DisResService{
 	//查询区本、校本资源信息
 	@Override
 	public Pagination<DisResourceEntity> selectAllDisRes(long userId,int mTypeId,String fileFormat,String tfcode,int orderBy,int page,int perPage,int fromFlag){
-		//根据fileFormat去查询该格式下的所有 后缀
-		List<String> fileExts = fileFormatMapper.getExtsByFormat(fileFormat);
-		
+	
 		//根据父类型，查询所有的子类型
 		List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
 		
@@ -87,7 +83,7 @@ public class DisResServiceImpl implements DisResService{
 			districtId = disAndSchoolIds.getDistrictId();
 		}
 		
-		return selectDisRes(fromFlag, fileExts, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
+		return selectDisRes(fromFlag, fileFormat, typeIds, tfcode, orderBy,schoolId,districtId,page,perPage);
 		
 	}
 					

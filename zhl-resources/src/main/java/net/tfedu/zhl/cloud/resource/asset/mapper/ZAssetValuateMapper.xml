@@ -92,5 +92,5 @@
 			select id  from z_assetevaluate t where t.flag = false and t.userid = #{userId} and t.AssetId = temp_t.contId and t.Atype = temp_t.atype 
 			)
   	</select>
-  
+
 </mapper>

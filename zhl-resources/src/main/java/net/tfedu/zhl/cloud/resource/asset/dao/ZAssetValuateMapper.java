@@ -35,6 +35,5 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
 	 */
 	public Integer getUnReviewedNum(Long userId);
 	
-	
 
 }
