@@ -1,5 +1,5 @@
 package net.tfedu.zhl.cloud.resource.resPreview.entity;
 
-public class ResPreview {
+public class ResPreviewInfo {
 
 }
