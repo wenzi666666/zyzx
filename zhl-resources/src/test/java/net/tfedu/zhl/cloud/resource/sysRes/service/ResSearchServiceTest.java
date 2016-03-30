@@ -27,20 +27,22 @@ public class ResSearchServiceTest extends BaseServiceTestCase{
 		//查询结果，封装为pagination
 		Pagination<ResSearchResultEntity> pagination = null;
 		
-		//检索范围 0 全部资源   1 系统资源  2 校本资源  3 区本资源
-		int fromFlag = 1;
+
+		//检索范围   0 全部资源   1 系统资源  3 校本资源  4 区本资源
+		int fromFlag = 3;
 		
-		String format = "图片";
+		String format = "全部";
 		
-		String searchKeyword = "荷塘";
+		String searchKeyword = "乐";
 		
 		//页码
 		int page = 1;
 		
 		//每页记录数目
-		int perPage = 5;
+		int perPage = 10;
 		
-		pagination = resSearchService.getAllResources(fromFlag, SysFrom.sys_from,searchKeyword, format, page, perPage);
+		pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from,searchKeyword, format, page, perPage);
+
 		
 		if(pagination != null){
 			System.out.println(pagination.getPage());

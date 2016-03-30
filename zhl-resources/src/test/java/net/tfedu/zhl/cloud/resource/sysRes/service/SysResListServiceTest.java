@@ -34,7 +34,7 @@ public class SysResListServiceTest extends BaseServiceTestCase{
 		int mTypeId = 1;
 		
 		//资源格式
-		String fileFormat = "图片";
+		String fileFormat = "全部";
 		
 		//课程tfcode
 		String tfcode = "RJGZ040101";

@@ -330,4 +330,9 @@ public class ResSearchResultEntity implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	@Override
+	public String toString(){
+		return "resSearchEntity[id="+Id+" title="+Title+" fname="+Fname+" fpath="+Fpath+" ]";
+	}
 }
