@@ -22,19 +22,21 @@ import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.core.service.CountryService;
 import net.tfedu.zhl.cloud.utils.datatype.ArrayUtil;
 
-@Controller 
+@Controller
 @RequestMapping("/country*")
 public class CountryController {
-	
-	@Resource CountryService countryService;
+
+	@Resource
+	CountryService countryService;
 
 	/**
-	handler method 参数绑定常用的注解,我们根据他们处理的Request的不同内容部分分为四类：（主要讲解常用类型）
-	A、处理requet uri 部分（这里指uri template中variable，不含queryString部分）的注解：   @PathVariable;
-	B、处理request header部分的注解：   @RequestHeader, @CookieValue;
-	C、处理request body部分的注解：@RequestParam,  @RequestBody;
-	D、处理attribute类型是注解： @SessionAttributes, @ModelAttribute;
-	*/
+	 * handler method 参数绑定常用的注解,我们根据他们处理的Request的不同内容部分分为四类：（主要讲解常用类型）
+	 * A、处理requet uri 部分（这里指uri
+	 * template中variable，不含queryString部分）的注解： @PathVariable; B、处理request
+	 * header部分的注解： @RequestHeader, @CookieValue; C、处理request
+	 * body部分的注解：@RequestParam, @RequestBody;
+	 * D、处理attribute类型是注解： @SessionAttributes, @ModelAttribute;
+	 */
 
 	/**
 	 * 获取单个实体
@@ -45,7 +47,7 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public  Country getById(@PathVariable int id) throws Exception {
+	public Country getById(@PathVariable int id) throws Exception {
 		return countryService.get(id);
 	}
 
@@ -59,15 +61,14 @@ public class CountryController {
 	 */
 	@RequestMapping(method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> create(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Country entity)
-			throws Exception {
+	public Map<String, Object> create(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody Country entity) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.insert(entity);
 		map.put("message", "success");
 		return map;
 	}
-	
+
 	/**
 	 * 批量新增
 	 * 
@@ -78,9 +79,8 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/collection/", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> addArray(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Country[] entity)
-			throws Exception {
+	public Map<String, Object> addArray(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody Country[] entity) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.insert(ArrayUtil.arrayToList(entity));
 		map.put("message", "success");
@@ -97,9 +97,8 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> update(HttpServletRequest request,
-			HttpServletResponse response, @RequestBody Country entity)
-			throws Exception {
+	public Map<String, Object> update(HttpServletRequest request, HttpServletResponse response,
+			@RequestBody Country entity) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		countryService.update(entity);
 		map.put("message", "success");
@@ -120,7 +119,7 @@ public class CountryController {
 		map.put("message", "success");
 		return map;
 	}
-	
+
 	/**
 	 * 分页查询
 	 * 
@@ -131,8 +130,7 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/page/", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> getPage(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> getPage(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		int pageNum = Integer.parseInt(request.getParameter("pageNum"));
 		int pageSize = Integer.parseInt(request.getParameter("pageSize"));
@@ -141,7 +139,7 @@ public class CountryController {
 		map.put("message", "success");
 		return map;
 	}
-	
+
 	/**
 	 * 自由查询
 	 * 
@@ -152,15 +150,14 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/collection/", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryMaps(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> queryMaps(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<Map<?,?>> list = countryService.queryMaps();
+		List<Map<?, ?>> list = countryService.queryMaps();
 		map.put("data", list);
 		map.put("message", "success");
 		return map;
 	}
-	
+
 	/**
 	 * 自由查询
 	 * 
@@ -171,8 +168,7 @@ public class CountryController {
 	 */
 	@RequestMapping(value = "/collection/property", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> queryIds(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> queryIds(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		List<Long> list = countryService.queryIds();
 		map.put("data", list);
