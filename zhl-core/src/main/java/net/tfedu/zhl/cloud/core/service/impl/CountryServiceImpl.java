@@ -14,6 +14,11 @@ import net.tfedu.zhl.cloud.core.dao.CountryMapper;
 import net.tfedu.zhl.cloud.core.entity.Country;
 import net.tfedu.zhl.cloud.core.service.CountryService;
 
+/**
+ * demo
+ * @author bruce
+ *
+ */
 @Service("countryService")
 public class CountryServiceImpl implements CountryService {
 
