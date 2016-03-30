@@ -10,4 +10,3 @@
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>
 </project-module>
-

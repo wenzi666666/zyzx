@@ -570,6 +570,4 @@ public class PersonalController {
 		}
 		return  result;
 	}
-	
-
 }

@@ -256,6 +256,4 @@ public class JPrepareServiceImpl implements JPrepareService {
 		}		
 		return list;
 	}
-	
-
 }

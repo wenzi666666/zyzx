@@ -16,6 +16,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
@@ -31,7 +32,7 @@ public class DisResourceController {
 	@Resource SysResourceService sysResourceService;
 	@Resource ResTypeService resTypeService;
 	
-	@RequestMapping("/v1.0/districtResource")
+	@RequestMapping(value = "/v1.0/districtResource",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getDisResource(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		/**
