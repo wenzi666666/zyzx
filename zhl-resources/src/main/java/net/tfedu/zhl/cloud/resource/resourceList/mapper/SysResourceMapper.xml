@@ -81,7 +81,7 @@
  <select id="SelectSysResources"  resultMap="SysResourceMap">
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
-	m.res_time,a.UpdateDT,a.FileExt,a.resolution,k.diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
+	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
@@ -94,14 +94,11 @@
                          #{item}
                 </foreach>
 	
-	and d.typeFlag in (0,1) 
+	 and d.typeFlag in (0,1) 
 	
-	 <if test="formats != null">
-        and a.FileExt in <foreach item="item" index="index" collection="formats" 
-                         open="(" separator="," close=")">
-                         #{item}
-                     </foreach>
-     </if>
+	  <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+      </if>
 	
      <if test="typeIds != null">
           and a.mtype in <foreach item="item" index="index" collection="typeIds" 

@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.resSearch.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -30,18 +31,23 @@ public class ResSearchServiceImpl implements ResSearchService{
 
 	//跨库检索资源
 	@Override
-	public Pagination<ResSearchResultEntity> getAllResources(int fromFlag,List<Integer> sys_from,String searchKeyword,String format,int page,int perPage){
+	public Pagination<ResSearchResultEntity> getResources(int fromFlag,List<Integer> sys_from,String searchKeyword,String format,int page,int perPage){
+	   
+		//存放查询结果
+		List<ResSearchResultEntity> list = new ArrayList<ResSearchResultEntity>();
+		//封装结果集
+		PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 		
-		//根据资源格式，查询所有满足条件的后缀
-		List<String> formats = fileFormatMapper.getExtsByFormat(format);
-		
-		
+		//若输入的关键字为空，则返回为空
+		if(searchKeyword == null || searchKeyword.length() == 0)
+			return transfer.transfer(list);
+
 		//查询满足条件的全部资源
 		if(fromFlag == 0){
 			
 			//Page插件必须放在查询语句之前紧挨的第一个位置
 			PageHelper.startPage(page, perPage);
-			List<ResSearchResultEntity> list = resSearchMapper.getAllResources(searchKeyword, formats,sys_from);
+			list = resSearchMapper.getAllResources(searchKeyword, format, sys_from);
 			//判断资源是否为最新
 			for(int i = 0; i < list.size(); i++){
 				//最后更新日期
@@ -54,9 +60,6 @@ public class ResSearchServiceImpl implements ResSearchService{
 				if(date.getTime() >= expireDate.getTime())
 					list.get(i).setNew(true);
 			}
-			
-			//封装结果集
-			PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 			
 			return transfer.transfer(list);
 
@@ -64,7 +67,7 @@ public class ResSearchServiceImpl implements ResSearchService{
 			
 			//Page插件必须放在查询语句之前紧挨的第一个位置
 			PageHelper.startPage(page, perPage);
-			List<ResSearchResultEntity> list = resSearchMapper.getAllSysResources(searchKeyword, formats,sys_from);
+			list = resSearchMapper.getAllSysResources(searchKeyword, format,sys_from);
 			//判断资源是否为最新
 			for(int i = 0; i < list.size(); i++){
 				//最后更新日期
@@ -77,9 +80,6 @@ public class ResSearchServiceImpl implements ResSearchService{
 				if(date.getTime() >= expireDate.getTime())
 					list.get(i).setNew(true);
 			}
-			
-			//封装结果集
-			PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 			
 			return transfer.transfer(list);
 			
@@ -87,7 +87,7 @@ public class ResSearchServiceImpl implements ResSearchService{
 			
 			//Page插件必须放在查询语句之前紧挨的第一个位置
 			PageHelper.startPage(page, perPage);
-			List<ResSearchResultEntity> list = resSearchMapper.getAllDisResources(searchKeyword, fromFlag, formats);
+			list = resSearchMapper.getAllDisResources(searchKeyword, fromFlag, format);
 			//判断资源是否为最新
 			for(int i = 0; i < list.size(); i++){
 				//最后更新日期
@@ -100,9 +100,6 @@ public class ResSearchServiceImpl implements ResSearchService{
 				if(date.getTime() >= expireDate.getTime())
 					list.get(i).setNew(true);
 			}
-			
-			//封装结果集
-			PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 			
 			return transfer.transfer(list);
 		}

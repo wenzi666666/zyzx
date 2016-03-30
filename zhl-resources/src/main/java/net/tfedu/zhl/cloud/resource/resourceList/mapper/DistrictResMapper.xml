@@ -93,20 +93,21 @@
        
   </resultMap>
   <select id="selectDisRes" resultMap="DisResMap">
-   select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
-   m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
+    select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+    m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
 	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
-
-    and a.FileExt in  <foreach item="item" index="index" collection="formats" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-
+    
+    where c.StructCode like  CONCAT(#{tfcode},'%')   
+    
+    <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+    </if>
+   
      <if test="typeIds != null">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
@@ -115,7 +116,6 @@
               )
      </if>
      
-    and c.StructCode like  CONCAT(#{tfcode},'%')    
     <if test="fromFlag == 3">
          and a.scopeId = #{schoolId}
     </if>
@@ -131,7 +131,7 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-     ,b.DisplayIndex asc,orderNum asc,id
+     ,b.DisplayIndex asc,orderNum asc
   </select>
   
 </mapper>

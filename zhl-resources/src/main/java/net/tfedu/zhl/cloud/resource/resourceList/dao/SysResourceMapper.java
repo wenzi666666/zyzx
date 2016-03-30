@@ -18,7 +18,7 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
 	
 	//查询系统资源，返回结果为List<HashMap<?, ?>>
 	public List<SysResourceEntity> SelectSysResources
-	(@Param("sys_from") List<Integer> sys_from,@Param("formats") List<String> formats,@Param("resourceIds") List<Long> resourceIds,
+	(@Param("sys_from") List<Integer> sys_from,@Param("fileFormat") String fileFormat,@Param("resourceIds") List<Long> resourceIds,
 		@Param("pTfcode") String tfcode,@Param("orderBy") int orderBy,@Param("typeIds") List<Integer> typeIds);	
 			
 }

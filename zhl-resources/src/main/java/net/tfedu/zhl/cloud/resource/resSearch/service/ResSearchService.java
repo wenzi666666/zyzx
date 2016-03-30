@@ -8,5 +8,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 public interface ResSearchService {
 
 	//跨库检索资源
-	public Pagination<ResSearchResultEntity> getAllResources(int fromFlag,List<Integer> sys_from,String searchKeyword,String format,int page,int perPage);
+	public Pagination<ResSearchResultEntity> getResources(int fromFlag,List<Integer> sys_from,String searchKeyword,String format,int page,int perPage);
+	
 }

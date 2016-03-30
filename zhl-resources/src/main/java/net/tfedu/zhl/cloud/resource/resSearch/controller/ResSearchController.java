@@ -57,7 +57,7 @@ public class ResSearchController {
 			//若当前用户已经登录系统
     		if(exception == null && currentUserId != null){
     			
-    			//检索范围 0 全部资源   1 系统资源  2 校本资源  3 区本资源
+    			//检索范围 0 全部资源   1 系统资源  3 校本资源  4 区本资源
     			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
     			
     			//检索的关键词
@@ -72,7 +72,7 @@ public class ResSearchController {
     		    //每页记录数目
     		    int perPage = Integer.parseInt(request.getParameter("perPage"));
     		    
-    		    pagination = resSearchService.getAllResources(fromFlag, SysFrom.sys_from,searchKeyword, format, page, perPage);
+    		    pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from,searchKeyword, format, page, perPage);
     		    
     		    exception = CustomException.SUCCESS;
     			
