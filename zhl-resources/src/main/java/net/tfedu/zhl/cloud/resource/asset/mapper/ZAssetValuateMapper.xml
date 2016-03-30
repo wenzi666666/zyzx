@@ -69,4 +69,28 @@
 		</if>
 		order by time desc
   </select>
+  
+  
+  <!--  获取当前用户评论的资源数目 -->
+  	<select id="getReviewedNum" parameterType="Long" resultType="Integer">
+  		select  count(1) as reviewNumber from z_assetevaluate t where  t.flag = false and t.userid = #{userId}
+  	</select>
+  
+  
+  <!-- 获取当前用户所有备课夹中未进行评论的资源数目 -->
+  	<select id="getUnReviewedNum" parameterType="Long" resultType="Integer">
+			  	
+			select  count(1) as  unReviewNumber  from (
+			select c.contId,c.contType
+			,CASE WHEN  (contType=1 or contType=9) then 2 when (contType=2 or contType=10) then 1 WHEN contType=11 THEN 4 WHEN conttype =12 THEN 3 END as atype 
+			from  j_lession_prepare p 
+			LEFT JOIN j_prepare_content c on c.preId = p.id 
+			where  p.flag = false and p.userid =  #{userId}
+			and c.conttype in (1,2,9,10,11,12)
+			)temp_t
+			where NOT EXISTS (
+			select id  from z_assetevaluate t where t.flag = false and t.userid = #{userId} and t.AssetId = temp_t.contId and t.Atype = temp_t.atype 
+			)
+  	</select>
+  
 </mapper>

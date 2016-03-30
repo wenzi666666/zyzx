@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
+import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
@@ -79,6 +80,27 @@ public class ZAssetServiceImpl implements ZAssetService {
 				reviewMapper.deleteByPrimaryKey(Long.parseLong(string));
 			}
 		}
+	}
+
+
+
+
+	@Override
+	public ReviewResultStatis getReviewStatis(Long userId) {
+		/**
+		 * 已经评价的资源数
+		 */
+		Integer reviewNumber  = reviewMapper.getReviewedNum(userId);
+		
+		/**
+		 * 未评价的资源数
+		 */
+		Integer unReviewNumber = reviewMapper.getUnReviewedNum(userId);
+		
+		ReviewResultStatis obj = new ReviewResultStatis();
+		obj.setReviewNumber(reviewNumber);
+		obj.setUnReviewNumber(unReviewNumber);
+		return obj;
 	}
 
 }

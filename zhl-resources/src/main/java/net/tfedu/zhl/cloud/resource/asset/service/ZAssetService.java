@@ -2,9 +2,8 @@ package net.tfedu.zhl.cloud.resource.asset.service;
 
 import java.util.List;
 
-import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
+import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
-import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 public interface ZAssetService {
@@ -45,6 +44,14 @@ public interface ZAssetService {
 	public void removeMyReview(String ids);
 	
 	
+	
+	
+	/**
+	 * 对用户的资源评论（评论、未评论）进行统计
+	 * @param userId
+	 * @return
+	 */
+	public ReviewResultStatis getReviewStatis(Long userId);
 	
 	
 	

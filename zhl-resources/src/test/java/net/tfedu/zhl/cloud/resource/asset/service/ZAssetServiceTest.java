@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
@@ -34,4 +35,13 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 	   }
 	}
 
+	
+	
+	
+	@Test
+	public void testReviewStatic(){
+		long userId =390330126;
+		ReviewResultStatis s =  zAssetService.getReviewStatis(userId);
+		System.out.println(s.getReviewNumber()+"-------"+s.getUnReviewNumber());
+	}
 }

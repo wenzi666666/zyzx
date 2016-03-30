@@ -19,5 +19,22 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
 	 */
 	public List<ResourceReview> getMyReview(@Param("userId")Long userId,@Param("reviewType")Integer reviewType);
 	
+	
+	
+	
+	/**
+	 * 获取当前用户评论的资源数目
+	 * @param userId
+	 * @return
+	 */
+	public Integer getReviewedNum(Long userId);
+	/**
+	 * 获取当前用户所有备课夹中未进行评论的资源数目
+	 * @param userId
+	 * @return
+	 */
+	public Integer getUnReviewedNum(Long userId);
+	
+	
 
 }
