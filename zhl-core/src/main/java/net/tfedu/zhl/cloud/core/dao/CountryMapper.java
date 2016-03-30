@@ -11,13 +11,15 @@ import net.tfedu.zhl.helper.CoreMapper;
  *
  */
 public interface CountryMapper extends CoreMapper<Country>{
-	/**
-	 * 自由查询，万能的map，最佳伙伴是lambda
-	 */
-	List<Map<?,?>> queryMaps();
-	/**
-	 * 根据单个属性查询
-	 */
-	List<Long> queryIds();
+    /**
+     * 自由查询，万能的map，最佳伙伴是lambda
+     * @return List<Map<?,?>>
+     */
+    List<Map<?,?>> queryMaps();
+    /**
+     * 根据单个属性查询
+     * @return List<Long>
+     */
+    List<Long> queryIds();
 
 }
