@@ -8,6 +8,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 public interface JPrepareService {
@@ -158,6 +159,15 @@ public interface JPrepareService {
 	 * @param fromFlags
 	 */
 	public void removeMyPrepareContentResource(Long userId,String resIds,String fromFlags);
+	
+	
+	
+	/**
+	 * 获取我的备课夹的信息统计
+	 * @param userId
+	 * @return
+	 */
+	public List<UserPrepareStatisInfo> getMyPrepareStatis(Long userId);
 	
 	
 

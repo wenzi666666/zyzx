@@ -55,7 +55,8 @@ public enum CustomException {
 	
 	
 	public static CustomException getCustomExceptionByCode(String code){
-		CustomException e = code.equalsIgnoreCase(CustomException.OUTOFDATE.code)?CustomException.OUTOFDATE
+		CustomException e = code ==null?CustomException.UNCUSTOM
+				:code.equalsIgnoreCase(CustomException.OUTOFDATE.code)?CustomException.OUTOFDATE
 				:code.equalsIgnoreCase(CustomException.UNUSUALERROR.code)?CustomException.UNUSUALERROR
 				:code.equalsIgnoreCase(CustomException.WITHOUTUSER.code)?CustomException.WITHOUTUSER
 				:code.equalsIgnoreCase(CustomException.WRONGPASSWORD.code)?CustomException.WRONGPASSWORD

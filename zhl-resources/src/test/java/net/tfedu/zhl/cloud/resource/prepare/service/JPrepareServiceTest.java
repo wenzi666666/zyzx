@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
@@ -278,7 +280,15 @@ public class JPrepareServiceTest extends BaseControllerTestCase{
 	}
 	
 	
-	
+	@Test
+	public void testPrepareStatic(){
+		long userId =390320126;
+		List<UserPrepareStatisInfo> list = jPrepareService.getMyPrepareStatis(userId);
+		System.out.println(list.size());
+		for (int i = 0; i < list.size(); i++) {
+			System.out.println(list.get(i).toString());
+		}
+	}
 	
 	
 	

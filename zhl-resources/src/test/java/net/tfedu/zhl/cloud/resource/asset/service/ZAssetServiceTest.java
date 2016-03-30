@@ -44,4 +44,8 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 		ReviewResultStatis s =  zAssetService.getReviewStatis(userId);
 		System.out.println(s.getReviewNumber()+"-------"+s.getUnReviewNumber());
 	}
+	
+	
+
+	
 }

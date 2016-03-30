@@ -200,6 +200,54 @@
   
   
   
+    
+    
+   <!-- 简版资源的信息，用于获取播放或下载路径 -->
+   <resultMap id="prepareStatisMap" type="net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo"> 		
+      <result column="tfcode"  property="tfcode" />
+      <result column="title"  property="title" />
+      <result column="preparenums" property="prepareNums" />
+      <result column="resourcenums" property="resourceNums" />
+      <result column="nodefinishednums" property="nodeFinishedNums" />
+      <result column="nodeomitnums"  property="nodeOmitNums" />
+   </resultMap>
+  	
+  
+  <!--  获取用户的备课夹统计(部分)  -->
+	<select id="getUserPrepareStatisButPartResult" resultMap="prepareStatisMap" parameterType="Long">
+		select  s.tfcode,s.Name as title
+		from 
+			(SELECT DISTINCT LEFT(t.tfcode,10) as tfcode 
+			
+			FROM
+				j_lession_prepare t
+			WHERE
+				LENGTH(t.tfcode)>=10  and t.flag =false 
+			AND t.userid = #{userId} )temp
+		LEFT JOIN j_syscourse s on temp.tfcode = s.tfcode
+		where s.flag = false
+  </select>
+  
+  
+  <select id="getBookPrepareStatis" resultMap="prepareStatisMap" >
+  	SELECT   preparenums,resourcenums,nodefinishednums,(nodeallnumbers-nodefinishednums) as nodeomitnums from (
+		select  sum( IF(childrennum=0,1,0) ) as nodeallnumbers,sum(prenum) as preparenums 
+			,sum(if(prenum=0,0,1)) as nodefinishednums,sum(resnum) as resourcenums
+		from (
+			SELECT 	id,tfcode
+			,(select count(1) from j_lession_prepare t where t.tfcode = p.tfcode  and userid =#{userId} and flag =FALSE ) as prenum
+			,(select count(c.id) from j_lession_prepare t,j_prepare_content c where t.tfcode = p.tfcode and t.flag =false 
+									and userid = #{userId} and t.id = c.preId and c.flag = false and c.contType in (1,2,9,10,11,12) ) as resnum 
+			,(SELECT count(1)	FROM	j_syscourse pp	WHERE	pp.pnodeid = p.id	AND pp.flag = FALSE ) AS childrennum
+			FROM
+				j_syscourse p
+			WHERE
+				tfcode LIKE #{tfcode}
+			AND flag = FALSE 
+		)temp 
+	)tep2
+  </select>
+  
   
  
   

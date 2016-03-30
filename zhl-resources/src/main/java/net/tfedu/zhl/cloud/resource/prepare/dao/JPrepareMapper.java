@@ -2,11 +2,14 @@ package net.tfedu.zhl.cloud.resource.prepare.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.helper.CoreMapper;
 
 public interface JPrepareMapper extends CoreMapper<JPrepare> {
@@ -107,6 +110,22 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
 	
 	
 	
+	/**
+	 * 获取用户的备课夹统计(部分)
+	 * 只 获取tfcode、title、resourcenums
+	 * @param userId
+	 * @return
+	 */
+	public List<UserPrepareStatisInfo> getUserPrepareStatisButPartResult(Long userId);
+	
+	
+	
+	/**
+	 * 获取教材的已经备完的课程、  需要备课的课程数
+	 * @param info
+	 * @return
+	 */
+	public  UserPrepareStatisInfo getBookPrepareStatis(@Param("userId")Long userId,@Param("tfcode")String tfcode);
 	
 	
 	

@@ -14,6 +14,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
@@ -240,6 +241,20 @@ public class JPrepareServiceImpl implements JPrepareService {
 			int  _contType = JPrepareConstant.getContTypeByFromFlag(Integer.parseInt(fromFlag[i]));
 			contMapper.removeMyPrepareContentResource(userId, _resId, _contType);
 		}
+	}
+
+	@Override
+	public List<UserPrepareStatisInfo> getMyPrepareStatis(Long userId) {
+		
+		List<UserPrepareStatisInfo> list = mapper.getUserPrepareStatisButPartResult(userId);
+		for (UserPrepareStatisInfo info : list) {
+			UserPrepareStatisInfo temp = mapper.getBookPrepareStatis(userId, info.getTfcode()+"%");
+			info.setNodeFinishedNums(temp.getNodeFinishedNums());
+			info.setNodeOmitNums(temp.getNodeOmitNums());
+			info.setPrepareNums(temp.getPrepareNums());
+			info.setResourceNums(temp.getResourceNums());
+		}		
+		return list;
 	}
 	
 
