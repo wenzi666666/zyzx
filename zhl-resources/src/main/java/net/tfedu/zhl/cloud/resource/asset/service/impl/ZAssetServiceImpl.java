@@ -171,4 +171,5 @@ public class ZAssetServiceImpl implements ZAssetService {
 		Pagination p = new PageInfoToPagination().transfer(list);		
 		return p ;
 	}
+
 }

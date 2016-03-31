@@ -39,6 +39,5 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 */
 	public List<ZAsset> queryMyAssets(@Param("userId")Long userId,@Param("unifyTypeId") Long unifyTypeId
 								,@Param("fileFormat")String fileFormat);
-	
-	
+
 }

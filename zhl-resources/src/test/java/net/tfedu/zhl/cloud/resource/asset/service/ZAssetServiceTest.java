@@ -61,10 +61,5 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 	public void testDel(){
 		
 	}
-	
-	
-	
-	
-	
-	
+
 }
