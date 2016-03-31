@@ -3,7 +3,7 @@ package net.tfedu.zhl.cloud.resource.resourceList.dao;
 
 import java.util.List;
 
-import net.tfedu.zhl.cloud.resource.resPreview.entity.AllResNav;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
@@ -27,9 +27,9 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
 	public ResPreviewInfo getSysResInfo(@Param("resId") long resId);
 	
 	//根据structCode，查询一个版本的目录
-	public AllResNav getOneSysNav(@Param("structCode")String structCode);
+	public ResNavEntity getOneSysNav(@Param("structCode")String structCode);
 	
 	//根据资源id，获得所有版本的structCode
-	public List<String> getAllRescodes(@Param("resId")long resId);
+	public List<String> getAllRescodes(@Param("resId")long resId,@Param("curTfcode")String curTfcode);
 			
 }
