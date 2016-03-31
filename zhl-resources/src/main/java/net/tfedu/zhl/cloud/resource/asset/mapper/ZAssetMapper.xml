@@ -52,4 +52,38 @@
   <update id="updateAssetFinished">
   	update z_asset set isfinished = 0 where userId = #{userId} and assetPath = #{resPath} 
   </update>
+  
+  
+     <!-- 自建资源前端展示信息 -->
+   <resultMap id="viewMap" type="net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView"> 		
+      <result column="resid"  property="resId" />
+      <result column="rescode"  property="resCode" />
+      <result column="title"  property="title" />
+      <result column="unifytype" property="unifyType" />
+      <result column="time"  property="time" />
+      <result column="imgpath"  property="imgPath" />
+      <result column="filesuffix" property="fileSuffix" />
+   </resultMap>
+  
+  <select id="queryMyAssets" resultMap="viewMap">
+	select  resId,rescode,title,unifytype,time,imgpath,filesuffix from  (	 
+			select  a.id as resId,a.resourceid as rescode,a.name as title,a.createTime as time,p.id as unifyTypeId
+			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			from  z_asset a 
+			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId		
+			where a.userid = #{userId}
+			and a.flag =false and a.FileType = 'A'
+
+ 	)temp_result 
+	where  1 =1 
+   	<if test="unifyTypeId>0">
+		and EXISTS ( select  id from x_resourcetype  where (id = #{unifyTypeId}>0 or pid = #{unifyTypeId}>0 )and flag =false and id = temp_result.unifyTypeId )
+	</if>
+	
+	<if test=" (fileFormat !='' and fileFormat !=null and fileFormat!='全部' and fileFormat!='all') ">
+		and EXISTS (select FormatCode from j_filetypedetail where flag = false  and FileFormat =#{fileFormat} and FormatCode = CONCAT('.',temp_result.filesuffix))
+	</if>   
+	ORDER BY time desc 
+  </select>
+  
 </mapper>

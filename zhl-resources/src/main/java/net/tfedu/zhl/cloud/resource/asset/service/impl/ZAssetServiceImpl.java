@@ -7,11 +7,13 @@ import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZTypeConvertMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
@@ -127,5 +129,46 @@ public class ZAssetServiceImpl implements ZAssetService {
 		
 		assetMapper.updateAssetFinished(userId, resPath);
 		
+	}
+
+
+
+
+	@Override
+	public void addAssetBatch(List<ZAsset> list) {
+		assetMapper.insertList(list);
+	}
+
+
+
+
+	@Override
+	public void delAsset(String resIds) {
+		if(StringUtils.isNotEmpty(resIds)){
+			String[]ids = resIds.split(",");
+			for (String id : ids) {
+				assetMapper.deleteByPrimaryKey(Long.parseLong(id));
+			}
+		}
+	}
+
+
+
+
+	@Override
+	public void updateAsset(ZAsset asset) {
+		assetMapper.updateByPrimaryKeySelective(asset);
+	}
+
+
+
+
+	@Override
+	public Pagination queryMyAssets(Long userId, Long unifyTypeId,
+			String fileFormat, Integer page, Integer perPage) {
+		PageHelper.startPage(page, perPage);
+		List<ZAsset> list  = assetMapper.queryMyAssets(userId, unifyTypeId, fileFormat);
+		Pagination p = new PageInfoToPagination().transfer(list);		
+		return p ;
 	}
 }

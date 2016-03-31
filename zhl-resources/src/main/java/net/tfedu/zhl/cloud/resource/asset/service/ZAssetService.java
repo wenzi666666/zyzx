@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.asset.service;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
@@ -61,6 +62,46 @@ public interface ZAssetService {
 	 * @param resPath  上传文件原始路径
 	 */
 	public void setTypeConvertSucceed(Long userId,String resPath);
+	
+	
+	
+	
+	
+	/**
+	 * 批量增加自建资源
+	 * @param list
+	 */
+	public void addAssetBatch(List<ZAsset> list) ;
+	
+	
+	
+	
+	/**
+	 * 删除自建资源
+	 * @param resIds
+	 */
+	public void delAsset(String resIds);
+	
+	
+	
+	/**
+	 * 修改自建资源
+	 * @param asset
+	 */
+	public void updateAsset(ZAsset asset);
+	
+	
+	
+	/**
+	 * 分页查询我的上传
+	 * @param userId
+	 * @param unifyTypeId  资源类型
+	 * @param fileFormat   资源格式 
+	 * @param page
+	 * @param perPage
+	 * @return
+	 */
+	public Pagination queryMyAssets(Long userId,Long unifyTypeId,String fileFormat,Integer page,Integer perPage);
 	
 	
 
