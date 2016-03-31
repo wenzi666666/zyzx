@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.downloadrescord.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
 			if(ids.length!=flags.length){
 				throw new RuntimeException(CustomException.PARAMSERROR.getCode());
 			}
+			List<ResDownRecord> list = new ArrayList<ResDownRecord>();
 			Calendar c = Calendar.getInstance();
 			for (int i = 0; i < flags.length; i++) {
 				ResDownRecord r = new ResDownRecord();
@@ -48,9 +50,9 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
 				r.setFromflag(Integer.parseInt(flags[i]));
 				r.setDowndate(c.getTime());
 				r.setDowntime(c.getTime());
-				mapper1.insert(r);
+				list.add(r);
 			}
-			
+			mapper1.insertList(list);
 		}
 		mapper.insert(obj);
 	}
