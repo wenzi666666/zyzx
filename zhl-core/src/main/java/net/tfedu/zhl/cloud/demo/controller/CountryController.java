@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.core.controller;
+package net.tfedu.zhl.cloud.demo.controller;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
 
-import net.tfedu.zhl.cloud.core.entity.Country;
-import net.tfedu.zhl.cloud.core.service.CountryService;
+import net.tfedu.zhl.cloud.demo.entity.Country;
+import net.tfedu.zhl.cloud.demo.service.CountryService;
 import net.tfedu.zhl.cloud.utils.datatype.ArrayUtil;
 
 @Controller

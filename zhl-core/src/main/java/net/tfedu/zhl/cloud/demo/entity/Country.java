@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.core.entity;
+package net.tfedu.zhl.cloud.demo.entity;
 
 import java.io.Serializable;
 import javax.persistence.Id;

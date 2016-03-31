@@ -9,8 +9,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import net.tfedu.zhl.cloud.core.controller.CountryController;
-import net.tfedu.zhl.cloud.core.entity.Country;
+import net.tfedu.zhl.cloud.demo.controller.CountryController;
+import net.tfedu.zhl.cloud.demo.entity.Country;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
