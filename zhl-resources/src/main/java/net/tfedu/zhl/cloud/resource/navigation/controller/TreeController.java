@@ -16,6 +16,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 目录树的controller
@@ -35,6 +36,7 @@ public class TreeController {
 	 * @throws IOException
 	 */
 	@RequestMapping(value = "/v1.0/contents",method = RequestMethod.GET)
+	@ResponseBody
 	public ResultJSON getTreeNodes(HttpServletRequest request,HttpServletResponse response) throws IOException{
 		/**
 		 * 返回json的结果对象

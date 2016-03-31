@@ -19,7 +19,7 @@ public class TreeServiceTest extends BaseServiceTestCase{
 	
 	@Test
 	public void testTreeService()throws IOException{
-		long pnodeId = 67527;
+		long pnodeId = 5200105;
 		List<TreeNode> resultNodes = new ArrayList<TreeNode>();
 		resultNodes = treeService.geTreeNodes(pnodeId);
 		
