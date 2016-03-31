@@ -1,0 +1,79 @@
+package net.tfedu.zhl.cloud.resource.user.service;
+
+import net.tfedu.zhl.cloud.resource.user.entity.JUser;
+import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
+
+/**
+ * 用户相关接口
+ * @author wangwr
+ *
+ */
+public interface UserService {
+	
+	
+	
+	/**
+	 * 根据id获取用户
+	 * @param id
+	 * @return
+	 */
+	public JUser getUserById(long id);
+	
+	/**
+	 * 根据name获取用户
+	 * @param id
+	 * @return
+	 */
+	public JUser getUserByName(String name);
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 根据id获取用户
+	 * @param id
+	 * @return
+	 */
+	public UserSimple getUserSimpleById(long id);
+	
+	/**
+	 * 根据name获取用户
+	 * @param id
+	 * @return
+	 */
+	public UserSimple getUserSimpleByName(String name);
+	
+	
+	
+	
+	
+	
+	/**
+	 * 修改用户的信息
+	 * @param userId
+	 * @param trueName
+	 * @param male
+	 * @param termId
+	 * @param subjectId
+	 */
+	public void updateUserInfo(Long userId,String trueName,Boolean male,Long termId,Long subjectId);
+	
+	
+	
+	/**
+	 * 修改用户头像
+	 * @param userId
+	 * @param userImage
+	 */
+	public void updateUserImage(Long userId,String userImage);
+	
+	
+	
+	
+	
+	
+
+}

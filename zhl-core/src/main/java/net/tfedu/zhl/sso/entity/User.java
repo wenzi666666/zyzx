@@ -14,11 +14,11 @@ import javax.persistence.Transient;
 @Table(name = "sys_user")
 public class User implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3508900201566884322L;
+     * 
+     */
+    private static final long serialVersionUID = 3508900201566884322L;
 
-	/**
+    /**
      * 编号
      */
     @Id
@@ -46,14 +46,14 @@ public class User implements Serializable {
      */
     @Column(name = "isDelete")
     private Integer isdelete;
-    
+
     private String salt;
-    
+
     @Transient
-    List<Role> roles; 
-    
+    List<Role> roles;
+
     @Transient
-    List<SysResource> resources;
+    List<Permission> userPermissions;
 
     public User(Integer id, String username, String password, Date createDate, Integer isdelete) {
         this.id = id;
@@ -66,9 +66,9 @@ public class User implements Serializable {
     public User() {
         super();
     }
-    
-    public User(String username){
-    	this.username=username;
+
+    public User(String username) {
+        this.username = username;
     }
 
     /**
@@ -83,7 +83,8 @@ public class User implements Serializable {
     /**
      * 设置编号
      *
-     * @param id 编号
+     * @param id
+     *            编号
      */
     public void setId(Integer id) {
         this.id = id;
@@ -101,7 +102,8 @@ public class User implements Serializable {
     /**
      * 设置用户名
      *
-     * @param username 用户名
+     * @param username
+     *            用户名
      */
     public void setUsername(String username) {
         this.username = username == null ? null : username.trim();
@@ -119,7 +121,8 @@ public class User implements Serializable {
     /**
      * 设置密码
      *
-     * @param password 密码
+     * @param password
+     *            密码
      */
     public void setPassword(String password) {
         this.password = password == null ? null : password.trim();
@@ -137,7 +140,8 @@ public class User implements Serializable {
     /**
      * 设置创建日期
      *
-     * @param createDate 创建日期
+     * @param createDate
+     *            创建日期
      */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
@@ -152,50 +156,46 @@ public class User implements Serializable {
         return isdelete;
     }
 
-    
     public String getSalt() {
-		return salt;
-	}
+        return salt;
+    }
 
-	public void setSalt(String salt) {
-		this.salt = salt;
-	}
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
 
-	/**
+    /**
      * 设置是否删除
      *
-     * @param isdelete 是否删除
+     * @param isdelete
+     *            是否删除
      */
     public void setIsdelete(Integer isdelete) {
         this.isdelete = isdelete;
     }
 
+    public List<Role> getRoles() {
+        return roles;
+    }
 
-	public List<Role> getRoles() {
-		return roles;
-	}
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+    public List<Permission> getUserPermissions() {
+        return userPermissions;
+    }
 
-	public List<SysResource> getResources() {
-		return resources;
-	}
+    public void setUserPermissions(List<Permission> userPermissions) {
+        this.userPermissions = userPermissions;
+    }
 
-	public void setResources(List<SysResource> resources) {
-		this.resources = resources;
-	}
-
-
-	/**
-	 * 提供toString方法，方便单元测试时，直接输出对象。
-	 */
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", createDate=" + createDate
-				+ ", isdelete=" + isdelete + ", roles=" + roles + ", resources=" + resources + "]";
-	}
-    
-    
+    /**
+     * 提供toString方法，方便单元测试时，直接输出对象。
+     */
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + ", password=" + password + ", createDate=" + createDate
+                + ", isdelete=" + isdelete + ", roles=" + roles + ", userPermissions=" + userPermissions + "]";
+    }
 }

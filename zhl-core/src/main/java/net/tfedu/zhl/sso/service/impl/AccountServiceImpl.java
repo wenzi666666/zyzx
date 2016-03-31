@@ -44,8 +44,7 @@ public class AccountServiceImpl implements AccountService {
         Object object = cacheManager.getCache("userIdsCache").get(userId);
         if (object != null) {
             return getUserByUserName(object.toString());
-        } 
-        else {
+        } else {
             User simple = userMapper.selectByPrimaryKey(userId);
             if (simple == null) {
                 return null;
@@ -54,11 +53,6 @@ public class AccountServiceImpl implements AccountService {
             cacheManager.getCache("userIdsCache").put(userId, simple.getUsername());
             return getUserByUserName(simple.getUsername());
         }
-    }
-
-    @Override
-    public List<SysResource> selectAllPermission() {
-        return sysReourceMapper.selectAllPermission();
     }
 
 }

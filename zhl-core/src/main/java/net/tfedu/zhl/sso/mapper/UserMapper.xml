@@ -27,4 +27,5 @@
     LEFT JOIN sys_resource rs on rp.resource_id=rs.id
 		where u.username=#{username}
 	</select>
+
 </mapper>

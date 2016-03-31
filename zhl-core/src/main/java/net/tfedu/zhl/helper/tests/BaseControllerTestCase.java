@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * Controller 单元测试基类
+ * 
  * @author bruce
  *
  */
@@ -21,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class BaseControllerTestCase {
 
     protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
-    protected MockHttpServletRequest request = new MockHttpServletRequest("GET", "/any");
+    protected MockHttpServletRequest request;
     protected MockHttpServletResponse response = new MockHttpServletResponse();
 
     protected long startTime;
@@ -38,6 +39,7 @@ public abstract class BaseControllerTestCase {
 
     /**
      * 结束
+     * 
      * @throws Exception
      */
     @After
@@ -59,6 +61,7 @@ public abstract class BaseControllerTestCase {
 
     /**
      * get请求
+     * 
      * @param url
      * @return
      */

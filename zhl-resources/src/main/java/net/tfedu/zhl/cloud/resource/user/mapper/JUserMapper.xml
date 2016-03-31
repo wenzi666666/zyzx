@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.user.dao.JUserMapper" >
+  <resultMap id="userMap" type="net.tfedu.zhl.cloud.resource.user.entity.JUser" >
+
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="name" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="RoleId" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="ChannelId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="ChannelLimit" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="LoginTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="LogoutTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="SchoolId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="TrueName" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="NickName" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="IsSee" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="Male" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="webLoginTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="webLogoutTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="forumLastSeeTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="qaLastSeeTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="studyTermId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="lastTipId" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="grade" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="isFirstLogin" jdbcType="BIT" javaType="java.lang.Boolean" />
+    </constructor>
+    
+    <result column="subjectIds" property="subjectIds" javaType="java.lang.String"/>
+    <result column="subjectNames" property="subjectNames" javaType="java.lang.String"/>
+    <result column="roleName" property="roleName" javaType="java.lang.String"/>
+    <result column="schoolName" property="schoolName" javaType="java.lang.String"/>
+    <result column="termId" property="termId" javaType="java.lang.Long" />
+    <result column="termName" property="termName" javaType="java.lang.String"/>
+  </resultMap>
+  
+  
+  <resultMap id="userMapSimple" type="net.tfedu.zhl.cloud.resource.user.entity.UserSimple" >
+  	<id column="userId" property="userId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+    <result column="userName" property="userName" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="trueName" property="trueName" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="userImage" property="userImage" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="male" property="male" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="subjectIds" property="subjectIds" javaType="java.lang.String" />
+    <result column="subjectNames" property="subjectNames" javaType="java.lang.String" />
+    <result column="roleName" property="roleName" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="schoolName" property="schoolName" javaType="java.lang.String" jdbcType="CHAR" />
+    <result column="termName" property="termName" javaType="java.lang.String" jdbcType="CHAR" />
+  
+  </resultMap>
+
+
+
+	<select id="getUserByName" parameterType="String" resultMap="userMap">
+		select u.Id,u.name,u.RoleId,u.ChannelId,u.ChannelLimit,u.LoginTime,u.LogoutTime,u.SchoolId,u.TrueName,u.NickName,u.IsSee,u.Male,u.Flag,u.webLoginTime,u.webLogoutTime
+		,u.forumLastSeeTime,u.qaLastSeeTime,u.studyTermId,u.status,u.lastTipId,u.grade,u.isFirstLogin
+		,r.Name as roleName,t.Id as termId,t.Name as termName,
+		s.name as schoolName,GROUP_CONCAT(su.id) as subjectIds,GROUP_CONCAT(su.name)as subjectNames
+		from j_user u
+		LEFT JOIN j_role r on r.id = u.RoleId
+		LEFT JOIN j_userterm ut on ut.UserId = u.id
+		LEFT JOIN j_term t on t.id = ut.TermId
+		LEFT JOIN j_school s on s.id = u.SchoolId
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		where u.name = #{name}
+		and r.flag  =false and ut.flag = false and t.flag = false 
+	</select>
+
+  
+  
+  
+	<select id="getUserById" parameterType="Long" resultMap="userMap" >
+		select u.Id,u.name,u.RoleId,u.ChannelId,u.ChannelLimit,u.LoginTime,u.LogoutTime,u.SchoolId,u.TrueName,u.NickName,u.IsSee,u.Male,u.Flag,u.webLoginTime,u.webLogoutTime
+		,u.forumLastSeeTime,u.qaLastSeeTime,u.studyTermId,u.status,u.lastTipId,u.grade,u.isFirstLogin
+		,r.Name as roleName,t.Id as termId,t.Name as termName,
+		s.name as schoolName,GROUP_CONCAT(su.id) as subjectIds,GROUP_CONCAT(su.name)as subjectNames		
+		from j_user u	
+		LEFT JOIN j_role r on r.id = u.RoleId
+		LEFT JOIN j_userterm ut on ut.UserId = u.id
+		LEFT JOIN j_term t on t.id = ut.TermId
+		LEFT JOIN j_school s on s.id = u.SchoolId
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		where u.id = #{id}
+		and r.flag  =false and ut.flag = false and t.flag = false 
+	</select>
+  
+  
+  
+  <select id="getUserSimpleById" parameterType="Long" resultMap="userMapSimple">
+  		select u.Id as userId ,u.roleId,
+     	u.name as userName,
+      	u.trueName,
+    	IF(u.male=1,'男','女')male,
+		r.Name as roleName,
+    	t.Name as termName,
+		s.name as schoolName,
+		ui.UserImage as userImage,
+		GROUP_CONCAT(su.id) as subjectIds,
+		GROUP_CONCAT(su.name)as subjectNames		
+		from j_user u	
+		LEFT JOIN j_userinfo ui on ui.userid = u.id
+		LEFT JOIN j_role r on r.id = u.RoleId
+		LEFT JOIN j_userterm ut on ut.UserId = u.id
+		LEFT JOIN j_term t on t.id = ut.TermId
+		LEFT JOIN j_school s on s.id = u.SchoolId
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		where u.id =#{id}
+		and r.flag  =false and ut.flag = false and t.flag = false   
+  </select>
+  
+  
+    
+  <select id="getUserSimpleByName" parameterType="String" resultMap="userMapSimple">
+  		select u.Id as userId ,u.roleId,
+     	u.name as userName,
+      	u.trueName,
+    	IF(u.male=1,'男','女')male,
+		r.Name as roleName,
+    	t.Name as termName,
+		s.name as schoolName,
+		ui.UserImage as userImage,
+		GROUP_CONCAT(su.id) as subjectIds,
+		GROUP_CONCAT(su.name)as subjectNames		
+		from j_user u	
+		LEFT JOIN j_userinfo ui on ui.userid = u.id
+		LEFT JOIN j_role r on r.id = u.RoleId
+		LEFT JOIN j_userterm ut on ut.UserId = u.id
+		LEFT JOIN j_term t on t.id = ut.TermId
+		LEFT JOIN j_school s on s.id = u.SchoolId
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		where u.name =#{name}
+		and r.flag  =false and ut.flag = false and t.flag = false   
+  </select>
+  
+  
+  <update id="updateUserImage">
+  	update  j_userinfo set UserImage = #{1} where userid =#{0} 
+  </update>
+  
+  
+  
+  
+</mapper>
