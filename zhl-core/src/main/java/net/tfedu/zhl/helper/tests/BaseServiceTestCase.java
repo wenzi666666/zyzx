@@ -8,26 +8,36 @@ import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)		//表示继承了SpringJUnit4ClassRunner类
-@ContextConfiguration(locations = {
-	    "classpath:/applicationContext.xml",
-	    "classpath*:/applicationContext-*.xml"
-	})
+/**
+ * 表示继承了SpringJUnit4ClassRunner类
+ * @author bruce
+ *
+ */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = { "classpath:/applicationContext.xml", "classpath*:/applicationContext-*.xml" })
 public abstract class BaseServiceTestCase {
 
-	protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
-    
-    protected long startTime,endTime;
+    protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
 
+    protected long startTime;
+    protected long endTime;
+
+    /**
+     * 初始化
+     */
     @Before
     public void onSetUp() {
 
-        startTime=System.currentTimeMillis();
+        startTime = System.currentTimeMillis();
     }
-    
-	@After
-	public void tearDown() throws Exception {
-        endTime=System.currentTimeMillis();
+
+    /**
+     * 结束
+     * @throws Exception
+     */
+    @After
+    public void tearDown() throws Exception {
+        endTime = System.currentTimeMillis();
         log.info("执行时长：" + (endTime - startTime) + "ms");
-	}
+    }
 }
