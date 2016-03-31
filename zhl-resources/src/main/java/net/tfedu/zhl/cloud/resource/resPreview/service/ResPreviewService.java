@@ -16,5 +16,5 @@ public interface ResPreviewService {
 	public ResPreviewInfo getResPreviewInfo(long resId,int fromFlag);
 	
 	//对一个资源进行预览时，查询该资源所在的所有版本目录
-	public List<ResNavEntity> getAllResNavs(long resId,int fromFlag,String curTfcode);
+	public List<List<ResNavEntity>> getAllResNavs(long resId,int fromFlag,String curTfcode);
 }

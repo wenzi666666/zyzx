@@ -27,7 +27,7 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
 	public ResPreviewInfo getSysResInfo(@Param("resId") long resId);
 	
 	//根据structCode，查询一个版本的目录
-	public ResNavEntity getOneSysNav(@Param("structCode")String structCode);
+	public List<ResNavEntity> getSysNav(@Param("structCode")String structCode);
 	
 	//根据资源id，获得所有版本的structCode
 	public List<String> getAllRescodes(@Param("resId")long resId,@Param("curTfcode")String curTfcode);
