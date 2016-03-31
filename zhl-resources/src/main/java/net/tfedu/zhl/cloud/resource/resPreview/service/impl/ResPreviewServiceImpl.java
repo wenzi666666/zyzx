@@ -47,14 +47,15 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 	
 	//对一个资源进行预览时，查询该资源所在的所有版本目录
 	@Override
-	public List<ResNavEntity> getAllResNavs(long resId,int fromFlag,String curTfcode){
-		List<ResNavEntity> info = new ArrayList<ResNavEntity>();
+	public List<List<ResNavEntity>> getAllResNavs(long resId,int fromFlag,String curTfcode){
+		List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
 		if(fromFlag == 0){//系统资源
 			List<String> structCodes = sysResourceMapper.getAllRescodes(resId,curTfcode);
 			if(structCodes != null){
 				for(int i = 0; i < structCodes.size(); i++){
-					ResNavEntity nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
-					info.add(nav);
+					List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
+					if(navs != null)
+					   info.add(navs);
 				}
 			}
 			
@@ -65,8 +66,9 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 			List<String> structCodes = districtResMapper.getAllDisRescodes(resId,curTfcode);
 			if(structCodes != null){
 				for(int i = 0; i < structCodes.size(); i++){
-					ResNavEntity nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
-					info.add(nav);
+					List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
+					if(navs != null)
+						   info.add(navs);
 				}
 			}
 		} 

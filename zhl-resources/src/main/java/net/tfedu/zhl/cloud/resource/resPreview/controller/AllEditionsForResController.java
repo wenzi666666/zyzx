@@ -43,7 +43,7 @@ public class AllEditionsForResController {
 		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
 		
 		//各个版本的资源目录
-		List<ResNavEntity> result = new ArrayList<ResNavEntity>();
+		List<List<ResNavEntity>> result = new ArrayList<List<ResNavEntity>>();
 		
 		try {
 			

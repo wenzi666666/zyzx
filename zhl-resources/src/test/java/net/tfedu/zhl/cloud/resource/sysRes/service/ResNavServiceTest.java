@@ -24,6 +24,7 @@ public class ResNavServiceTest extends BaseServiceTestCase {
 	
 	@Test
 	public void testResPreview()throws IOException{
+		
 		//0 系统资源；1 自建资源；2 共享资源；3 校本资源；4 区本资源
 		int fromFlag = 0;
 		
@@ -31,16 +32,17 @@ public class ResNavServiceTest extends BaseServiceTestCase {
 		long resId = 1;
 		
 		//当前所在结点
-		String curTfcode = "";
+		String curTfcode = "RJXX0101";
 		
-		List<ResNavEntity> result = new ArrayList<ResNavEntity>();
+		List<List<ResNavEntity>> result = new ArrayList<List<ResNavEntity>>();
 		
 		result = resPreviewService.getAllResNavs(resId, fromFlag, curTfcode);
 		
 		Assert.isTrue(result.size() > 0);
 		
 		for(int i = 0; i < result.size(); i++)
-			log.info(result.get(i).toString());
-		
+			for (int j = 0; j < result.get(i).size(); j++) {
+				log.info(result.get(i).get(j).toString());
+			}
 	}
 }
