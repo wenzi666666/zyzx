@@ -51,6 +51,32 @@ public class ZhlResourceCenterWrap {
 	 */
 	public static final String zipPath_prefix = "zipPath";
 	
+
+	/**
+	 * 上传文件路径前缀
+	 */
+	public static final String upload_prefix = "upFile";
+	
+	
+	/**
+	 * 获取用户的上传文件
+	 * @param userId
+	 * @return
+	 */
+	public static String getUserUploadPath(Long userId,Long schoolId){
+		Calendar time =  Calendar.getInstance();
+		
+		return  new StringBuffer()
+		.append(upload_prefix)
+		.append(File.separator)
+		.append(time.get(Calendar.YEAR))
+		.append(File.separator)
+		.append(userId)
+		.append(File.separator)
+		.append(schoolId)
+		.append(File.separator)
+		.toString();
+	}
 	
 	
 	/**
@@ -302,17 +328,14 @@ public class ZhlResourceCenterWrap {
 	 *            指定的上传路径
 	 * @return
 	 */
-	public static String getUploadUrlConvert(String uploadPath,HttpServletRequest request,long userId) {
-		String basePath = request.getServletContext().getInitParameter("hostLocal");
-		String paths[] = basePath.split(",");
+	public static String getUploadUrlConvert(String uploadPath,String resServiceLocal
+										,String currentResService,String hostLocal,long userId) {
 		//回调函数action
-		String returnUrl = paths[0] + "historyConvert_insert.action";
-		
-		String resSerPath = request.getServletContext().getInitParameter("resServiceLocal");
-		
-		
-		return new zhldowncenter(CustomerID, CustomerKey, resSerPath)
-				.GetUploadURLString(uploadPath, "rename&userId=" + userId,returnUrl);  //returnUrl中配置回调函数的action 
+		String returnUrl = hostLocal + "/v1.0/resource/uploadConvertCallBack";
+
+		String url =  new zhldowncenter(CustomerID, CustomerKey, resServiceLocal)
+				.GetUploadURLString(uploadPath, "rename&userId=" + userId,returnUrl);  //returnUrl中配置回调函数的action 	
+		return url.replace(resServiceLocal, currentResService) ;
 	}
 	
 	/**

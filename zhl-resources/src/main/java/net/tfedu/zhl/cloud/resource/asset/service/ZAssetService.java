@@ -54,5 +54,14 @@ public interface ZAssetService {
 	public ReviewResultStatis getReviewStatis(Long userId);
 	
 	
+	
+	/**
+	 * 设置上传资源格式转换成功
+	 * @param userId
+	 * @param resPath  上传文件原始路径
+	 */
+	public void setTypeConvertSucceed(Long userId,String resPath);
+	
+	
 
 }

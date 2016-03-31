@@ -40,4 +40,16 @@
       <arg column="Content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  
+  
+  <select id="getAssetByUserIdAndPath" resultMap="BaseResultMap">
+  	  select * from z_asset where userid = #{userId} and assetpath =#{resPath} 
+  </select>
+  
+  
+  
+  <update id="updateAssetFinished">
+  	update z_asset set isfinished = 0 where userId = #{userId} and assetPath = #{resPath} 
+  </update>
 </mapper>

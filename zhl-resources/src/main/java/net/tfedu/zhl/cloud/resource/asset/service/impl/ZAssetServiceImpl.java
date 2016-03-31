@@ -2,9 +2,12 @@ package net.tfedu.zhl.cloud.resource.asset.service.impl;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
+import net.tfedu.zhl.cloud.resource.asset.dao.ZTypeConvertMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
@@ -32,6 +35,15 @@ public class ZAssetServiceImpl implements ZAssetService {
 	 */
 	@Autowired
 	ZAssetValuateMapper reviewMapper;
+	
+	
+	@Autowired
+	ZAssetMapper assetMapper;
+	
+	
+	@Autowired
+	ZTypeConvertMapper convertMapper; 
+	
 	
 
 	@Override
@@ -101,5 +113,19 @@ public class ZAssetServiceImpl implements ZAssetService {
 		obj.setReviewNumber(reviewNumber);
 		obj.setUnReviewNumber(unReviewNumber);
 		return obj;
+	}
+
+
+
+
+	@Override
+	public void setTypeConvertSucceed(Long userId, String resPath) {
+		ZTypeConvert obj = new ZTypeConvert();
+		obj.setUserid(userId);
+		obj.setRespath(resPath);
+		convertMapper.insert(obj);
+		
+		assetMapper.updateAssetFinished(userId, resPath);
+		
 	}
 }
