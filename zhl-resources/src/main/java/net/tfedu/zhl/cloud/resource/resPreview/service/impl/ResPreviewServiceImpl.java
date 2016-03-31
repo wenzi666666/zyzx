@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.resPreview.entity.AllResNav;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
@@ -47,13 +47,13 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 	
 	//对一个资源进行预览时，查询该资源所在的所有版本目录
 	@Override
-	public List<AllResNav> getAllResNavs(long resId,int fromFlag){
-		List<AllResNav> info = new ArrayList<AllResNav>();
+	public List<ResNavEntity> getAllResNavs(long resId,int fromFlag,String curTfcode){
+		List<ResNavEntity> info = new ArrayList<ResNavEntity>();
 		if(fromFlag == 0){//系统资源
-			List<String> structCodes = sysResourceMapper.getAllRescodes(resId);
+			List<String> structCodes = sysResourceMapper.getAllRescodes(resId,curTfcode);
 			if(structCodes != null){
 				for(int i = 0; i < structCodes.size(); i++){
-					AllResNav nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
+					ResNavEntity nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
 					info.add(nav);
 				}
 			}
@@ -62,10 +62,10 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 			
 			
 		} else if(fromFlag == 3 || fromFlag == 4){//校本资源、区本资源
-			List<String> structCodes = districtResMapper.getAllDisRescodes(resId);
+			List<String> structCodes = districtResMapper.getAllDisRescodes(resId,curTfcode);
 			if(structCodes != null){
 				for(int i = 0; i < structCodes.size(); i++){
-					AllResNav nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
+					ResNavEntity nav = sysResourceMapper.getOneSysNav(structCodes.get(i));
 					info.add(nav);
 				}
 			}

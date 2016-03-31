@@ -22,5 +22,5 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
     public ResPreviewInfo getDisResInfo(@Param("fromFlag") int fromFlag,@Param("resId") long resId);
     
     //根据资源id，获得所有版本的structCode
-    public  List<String> getAllDisRescodes(@Param("resId")long resId);
+    public  List<String> getAllDisRescodes(@Param("resId")long resId,@Param("curTfcode")String curTfcode);
 }

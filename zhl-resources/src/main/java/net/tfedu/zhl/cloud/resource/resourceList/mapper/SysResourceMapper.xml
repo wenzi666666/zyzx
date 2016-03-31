@@ -147,9 +147,12 @@
      select id,name,tfcode from j_syscourse where LOCATE(tfcode,#{structCode}) > 0
  </select>
  
- <!-- 根据系统资源id，查询其对应的所有的rescode -->
+ <!-- 根据系统资源id，查询其对应的所有版本的StructCode -->
  <select id="getAllRescodes" resultType="String">
-    select StructCode from z_resnav nav inner JOIN z_resource res on nav.ResCode = res.ResCode 
-    where res.id = #{resId} and nav.flag = false and res.flag = false 
+    select StructCode from z_resnav nav 
+	LEFT JOIN z_resource res on nav.ResCode = res.ResCode 
+	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode
+	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false 
+	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
 </mapper>
