@@ -36,13 +36,10 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception exception) throws Exception {
-        logger.debug("------------afterCompletion-------------------");
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object controller, ModelAndView mv) throws Exception {
-        logger.debug("------------postHandle-------------------");
-
     }
 
     @Override
