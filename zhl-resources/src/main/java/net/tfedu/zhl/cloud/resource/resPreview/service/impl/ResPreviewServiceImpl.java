@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
+import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
@@ -23,6 +25,7 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 	
 	@Resource SysResourceMapper sysResourceMapper;
 	@Resource DistrictResMapper districtResMapper;
+	@Resource JUserDefaultMapper jUserDefaultMapper;
 
 	//根据resId和fromFlag，查询资源具体信息
 	@Override
@@ -74,5 +77,12 @@ public class ResPreviewServiceImpl implements ResPreviewService{
 		} 
 		
 		return info;
+	}
+	
+	//根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
+	@Override
+	public JUserDefault getPnodes(String tfcode){
+		
+		return jUserDefaultMapper.getCourseContent(tfcode);
 	}
 }
