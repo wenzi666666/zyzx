@@ -49,7 +49,7 @@ public class UserDefaultController {
 		try {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			long userId = Long.parseLong(request.getParameter("userId").toString().trim());
+    			long userId = currentUserId;
 				
     			int type = Integer.parseInt(request.getParameter("type").toString().trim());
     					
@@ -98,7 +98,7 @@ public class UserDefaultController {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
     			
-    			long userId = Long.parseLong(request.getParameter("userId").toString().trim());
+    			long userId = currentUserId;
 				
     			int type = Integer.parseInt(request.getParameter("type").toString().trim());
     					

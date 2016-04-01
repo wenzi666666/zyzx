@@ -77,8 +77,10 @@ public class UserCommentController {
         			long resId = Long.parseLong(request.getParameter("resId"));
         			String displayContent = request.getParameter("displayContent");
         			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+        			int ascore = Integer.parseInt(request.getParameter("ascore"));
+        			int isScore = Integer.parseInt(request.getParameter("isScore"));
         			
-        			userCommentService.insertUserComment(resId, userId, displayContent, fromFlag);
+        			userCommentService.insertUserComment(resId, userId, displayContent, ascore,fromFlag,isScore);
 				}
     			
     			exception = CustomException.SUCCESS;
@@ -123,11 +125,11 @@ public class UserCommentController {
 		try {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			long userId = Long.parseLong(request.getParameter("userId"));
+    			long userId = currentUserId;
     			long resId = Long.parseLong(request.getParameter("resId"));
     			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
     			
-    			myComments = userCommentService.getMyComments(fromFlag, userId, resId);
+    			myComments = userCommentService.getMyComments(fromFlag,resId,userId );
     			
     			exception = CustomException.SUCCESS;
     		}
@@ -171,11 +173,11 @@ public class UserCommentController {
 		try {
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			long userId = Long.parseLong(request.getParameter("userId"));
+    			long userId = currentUserId;
     			long resId = Long.parseLong(request.getParameter("resId"));
     			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
     			
-    			otherComments = userCommentService.getOtherComments(fromFlag, userId, resId);
+    			otherComments = userCommentService.getOtherComments(fromFlag,resId,userId);
     			
     			exception = CustomException.SUCCESS;
     		}
