@@ -13,4 +13,5 @@ mvn mybatis-generator:generate
 比如：private Integer userid; 这个是正确的写法；
       private int userid;    这个是错误的写法，会自动赋值一个缺省值，不利于更新。
 
-      
+为了统一权限管理，对数据库做了些增减，详细见group_add.sql
+

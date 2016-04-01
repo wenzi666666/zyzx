@@ -11,7 +11,9 @@ public enum CustomException {
 	
 	
 	SUCCESS("OK","",200),	
+	NULOGIN("WithoutLogin","用户没登录",401),    
 	WITHOUTUSER("WithoutUser","用户不存在",401),	
+	WITHOUTAUTH("WithoutAuthorization","用户没权限",401),    
 	WRONGPASSWORD("WrongPassWord","密码错误",401),
 	OUTOFDATE("OutOfDate","卡号过期",401),
 	UNUSUALERROR("UnusualError","用户信息异常",401),
