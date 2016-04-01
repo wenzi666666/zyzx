@@ -73,7 +73,7 @@ public class UserCommentController {
     				
     			} else { //新建用户评论
     				
-    				long userId = Long.parseLong(request.getParameter("userId"));
+    				long userId = currentUserId;
         			long resId = Long.parseLong(request.getParameter("resId"));
         			String displayContent = request.getParameter("displayContent");
         			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
