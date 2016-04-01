@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 资源库 controller
+ * 
  * @author WeiCuicui
  *
  */
@@ -27,49 +28,51 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/resRestAPI")
 public class ResPoolController {
 
-	@Resource ResPoolService resPoolService;
+    @Resource
+    ResPoolService resPoolService;
 
-	/**
-	 * 查询所有的资源库
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws IOException
-	 */
-	@RequestMapping(value = "/v1.0/pools",method = RequestMethod.GET)
-	@ResponseBody
-	public ResultJSON getAllPools(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		/**
-		 * 返回json的结果对象
-		 */
-		ResultJSON resultJSON = new ResultJSON();
-		
-		//异常
-		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
-		//当前登录用户id 
-		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
-		List<ResPool> pools = new ArrayList<ResPool>();
-		try {
-			//当前用户已经登录系统
-    		if(exception == null && currentUserId != null){
-    		
-    			//查询所有资源库
-    			pools = resPoolService.getAllPools();
+    /**
+     * 查询所有的资源库
+     * 
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping(value = "/v1.0/pools", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getAllPools(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        /**
+         * 返回json的结果对象
+         */
+        ResultJSON resultJSON = new ResultJSON();
 
-    			exception = CustomException.SUCCESS;
-    		}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			exception = CustomException.getCustomExceptionByCode(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			resultJSON.setCode(exception.getCode());
-			resultJSON.setData(pools);
-			resultJSON.setMessage(exception.getMessage());
-			resultJSON.setSign("");
-		}
-		
-		return resultJSON;
-	}
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        List<ResPool> pools = new ArrayList<ResPool>();
+        try {
+            // 当前用户已经登录系统
+            if (exception == null && currentUserId != null) {
+
+                // 查询所有资源库
+                pools = resPoolService.getAllPools();
+
+                exception = CustomException.SUCCESS;
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            resultJSON.setCode(exception.getCode());
+            resultJSON.setData(pools);
+            resultJSON.setMessage(exception.getMessage());
+            resultJSON.setSign("");
+        }
+
+        return resultJSON;
+    }
 }

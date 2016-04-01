@@ -22,50 +22,51 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/resRestAPI")
 public class DistrictResFormatController {
 
-	@Resource ResFormatService resFormatService;
-	@Resource ResTypeService resTypeService;
+    @Resource
+    ResFormatService resFormatService;
+    @Resource
+    ResTypeService resTypeService;
 
-	
-	@RequestMapping(value = "/v1.0/districtResource/formats",method = RequestMethod.GET)
-	@ResponseBody
-	public ResultJSON getDisFormats(HttpServletRequest request,HttpServletResponse response) throws IOException{
-		/**
-		 * 返回json的结果对象
-		 */
-		ResultJSON resultJSON = new ResultJSON();
-		
-		//异常
-		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
-		//当前登录用户id 
-		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
-		
-		//格式
-		List<String> formats = new ArrayList<String>();
-		try {
-			//当前用户已经登录系统
-    		if(exception == null && currentUserId != null){
-    		
-    			//资源类型id
-    			String tfcode = request.getParameter("tfcode");
-    			int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-    			
-    			formats = resFormatService.getDisResFormats(tfcode, fromFlag);
-    			
-    			exception = CustomException.SUCCESS;
-    		}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			//捕获异常信息
-			exception = CustomException.getCustomExceptionByCode(e.getMessage());
-			e.printStackTrace();
-		} finally {
-			resultJSON.setCode(exception.getCode());
-			resultJSON.setData(formats);
-			resultJSON.setMessage(exception.getMessage());
-			resultJSON.setSign("");
-		}
-		
-		return resultJSON;
-	}
+    @RequestMapping(value = "/v1.0/districtResource/formats", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getDisFormats(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        /**
+         * 返回json的结果对象
+         */
+        ResultJSON resultJSON = new ResultJSON();
+
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+
+        // 格式
+        List<String> formats = new ArrayList<String>();
+        try {
+            // 当前用户已经登录系统
+            if (exception == null && currentUserId != null) {
+
+                // 资源类型id
+                String tfcode = request.getParameter("tfcode");
+                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+
+                formats = resFormatService.getDisResFormats(tfcode, fromFlag);
+
+                exception = CustomException.SUCCESS;
+            }
+
+        } catch (Exception e) {
+            // TODO: handle exception
+            // 捕获异常信息
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            resultJSON.setCode(exception.getCode());
+            resultJSON.setData(formats);
+            resultJSON.setMessage(exception.getMessage());
+            resultJSON.setSign("");
+        }
+
+        return resultJSON;
+    }
 }

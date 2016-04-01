@@ -10,15 +10,16 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.CoreMapper;
 
 public interface ResZipDownRecordMapper extends CoreMapper<ResZipDownRecord> {
-	
-	/**
-	 * 分页获取我的下载
-	 * @param userId
-	 * @param unifyTypeId
-	 * @param fileFormat
-	 * @return
-	 */
-	public List<JPrepareContentView> getMydownload(@Param("userId")Long userId,@Param("unifyTypeId")Long unifyTypeId,@Param("fileFormat")String fileFormat); 
-	
+
+    /**
+     * 分页获取我的下载
+     * 
+     * @param userId
+     * @param unifyTypeId
+     * @param fileFormat
+     * @return
+     */
+    public List<JPrepareContentView> getMydownload(@Param("userId") Long userId, @Param("unifyTypeId") Long unifyTypeId,
+            @Param("fileFormat") String fileFormat);
 
 }

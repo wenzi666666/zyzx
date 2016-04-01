@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "z_resdown_record")
-public class ResDownRecord  implements Serializable{
+public class ResDownRecord implements Serializable {
     /**
      * id
      */
@@ -20,7 +20,7 @@ public class ResDownRecord  implements Serializable{
     private Long resid;
 
     /**
-     * 下载资源的来源  0 系统资源 1 区校资源 2 共享资源
+     * 下载资源的来源 0 系统资源 1 区校资源 2 共享资源
      */
     private Integer fromflag;
 
@@ -64,7 +64,8 @@ public class ResDownRecord  implements Serializable{
     /**
      * 设置id
      *
-     * @param id id
+     * @param id
+     *            id
      */
     public void setId(Long id) {
         this.id = id;
@@ -82,25 +83,27 @@ public class ResDownRecord  implements Serializable{
     /**
      * 设置资源在表中的id
      *
-     * @param resid 资源在表中的id
+     * @param resid
+     *            资源在表中的id
      */
     public void setResid(Long resid) {
         this.resid = resid;
     }
 
     /**
-     * 获取下载资源的来源  0 系统资源 1 区校资源 2 共享资源
+     * 获取下载资源的来源 0 系统资源 1 区校资源 2 共享资源
      *
-     * @return fromflag - 下载资源的来源  0 系统资源 1 区校资源 2 共享资源
+     * @return fromflag - 下载资源的来源 0 系统资源 1 区校资源 2 共享资源
      */
     public Integer getFromflag() {
         return fromflag;
     }
 
     /**
-     * 设置下载资源的来源  0 系统资源 1 区校资源 2 共享资源
+     * 设置下载资源的来源 0 系统资源 1 区校资源 2 共享资源
      *
-     * @param fromflag 下载资源的来源  0 系统资源 1 区校资源 2 共享资源
+     * @param fromflag
+     *            下载资源的来源 0 系统资源 1 区校资源 2 共享资源
      */
     public void setFromflag(Integer fromflag) {
         this.fromflag = fromflag;
@@ -118,7 +121,8 @@ public class ResDownRecord  implements Serializable{
     /**
      * 设置下载用户
      *
-     * @param userid 下载用户
+     * @param userid
+     *            下载用户
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -136,7 +140,8 @@ public class ResDownRecord  implements Serializable{
     /**
      * 设置下载日期
      *
-     * @param downdate 下载日期
+     * @param downdate
+     *            下载日期
      */
     public void setDowndate(Date downdate) {
         this.downdate = downdate;
@@ -154,7 +159,8 @@ public class ResDownRecord  implements Serializable{
     /**
      * 设置下载的时分秒
      *
-     * @param downtime 下载的时分秒
+     * @param downtime
+     *            下载的时分秒
      */
     public void setDowntime(Date downtime) {
         this.downtime = downtime;

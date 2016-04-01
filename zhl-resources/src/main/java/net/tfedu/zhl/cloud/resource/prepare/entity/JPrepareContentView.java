@@ -11,163 +11,161 @@ import javax.persistence.Id;
  * @author wangwr
  * 
  */
-public class JPrepareContentView  implements Serializable{
+public class JPrepareContentView implements Serializable {
 
-		@Id
-	    private Long id;
+    @Id
+    private Long id;
 
-	    private String title;
+    private String title;
 
-	    private Long resId;
+    private Long resId;
 
-	    private Integer fromFlag;
+    private Integer fromFlag;
 
-	    private String unifyType;
+    private String unifyType;
 
-	    private String size;
+    private String size;
 
-	    private String timeline;
+    private String timeline;
 
-	    private Date time;
+    private Date time;
 
-	    private String imgPath;
+    private String imgPath;
 
-	    private String fileSuffix;
+    private String fileSuffix;
 
-	    public JPrepareContentView(Long id, String title, Long resId, Integer fromFlag, String unifyType, String size, String timeline, Date time, String imgPath, String fileSuffix) {
-	        this.id = id;
-	        this.title = title;
-	        this.resId = resId;
-	        this.fromFlag = fromFlag;
-	        this.unifyType = unifyType;
-	        this.size = size;
-	        this.timeline = timeline;
-	        this.time = time;
-	        this.imgPath = imgPath;
-	        this.fileSuffix = fileSuffix;
-	    }
+    public JPrepareContentView(Long id, String title, Long resId, Integer fromFlag, String unifyType, String size,
+            String timeline, Date time, String imgPath, String fileSuffix) {
+        this.id = id;
+        this.title = title;
+        this.resId = resId;
+        this.fromFlag = fromFlag;
+        this.unifyType = unifyType;
+        this.size = size;
+        this.timeline = timeline;
+        this.time = time;
+        this.imgPath = imgPath;
+        this.fileSuffix = fileSuffix;
+    }
 
-	    public JPrepareContentView() {
-	        super();
-	    }
+    public JPrepareContentView() {
+        super();
+    }
 
-	    /**
-	     * @return id
-	     */
-	    public Long getId() {
-	        return id;
-	    }
+    /**
+     * @return id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	    /**
-	     * @param id
-	     */
-	    public void setId(Long id) {
-	        this.id = id;
-	    }
+    /**
+     * @param id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    /**
-	     * @return title
-	     */
-	    public String getTitle() {
-	        return title;
-	    }
+    /**
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	    /**
-	     * @param title
-	     */
-	    public void setTitle(String title) {
-	        this.title = title == null ? null : title.trim();
-	    }
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
 
-	  
+    /**
+     * @return size
+     */
+    public String getSize() {
+        return size;
+    }
 
-	    /**
-	     * @return size
-	     */
-	    public String getSize() {
-	        return size;
-	    }
+    /**
+     * @param size
+     */
+    public void setSize(String size) {
+        this.size = size == null ? null : size.trim();
+    }
 
-	    /**
-	     * @param size
-	     */
-	    public void setSize(String size) {
-	        this.size = size == null ? null : size.trim();
-	    }
+    /**
+     * @return timeline
+     */
+    public String getTimeline() {
+        return timeline;
+    }
 
-	    /**
-	     * @return timeline
-	     */
-	    public String getTimeline() {
-	        return timeline;
-	    }
+    /**
+     * @param timeline
+     */
+    public void setTimeline(String timeline) {
+        this.timeline = timeline == null ? null : timeline.trim();
+    }
 
-	    /**
-	     * @param timeline
-	     */
-	    public void setTimeline(String timeline) {
-	        this.timeline = timeline == null ? null : timeline.trim();
-	    }
+    /**
+     * @return time
+     */
+    public Date getTime() {
+        return time;
+    }
 
-	    /**
-	     * @return time
-	     */
-	    public Date getTime() {
-	        return time;
-	    }
+    /**
+     * @param time
+     */
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
-	    /**
-	     * @param time
-	     */
-	    public void setTime(Date time) {
-	        this.time = time;
-	    }
+    public Long getResId() {
+        return resId;
+    }
 
-		public Long getResId() {
-			return resId;
-		}
+    public void setResId(Long resId) {
+        this.resId = resId;
+    }
 
-		public void setResId(Long resId) {
-			this.resId = resId;
-		}
+    public Integer getFromFlag() {
+        return fromFlag;
+    }
 
-		public Integer getFromFlag() {
-			return fromFlag;
-		}
+    public void setFromFlag(Integer fromFlag) {
+        this.fromFlag = fromFlag;
+    }
 
-		public void setFromFlag(Integer fromFlag) {
-			this.fromFlag = fromFlag;
-		}
+    public String getUnifyType() {
+        return unifyType;
+    }
 
-		public String getUnifyType() {
-			return unifyType;
-		}
+    public void setUnifyType(String unifyType) {
+        this.unifyType = unifyType;
+    }
 
-		public void setUnifyType(String unifyType) {
-			this.unifyType = unifyType;
-		}
+    public String getImgPath() {
+        return imgPath;
+    }
 
-		public String getImgPath() {
-			return imgPath;
-		}
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
-		public void setImgPath(String imgPath) {
-			this.imgPath = imgPath;
-		}
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
 
-		public String getFileSuffix() {
-			return fileSuffix;
-		}
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
+    }
 
-		public void setFileSuffix(String fileSuffix) {
-			this.fileSuffix = fileSuffix;
-		}
+    @Override
+    public String toString() {
+        return "[prepareContentView:{id:" + id + ";title:" + title + ";resId:" + resId + ";fromFlag:" + fromFlag
+                + ";unifyType:" + unifyType + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";
+    }
 
-		
-		@Override
-		public String toString(){
-			return "[prepareContentView:{id:"+id+";title:"+title+";resId:"+resId+";fromFlag:"
-					+fromFlag+";unifyType:"+unifyType+";imgPath:"+imgPath+";fileSuffix:"+fileSuffix+"}]";
-		}
-	
 }

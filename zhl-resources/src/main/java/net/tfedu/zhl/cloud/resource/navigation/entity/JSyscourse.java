@@ -10,9 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "j_syscourse")
-public class JSyscourse implements Serializable{
-	
-	private static final long serialVersionUID = 8160030266758656476L;
+public class JSyscourse implements Serializable {
+
+    private static final long serialVersionUID = 8160030266758656476L;
 
     /**
      * 自增id
@@ -86,7 +86,7 @@ public class JSyscourse implements Serializable{
     private Boolean flag;
 
     /**
-     * 0 共用  1平台教材 2 三年无忧
+     * 0 共用 1平台教材 2 三年无忧
      */
     @Column(name = "typeFlag")
     private Integer typeflag;
@@ -98,7 +98,7 @@ public class JSyscourse implements Serializable{
     private Long ordernum;
 
     /**
-     * 是否可见（三年无忧） 1 可见  0 不可见
+     * 是否可见（三年无忧） 1 可见 0 不可见
      */
     private Boolean visible;
 
@@ -132,7 +132,10 @@ public class JSyscourse implements Serializable{
     @Column(name = "scopeType")
     private Integer scopetype;
 
-    public JSyscourse(Long id, Long subjectid, Long termid, Long pnodeid, String name, String tfcode, String isarea, Integer firstpage, Integer endpage, Long resourceid, String ebookpath, String ebookdic, Boolean flag, Integer typeflag, Long ordernum, Boolean visible, Short grade, Date updatetime, Date createdt, Date createtime, Boolean isspec, Boolean enabled, String createman, Integer scopetype) {
+    public JSyscourse(Long id, Long subjectid, Long termid, Long pnodeid, String name, String tfcode, String isarea,
+            Integer firstpage, Integer endpage, Long resourceid, String ebookpath, String ebookdic, Boolean flag,
+            Integer typeflag, Long ordernum, Boolean visible, Short grade, Date updatetime, Date createdt,
+            Date createtime, Boolean isspec, Boolean enabled, String createman, Integer scopetype) {
         this.id = id;
         this.subjectid = subjectid;
         this.termid = termid;
@@ -175,7 +178,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置自增id
      *
-     * @param id 自增id
+     * @param id
+     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
@@ -193,7 +197,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置科目id
      *
-     * @param subjectid 科目id
+     * @param subjectid
+     *            科目id
      */
     public void setSubjectid(Long subjectid) {
         this.subjectid = subjectid;
@@ -211,7 +216,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置学段id
      *
-     * @param termid 学段id
+     * @param termid
+     *            学段id
      */
     public void setTermid(Long termid) {
         this.termid = termid;
@@ -229,7 +235,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置父节点
      *
-     * @param pnodeid 父节点
+     * @param pnodeid
+     *            父节点
      */
     public void setPnodeid(Long pnodeid) {
         this.pnodeid = pnodeid;
@@ -261,7 +268,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置ͬ
      *
-     * @param tfcode ͬ
+     * @param tfcode
+     *            ͬ
      */
     public void setTfcode(String tfcode) {
         this.tfcode = tfcode == null ? null : tfcode.trim();
@@ -279,7 +287,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置N-----
      *
-     * @param isarea N-----
+     * @param isarea
+     *            N-----
      */
     public void setIsarea(String isarea) {
         this.isarea = isarea == null ? null : isarea.trim();
@@ -297,7 +306,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置第一页
      *
-     * @param firstpage 第一页
+     * @param firstpage
+     *            第一页
      */
     public void setFirstpage(Integer firstpage) {
         this.firstpage = firstpage;
@@ -315,7 +325,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置最后一页
      *
-     * @param endpage 最后一页
+     * @param endpage
+     *            最后一页
      */
     public void setEndpage(Integer endpage) {
         this.endpage = endpage;
@@ -333,7 +344,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置系统资源
      *
-     * @param resourceid 系统资源
+     * @param resourceid
+     *            系统资源
      */
     public void setResourceid(Long resourceid) {
         this.resourceid = resourceid;
@@ -379,25 +391,27 @@ public class JSyscourse implements Serializable{
     /**
      * 设置是否删除，0-----否；1----是
      *
-     * @param flag 是否删除，0-----否；1----是
+     * @param flag
+     *            是否删除，0-----否；1----是
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
     }
 
     /**
-     * 获取0 共用  1平台教材 2 三年无忧
+     * 获取0 共用 1平台教材 2 三年无忧
      *
-     * @return typeFlag - 0 共用  1平台教材 2 三年无忧
+     * @return typeFlag - 0 共用 1平台教材 2 三年无忧
      */
     public Integer getTypeflag() {
         return typeflag;
     }
 
     /**
-     * 设置0 共用  1平台教材 2 三年无忧
+     * 设置0 共用 1平台教材 2 三年无忧
      *
-     * @param typeflag 0 共用  1平台教材 2 三年无忧
+     * @param typeflag
+     *            0 共用 1平台教材 2 三年无忧
      */
     public void setTypeflag(Integer typeflag) {
         this.typeflag = typeflag;
@@ -415,25 +429,27 @@ public class JSyscourse implements Serializable{
     /**
      * 设置序排字段
      *
-     * @param ordernum 序排字段
+     * @param ordernum
+     *            序排字段
      */
     public void setOrdernum(Long ordernum) {
         this.ordernum = ordernum;
     }
 
     /**
-     * 获取是否可见（三年无忧） 1 可见  0 不可见
+     * 获取是否可见（三年无忧） 1 可见 0 不可见
      *
-     * @return visible - 是否可见（三年无忧） 1 可见  0 不可见
+     * @return visible - 是否可见（三年无忧） 1 可见 0 不可见
      */
     public Boolean getVisible() {
         return visible;
     }
 
     /**
-     * 设置是否可见（三年无忧） 1 可见  0 不可见
+     * 设置是否可见（三年无忧） 1 可见 0 不可见
      *
-     * @param visible 是否可见（三年无忧） 1 可见  0 不可见
+     * @param visible
+     *            是否可见（三年无忧） 1 可见 0 不可见
      */
     public void setVisible(Boolean visible) {
         this.visible = visible;
@@ -451,7 +467,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置年级代码：1-12；分别代表十二个年级。0代表无年级信息
      *
-     * @param grade 年级代码：1-12；分别代表十二个年级。0代表无年级信息
+     * @param grade
+     *            年级代码：1-12；分别代表十二个年级。0代表无年级信息
      */
     public void setGrade(Short grade) {
         this.grade = grade;
@@ -469,7 +486,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置更新时间
      *
-     * @param updatetime 更新时间
+     * @param updatetime
+     *            更新时间
      */
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
@@ -543,7 +561,8 @@ public class JSyscourse implements Serializable{
     /**
      * 设置c
      *
-     * @param createman c
+     * @param createman
+     *            c
      */
     public void setCreateman(String createman) {
         this.createman = createman == null ? null : createman.trim();

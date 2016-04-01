@@ -22,14 +22,17 @@ public class HttpUtil {
             while ((line = buffer.readLine()) != null) {
                 sb.append(line);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
-        } finally {
+        }
+        finally {
             try {
                 if (buffer != null) {
                     buffer.close();
                 }
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -58,8 +61,7 @@ public class HttpUtil {
 
             StringBuffer strBuf = new StringBuffer();
             strBuf.append("\r\n").append("--").append(BOUNDARY).append("\r\n");
-            strBuf.append("Content-Disposition: form-data; filename=\"" + java.net.URLEncoder.encode(FileName, "utf-8")
-                    + "\"\r\n");
+            strBuf.append("Content-Disposition: form-data; filename=\"" + java.net.URLEncoder.encode(FileName, "utf-8") + "\"\r\n");
             strBuf.append("Content-Type:application/octet-stream" + "\r\n\r\n");
 
             out.write(strBuf.toString().getBytes());
@@ -81,7 +83,8 @@ public class HttpUtil {
                 sb.append(line);
             }
             conn.disconnect();
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.out.println("发送文件出现异常！" + e);
             e.printStackTrace();
         }

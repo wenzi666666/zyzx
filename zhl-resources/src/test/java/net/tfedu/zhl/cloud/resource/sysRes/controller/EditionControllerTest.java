@@ -15,28 +15,30 @@ import org.springframework.util.Assert;
 
 /**
  * 测试版本信息
+ * 
  * @author WeiCuicui
  *
  */
-public class EditionControllerTest extends BaseControllerTestCase{
+public class EditionControllerTest extends BaseControllerTestCase {
 
-	@Resource EditonController editonController;
-	
-	@Test
-	public void testEditionController()throws IOException{
-		request = newGet("/resRestAPI/v1.0/editions");
-		request.setParameter("termId", "1");
-		request.setParameter("subjectId", "2");
-		
-		ResultJSON resultJSON = editonController.getAllEditions(request, response);
-		Assert.isTrue(resultJSON != null);
-		List<JSyscourse> editons = (List<JSyscourse>)resultJSON.getData();
-		Assert.isTrue(editons.size() > 0);
-		for(int i = 0; i < editons.size(); i++){
-			System.out.println(editons.get(i).getId() + ":" + editons.get(i).getName() + ":" + editons.get(i).getTfcode());
-		}
-		
-	}
-	
-	
+    @Resource
+    EditonController editonController;
+
+    @Test
+    public void testEditionController() throws IOException {
+        request = newGet("/resRestAPI/v1.0/editions");
+        request.setParameter("termId", "1");
+        request.setParameter("subjectId", "2");
+
+        ResultJSON resultJSON = editonController.getAllEditions(request, response);
+        Assert.isTrue(resultJSON != null);
+        List<JSyscourse> editons = (List<JSyscourse>) resultJSON.getData();
+        Assert.isTrue(editons.size() > 0);
+        for (int i = 0; i < editons.size(); i++) {
+            System.out.println(
+                    editons.get(i).getId() + ":" + editons.get(i).getName() + ":" + editons.get(i).getTfcode());
+        }
+
+    }
+
 }

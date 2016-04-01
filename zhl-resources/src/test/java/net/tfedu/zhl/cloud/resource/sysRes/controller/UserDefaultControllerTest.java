@@ -14,49 +14,51 @@ import org.springframework.util.Assert;
 
 public class UserDefaultControllerTest extends BaseControllerTestCase {
 
-	@Resource
-	UserDefaultController userDefaultController;
+    @Resource
+    UserDefaultController userDefaultController;
 
-	/**
-	 * 查询用户历史记录
-	 * @throws IOException
-	 */
-	@Test 
-	public void testGetUserDefaultController() throws IOException {
-		  request = newGet("/resRestAPI/v1.0/history");
-		  request.setParameter("type", "1"); 
-		  request.setParameter("userId", "699230735");
-		  ResultJSON resultJSON = userDefaultController.getUserDefault(request, response); 
-		  Assert.isTrue(resultJSON != null); 
-		  JUserDefault userDefault = (JUserDefault) resultJSON.getData(); Assert.isTrue(userDefault != null);
-		  log.info(userDefault.toString());
-	}
-	 
+    /**
+     * 查询用户历史记录
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testGetUserDefaultController() throws IOException {
+        request = newGet("/resRestAPI/v1.0/history");
+        request.setParameter("type", "1");
+        request.setParameter("userId", "699230735");
+        ResultJSON resultJSON = userDefaultController.getUserDefault(request, response);
+        Assert.isTrue(resultJSON != null);
+        JUserDefault userDefault = (JUserDefault) resultJSON.getData();
+        Assert.isTrue(userDefault != null);
+        log.info(userDefault.toString());
+    }
 
-	/**
-	 * 修改用户历史记录
-	 * @throws IOException
-	 */
-	@Test
-	public void testUpdateUserDefaultController() throws IOException {
-		request = newGet("/resRestAPI/v1.0/history");
+    /**
+     * 修改用户历史记录
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testUpdateUserDefaultController() throws IOException {
+        request = newGet("/resRestAPI/v1.0/history");
 
-		request.setParameter("type", "1");
-		request.setParameter("userId", "8978979");
-		request.setParameter("tfcode", "SHXX02010101");
+        request.setParameter("type", "1");
+        request.setParameter("userId", "8978979");
+        request.setParameter("tfcode", "SHXX02010101");
 
-		// 插入
-		// request.setParameter("_method", "POST");
+        // 插入
+        // request.setParameter("_method", "POST");
 
-		// 修改
-		request.setParameter("_method", "PATCH");
+        // 修改
+        request.setParameter("_method", "PATCH");
 
-		ResultJSON resultJSON = userDefaultController.updateUserDefault(request, response);
-				
-		Assert.isTrue(resultJSON != null);
-		String userDefault = (String) resultJSON.getData();
-		Assert.isTrue(userDefault != null);
-		log.info(userDefault.toString());
+        ResultJSON resultJSON = userDefaultController.updateUserDefault(request, response);
 
-	}
+        Assert.isTrue(resultJSON != null);
+        String userDefault = (String) resultJSON.getData();
+        Assert.isTrue(userDefault != null);
+        log.info(userDefault.toString());
+
+    }
 }

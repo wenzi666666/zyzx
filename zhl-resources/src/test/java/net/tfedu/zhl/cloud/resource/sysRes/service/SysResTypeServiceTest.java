@@ -15,29 +15,31 @@ import org.springframework.util.Assert;
 
 /**
  * 资源类型 的 service测试
+ * 
  * @author WeiCuicui
  *
  */
-public class SysResTypeServiceTest extends BaseServiceTestCase{
+public class SysResTypeServiceTest extends BaseServiceTestCase {
 
-	@Resource ResTypeService resTypeService;
-	
-	@Test
-	public void testResTypeService()throws IOException{
-		
-		List<ResType> types = new ArrayList<ResType>();
-		
-		long poolId = 4;
-		String pTfcode = "RJCZ01010501";
-		
-		types = resTypeService.getSysResTypes(poolId, pTfcode);
+    @Resource
+    ResTypeService resTypeService;
 
-		Assert.isTrue(types.size() > 0);
-		
-		for(int i = 0; i < types.size(); i++){
-			if(i % 10 == 0)
-	    		System.out.println();
-	    	System.out.print(types.get(i) + ",");
-		}
-	}
+    @Test
+    public void testResTypeService() throws IOException {
+
+        List<ResType> types = new ArrayList<ResType>();
+
+        long poolId = 4;
+        String pTfcode = "RJCZ01010501";
+
+        types = resTypeService.getSysResTypes(poolId, pTfcode);
+
+        Assert.isTrue(types.size() > 0);
+
+        for (int i = 0; i < types.size(); i++) {
+            if (i % 10 == 0)
+                System.out.println();
+            System.out.print(types.get(i) + ",");
+        }
+    }
 }

@@ -149,8 +149,7 @@ public class ZAsset {
     private String filecode;
 
     /**
-     * 是否为文件包，0---不
-是；1---是）
+     * 是否为文件包，0---不 是；1---是）
      */
     @Column(name = "IsWjb")
     private Boolean iswjb;
@@ -168,7 +167,7 @@ public class ZAsset {
     private Integer islocal;
 
     /**
-     * 是否是课件，默认为0 否  1是
+     * 是否是课件，默认为0 否 1是
      */
     private Boolean iscourseware;
 
@@ -190,7 +189,12 @@ public class ZAsset {
     @Column(name = "Content")
     private String content;
 
-    public ZAsset(Long id, String resourceid, Long typeid, Long userid, Date createtime, Date updatetime, String filetype, Boolean isissue, String notes, String name, String assetpath, String assetdesc, String keyword, String filename, String filepath, Boolean issysres, String attachement, String attachpath, String assetsize, Date checktime, String checkman, Boolean checkflag, Boolean stustate, Boolean flag, String filecode, Boolean iswjb, String wjbname, Integer islocal, Boolean iscourseware, Integer isfinished, String unifytypeid, String content) {
+    public ZAsset(Long id, String resourceid, Long typeid, Long userid, Date createtime, Date updatetime,
+            String filetype, Boolean isissue, String notes, String name, String assetpath, String assetdesc,
+            String keyword, String filename, String filepath, Boolean issysres, String attachement, String attachpath,
+            String assetsize, Date checktime, String checkman, Boolean checkflag, Boolean stustate, Boolean flag,
+            String filecode, Boolean iswjb, String wjbname, Integer islocal, Boolean iscourseware, Integer isfinished,
+            String unifytypeid, String content) {
         this.id = id;
         this.resourceid = resourceid;
         this.typeid = typeid;
@@ -241,7 +245,8 @@ public class ZAsset {
     /**
      * 设置自建id
      *
-     * @param id 自建id
+     * @param id
+     *            自建id
      */
     public void setId(Long id) {
         this.id = id;
@@ -259,7 +264,8 @@ public class ZAsset {
     /**
      * 设置自建资源编码，是唯一标识（也可当做系统资源的外键）
      *
-     * @param resourceid 自建资源编码，是唯一标识（也可当做系统资源的外键）
+     * @param resourceid
+     *            自建资源编码，是唯一标识（也可当做系统资源的外键）
      */
     public void setResourceid(String resourceid) {
         this.resourceid = resourceid == null ? null : resourceid.trim();
@@ -277,7 +283,8 @@ public class ZAsset {
     /**
      * 设置自建资源类型 (resourceType)（素材，还是教案，课件，学案等）
      *
-     * @param typeid 自建资源类型 (resourceType)（素材，还是教案，课件，学案等）
+     * @param typeid
+     *            自建资源类型 (resourceType)（素材，还是教案，课件，学案等）
      */
     public void setTypeid(Long typeid) {
         this.typeid = typeid;
@@ -295,7 +302,8 @@ public class ZAsset {
     /**
      * 设置资源创建者
      *
-     * @param userid 资源创建者
+     * @param userid
+     *            资源创建者
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -313,7 +321,8 @@ public class ZAsset {
     /**
      * 设置创建日期
      *
-     * @param createtime 创建日期
+     * @param createtime
+     *            创建日期
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
@@ -331,7 +340,8 @@ public class ZAsset {
     /**
      * 设置修改时间
      *
-     * @param updatetime 修改时间
+     * @param updatetime
+     *            修改时间
      */
     public void setUpdatetime(Date updatetime) {
         this.updatetime = updatetime;
@@ -349,7 +359,8 @@ public class ZAsset {
     /**
      * 设置A：资源；B：教案；C：学案；D：课件；E：作业
      *
-     * @param filetype A：资源；B：教案；C：学案；D：课件；E：作业
+     * @param filetype
+     *            A：资源；B：教案；C：学案；D：课件；E：作业
      */
     public void setFiletype(String filetype) {
         this.filetype = filetype == null ? null : filetype.trim();
@@ -367,7 +378,8 @@ public class ZAsset {
     /**
      * 设置是否发布，0---否；1---是
      *
-     * @param isissue 是否发布，0---否；1---是
+     * @param isissue
+     *            是否发布，0---否；1---是
      */
     public void setIsissue(Boolean isissue) {
         this.isissue = isissue;
@@ -385,7 +397,8 @@ public class ZAsset {
     /**
      * 设置习学提示
      *
-     * @param notes 习学提示
+     * @param notes
+     *            习学提示
      */
     public void setNotes(String notes) {
         this.notes = notes == null ? null : notes.trim();
@@ -403,7 +416,8 @@ public class ZAsset {
     /**
      * 设置音频
      *
-     * @param name 音频
+     * @param name
+     *            音频
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
@@ -435,7 +449,8 @@ public class ZAsset {
     /**
      * 设置自建资源描述
      *
-     * @param assetdesc 自建资源描述
+     * @param assetdesc
+     *            自建资源描述
      */
     public void setAssetdesc(String assetdesc) {
         this.assetdesc = assetdesc == null ? null : assetdesc.trim();
@@ -453,7 +468,8 @@ public class ZAsset {
     /**
      * 设置关键字
      *
-     * @param keyword 关键字
+     * @param keyword
+     *            关键字
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword == null ? null : keyword.trim();
@@ -485,7 +501,8 @@ public class ZAsset {
     /**
      * 设置文件路径
      *
-     * @param filepath 文件路径
+     * @param filepath
+     *            文件路径
      */
     public void setFilepath(String filepath) {
         this.filepath = filepath == null ? null : filepath.trim();
@@ -503,7 +520,8 @@ public class ZAsset {
     /**
      * 设置是否是系统资源，资源路径加以区分；0：系统资源；1：用户上传资源
      *
-     * @param issysres 是否是系统资源，资源路径加以区分；0：系统资源；1：用户上传资源
+     * @param issysres
+     *            是否是系统资源，资源路径加以区分；0：系统资源；1：用户上传资源
      */
     public void setIssysres(Boolean issysres) {
         this.issysres = issysres;
@@ -521,7 +539,8 @@ public class ZAsset {
     /**
      * 设置附件
      *
-     * @param attachement 附件
+     * @param attachement
+     *            附件
      */
     public void setAttachement(String attachement) {
         this.attachement = attachement == null ? null : attachement.trim();
@@ -553,7 +572,8 @@ public class ZAsset {
     /**
      * 设置自建资源的大小
      *
-     * @param assetsize 自建资源的大小
+     * @param assetsize
+     *            自建资源的大小
      */
     public void setAssetsize(String assetsize) {
         this.assetsize = assetsize == null ? null : assetsize.trim();
@@ -571,7 +591,8 @@ public class ZAsset {
     /**
      * 设置审核通过时间
      *
-     * @param checktime 审核通过时间
+     * @param checktime
+     *            审核通过时间
      */
     public void setChecktime(Date checktime) {
         this.checktime = checktime;
@@ -589,7 +610,8 @@ public class ZAsset {
     /**
      * 设置审核人
      *
-     * @param checkman 审核人
+     * @param checkman
+     *            审核人
      */
     public void setCheckman(String checkman) {
         this.checkman = checkman == null ? null : checkman.trim();
@@ -607,7 +629,8 @@ public class ZAsset {
     /**
      * 设置审核标识，0---未通过；1---通过
      *
-     * @param checkflag 审核标识，0---未通过；1---通过
+     * @param checkflag
+     *            审核标识，0---未通过；1---通过
      */
     public void setCheckflag(Boolean checkflag) {
         this.checkflag = checkflag;
@@ -625,7 +648,8 @@ public class ZAsset {
     /**
      * 设置学生端显示答案的时机，0--测试已提交；1----测试已批阅
      *
-     * @param stustate 学生端显示答案的时机，0--测试已提交；1----测试已批阅
+     * @param stustate
+     *            学生端显示答案的时机，0--测试已提交；1----测试已批阅
      */
     public void setStustate(Boolean stustate) {
         this.stustate = stustate;
@@ -643,7 +667,8 @@ public class ZAsset {
     /**
      * 设置是否删除标识，0------否；1---是
      *
-     * @param flag 是否删除标识，0------否；1---是
+     * @param flag
+     *            是否删除标识，0------否；1---是
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -661,29 +686,27 @@ public class ZAsset {
     /**
      * 设置文件格式
      *
-     * @param filecode 文件格式
+     * @param filecode
+     *            文件格式
      */
     public void setFilecode(String filecode) {
         this.filecode = filecode == null ? null : filecode.trim();
     }
 
     /**
-     * 获取是否为文件包，0---不
-是；1---是）
+     * 获取是否为文件包，0---不 是；1---是）
      *
-     * @return IsWjb - 是否为文件包，0---不
-是；1---是）
+     * @return IsWjb - 是否为文件包，0---不 是；1---是）
      */
     public Boolean getIswjb() {
         return iswjb;
     }
 
     /**
-     * 设置是否为文件包，0---不
-是；1---是）
+     * 设置是否为文件包，0---不 是；1---是）
      *
-     * @param iswjb 是否为文件包，0---不
-是；1---是）
+     * @param iswjb
+     *            是否为文件包，0---不 是；1---是）
      */
     public void setIswjb(Boolean iswjb) {
         this.iswjb = iswjb;
@@ -701,7 +724,8 @@ public class ZAsset {
     /**
      * 设置主文件名
      *
-     * @param wjbname 主文件名
+     * @param wjbname
+     *            主文件名
      */
     public void setWjbname(String wjbname) {
         this.wjbname = wjbname == null ? null : wjbname.trim();
@@ -719,25 +743,27 @@ public class ZAsset {
     /**
      * 设置是否是本地资源 0为本地资源1为网络资源
      *
-     * @param islocal 是否是本地资源 0为本地资源1为网络资源
+     * @param islocal
+     *            是否是本地资源 0为本地资源1为网络资源
      */
     public void setIslocal(Integer islocal) {
         this.islocal = islocal;
     }
 
     /**
-     * 获取是否是课件，默认为0 否  1是
+     * 获取是否是课件，默认为0 否 1是
      *
-     * @return iscourseware - 是否是课件，默认为0 否  1是
+     * @return iscourseware - 是否是课件，默认为0 否 1是
      */
     public Boolean getIscourseware() {
         return iscourseware;
     }
 
     /**
-     * 设置是否是课件，默认为0 否  1是
+     * 设置是否是课件，默认为0 否 1是
      *
-     * @param iscourseware 是否是课件，默认为0 否  1是
+     * @param iscourseware
+     *            是否是课件，默认为0 否 1是
      */
     public void setIscourseware(Boolean iscourseware) {
         this.iscourseware = iscourseware;
@@ -755,7 +781,8 @@ public class ZAsset {
     /**
      * 设置文件转码，0：转码完成，1：未完成
      *
-     * @param isfinished 文件转码，0：转码完成，1：未完成
+     * @param isfinished
+     *            文件转码，0：转码完成，1：未完成
      */
     public void setIsfinished(Integer isfinished) {
         this.isfinished = isfinished;
@@ -773,7 +800,8 @@ public class ZAsset {
     /**
      * 设置v3.1新版资源中心类型
      *
-     * @param unifytypeid v3.1新版资源中心类型
+     * @param unifytypeid
+     *            v3.1新版资源中心类型
      */
     public void setUnifytypeid(String unifytypeid) {
         this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();
@@ -791,7 +819,8 @@ public class ZAsset {
     /**
      * 设置上传资源的文档内容
      *
-     * @param content 上传资源的文档内容
+     * @param content
+     *            上传资源的文档内容
      */
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();

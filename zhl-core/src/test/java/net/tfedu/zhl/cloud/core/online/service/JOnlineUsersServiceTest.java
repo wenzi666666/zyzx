@@ -9,8 +9,9 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
-import net.tfedu.zhl.cloud.core.online.entity.JOnlineUsers;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
+import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
 
 /**
  * @author wangwr

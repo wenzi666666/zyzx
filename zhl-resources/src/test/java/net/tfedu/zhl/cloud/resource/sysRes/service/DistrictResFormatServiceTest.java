@@ -15,22 +15,25 @@ import org.springframework.util.Assert;
 
 public class DistrictResFormatServiceTest extends BaseServiceTestCase {
 
-	@Resource ResTypeService resTypeService;
-	@Resource ResFormatService resFormatService;
-	@Test
-	public void testDisResTypeService()throws IOException{
-		//格式
-		List<String> formats = new ArrayList<String>();
-		
-		//资源类型id
-		String tfcode = "RJGZ040101";
-		int fromFlag = 3;
-		
-		formats = resFormatService.getDisResFormats(tfcode, fromFlag);
-		
-		Assert.isTrue(formats.size() > 0);
-		System.out.println(formats.size());
-		for(int i = 0; i < formats.size(); i++)
-			System.out.print(formats.get(i) + ",");
-	}
+    @Resource
+    ResTypeService resTypeService;
+    @Resource
+    ResFormatService resFormatService;
+
+    @Test
+    public void testDisResTypeService() throws IOException {
+        // 格式
+        List<String> formats = new ArrayList<String>();
+
+        // 资源类型id
+        String tfcode = "RJGZ040101";
+        int fromFlag = 3;
+
+        formats = resFormatService.getDisResFormats(tfcode, fromFlag);
+
+        Assert.isTrue(formats.size() > 0);
+        System.out.println(formats.size());
+        for (int i = 0; i < formats.size(); i++)
+            System.out.print(formats.get(i) + ",");
+    }
 }

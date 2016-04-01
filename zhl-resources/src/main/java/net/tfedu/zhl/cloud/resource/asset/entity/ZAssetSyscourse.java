@@ -49,7 +49,8 @@ public class ZAssetSyscourse {
     /**
      * 设置自增主键
      *
-     * @param id 自增主键
+     * @param id
+     *            自增主键
      */
     public void setId(Long id) {
         this.id = id;
@@ -67,7 +68,8 @@ public class ZAssetSyscourse {
     /**
      * 设置自建资源id
      *
-     * @param assetid 自建资源id
+     * @param assetid
+     *            自建资源id
      */
     public void setAssetid(Long assetid) {
         this.assetid = assetid;
@@ -85,7 +87,8 @@ public class ZAssetSyscourse {
     /**
      * 设置资源类型id(z_unfiy_resource_type)
      *
-     * @param tfcode 资源类型id(z_unfiy_resource_type)
+     * @param tfcode
+     *            资源类型id(z_unfiy_resource_type)
      */
     public void setTfcode(String tfcode) {
         this.tfcode = tfcode == null ? null : tfcode.trim();
@@ -103,7 +106,8 @@ public class ZAssetSyscourse {
     /**
      * 设置逻辑删除表示
      *
-     * @param flag 逻辑删除表示
+     * @param flag
+     *            逻辑删除表示
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;

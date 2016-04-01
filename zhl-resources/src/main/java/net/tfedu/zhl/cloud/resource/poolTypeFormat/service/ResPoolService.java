@@ -6,11 +6,12 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 
 /**
  * 查询所有资源库 service
+ * 
  * @author WeiCuicui
  *
  */
 public interface ResPoolService {
 
-    //查询所有资源库
-	public List<ResPool> getAllPools();
+    // 查询所有资源库
+    public List<ResPool> getAllPools();
 }

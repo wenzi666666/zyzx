@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "z_res_zip_down_record")
-public class ResZipDownRecord   implements Serializable{
+public class ResZipDownRecord implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class ResZipDownRecord   implements Serializable{
     private String zippath;
 
     /**
-     * 是否打包完成 false 为完成  true 已经完成
+     * 是否打包完成 false 为完成 true 已经完成
      */
     private Boolean status;
 
@@ -40,7 +40,8 @@ public class ResZipDownRecord   implements Serializable{
      */
     private String ids;
 
-    public ResZipDownRecord(Long id, Long userid, Date time, String fromflags, String zippath, Boolean status, String ids) {
+    public ResZipDownRecord(Long id, Long userid, Date time, String fromflags, String zippath, Boolean status,
+            String ids) {
         this.id = id;
         this.userid = userid;
         this.time = time;
@@ -80,7 +81,8 @@ public class ResZipDownRecord   implements Serializable{
     /**
      * 设置下载人
      *
-     * @param userid 下载人
+     * @param userid
+     *            下载人
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -98,7 +100,8 @@ public class ResZipDownRecord   implements Serializable{
     /**
      * 设置下载时间
      *
-     * @param time 下载时间
+     * @param time
+     *            下载时间
      */
     public void setTime(Date time) {
         this.time = time;
@@ -116,7 +119,8 @@ public class ResZipDownRecord   implements Serializable{
     /**
      * 设置下载资源来源集合,逗号分隔
      *
-     * @param fromflags 下载资源来源集合,逗号分隔
+     * @param fromflags
+     *            下载资源来源集合,逗号分隔
      */
     public void setFromflags(String fromflags) {
         this.fromflags = fromflags == null ? null : fromflags.trim();
@@ -134,25 +138,27 @@ public class ResZipDownRecord   implements Serializable{
     /**
      * 设置生成的压缩包的保存路径
      *
-     * @param zippath 生成的压缩包的保存路径
+     * @param zippath
+     *            生成的压缩包的保存路径
      */
     public void setZippath(String zippath) {
         this.zippath = zippath == null ? null : zippath.trim();
     }
 
     /**
-     * 获取是否打包完成 false 为完成  true 已经完成
+     * 获取是否打包完成 false 为完成 true 已经完成
      *
-     * @return status - 是否打包完成 false 为完成  true 已经完成
+     * @return status - 是否打包完成 false 为完成 true 已经完成
      */
     public Boolean getStatus() {
         return status;
     }
 
     /**
-     * 设置是否打包完成 false 为完成  true 已经完成
+     * 设置是否打包完成 false 为完成 true 已经完成
      *
-     * @param status 是否打包完成 false 为完成  true 已经完成
+     * @param status
+     *            是否打包完成 false 为完成 true 已经完成
      */
     public void setStatus(Boolean status) {
         this.status = status;
@@ -170,7 +176,8 @@ public class ResZipDownRecord   implements Serializable{
     /**
      * 设置下载资源id集合,逗号分隔
      *
-     * @param ids 下载资源id集合,逗号分隔
+     * @param ids
+     *            下载资源id集合,逗号分隔
      */
     public void setIds(String ids) {
         this.ids = ids == null ? null : ids.trim();

@@ -11,109 +11,100 @@ import javax.persistence.Id;
  * @author wangwr
  * 
  */
-public class ZAssetView  implements Serializable{
+public class ZAssetView implements Serializable {
 
+    private Long resId;
 
+    private String resCode;
 
+    private String title;
 
-	    private Long resId;
+    private String unifyType;
 
-	    private String resCode;
-	    
-	    private String title;
+    private Date time;
 
-	    private String unifyType;
+    private String imgPath;
 
-	    private Date time;
+    private String fileSuffix;
 
-	    private String imgPath;
+    public ZAssetView(Long resId, String title, String resCode, String unifyType, Date time, String imgPath,
+            String fileSuffix) {
+        this.title = title;
+        this.resId = resId;
+        this.unifyType = unifyType;
+        this.time = time;
+        this.imgPath = imgPath;
+        this.fileSuffix = fileSuffix;
+    }
 
-	    private String fileSuffix;
+    public ZAssetView() {
+        super();
+    }
 
-	    public ZAssetView(Long resId, String title, String resCode, String unifyType,Date time, String imgPath, String fileSuffix) {
-	        this.title = title;
-	        this.resId = resId;
-	        this.unifyType = unifyType;
-	        this.time = time;
-	        this.imgPath = imgPath;
-	        this.fileSuffix = fileSuffix;
-	    }
+    /**
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	    public ZAssetView() {
-	        super();
-	    }
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
 
-	 
+    /**
+     * @return time
+     */
+    public Date getTime() {
+        return time;
+    }
 
-	    /**
-	     * @return title
-	     */
-	    public String getTitle() {
-	        return title;
-	    }
+    /**
+     * @param time
+     */
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
-	    /**
-	     * @param title
-	     */
-	    public void setTitle(String title) {
-	        this.title = title == null ? null : title.trim();
-	    }
+    public Long getResId() {
+        return resId;
+    }
 
-	  
+    public void setResId(Long resId) {
+        this.resId = resId;
+    }
 
-	 
-	    /**
-	     * @return time
-	     */
-	    public Date getTime() {
-	        return time;
-	    }
+    public String getUnifyType() {
+        return unifyType;
+    }
 
-	    /**
-	     * @param time
-	     */
-	    public void setTime(Date time) {
-	        this.time = time;
-	    }
+    public void setUnifyType(String unifyType) {
+        this.unifyType = unifyType;
+    }
 
-		public Long getResId() {
-			return resId;
-		}
+    public String getImgPath() {
+        return imgPath;
+    }
 
-		public void setResId(Long resId) {
-			this.resId = resId;
-		}
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
 
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
+    }
 
-		public String getUnifyType() {
-			return unifyType;
-		}
+    @Override
+    public String toString() {
+        return "[ZAssetView:{resId:" + resId + ";title:" + title + ";resCode:" + resCode + ";unifyType:" + unifyType
+                + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";
+    }
 
-		public void setUnifyType(String unifyType) {
-			this.unifyType = unifyType;
-		}
-
-		public String getImgPath() {
-			return imgPath;
-		}
-
-		public void setImgPath(String imgPath) {
-			this.imgPath = imgPath;
-		}
-
-		public String getFileSuffix() {
-			return fileSuffix;
-		}
-
-		public void setFileSuffix(String fileSuffix) {
-			this.fileSuffix = fileSuffix;
-		}
-
-		
-		@Override
-		public String toString(){
-			return "[ZAssetView:{resId:"+resId+";title:"+title+";resCode:"+resCode+";unifyType:"+unifyType+";imgPath:"+imgPath+";fileSuffix:"+fileSuffix+"}]";
-		}
-	
 }

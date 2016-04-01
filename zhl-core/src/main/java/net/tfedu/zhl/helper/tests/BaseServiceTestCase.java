@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * 表示继承了SpringJUnit4ClassRunner类
+ * 
  * @author bruce
  *
  */
@@ -33,6 +34,7 @@ public abstract class BaseServiceTestCase {
 
     /**
      * 结束
+     * 
      * @throws Exception
      */
     @After

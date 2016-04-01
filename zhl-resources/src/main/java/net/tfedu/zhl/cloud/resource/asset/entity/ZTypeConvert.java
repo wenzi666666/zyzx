@@ -54,7 +54,8 @@ public class ZTypeConvert {
     /**
      * 设置转换资源id
      *
-     * @param id 转换资源id
+     * @param id
+     *            转换资源id
      */
     public void setId(Long id) {
         this.id = id;
@@ -72,7 +73,8 @@ public class ZTypeConvert {
     /**
      * 设置资源路径
      *
-     * @param respath 资源路径
+     * @param respath
+     *            资源路径
      */
     public void setRespath(String respath) {
         this.respath = respath == null ? null : respath.trim();
@@ -90,7 +92,8 @@ public class ZTypeConvert {
     /**
      * 设置资源创建者
      *
-     * @param userid 资源创建者
+     * @param userid
+     *            资源创建者
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -108,7 +111,8 @@ public class ZTypeConvert {
     /**
      * 设置创建日期
      *
-     * @param createtime 创建日期
+     * @param createtime
+     *            创建日期
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;

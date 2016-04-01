@@ -13,18 +13,19 @@ import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 import org.junit.Test;
 import org.springframework.util.Assert;
 
-public class TreeServiceTest extends BaseServiceTestCase{
+public class TreeServiceTest extends BaseServiceTestCase {
 
-	@Resource TreeService treeService;
-	
-	@Test
-	public void testTreeService()throws IOException{
-		long pnodeId = 67527;
-		List<TreeNode> resultNodes = new ArrayList<TreeNode>();
-		resultNodes = treeService.geTreeNodes(pnodeId);
-		
-		Assert.isTrue(resultNodes.size() > 0);
-		for(int i = 0; i < resultNodes.size();i++)
-			log.info(resultNodes.get(i).toString());
-	}
+    @Resource
+    TreeService treeService;
+
+    @Test
+    public void testTreeService() throws IOException {
+        long pnodeId = 67527;
+        List<TreeNode> resultNodes = new ArrayList<TreeNode>();
+        resultNodes = treeService.geTreeNodes(pnodeId);
+
+        Assert.isTrue(resultNodes.size() > 0);
+        for (int i = 0; i < resultNodes.size(); i++)
+            log.info(resultNodes.get(i).toString());
+    }
 }

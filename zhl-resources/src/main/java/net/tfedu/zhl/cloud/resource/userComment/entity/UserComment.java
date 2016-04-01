@@ -47,7 +47,7 @@ public class UserComment {
     private Integer ascore;
 
     /**
-     * 0 共享资源评论,1系统资源评论,2自建资源,  3,4校区本资源评论
+     * 0 共享资源评论,1系统资源评论,2自建资源, 3,4校区本资源评论
      */
     @Column(name = "Atype")
     private String atype;
@@ -63,7 +63,7 @@ public class UserComment {
      */
     @Column(name = "IsScore")
     private Integer isscore;
-    
+
     /**
      * 用户名
      */
@@ -71,14 +71,15 @@ public class UserComment {
     private String userName;
 
     public String getUserName() {
-		return userName;
-	}
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public UserComment(Long id, Long assetid, Long userid, Date atime, String acontent, Integer ascore, String atype, Boolean flag, Integer isscore) {
+    public UserComment(Long id, Long assetid, Long userid, Date atime, String acontent, Integer ascore, String atype,
+            Boolean flag, Integer isscore) {
         this.id = id;
         this.assetid = assetid;
         this.userid = userid;
@@ -106,7 +107,8 @@ public class UserComment {
     /**
      * 设置自增id
      *
-     * @param id 自增id
+     * @param id
+     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
@@ -124,7 +126,8 @@ public class UserComment {
     /**
      * 设置相关联的资源id
      *
-     * @param assetid 相关联的资源id
+     * @param assetid
+     *            相关联的资源id
      */
     public void setAssetid(Long assetid) {
         this.assetid = assetid;
@@ -142,7 +145,8 @@ public class UserComment {
     /**
      * 设置评论人
      *
-     * @param userid 评论人
+     * @param userid
+     *            评论人
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -160,7 +164,8 @@ public class UserComment {
     /**
      * 设置评价时间
      *
-     * @param atime 评价时间
+     * @param atime
+     *            评价时间
      */
     public void setAtime(Date atime) {
         this.atime = atime;
@@ -192,25 +197,27 @@ public class UserComment {
     /**
      * 设置评分
      *
-     * @param ascore 评分
+     * @param ascore
+     *            评分
      */
     public void setAscore(Integer ascore) {
         this.ascore = ascore;
     }
 
     /**
-     * 获取0 共享资源评论,1系统资源评论,2自建资源,  3,4校区本资源评论
+     * 获取0 共享资源评论,1系统资源评论,2自建资源, 3,4校区本资源评论
      *
-     * @return Atype - 0 共享资源评论,1系统资源评论,2自建资源,  3,4校区本资源评论
+     * @return Atype - 0 共享资源评论,1系统资源评论,2自建资源, 3,4校区本资源评论
      */
     public String getAtype() {
         return atype;
     }
 
     /**
-     * 设置0 共享资源评论,1系统资源评论,2自建资源,  3,4校区本资源评论
+     * 设置0 共享资源评论,1系统资源评论,2自建资源, 3,4校区本资源评论
      *
-     * @param atype 0 共享资源评论,1系统资源评论,2自建资源,  3,4校区本资源评论
+     * @param atype
+     *            0 共享资源评论,1系统资源评论,2自建资源, 3,4校区本资源评论
      */
     public void setAtype(String atype) {
         this.atype = atype == null ? null : atype.trim();
@@ -228,7 +235,8 @@ public class UserComment {
     /**
      * 设置是否删除此记录，0------否；1----是
      *
-     * @param flag 是否删除此记录，0------否；1----是
+     * @param flag
+     *            是否删除此记录，0------否；1----是
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -246,14 +254,16 @@ public class UserComment {
     /**
      * 设置0 评分 1评论
      *
-     * @param isscore 0 评分 1评论
+     * @param isscore
+     *            0 评分 1评论
      */
     public void setIsscore(Integer isscore) {
         this.isscore = isscore;
     }
-    
+
     @Override
-    public String toString(){
-    	return "userComment[id="+id+",resId="+assetid+",userId="+userid+",content="+acontent+",ascore="+ascore+",atype="+atype+",flag="+flag+"]";
+    public String toString() {
+        return "userComment[id=" + id + ",resId=" + assetid + ",userId=" + userid + ",content=" + acontent + ",ascore="
+                + ascore + ",atype=" + atype + ",flag=" + flag + "]";
     }
 }

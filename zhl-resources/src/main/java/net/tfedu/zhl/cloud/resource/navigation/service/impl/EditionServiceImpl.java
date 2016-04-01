@@ -13,18 +13,20 @@ import org.springframework.stereotype.Service;
 
 /**
  * 根据学段、学科，查询所有教材版本
+ * 
  * @author WeiCuicui
  *
  */
 @Service("editionService")
 public class EditionServiceImpl implements EditionService {
-	
-	@Resource JSyscourseMapper jSyscourseMapper;
 
-	//参数 map中存放 termId，subjectId
-	@Override
-	public List<JSyscourse> getAllEditionsByTermAndSub(HashMap<String, Object> map){
-		return jSyscourseMapper.getAllEditions(map);
-	}
-	
+    @Resource
+    JSyscourseMapper jSyscourseMapper;
+
+    // 参数 map中存放 termId，subjectId
+    @Override
+    public List<JSyscourse> getAllEditionsByTermAndSub(HashMap<String, Object> map) {
+        return jSyscourseMapper.getAllEditions(map);
+    }
+
 }
