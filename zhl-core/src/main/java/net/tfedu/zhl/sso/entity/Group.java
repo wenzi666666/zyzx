@@ -1,6 +1,9 @@
 package net.tfedu.zhl.sso.entity;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "j_group")
 public class Group {
@@ -49,7 +52,8 @@ public class Group {
     /**
      * 设置编号
      *
-     * @param id 编号
+     * @param id
+     *            编号
      */
     public void setId(Long id) {
         this.id = id;
@@ -67,7 +71,8 @@ public class Group {
     /**
      * 设置名称
      *
-     * @param name 名称
+     * @param name
+     *            名称
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
@@ -85,7 +90,8 @@ public class Group {
     /**
      * 设置系统模块
      *
-     * @param model 系统模块
+     * @param model
+     *            系统模块
      */
     public void setModel(String model) {
         this.model = model == null ? null : model.trim();
@@ -103,7 +109,8 @@ public class Group {
     /**
      * 设置0-公共1-子系统自定义
      *
-     * @param tag 0-公共1-子系统自定义
+     * @param tag
+     *            0-公共1-子系统自定义
      */
     public void setTag(Boolean tag) {
         this.tag = tag;
