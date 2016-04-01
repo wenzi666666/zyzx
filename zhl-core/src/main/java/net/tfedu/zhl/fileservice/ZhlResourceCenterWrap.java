@@ -380,6 +380,19 @@ public class ZhlResourceCenterWrap {
 	
 	
 	
+	public static Boolean copyFile(String resSerPath,String sourcePath,String targetPath){
+		FileOperate operate = new FileOperate();
+		operate.setOperateType("copy");
+		String[] src = new String[1];
+		src[0] = sourcePath;
+		operate.setSourceFile(src);
+
+		String[] dst = new String[1];
+		dst[0] = targetPath;
+		operate.setDestFile(dst);
+
+	    return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileOperateTask(operate);
+	}
 	
 }
 
