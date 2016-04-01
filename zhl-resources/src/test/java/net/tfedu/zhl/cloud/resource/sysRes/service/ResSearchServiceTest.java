@@ -29,11 +29,11 @@ public class ResSearchServiceTest extends BaseServiceTestCase{
 		
 
 		//检索范围   0 全部资源   1 系统资源  3 校本资源  4 区本资源
-		int fromFlag = 3;
+		int fromFlag = 1;
 		
 		String format = "全部";
 		
-		String searchKeyword = "乐";
+		String searchKeyword = "荷塘";
 		
 		//页码
 		int page = 1;
