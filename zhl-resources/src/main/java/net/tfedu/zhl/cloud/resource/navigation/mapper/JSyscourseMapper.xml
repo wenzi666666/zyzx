@@ -33,25 +33,32 @@
     </constructor>
   </resultMap>
   
-   <!-- 根据学段、学科，获得所有教材版本 -->
+   <!-- 根据学段、学科，获得所有教材版本，查询的第一个为 “课标版” -->
    <resultMap id="EditionResultMap" type="net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="tfcode" property="tfcode" />
   </resultMap>
   <select id="getAllEditions" parameterType="HashMap" resultMap="EditionResultMap">
-		select id,SUBSTRING(name,5) name,tfcode from j_syscourse 
-		where termid =#{termId} and subjectid =#{subjectId} and flag = false and pnodeid = 0 ORDER BY id DESC
+  	select s.id,replace(s.Name,CONCAT(j.name,sub.name),'') as name,tfcode from j_syscourse s
+	LEFT JOIN j_term j on s.termId = j.id
+	LEFT JOIN j_subject sub on s.subjectId = sub.id
+	where s.termid =#{termId} and s.subjectid =#{subjectId} and s.flag = false and j.flag = false and sub.flag = false and s.pnodeid = 0 ORDER BY s.id DESC
   </select>
   
-  <!-- 获得特定版本下的所有教材 -->
-  <resultMap id="BooksResultMap" type="net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse" >
+  <!-- 根据所属版本和产品编码，查询所有的教材 -->
+  <resultMap id="BooksResultMap"   type="net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="tfcode" property="tfcode" />
   </resultMap>
-  <select id="getAllBooks" parameterType="Long" resultMap="BooksResultMap">
-		select id,name,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false 
+  <select id="getAllBooks" parameterType="HashMap" resultMap="BooksResultMap">
+  
+	select s.id, case when bookname is NULL then s.Name
+	else bookname end as name, s.tfcode from j_syscourse s
+	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
+	where pnodeid =#{pnodeId} and s.flag = false and proCode = #{proCode}
+
   </select>
   
   <!-- 查询某父节点下的直接子节点(即不包含孙子节点等) -->
@@ -61,7 +68,7 @@
 		<result column="tfcode" property="tfcode" />
   </resultMap>
   <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false 
+		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false order by orderNum
   </select>
  
 </mapper>

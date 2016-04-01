@@ -38,6 +38,10 @@ public class BooksController {
 	@RequestMapping(value = "/v1.0/books",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getAllBooksByEdition(HttpServletRequest request,HttpServletResponse response) throws IOException{
+		
+		//定义这里的产品编码是资源中心
+		String proCode = "zy";
+		
 		/**
 		 * 返回json的结果对象
 		 */
@@ -53,7 +57,9 @@ public class BooksController {
 			
 			if(currentUserId != null && exception == null){
 				long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
-				books = bookService.getAllBooks(pnodeId);
+				
+				//根据所属版本和产品编码，查询所有的教材
+				books = bookService.getAllBooks(pnodeId,proCode);
 				
 				exception = CustomException.SUCCESS;
 			}

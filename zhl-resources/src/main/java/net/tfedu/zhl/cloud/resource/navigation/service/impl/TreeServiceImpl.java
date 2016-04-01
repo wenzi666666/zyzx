@@ -40,10 +40,7 @@ public class TreeServiceImpl implements TreeService{
 	@Override
 	public List<TreeNode> getAllChildren(List<TreeNode> topChildren,List<TreeNode> resultTrees){
 		for (int i = 0; i < topChildren.size(); i++) {
-			TreeNode node = topChildren.get(i);
-			
-			//加入到结果集中
-			resultTrees.add(node);
+			TreeNode node = topChildren.get(i);	
 			
 			//设置当前结点属于第几个结点
 			node.setI(i + 1);
@@ -69,6 +66,8 @@ public class TreeServiceImpl implements TreeService{
         return resultTrees;
 	}
 	
+	
+	
 	/**
 	 * 加载父结点及其所有的子结点
 	 * @return
@@ -82,7 +81,33 @@ public class TreeServiceImpl implements TreeService{
 		List<TreeNode> resultNodes = new ArrayList<TreeNode>();
 		
 		//查询所有的子结点
-		return getAllChildren(topChildren, resultNodes);
+		for (int i = 0; i < topChildren.size(); i++) {
+			TreeNode node = topChildren.get(i);
+			
+			//加入到结果集中
+			resultNodes.add(node);
+			
+			//设置当前结点属于第几个结点
+			node.setI(i + 1);
+			
+			//如果当前节点是叶子节点，跳过不进行递归查询子节点
+            if(node.isLeaf()){
+                continue;
+            }
+            
+            //查询children
+            List<TreeNode> children = getTopChildren(node.getId());
+            if(children == null || children.size() == 0){
+            	node.setLeaf(true);
+            } else {
+                //设置children
+                node.setChildren(children);        
+			}
+            	
+            //递归调用
+            getAllChildren(children,resultNodes);
+		}
 		
+		return resultNodes;
 	}
 }

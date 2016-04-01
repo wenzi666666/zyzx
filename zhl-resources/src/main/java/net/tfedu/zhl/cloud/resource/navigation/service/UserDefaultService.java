@@ -20,6 +20,4 @@ public interface UserDefaultService {
 	//更新用户历史选择
 	public void updateUserHistoryDefault(HashMap<String, Object> map);
 	
-	//插入 或者  修改用户历史选择
-	public void updateUserDefault(long userId,int type,String tfcode,String _method);
 }
