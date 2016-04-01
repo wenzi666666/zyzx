@@ -68,7 +68,7 @@
 		<result column="tfcode" property="tfcode" />
   </resultMap>
   <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false 
+		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false order by orderNum
   </select>
  
 </mapper>

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -64,8 +65,8 @@ public class UserDefaultController {
 		} catch (Exception e) {
 			// TODO: handle exception
 			// 获得异常信息，并打印
-			exception = CustomException
-					.getCustomExceptionByCode(e.getMessage());
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+					
 			e.printStackTrace();
 		} finally {
 			// 封装result
@@ -97,17 +98,36 @@ public class UserDefaultController {
 			
 			//当前用户已经登录系统
     		if(exception == null && currentUserId != null){
-    			
+    			//用户id
     			long userId = currentUserId;
 				
+    			//类型：   1：系统资源
     			int type = Integer.parseInt(request.getParameter("type").toString().trim());
-    					
+    			
+    		    //结点tfcode			
     			String tfcode = request.getParameter("tfcode");
+    			
+    			//方法
     			String _method = request.getParameter("_method");
     			
-    			//更新用户历史选择
-    			userDefaultService.updateUserDefault(userId, type, tfcode, _method);
-
+    			//封装参数
+    			HashMap<String, Object> map = new HashMap<String, Object>();
+    			map.put("userId", userId);
+    			map.put("type", type);
+    			map.put("tfcode", tfcode);
+    			
+    			
+    			if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {
+    				
+    				// 修改用户历史选择
+    				userDefaultService.updateUserHistoryDefault(map);
+    				
+    			} else  {
+    					
+    				// 增加用户历史选择
+    				userDefaultService.addUserHistoryDefault(map);
+    			}
+    			
     			exception = CustomException.SUCCESS;
     			
     		}
