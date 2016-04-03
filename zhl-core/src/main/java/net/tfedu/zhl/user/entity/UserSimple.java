@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.user.entity;
+package net.tfedu.zhl.user.entity;
 
 import java.io.Serializable;
 

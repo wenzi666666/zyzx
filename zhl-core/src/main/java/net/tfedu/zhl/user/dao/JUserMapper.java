@@ -1,11 +1,11 @@
-package net.tfedu.zhl.cloud.resource.user.dao;
+package net.tfedu.zhl.user.dao;
 
 
 import java.util.HashMap;
 
-import net.tfedu.zhl.cloud.resource.user.entity.JUser;
-import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
 import net.tfedu.zhl.helper.CoreMapper;
+import net.tfedu.zhl.user.entity.JUser;
+import net.tfedu.zhl.user.entity.UserSimple;
 
 /**
  * 用户业务表

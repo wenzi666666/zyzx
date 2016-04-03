@@ -1,7 +1,7 @@
-package net.tfedu.zhl.cloud.resource.user.service;
+package net.tfedu.zhl.user.service;
 
-import net.tfedu.zhl.cloud.resource.user.entity.JUser;
-import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
+import net.tfedu.zhl.user.entity.JUser;
+import net.tfedu.zhl.user.entity.UserSimple;
 
 /**
  * 用户相关接口

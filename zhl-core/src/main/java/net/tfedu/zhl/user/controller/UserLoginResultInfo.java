@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.user.controller;
+package net.tfedu.zhl.user.controller;
 
 /**
  * 用户登录之后返回的接口信息

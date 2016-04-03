@@ -1,13 +1,11 @@
-package net.tfedu.zhl.cloud.resource.user.service;
+package net.tfedu.zhl.cloud.user;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.user.controller.UserController;
-import net.tfedu.zhl.helper.LoginStatusCheckInterceptor;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.user.controller.UserController;
 
-import org.apache.log4j.Logger;
 import org.junit.Test;
 
 public class UserControllerTest extends BaseControllerTestCase {

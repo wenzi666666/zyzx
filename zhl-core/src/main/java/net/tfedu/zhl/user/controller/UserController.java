@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.user.controller;
+package net.tfedu.zhl.user.controller;
 
 import java.util.Arrays;
 
@@ -6,8 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
-import net.tfedu.zhl.cloud.resource.user.service.UserService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.helper.CustomException;
@@ -16,6 +14,8 @@ import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.user.entity.UserSimple;
+import net.tfedu.zhl.user.service.UserService;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
