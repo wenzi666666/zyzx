@@ -1,6 +1,8 @@
 package net.tfedu.zhl.cloud.resource.user.dao;
 
 
+import java.util.HashMap;
+
 import net.tfedu.zhl.cloud.resource.user.entity.JUser;
 import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
 import net.tfedu.zhl.helper.CoreMapper;
@@ -51,7 +53,11 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	public void updateUserImage(Long userId,String userImage);
 	
 
-	
+	/**
+	 * 获取用户地区信息
+	 * @return
+	 */
+	public HashMap<String,Long> getUserAreaInfo(Long userId);
 	
 	
 }

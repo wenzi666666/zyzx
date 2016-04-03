@@ -146,7 +146,11 @@
   	update  j_userinfo set UserImage = #{1} where userid =#{0} 
   </update>
   
-  
+  <select id="getUserAreaInfo"  resultType="java.util.HashMap">
+  	SELECT schoolid,s.districtid from  j_user u
+	LEFT JOIN j_school s on s.id = u.SchoolId
+	where u.id = #{0} 
+  </select>
   
   
 </mapper>

@@ -172,7 +172,7 @@ public class PersonalController {
 				
 				String _unifyTypeId = request.getParameter("unifyTypeId");
 				String _page = request.getParameter("page");
-				String _prePage = request.getParameter("prePage");
+				String _prePage = request.getParameter("perPage");
 				String fileFormat = request.getParameter("fileFormat");
 				if(StringUtils.isNotEmpty(_unifyTypeId)){
 					unifyTypeId  = Long.parseLong(_unifyTypeId);
@@ -289,7 +289,7 @@ public class PersonalController {
 				
 				String _unifyTypeId = request.getParameter("unifyTypeId");
 				String _page = request.getParameter("page");
-				String _prePage = request.getParameter("prePage");
+				String _prePage = request.getParameter("perPage");
 				String fileFormat = request.getParameter("fileFormat");
 				if(StringUtils.isNotEmpty(_unifyTypeId)){
 					unifyTypeId  = Long.parseLong(_unifyTypeId);
@@ -355,7 +355,7 @@ public class PersonalController {
 				
 				String _reviewType  = request.getParameter("reviewType");
 				String _page = request.getParameter("page");
-				String _prePage = request.getParameter("prePage");
+				String _prePage = request.getParameter("perPage");
 				if(StringUtils.isNotEmpty(_reviewType)){
 					reviewType   = Integer.parseInt(_reviewType);
 				}

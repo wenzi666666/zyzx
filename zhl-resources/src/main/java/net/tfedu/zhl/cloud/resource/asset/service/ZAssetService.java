@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.asset.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
@@ -70,8 +71,12 @@ public interface ZAssetService {
 	/**
 	 * 批量增加自建资源
 	 * @param list
+	 * @param codes
+	 * @param hostLocal 
+	 * @param currentResPath 
+	 * @param resServiceLocal 
 	 */
-	public void addAssetBatch(List<ZAsset> list) ;
+	public void addAssetBatch(List<ZAsset> list,List<String> codes,ArrayList<Integer> scope_list,String resServiceLocal, String currentResPath, String hostLocal) ;
 	
 	
 	
@@ -88,7 +93,7 @@ public interface ZAssetService {
 	 * 修改自建资源
 	 * @param asset
 	 */
-	public void updateAsset(ZAsset asset);
+	public void updateAsset(ZAsset asset, String resServiceLocal, String currentResPath, String hostLocal);
 	
 	
 	
@@ -105,5 +110,6 @@ public interface ZAssetService {
 	
 	
 
+	
 
 }

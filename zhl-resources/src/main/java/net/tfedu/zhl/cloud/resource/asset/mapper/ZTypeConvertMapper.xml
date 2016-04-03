@@ -12,4 +12,12 @@
       <arg column="CreateTime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+  
+  
+  
+  
+  	<select id = "getConvertRecord" resultMap="BaseResultMap">
+  		SELECT * FROM z_type_convert WHERE userid =#{userId}  and respath = #{resPath} 
+  	</select>
+  
 </mapper>

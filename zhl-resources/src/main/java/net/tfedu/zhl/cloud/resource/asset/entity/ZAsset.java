@@ -361,7 +361,7 @@ public class ZAsset {
      * @return IsIssue - 是否发布，0---否；1---是
      */
     public Boolean getIsissue() {
-        return isissue;
+        return isissue==null?false:true;
     }
 
     /**
@@ -397,7 +397,7 @@ public class ZAsset {
      * @return Name - 音频
      */
     public String getName() {
-        return name;
+        return name== null ? null : name.trim();
     }
 
     /**
@@ -406,21 +406,21 @@ public class ZAsset {
      * @param name 音频
      */
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name ;
     }
 
     /**
      * @return AssetPath
      */
     public String getAssetpath() {
-        return assetpath;
+        return assetpath == null ? null : assetpath.trim();
     }
 
     /**
      * @param assetpath
      */
     public void setAssetpath(String assetpath) {
-        this.assetpath = assetpath == null ? null : assetpath.trim();
+        this.assetpath = assetpath ;
     }
 
     /**
@@ -429,7 +429,7 @@ public class ZAsset {
      * @return AssetDesc - 自建资源描述
      */
     public String getAssetdesc() {
-        return assetdesc;
+        return assetdesc == null ? null : assetdesc.trim();
     }
 
     /**
@@ -438,7 +438,7 @@ public class ZAsset {
      * @param assetdesc 自建资源描述
      */
     public void setAssetdesc(String assetdesc) {
-        this.assetdesc = assetdesc == null ? null : assetdesc.trim();
+        this.assetdesc = assetdesc;
     }
 
     /**
@@ -447,7 +447,7 @@ public class ZAsset {
      * @return keyWord - 关键字
      */
     public String getKeyword() {
-        return keyword;
+        return keyword== null ? null : keyword.trim();
     }
 
     /**
@@ -456,21 +456,21 @@ public class ZAsset {
      * @param keyword 关键字
      */
     public void setKeyword(String keyword) {
-        this.keyword = keyword == null ? null : keyword.trim();
+        this.keyword = keyword ;
     }
 
     /**
      * @return FileName
      */
     public String getFilename() {
-        return filename;
+        return filename== null ? null : filename.trim();
     }
 
     /**
      * @param filename
      */
     public void setFilename(String filename) {
-        this.filename = filename == null ? null : filename.trim();
+        this.filename = filename ;
     }
 
     /**
@@ -479,7 +479,7 @@ public class ZAsset {
      * @return FilePath - 文件路径
      */
     public String getFilepath() {
-        return filepath;
+        return filepath== null ? null : filepath.trim();
     }
 
     /**
@@ -488,7 +488,7 @@ public class ZAsset {
      * @param filepath 文件路径
      */
     public void setFilepath(String filepath) {
-        this.filepath = filepath == null ? null : filepath.trim();
+        this.filepath = filepath ;
     }
 
     /**
@@ -497,7 +497,7 @@ public class ZAsset {
      * @return IsSysRes - 是否是系统资源，资源路径加以区分；0：系统资源；1：用户上传资源
      */
     public Boolean getIssysres() {
-        return issysres;
+        return issysres ==null?false:true;
     }
 
     /**
@@ -515,7 +515,7 @@ public class ZAsset {
      * @return Attachement - 附件
      */
     public String getAttachement() {
-        return attachement;
+        return attachement == null?"":attachement.trim();
     }
 
     /**
@@ -524,21 +524,21 @@ public class ZAsset {
      * @param attachement 附件
      */
     public void setAttachement(String attachement) {
-        this.attachement = attachement == null ? null : attachement.trim();
+        this.attachement = attachement;
     }
 
     /**
      * @return AttachPath
      */
     public String getAttachpath() {
-        return attachpath;
+        return attachpath== null ? "" : attachpath.trim();
     }
 
     /**
      * @param attachpath
      */
     public void setAttachpath(String attachpath) {
-        this.attachpath = attachpath == null ? null : attachpath.trim();
+        this.attachpath = attachpath ;
     }
 
     /**
@@ -547,7 +547,7 @@ public class ZAsset {
      * @return AssetSize - 自建资源的大小
      */
     public String getAssetsize() {
-        return assetsize;
+        return assetsize == null ? "" : assetsize.trim();
     }
 
     /**
@@ -556,7 +556,7 @@ public class ZAsset {
      * @param assetsize 自建资源的大小
      */
     public void setAssetsize(String assetsize) {
-        this.assetsize = assetsize == null ? null : assetsize.trim();
+        this.assetsize = assetsize ;
     }
 
     /**
@@ -583,7 +583,7 @@ public class ZAsset {
      * @return CheckMan - 审核人
      */
     public String getCheckman() {
-        return checkman;
+        return checkman  == null ? "" : checkman.trim();
     }
 
     /**
@@ -592,7 +592,7 @@ public class ZAsset {
      * @param checkman 审核人
      */
     public void setCheckman(String checkman) {
-        this.checkman = checkman == null ? null : checkman.trim();
+        this.checkman = checkman;
     }
 
     /**
@@ -601,7 +601,7 @@ public class ZAsset {
      * @return CheckFlag - 审核标识，0---未通过；1---通过
      */
     public Boolean getCheckflag() {
-        return checkflag;
+        return checkflag == null?false:true;
     }
 
     /**
@@ -619,7 +619,7 @@ public class ZAsset {
      * @return StuState - 学生端显示答案的时机，0--测试已提交；1----测试已批阅
      */
     public Boolean getStustate() {
-        return stustate;
+        return stustate ==null?false:true;
     }
 
     /**
@@ -637,7 +637,7 @@ public class ZAsset {
      * @return Flag - 是否删除标识，0------否；1---是
      */
     public Boolean getFlag() {
-        return flag;
+        return flag==null?false:true;
     }
 
     /**
@@ -655,7 +655,7 @@ public class ZAsset {
      * @return FileCode - 文件格式
      */
     public String getFilecode() {
-        return filecode;
+        return filecode == null?"":filecode.trim();
     }
 
     /**
@@ -664,7 +664,7 @@ public class ZAsset {
      * @param filecode 文件格式
      */
     public void setFilecode(String filecode) {
-        this.filecode = filecode == null ? null : filecode.trim();
+        this.filecode = filecode;
     }
 
     /**
@@ -675,7 +675,7 @@ public class ZAsset {
 是；1---是）
      */
     public Boolean getIswjb() {
-        return iswjb;
+        return iswjb == null ?false:true;
     }
 
     /**
@@ -695,7 +695,7 @@ public class ZAsset {
      * @return WjbName - 主文件名
      */
     public String getWjbname() {
-        return wjbname;
+        return wjbname== null ? "" : wjbname.trim();
     }
 
     /**
@@ -704,7 +704,7 @@ public class ZAsset {
      * @param wjbname 主文件名
      */
     public void setWjbname(String wjbname) {
-        this.wjbname = wjbname == null ? null : wjbname.trim();
+        this.wjbname = wjbname== null ? "" : wjbname.trim() ;
     }
 
     /**
