@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.navigation.dao.TermMapper" >
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.core.term.entity.JTerm" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.term.entity.JTerm" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -15,7 +15,7 @@
   </resultMap>
   
   <!-- 选择特定学段下的学科  -->
-  <resultMap id="SubjectResultMap" type="net.tfedu.zhl.cloud.core.subject.entity.JSubject" >
+  <resultMap id="SubjectResultMap" type="net.tfedu.zhl.sso.subject.entity.JSubject" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
   </resultMap>
@@ -27,9 +27,9 @@
   </select>
   
   <!-- 根据学段，查询学科  collection 关联查询 （测试用） -->
-  <resultMap id="SubjectResultMap1" type="net.tfedu.zhl.cloud.resource.navigation.entity.Term">
+  <resultMap id="SubjectResultMap1" type="net.tfedu.zhl.sso.term.entity.JTerm">
 		
-		<collection property="subjects" ofType="net.tfedu.zhl.cloud.core.subject.entity.JSubject">
+		<collection property="subjects" ofType="net.tfedu.zhl.sso.subject.entity.JSubject">
 			<id column="id" property="id" />
 			<result column="name" property="name" />
 		</collection>
@@ -43,7 +43,7 @@
   </select>
 
   <!-- 获得所有学段 -->
-  <resultMap id="AllTermsMap" type="net.tfedu.zhl.cloud.core.term.entity.JTerm" >
+  <resultMap id="AllTermsMap" type="net.tfedu.zhl.sso.term.entity.JTerm" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
   </resultMap>

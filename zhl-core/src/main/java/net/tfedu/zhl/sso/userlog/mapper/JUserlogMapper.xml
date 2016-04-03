@@ -38,7 +38,7 @@
     
     <select id="getMyViewForResource" resultMap="resourceViewMap">
     	select  id,resid,rescode,title,fromflag,time,imgpath,filesuffix from (
-		select  max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, 1 as fromflag,p.mtype
+		select  max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, 1 as fromflag,p.mtype,p.id as unifyTypeId
 		,a.name as title,a.ResourceId as rescode,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1))  as fileSuffix
 		from j_userlog t
 		LEFT JOIN z_asset a on a.id = t.objid  
@@ -48,7 +48,7 @@
 		
 		union ALL 
 		
-		select  max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, 0 as fromflag,p.mtype
+		select  max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, 0 as fromflag,p.mtype,p.id as unifyTypeId
 		,z.title,z.rescode,CONCAT(z.FPath,'\\\\',z.Fname) as imgPath,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix
 		from j_userlog t
 		LEFT JOIN z_resource z on z.id = t.objid 
@@ -58,18 +58,18 @@
 		
 		union ALL 
 		
-		select   max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, if(t.logtypecode='districtres',4,3) as fromflag,p.mtype
+		select   max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, if(t.logtypecode='districtres',4,3) as fromflag,p.mtype,p.id as unifyTypeId
 		,r.title,r.rescode,r.fullpath as imgPath ,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix
 		from j_userlog t
 		LEFT JOIN z_districts_resource r on r.id = t.objid
-		LEFT JOIN x_resourcetype p on  p.id = r.unifyTypeId
+		LEFT JOIN x_resourcetype p on  p.id = r.mtype
 		where  t.logtypecode in ('districtres','schoolres') and r.flag =false  and t.userid = #{userId} and t.flag = false and t.isflag = 0 
 		GROUP BY objid 
 		)temp_tab
 		where  1 =1 
 	
 		<if test="unifyTypeId>0">
-			and EXISTS ( select  id from x_resourcetype  where (id = #{unifyTypeId}>0 or pid = #{unifyTypeId}>0 )and flag =false and id = temp_result.unifyTypeId )
+			and EXISTS ( select  id from x_resourcetype  where (id = #{unifyTypeId} or pid = #{unifyTypeId}>0 )and flag =false and id = temp_result.unifyTypeId )
 		</if>
 		
 		<if test=" (fileFormat !='' and fileFormat !=null and fileFormat!='全部' and fileFormat!='all') ">

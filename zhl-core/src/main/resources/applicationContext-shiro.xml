@@ -15,7 +15,11 @@
 		2、perms[/url] 表示该链接需要拥有对应的资源/权限才能访问
 		3、roles[admin] 表示需要对应的角色才能访问
 		4、perms[admin:url] 表示需要对应角色的资源才能访问
-		 -->
+		
+		-->
+	<!-- 	
+		 
+
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
 		<property name="loginUrl" value="/security/tologin" />
@@ -24,9 +28,9 @@
 
 		<property name="filterChainDefinitions">
 			<value>
-				/security/*=anon <!-- anon 表示无需认证 -->
-				/views/*=anon <!-- anon 表示无需认证 -->
-				/** = authc <!-- authc 表示需要认证才能访问的页面 -->
+				/security/*=anon anon 表示无需认证
+				/views/*=anon anon 表示无需认证
+				/** = authc authc 表示需要认证才能访问的页面
 			</value>
 		</property>
 	</bean>
@@ -40,5 +44,6 @@
 	</bean>
 
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>  
- 
+
+  -->
 </beans>

@@ -154,7 +154,7 @@
 		,p.MType as unifyType,r.FSize as size,'' as timeline,r.fullpath as imgPath ,'' as fileSuffix,t.orderIdx
 		from  j_prepare_content  t  
 		LEFT JOIN z_districts_resource r on r.id = t.contId
-		LEFT JOIN x_resourcetype p on p.id = r.unifyTypeId
+		LEFT JOIN x_resourcetype p on p.id = r.mtype
 		where t.preid =  #{0}  and t.flag = false  and t.contType in (11,12)
 		and r.flag = false 
 		

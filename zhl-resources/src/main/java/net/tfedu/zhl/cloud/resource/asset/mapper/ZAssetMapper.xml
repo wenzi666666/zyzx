@@ -77,7 +77,7 @@
  	)temp_result 
 	where  1 =1 
    	<if test="unifyTypeId>0">
-		and EXISTS ( select  id from x_resourcetype  where (id = #{unifyTypeId}>0 or pid = #{unifyTypeId}>0 )and flag =false and id = temp_result.unifyTypeId )
+		and EXISTS ( select  id from x_resourcetype  where (id = #{unifyTypeId} or pid = #{unifyTypeId}>0 )and flag =false and id = temp_result.unifyTypeId )
 	</if>
 	
 	<if test=" (fileFormat !='' and fileFormat !=null and fileFormat!='全部' and fileFormat!='all') ">
