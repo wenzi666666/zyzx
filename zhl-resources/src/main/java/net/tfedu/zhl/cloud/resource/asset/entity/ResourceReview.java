@@ -11,158 +11,147 @@ import javax.persistence.Id;
  * @author wangwr
  * 
  */
-public class ResourceReview  implements Serializable{
+public class ResourceReview implements Serializable {
 
-	
-		/**
-		 * 评论id
-		 */
-		@Id
-	    private Long id;
+    /**
+     * 评论id
+     */
+    @Id
+    private Long id;
 
+    private Long resId;
 
-	    private Long resId;
+    private String resCode;
 
+    private String title;
 
-	    private String resCode ; 
+    /**
+     * 转换为新版的fromflag输出
+     */
+    private Integer fromFlag;
 
-	    
-	    private String title;
+    private String content;
 
-	    /**
-	     * 转换为新版的fromflag输出
-	     */
-	    private Integer fromFlag;
+    /**
+     * 评论时间
+     */
+    private Date time;
 
-	    private String content;
+    private String imgPath;
 
-	    /**
-	     * 评论时间 
-	     */
-	    private Date time;
+    private String fileSuffix;
 
-	    private String imgPath;
+    public ResourceReview(Long id, String title, Long resId, Integer fromFlag, String content, Date time,
+            String imgPath, String fileSuffix, String resCode) {
+        this.id = id;
+        this.title = title;
+        this.resId = resId;
+        this.fromFlag = fromFlag;
+        this.content = content;
+        this.time = time;
+        this.imgPath = imgPath;
+        this.fileSuffix = fileSuffix;
+        this.resCode = resCode;
+    }
 
-	    private String fileSuffix;
-	    
-	    
-	    
+    public ResourceReview() {
+        super();
+    }
 
-	    public ResourceReview(Long id, String title, Long resId, Integer fromFlag, String content,  Date time, String imgPath, String fileSuffix,String resCode) {
-	        this.id = id;
-	        this.title = title;
-	        this.resId = resId;
-	        this.fromFlag = fromFlag;
-	        this.content = content;
-	        this.time = time;
-	        this.imgPath = imgPath;
-	        this.fileSuffix = fileSuffix;
-	        this.resCode = resCode ;
-	    }
+    /**
+     * @return id
+     */
+    public Long getId() {
+        return id;
+    }
 
-	    public ResourceReview() {
-	        super();
-	    }
+    /**
+     * @param id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    /**
-	     * @return id
-	     */
-	    public Long getId() {
-	        return id;
-	    }
+    /**
+     * @return title
+     */
+    public String getTitle() {
+        return title;
+    }
 
-	    /**
-	     * @param id
-	     */
-	    public void setId(Long id) {
-	        this.id = id;
-	    }
+    /**
+     * @param title
+     */
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
 
-	    /**
-	     * @return title
-	     */
-	    public String getTitle() {
-	        return title;
-	    }
+    /**
+     * @return time
+     */
+    public Date getTime() {
+        return time;
+    }
 
-	    /**
-	     * @param title
-	     */
-	    public void setTitle(String title) {
-	        this.title = title == null ? null : title.trim();
-	    }
+    /**
+     * @param time
+     */
+    public void setTime(Date time) {
+        this.time = time;
+    }
 
-	  
+    public Long getResId() {
+        return resId;
+    }
 
-	    /**
-	     * @return time
-	     */
-	    public Date getTime() {
-	        return time;
-	    }
+    public void setResId(Long resId) {
+        this.resId = resId;
+    }
 
-	    /**
-	     * @param time
-	     */
-	    public void setTime(Date time) {
-	        this.time = time;
-	    }
+    public Integer getFromFlag() {
+        return fromFlag;
+    }
 
-		public Long getResId() {
-			return resId;
-		}
+    public void setFromFlag(Integer fromFlag) {
+        this.fromFlag = fromFlag;
+    }
 
-		public void setResId(Long resId) {
-			this.resId = resId;
-		}
+    public String getContent() {
+        return content;
+    }
 
-		public Integer getFromFlag() {
-			return fromFlag;
-		}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-		public void setFromFlag(Integer fromFlag) {
-			this.fromFlag = fromFlag;
-		}
+    public String getResCode() {
+        return resCode;
+    }
 
-		
+    public void setResCode(String resCode) {
+        this.resCode = resCode;
+    }
 
-		public String getContent() {
-			return content;
-		}
+    public String getImgPath() {
+        return imgPath;
+    }
 
-		public void setContent(String content) {
-			this.content = content;
-		}
+    public void setImgPath(String imgPath) {
+        this.imgPath = imgPath;
+    }
 
-		public String getResCode() {
-			return resCode;
-		}
+    public String getFileSuffix() {
+        return fileSuffix;
+    }
 
-		public void setResCode(String resCode) {
-			this.resCode = resCode;
-		}
+    public void setFileSuffix(String fileSuffix) {
+        this.fileSuffix = fileSuffix;
+    }
 
-		public String getImgPath() {
-			return imgPath;
-		}
+    @Override
+    public String toString() {
+        return "[ResourceReview:{id:" + id + ";title:" + title + ";resId:" + resId + ";fromFlag:" + fromFlag
+                + ";content:" + content + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";
+    }
 
-		public void setImgPath(String imgPath) {
-			this.imgPath = imgPath;
-		}
-
-		public String getFileSuffix() {
-			return fileSuffix;
-		}
-
-		public void setFileSuffix(String fileSuffix) {
-			this.fileSuffix = fileSuffix;
-		}
-
-		
-		@Override
-		public String toString(){
-			return "[ResourceReview:{id:"+id+";title:"+title+";resId:"+resId+";fromFlag:"
-					+fromFlag+";content:"+content+";imgPath:"+imgPath+";fileSuffix:"+fileSuffix+"}]";
-		}
-	
 }

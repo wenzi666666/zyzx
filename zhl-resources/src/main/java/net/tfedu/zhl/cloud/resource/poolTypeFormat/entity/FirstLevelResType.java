@@ -2,49 +2,43 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.entity;
 
 import java.io.Serializable;
 
-
-
 /**
  * 自建资源，获取一级资源类型
+ * 
  * @author wangwr
  *
  */
-public class FirstLevelResType implements Serializable{
-	private static final long serialVersionUID = 8160030266758656476L;
+public class FirstLevelResType implements Serializable {
+    private static final long serialVersionUID = 8160030266758656476L;
 
-	Long id;
-	
-	String mtype ;
-	
-	String code ;
+    Long id;
 
-	public Long getId() {
-		return id;
-	}
+    String mtype;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    String code;
 
-	public String getMtype() {
-		return mtype;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setMtype(String mtype) {
-		this.mtype = mtype;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public String getCode() {
-		return code;
-	}
+    public String getMtype() {
+        return mtype;
+    }
 
-	public void setCode(String code) {
-		this.code = code;
-	} 
-	
+    public void setMtype(String mtype) {
+        this.mtype = mtype;
+    }
 
-	
-	
-	
-	
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
 }

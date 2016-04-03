@@ -5,11 +5,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Table(name = "x_resourcetype")
-public class ResType implements Serializable{
-	/**
-	 * 序列号
-	 */
-	private static final long serialVersionUID = 8160030266758656476L;
+public class ResType implements Serializable {
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = 8160030266758656476L;
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,7 +78,8 @@ public class ResType implements Serializable{
     @Column(name = "DisplayIndex")
     private Byte displayindex;
 
-    public ResType(Integer id, String mtype, String code, String description, Boolean flag, Long pid, Integer level, Boolean typeflag, Long roleid, Long schoolid, Long subjectid, Byte displayindex) {
+    public ResType(Integer id, String mtype, String code, String description, Boolean flag, Long pid, Integer level,
+            Boolean typeflag, Long roleid, Long schoolid, Long subjectid, Byte displayindex) {
         this.id = id;
         this.mtype = mtype;
         this.code = code;
@@ -123,7 +124,8 @@ public class ResType implements Serializable{
     /**
      * 设置类型名称
      *
-     * @param mtype 类型名称
+     * @param mtype
+     *            类型名称
      */
     public void setMtype(String mtype) {
         this.mtype = mtype == null ? null : mtype.trim();
@@ -141,7 +143,8 @@ public class ResType implements Serializable{
     /**
      * 设置类型代码
      *
-     * @param code 类型代码
+     * @param code
+     *            类型代码
      */
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
@@ -159,7 +162,8 @@ public class ResType implements Serializable{
     /**
      * 设置类型说明
      *
-     * @param description 类型说明
+     * @param description
+     *            类型说明
      */
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
@@ -177,7 +181,8 @@ public class ResType implements Serializable{
     /**
      * 设置是否删除标识，0----否；1------是
      *
-     * @param flag 是否删除标识，0----否；1------是
+     * @param flag
+     *            是否删除标识，0----否；1------是
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -195,7 +200,8 @@ public class ResType implements Serializable{
     /**
      * 设置父id
      *
-     * @param pid 父id
+     * @param pid
+     *            父id
      */
     public void setPid(Long pid) {
         this.pid = pid;
@@ -213,7 +219,8 @@ public class ResType implements Serializable{
     /**
      * 设置类型级别
      *
-     * @param level 类型级别
+     * @param level
+     *            类型级别
      */
     public void setLevel(Integer level) {
         this.level = level;
@@ -231,7 +238,8 @@ public class ResType implements Serializable{
     /**
      * 设置分区是系统类型，还是自定义类型0-----系统；1----自定义，系统类型不允许修改
      *
-     * @param typeflag 分区是系统类型，还是自定义类型0-----系统；1----自定义，系统类型不允许修改
+     * @param typeflag
+     *            分区是系统类型，还是自定义类型0-----系统；1----自定义，系统类型不允许修改
      */
     public void setTypeflag(Boolean typeflag) {
         this.typeflag = typeflag;
@@ -249,7 +257,8 @@ public class ResType implements Serializable{
     /**
      * 设置角色标识
      *
-     * @param roleid 角色标识
+     * @param roleid
+     *            角色标识
      */
     public void setRoleid(Long roleid) {
         this.roleid = roleid;
@@ -267,7 +276,8 @@ public class ResType implements Serializable{
     /**
      * 设置自定义类型所属学校
      *
-     * @param schoolid 自定义类型所属学校
+     * @param schoolid
+     *            自定义类型所属学校
      */
     public void setSchoolid(Long schoolid) {
         this.schoolid = schoolid;
@@ -285,7 +295,8 @@ public class ResType implements Serializable{
     /**
      * 设置科目id
      *
-     * @param subjectid 科目id
+     * @param subjectid
+     *            科目id
      */
     public void setSubjectid(Long subjectid) {
         this.subjectid = subjectid;
@@ -303,18 +314,19 @@ public class ResType implements Serializable{
     /**
      * 设置类型的显示顺序
      *
-     * @param displayindex 类型的显示顺序
+     * @param displayindex
+     *            类型的显示顺序
      */
     public void setDisplayindex(Byte displayindex) {
         this.displayindex = displayindex;
     }
-    
+
     /**
      * 重写toString方法，方便单元测试输出
      */
     @Override
-    public String toString(){
-    	
-    	return "Type [id = "+ id +",pid = "+ pid +",mtype = "+ mtype +"]";   
+    public String toString() {
+
+        return "Type [id = " + id + ",pid = " + pid + ",mtype = " + mtype + "]";
     }
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "j_prepare_content")
-public class JPrepareContent   implements Serializable{
+public class JPrepareContent implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,9 +28,9 @@ public class JPrepareContent   implements Serializable{
     private Long contid;
 
     /**
-     * 内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源 11 新版资源中心区本资源 12新版资源中心校本资源）
-     * 插入时新版资源中心都使用 9 ；10； 11； 12 
-     * 查询是 查询     1、9； 2、10；11；12
+     * 内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源 11
+     * 新版资源中心区本资源 12新版资源中心校本资源） 插入时新版资源中心都使用 9 ；10； 11； 12 查询是 查询 1、9；
+     * 2、10；11；12
      * 
      */
     @Column(name = "contType")
@@ -44,7 +44,8 @@ public class JPrepareContent   implements Serializable{
     @Column(name = "orderIdx")
     private Integer orderidx;
 
-    public JPrepareContent(Long id, Date createtime, Long preid, Long contid, Integer conttype, Boolean flag, Integer orderidx) {
+    public JPrepareContent(Long id, Date createtime, Long preid, Long contid, Integer conttype, Boolean flag,
+            Integer orderidx) {
         this.id = id;
         this.createtime = createtime;
         this.preid = preid;
@@ -84,7 +85,8 @@ public class JPrepareContent   implements Serializable{
     /**
      * 设置添加日期
      *
-     * @param createtime 添加日期
+     * @param createtime
+     *            添加日期
      */
     public void setCreatetime(Date createtime) {
         this.createtime = createtime;
@@ -102,7 +104,8 @@ public class JPrepareContent   implements Serializable{
     /**
      * 设置备课夹ID
      *
-     * @param preid 备课夹ID
+     * @param preid
+     *            备课夹ID
      */
     public void setPreid(Long preid) {
         this.preid = preid;
@@ -120,7 +123,8 @@ public class JPrepareContent   implements Serializable{
     /**
      * 设置内容ID
      *
-     * @param contid 内容ID
+     * @param contid
+     *            内容ID
      */
     public void setContid(Long contid) {
         this.contid = contid;
@@ -129,7 +133,8 @@ public class JPrepareContent   implements Serializable{
     /**
      * 获取内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
      *
-     * @return contType - 内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
+     * @return contType - 内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8
+     *         区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
      */
     public Integer getConttype() {
         return conttype;
@@ -138,7 +143,9 @@ public class JPrepareContent   implements Serializable{
     /**
      * 设置内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
      *
-     * @param conttype 内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8 区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
+     * @param conttype
+     *            内容类型（1本地资源2系统资源3 学案 4练习5测试6讨论 7 校本资源，8
+     *            区本资源，9新版资源中心个人资源，10新版资源中心系统 资源）
      */
     public void setConttype(Integer conttype) {
         this.conttype = conttype;
@@ -150,13 +157,14 @@ public class JPrepareContent   implements Serializable{
      * @return flag - 逻辑删除
      */
     public Boolean getFlag() {
-        return flag==null?false:flag;
+        return flag == null ? false : flag;
     }
 
     /**
      * 设置逻辑删除
      *
-     * @param flag 逻辑删除
+     * @param flag
+     *            逻辑删除
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -166,7 +174,7 @@ public class JPrepareContent   implements Serializable{
      * @return orderIdx
      */
     public Integer getOrderidx() {
-        return orderidx==null?0:orderidx;
+        return orderidx == null ? 0 : orderidx;
     }
 
     /**

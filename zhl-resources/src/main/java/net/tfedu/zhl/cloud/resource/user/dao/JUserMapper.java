@@ -6,8 +6,10 @@ import java.util.HashMap;
 import net.tfedu.zhl.cloud.resource.user.entity.JUser;
 import net.tfedu.zhl.cloud.resource.user.entity.UserSimple;
 import net.tfedu.zhl.helper.CoreMapper;
+
 /**
  * 用户业务表
+ * 
  * @author wangwr
  *
  */
@@ -60,4 +62,5 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	public HashMap<String,Long> getUserAreaInfo(Long userId);
 	
 	
+
 }

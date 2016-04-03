@@ -7,11 +7,11 @@ import javax.persistence.*;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 
 @Table(name = "z_resource")
-public class SysResource implements Serializable{
-	/**
-	 * 序列号
-	 */
-	private static final long serialVersionUID = 8160030266758656476L;
+public class SysResource implements Serializable {
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 自增id
      */
@@ -196,25 +196,29 @@ public class SysResource implements Serializable{
 
     @Column(name = "Des")
     private String des;
-    
-  
 
-	/**
+    /**
      * 课程表
      */
     @Transient
     private JSyscourse syscourse;
-  
 
-	public JSyscourse getSyscourse() {
-		return syscourse;
-	}
+    public JSyscourse getSyscourse() {
+        return syscourse;
+    }
 
-	public void setSyscourse(JSyscourse syscourse) {
-		this.syscourse = syscourse;
-	}
+    public void setSyscourse(JSyscourse syscourse) {
+        this.syscourse = syscourse;
+    }
 
-    public SysResource(Long id, String rescode, String provider, String title, String keyword, String fpath, String fname, String creator, String author, Date createdt, Date updatedt, String fsize, String typelean, Integer oldmtype, Boolean islocal, String editor, String thumbnailname, String thumbnailnote, String thumbnailpath, String eduplace, String suitterm, String copyright, Integer uploadscore, Integer dloadtimes, Integer dloadscore, Integer clicktimes, Integer sctimes, String rdes, Boolean flag, Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel, String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker, String speakerunit, Integer resolution, String unifytypeid, String des) {
+    public SysResource(Long id, String rescode, String provider, String title, String keyword, String fpath,
+            String fname, String creator, String author, Date createdt, Date updatedt, String fsize, String typelean,
+            Integer oldmtype, Boolean islocal, String editor, String thumbnailname, String thumbnailnote,
+            String thumbnailpath, String eduplace, String suitterm, String copyright, Integer uploadscore,
+            Integer dloadtimes, Integer dloadscore, Integer clicktimes, Integer sctimes, String rdes, Boolean flag,
+            Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel,
+            String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker,
+            String speakerunit, Integer resolution, String unifytypeid, String des) {
         this.id = id;
         this.rescode = rescode;
         this.provider = provider;
@@ -276,7 +280,8 @@ public class SysResource implements Serializable{
     /**
      * 设置自增id
      *
-     * @param id 自增id
+     * @param id
+     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
@@ -406,7 +411,8 @@ public class SysResource implements Serializable{
     /**
      * 设置创建时间
      *
-     * @param createdt 创建时间
+     * @param createdt
+     *            创建时间
      */
     public void setCreatedt(Date createdt) {
         this.createdt = createdt;
@@ -424,7 +430,8 @@ public class SysResource implements Serializable{
     /**
      * 设置更新时间
      *
-     * @param updatedt 更新时间
+     * @param updatedt
+     *            更新时间
      */
     public void setUpdatedt(Date updatedt) {
         this.updatedt = updatedt;
@@ -442,7 +449,8 @@ public class SysResource implements Serializable{
     /**
      * 设置Դ
      *
-     * @param fsize Դ
+     * @param fsize
+     *            Դ
      */
     public void setFsize(String fsize) {
         this.fsize = fsize == null ? null : fsize.trim();
@@ -474,7 +482,8 @@ public class SysResource implements Serializable{
     /**
      * 设置资源类型的外键
      *
-     * @param oldmtype 资源类型的外键
+     * @param oldmtype
+     *            资源类型的外键
      */
     public void setOldmtype(Integer oldmtype) {
         this.oldmtype = oldmtype;
@@ -492,7 +501,8 @@ public class SysResource implements Serializable{
     /**
      * 设置是否网络资源(0-网络资源,1-本地资源)
      *
-     * @param islocal 是否网络资源(0-网络资源,1-本地资源)
+     * @param islocal
+     *            是否网络资源(0-网络资源,1-本地资源)
      */
     public void setIslocal(Boolean islocal) {
         this.islocal = islocal;
@@ -608,7 +618,8 @@ public class SysResource implements Serializable{
     /**
      * 设置上传资源所获积分
      *
-     * @param uploadscore 上传资源所获积分
+     * @param uploadscore
+     *            上传资源所获积分
      */
     public void setUploadscore(Integer uploadscore) {
         this.uploadscore = uploadscore;
@@ -626,7 +637,8 @@ public class SysResource implements Serializable{
     /**
      * 设置该资源被下载次数
      *
-     * @param dloadtimes 该资源被下载次数
+     * @param dloadtimes
+     *            该资源被下载次数
      */
     public void setDloadtimes(Integer dloadtimes) {
         this.dloadtimes = dloadtimes;
@@ -644,7 +656,8 @@ public class SysResource implements Serializable{
     /**
      * 设置规定下载该条资源所需积分
      *
-     * @param dloadscore 规定下载该条资源所需积分
+     * @param dloadscore
+     *            规定下载该条资源所需积分
      */
     public void setDloadscore(Integer dloadscore) {
         this.dloadscore = dloadscore;
@@ -662,7 +675,8 @@ public class SysResource implements Serializable{
     /**
      * 设置资源点击次数
      *
-     * @param clicktimes 资源点击次数
+     * @param clicktimes
+     *            资源点击次数
      */
     public void setClicktimes(Integer clicktimes) {
         this.clicktimes = clicktimes;
@@ -680,7 +694,8 @@ public class SysResource implements Serializable{
     /**
      * 设置该资源被收藏次数
      *
-     * @param sctimes 该资源被收藏次数
+     * @param sctimes
+     *            该资源被收藏次数
      */
     public void setSctimes(Integer sctimes) {
         this.sctimes = sctimes;
@@ -712,7 +727,8 @@ public class SysResource implements Serializable{
     /**
      * 设置是否删除(0-未删除,1-删除)
      *
-     * @param flag 是否删除(0-未删除,1-删除)
+     * @param flag
+     *            是否删除(0-未删除,1-删除)
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -730,7 +746,8 @@ public class SysResource implements Serializable{
     /**
      * 设置资源来源0 平台资源 1 专家辅导资源 2三年无忧资源
      *
-     * @param fromflag 资源来源0 平台资源 1 专家辅导资源 2三年无忧资源
+     * @param fromflag
+     *            资源来源0 平台资源 1 专家辅导资源 2三年无忧资源
      */
     public void setFromflag(Integer fromflag) {
         this.fromflag = fromflag;
@@ -748,7 +765,8 @@ public class SysResource implements Serializable{
     /**
      * 设置是否是多文件资源
      *
-     * @param isdwj 是否是多文件资源
+     * @param isdwj
+     *            是否是多文件资源
      */
     public void setIsdwj(Boolean isdwj) {
         this.isdwj = isdwj;
@@ -794,7 +812,8 @@ public class SysResource implements Serializable{
     /**
      * 设置评级0-5（0不要，最高5)
      *
-     * @param displaylevel 评级0-5（0不要，最高5)
+     * @param displaylevel
+     *            评级0-5（0不要，最高5)
      */
     public void setDisplaylevel(Integer displaylevel) {
         this.displaylevel = displaylevel;
@@ -840,7 +859,8 @@ public class SysResource implements Serializable{
     /**
      * 设置搜索结果的素材显示顺序，增序，数小的排在前面
      *
-     * @param displayindex 搜索结果的素材显示顺序，增序，数小的排在前面
+     * @param displayindex
+     *            搜索结果的素材显示顺序，增序，数小的排在前面
      */
     public void setDisplayindex(Integer displayindex) {
         this.displayindex = displayindex;
@@ -858,7 +878,8 @@ public class SysResource implements Serializable{
     /**
      * 设置全路径
      *
-     * @param fullpath 全路径
+     * @param fullpath
+     *            全路径
      */
     public void setFullpath(String fullpath) {
         this.fullpath = fullpath == null ? null : fullpath.trim();
@@ -904,7 +925,8 @@ public class SysResource implements Serializable{
     /**
      * 设置0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
      *
-     * @param resolution 0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
+     * @param resolution
+     *            0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
      */
     public void setResolution(Integer resolution) {
         this.resolution = resolution;
@@ -922,7 +944,8 @@ public class SysResource implements Serializable{
     /**
      * 设置新版3.1资源类型
      *
-     * @param unifytypeid 新版3.1资源类型
+     * @param unifytypeid
+     *            新版3.1资源类型
      */
     public void setUnifytypeid(String unifytypeid) {
         this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();

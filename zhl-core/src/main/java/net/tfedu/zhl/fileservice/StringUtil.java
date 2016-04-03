@@ -6,7 +6,7 @@ package net.tfedu.zhl.fileservice;
  * @author Boatzhang 2008-10-23 13:23:09
  */
 public class StringUtil {
-	public static boolean IsNullOrEmpty(String value) {
-		return value == null || value.isEmpty();
-	}
+    public static boolean IsNullOrEmpty(String value) {
+        return value == null || value.isEmpty();
+    }
 }

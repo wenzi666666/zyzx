@@ -6,7 +6,7 @@ import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "j_lession_prepare")
-public class JPrepare   implements Serializable{
+public class JPrepare implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -39,7 +39,8 @@ public class JPrepare   implements Serializable{
     @Column(name = "subjectId")
     private Long subjectid;
 
-    public JPrepare(Long id, Long userid, Date createtime, String title, Long courseid, Boolean flag, Long ordernum, String tfcode, Long subjectid) {
+    public JPrepare(Long id, Long userid, Date createtime, String title, Long courseid, Boolean flag, Long ordernum,
+            String tfcode, Long subjectid) {
         this.id = id;
         this.userid = userid;
         this.createtime = createtime;
@@ -87,7 +88,7 @@ public class JPrepare   implements Serializable{
      * @return createtime
      */
     public Date getCreatetime() {
-        return createtime==null?Calendar.getInstance().getTime():createtime;
+        return createtime == null ? Calendar.getInstance().getTime() : createtime;
     }
 
     /**
@@ -117,13 +118,14 @@ public class JPrepare   implements Serializable{
      * @return courseId - 自建目录
      */
     public Long getCourseid() {
-        return courseid==null?0:courseid;
+        return courseid == null ? 0 : courseid;
     }
 
     /**
      * 设置自建目录
      *
-     * @param courseid 自建目录
+     * @param courseid
+     *            自建目录
      */
     public void setCourseid(Long courseid) {
         this.courseid = courseid;
@@ -135,13 +137,14 @@ public class JPrepare   implements Serializable{
      * @return flag - 逻辑删除
      */
     public Boolean getFlag() {
-        return flag == null?false:flag;
+        return flag == null ? false : flag;
     }
 
     /**
      * 设置逻辑删除
      *
-     * @param flag 逻辑删除
+     * @param flag
+     *            逻辑删除
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -153,13 +156,14 @@ public class JPrepare   implements Serializable{
      * @return ordernum - 排序字段-备用
      */
     public Long getOrdernum() {
-        return ordernum==null?0:ordernum;
+        return ordernum == null ? 0 : ordernum;
     }
 
     /**
      * 设置排序字段-备用
      *
-     * @param ordernum 排序字段-备用
+     * @param ordernum
+     *            排序字段-备用
      */
     public void setOrdernum(Long ordernum) {
         this.ordernum = ordernum;
@@ -183,7 +187,7 @@ public class JPrepare   implements Serializable{
      * @return subjectId
      */
     public Long getSubjectid() {
-        return subjectid==null?0:subjectid;
+        return subjectid == null ? 0 : subjectid;
     }
 
     /**

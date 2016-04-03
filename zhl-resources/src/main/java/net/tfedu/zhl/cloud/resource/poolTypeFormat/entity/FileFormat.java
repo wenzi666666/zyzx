@@ -5,11 +5,11 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 @Table(name = "j_filetypedetail")
-public class FileFormat implements Serializable{
-	/**
-	 * 序列号
-	 */
-	private static final long serialVersionUID = 8160030266758656476L;
+public class FileFormat implements Serializable {
+    /**
+     * 序列号
+     */
+    private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 自增id
      */
@@ -73,7 +73,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置自增id
      *
-     * @param id 自增id
+     * @param id
+     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
@@ -91,7 +92,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置格式代码
      *
-     * @param formatcode 格式代码
+     * @param formatcode
+     *            格式代码
      */
     public void setFormatcode(String formatcode) {
         this.formatcode = formatcode == null ? null : formatcode.trim();
@@ -109,7 +111,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置文件类型
      *
-     * @param fileformat 文件类型
+     * @param fileformat
+     *            文件类型
      */
     public void setFileformat(String fileformat) {
         this.fileformat = fileformat == null ? null : fileformat.trim();
@@ -127,7 +130,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置文件类型描述
      *
-     * @param typedesc 文件类型描述
+     * @param typedesc
+     *            文件类型描述
      */
     public void setTypedesc(String typedesc) {
         this.typedesc = typedesc == null ? null : typedesc.trim();
@@ -145,7 +149,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置排序
      *
-     * @param ordernum 排序
+     * @param ordernum
+     *            排序
      */
     public void setOrdernum(Integer ordernum) {
         this.ordernum = ordernum;
@@ -163,7 +168,8 @@ public class FileFormat implements Serializable{
     /**
      * 设置是否删除，0----否；1-----是
      *
-     * @param flag 是否删除，0----否；1-----是
+     * @param flag
+     *            是否删除，0----否；1-----是
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;

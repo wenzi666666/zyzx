@@ -5,303 +5,301 @@ import java.util.Date;
 
 /**
  * 系统资源查询结果的一条记录实体类
+ * 
  * @author WeiCuicui
  *
  */
 
-public class SysResourceEntity implements Serializable{
-	private static final long serialVersionUID = 8160030266758656476L;
-	
-	/**
-	 * 资源id
-	 */
-	private Long Id;
+public class SysResourceEntity implements Serializable {
+    private static final long serialVersionUID = 8160030266758656476L;
 
+    /**
+     * 资源id
+     */
+    private Long Id;
 
-	/**
-	 * 资源code
-	 */
-	private String ResCode;
-	
-	/**
-	 * 资源标题
-	 */
-	private String Title;
-	
-	/**
-	 * 文件路径
-	 */
-	private String Fpath;
-	
-	/**
-	 * 文件名
-	 */
-	private String Fname;
-	/**
-	 * 资源类型
-	 */
-	private String MType;
-	/**
-	 * 类型id
-	 */
-	private Integer typeId;
-	/**
-	 * 资源大小
-	 */
-	private String FSize;
-	/**
-	 * 下载次数
-	 */
-	private Integer DLoadTimes;
-	/**
-	 * 浏览次数
-	 */
-	private Integer ClickTimes;
-	/**
-	 * 主讲人
-	 */
-	private String speaker;
-	/**
-	 * 播放时长
-	 */
-	private String res_time;
-	
-	/**
-	 * 文件扩展名
-	 */
-	private String FileExt;
-	
-	
-	 /**
+    /**
+     * 资源code
+     */
+    private String ResCode;
+
+    /**
+     * 资源标题
+     */
+    private String Title;
+
+    /**
+     * 文件路径
+     */
+    private String Fpath;
+
+    /**
+     * 文件名
+     */
+    private String Fname;
+    /**
+     * 资源类型
+     */
+    private String MType;
+    /**
+     * 类型id
+     */
+    private Integer typeId;
+    /**
+     * 资源大小
+     */
+    private String FSize;
+    /**
+     * 下载次数
+     */
+    private Integer DLoadTimes;
+    /**
+     * 浏览次数
+     */
+    private Integer ClickTimes;
+    /**
+     * 主讲人
+     */
+    private String speaker;
+    /**
+     * 播放时长
+     */
+    private String res_time;
+
+    /**
+     * 文件扩展名
+     */
+    private String FileExt;
+
+    /**
      * 0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
      */
-	private Integer resolution;
-	
-	/**
-	 * 盘符序号
-	 */
-	private int diskorder;
-	
-	 /**
+    private Integer resolution;
+
+    /**
+     * 盘符序号
+     */
+    private int diskorder;
+
+    /**
      * 搜索结果的素材显示顺序，增序，数小的排在前面
      */
-	private Integer Displayindex;
-	
-	/**
-	 * 是否为多文件
-	 */
-	private Boolean isDWJ;
-	
-	/**
-	 * 资源更新时间
-	 */
-	private Date UpdateDT;
-	
-	/**
-	 * 排序
-	 */
-	private int orderNum;
-	
-	/**
-	 * 评分的平均值
-	 */
-	private int avgScore;
-	
-	/**
-	 * 是否最新资源（资源最后更新时间距离当前时间在一个月之内的）
-	 */
-	private boolean isNew;
-	
-	/**
-	 * 资源来源
-	 */
-	private int fromFlag;
+    private Integer Displayindex;
 
-	
-	
-	public int getFromFlag() {
-		return fromFlag;
-	}
+    /**
+     * 是否为多文件
+     */
+    private Boolean isDWJ;
 
-	public void setFromFlag(int fromFlag) {
-		this.fromFlag = fromFlag;
-	}
+    /**
+     * 资源更新时间
+     */
+    private Date UpdateDT;
 
-	public boolean isNew() {
-		return isNew;
-	}
+    /**
+     * 排序
+     */
+    private int orderNum;
 
-	public void setNew(boolean isNew) {
-		this.isNew = isNew;
-	}
+    /**
+     * 评分的平均值
+     */
+    private int avgScore;
 
-	public Long getId() {
-		return Id;
-	}
+    /**
+     * 是否最新资源（资源最后更新时间距离当前时间在一个月之内的）
+     */
+    private boolean isNew;
 
-	public void setId(Long id) {
-		Id = id;
-	}
+    /**
+     * 资源来源
+     */
+    private int fromFlag;
 
-	public String getResCode() {
-		return ResCode;
-	}
+    public int getFromFlag() {
+        return fromFlag;
+    }
 
-	public void setResCode(String resCode) {
-		ResCode = resCode;
-	}
+    public void setFromFlag(int fromFlag) {
+        this.fromFlag = fromFlag;
+    }
 
-	public String getTitle() {
-		return Title;
-	}
+    public boolean isNew() {
+        return isNew;
+    }
 
-	public void setTitle(String title) {
-		Title = title;
-	}
+    public void setNew(boolean isNew) {
+        this.isNew = isNew;
+    }
 
-	public String getFpath() {
-		return Fpath;
-	}
+    public Long getId() {
+        return Id;
+    }
 
-	public void setFpath(String fpath) {
-		Fpath = fpath;
-	}
+    public void setId(Long id) {
+        Id = id;
+    }
 
-	public String getFname() {
-		return Fname;
-	}
+    public String getResCode() {
+        return ResCode;
+    }
 
-	public void setFname(String fname) {
-		Fname = fname;
-	}
+    public void setResCode(String resCode) {
+        ResCode = resCode;
+    }
 
-	public String getMType() {
-		return MType;
-	}
+    public String getTitle() {
+        return Title;
+    }
 
-	public void setMType(String mType) {
-		MType = mType;
-	}
+    public void setTitle(String title) {
+        Title = title;
+    }
 
-	public Integer getTypeId() {
-		return typeId;
-	}
+    public String getFpath() {
+        return Fpath;
+    }
 
-	public void setTypeId(Integer typeId) {
-		this.typeId = typeId;
-	}
+    public void setFpath(String fpath) {
+        Fpath = fpath;
+    }
 
-	public String getFSize() {
-		return FSize;
-	}
+    public String getFname() {
+        return Fname;
+    }
 
-	public void setFSize(String fSize) {
-		FSize = fSize;
-	}
+    public void setFname(String fname) {
+        Fname = fname;
+    }
 
-	public Integer getDLoadTimes() {
-		return DLoadTimes;
-	}
+    public String getMType() {
+        return MType;
+    }
 
-	public void setDLoadTimes(Integer dLoadTimes) {
-		DLoadTimes = dLoadTimes;
-	}
+    public void setMType(String mType) {
+        MType = mType;
+    }
 
-	public Integer getClickTimes() {
-		return ClickTimes;
-	}
+    public Integer getTypeId() {
+        return typeId;
+    }
 
-	public void setClickTimes(Integer clickTimes) {
-		ClickTimes = clickTimes;
-	}
+    public void setTypeId(Integer typeId) {
+        this.typeId = typeId;
+    }
 
-	public String getSpeaker() {
-		return speaker;
-	}
+    public String getFSize() {
+        return FSize;
+    }
 
-	public void setSpeaker(String speaker) {
-		this.speaker = speaker;
-	}
+    public void setFSize(String fSize) {
+        FSize = fSize;
+    }
 
-	public String getRes_time() {
-		return res_time;
-	}
+    public Integer getDLoadTimes() {
+        return DLoadTimes;
+    }
 
-	public void setRes_time(String res_time) {
-		this.res_time = res_time;
-	}
+    public void setDLoadTimes(Integer dLoadTimes) {
+        DLoadTimes = dLoadTimes;
+    }
 
-	public String getFileExt() {
-		return FileExt;
-	}
+    public Integer getClickTimes() {
+        return ClickTimes;
+    }
 
-	public void setFileExt(String fileExt) {
-		FileExt = fileExt;
-	}
+    public void setClickTimes(Integer clickTimes) {
+        ClickTimes = clickTimes;
+    }
 
-	public Integer getResolution() {
-		return resolution;
-	}
+    public String getSpeaker() {
+        return speaker;
+    }
 
-	public void setResolution(Integer resolution) {
-		this.resolution = resolution;
-	}
+    public void setSpeaker(String speaker) {
+        this.speaker = speaker;
+    }
 
-	public int getDiskorder() {
-		return diskorder;
-	}
+    public String getRes_time() {
+        return res_time;
+    }
 
-	public void setDiskorder(int diskorder) {
-		this.diskorder = diskorder;
-	}
+    public void setRes_time(String res_time) {
+        this.res_time = res_time;
+    }
 
-	public Integer getDisplayindex() {
-		return Displayindex;
-	}
+    public String getFileExt() {
+        return FileExt;
+    }
 
-	public void setDisplayindex(Integer displayindex) {
-		Displayindex = displayindex;
-	}
+    public void setFileExt(String fileExt) {
+        FileExt = fileExt;
+    }
 
-	public Boolean getIsDWJ() {
-		return isDWJ;
-	}
+    public Integer getResolution() {
+        return resolution;
+    }
 
-	public void setIsDWJ(Boolean isDWJ) {
-		this.isDWJ = isDWJ;
-	}
+    public void setResolution(Integer resolution) {
+        this.resolution = resolution;
+    }
 
-	public Date getUpdateDT() {
-		return UpdateDT;
-	}
+    public int getDiskorder() {
+        return diskorder;
+    }
 
-	public void setUpdateDT(Date updateDT) {
-		UpdateDT = updateDT;
-	}
+    public void setDiskorder(int diskorder) {
+        this.diskorder = diskorder;
+    }
 
-	public int getOrderNum() {
-		return orderNum;
-	}
+    public Integer getDisplayindex() {
+        return Displayindex;
+    }
 
-	public void setOrderNum(int orderNum) {
-		this.orderNum = orderNum;
-	}
+    public void setDisplayindex(Integer displayindex) {
+        Displayindex = displayindex;
+    }
 
-	public int getAvgScore() {
-		return avgScore;
-	}
+    public Boolean getIsDWJ() {
+        return isDWJ;
+    }
 
-	public void setAvgScore(int avgScore) {
-		this.avgScore = avgScore;
-	}
+    public void setIsDWJ(Boolean isDWJ) {
+        this.isDWJ = isDWJ;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-	
-	@Override
-	public String toString(){
-		return "sysResEntity[id="+Id+" fpath="+Fpath+" fname= "+Fname+" fileExt="+FileExt+" fzise = "+FSize+"]";
-	}
+    public Date getUpdateDT() {
+        return UpdateDT;
+    }
+
+    public void setUpdateDT(Date updateDT) {
+        UpdateDT = updateDT;
+    }
+
+    public int getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(int orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public int getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(int avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    @Override
+    public String toString() {
+        return "sysResEntity[id=" + Id + " fpath=" + Fpath + " fname= " + Fname + " fileExt=" + FileExt + " fzise = "
+                + FSize + "]";
+    }
 
 }

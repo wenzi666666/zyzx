@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "z_districts_resource")
-public class DistrictRes implements Serializable{
-	private static final long serialVersionUID = 8160030266758656476L;
+public class DistrictRes implements Serializable {
+    private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 自增id
      */
@@ -256,7 +256,7 @@ public class DistrictRes implements Serializable{
     private Integer authorfromflag;
 
     /**
-     * 资源范围 1全国资源 2省资源  3市资源 4区资源 5校资源 
+     * 资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
      */
     @Column(name = "Scope")
     private Integer scope;
@@ -294,7 +294,15 @@ public class DistrictRes implements Serializable{
     @Column(name = "Des")
     private String des;
 
-    public DistrictRes(Long id, String rescode, String provider, String title, String keyword, String fpath, String fname, Long creatorid, Long authorid, Date createdt, Date updatedt, String fsize, String typelean, Integer islocal, Long editorid, String thumbnailname, String thumbnailnote, String thumbnailpath, String eduplace, String suitterm, String copyright, Integer uploadscore, Integer dloadtimes, Integer dloadscore, Integer clicktimes, Long assetid, Integer sctimes, String rdes, Boolean flag, Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel, String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker, String speakerunit, Integer resolution, Integer authorfromflag, Integer scope, Long scopeid, Integer state, String auditopinion, Integer isfinished, String unifytypeid, String des) {
+    public DistrictRes(Long id, String rescode, String provider, String title, String keyword, String fpath,
+            String fname, Long creatorid, Long authorid, Date createdt, Date updatedt, String fsize, String typelean,
+            Integer islocal, Long editorid, String thumbnailname, String thumbnailnote, String thumbnailpath,
+            String eduplace, String suitterm, String copyright, Integer uploadscore, Integer dloadtimes,
+            Integer dloadscore, Integer clicktimes, Long assetid, Integer sctimes, String rdes, Boolean flag,
+            Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel,
+            String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker,
+            String speakerunit, Integer resolution, Integer authorfromflag, Integer scope, Long scopeid, Integer state,
+            String auditopinion, Integer isfinished, String unifytypeid, String des) {
         this.id = id;
         this.rescode = rescode;
         this.provider = provider;
@@ -362,7 +370,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置自增id
      *
-     * @param id 自增id
+     * @param id
+     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
@@ -380,7 +389,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置编码
      *
-     * @param rescode 编码
+     * @param rescode
+     *            编码
      */
     public void setRescode(String rescode) {
         this.rescode = rescode == null ? null : rescode.trim();
@@ -398,7 +408,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源提供商
      *
-     * @param provider 资源提供商
+     * @param provider
+     *            资源提供商
      */
     public void setProvider(String provider) {
         this.provider = provider == null ? null : provider.trim();
@@ -416,7 +427,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源标题
      *
-     * @param title 资源标题
+     * @param title
+     *            资源标题
      */
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
@@ -434,7 +446,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置关键字
      *
-     * @param keyword 关键字
+     * @param keyword
+     *            关键字
      */
     public void setKeyword(String keyword) {
         this.keyword = keyword == null ? null : keyword.trim();
@@ -452,7 +465,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源路径
      *
-     * @param fpath 资源路径
+     * @param fpath
+     *            资源路径
      */
     public void setFpath(String fpath) {
         this.fpath = fpath == null ? null : fpath.trim();
@@ -470,7 +484,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置文件名
      *
-     * @param fname 文件名
+     * @param fname
+     *            文件名
      */
     public void setFname(String fname) {
         this.fname = fname == null ? null : fname.trim();
@@ -488,7 +503,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置创建者
      *
-     * @param creatorid 创建者
+     * @param creatorid
+     *            创建者
      */
     public void setCreatorid(Long creatorid) {
         this.creatorid = creatorid;
@@ -506,7 +522,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置作者
      *
-     * @param authorid 作者
+     * @param authorid
+     *            作者
      */
     public void setAuthorid(Long authorid) {
         this.authorid = authorid;
@@ -524,7 +541,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置创建时间
      *
-     * @param createdt 创建时间
+     * @param createdt
+     *            创建时间
      */
     public void setCreatedt(Date createdt) {
         this.createdt = createdt;
@@ -542,7 +560,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置更新时间
      *
-     * @param updatedt 更新时间
+     * @param updatedt
+     *            更新时间
      */
     public void setUpdatedt(Date updatedt) {
         this.updatedt = updatedt;
@@ -560,7 +579,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置源资大小
      *
-     * @param fsize 源资大小
+     * @param fsize
+     *            源资大小
      */
     public void setFsize(String fsize) {
         this.fsize = fsize == null ? null : fsize.trim();
@@ -578,7 +598,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置上传的资源，A----学案；B----测试；C--作业；D---教案；E-----课件
      *
-     * @param typelean 上传的资源，A----学案；B----测试；C--作业；D---教案；E-----课件
+     * @param typelean
+     *            上传的资源，A----学案；B----测试；C--作业；D---教案；E-----课件
      */
     public void setTypelean(String typelean) {
         this.typelean = typelean == null ? null : typelean.trim();
@@ -596,7 +617,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置是否网络资源(1-网络资源,0-本地资源)
      *
-     * @param islocal 是否网络资源(1-网络资源,0-本地资源)
+     * @param islocal
+     *            是否网络资源(1-网络资源,0-本地资源)
      */
     public void setIslocal(Integer islocal) {
         this.islocal = islocal;
@@ -614,7 +636,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置编辑者
      *
-     * @param editorid 编辑者
+     * @param editorid
+     *            编辑者
      */
     public void setEditorid(Long editorid) {
         this.editorid = editorid;
@@ -632,7 +655,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置缩略图名称
      *
-     * @param thumbnailname 缩略图名称
+     * @param thumbnailname
+     *            缩略图名称
      */
     public void setThumbnailname(String thumbnailname) {
         this.thumbnailname = thumbnailname == null ? null : thumbnailname.trim();
@@ -650,7 +674,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置缩略图描述
      *
-     * @param thumbnailnote 缩略图描述
+     * @param thumbnailnote
+     *            缩略图描述
      */
     public void setThumbnailnote(String thumbnailnote) {
         this.thumbnailnote = thumbnailnote == null ? null : thumbnailnote.trim();
@@ -668,7 +693,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置缩略图路径
      *
-     * @param thumbnailpath 缩略图路径
+     * @param thumbnailpath
+     *            缩略图路径
      */
     public void setThumbnailpath(String thumbnailpath) {
         this.thumbnailpath = thumbnailpath == null ? null : thumbnailpath.trim();
@@ -686,7 +712,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置教学场所，比如是：A,多媒体教室、B,礼堂、C,教室
      *
-     * @param eduplace 教学场所，比如是：A,多媒体教室、B,礼堂、C,教室
+     * @param eduplace
+     *            教学场所，比如是：A,多媒体教室、B,礼堂、C,教室
      */
     public void setEduplace(String eduplace) {
         this.eduplace = eduplace == null ? null : eduplace.trim();
@@ -704,7 +731,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置适合的学段
      *
-     * @param suitterm 适合的学段
+     * @param suitterm
+     *            适合的学段
      */
     public void setSuitterm(String suitterm) {
         this.suitterm = suitterm == null ? null : suitterm.trim();
@@ -722,7 +750,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置版权
      *
-     * @param copyright 版权
+     * @param copyright
+     *            版权
      */
     public void setCopyright(String copyright) {
         this.copyright = copyright == null ? null : copyright.trim();
@@ -740,7 +769,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置上传资源所获积分
      *
-     * @param uploadscore 上传资源所获积分
+     * @param uploadscore
+     *            上传资源所获积分
      */
     public void setUploadscore(Integer uploadscore) {
         this.uploadscore = uploadscore;
@@ -758,7 +788,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置该资源被下载次数
      *
-     * @param dloadtimes 该资源被下载次数
+     * @param dloadtimes
+     *            该资源被下载次数
      */
     public void setDloadtimes(Integer dloadtimes) {
         this.dloadtimes = dloadtimes;
@@ -776,7 +807,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置规定下载该条资源所需积分
      *
-     * @param dloadscore 规定下载该条资源所需积分
+     * @param dloadscore
+     *            规定下载该条资源所需积分
      */
     public void setDloadscore(Integer dloadscore) {
         this.dloadscore = dloadscore;
@@ -794,7 +826,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源点击次数
      *
-     * @param clicktimes 资源点击次数
+     * @param clicktimes
+     *            资源点击次数
      */
     public void setClicktimes(Integer clicktimes) {
         this.clicktimes = clicktimes;
@@ -812,7 +845,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置自建资源来源id
      *
-     * @param assetid 自建资源来源id
+     * @param assetid
+     *            自建资源来源id
      */
     public void setAssetid(Long assetid) {
         this.assetid = assetid;
@@ -830,7 +864,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置该资源被收藏次数
      *
-     * @param sctimes 该资源被收藏次数
+     * @param sctimes
+     *            该资源被收藏次数
      */
     public void setSctimes(Integer sctimes) {
         this.sctimes = sctimes;
@@ -848,7 +883,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置备注
      *
-     * @param rdes 备注
+     * @param rdes
+     *            备注
      */
     public void setRdes(String rdes) {
         this.rdes = rdes == null ? null : rdes.trim();
@@ -866,7 +902,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置是否删除(0-未删除,1-删除)
      *
-     * @param flag 是否删除(0-未删除,1-删除)
+     * @param flag
+     *            是否删除(0-未删除,1-删除)
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
@@ -884,7 +921,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源来源 3校本资源 4 区本资源
      *
-     * @param fromflag 资源来源 3校本资源 4 区本资源
+     * @param fromflag
+     *            资源来源 3校本资源 4 区本资源
      */
     public void setFromflag(Integer fromflag) {
         this.fromflag = fromflag;
@@ -902,7 +940,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置是否是多文件资源
      *
-     * @param isdwj 是否是多文件资源
+     * @param isdwj
+     *            是否是多文件资源
      */
     public void setIsdwj(Boolean isdwj) {
         this.isdwj = isdwj;
@@ -934,7 +973,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置作者单位
      *
-     * @param authorunit 作者单位
+     * @param authorunit
+     *            作者单位
      */
     public void setAuthorunit(String authorunit) {
         this.authorunit = authorunit == null ? null : authorunit.trim();
@@ -952,7 +992,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置评级0-5（0不要，最高5)
      *
-     * @param displaylevel 评级0-5（0不要，最高5)
+     * @param displaylevel
+     *            评级0-5（0不要，最高5)
      */
     public void setDisplaylevel(Integer displaylevel) {
         this.displaylevel = displaylevel;
@@ -998,7 +1039,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置搜索结果的素材显示顺序，增序，数小的排在前面
      *
-     * @param displayindex 搜索结果的素材显示顺序，增序，数小的排在前面
+     * @param displayindex
+     *            搜索结果的素材显示顺序，增序，数小的排在前面
      */
     public void setDisplayindex(Integer displayindex) {
         this.displayindex = displayindex;
@@ -1016,7 +1058,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置全路径
      *
-     * @param fullpath 全路径
+     * @param fullpath
+     *            全路径
      */
     public void setFullpath(String fullpath) {
         this.fullpath = fullpath == null ? null : fullpath.trim();
@@ -1034,7 +1077,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置主讲人
      *
-     * @param speaker 主讲人
+     * @param speaker
+     *            主讲人
      */
     public void setSpeaker(String speaker) {
         this.speaker = speaker == null ? null : speaker.trim();
@@ -1052,7 +1096,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置主讲人单位
      *
-     * @param speakerunit 主讲人单位
+     * @param speakerunit
+     *            主讲人单位
      */
     public void setSpeakerunit(String speakerunit) {
         this.speakerunit = speakerunit == null ? null : speakerunit.trim();
@@ -1070,7 +1115,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置视频清晰度 0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
      *
-     * @param resolution 视频清晰度 0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
+     * @param resolution
+     *            视频清晰度 0:标清；1：高清；2：全高清；3：2k;4:4k;5:8k;
      */
     public void setResolution(Integer resolution) {
         this.resolution = resolution;
@@ -1088,25 +1134,27 @@ public class DistrictRes implements Serializable{
     /**
      * 设置0-管理员自己上传，1-共享资源 2-投稿资源
      *
-     * @param authorfromflag 0-管理员自己上传，1-共享资源 2-投稿资源
+     * @param authorfromflag
+     *            0-管理员自己上传，1-共享资源 2-投稿资源
      */
     public void setAuthorfromflag(Integer authorfromflag) {
         this.authorfromflag = authorfromflag;
     }
 
     /**
-     * 获取资源范围 1全国资源 2省资源  3市资源 4区资源 5校资源 
+     * 获取资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
      *
-     * @return Scope - 资源范围 1全国资源 2省资源  3市资源 4区资源 5校资源 
+     * @return Scope - 资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
      */
     public Integer getScope() {
         return scope;
     }
 
     /**
-     * 设置资源范围 1全国资源 2省资源  3市资源 4区资源 5校资源 
+     * 设置资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
      *
-     * @param scope 资源范围 1全国资源 2省资源  3市资源 4区资源 5校资源 
+     * @param scope
+     *            资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
      */
     public void setScope(Integer scope) {
         this.scope = scope;
@@ -1124,7 +1172,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置范围Id
      *
-     * @param scopeid 范围Id
+     * @param scopeid
+     *            范围Id
      */
     public void setScopeid(Long scopeid) {
         this.scopeid = scopeid;
@@ -1142,7 +1191,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源状态 1 教师未答复 2 教师拒绝 3教师同意 4 待审核 5 审核失败 6 审核成功 7 存疑
      *
-     * @param state 资源状态 1 教师未答复 2 教师拒绝 3教师同意 4 待审核 5 审核失败 6 审核成功 7 存疑
+     * @param state
+     *            资源状态 1 教师未答复 2 教师拒绝 3教师同意 4 待审核 5 审核失败 6 审核成功 7 存疑
      */
     public void setState(Integer state) {
         this.state = state;
@@ -1160,7 +1210,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置审核意见
      *
-     * @param auditopinion 审核意见
+     * @param auditopinion
+     *            审核意见
      */
     public void setAuditopinion(String auditopinion) {
         this.auditopinion = auditopinion == null ? null : auditopinion.trim();
@@ -1192,7 +1243,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置v3.1新版资源中心类型
      *
-     * @param unifytypeid v3.1新版资源中心类型
+     * @param unifytypeid
+     *            v3.1新版资源中心类型
      */
     public void setUnifytypeid(String unifytypeid) {
         this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();
@@ -1210,7 +1262,8 @@ public class DistrictRes implements Serializable{
     /**
      * 设置资源描述
      *
-     * @param des 资源描述
+     * @param des
+     *            资源描述
      */
     public void setDes(String des) {
         this.des = des == null ? null : des.trim();

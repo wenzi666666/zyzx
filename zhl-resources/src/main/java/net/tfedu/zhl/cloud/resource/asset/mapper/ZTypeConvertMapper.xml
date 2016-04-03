@@ -20,4 +20,5 @@
   		SELECT * FROM z_type_convert WHERE userid =#{userId}  and respath = #{resPath} 
   	</select>
   
+
 </mapper>

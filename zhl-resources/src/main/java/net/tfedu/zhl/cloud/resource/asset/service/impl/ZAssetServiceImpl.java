@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import net.tfedu.zhl.cloud.core.userlog.dao.JUserlogMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZTypeConvertMapper;

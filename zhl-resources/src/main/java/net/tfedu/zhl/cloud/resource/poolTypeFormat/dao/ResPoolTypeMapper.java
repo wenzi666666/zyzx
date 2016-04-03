@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 
 //资源库、资源类型的关联表的mapper
 public interface ResPoolTypeMapper extends CoreMapper<ResPoolType> {
-	
-	//根据库id查询所有资源类型id
-	public List<Integer> getAllTypeIdsByPool(@Param("poolId") long poolId);
+
+    // 根据库id查询所有资源类型id
+    public List<Integer> getAllTypeIdsByPool(@Param("poolId") long poolId);
 }

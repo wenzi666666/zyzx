@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.navigation.entity;
 
-
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,7 +12,7 @@ import javax.persistence.Transient;
 
 @Table(name = "j_syscourse_user_default")
 public class JUserDefault implements Serializable {
-	private static final long serialVersionUID = 8160030266758656476L;
+    private static final long serialVersionUID = 8160030266758656476L;
     /**
      * 主键id
      */
@@ -31,26 +30,25 @@ public class JUserDefault implements Serializable {
      * 默认资源目录code
      */
     private String tfcode;
-    
-    //用户历史选择学段
+
+    // 用户历史选择学段
     @Transient
     private Long termId;
 
-	//用户历史选择学科
+    // 用户历史选择学科
     @Transient
     private Long subjectId;
-    
-    //用户历史选择版本
+
+    // 用户历史选择版本
     @Transient
     private Long editionId;
-    
-    //用户历史选择教材
+
+    // 用户历史选择教材
     @Transient
     private Long bookId;
-    
 
     /**
-     * 资源目录类型  1、系统教学资源目录  2、自建目录
+     * 资源目录类型 1、系统教学资源目录 2、自建目录
      */
     private Integer type;
 
@@ -84,7 +82,8 @@ public class JUserDefault implements Serializable {
     /**
      * 设置主键id
      *
-     * @param id 主键id
+     * @param id
+     *            主键id
      */
     public void setId(Long id) {
         this.id = id;
@@ -102,7 +101,8 @@ public class JUserDefault implements Serializable {
     /**
      * 设置用户id
      *
-     * @param userid 用户id
+     * @param userid
+     *            用户id
      */
     public void setUserid(Long userid) {
         this.userid = userid;
@@ -120,25 +120,27 @@ public class JUserDefault implements Serializable {
     /**
      * 设置默认资源目录code
      *
-     * @param tfcode 默认资源目录code
+     * @param tfcode
+     *            默认资源目录code
      */
     public void setTfcode(String tfcode) {
         this.tfcode = tfcode == null ? null : tfcode.trim();
     }
 
     /**
-     * 获取资源目录类型  1、系统教学资源目录  2、自建目录
+     * 获取资源目录类型 1、系统教学资源目录 2、自建目录
      *
-     * @return type - 资源目录类型  1、系统教学资源目录  2、自建目录
+     * @return type - 资源目录类型 1、系统教学资源目录 2、自建目录
      */
     public Integer getType() {
         return type;
     }
 
     /**
-     * 设置资源目录类型  1、系统教学资源目录  2、自建目录
+     * 设置资源目录类型 1、系统教学资源目录 2、自建目录
      *
-     * @param type 资源目录类型  1、系统教学资源目录  2、自建目录
+     * @param type
+     *            资源目录类型 1、系统教学资源目录 2、自建目录
      */
     public void setType(Integer type) {
         this.type = type;
@@ -171,42 +173,42 @@ public class JUserDefault implements Serializable {
     public void setFlag(Boolean flag) {
         this.flag = flag;
     }
-    
-    
+
     public Long getTermId() {
-		return termId;
-	}
+        return termId;
+    }
 
-	public void setTermId(Long termId) {
-		this.termId = termId;
-	}
+    public void setTermId(Long termId) {
+        this.termId = termId;
+    }
 
-	public Long getSubjectId() {
-		return subjectId;
-	}
+    public Long getSubjectId() {
+        return subjectId;
+    }
 
-	public void setSubjectId(Long subjectId) {
-		this.subjectId = subjectId;
-	}
+    public void setSubjectId(Long subjectId) {
+        this.subjectId = subjectId;
+    }
 
-	public Long getEditionId() {
-		return editionId;
-	}
+    public Long getEditionId() {
+        return editionId;
+    }
 
-	public void setEditionId(Long editionId) {
-		this.editionId = editionId;
-	}
+    public void setEditionId(Long editionId) {
+        this.editionId = editionId;
+    }
 
-	public Long getBookId() {
-		return bookId;
-	}
+    public Long getBookId() {
+        return bookId;
+    }
 
-	public void setBookId(Long bookId) {
-		this.bookId = bookId;
-	}
-	
-	@Override
-	public String toString(){
-		return "userDefault[userId: + "+userid+" + ,tfcode: + "+tfcode+" + ,termId: + "+termId+" + ,subjectId: + "+subjectId+" + ,editionid: + "+editionId+" + ,bookId: + "+bookId+"]";
-	}
+    public void setBookId(Long bookId) {
+        this.bookId = bookId;
+    }
+
+    @Override
+    public String toString() {
+        return "userDefault[userId: + " + userid + " + ,tfcode: + " + tfcode + " + ,termId: + " + termId
+                + " + ,subjectId: + " + subjectId + " + ,editionid: + " + editionId + " + ,bookId: + " + bookId + "]";
+    }
 }

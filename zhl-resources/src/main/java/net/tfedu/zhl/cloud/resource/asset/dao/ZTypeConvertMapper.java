@@ -19,4 +19,5 @@ public interface ZTypeConvertMapper extends CoreMapper<ZTypeConvert> {
 	
 	
 	
+
 }

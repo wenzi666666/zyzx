@@ -15,20 +15,21 @@ import org.springframework.util.Assert;
 
 public class BooksControllerTest extends BaseControllerTestCase {
 
-    @Resource BooksController booksController;
-	
-	@Test
-	public void testBooksController()throws IOException{
-		request = newGet("/resRestAPI/v1.0/books");
-		request.setParameter("pnodeId", "101140105");
-		
-		ResultJSON resultJSON = booksController.getAllBooksByEdition(request, response);
-		Assert.isTrue(resultJSON != null);
-		List<JSyscourse> books = (List<JSyscourse>)resultJSON.getData();
-		Assert.isTrue(books.size() > 0);
-		for(int i = 0; i < books.size(); i++){
-			System.out.println(books.get(i).getId() + ":" + books.get(i).getName() + ":" + books.get(i).getTfcode());
-		}
-		
-	}
+    @Resource
+    BooksController booksController;
+
+    @Test
+    public void testBooksController() throws IOException {
+        request = newGet("/resRestAPI/v1.0/books");
+        request.setParameter("pnodeId", "101140105");
+
+        ResultJSON resultJSON = booksController.getAllBooksByEdition(request, response);
+        Assert.isTrue(resultJSON != null);
+        List<JSyscourse> books = (List<JSyscourse>) resultJSON.getData();
+        Assert.isTrue(books.size() > 0);
+        for (int i = 0; i < books.size(); i++) {
+            System.out.println(books.get(i).getId() + ":" + books.get(i).getName() + ":" + books.get(i).getTfcode());
+        }
+
+    }
 }

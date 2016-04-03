@@ -9,18 +9,17 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 
-public class SysResTypeControllerTest extends BaseControllerTestCase{
+public class SysResTypeControllerTest extends BaseControllerTestCase {
 
-	@Resource SysResTypeController sysResTypeController;
-	
-	@Test
-	public void testSysTypeController()throws IOException{
-		request = newGet("/resRestAPI/v1.0/sysResource/types");
-		
-		request.setParameter("poolId", "0");
-		request.setParameter("tfcode", "BJCZ0101");
-		
-		
-		
-	}
+    @Resource
+    SysResTypeController sysResTypeController;
+
+    @Test
+    public void testSysTypeController() throws IOException {
+        request = newGet("/resRestAPI/v1.0/sysResource/types");
+
+        request.setParameter("poolId", "0");
+        request.setParameter("tfcode", "BJCZ0101");
+
+    }
 }

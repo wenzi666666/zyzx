@@ -127,4 +127,5 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 		System.out.println(scope_list.contains(1));
 		System.out.println(scope_list.contains(0));
 	}
+
 }
