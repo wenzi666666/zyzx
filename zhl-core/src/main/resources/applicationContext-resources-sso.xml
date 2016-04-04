@@ -45,7 +45,7 @@
 	<bean id="ssoSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="ssoDataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
-		<property name="typeAliasesPackage" value="net.tfedu.zhl.sso.entity"></property>
+		<property name="typeAliasesPackage" value="net.tfedu.zhl.sso.**.entity"></property>
 		<property name="mapperLocations" value="classpath*:net/tfedu/zhl/sso/**/*Mapper.xml" />
 		<property name="plugins">
 			<array>
