@@ -62,6 +62,18 @@ public class ResultJSON {
         this.sign = sign;
     }
 
+    public ResultJSON(){
+        super();
+    }
+    
+    public ResultJSON(String code, String message, Object data, String sign) {
+        super();
+        this.code = code;
+        this.message = message;
+        this.data = data;
+        this.sign = sign;
+    }
+
     @Override
     public String toString() {
         return "[code :" + code + "  ;message:" + message + ";data:" + data.toString() + ";sign:" + sign + "]";
