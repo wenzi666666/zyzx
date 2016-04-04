@@ -1,6 +1,12 @@
 package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
+import javax.persistence.Transient;
+
+import net.tfedu.zhl.sso.role.entity.JRole;
+import net.tfedu.zhl.sso.users.entity.FuncList;
 
 /**
  * 用户信息简易版
@@ -28,6 +34,18 @@ public class UserSimple implements Serializable {
      * 获取用户学科
      */
     private String subjectNames;
+    
+    /**
+     * 用户附加角色
+     */
+    @Transient
+    private List<JRole> roles;
+    
+    /**
+     * 用户权限
+     */
+    @Transient
+    private List<FuncList> funcs;
 
     public String getSubjectIds() {
         return subjectIds;
@@ -117,4 +135,29 @@ public class UserSimple implements Serializable {
         this.roleId = roleId;
     }
 
+    public List<JRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<JRole> roles) {
+        this.roles = roles;
+    }
+
+    public List<FuncList> getFuncs() {
+        return funcs;
+    }
+
+    public void setFuncs(List<FuncList> funcs) {
+        this.funcs = funcs;
+    }
+
+    @Override
+    public String toString() {
+        return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
+                + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
+                + userImage + ", roleId=" + roleId + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames
+                + ", roles=" + roles + ", funcs=" + funcs + "]";
+    }
+
+    
 }
