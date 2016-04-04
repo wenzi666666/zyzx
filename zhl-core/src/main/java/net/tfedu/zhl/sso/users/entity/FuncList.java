@@ -410,4 +410,14 @@ public class FuncList {
     public void setTag(Boolean tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "FuncList [id=" + id + ", menuid=" + menuid + ", name=" + name + ", funcdesc=" + funcdesc + ", path="
+                + path + ", area=" + area + ", functype=" + functype + ", isbase=" + isbase + ", isfree=" + isfree
+                + ", isenabled=" + isenabled + ", flag=" + flag + ", pid=" + pid + ", iconpath=" + iconpath + ", model="
+                + model + ", tag=" + tag + "]";
+    }
+    
+    
 }
