@@ -14,6 +14,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +36,9 @@ public class DisResourceController {
     SysResourceService sysResourceService;
     @Resource
     ResTypeService resTypeService;
+    
+    //写入日志
+    Logger logger = Logger.getLogger(DisResourceController.class);
 
     @RequestMapping(value = "/v1.0/districtResource", method = RequestMethod.GET)
     @ResponseBody
@@ -76,6 +80,15 @@ public class DisResourceController {
 
                 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                         fromFlag);
+                
+                logger.info(" 总页数："+pagination.getTotal() + " 总记录数："+pagination.getTotalLines());
+                
+                if(fromFlag == 3)
+                	logger.info(fromFlag + " : 校本资源");
+                else if(fromFlag == 4)
+                	logger.info(fromFlag + " : 区本资源");
+                
+                logger.info(" 校本 / 区本 资源的数目：" + pagination.getList().size());
 
                 exception = CustomException.SUCCESS;
             }
