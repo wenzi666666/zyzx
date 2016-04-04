@@ -1,16 +1,11 @@
-package net.tfedu.zhl.message.entity;
+package net.tfedu.zhl.sso.message.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "j_message")
-public class JMessage  implements Serializable {
+public class JMessage implements Serializable{
     /**
      * ID
      */

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.tfedu.zhl.user.dao.JUserMapper" >
-  <resultMap id="userMap" type="net.tfedu.zhl.user.entity.JUser" >
+<mapper namespace="net.tfedu.zhl.sso.user.dao.JUserMapper" >
+  <resultMap id="userMap" type="net.tfedu.zhl.sso.user.entity.JUser" >
 
     <!--
       WARNING - @mbggenerated
@@ -40,7 +40,7 @@
   </resultMap>
   
   
-  <resultMap id="userMapSimple" type="net.tfedu.zhl.user.entity.UserSimple" >
+  <resultMap id="userMapSimple" type="net.tfedu.zhl.sso.user.entity.UserSimple" >
   	<id column="userId" property="userId" javaType="java.lang.Long" jdbcType="BIGINT"/>
     <result column="userName" property="userName" javaType="java.lang.String" jdbcType="CHAR" />
     <result column="trueName" property="trueName" javaType="java.lang.String" jdbcType="CHAR" />

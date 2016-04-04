@@ -1,12 +1,12 @@
-package net.tfedu.zhl.user.service.impl;
+package net.tfedu.zhl.sso.user.service.impl;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
-import net.tfedu.zhl.user.dao.JUserMapper;
-import net.tfedu.zhl.user.entity.JUser;
-import net.tfedu.zhl.user.entity.UserSimple;
-import net.tfedu.zhl.user.service.UserService;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

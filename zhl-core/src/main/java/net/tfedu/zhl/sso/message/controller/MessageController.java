@@ -1,4 +1,4 @@
-package net.tfedu.zhl.message.controller;
+package net.tfedu.zhl.sso.message.controller;
 
 import java.util.HashMap;
 
@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.message.service.JMessageService;
+import net.tfedu.zhl.sso.message.service.JMessageService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;

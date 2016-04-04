@@ -1,4 +1,4 @@
-package net.tfedu.zhl.user.entity;
+package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
 

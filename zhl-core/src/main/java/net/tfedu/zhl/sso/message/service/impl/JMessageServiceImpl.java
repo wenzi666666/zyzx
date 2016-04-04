@@ -1,28 +1,30 @@
-package net.tfedu.zhl.message.service.impl;
+package net.tfedu.zhl.sso.message.service.impl;
 
 
 
-import java.util.List;
+import javax.annotation.Resource;
 
-import net.tfedu.zhl.message.dao.JMessageMapper;
-import net.tfedu.zhl.message.entity.JMessage;
-import net.tfedu.zhl.message.service.JMessageService;
+import net.tfedu.zhl.sso.message.dao.JMessageMapper;
+import net.tfedu.zhl.sso.message.entity.JMessage;
+import net.tfedu.zhl.sso.message.service.JMessageService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
+
 @Service("jMessageService")
 public class JMessageServiceImpl implements JMessageService {
 	
-	@Autowired
+	@Resource 
 	JMessageMapper  mapper;
 
 	
 	@Override
 	public int getUserNewMessageNumber(Long userId) {
-		return mapper.getUserNewMessageNumber(userId);
+	//	return mapper.getUserNewMessageNumber(userId);
+		return 0;
 	}
 
 	@Override

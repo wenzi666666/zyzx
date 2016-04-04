@@ -4,7 +4,7 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.user.controller.UserController;
+import net.tfedu.zhl.sso.user.controller.UserController;
 
 import org.junit.Test;
 

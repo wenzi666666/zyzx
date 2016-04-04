@@ -24,7 +24,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
-import net.tfedu.zhl.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

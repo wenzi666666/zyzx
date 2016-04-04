@@ -1,4 +1,4 @@
-package net.tfedu.zhl.user.controller;
+package net.tfedu.zhl.sso.user.controller;
 
 import java.util.Arrays;
 
@@ -12,10 +12,10 @@ import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
-import net.tfedu.zhl.user.entity.UserSimple;
-import net.tfedu.zhl.user.service.UserService;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;

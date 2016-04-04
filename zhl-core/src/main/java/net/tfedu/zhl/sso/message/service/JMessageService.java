@@ -1,4 +1,4 @@
-package net.tfedu.zhl.message.service;
+package net.tfedu.zhl.sso.message.service;
 
 import com.github.pagehelper.PageInfo;
 

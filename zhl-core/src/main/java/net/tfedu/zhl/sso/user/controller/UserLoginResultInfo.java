@@ -1,4 +1,4 @@
-package net.tfedu.zhl.user.controller;
+package net.tfedu.zhl.sso.user.controller;
 
 /**
  * 用户登录之后返回的接口信息
