@@ -16,7 +16,7 @@ import net.tfedu.zhl.helper.ResultJSON;
  * 基础服务类
  * 
  * @author Bruce
- *
+ * @Autowired按byType自动注入，而@Resource默认按 byName自动注入罢了
  * @param <T>
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
