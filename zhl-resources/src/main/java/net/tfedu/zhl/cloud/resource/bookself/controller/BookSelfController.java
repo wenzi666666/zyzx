@@ -1,9 +1,13 @@
 package net.tfedu.zhl.cloud.resource.bookself.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfImgPathConvert;
+import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
@@ -142,9 +146,16 @@ public class BookSelfController {
 		
 		try{
 			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+
+				
 				long userId = currentUserId;
 				String tfcode = request.getParameter("tfcode");
-				data = bookSelfService.queryBook(userId, tfcode);
+				List<BookSelfView> list = bookSelfService.queryBook(userId, tfcode);
+				BookSelfImgPathConvert.convert(list, resServiceLocal, currentResPath);
+				data = list ;
 				exception = CustomException.SUCCESS;				
 			}
 		}catch(Exception e){

@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.bookself.service;
+package net.tfedu.zhl.cloud.resource.bookself.service.impl;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.dao.JSyscourseUserMapper;
+import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
 
 
 @Service("bookSelfService")

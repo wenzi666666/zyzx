@@ -22,7 +22,7 @@ public class JMessageServiceTest extends BaseServiceTestCase {
 		jMessageService.getUserNewMessageNumber(userId);
 	}
 	
-	/*@Test
+	@Test
 	public void testQuery(){
 		
 		int page =1 ;
@@ -46,9 +46,8 @@ public class JMessageServiceTest extends BaseServiceTestCase {
 	@Test
 	public void testAdd(){
 		
-		int page =1 ;
-		int perPage = 10 ;
-		jMessageService.updateMessageReaded(521039l);
+
+		//jMessageService.updateMessageReaded(521039l);
 		
 	}
 	
@@ -57,10 +56,7 @@ public class JMessageServiceTest extends BaseServiceTestCase {
 	@Test
 	public void testDel(){
 		
-		int page =1 ;
-		int perPage = 10 ;
-		jMessageService.updateMessageReaded(521039l);
 		
-	}*/
+	}
 	
 }

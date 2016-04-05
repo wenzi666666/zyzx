@@ -2,6 +2,8 @@ package net.tfedu.zhl.sso.message.service.impl;
 
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.sso.message.dao.JMessageMapper;
@@ -23,22 +25,19 @@ public class JMessageServiceImpl implements JMessageService {
 	
 	@Override
 	public int getUserNewMessageNumber(Long userId) {
-	//	return mapper.getUserNewMessageNumber(userId);
-		return 0;
+		return mapper.getUserNewMessageNumber(userId);
 	}
 
 	@Override
 	public PageInfo queryMessage(Long userId, Integer page, Integer perPage) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, perPage);
-//		List<JMessage> list = mapper.queryMessage(userId);
-//		return new PageInfo(list);
-		return  null ;
+		List<JMessage> list = mapper.queryMessage(userId);
+		return new PageInfo(list);
 	}
 
 	@Override
 	public void updateMessageReaded(Long id) {
-		// TODO Auto-generated method stub
 		JMessage record =  new JMessage();
 		record.setId(id);
 		record.setReadflag(true);
