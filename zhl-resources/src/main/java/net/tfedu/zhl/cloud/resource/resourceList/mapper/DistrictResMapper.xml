@@ -90,11 +90,13 @@
        <result column="isLocal" property="isLocal" />
        <result column="state" property="state" />
        <result column="fromFlag" property="fromFlag" />
+       <result column="thumbnailpath" property="thumbnailpath" />
+       <result column="fullpath" property="fullpath" />
        
   </resultMap>
   <select id="selectDisRes" resultMap="DisResMap">
 
-    select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
+    select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'\\',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
     m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
 	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 

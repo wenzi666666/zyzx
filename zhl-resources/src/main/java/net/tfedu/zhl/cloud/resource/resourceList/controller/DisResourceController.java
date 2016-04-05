@@ -11,6 +11,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
+import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -56,6 +57,11 @@ public class DisResourceController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+				
                 long userId = currentUserId; // 获得用户id
                 // 类型Id
                 int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
@@ -81,6 +87,8 @@ public class DisResourceController {
                 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                         fromFlag);
                 
+                //生成文件的缩略图路径
+                ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
                
                 if(fromFlag == 3)
                 	logger.debug(fromFlag + " : 校本资源");

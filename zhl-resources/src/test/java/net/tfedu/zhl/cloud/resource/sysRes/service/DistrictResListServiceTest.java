@@ -34,10 +34,10 @@ public class DistrictResListServiceTest extends BaseServiceTestCase {
         Pagination<DisResourceEntity> pagination = null;
         long userId = 699230735;
         // 类型Id
-        int mTypeId = 1;
+        int mTypeId = 0;
 
         // 资源格式
-        String fileFormat = "图片";
+        String fileFormat = "全部";
 
         // 课程tfcode
         String tfcode = "RJGZ040101";
@@ -52,7 +52,7 @@ public class DistrictResListServiceTest extends BaseServiceTestCase {
         int perPage = 10;
 
         // 资源来源 校本资源
-        int fromFlag = 4;
+        int fromFlag = 3;
 
         pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                 fromFlag);

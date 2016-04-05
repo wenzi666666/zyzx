@@ -10,6 +10,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
+import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -59,6 +60,10 @@ public class SysResourceController {
 
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
 
                 // 资源库id
                 long poolId = Long.parseLong(request.getParameter("poolId"));
@@ -84,6 +89,9 @@ public class SysResourceController {
                 // 查询出的系统资源信息
                 pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                         perPage);
+                
+                //生成文件的缩略图路径
+                ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
                 
                 logger.debug("系统资源的课程id：" + tfcode);
                 
