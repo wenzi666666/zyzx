@@ -134,7 +134,7 @@ public class ResTypeServiceImpl implements ResTypeService {
         ResType all = new ResType();
         all.setId(0);
         all.setMtype("全部");
-        types.add(all);
+        types.add(0,all);
 
         return types;
     }
@@ -171,7 +171,7 @@ public class ResTypeServiceImpl implements ResTypeService {
         ResType all = new ResType();
         all.setId(0);
         all.setMtype("全部");
-        types.add(all);
+        types.add(0,all);
 
         return types;
     }

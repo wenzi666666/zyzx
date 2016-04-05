@@ -119,12 +119,39 @@ public class DisResourceEntity implements Serializable {
      * 
      */
     private int scopeId;
+    
+    /**
+     * 文件缩略图路径
+     */
+    private String thumbnailpath;
+    
+    /**
+     * 全路径
+     */
+    private String fullpath;
+
+
+    public String getFullpath() {
+		return fullpath;
+	}
+
+	public void setFullpath(String fullpath) {
+		this.fullpath = fullpath;
+	}
+    
+    public String getThumbnailpath() {
+		return thumbnailpath;
+	}
+
+	public void setThumbnailpath(String thumbnailpath) {
+		this.thumbnailpath = thumbnailpath;
+	}
+
 
     public Long getId() {
         return Id;
     }
-
-    public void setId(Long id) {
+	public void setId(Long id) {
         Id = id;
     }
 
