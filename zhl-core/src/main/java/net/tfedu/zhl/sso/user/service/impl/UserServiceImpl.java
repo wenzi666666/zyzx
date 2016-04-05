@@ -1,12 +1,14 @@
 package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
+import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.role.entity.JRole;
@@ -64,28 +66,33 @@ public class UserServiceImpl implements UserService {
 
         // 2 获取角色
         List<JRole> roles = roleMapper.getUserRoleByUserId(us.getUserId(), model);
-        if (roles == null) {
-            String key = String.valueOf(id) + model;
-            cacheManager.getCache("UserSimpleCache").put(key, us);
-            return us;
-        }
-        us.setRoles(roles);
+        us.setRoles(roles);        
         List<Long> roleIds = new ArrayList<Long>();
         for (JRole r : roles) {
             roleIds.add(r.getId());
         }
+        
         // 本身缺省的角色
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-//        List<FuncList> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-//        us.setFuncs(funcs);
+        List<FuncList> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        us.setFuncs(funcs);
         
+        //记录状态
+        String token = IdUtil.getUUID();
+        us.setLogintime(new Date());
+        us.setToken(token);
+
         //放入缓存
-        String key = String.valueOf(id) + model;
-        cacheManager.getCache("UserSimpleCache").put(key, us);
+        cacheManager.getCache("UserSimpleCache").put(token, us);
         
         return us;
+    }
+    
+    @Override
+    public void logout(String token){
+        cacheManager.getCache("UserSimpleCache").evict(token);
     }
 
     @Override

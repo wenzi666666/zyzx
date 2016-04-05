@@ -62,4 +62,10 @@ public interface UserService {
      */
     public void updateUserImage(Long userId, String userImage);
 
+    /**
+     * 登出
+     * @param token
+     */
+    void logout(String token);
+
 }
