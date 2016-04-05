@@ -60,6 +60,10 @@ public class UserController {
         Long currentUserId = (Long) request.getAttribute("currentUserId");
 
         String _method = request.getParameter("_method");
+
+        // 不同的子系统，使用不同的model参数
+        String model = request.getParameter("model") == null ? " " : request.getParameter("model");
+
         // 注销
         if (StringUtils.isNotEmpty(_method) && HttpMethod.DELETE.name().equals(_method)) {
 
@@ -91,7 +95,7 @@ public class UserController {
                 // 用户登录
                 SRegister reg = registerService.login(userName, userPwd);
                 // 获取用户信息
-                UserSimple user = userService.getUserSimpleById(reg.getId());
+                UserSimple user = userService.getUserSimpleById(reg.getId(), model);
                 // 成功,增加用户的在线信息
                 Boolean repeatLoginVaildFlag = false;// repeatLoginVaildFlag资源中心不允许一个用户重复登录
                 JOnlineUsers online = jOnlineUsersService.getUserOnlines(reg.getId(), request, repeatLoginVaildFlag);
@@ -129,12 +133,16 @@ public class UserController {
         CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
+
+        // 不同的子系统，使用不同的model参数
+        String model = request.getParameter("model") == null ? " " : request.getParameter("model");
+
         // 返回
         Object data = null;
 
         try {
             if (currentUserId != null && exception == null) {
-                data = userService.getUserSimpleById(id);
+                data = userService.getUserSimpleById(id, model);
                 exception = CustomException.SUCCESS;
             }
         } catch (Exception e) {

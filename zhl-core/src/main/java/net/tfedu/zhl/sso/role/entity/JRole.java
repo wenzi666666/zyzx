@@ -2,34 +2,49 @@ package net.tfedu.zhl.sso.role.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "j_role")
 public class JRole implements Serializable {
+    
     /**
-     * 自增id
+     * 
      */
+    private static final long serialVersionUID = 1L;
+
     @Id
-    @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
-     * 角色名称
+     * 角色名
      */
-    @Column(name = "Name")
     private String name;
 
     /**
-     * 是否删除标识，0-------否；1------是
+     * 角色说明
      */
-    @Column(name = "Flag")
-    private Boolean flag;
+    private String description;
 
-    public JRole(Long id, String name, Boolean flag) {
+    /**
+     * 系统模块
+     */
+    private String model;
+
+    /**
+     * 0-公共角色,1-子系统自定义角色
+     */
+    private Boolean tag;
+
+    public JRole(Long id, String name, String description, String model, Boolean tag) {
         this.id = id;
         this.name = name;
-        this.flag = flag;
+        this.description = description;
+        this.model = model;
+        this.tag = tag;
     }
 
     public JRole() {
@@ -37,59 +52,88 @@ public class JRole implements Serializable {
     }
 
     /**
-     * 获取自增id
-     *
-     * @return Id - 自增id
+     * @return id
      */
     public Long getId() {
         return id;
     }
 
     /**
-     * 设置自增id
-     *
      * @param id
-     *            自增id
      */
     public void setId(Long id) {
         this.id = id;
     }
 
     /**
-     * 获取角色名称
+     * 获取角色名
      *
-     * @return Name - 角色名称
+     * @return name - 角色名
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 设置角色名称
+     * 设置角色名
      *
-     * @param name
-     *            角色名称
+     * @param name 角色名
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
 
     /**
-     * 获取是否删除标识，0-------否；1------是
+     * 获取角色说明
      *
-     * @return Flag - 是否删除标识，0-------否；1------是
+     * @return description - 角色说明
      */
-    public Boolean getFlag() {
-        return flag;
+    public String getDescription() {
+        return description;
     }
 
     /**
-     * 设置是否删除标识，0-------否；1------是
+     * 设置角色说明
      *
-     * @param flag
-     *            是否删除标识，0-------否；1------是
+     * @param description 角色说明
      */
-    public void setFlag(Boolean flag) {
-        this.flag = flag;
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
+    }
+
+    /**
+     * 获取系统模块
+     *
+     * @return model - 系统模块
+     */
+    public String getModel() {
+        return model;
+    }
+
+    /**
+     * 设置系统模块
+     *
+     * @param model 系统模块
+     */
+    public void setModel(String model) {
+        this.model = model == null ? null : model.trim();
+    }
+
+    /**
+     * 获取0-公共角色,1-子系统自定义角色
+     *
+     * @return tag - 0-公共角色,1-子系统自定义角色
+     */
+    public Boolean getTag() {
+        return tag;
+    }
+
+    /**
+     * 设置0-公共角色,1-子系统自定义角色
+     *
+     * @param tag 0-公共角色,1-子系统自定义角色
+     */
+    public void setTag(Boolean tag) {
+        this.tag = tag;
     }
 }

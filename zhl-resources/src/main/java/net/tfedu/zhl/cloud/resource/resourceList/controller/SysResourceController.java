@@ -13,6 +13,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -33,6 +34,9 @@ public class SysResourceController {
     SysResourceService sysResourceService;
     @Resource
     ResTypeService resTypeService;
+    
+    //写入日志
+    Logger logger = Logger.getLogger(DisResourceController.class);
 
     @RequestMapping(value = "/v1.0/sysResource", method = RequestMethod.GET)
     @ResponseBody
@@ -47,6 +51,7 @@ public class SysResourceController {
         CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
+        
 
         // 查询结果，封装为pagination
         Pagination<SysResourceEntity> pagination = null;
@@ -79,6 +84,12 @@ public class SysResourceController {
                 // 查询出的系统资源信息
                 pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                         perPage);
+                
+                logger.info(" 课程id：" + tfcode);
+                
+                logger.info(" 总页数："+pagination.getTotal() + " 总记录数："+pagination.getTotalLines());
+             
+                logger.info(" 查询到的系统资源的数目：" + pagination.getList().size());
 
                 exception = CustomException.SUCCESS;
 

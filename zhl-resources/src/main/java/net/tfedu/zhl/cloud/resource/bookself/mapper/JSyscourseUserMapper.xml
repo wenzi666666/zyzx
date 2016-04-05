@@ -59,4 +59,5 @@
 		LEFT JOIN j_syscourse_user  su  on (su.syscourseid  =  s.id and Su.userid = 699230769)
 		where tfcode  like CONCAT(#{tfcode},'%') and length(s.tfcode) = length(#{tfcode})+2 
   </select>
+
 </mapper>

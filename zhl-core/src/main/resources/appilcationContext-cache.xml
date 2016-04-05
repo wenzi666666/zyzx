@@ -6,7 +6,7 @@
                   overflowToDisk="true" maxEntriesLocalDisk="100000"/>
                   
     <!-- 只存id，name -->              
-    <cache name="userIdsCache" maxElementsInMemory="900000" timeToIdleSeconds="86400" overflowToDisk="false" diskPersistent="false"/>
+    <cache name="UserSimpleCache" maxElementsInMemory="900000" timeToIdleSeconds="86400" overflowToDisk="false" diskPersistent="false"/>
     <!-- 活跃用户，为单点登录的ticket所用，保留1小时 -->  
     <cache name="ticketCache" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false"/>  
     <!-- 空闲时间保留1天，如果一直活跃，基本是长期存在了 -->

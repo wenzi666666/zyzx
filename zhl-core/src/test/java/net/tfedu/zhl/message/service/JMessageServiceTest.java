@@ -60,3 +60,4 @@ public class JMessageServiceTest extends BaseServiceTestCase {
 	}
 	
 }
+

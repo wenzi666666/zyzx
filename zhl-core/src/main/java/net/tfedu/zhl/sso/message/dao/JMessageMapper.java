@@ -23,4 +23,5 @@ public interface JMessageMapper extends CoreMapper<JMessage> {
 	public List<JMessage> queryMessage(Long userId);
 	
 	
+
 }

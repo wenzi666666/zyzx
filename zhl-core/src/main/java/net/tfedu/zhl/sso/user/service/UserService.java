@@ -33,7 +33,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    public UserSimple getUserSimpleById(long id);
+    public UserSimple getUserSimpleById(long id, String model);
 
     /**
      * 根据name获取用户
