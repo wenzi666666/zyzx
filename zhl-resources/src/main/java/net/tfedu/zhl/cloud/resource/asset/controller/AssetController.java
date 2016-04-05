@@ -383,15 +383,37 @@ public class AssetController {
 
 				
 					ZAsset a  = new ZAsset();
-					a.setAssetpath(path);
-					a.setAssetsize(size);
-					a.setAssetdesc(desc);
+					a.setId(id);
+					
+					if(StringUtils.isEmpty(path)){
+						a.setAssetpath(path);
+						
+					}
+					if(StringUtils.isEmpty(size)){
+						a.setAssetsize(size);
+						
+						
+					}
+					if(StringUtils.isEmpty(desc)){
+						a.setAssetdesc(desc);
+						
+					}
+					if(StringUtils.isEmpty(unifTypeId)){
+						//新版资源类型
+						a.setUnifytypeid(unifTypeId);
+						//旧版资源类型字段也设置为新版的类型
+						a.setTypeid(Long.parseLong(unifTypeId));
+
+					}
+					if(StringUtils.isEmpty(name)){
+						a.setName(name);
+						
+					}
+					if(StringUtils.isEmpty(keyword)){
+						a.setKeyword(keyword);
+						
+					}
 					//新版资源类型
-					a.setUnifytypeid(unifTypeId);
-					a.setName(name);
-					//旧版资源类型字段也设置为新版的类型
-					a.setTypeid(Long.parseLong(unifTypeId));
-					a.setKeyword(keyword);
 					assetService.updateAsset(a, resServiceLocal, currentResPath, hostLocal);
 				
 				}

@@ -1,6 +1,9 @@
 package net.tfedu.zhl.cloud.resource.bookself.bean;
 
+import java.util.HashMap;
 import java.util.List;
+
+import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -19,8 +22,20 @@ public class BookSelfImgPathConvert {
 				String imgPath = bookSelfView.getImgpath();
 				if(StringUtils.isNotEmpty(imgPath)){
 					System.out.println("-----"+imgPath);
-					imgPath = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, imgPath);
-					imgPath = imgPath.replace(resServiceLocal, currentResPath);
+					
+					// 判断是否存在
+                    String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, imgPath);
+                    if (StringUtils.isNotEmpty(s)) {
+                        HashMap m = JSONObject.parseObject(s, HashMap.class);
+                        if (m != null && ((Integer) m.get("FileSize") > 0)) {
+                            // 获取缩略图的地址（内网）
+                            imgPath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imgPath);
+                            // 替换
+                            imgPath = imgPath.replace(resServiceLocal, currentResPath);
+                        }
+                    } else {
+                    	imgPath = "";
+                    }
 					bookSelfView.setImgpath(imgPath);
 				}
 				

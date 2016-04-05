@@ -86,5 +86,46 @@
 	ORDER BY time desc 
   </select>
   
+  
+  
+  
+  
+  <!-- 重命名  -->
+  <update id="renameAsset">
+  	update z_asset  set name =#{name},UpdateTime=now() where id = #{id};
+  </update>
+  
+  <!-- 获取用户的课件  注意time 为 updatetime  -->  
+  <select id="queryUserCourseware" resultMap="viewMap">
+  
+	select  resId,rescode,title,unifytype,time,imgpath,filesuffix from  (	 
+			select  a.id as resId,a.resourceid as rescode,a.name as title,a.updatetime,a.createTime as time,p.id as unifyTypeId,a.assetSize  as size 
+			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			from  z_asset a 
+			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId
+			LEFT JOIN z_asset_syscourse  s on s.assetid = a.id
+			where a.iscourseware = true  and a.flag =false and a.FileType = 'A'
+      and s.flag = false  
+			and a.userid = #{userId} and s.tfcode like #{tfcode} and a.name like  #{title}
+ 	)temp_result 
+	where  1 =1 
+	<if test=" 'title'== orderby">
+		ORDER BY title desc, updatetime desc,size desc 	
+	</if>
+	
+	<if test=" 'updatetime'== orderby">
+		ORDER BY updatetime desc,title desc, size desc 		
+	</if>
+	
+	<if test=" 'size'== orderby">
+		ORDER BY  size desc ,updatetime desc,title desc		
+	</if>
+	
+	<if test=" ''== orderby or null == orderby ">
+			ORDER BY title desc, updatetime desc,size desc 	
+	</if>
+  </select>
+  
+  
 
 </mapper>

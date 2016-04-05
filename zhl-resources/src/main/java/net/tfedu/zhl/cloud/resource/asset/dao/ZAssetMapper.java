@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.helper.CoreMapper;
 
 public interface ZAssetMapper extends CoreMapper<ZAsset> {
@@ -36,5 +37,24 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
      */
     public List<ZAsset> queryMyAssets(@Param("userId") Long userId, @Param("unifyTypeId") Long unifyTypeId,
             @Param("fileFormat") String fileFormat);
+    
+    
+    
+    /**
+	 * 获取用户的课件
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @param orderby
+	 * @return
+	 */
+	public List<ZAssetView> queryUserCourseware(@Param("userId") Long userId,@Param("tfcode") String tfcode
+				,@Param("title") String title,@Param("orderby") String orderby);
+	
+	
+	/**
+	 * 重命名课件
+	 */
+	public void renameAsset(@Param("id")Long id,@Param("name")String name);
 
 }
