@@ -61,6 +61,8 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         loginTime.add(Calendar.HOUR_OF_DAY, validTime);
 
         if (now.before(loginTime)) {
+            customException = CustomException.OUTOFDATE;
+            request.setAttribute(CustomException.request_key, customException);
             cacheManager.getCache("UserSimpleCache").evict(token);
             return false;
         }
@@ -77,6 +79,8 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         }
         
         if(!hasAuth){
+            customException = CustomException.WITHOUTAUTH;
+            request.setAttribute(CustomException.request_key, customException);
             return false;
         }
 
