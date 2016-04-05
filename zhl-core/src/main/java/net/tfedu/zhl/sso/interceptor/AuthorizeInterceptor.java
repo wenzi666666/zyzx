@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.users.interceptor;
+package net.tfedu.zhl.sso.interceptor;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,7 +14,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.users.entity.FuncList;
 
 /**
  * 授权拦截器
