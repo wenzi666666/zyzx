@@ -84,7 +84,10 @@ public class ResSearchController {
                 logger.debug("检索关键字：" + searchKeyword);
                 logger.debug("资源格式：" + format);
                 logger.debug("资源来源fromFlag：" + fromFlag);
-                logger.debug("检索到的资源数目：" + pagination.getList().size());
+                logger.debug("检索结果的当前页：" + pagination.getPage());
+                logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
+                logger.debug("检索到的资源总页：" + pagination.getTotal());
+                logger.debug("检索到的资源总数：" + pagination.getTotalLines());
 
                 exception = CustomException.SUCCESS;
 
