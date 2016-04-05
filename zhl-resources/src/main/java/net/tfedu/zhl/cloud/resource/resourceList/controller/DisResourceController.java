@@ -81,14 +81,18 @@ public class DisResourceController {
                 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                         fromFlag);
                 
-                logger.info(" 总页数："+pagination.getTotal() + " 总记录数："+pagination.getTotalLines());
-                
+               
                 if(fromFlag == 3)
-                	logger.info(fromFlag + " : 校本资源");
+                	logger.debug(fromFlag + " : 校本资源");
                 else if(fromFlag == 4)
-                	logger.info(fromFlag + " : 区本资源");
+                	logger.debug(fromFlag + " : 区本资源");
                 
-                logger.info(" 校本 / 区本 资源的数目：" + pagination.getList().size());
+                logger.debug("校本 / 区本资源的资源格式：" + fileFormat);
+                
+                logger.debug("查询结果的当前页：" + pagination.getPage());
+                logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+                logger.debug("查询到的资源总页：" + pagination.getTotal());
+                logger.debug("查询到的资源总数：" + pagination.getTotalLines());
 
                 exception = CustomException.SUCCESS;
             }

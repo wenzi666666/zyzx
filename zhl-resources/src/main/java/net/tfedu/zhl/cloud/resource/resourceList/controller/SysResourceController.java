@@ -36,7 +36,7 @@ public class SysResourceController {
     ResTypeService resTypeService;
     
     //写入日志
-    Logger logger = Logger.getLogger(DisResourceController.class);
+    Logger logger = Logger.getLogger(SysResourceController.class);
 
     @RequestMapping(value = "/v1.0/sysResource", method = RequestMethod.GET)
     @ResponseBody
@@ -85,11 +85,14 @@ public class SysResourceController {
                 pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                         perPage);
                 
-                logger.info(" 课程id：" + tfcode);
+                logger.debug("系统资源的课程id：" + tfcode);
                 
-                logger.info(" 总页数："+pagination.getTotal() + " 总记录数："+pagination.getTotalLines());
-             
-                logger.info(" 查询到的系统资源的数目：" + pagination.getList().size());
+                logger.debug("系统资源的资源格式：" + fileFormat);
+              
+                logger.debug("查询结果的当前页：" + pagination.getPage());
+                logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+                logger.debug("查询到的资源总页：" + pagination.getTotal());
+                logger.debug("查询到的资源总数：" + pagination.getTotalLines());
 
                 exception = CustomException.SUCCESS;
 

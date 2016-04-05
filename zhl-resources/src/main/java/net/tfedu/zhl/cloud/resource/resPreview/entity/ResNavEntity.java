@@ -1,6 +1,10 @@
 package net.tfedu.zhl.cloud.resource.resPreview.entity;
 
-public class ResNavEntity {
+import java.io.Serializable;
+
+public class ResNavEntity implements Serializable{
+	
+	private static final long serialVersionUID = 8160030266758656476L;
 
     // 目录id
     private long id;
