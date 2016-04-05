@@ -18,9 +18,9 @@ git 1.9+
 2、git clone 
 3、在zhl-cloud项目目录下，执行mvn install
 4、在zhl-core项目目录下，
-     更改jdbc.sample.properties为 jdbc.properties，改用户名、密码、数据库连接字符串
-     更改generator.sample.properties为generator.properties ，改用户名、密码、数据库连接字符串
-     更改generatorConfig.sample.xml为generatorConfig.xml，方便以后自己生成代码
+     拷贝jdbc.sample.properties为 jdbc.properties，改用户名、密码、数据库连接字符串
+     拷贝generator.sample.properties为generator.properties ，改用户名、密码、数据库连接字符串
+     拷贝generatorConfig.sample.xml为generatorConfig.xml，方便以后自己生成代码
      在zhl-cloud项目目录下，有建立数据库的脚本test.sql
 5、从单元测试开始使用
 6、碰到红叉，而代码又没问题，就在zhl-cloud项目上，运行maven下面的update project
