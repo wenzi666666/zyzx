@@ -17,7 +17,10 @@ public interface JSyscourseUserMapper extends CoreMapper<JSyscourseUser> {
 	 * @param userId
 	 * @return
 	 */
-	public List<BookSelfView> getAllMyBook(Long userId);
+	public List<BookSelfView> getAllMyBook(@Param("userId")Long userId,@Param("title")String title);
+	
+	
+	
 	
 	
 	/**根据条件删除
@@ -37,6 +40,13 @@ public interface JSyscourseUserMapper extends CoreMapper<JSyscourseUser> {
 	 * @param syscourseId
 	 */
 	public void addMyBook(@Param("userId")Long userId,@Param("tfcode")String tfcode);
+	
+	/**
+	 * 增加 默认知识点到 我的书架
+	 * @param userId
+	 * @param syscourseId
+	 */
+	public void addMyBookByDefaultKnowledge(@Param("userId")Long userId,@Param("termId")Long termId,@Param("subjectId")Long subjectId);
 	
 	
 	

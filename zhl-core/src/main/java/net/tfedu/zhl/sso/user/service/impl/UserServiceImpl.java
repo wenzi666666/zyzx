@@ -78,8 +78,8 @@ public class UserServiceImpl implements UserService {
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        List<FuncList> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-        us.setFuncs(funcs);
+//        List<FuncList> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+//        us.setFuncs(funcs);
         
         //放入缓存
         String key = String.valueOf(id) + model;

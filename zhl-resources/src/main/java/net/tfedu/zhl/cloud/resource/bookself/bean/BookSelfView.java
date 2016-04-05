@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.bookself.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 用于书架浏览 
@@ -27,19 +28,24 @@ public class BookSelfView implements Serializable{
 	String imgpath;
 	
 	
+	/**
+	 * 最后修改时间
+	 */
+	Date time ;
+	
 	
 	public BookSelfView(){
 		super();
 	}
 	
 	
-	public BookSelfView(Long id,String title,String rescode,Integer ismybook,String imgpath){
+	public BookSelfView(Long id,String title,String rescode,Integer ismybook,String imgpath,Date time){
 		this.id = id ;
 		this.title = title;
 		this.tfcode = tfcode ;
 		this.ismybook = ismybook;
 		this.imgpath = imgpath;
-		
+		this.time = time ;
 	}
 	
 	
@@ -78,6 +84,16 @@ public class BookSelfView implements Serializable{
 	}
 	public void setImgpath(String imgpath) {
 		this.imgpath = imgpath;
+	}
+
+
+	public Date getTime() {
+		return time;
+	}
+
+
+	public void setTime(Date time) {
+		this.time = time;
 	}
 	
 	

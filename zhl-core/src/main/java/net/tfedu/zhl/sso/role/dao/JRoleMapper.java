@@ -2,6 +2,8 @@ package net.tfedu.zhl.sso.role.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.role.entity.JRole;
 
@@ -12,5 +14,5 @@ public interface JRoleMapper extends CoreMapper<JRole> {
      * @param userId
      * @return
      */
-    List<JRole> getUserRoleByUserId(Long userId, String model);
+    List<JRole> getUserRoleByUserId(@Param("userId")Long userId, @Param("model")String model);
 }

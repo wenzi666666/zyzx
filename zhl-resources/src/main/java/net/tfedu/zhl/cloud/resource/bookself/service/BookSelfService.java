@@ -13,7 +13,7 @@ public interface BookSelfService {
 	 * @param userId
 	 * @return
 	 */
-	public List<BookSelfView> getAllMyBook(Long userId);
+	public List<BookSelfView> getAllMyBook(Long userId, String title );
 	
 	
 	/**根据条件删除

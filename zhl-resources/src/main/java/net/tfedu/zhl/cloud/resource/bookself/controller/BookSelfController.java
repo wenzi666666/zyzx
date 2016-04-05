@@ -54,8 +54,10 @@ public class BookSelfController {
 		
 		try{
 			if(currentUserId!=null && exception==null){	
+				
 				long userId = currentUserId;
-				data =  bookSelfService.getAllMyBook(userId);
+				String title = request.getParameter("title");
+				data =  bookSelfService.getAllMyBook(userId,title);
 				exception = CustomException.SUCCESS;
 			}
 		}catch(Exception e){
