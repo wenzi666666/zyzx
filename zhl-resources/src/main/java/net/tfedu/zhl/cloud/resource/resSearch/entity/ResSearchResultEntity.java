@@ -125,8 +125,34 @@ public class ResSearchResultEntity implements Serializable {
      * （区本校本资源） 地区id 或 学校id
      */
     private int scopeId;
+    
+    /**
+     * 文件缩略图地址
+     */
+    private String thumbnailpath;
+    
+    /**
+     * 全路径
+     */
+    private String fullpath;
 
-    public Long getId() {
+    public String getThumbnailpath() {
+		return thumbnailpath;
+	}
+
+	public void setThumbnailpath(String thumbnailpath) {
+		this.thumbnailpath = thumbnailpath;
+	}
+
+	public String getFullpath() {
+		return fullpath;
+	}
+
+	public void setFullpath(String fullpath) {
+		this.fullpath = fullpath;
+	}
+
+	public Long getId() {
         return Id;
     }
 

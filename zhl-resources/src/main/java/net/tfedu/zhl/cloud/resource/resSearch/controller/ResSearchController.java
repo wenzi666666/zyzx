@@ -10,6 +10,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -62,6 +63,10 @@ public class ResSearchController {
 
             // 若当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
 
                 // 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
                 int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
@@ -80,6 +85,9 @@ public class ResSearchController {
 
                 pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page,
                         perPage);
+                
+                //生成文件的缩略图路径
+                ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
                 
                 logger.debug("检索关键字：" + searchKeyword);
                 logger.debug("资源格式：" + format);

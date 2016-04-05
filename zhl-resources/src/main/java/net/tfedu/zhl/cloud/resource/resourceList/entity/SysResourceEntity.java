@@ -110,8 +110,35 @@ public class SysResourceEntity implements Serializable {
      * 是否最新资源（资源最后更新时间距离当前时间在一个月之内的）
      */
     private boolean isNew;
-
+    
     /**
+     * 文件缩略图地址
+     */
+    private String thumbnailpath;
+    
+    /**
+     * 全路径
+     */
+    private String fullpath;
+
+
+    public String getFullpath() {
+		return fullpath;
+	}
+
+	public void setFullpath(String fullpath) {
+		this.fullpath = fullpath;
+	}
+
+	public String getThumbnailpath() {
+		return thumbnailpath;
+	}
+
+	public void setThumbnailpath(String thumbnailpath) {
+		this.thumbnailpath = thumbnailpath;
+	}
+
+	/**
      * 资源来源
      */
     private int fromFlag;
