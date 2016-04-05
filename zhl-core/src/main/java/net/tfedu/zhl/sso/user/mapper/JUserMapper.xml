@@ -110,10 +110,10 @@
 		LEFT JOIN j_userterm ut on ut.UserId = u.id
 		LEFT JOIN j_term t on t.id = ut.TermId
 		LEFT JOIN j_school s on s.id = u.SchoolId
-		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
-  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId 
 		where u.id =#{id}
-		and r.flag  =false and ut.flag = false and t.flag = false   
+		and r.flag  =false and u.flag = false   
   </select>
   
   
@@ -135,10 +135,10 @@
 		LEFT JOIN j_userterm ut on ut.UserId = u.id
 		LEFT JOIN j_term t on t.id = ut.TermId
 		LEFT JOIN j_school s on s.id = u.SchoolId
-		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
-  		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
+		LEFT JOIN j_teachersubject ts on ts.userid = u.Id 
+  		LEFT JOIN j_subject su on su.id = ts.SubjectId and
 		where u.name =#{name}
-		and r.flag  =false and ut.flag = false and t.flag = false   
+		and r.flag  =false and u.flag = false
   </select>
   
   

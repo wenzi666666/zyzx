@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.user;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 import net.tfedu.zhl.sso.user.controller.UserController;
@@ -18,6 +19,7 @@ public class UserControllerTest extends BaseControllerTestCase {
 
         request = newGet("/resRestAPI/v1.0/users/{id}");
         request.addHeader("Authorization", "f07b6038-f339-4ace-bf69-460e61d4e8e7");
+        request.setAttribute(CustomException.request_key, "OK");
         ResultJSON result = controller.getUserInfo(1l, request, response);
         System.out.println(result.toString());
 

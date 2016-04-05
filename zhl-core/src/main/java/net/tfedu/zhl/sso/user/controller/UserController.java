@@ -71,7 +71,7 @@ public class UserController {
 
                 if (currentUserId != null && exception == null) {
                     String token = request.getHeader("Authorization");
-                    jOnlineUsersService.logout(token);
+                    userService.logout(token);
                     exception = CustomException.SUCCESS;
                 }
             } catch (Exception e) {
@@ -90,18 +90,19 @@ public class UserController {
             String userName = request.getParameter("user_name");
             String userPwd = request.getParameter("user_pwd");
             // 返回用户的信息
-            UserLoginResultInfo data = new UserLoginResultInfo();
+//            UserLoginResultInfo data = new UserLoginResultInfo();
+            UserSimple user = null;
             try {
                 // 用户登录
                 SRegister reg = registerService.login(userName, userPwd);
                 // 获取用户信息
-                UserSimple user = userService.getUserSimpleById(reg.getId(), model);
-                // 成功,增加用户的在线信息
-                Boolean repeatLoginVaildFlag = false;// repeatLoginVaildFlag资源中心不允许一个用户重复登录
-                JOnlineUsers online = jOnlineUsersService.getUserOnlines(reg.getId(), request, repeatLoginVaildFlag);
+                user = userService.getUserSimpleById(reg.getId(), model);
+//                // 成功,增加用户的在线信息
+//                Boolean repeatLoginVaildFlag = false;// repeatLoginVaildFlag资源中心不允许一个用户重复登录
+//                JOnlineUsers online = jOnlineUsersService.getUserOnlines(reg.getId(), request, repeatLoginVaildFlag);
 
-                BeanUtils.copyProperties(data, user);
-                data.setToken(online.getToken());
+//                BeanUtils.copyProperties(data, user);
+//                data.setToken(user.getToken());
                 exception = CustomException.SUCCESS;
             } catch (Exception e) {
                 exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -112,7 +113,7 @@ public class UserController {
             } finally {
                 result.setCode(exception.getCode());
                 result.setMessage(exception.getMessage());
-                result.setData(data == null ? "" : data);
+                result.setData(user == null ? "" : user);
                 result.setSign("");
             }
         }

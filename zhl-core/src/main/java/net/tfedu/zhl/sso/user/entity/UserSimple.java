@@ -1,6 +1,7 @@
 package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Transient;
@@ -25,6 +26,14 @@ public class UserSimple implements Serializable {
     String termName;
     String userImage;
     Long roleId;
+    String token;
+    Date logintime;
+    
+    /**
+     * 1 web 2 android 3 winpad
+     */
+    Integer clienttype;
+    
     /**
      * 获取用户学科ids
      */
@@ -135,6 +144,30 @@ public class UserSimple implements Serializable {
         this.roleId = roleId;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Date getLogintime() {
+        return logintime;
+    }
+
+    public void setLogintime(Date logintime) {
+        this.logintime = logintime;
+    }
+
+    public Integer getClienttype() {
+        return clienttype;
+    }
+
+    public void setClienttype(Integer clienttype) {
+        this.clienttype = clienttype;
+    }
+
     public List<JRole> getRoles() {
         return roles;
     }
@@ -155,9 +188,8 @@ public class UserSimple implements Serializable {
     public String toString() {
         return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
-                + userImage + ", roleId=" + roleId + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames
-                + ", roles=" + roles + ", funcs=" + funcs + "]";
-    }
-
-    
+                + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", clienttype="
+                + clienttype + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roles=" + roles
+                + ", funcs=" + funcs + "]";
+    }    
 }
