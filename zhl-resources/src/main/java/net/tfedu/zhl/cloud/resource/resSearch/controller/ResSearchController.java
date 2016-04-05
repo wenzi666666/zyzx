@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
-import net.tfedu.zhl.cloud.resource.resourceList.controller.DisResourceController;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -33,7 +32,7 @@ public class ResSearchController {
     ResSearchService resSearchService;
     
     //写入日志
-    Logger logger = Logger.getLogger(DisResourceController.class);
+    Logger logger = Logger.getLogger(ResSearchController.class);
 
     /**
      * 根据检索内容，跨库检索所有资源
@@ -82,10 +81,10 @@ public class ResSearchController {
                 pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page,
                         perPage);
                 
-                logger.info("检索关键字：" + searchKeyword);
-                logger.info("资源格式：" + format);
-                logger.info("资源来源fromFlag：" + fromFlag);
-                logger.info("检索到的资源数目：" + pagination.getList().size());
+                logger.debug("检索关键字：" + searchKeyword);
+                logger.debug("资源格式：" + format);
+                logger.debug("资源来源fromFlag：" + fromFlag);
+                logger.debug("检索到的资源数目：" + pagination.getList().size());
 
                 exception = CustomException.SUCCESS;
 
