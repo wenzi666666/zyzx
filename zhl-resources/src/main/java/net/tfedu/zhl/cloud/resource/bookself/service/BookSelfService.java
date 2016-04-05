@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.bookself.service;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 
 public interface BookSelfService {
@@ -44,5 +45,23 @@ public interface BookSelfService {
 	 */
 	public List<BookSelfView> queryBook(Long userId,String tfcode);
 	
+	
+	
+	
+	/**
+	 * 获取用户的课件
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @param orderby
+	 * @return
+	 */
+	public List<ZAssetView> queryUserCourseware(Long userId,String tfcode,String title,String orderby);
+	
+	
+	/**
+	 * 重命名课件
+	 */
+	public void renameAsset(Long id,String name);
 	
 }

@@ -7,11 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
 
 /**
  * 登录状态拦截器
@@ -28,6 +31,11 @@ import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
  *
  */
 public class LoginStatusCheckInterceptor implements HandlerInterceptor {
+	
+	
+    @Autowired
+    CacheManager cacheManager;
+
 
     @Resource
     private JOnlineUsersService jOnlineUsersService;
@@ -96,11 +104,22 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                 customException = CustomException.NOTOKEN;
             }
             else {
-                // token的有效时间
+            	
+
+/*                // token的有效时间
                 int validTime = ZhlOnlineUtil.getTokenValidTime(request);
 
                 JOnlineUsers user = jOnlineUsersService.getUserOnlinesByToken(token, validTime);
-                currentUserId = user.getUserid();
+                currentUserId = user.getId();*/
+            	
+            	
+            	
+            	Object o = cacheManager.getCache("UserSimpleCache").get(token).get();
+            	if(o!=null){
+                	UserSimple us  = (UserSimple) o;
+                    currentUserId = us.getUserId();
+            		
+            	}
             }
         }
         catch (Exception e) {

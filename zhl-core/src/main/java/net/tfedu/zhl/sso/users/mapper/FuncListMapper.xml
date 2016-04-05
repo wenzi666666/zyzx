@@ -23,7 +23,7 @@
 	</resultMap>
 
 	<select id="getRoleFuncByRoleIds" resultMap="BaseResultMap">
-		SELECT f.id,f.`Name`,f.Path,f.iconPath,f.model
+		SELECT f.*
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id
 		where f.model=#{model} and rc.RoleId in

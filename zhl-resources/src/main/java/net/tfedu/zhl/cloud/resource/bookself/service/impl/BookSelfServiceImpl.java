@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.dao.JSyscourseUserMapper;
 import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
@@ -24,12 +26,14 @@ public class BookSelfServiceImpl implements BookSelfService {
 	@Autowired
 	JUserMapper userMapper;
 	
+	
+	@Autowired
+	ZAssetMapper assetMapper;
+	
 
 	@Override
 	public List<BookSelfView> getAllMyBook(Long userId,String title) {
 		// TODO Auto-generated method stub
-		
-		
 		
 		List <BookSelfView> list = mapper.getAllMyBook(userId,title==null?"":("%"+title.trim()+"%"));
 		//如果没有书架内容 默认增加一个课标版的教材
@@ -68,4 +72,25 @@ public class BookSelfServiceImpl implements BookSelfService {
 		return mapper.queryBook(userId, tfcode);
 	}
 
+	@Override
+	public List<ZAssetView> queryUserCourseware(Long userId, String tfcode,
+			String title, String orderby) {
+		// TODO Auto-generated method stub
+		
+		tfcode = tfcode==null?"":(tfcode.trim()+"%");
+		title = title==null?"":("%"+title.trim()+"%");
+		orderby = orderby==null?"":orderby.trim();
+		
+		
+		return assetMapper.queryUserCourseware(userId, tfcode, title, orderby);
+	}
+
+	@Override
+	public void renameAsset(Long id, String name) {
+		// TODO Auto-generated method stub
+		assetMapper.renameAsset(id, name);
+	}
+
+
+	
 }
