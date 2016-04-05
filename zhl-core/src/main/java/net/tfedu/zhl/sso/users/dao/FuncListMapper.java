@@ -1,6 +1,6 @@
 package net.tfedu.zhl.sso.users.dao;
 
-import java.util.List;
+import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -19,5 +19,5 @@ public interface FuncListMapper extends CoreMapper<FuncList> {
      * @param model
      * @return
      */
-    List<FuncList> getRoleFuncByRoleIds(@Param("roleIds") List<Long> roleIds, @Param("model")String model);
+    Set<String> getRoleFuncByRoleIds(@Param("roleIds") Set<Long> roleIds, @Param("model")String model);
 }

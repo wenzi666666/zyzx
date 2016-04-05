@@ -14,9 +14,9 @@
     </constructor>
   </resultMap>
   
-  <select id="getUserRoleByUserId" resultMap="BaseResultMap">
+  <select id="getUserRoleByUserId" resultType="Long">
 	SELECT
-	  r.Id,r.`name`,r.model,r.tag
+	  r.Id
 	FROM j_user u
 	LEFT JOIN j_userrole ur on u.Id=ur.UserId
 	LEFT JOIN j_role r on ur.RoleId=r.id
@@ -25,7 +25,7 @@
 	UNION 
 	
 	SELECT
-	  r.Id,r.`name`,r.model,r.tag
+	  r.Id
 	FROM j_user u
 	LEFT JOIN j_usergroup ug on u.id=ug.user_id
 	LEFT JOIN j_rolegroup rg on ug.group_id=rg.group_id

@@ -2,7 +2,7 @@ package net.tfedu.zhl.sso.users.interceptor;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -68,17 +68,10 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         }
 
         // 4判断是否有权限
-        List<FuncList> funcs = us.getFuncs();
-        String url = request.getRequestURI();
-        boolean hasAuth = false;
-        for (FuncList func : funcs) {
-            if (func.getPath().equals(url)) {
-                hasAuth = true;
-                break;
-            }
-        }
+        Set<String> funcs = us.getFuncPaths();
+        String url = request.getRequestURI();      
         
-        if(!hasAuth){
+        if(!funcs.contains(url)){
             customException = CustomException.WITHOUTAUTH;
             request.setAttribute(CustomException.request_key, customException);
             return false;

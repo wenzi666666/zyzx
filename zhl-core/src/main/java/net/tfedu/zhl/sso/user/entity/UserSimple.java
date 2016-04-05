@@ -2,12 +2,11 @@ package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Transient;
 
-import net.tfedu.zhl.sso.role.entity.JRole;
-import net.tfedu.zhl.sso.users.entity.FuncList;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 用户信息简易版
@@ -17,6 +16,11 @@ import net.tfedu.zhl.sso.users.entity.FuncList;
  */
 public class UserSimple implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4154529847915546034L;
+    
     String userName;
     Long userId;
     String trueName;
@@ -48,13 +52,12 @@ public class UserSimple implements Serializable {
      * 用户附加角色
      */
     @Transient
-    private List<JRole> roles;
+    private Set<Long> roleIds;
     
     /**
      * 用户权限
      */
-    @Transient
-    private List<FuncList> funcs;
+    private Set<String> funcPaths;
 
     public String getSubjectIds() {
         return subjectIds;
@@ -168,20 +171,21 @@ public class UserSimple implements Serializable {
         this.clienttype = clienttype;
     }
 
-    public List<JRole> getRoles() {
-        return roles;
+    public Set<Long> getRoleIds() {
+        return roleIds;
     }
 
-    public void setRoles(List<JRole> roles) {
-        this.roles = roles;
+    public void setRoleIds(Set<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 
-    public List<FuncList> getFuncs() {
-        return funcs;
+    @JsonIgnore
+    public Set<String> getFuncPaths() {
+        return funcPaths;
     }
 
-    public void setFuncs(List<FuncList> funcs) {
-        this.funcs = funcs;
+    public void setFuncPaths(Set<String> funcPaths) {
+        this.funcPaths = funcPaths;
     }
 
     @Override
@@ -189,7 +193,9 @@ public class UserSimple implements Serializable {
         return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", clienttype="
-                + clienttype + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roles=" + roles
-                + ", funcs=" + funcs + "]";
-    }    
+                + clienttype + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
+                + ", funcPaths=" + funcPaths + "]";
+    }
+
+    
 }
