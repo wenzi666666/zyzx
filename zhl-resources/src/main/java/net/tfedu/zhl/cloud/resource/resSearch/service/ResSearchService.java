@@ -19,7 +19,7 @@ public interface ResSearchService {
      */
 
     public Pagination<ResSearchResultEntity> getResources(int fromFlag, List<Integer> sys_from, String searchKeyword,
-            String format, int page, int perPage);
+            String format, int page, int perPage,long userId);
     
    
     /**
@@ -29,6 +29,6 @@ public interface ResSearchService {
      * @param sys_from
      * @return
      */
-    public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from);
+    public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from,long userId);
     
 }

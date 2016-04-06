@@ -31,11 +31,13 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
         Pagination<ResSearchResultEntity> pagination = null;
 
         // 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
-        int fromFlag = 1;
+        int fromFlag = 0;
 
         String format = "全部";
 
-        String searchKeyword = "荷塘";
+        String searchKeyword = "乐";
+        
+        long userId = 699230735;
 
         // 页码
         int page = 1;
@@ -43,7 +45,7 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
         // 每页记录数目
         int perPage = 10;
 
-        pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page, perPage);
+        pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page, perPage,userId);
 
         if (pagination != null) {
             System.out.println(pagination.getPage());

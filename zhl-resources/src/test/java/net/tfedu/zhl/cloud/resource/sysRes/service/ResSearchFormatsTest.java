@@ -25,8 +25,9 @@ public class ResSearchFormatsTest extends BaseServiceTestCase{
 	public void testResSearchFormat()throws IOException{
 		String searchKeyword = "荷塘";
 		int fromFlag = 1; //系统资源
+		long userId = 699230735;
 		
-		List<String> list = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from);
+		List<String> list = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from,userId);
 		
 		Assert.isTrue(list.size() > 0);
 		

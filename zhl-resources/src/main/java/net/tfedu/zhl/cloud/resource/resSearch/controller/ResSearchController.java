@@ -86,7 +86,7 @@ public class ResSearchController {
                 int perPage = Integer.parseInt(request.getParameter("perPage"));
 
                 pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page,
-                        perPage);
+                        perPage,currentUserId);
                 
                 //生成文件的缩略图路径
                 ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
@@ -150,7 +150,7 @@ public class ResSearchController {
                 // 检索的关键词
                 String searchKeyword = request.getParameter("searchKeyword");
                 
-                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from);
+                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from,currentUserId);
                 
                 exception = CustomException.SUCCESS;
             }

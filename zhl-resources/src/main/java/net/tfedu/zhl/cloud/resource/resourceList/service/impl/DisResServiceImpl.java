@@ -46,7 +46,7 @@ public class DisResServiceImpl implements DisResService {
         // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
-        // 查询系统资源
+        // 查询资源
         List<DisResourceEntity> list = districtResMapper.selectDisRes(fromFlag, fileFormat, typeIds, tfcode, orderBy,
                 schoolId, districtId);
 
