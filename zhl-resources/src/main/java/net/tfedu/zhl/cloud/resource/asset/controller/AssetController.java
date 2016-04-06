@@ -22,6 +22,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.service.UserService;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/resRestAPI")
 public class AssetController {
+	
+	
+	
 	
 	/**
 	 * 用户service
@@ -239,7 +243,7 @@ public class AssetController {
 								a.setAssetdesc(descs[i]);
 								a.setIsfinished(isfinished);
 								//新版资源类型
-								a.setUnifytypeid(unifTypeIds[i]);
+								a.setUnifytypeid(Integer.parseInt(unifTypeIds[i]));
 								a.setName(names[i]);
 								//旧版资源类型字段也设置为新版的类型
 								a.setTypeid(Long.parseLong(unifTypeIds[i]));
@@ -399,8 +403,9 @@ public class AssetController {
 						
 					}
 					if(StringUtils.isEmpty(unifTypeId)){
+
 						//新版资源类型
-						a.setUnifytypeid(unifTypeId);
+						a.setUnifytypeid(Integer.parseInt(unifTypeId));
 						//旧版资源类型字段也设置为新版的类型
 						a.setTypeid(Long.parseLong(unifTypeId));
 

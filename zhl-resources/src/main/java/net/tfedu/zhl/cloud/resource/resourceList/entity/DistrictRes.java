@@ -282,11 +282,6 @@ public class DistrictRes implements Serializable {
     @Column(name = "isFinished")
     private Integer isfinished;
 
-    /**
-     * v3.1新版资源中心类型
-     */
-    @Column(name = "unifyTypeId")
-    private String unifytypeid;
 
     /**
      * 资源描述
@@ -302,7 +297,7 @@ public class DistrictRes implements Serializable {
             Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel,
             String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker,
             String speakerunit, Integer resolution, Integer authorfromflag, Integer scope, Long scopeid, Integer state,
-            String auditopinion, Integer isfinished, String unifytypeid, String des) {
+            String auditopinion, Integer isfinished, String des) {
         this.id = id;
         this.rescode = rescode;
         this.provider = provider;
@@ -350,7 +345,6 @@ public class DistrictRes implements Serializable {
         this.state = state;
         this.auditopinion = auditopinion;
         this.isfinished = isfinished;
-        this.unifytypeid = unifytypeid;
         this.des = des;
     }
 
@@ -602,7 +596,7 @@ public class DistrictRes implements Serializable {
      *            上传的资源，A----学案；B----测试；C--作业；D---教案；E-----课件
      */
     public void setTypelean(String typelean) {
-        this.typelean = typelean == null ? null : typelean.trim();
+        this.typelean = typelean == null ? "A" : typelean.trim();
     }
 
     /**
@@ -640,7 +634,7 @@ public class DistrictRes implements Serializable {
      *            编辑者
      */
     public void setEditorid(Long editorid) {
-        this.editorid = editorid;
+        this.editorid = editorid ==null?this.authorid:editorid;
     }
 
     /**
@@ -1231,25 +1225,7 @@ public class DistrictRes implements Serializable {
         this.isfinished = isfinished;
     }
 
-    /**
-     * 获取v3.1新版资源中心类型
-     *
-     * @return unifyTypeId - v3.1新版资源中心类型
-     */
-    public String getUnifytypeid() {
-        return unifytypeid;
-    }
-
-    /**
-     * 设置v3.1新版资源中心类型
-     *
-     * @param unifytypeid
-     *            v3.1新版资源中心类型
-     */
-    public void setUnifytypeid(String unifytypeid) {
-        this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();
-    }
-
+   
     /**
      * 获取资源描述
      *

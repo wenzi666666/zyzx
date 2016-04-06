@@ -54,7 +54,7 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      * @param tfcode
      * @return
      */
-    public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode, Long userId);
+    public List<JPrepareView> queryPrepareAndTimeScopeList(@Param("tfcode")String tfcode,@Param("title")String title,@Param("userId") Long userId);
 
     /**
      * 获取备课夹内容列表(其中缩略图、文件后缀需要工具类继续处理)

@@ -52,7 +52,7 @@
 			targetPackage="${daoPackage}" targetProject="${targetProject}">
 		</javaClientGenerator>
 
-		<table tableName="sys_user" domainObjectName="User">
+		<table tableName="z_districts_resnav" domainObjectName="DistrictsResNav">
 			<generatedKey column="id" sqlStatement="Mysql" identity="true" />
 		</table>
 	</context>

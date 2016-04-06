@@ -53,7 +53,10 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public void deletePrepareById(Long id) {
-        mapper.deleteByPrimaryKey(id);
+    	JPrepare p = new JPrepare();
+    	p.setFlag(true);
+    	p.setId(id);
+        mapper.updateByPrimaryKeySelective(p);
     }
 
     @Override
@@ -71,7 +74,10 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public void deletePrepareContentById(Long id) {
-        contMapper.deleteByPrimaryKey(id);
+    	JPrepareContent record = new JPrepareContent();
+    	record.setId(id);
+    	record.setFlag(true);
+        contMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
@@ -86,9 +92,9 @@ public class JPrepareServiceImpl implements JPrepareService {
     }
 
     @Override
-    public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode, Long userId) {
+    public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode,String title, Long userId) {
         // TODO Auto-generated method stub
-        return mapper.queryPrepareAndTimeScopeList(tfcode + "%", userId);
+        return mapper.queryPrepareAndTimeScopeList(tfcode + "%",("%"+title+"%"), userId);
     }
 
     @Override

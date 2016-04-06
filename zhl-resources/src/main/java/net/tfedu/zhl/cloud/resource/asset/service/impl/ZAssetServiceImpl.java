@@ -6,12 +6,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.asset.controller.AssetController;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
+import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZTypeConvertMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetSyscourse;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetValuate;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
@@ -19,13 +23,16 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictsResNavMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictsResNav;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +40,10 @@ import com.github.pagehelper.PageHelper;
 
 @Service("zAssetService")
 public class ZAssetServiceImpl implements ZAssetService {
+	
+	
+	Logger logger = Logger.getLogger(ZAssetServiceImpl.class);
+
 	
 	@Autowired
 	ResTypeMapper typeMapper;
@@ -60,7 +71,13 @@ public class ZAssetServiceImpl implements ZAssetService {
 	
 	@Autowired
 	DistrictResMapper districtMapper;
-
+	
+	@Autowired
+	ZAssetSyscourseMapper asMapper;
+	
+	@Autowired
+	DistrictsResNavMapper districtResNavMapper;
+	
 	@Override
 	public List<FirstLevelResType> getAllFirstLevelResType() {
 		// TODO Auto-generated method stub
@@ -104,7 +121,10 @@ public class ZAssetServiceImpl implements ZAssetService {
 		if(StringUtils.isNotEmpty(ids)){
 			String id[] = ids.split(",");
 			for (String string : id) {
-				reviewMapper.deleteByPrimaryKey(Long.parseLong(string));
+				ZAssetValuate z = new ZAssetValuate();
+				z.setId(Long.parseLong(string));
+				z.setFlag(true);
+				reviewMapper.updateByPrimaryKeySelective(z);
 			}
 		}
 	}
@@ -152,12 +172,22 @@ public class ZAssetServiceImpl implements ZAssetService {
 		long schoolid = 0 ;
 		long districtid=  0;
 		
+		
+		
+		
+		List<DistrictRes> dResList = new ArrayList();
+		List<DistrictsResNav> dResNavList = new ArrayList();
+		
 		//如果需要共享到区校
 		if(scope_list.contains(1)||scope_list.contains(2)){
-			HashMap<String,Long> map =  userMapper.getUserAreaInfo(list.get(0).getUserid());
+			HashMap<String,Object> map =  userMapper.getUserAreaInfo(list.get(0).getUserid());
 			if(map!=null){
-				districtid = map.get("districtid");
-				schoolid = map.get("schoolid");
+				districtid =  (map.get("districtid") instanceof java.lang.String )
+								?Long.parseLong(map.get("districtid").toString())
+								:Long.parseLong(String.valueOf(map.get("districtid")));
+				schoolid = (map.get("schoolid") instanceof java.lang.String )
+						?Long.parseLong(map.get("schoolid").toString())
+						:Long.parseLong(String.valueOf(map.get("schoolid")));
 			}			
 		}
 		
@@ -167,7 +197,9 @@ public class ZAssetServiceImpl implements ZAssetService {
 		for (int i=0;i<list.size();i++) {
 			ZAsset asset = list.get(i);
 			int scope = scope_list.get(i);
-						
+			int _scope = scope==1?3:4;
+			long _scopeId = _scope==3?schoolid:districtid;
+			
 			//0：转码完成，1：未完成
 			int isfinished = 1 ;
 			//如果更新了文件且需要格式转换
@@ -199,25 +231,109 @@ public class ZAssetServiceImpl implements ZAssetService {
 				String rescode = AssetTypeConvertConstant.getResCodeForDistrictRes(scope, tfcode);
 				//复制到区本校本资源
 				DistrictRes res = new DistrictRes();
+				
+				res.setScope(_scope);
+				res.setScopeid(_scopeId);
+				res.setFromflag(scope==1?3:4);
 				res.setRescode(rescode);
 				res.setCreatedt(time);
-				res.setCreatorid(asset.getUserid());
+				//作者
 				res.setAuthorid(asset.getUserid());
-				res.setFromflag(scope==1?3:4);
 				res.setFname(_name);
 				res.setFpath(_path);
 				res.setFullpath(_fullpath);
 				
+				//创建者（后台管理员）
+				res.setCreatorid(0l);
 				res.setDes(asset.getAssetdesc());
-				res.setMtype(Integer.parseInt(asset.getUnifytypeid()));
+				res.setMtype(asset.getUnifytypeid());
 				res.setTitle(asset.getName());
-				res.setKeyword(asset.getKeyword());
+				res.setKeyword(asset.getKeyword());	
+				res.setRdes("");
+				
+				res.setTypelean("");
+				res.setAuditopinion("");
+				res.setAuthorfromflag(1);
+				res.setAuthorunit("");
+				res.setClicktimes(0);
+				res.setCopyright("");
+				res.setDisplayindex(0);
+				res.setDisplaylevel(0);
+				res.setDloadscore(0);
+				res.setDloadtimes(0);
+				res.setEditorid(0l);
+				res.setEduplace("");
+				//后缀
+				String  fileext =assetPath.substring(assetPath.lastIndexOf(".") + 1, assetPath.length());
+				res.setFileext(fileext);
+				res.setFlag(false);
+				res.setFsize(asset.getAssetsize());
+				res.setFullpath(assetPath);
+				res.setIsdwj(asset.getIswjb());
+				res.setIsfinished(isfinished);
+				res.setIslocal(0);
+				res.setSuitterm("");
+				res.setSctimes(0);
+				//待审核
+				res.setState(4);
+				res.setCopyright("");
+				res.setAuthorfromflag(1);
+				
+				res.setUploadscore(0);
+				res.setUpdatedt(time);
+				dResList.add(res);
 				
 				
-				districtMapper.insert(res);
+				
+				DistrictsResNav resNav = new DistrictsResNav();
+				resNav.setFlag(false);
+				resNav.setRescode(rescode);
+				resNav.setStructcode(tfcode);				
+				dResNavList.add(resNav);
+				
+				
+				
 			}
 		}
+		
+		logger.debug("start  to save data to database ...... ");
 		assetMapper.insertList(list);
+
+		logger.debug("insert asset to database batch ");
+
+		//批量添加资源的导航信息
+		List<ZAssetSyscourse> asList = new ArrayList<ZAssetSyscourse>();
+		for (int i=0;i<list.size();i++) {
+			ZAsset asset = list.get(i);
+			String  tfcode = codes.get(i);
+			long resid= asset.getId();
+			ZAssetSyscourse  as = new ZAssetSyscourse();
+			as.setAssetid(resid);
+			as.setTfcode(tfcode);
+			as.setFlag(false);
+			asList.add(as);
+			
+			//取消资源添加
+			if(dResList.size()>0){
+				dResList.get(i).setAssetid(resid);
+			}
+		}
+		if(asList.size()>0){
+			logger.debug("add asset_syscourse to database batch .....");
+			asMapper.insertList(asList);
+		}
+		
+		//如果需要共享到dResList
+		if(scope_list.contains(1)||scope_list.contains(2)){
+			//批量增加资源
+			logger.debug("add districtRes to database batch .....");
+			districtMapper.insertList(dResList);
+			for (DistrictsResNav nav : dResNavList) {
+				logger.debug("add districtResNav to database .....");
+				districtResNavMapper.insertWithoutSyscourseId(nav);
+			}
+		}
+
 	}
 
 
@@ -228,7 +344,12 @@ public class ZAssetServiceImpl implements ZAssetService {
 		if(StringUtils.isNotEmpty(resIds)){
 			String[]ids = resIds.split(",");
 			for (String id : ids) {
-				assetMapper.deleteByPrimaryKey(Long.parseLong(id));
+				
+				ZAsset  z = new ZAsset();
+				z.setId(Long.parseLong(id));
+				z.setFlag(true);
+				
+				assetMapper.updateByPrimaryKeySelective(z);
 			}
 		}
 	}

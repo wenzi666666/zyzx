@@ -75,7 +75,7 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 		a.setAssetsize("2252258");
 		a.setAssetdesc("");
 		a.setIsfinished(1);
-		a.setUnifytypeid("1");
+		a.setUnifytypeid(1);
 		a.setName("20151105151125640.mp4");
 		a.setTypeid(560413l);
 		a.setIscourseware(iscourseware);

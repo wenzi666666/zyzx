@@ -181,7 +181,7 @@ public class ZAsset {
      * v3.1新版资源中心类型
      */
     @Column(name = "unifyTypeId")
-    private String unifytypeid;
+    private Integer unifytypeid;
 
     /**
      * 上传资源的文档内容
@@ -194,7 +194,7 @@ public class ZAsset {
             String keyword, String filename, String filepath, Boolean issysres, String attachement, String attachpath,
             String assetsize, Date checktime, String checkman, Boolean checkflag, Boolean stustate, Boolean flag,
             String filecode, Boolean iswjb, String wjbname, Integer islocal, Boolean iscourseware, Integer isfinished,
-            String unifytypeid, String content) {
+            Integer unifytypeid, String content) {
         this.id = id;
         this.resourceid = resourceid;
         this.typeid = typeid;
@@ -793,7 +793,7 @@ public class ZAsset {
      *
      * @return unifyTypeId - v3.1新版资源中心类型
      */
-    public String getUnifytypeid() {
+    public Integer getUnifytypeid() {
         return unifytypeid;
     }
 
@@ -803,8 +803,8 @@ public class ZAsset {
      * @param unifytypeid
      *            v3.1新版资源中心类型
      */
-    public void setUnifytypeid(String unifytypeid) {
-        this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();
+    public void setUnifytypeid(Integer unifytypeid) {
+        this.unifytypeid = unifytypeid == null ? null : unifytypeid.intValue();
     }
 
     /**

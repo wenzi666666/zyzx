@@ -36,7 +36,7 @@
       <arg column="IsLocal" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="iscourseware" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="IsFinished" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="unifyTypeId" jdbcType="CHAR" javaType="java.lang.String" />
+      <arg column="unifyTypeId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="Content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
@@ -127,5 +127,24 @@
   </select>
   
   
+	<!-- 自建资源的资源导航信息 -->
+	<select id="getAssetNavs" resultType="String">
+		select  t.tfcode  from z_asset_syscourse  t
+		LEFT JOIN j_syscourse sys on sys.tfcode = t.tfcode
+		where t.assetid = #{resId} and t.flag = false 
+		ORDER BY LOCATE(#{curTfcode},t.tfcode) desc
+	</select>
+
+	<!-- 自建资源的详细信息 -->
+	 <select id="getAssetPreviewInfo" parameterType="Long" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo">
+			select  a.id ,a.name as title,a.keyword,AssetDesc as des ,AssetSize as fsize ,p.MType,p.id as typeId
+		    ,0 as  DLoadTimes,0 as ClickTimes,1 as fromflag, a.name as fname, a.assetpath as fpath
+			,0 as userNum,0 as totalScore,0 as avgScore,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as FileExt,IsWjb as isDWJ
+			from  z_asset a 
+			LEFT JOIN x_resourcetype p  on p.id = a.unifytypeid 		
+			where a.id =  #{resId}
+			and a.flag =false and a.FileType = 'A'
+	 </select>
+ 
 
 </mapper>

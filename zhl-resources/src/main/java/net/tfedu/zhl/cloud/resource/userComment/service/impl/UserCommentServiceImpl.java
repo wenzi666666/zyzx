@@ -54,7 +54,12 @@ public class UserCommentServiceImpl implements UserCommentService {
     // 删除用户评论
     @Override
     public void deleteUserComment(long commentId) {
-        userCommentMapper.deleteComment(commentId);
+    	
+    	
+    	UserComment record = new UserComment();
+    	record.setId(commentId);
+    	record.setFlag(true);
+        userCommentMapper.updateByPrimaryKeySelective(record);
     }
 
     // 查询我的评论

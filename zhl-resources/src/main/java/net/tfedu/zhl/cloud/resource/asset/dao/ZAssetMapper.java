@@ -2,11 +2,13 @@ package net.tfedu.zhl.cloud.resource.asset.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface ZAssetMapper extends CoreMapper<ZAsset> {
 
@@ -56,5 +58,25 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * 重命名课件
 	 */
 	public void renameAsset(@Param("id")Long id,@Param("name")String name);
+	
+	
+	
+	
+	/**
+	 * 查询 自建资源的详细信息
+	 * @param resId
+	 * @return
+	 */
+	public  ResPreviewInfo getAssetPreviewInfo(@Param("resId")Long resId,@Param("curTfcode")String curTfcode);
+	
+	/**
+	 * 返回自建资源的资源导航信息
+	 * @param resId
+	 * @return
+	 */
+	public List<ResNavEntity>  getAssetNavs(Long resId);
+	
+	
+	
 
 }

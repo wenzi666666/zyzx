@@ -89,8 +89,11 @@
 	FROM
 		j_lession_prepare
 	WHERE
-		tfcode LIKE #{0}
-	AND userid =  #{1}  AND flag = false 
+		tfcode LIKE #{tfcode}
+	AND userid =  #{userId}  AND flag = false 
+	<if test="title!=''">
+		AND title like #{title}	
+	</if>
 	ORDER BY ordernum desc
   </select>
   

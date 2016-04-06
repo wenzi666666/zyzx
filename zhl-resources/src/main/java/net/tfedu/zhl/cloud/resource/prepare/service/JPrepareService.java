@@ -80,7 +80,7 @@ public interface JPrepareService {
      * @param tfcode
      * @return
      */
-    public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode, Long userId);
+    public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode,String title, Long userId);
 
     /**
      * 获取备课夹内容列表

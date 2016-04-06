@@ -53,7 +53,6 @@
       <arg column="State" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="AuditOpinion" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="isFinished" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="unifyTypeId" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="Des" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>

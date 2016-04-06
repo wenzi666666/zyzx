@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
@@ -30,6 +31,10 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     DistrictResMapper districtResMapper;
     @Resource
     JUserDefaultMapper jUserDefaultMapper;
+    
+    @Resource
+    ZAssetMapper  assetMapper;
+    
 
     // 根据resId和fromFlag，查询资源具体信息
     @Override
@@ -55,29 +60,23 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     @Override
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode) {
         List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
+        List<String> structCodes  = null;
         if (fromFlag == 0) {// 系统资源
-            List<String> structCodes = sysResourceMapper.getAllRescodes(resId, curTfcode);
-            if (structCodes != null) {
-                for (int i = 0; i < structCodes.size(); i++) {
-                    List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
-                    if (navs != null)
-                        info.add(navs);
-                }
-            }
-
+            structCodes = sysResourceMapper.getAllRescodes(resId, curTfcode);
         } else if (fromFlag == 1) {// 自建资源
-
+        	
         } else if (fromFlag == 3 || fromFlag == 4) {// 校本资源、区本资源
-            List<String> structCodes = districtResMapper.getAllDisRescodes(resId, curTfcode);
-            if (structCodes != null) {
-                for (int i = 0; i < structCodes.size(); i++) {
-                    List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
-                    if (navs != null)
-                        info.add(navs);
-                }
+            structCodes = districtResMapper.getAllDisRescodes(resId, curTfcode);
+        }
+        
+        
+        if (structCodes != null) {
+            for (int i = 0; i < structCodes.size(); i++) {
+                List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
+                if (navs != null)
+                    info.add(navs);
             }
         }
-
         return info;
     }
 

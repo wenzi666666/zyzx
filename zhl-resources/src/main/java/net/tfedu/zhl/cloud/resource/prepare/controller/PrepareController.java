@@ -189,8 +189,10 @@ public class PrepareController {
             if (currentUserId != null && exception == null) {
                 long userId = currentUserId;
                 String tfcode = request.getParameter("tfcode");
+                String title =  request.getParameter("title");
                 if (StringUtils.isNotEmpty(tfcode)) {
-                    data = jPrepareService.queryPrepareAndTimeScopeList(tfcode, userId);
+                	title = title==null?"":title.trim();
+                    data = jPrepareService.queryPrepareAndTimeScopeList(tfcode,title, userId);
                     exception = CustomException.SUCCESS;
                 } else {
                     exception = CustomException.PARAMSERROR;
