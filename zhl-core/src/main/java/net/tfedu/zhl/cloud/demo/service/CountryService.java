@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.demo.service;
 
 import net.tfedu.zhl.cloud.demo.entity.Country;
+import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 
 /**

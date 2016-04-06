@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import net.tfedu.zhl.cloud.demo.dao.CountryMapper;
 import net.tfedu.zhl.cloud.demo.entity.Country;
 import net.tfedu.zhl.cloud.demo.service.CountryService;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
