@@ -41,5 +41,29 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      */
     public List<ResSearchResultEntity> getAllDisResources(@Param("searchKeyword") String searchKeyword,
             @Param("fromFlag") int fromFlag, @Param("format") String format);
+    
+    /**
+     * 根据关键字，查询所有资源查询结果的格式
+     * @param searchKeyword
+     * @param sys_from
+     * @return
+     */
+    public List<String> getAllFileFormats(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
+    
+    /**
+     * 根据关键字，fromFlag，查询区本、校本资源的格式
+     * @param searchKeyword
+     * @param fromFlag
+     * @return
+     */
+    public List<String> getDisFileFormats(@Param("searchKeyword") String searchKeyword,@Param("fromFlag") int fromFlag);
+    
+    /**
+     * 根据关键字，查询系统资源的格式
+     * @param searchKeyword
+     * @param sys_from
+     * @return
+     */
+    public List<String> getSysFileFormats(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
 
 }

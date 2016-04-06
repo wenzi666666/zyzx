@@ -1,6 +1,8 @@
 package net.tfedu.zhl.cloud.resource.resSearch.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -115,6 +117,59 @@ public class ResSearchController {
         }
 
         return resultJSON;
+    }
+    
+    /**
+     * 查询资源检索结果中的格式
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    @RequestMapping("/v1.0/resSearchResults/formats")
+    @ResponseBody
+    public ResultJSON getResFormats(HttpServletRequest request,HttpServletResponse response)throws IOException{
+    	 /**
+         * 返回json的结果对象
+         */
+        ResultJSON resultJSON = new ResultJSON();
+
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        
+        List<String> resultList = new ArrayList<String>();
+    	try {
+    		
+    		// 若当前用户已经登录系统
+            if (exception == null && currentUserId != null) {
+            	// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
+                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+
+                // 检索的关键词
+                String searchKeyword = request.getParameter("searchKeyword");
+                
+                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from);
+                
+                exception = CustomException.SUCCESS;
+            }
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			// 捕获异常信息
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            e.printStackTrace();
+		} finally {
+			
+			// 封装结果集
+            resultJSON.setCode(exception.getCode());
+            resultJSON.setData(resultList);
+            resultJSON.setMessage(exception.getMessage());
+            resultJSON.setSign("");
+		}
+    	
+    	return resultJSON;
     }
 
 }
