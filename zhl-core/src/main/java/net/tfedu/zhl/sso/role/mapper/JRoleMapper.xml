@@ -27,8 +27,8 @@
 	SELECT
 	  r.Id
 	FROM j_user u
-	LEFT JOIN j_usergroup ug on u.id=ug.user_id
-	LEFT JOIN j_rolegroup rg on ug.group_id=rg.group_id
+	LEFT JOIN j_groupuser ug on u.id=ug.userId
+	LEFT JOIN j_rolegroup rg on ug.groupId=rg.group_id
 	LEFT JOIN j_role r on rg.role_id=r.id
 	WHERE u.id=#{userId} and r.Id is not NULL  and (r.model=' ' or r.model=#{model}) 
   </select>
