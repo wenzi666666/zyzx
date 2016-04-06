@@ -104,4 +104,60 @@ union ALL
 
   </select>
   
+  <!-- 根据关键字,查询系统资源检索结果的格式   -->
+  <select id="getSysFileFormats" resultType="String">
+  
+	SELECT DISTINCT FileFormat from z_resource a 
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
+  
+  <!-- 根据关键字,fromFlag，查询校本区本资源检索结果的格式  -->
+  <select id="getDisFileFormats" resultType="String">
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = #{fromFlag} 
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
+  
+  <!-- 根据关键字,查询全部资源检索结果的格式   -->
+  <select id="getAllFileFormats" resultType="String">
+    SELECT DISTINCT FileFormat from z_resource a 
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+     
+     union all
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = 3
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+     
+     union all
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = 4
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
 </mapper>
