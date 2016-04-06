@@ -51,14 +51,14 @@ CREATE TABLE `j_rolegroup` (
 -- ----------------------------
 -- Table structure for `j_usergroup`
 -- ----------------------------
-DROP TABLE IF EXISTS `j_usergroup`;
-CREATE TABLE `j_usergroup` (
+DROP TABLE IF EXISTS `j_groupuser`;
+CREATE TABLE `j_groupuser` (
   `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `group_id` bigint(15) NOT NULL DEFAULT '0' COMMENT '用户组编号',
   `user_id` bigint(15) NOT NULL DEFAULT '0' COMMENT '用户编号',
   PRIMARY KEY (`id`),
-  KEY `fk_j_usergroup_0` (`group_id`),
-  KEY `fk_j_usergroup_1` (`user_id`)
+  KEY `fk_j_groupuser_0` (`group_id`),
+  KEY `fk_j_groupuser_1` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `j_role`
