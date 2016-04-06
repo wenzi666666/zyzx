@@ -3,6 +3,7 @@ package net.tfedu.zhl.sso.user.service.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -65,19 +66,15 @@ public class UserServiceImpl implements UserService {
         UserSimple us = mapper.getUserSimpleById(id);
 
         // 2 获取角色
-        List<JRole> roles = roleMapper.getUserRoleByUserId(us.getUserId(), model);
-        us.setRoles(roles);        
-        List<Long> roleIds = new ArrayList<Long>();
-        for (JRole r : roles) {
-            roleIds.add(r.getId());
-        }
+        Set<Long> roleIds = roleMapper.getUserRoleByUserId(us.getUserId(), model);
+        us.setRoleIds(roleIds);        
         
         // 本身缺省的角色
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        List<FuncList> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-        us.setFuncs(funcs);
+        Set<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        us.setFuncPaths(funcs);
         
         //记录状态
         String token = IdUtil.getUUID();

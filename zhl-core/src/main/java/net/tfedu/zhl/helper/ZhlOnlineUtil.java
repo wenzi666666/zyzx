@@ -54,7 +54,7 @@ public class ZhlOnlineUtil {
      * @return
      */
     public static int getTokenValidTime(HttpServletRequest request) {
-        int timeout = 2;// 有效时间两个小时 单位为小时
+        int timeout = 4;// 有效时间两个小时 单位为小时
         String time = request.getServletContext().getInitParameter("TOKEN_VALID_TIME");
         if (StringUtils.isNotEmpty(time) && Integer.parseInt(time) > 0) {
             timeout = Integer.parseInt(time);

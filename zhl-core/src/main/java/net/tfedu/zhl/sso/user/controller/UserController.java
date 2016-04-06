@@ -6,18 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
-import net.tfedu.zhl.helper.CustomException;
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
-import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
-import net.tfedu.zhl.sso.users.entity.SRegister;
-import net.tfedu.zhl.sso.users.service.RegisterService;
-
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
@@ -25,6 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 @Controller
 @RequestMapping("/resRestAPI")
@@ -35,9 +32,6 @@ public class UserController {
 
     @Resource
     private RegisterService registerService;
-
-    @Resource
-    private JOnlineUsersService jOnlineUsersService;
 
     Logger logger = Logger.getLogger(UserController.class);
 

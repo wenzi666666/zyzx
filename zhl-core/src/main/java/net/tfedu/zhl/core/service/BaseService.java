@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.demo.service;
+package net.tfedu.zhl.core.service;
 
 import java.util.List;
 

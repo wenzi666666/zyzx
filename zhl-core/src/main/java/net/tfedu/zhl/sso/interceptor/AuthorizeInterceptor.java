@@ -1,4 +1,8 @@
-package net.tfedu.zhl.sso.users.interceptor;
+package net.tfedu.zhl.sso.interceptor;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -8,7 +12,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import net.tfedu.zhl.helper.CustomException;
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
+import net.tfedu.zhl.helper.ZhlOnlineUtil;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
 
 /**
  * 授权拦截器
@@ -21,7 +26,8 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
     CacheManager cacheManager;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
+            throws Exception {
         // 1判断是否请求是否需要拦截, 拦截器自动处理，配置一下excludedUrls
         // 获取参数
         String token = request.getHeader("Authorization");
@@ -36,25 +42,43 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         }
 
         // 2判断是否登录
-        Object obj = cacheManager.getCache("userIds").get(token);
+        Object obj = cacheManager.getCache("UserSimpleCache").get(token).get();
         if (obj == null) {
             customException = CustomException.NULOGIN;
             request.setAttribute(CustomException.request_key, customException);
             return false;
         }
 
-        // 3判断是否有权限
-        // 3.1加载所有权限，角色和api的键值对
+        // 3判断用户token是否有效
+        int validTime = ZhlOnlineUtil.getTokenValidTime(request);
+        UserSimple us = (UserSimple) obj;
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
 
-        // 3.2 判断用户自身角色的权限
-        JOnlineUsers onlineUser = (JOnlineUsers) obj;
+        Calendar loginTime = Calendar.getInstance();
+        loginTime.setTime(us.getLogintime());
+        loginTime.add(Calendar.HOUR_OF_DAY, validTime);
 
-        // 3.3 判断用户角色关系表的权限
+        if (now.before(loginTime)) {
+            customException = CustomException.OUTOFDATE;
+            request.setAttribute(CustomException.request_key, customException);
+            cacheManager.getCache("UserSimpleCache").evict(token);
+            return false;
+        }
 
-        // 3.4 判断用户组的权限
+        // 4判断是否有权限
+        Set<String> funcs = us.getFuncPaths();
+        String url = request.getRequestURI();      
+        
+        if(!funcs.contains(url)){
+            customException = CustomException.WITHOUTAUTH;
+            request.setAttribute(CustomException.request_key, customException);
+            return false;
+        }
+
         request.setAttribute("currentUserId", currentUserId);
         request.setAttribute(CustomException.request_key, customException);
-        return false;
+        return true;
     }
 
 }

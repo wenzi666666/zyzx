@@ -63,4 +63,5 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	
 	
 
+
 }

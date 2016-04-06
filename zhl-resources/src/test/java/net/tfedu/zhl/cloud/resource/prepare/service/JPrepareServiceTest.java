@@ -163,7 +163,7 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
      */
     @Test
     public void testqueryPrepareAndTimeScopeList() {
-        List<JPrepareView> list = jPrepareService.queryPrepareAndTimeScopeList(tfcode, userId);
+        List<JPrepareView> list = jPrepareService.queryPrepareAndTimeScopeList(tfcode,null, userId);
 
         System.out.println(list.size());
         System.out.println(list.get(0).getTimeLabel());

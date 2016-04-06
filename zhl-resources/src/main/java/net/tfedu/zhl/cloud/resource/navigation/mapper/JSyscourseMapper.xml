@@ -43,7 +43,9 @@
   	select s.id,replace(s.Name,CONCAT(j.name,sub.name),'') as name,tfcode from j_syscourse s
 	LEFT JOIN j_term j on s.termId = j.id
 	LEFT JOIN j_subject sub on s.subjectId = sub.id
-	where s.termid =#{termId} and s.subjectid =#{subjectId} and s.flag = false and j.flag = false and sub.flag = false and s.pnodeid = 0 ORDER BY s.id DESC
+	where s.termid =#{termId} and s.subjectid =#{subjectId} and s.flag = false and j.flag = false and sub.flag = false and s.pnodeid = 0 
+	and tfcode in (select DISTINCT left(tfcode,8) as tfcode from j_producttfcodecontrast) ORDER BY s.id DESC
+	ORDER BY s.id DESC
   </select>
   
   <!-- 根据所属版本和产品编码，查询所有的教材 -->

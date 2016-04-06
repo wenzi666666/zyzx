@@ -16,7 +16,11 @@ public class PageInfoToPagination<T> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    // 将pageIn封装为自定义的pagination
+    /**
+     *  将pageIn封装为自定义的pagination
+     * @param list
+     * @return
+     */
     public Pagination<T> transfer(List<T> list) {
         // 将查询结果封装到pagination
         PageInfo pageInfo = new PageInfo(list);

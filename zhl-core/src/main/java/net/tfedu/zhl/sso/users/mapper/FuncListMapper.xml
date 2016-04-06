@@ -22,8 +22,8 @@
 		</constructor>
 	</resultMap>
 
-	<select id="getRoleFuncByRoleIds" resultMap="BaseResultMap">
-		SELECT f.*
+	<select id="getRoleFuncByRoleIds" resultType="String">
+		SELECT f.Path
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id
 		where f.model=#{model} and rc.RoleId in

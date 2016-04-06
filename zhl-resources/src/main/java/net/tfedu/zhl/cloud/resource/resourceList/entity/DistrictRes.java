@@ -1245,3 +1245,4 @@ public class DistrictRes implements Serializable {
         this.des = des == null ? null : des.trim();
     }
 }
+

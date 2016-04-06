@@ -111,4 +111,5 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      */
     public UserPrepareStatisInfo getBookPrepareStatis(@Param("userId") Long userId, @Param("tfcode") String tfcode);
 
+
 }

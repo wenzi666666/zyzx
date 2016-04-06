@@ -36,13 +36,21 @@
     m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,1 diskorder,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
 	from z_districts_resource a 
-    left join x_resourcetype b on a.MType = b.id and b.flag = 0
+    left join x_resourcetype b on a.MType = b.id
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
-	where fromFlag = #{fromFlag} 
+	where a.flag = 0 and b.flag = 0 and fromFlag = #{fromFlag} 
     <if test="format != '全部'">
          and jf.FileFormat = #{format}
     </if>
+    
+    <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId}
+    </if>
+    
     <if test="searchKeyword != null">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
@@ -57,7 +65,7 @@
 	from z_resource a left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
-	where a.flag = 0 and b.flag = 0 and jf.flag = 0 
+	where a.flag = 0 and b.flag = 0
 	
 	and a.fromflag in (0,1,2)
 	<if test="format != '全部'">
@@ -73,10 +81,10 @@ union ALL
   m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,0 DisplayIndex,1 diskorder,a.fromFlag,
   (SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 3) avgScore 
   from z_districts_resource a 
-  left join x_resourcetype b on a.MType = b.id and b.flag = 0
+  left join x_resourcetype b on a.MType = b.id
   left join j_filetypedetail jf on a.FileExt=jf.FormatCode 
   left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
-  where fromFlag = 3
+  where a.flag = 0 and b.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} 
   <if test="format != '全部'">
          and jf.FileFormat = #{format}
   </if>
@@ -90,10 +98,10 @@ union ALL
   m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,0 DisplayIndex,1 diskorder,a.fromFlag,
   (SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 4) avgScore 
   from z_districts_resource a 
-  left join x_resourcetype b on a.MType = b.id and b.flag = 0
+  left join x_resourcetype b on a.MType = b.id
   left join j_filetypedetail jf on a.FileExt=jf.FormatCode 
   left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
-  where fromFlag = 4 
+  where a.flag = 0 and b.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} 
   <if test="format != '全部'">
          and jf.FileFormat = #{format}
   </if>
@@ -104,4 +112,68 @@ union ALL
 
   </select>
   
+  <!-- 根据关键字,查询系统资源检索结果的格式   -->
+  <select id="getSysFileFormats" resultType="String">
+  
+	SELECT DISTINCT FileFormat from z_resource a 
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
+  
+  <!-- 根据关键字,fromFlag，查询校本\区本资源检索结果的格式  -->
+  <select id="getDisFileFormats" resultType="String">
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = #{fromFlag}  
+	
+	<if test="fromFlag == 3">
+         and a.scopeId = #{schoolId}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId}
+    </if>
+	
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
+  
+  <!-- 根据关键字,查询全部资源检索结果的格式   -->
+  <select id="getAllFileFormats" resultType="String">
+    SELECT DISTINCT FileFormat from z_resource a 
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+     
+     union all
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId}
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+     
+     union all
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on a.fileExt = b.FormatCode  
+	WHERE 1=1 and a.flag = 0 and b.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId}
+    <if test="searchKeyword != null">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+  </select>
 </mapper>

@@ -1,125 +1,15 @@
-<<<<<<< HEAD
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost
-Source Server Version : 50528
-Source Host           : localhost:3306
-Source Database       : j2ee_demo
-
-Target Server Type    : MYSQL
-Target Server Version : 50528
-File Encoding         : 65001
-
-Date: 2016-03-21 14:48:51
-*/
-
 SET FOREIGN_KEY_CHECKS=0;
-
--- ----------------------------
--- Table structure for `sys_resource`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_resource`;
-CREATE TABLE `sys_resource` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `url` varchar(120) NOT NULL DEFAULT ' ' COMMENT 'èµ„æºurl',
-  `description` varchar(60) NOT NULL DEFAULT ' ' COMMENT 'æƒé™è¯´æ˜Ž',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_resource
--- ----------------------------
-INSERT INTO `sys_resource` VALUES ('1', ' /user/add', ' ');
-INSERT INTO `sys_resource` VALUES ('2', ' /user/list', ' ');
-
--- ----------------------------
--- Table structure for `sys_role`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'è§’è‰²å',
-  `description` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'è§’è‰²è¯´æ˜Ž',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_role
--- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', ' admin', ' ');
-INSERT INTO `sys_role` VALUES ('2', ' teacher', ' ');
-INSERT INTO `sys_role` VALUES ('3', ' student', ' ');
-
--- ----------------------------
--- Table structure for `sys_role_permisson`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role_permisson`;
-CREATE TABLE `sys_role_permisson` (
-  `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'ç¼–å·',
-  `role_id` int(15) NOT NULL DEFAULT '0' COMMENT 'è§’è‰²ç¼–å·',
-  `resource_id` int(15) NOT NULL COMMENT 'èµ„æºç¼–å·',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_sys_role_permission_0` (`role_id`,`resource_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_role_permisson
--- ----------------------------
-INSERT INTO `sys_role_permisson` VALUES ('1', '1', '1');
-INSERT INTO `sys_role_permisson` VALUES ('2', '1', '2');
-
--- ----------------------------
--- Table structure for `sys_user`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'ç¼–å·',
-  `username` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'ç”¨æˆ·å',
-  `password` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'å¯†ç ',
-  `salt` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'åŠ å¯†ç›',
-  `create_date` datetime NOT NULL DEFAULT '2000-10-01 08:08:08' COMMENT 'åˆ›å»ºæ—¥æœŸ',
-  `isDelete` int(1) NOT NULL DEFAULT '0' COMMENT 'æ˜¯å¦åˆ é™¤',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `sys_user_name_index_unique` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user
--- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'aaa', '000000', ' ', '2000-10-01 08:08:08', '0');
-INSERT INTO `sys_user` VALUES ('2', 'bruce', '000000', ' ', '2000-10-01 08:08:08', '0');
-
--- ----------------------------
--- Table structure for `sys_user_role`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `user_id` int(15) NOT NULL DEFAULT '0',
-  `role_id` int(15) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `unique_sys_user_role_1` (`user_id`,`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user_role
--- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
-INSERT INTO `sys_user_role` VALUES ('2', '1', '2');
-INSERT INTO `sys_user_role` VALUES ('3', '1', '3');
-INSERT INTO `sys_user_role` VALUES ('4', '2', '3');
 
 -- ----------------------------
 -- Table structure for `zhl_country`
 -- ----------------------------
 DROP TABLE IF EXISTS `zhl_country`;
 CREATE TABLE `zhl_country` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ç¼–å·',
-  `ccode` varchar(56) NOT NULL DEFAULT ' ' COMMENT 'ç¼–å·',
-  `cname` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'åç§°',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '±àºÅ',
+  `ccode` varchar(56) NOT NULL DEFAULT ' ' COMMENT '±àºÅ',
+  `cname` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'Ãû³Æ',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of zhl_country
@@ -132,121 +22,35 @@ INSERT INTO `zhl_country` VALUES ('5', '1000', 'china');
 INSERT INTO `zhl_country` VALUES ('6', '1000', 'china');
 INSERT INTO `zhl_country` VALUES ('7', '1000', 'china');
 INSERT INTO `zhl_country` VALUES ('8', '1000', 'china');
-=======
-/*
-Navicat MySQL Data Transfer
-
-Source Server         : localhost
-Source Server Version : 50528
-Source Host           : localhost:3306
-Source Database       : j2ee_demo
-
-Target Server Type    : MYSQL
-Target Server Version : 50528
-File Encoding         : 65001
-
-Date: 2016-03-18 19:21:09
-*/
-
-SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `sys_permission`
+-- Table structure for `j_rolegroup`
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_permission`;
-CREATE TABLE `sys_permission` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `token` varchar(60) NOT NULL DEFAULT ' ',
-  `url` varchar(600) NOT NULL DEFAULT ' ' COMMENT 'èµ„æºurl',
-  `role_id` int(15) NOT NULL DEFAULT '0' COMMENT 'æ‰€å±žè§’è‰²ç¼–å·',
-  `description` varchar(60) NOT NULL DEFAULT ' ' COMMENT 'æƒé™è¯´æ˜Ž',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_permission
--- ----------------------------
-INSERT INTO `sys_permission` VALUES ('1', ' ', ' add', '1', ' ');
-INSERT INTO `sys_permission` VALUES ('2', ' ', ' list', '1', ' ');
-
--- ----------------------------
--- Table structure for `sys_role`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'è§’è‰²å',
-  `description` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'è§’è‰²è¯´æ˜Ž',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_role
--- ----------------------------
-INSERT INTO `sys_role` VALUES ('1', ' admin', ' ');
-INSERT INTO `sys_role` VALUES ('2', ' teacher', ' ');
-INSERT INTO `sys_role` VALUES ('3', ' student', ' ');
-
--- ----------------------------
--- Table structure for `sys_user`
--- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
-  `id` int(15) NOT NULL AUTO_INCREMENT COMMENT 'ç¼–å·',
-  `username` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'ç”¨æˆ·å',
-  `password` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'å¯†ç ',
-  `salt` varchar(50) NOT NULL DEFAULT ' ' COMMENT 'åŠ å¯†ç›',
-  `create_date` datetime NOT NULL DEFAULT '2000-10-01 08:08:08' COMMENT 'åˆ›å»ºæ—¥æœŸ',
-  `isDelete` int(1) NOT NULL DEFAULT '0' COMMENT 'æ˜¯å¦åˆ é™¤',
+DROP TABLE IF EXISTS `j_rolegroup`;
+CREATE TABLE `j_rolegroup` (
+  `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT '±àºÅ',
+  `group_id` bigint(15) NOT NULL DEFAULT '0' COMMENT 'ÓÃ»§×é±àºÅ',
+  `role_id` bigint(15) NOT NULL DEFAULT '0' COMMENT 'ÓÃ»§±àºÅ',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `sys_user_name_index_unique` (`username`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  KEY `fk_j_usergroup_0` (`group_id`),
+  KEY `fk_j_usergroup_1` (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_user
+-- Records of j_rolegroup
 -- ----------------------------
-INSERT INTO `sys_user` VALUES ('1', 'aaa', '000000', ' ', '2000-10-01 08:08:08', '0');
-INSERT INTO `sys_user` VALUES ('2', 'bruce', '000000', ' ', '2000-10-01 08:08:08', '0');
+ALTER TABLE `j_group`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'ÏµÍ³Ä£¿é',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-¹«¹²,1-×ÓÏµÍ³×Ô¶¨Òå';
+
+ALTER TABLE `j_role`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'ÏµÍ³Ä£¿é',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-¹«¹²,1-×ÓÏµÍ³×Ô¶¨Òå';
+
+ALTER TABLE `j_funclist`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'ÏµÍ³Ä£¿é',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-¹«¹²,1-×ÓÏµÍ³×Ô¶¨Òå';
 
 -- ----------------------------
--- Table structure for `sys_user_role`
+-- Records of j_usergroup
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
-  `id` int(15) NOT NULL AUTO_INCREMENT,
-  `user_id` int(15) NOT NULL DEFAULT '0',
-  `role_id` int(15) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of sys_user_role
--- ----------------------------
-INSERT INTO `sys_user_role` VALUES ('1', '1', '1');
-INSERT INTO `sys_user_role` VALUES ('2', '1', '2');
-INSERT INTO `sys_user_role` VALUES ('3', '1', '3');
-INSERT INTO `sys_user_role` VALUES ('4', '2', '3');
-
--- ----------------------------
--- Table structure for `zhl_country`
--- ----------------------------
-DROP TABLE IF EXISTS `zhl_country`;
-CREATE TABLE `zhl_country` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ç¼–å·',
-  `ccode` varchar(56) NOT NULL DEFAULT ' ' COMMENT 'ç¼–å·',
-  `cname` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'åç§°',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of zhl_country
--- ----------------------------
-INSERT INTO `zhl_country` VALUES ('1', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('2', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('3', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('4', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('5', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('6', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('7', '1000', 'china');
-INSERT INTO `zhl_country` VALUES ('8', '1000', 'china');
->>>>>>> refs/remotes/origin/develop_resource

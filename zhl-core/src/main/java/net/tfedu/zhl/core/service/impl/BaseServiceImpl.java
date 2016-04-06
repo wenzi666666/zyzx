@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.demo.service.impl;
+package net.tfedu.zhl.core.service.impl;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import net.tfedu.zhl.cloud.demo.service.BaseService;
+import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
