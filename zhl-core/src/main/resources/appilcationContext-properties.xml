@@ -26,5 +26,11 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <property name="properties" ref="configProperties" />
     </bean>    
+    
+    <!-- 使用方法  -->
+    <!-- 
+    @Value("#{configProperties['ftp_username']}")
+    private String username;
+     -->
 
 </beans>
