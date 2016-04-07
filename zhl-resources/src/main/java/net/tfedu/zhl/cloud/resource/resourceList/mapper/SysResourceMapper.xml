@@ -86,11 +86,12 @@
 
 	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
-	from z_resource a left join x_resourcetype b on a.MType = b.id 
+	from z_resource a left join x_resourcetype b on a.MType = b.id and b.flag = 0
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
-	left join z_resnav c on a.ResCode=c.ResCode left join j_syscourse d on  c.StructCode=d.TFcode 
+	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
+	left join j_syscourse d on  c.StructCode=d.TFcode and d.flag=0 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and b.flag = 0  and c.flag=0 and d.flag=0  and a.fromflag in 
+	where a.flag = 0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -139,9 +140,9 @@
    (select SUM(ttt.ascore) from z_assetevaluate ttt where ttt.assetId = a.id and ttt.flag = 0 and ttt.IsScore = 0 and ttt.aType = 1) totalScore,
    (SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore,a.FileExt,a.isDWJ 
    from z_resource a 
-   left join z_resnav b on a.ResCode=b.ResCode and a.flag=0 and b.flag=0 
+   left join z_resnav b on a.ResCode=b.ResCode and b.flag=0 
    left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
-   left join x_resourcetype e on a.MType = e.id where a.id =#{resId}) a limit 1
+   left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and and a.flag=0 ) a limit 1
  </select>
  
  <!-- 根据一个structCode 查询  一个版本的 目录-->
@@ -152,9 +153,9 @@
  <!-- 根据系统资源id，查询其对应的所有版本的StructCode -->
  <select id="getAllRescodes" resultType="String">
     select StructCode from z_resnav nav 
-	LEFT JOIN z_resource res on nav.ResCode = res.ResCode 
-	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode
-	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false 
+	LEFT JOIN z_resource res on nav.ResCode = res.ResCode and res.flag = false 
+	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode and sys.flag = false 
+	where res.id = #{resId} and nav.flag = false 
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
 </mapper>

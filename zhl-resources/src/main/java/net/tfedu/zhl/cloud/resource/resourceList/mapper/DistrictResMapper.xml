@@ -98,13 +98,13 @@
     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'\\',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
     m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
-	from z_districts_resource a left join x_resourcetype b on a.flag = 0 and b.flag = 0 and a.MType = b.id 
+	from z_districts_resource a left join x_resourcetype b on b.flag = 0 and a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
@@ -144,17 +144,17 @@
 (select SUM(ttt.ascore) from z_assetevaluate ttt where ttt.assetId = a.id and ttt.flag = 0 and ttt.IsScore = 0 and ttt.aType = #{fromFlag}) totalScore, 
 (SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore,a.isLocal,a.FileExt,a.isDWJ
 from z_districts_resource a 
-left join z_districts_resnav b on a.ResCode=b.ResCode and a.flag=0 and b.flag=0 
+left join z_districts_resnav b on a.ResCode=b.ResCode and b.flag=0 
 left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
-left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and a.fromflag = #{fromFlag}) a limit 1 
+left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1 
  </select>
  
  <!-- 根据区本校本资源id，查询其对应的所有版本的rescode -->
  <select id="getAllDisRescodes" resultType="String">
     select StructCode from z_districts_resnav nav 
-	LEFT JOIN z_districts_resource res on nav.ResCode = res.ResCode 
-	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode
-	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false 
+	LEFT JOIN z_districts_resource res on nav.ResCode = res.ResCode and res.flag = false 
+	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode and sys.flag = false
+	where res.id = #{resId} and nav.flag = false  
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
 </mapper>
