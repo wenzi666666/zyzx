@@ -57,7 +57,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
         String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
 
-        Enumeration<String> map = request.getServletContext().getInitParameterNames();
+        logger.debug("------------getHost---------getInitParameter----------");
         // 应用
         String host = request.getServletContext().getInitParameter("host");
         String host_local = request.getServletContext().getInitParameter("hostLocal");
@@ -95,6 +95,9 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         request.setAttribute("resServiceLocal", resServiceLocal);
         request.setAttribute("currentResPath", currentResPath);
 
+        
+        logger.debug("------------start-----get----Authorization----------");
+
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
         CustomException customException = null;
@@ -114,13 +117,16 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                 currentUserId = user.getId();*/
             	
             	
-            	
+                logger.debug("------------token-------------------" + token);
             	ValueWrapper o = cacheManager.getCache("UserSimpleCache").get(token);
-            	if(o!=null){
+                logger.debug("------------getCache----------");
+                if(o!=null){
                 	UserSimple us  = (UserSimple)(o.get());
                 	if(us!=null){
                         currentUserId = us.getUserId();
                 	}
+                    logger.debug("------------currentUserId----------"+currentUserId;
+
             	}
             }
         }
@@ -134,8 +140,6 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         finally {
             // 传递 currentUserId customException 判断正常登录的条件为 currentUserId!=null
             // && customException==null;
-            logger.debug("------------token-------------------" + token);
-            logger.debug("------------currentUserId-------------------" + currentUserId);
             request.setAttribute("currentUserId", currentUserId);
             request.setAttribute(CustomException.request_key, customException);
         }

@@ -83,10 +83,24 @@ public class DisResourceController {
 
                 // 资源来源
                 int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-
-                pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
-                        fromFlag);
                 
+                if(request.getParameter("isPreview") != null){ //若当前是 预览页面的资源推荐列表（需要将当前预览的这条资源显示为第一个）
+                	
+                	//
+                	
+                }  else if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
+                	
+                	//模糊查询的关键字
+                	String searchWord = request.getParameter("searchWord");
+                	//新的; 
+                	
+                } else {
+                	
+                	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
+                             fromFlag);
+				}
+
+               
                 //生成文件的缩略图路径
                 ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
                

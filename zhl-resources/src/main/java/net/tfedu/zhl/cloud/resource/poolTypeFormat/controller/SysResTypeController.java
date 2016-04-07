@@ -54,9 +54,15 @@ public class SysResTypeController {
 
                 // 当前课程结点的tfcode
                 String pTfcode = request.getParameter("tfcode");
+                
+                if(request.getParameter("isEPrepare") != null){//而备课
+                	//新的类型查询方法（去除一些类型）
+                	
+                } else {
+                	types = resTypeService.getSysResTypes(poolId, pTfcode);
+				}
 
-                types = resTypeService.getSysResTypes(poolId, pTfcode);
-
+               
                 exception = CustomException.SUCCESS;
 
             }

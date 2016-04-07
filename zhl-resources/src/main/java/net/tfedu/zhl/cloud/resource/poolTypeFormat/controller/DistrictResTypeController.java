@@ -54,9 +54,15 @@ public class DistrictResTypeController {
                 String tfcode = request.getParameter("tfcode");
                 // 3校本 4区本
                 int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+                
+                if(request.getParameter("isEPrepare") != null){//而备课
+                	//新的类型查询方法（去除一些类型）
+                	
+                } else {
+                	 types = resTypeService.getDisResTypes(tfcode, fromFlag);
+				}
 
-                types = resTypeService.getDisResTypes(tfcode, fromFlag);
-
+               
                 exception = CustomException.SUCCESS;
             }
 
