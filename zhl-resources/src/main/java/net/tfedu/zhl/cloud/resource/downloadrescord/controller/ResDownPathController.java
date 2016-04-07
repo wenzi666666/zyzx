@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResDownPathService;
-import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -60,30 +59,29 @@ public class ResDownPathController {
         	// 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
             	
-            	//当前用户id
-            	long resId = currentUserId;    
+            	if(request.getParameter("resId") == null || request.getParameter("fromFlag") == null){
+            		logger.debug("--------------- 输入的resId 和 fromFlag 不能为空 ----------".toString());
+				}
+            	
+            	//资源Id
+            	long resId = Integer.parseInt(request.getParameter("resId"));    
             	
             	// 0 为自建资源   1 为系统资源  （0  自建资源 1 系统资源    2共享资源  3 区本  4 校本资源）
 				int fromFlag = Integer.parseInt(request.getParameter("fromFlag")); 
 				
-				// 当 getSource = 1 时   1 为需要源文件 0 为不需要源文件  ； getSource = 0 时  不启用
-				int getSource = 0;  
 	
-				logger.debug("---------------获取资源的下载路径----------".toString());
+				logger.debug("---------------获取资源的下载路径开始----------".toString());
 				
             	//获取文件服务器的访问url 
 				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
 				String currentResPath = (String)request.getAttribute("currentResPath");
 				
-			
-				String assetPath = "";
-				String imgDownPath = ""; 
-				String pdfPath = "";
-				int diskOrder= 1 ;
+				logger.debug("---------------resServiceLocal----------" + resServiceLocal.toString());
+				logger.debug("---------------currentResPath----------" + currentResPath.toString());
 				
-				//获取一条资源的详细信息(自建、系统、区本、校本)
-				ResPreviewInfo info = resPreviewService.getResPreviewInfo(resId, fromFlag);
+				resultList = resDownPathService.getResDownPath(currentUserId,resId,fromFlag);
 				
+				exception = CustomException.SUCCESS;
             }
         	
 		} catch (Exception e) {
@@ -96,7 +94,7 @@ public class ResDownPathController {
 			
 			//封装结果集
             resultJSON.setCode(exception.getCode());
-            resultJSON.setData("");
+            resultJSON.setData(resultList);
             resultJSON.setMessage(exception.getMessage());
             resultJSON.setSign("");
 		}
