@@ -59,6 +59,21 @@ public class ZhlResourceCenterWrap {
 	
 	
 	/**
+	 * 
+	 * 
+	 * 文件服务
+	 * 用户头像的上传路径前缀
+	 * 
+	 * 
+	 */
+	public static final String userimage_upload_prefix = "userimage_warehouse";
+	
+	
+	
+	
+	
+	
+	/**
 	 * 获取用户的上传文件
 	 * @param userId
 	 * @return
@@ -77,6 +92,29 @@ public class ZhlResourceCenterWrap {
 		.append(File.separator)
 		.toString();
 	}
+
+	
+	
+	/**
+	 * 获取用户头像的上传文件路径
+	 * @param userId
+	 * @return
+	 */
+	public static String getUserImageUploadPath(Long userId,Long schoolId){
+		Calendar time =  Calendar.getInstance();
+		
+		return  new StringBuffer()
+		.append(userimage_upload_prefix)
+		.append(File.separator)
+		.append(time.get(Calendar.YEAR))
+		.append(File.separator)
+		.append(userId)
+		.append(File.separator)
+		.append(schoolId)
+		.append(File.separator)
+		.toString();
+	}
+	
 	
 	
 	/**

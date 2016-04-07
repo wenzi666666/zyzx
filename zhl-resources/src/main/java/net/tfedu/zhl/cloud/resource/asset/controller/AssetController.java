@@ -85,6 +85,7 @@ public class AssetController {
 				
 				HashMap<String,String> map = new HashMap<String,String>();
 				map.put("uploadUrl", uploadUrl);
+				map.put("uploadPath", uploadPath);
 				data = map ; 
 				exception = CustomException.SUCCESS;
 			}

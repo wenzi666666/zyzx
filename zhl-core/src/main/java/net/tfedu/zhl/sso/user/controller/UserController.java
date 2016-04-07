@@ -19,11 +19,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.cloud.utils.security.VerificationCodeGenerator;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
+import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
@@ -41,6 +44,46 @@ public class UserController {
 
     Logger logger = Logger.getLogger(UserController.class);
 
+    
+	
+   /**
+    * 登录获取验证码 
+    * 不用登录
+    * @return
+    */
+   @RequestMapping(value = "/v1.0/verificationcode", method = RequestMethod.GET)
+   @ResponseBody
+   public ResultJSON getVerificationCode(HttpServletRequest request, HttpServletResponse response) {
+
+       // 返回json的结果对象
+       ResultJSON result = new ResultJSON();
+       // 异常
+       CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+       // 当前登录用户id
+       Long currentUserId = (Long) request.getAttribute("currentUserId");
+       // 返回
+       Object data = null;
+
+       try {
+       	
+       		data = VerificationCodeGenerator.getCode();
+       		exception = CustomException.SUCCESS;
+       } catch (Exception e) {
+           e.printStackTrace();
+           exception = CustomException.getCustomExceptionByCode(e.getMessage());
+       } finally {
+           result.setCode(exception.getCode());
+           result.setMessage(exception.getMessage());
+           result.setData(data == null ? "" : data);
+           result.setSign("");
+       }
+       return result;
+   }
+    
+    
+    
+    
+    
     /**
      * 登陆、注销
      * 
@@ -97,6 +140,18 @@ public class UserController {
                 SRegister reg = registerService.login(userName, userPwd);
                 // 获取用户信息
                 user = userService.getUserSimpleById(reg.getId(), model);
+
+                //如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
+				if(user.getUserImage()!=null && user.getUserImage().trim().contains(ZhlResourceCenterWrap.userimage_upload_prefix)){
+					//获取文件服务器的访问url 
+					String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+					String currentResPath = (String)request.getAttribute("currentResPath");
+					String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, user.getUserImage()) ;
+					temp = temp.replace(resServiceLocal, currentResPath);
+					user.setUserImage(temp);
+				}
+                
+                
 //                // 成功,增加用户的在线信息
 //                Boolean repeatLoginVaildFlag = false;// repeatLoginVaildFlag资源中心不允许一个用户重复登录
 //                JOnlineUsers online = jOnlineUsersService.getUserOnlines(reg.getId(), request, repeatLoginVaildFlag);
@@ -411,5 +466,70 @@ public class UserController {
 		}
 		return null;
 	}
+	
+	
+
+    
+    /**
+	 * 获取用户头像的专用上传链接
+	 * 
+	 * 
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/users/userImageUploadUrl",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON  getUserImageUrl(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
+		try{
+			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+				String hostLocal = (String)request.getAttribute("hostLocal");
+				
+				long userId = currentUserId;
+				JUser  user =  userService.getUserById(userId);
+				long schoolId = user.getSchoolid();
+				//组装上传路径
+				String uploadPath = ZhlResourceCenterWrap.getUserImageUploadPath(userId, schoolId);
+				//获取上传文件路径
+				String uploadUrl=  ZhlResourceCenterWrap.getUploadUrlConvert(uploadPath, resServiceLocal, currentResPath, hostLocal, userId);
+				
+				HashMap<String,String> map = new HashMap<String,String>();
+				map.put("uploadUrl", uploadUrl);
+				map.put("uploadPath", uploadPath);
+				data = map ; 
+				exception = CustomException.SUCCESS;
+			}
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;		
+		
+	}
+	
+	
+    
+    
 
 }
