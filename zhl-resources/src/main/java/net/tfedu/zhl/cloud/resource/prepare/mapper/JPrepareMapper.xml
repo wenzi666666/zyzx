@@ -143,7 +143,7 @@
 		UNION ALL
 		
 		select t.id,z.Id as resId,z.title,z.CreateDT  as  time,0 as fromFlag
-		,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline ,CONCAT(z.FPath,'\\\\',z.Fname) as imgPath ,'' as fileSuffix,t.orderIdx		
+		,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline ,CONCAT(z.FPath,'/',z.Fname) as imgPath ,'' as fileSuffix,t.orderIdx		
 		from  j_prepare_content  t  
 		LEFT JOIN z_resource  z on t.contId = z.Id
 		LEFT JOIN x_resourcetype p  on p.id = z.MType
@@ -189,7 +189,7 @@
   </select>
   <!--  获取系统资源的信息 -->
   <select id="getResourceInfo" resultMap="simpleResInfo">
-  	select id as resid,title,rescode,0 as fromflag , 0 isnet ,isdwj ,concat(fpath,'\\',fname) as path from z_resource
+  	select id as resid,title,rescode,0 as fromflag , 0 isnet ,isdwj ,concat(fpath,'/',fname) as path from z_resource
   	  where flag = false and id = #{0}
   </select>
   <!-- 获取区校本资源的信息 -->

@@ -49,7 +49,7 @@
 		union ALL 
 		
 		select  max(t.id)as id ,t.objid as resid ,max(t.createtime) as time, 0 as fromflag,p.mtype,p.id as unifyTypeId
-		,z.title,z.rescode,CONCAT(z.FPath,'\\\\',z.Fname) as imgPath,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix
+		,z.title,z.rescode,CONCAT(z.FPath,'/',z.Fname) as imgPath,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix
 		from j_userlog t
 		LEFT JOIN z_resource z on z.id = t.objid 
 		LEFT JOIN x_resourcetype p on  p.id = z.mtype 

@@ -44,7 +44,7 @@
 			union all 
 					
 			select t.id,t.assetid as resid,t.atime as time ,t.acontent as content,t.isscore as score,0 as fromflag 
-			,z.title,z.rescode,concat(z.fpath,'\\\\',z.fname) as imgpath,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as filesuffix
+			,z.title,z.rescode,concat(z.fpath,'/',z.fname) as imgpath,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as filesuffix
 			from z_assetevaluate t 
 			left join z_resource z on z.id = t.assetid 
 			where t.atype = 1   and t.flag =false and z.flag =false  and t.userid = #{userId}
