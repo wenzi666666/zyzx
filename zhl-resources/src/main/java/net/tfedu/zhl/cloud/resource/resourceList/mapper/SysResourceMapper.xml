@@ -82,7 +82,7 @@
  <!-- 分页查询系统资源信息的所有记录 -->
  <select id="SelectSysResources"  resultMap="SysResourceMap">
    
-    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'\\',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 
 	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore

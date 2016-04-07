@@ -59,7 +59,7 @@ public class AllEditionsForResController {
                 int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
 
                 // 当前所在结点
-                String curTfcode = request.getParameter("curTfcode ");
+                String curTfcode = request.getParameter("curTfcode");
 
                 // 查询所有版本的资源目录
                 result = resPreviewService.getAllResNavs(resId, fromFlag, curTfcode);

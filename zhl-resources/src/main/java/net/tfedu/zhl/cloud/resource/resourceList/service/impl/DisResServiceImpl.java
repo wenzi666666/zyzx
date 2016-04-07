@@ -52,6 +52,12 @@ public class DisResServiceImpl implements DisResService {
 
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
+        	
+        	
+        	//将 / 替换为 \
+        	String thumbnailpath = list.get(i).getThumbnailpath();
+        	list.get(i).setThumbnailpath(thumbnailpath.replaceAll("/", "\\"));
+        	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
             // 得到当前日期的前多少天

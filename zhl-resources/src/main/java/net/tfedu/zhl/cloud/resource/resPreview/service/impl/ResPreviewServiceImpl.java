@@ -61,20 +61,46 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode) {
         List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
         List<String> structCodes  = null;
+        String resFrom = "";
         if (fromFlag == 0) {// 系统资源
+        	resFrom = "系统资源";
             structCodes = sysResourceMapper.getAllRescodes(resId, curTfcode);
         } else if (fromFlag == 1) {// 自建资源
+        	resFrom = "自建资源";
         	structCodes = assetMapper.getAssetNavs(resId, curTfcode);
         } else if (fromFlag == 3 || fromFlag == 4) {// 校本资源、区本资源
+        	
             structCodes = districtResMapper.getAllDisRescodes(resId, curTfcode);
         }
+        
+        if(fromFlag == 3)
+        	resFrom = "校本资源";
+        if(fromFlag == 4)
+        	resFrom = "区本资源";
+		
+        
+       
+        //将资源来源添加到结果集中
+        ResNavEntity navEntity = new ResNavEntity();
+        navEntity.setName(resFrom);
         
         
         if (structCodes != null) {
             for (int i = 0; i < structCodes.size(); i++) {
                 List<ResNavEntity> navs = sysResourceMapper.getSysNav(structCodes.get(i));
-                if (navs != null)
-                    info.add(navs);
+                List<ResNavEntity> finalNavs = new ArrayList<ResNavEntity>();
+                //获取结果集中的第一条和最后一条
+                finalNavs.add(navEntity);
+                
+                if(navs.size() <= 1){
+                	continue;
+                } else {
+                	finalNavs.add(navs.get(0));
+                    finalNavs.add(navs.get(navs.size() - 1));
+				}
+                
+                if (finalNavs != null)
+                    info.add(finalNavs);
             }
         }
         return info;
