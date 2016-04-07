@@ -70,7 +70,7 @@ public class ResDownPathController {
 				int fromFlag = Integer.parseInt(request.getParameter("fromFlag")); 
 				
 	
-				logger.debug("---------------获取资源的下载路径开始----------".toString());
+				logger.debug("---------------获取资源的下载路径   开始----------".toString());
 				
             	//获取文件服务器的访问url 
 				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
@@ -80,6 +80,8 @@ public class ResDownPathController {
 				logger.debug("---------------currentResPath----------" + currentResPath.toString());
 				
 				resultList = resDownPathService.getResDownPath(currentUserId,resId,fromFlag);
+				
+				logger.debug("---------------获取资源的下载路径   结束----------".toString());
 				
 				exception = CustomException.SUCCESS;
             }

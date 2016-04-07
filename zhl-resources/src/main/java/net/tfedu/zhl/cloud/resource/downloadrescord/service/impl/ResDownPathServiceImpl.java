@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.annotation.Resource;
-
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResDownPathService;
 
 import org.springframework.stereotype.Service;
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Service;
 @Service("resDownPathService")
 public class ResDownPathServiceImpl implements ResDownPathService{
 
-	@Resource 
+	
 	/**
 	 * 获取资源的下载链接
 	 */
