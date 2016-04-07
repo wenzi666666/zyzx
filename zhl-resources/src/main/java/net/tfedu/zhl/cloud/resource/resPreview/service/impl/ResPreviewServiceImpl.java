@@ -44,7 +44,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             info = sysResourceMapper.getSysResInfo(resId);
 
         } else if (fromFlag == 1) {// 自建资源
-
+        	info = assetMapper.getAssetPreviewInfo(resId);
         } else if (fromFlag == 3) {// 校本资源
             info = districtResMapper.getDisResInfo(fromFlag, resId);
 
@@ -64,7 +64,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         if (fromFlag == 0) {// 系统资源
             structCodes = sysResourceMapper.getAllRescodes(resId, curTfcode);
         } else if (fromFlag == 1) {// 自建资源
-        	
+        	structCodes = assetMapper.getAssetNavs(resId, curTfcode);
         } else if (fromFlag == 3 || fromFlag == 4) {// 校本资源、区本资源
             structCodes = districtResMapper.getAllDisRescodes(resId, curTfcode);
         }

@@ -67,14 +67,14 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param resId
 	 * @return
 	 */
-	public  ResPreviewInfo getAssetPreviewInfo(@Param("resId")Long resId,@Param("curTfcode")String curTfcode);
+	public  ResPreviewInfo getAssetPreviewInfo(Long resId);
 	
 	/**
 	 * 返回自建资源的资源导航信息
 	 * @param resId
 	 * @return
 	 */
-	public List<ResNavEntity>  getAssetNavs(Long resId);
+	public List<String>  getAssetNavs(@Param("resId")Long resId,@Param("curTfcode")String curTfcode);
 	
 	
 	
