@@ -59,7 +59,7 @@
 	      
 		  UNION ALL 
 			select distinct  0 as  id,z.Id as resId,z.title,z.CreateDT  as  time,0 as fromFlag,p.id as unifyTypeId
-			,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline,CONCAT(z.FPath,'\\\\',z.Fname) as imgPath 
+			,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline,CONCAT(z.FPath,'/',z.Fname) as imgPath 
 	     ,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix,0 as orderIdx		
 			from  j_prepare_content  t  
 			LEFT JOIN z_resource  z on t.contId = z.Id

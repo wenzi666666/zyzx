@@ -31,7 +31,7 @@
 	select * from  (
 	  SELECT s.id,
 	  if(pt.bookname is null,if(p.name=s.name,s.name,concat(IFNULL(p.name,''),s.name)),concat(IFNULL(p.name,''),pt.bookname)) as title
-	   ,s.tfcode,1 as ismybook,CONCAT(s.EbookPath,'\\',s.tfcode,'.jpg') as imgpath,if(s.UpdateTime is null,s.CreateDT,s.UpdateTime) as time   
+	   ,s.tfcode,1 as ismybook,CONCAT(s.EbookPath,'/',s.tfcode,'.jpg') as imgpath,if(s.UpdateTime is null,s.CreateDT,s.UpdateTime) as time   
 	  FROM j_syscourse_user  su
 		LEFT JOIN j_syscourse s on s.id = su.syscourseId
 	    LEFT JOIN j_syscourse p on p.id = s.PnodeId
@@ -69,7 +69,7 @@
   <select id="queryBook" resultMap="viewBookMap">
 		select  s.id
 		,if(pt.bookname is null,if(p.name=s.name,s.name,concat(IFNULL(p.name,''),s.name)),concat(IFNULL(p.name,''),pt.bookname)) as title 
-		,s.tfcode,CONCAT(s.EbookPath,'\\',s.tfcode,'.jpg') as imgpath
+		,s.tfcode,CONCAT(s.EbookPath,'/',s.tfcode,'.jpg') as imgpath
 		, if(Su.id is NULL,0,1 ) as ismybook 
 		from  j_syscourse s 
 		LEFT JOIN j_syscourse p on p.id = s.PnodeId
