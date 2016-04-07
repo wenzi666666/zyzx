@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -42,7 +43,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         }
 
         // 2判断是否登录
-        Object obj = cacheManager.getCache("UserSimpleCache").get(token).get();
+        ValueWrapper obj = cacheManager.getCache("UserSimpleCache").get(token);
         if (obj == null) {
             customException = CustomException.NULOGIN;
             request.setAttribute(CustomException.request_key, customException);
@@ -51,7 +52,7 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
 
         // 3判断用户token是否有效
         int validTime = ZhlOnlineUtil.getTokenValidTime(request);
-        UserSimple us = (UserSimple) obj;
+        UserSimple us = (UserSimple) obj.get();
         Calendar now = Calendar.getInstance();
         now.setTime(new Date());
 
