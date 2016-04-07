@@ -85,6 +85,7 @@ public class SysResourceController {
 
                 // 每页的记录数
                 int perPage = Integer.parseInt(request.getParameter("perPage"));
+                
 
                 // 查询出的系统资源信息
                 pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
