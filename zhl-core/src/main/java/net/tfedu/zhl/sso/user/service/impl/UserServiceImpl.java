@@ -2,6 +2,7 @@ package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -126,4 +127,10 @@ public class UserServiceImpl implements UserService {
             mapper.updateUserImage(userId, userImage);
         }
     }
+
+	@Override
+	public HashMap<String, String> getUserTermAndSubject(Long userId) {
+		// TODO Auto-generated method stub
+		return mapper.getUserTermAndSubject(userId);
+	}
 }

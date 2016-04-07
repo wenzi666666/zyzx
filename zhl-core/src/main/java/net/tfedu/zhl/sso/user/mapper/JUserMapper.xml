@@ -153,4 +153,14 @@
   </select>
   
   
+  
+  <select id="getUserTermAndSubject" parameterType="Long" resultType="java.util.HashMap">
+  	select m.code as termcode , GROUP_CONCAT(s.code) as subjectcode from j_user u 
+	left join j_userterm um on um.userid = u.id 
+	LEFT JOIN j_term m on m.id = um.termid 
+	LEFT JOIN j_teachersubject ts on ts.UserId = u.id 
+	LEFT JOIN j_subject s on s.id = ts.SubjectId 
+	where u.id = #{userId}  and um.flag = false and u.flag = false and ts.flag =false and s.flag = false 
+  </select>
+  
 </mapper>

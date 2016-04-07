@@ -63,5 +63,10 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	
 	
 
+	/**
+	 * 获取用户地区信息
+	 * @return
+	 */
+	public HashMap<String,String> getUserTermAndSubject(Long userId);
 
 }

@@ -1,5 +1,7 @@
 package net.tfedu.zhl.sso.user.service;
 
+import java.util.HashMap;
+
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 
@@ -67,5 +69,13 @@ public interface UserService {
      * @param token
      */
     void logout(String token);
+    
+    
+
+	/**
+	 * 获取用户地区信息
+	 * @return
+	 */
+	public HashMap<String,String> getUserTermAndSubject(Long userId);
 
 }
