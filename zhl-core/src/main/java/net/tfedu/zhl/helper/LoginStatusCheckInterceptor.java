@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -114,11 +115,12 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             	
             	
             	
-            	Object o = cacheManager.getCache("UserSimpleCache").get(token).get();
+            	ValueWrapper o = cacheManager.getCache("UserSimpleCache").get(token);
             	if(o!=null){
-                	UserSimple us  = (UserSimple) o;
-                    currentUserId = us.getUserId();
-            		
+                	UserSimple us  = (UserSimple)(o.get());
+                	if(us!=null){
+                        currentUserId = us.getUserId();
+                	}
             	}
             }
         }
