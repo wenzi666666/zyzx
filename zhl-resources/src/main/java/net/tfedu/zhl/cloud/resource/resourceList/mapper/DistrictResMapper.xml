@@ -98,10 +98,11 @@
     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'\\',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
     m.res_time,a.UpdateDT,a.FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore 
-	from z_districts_resource a left join x_resourcetype b on b.flag = 0 and a.MType = b.id 
+	from z_districts_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
-	left join j_syscourse d on d.flag=0 and  c.StructCode=d.tfcode 
+	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
     where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
@@ -146,7 +147,8 @@
 from z_districts_resource a 
 left join z_districts_resnav b on a.ResCode=b.ResCode and b.flag=0 
 left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
-left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1 
+left join x_resourcetype e on a.MType = e.id 
+where a.id =#{resId} and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1 
  </select>
  
  <!-- 根据区本校本资源id，查询其对应的所有版本的rescode -->

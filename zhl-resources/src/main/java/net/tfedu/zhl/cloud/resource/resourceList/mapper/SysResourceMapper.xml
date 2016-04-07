@@ -86,11 +86,13 @@
 
 	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
-	from z_resource a left join x_resourcetype b on a.MType = b.id and b.flag = 0
+	from z_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
 	left join j_syscourse d on  c.StructCode=d.TFcode and d.flag=0 
-	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code LEFT JOIN z_res_disk k on k.rescode = a.rescode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
 	where a.flag = 0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
@@ -142,7 +144,7 @@
    from z_resource a 
    left join z_resnav b on a.ResCode=b.ResCode and b.flag=0 
    left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
-   left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and and a.flag=0 ) a limit 1
+   left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and a.flag=0 ) a limit 1
  </select>
  
  <!-- 根据一个structCode 查询  一个版本的 目录-->
