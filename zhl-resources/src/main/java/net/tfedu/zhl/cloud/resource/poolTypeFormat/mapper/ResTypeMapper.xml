@@ -161,16 +161,19 @@
     left join x_resourcetype pb on pb.Id=b.pid 
     where a.flag = 0 
 
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-         and b.id in
+     </if>
+     
+     <if test="typeIds > 0">
+          and b.id in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
@@ -189,21 +192,23 @@
      select distinct b.mtype,b.id from z_resource a 
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
      where a.flag = 0 and b.level = 2 
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-         and a.mtype in
+     </if>  
+     <if test="typeIds.size() > 0">
+      and a.mtype in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-     </if>  
+     </if>
   </select>
   
   <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
@@ -214,10 +219,10 @@
      left join x_resourcetype pb on pb.Id = b.pid 
      where a.flag = 0 and a.fromFlag in (#{fromFlag})
      
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0">
          and a.id in 
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
@@ -234,9 +239,11 @@
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
      left join x_resourcetype pb on pb.Id = b.pid and pb.flag = 0 
-     where a.flag = 0 and a.fromFlag in (#{fromFlag}) and b.id not in 
+     where a.flag = 0 and a.fromFlag in (#{fromFlag}) 
+     
+     and b.id not in 
     
-         <foreach item="item" index="index" collection="removeTypeIds" 
+      <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
@@ -246,10 +253,10 @@
                          #{item}
                 </foreach>
      
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
