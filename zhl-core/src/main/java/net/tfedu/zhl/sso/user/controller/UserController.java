@@ -8,7 +8,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,7 +43,7 @@ public class UserController {
     @Resource
     private RegisterService registerService;
 
-    Logger logger = Logger.getLogger(UserController.class);
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     
 	

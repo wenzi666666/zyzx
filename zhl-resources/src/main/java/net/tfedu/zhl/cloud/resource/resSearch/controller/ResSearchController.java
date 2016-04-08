@@ -8,6 +8,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
@@ -15,11 +21,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 资源跨库检索的controller
@@ -35,7 +36,7 @@ public class ResSearchController {
     ResSearchService resSearchService;
     
     //写入日志
-    Logger logger = Logger.getLogger(ResSearchController.class);
+    Logger logger = LoggerFactory.getLogger(ResSearchController.class);
 
     /**
      * 根据检索内容，跨库检索所有资源

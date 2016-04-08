@@ -9,15 +9,16 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResDownPathService;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 获取资源下载地址 controller
@@ -36,7 +37,7 @@ public class ResDownPathController {
 	@Resource ResPreviewService resPreviewService;
 	
 	//写入日志
-    Logger logger = Logger.getLogger(ResDownPathController.class);
+    Logger logger = LoggerFactory.getLogger(ResDownPathController.class);
 	
 	@RequestMapping("/v1.0/res_down")
 	@ResponseBody

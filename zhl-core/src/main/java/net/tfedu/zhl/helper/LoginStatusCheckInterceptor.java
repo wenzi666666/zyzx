@@ -1,19 +1,17 @@
 package net.tfedu.zhl.helper;
 
-import java.util.Enumeration;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 
@@ -41,7 +39,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     @Resource
     private JOnlineUsersService jOnlineUsersService;
 
-    Logger logger = Logger.getLogger(LoginStatusCheckInterceptor.class);
+    Logger logger = LoggerFactory.getLogger(LoginStatusCheckInterceptor.class);
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj, Exception exception) throws Exception {

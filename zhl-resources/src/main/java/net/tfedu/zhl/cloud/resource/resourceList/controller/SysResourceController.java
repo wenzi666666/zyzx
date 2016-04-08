@@ -6,6 +6,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -14,12 +21,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
-
-import org.apache.log4j.Logger;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 系统资源 列表 controller
@@ -38,7 +39,7 @@ public class SysResourceController {
     ResTypeService resTypeService;
     
     //写入日志
-    Logger logger = Logger.getLogger(SysResourceController.class);
+    Logger logger = LoggerFactory.getLogger(SysResourceController.class);
 
     @RequestMapping(value = "/v1.0/sysResource", method = RequestMethod.GET)
     @ResponseBody

@@ -35,8 +35,8 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${plugin.maven-surefire}</version>
 				<configuration>
-					<forkMode>once</forkMode> 
-               		<argLine>-Dfile.encoding=UTF-8</argLine>
+					<forkMode>once</forkMode>
+					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<skipTests>${skipTests}</skipTests>
 				</configuration>
 			</plugin>
@@ -58,32 +58,32 @@
 				<groupId>org.mybatis.generator</groupId>
 				<artifactId>mybatis-generator-maven-plugin</artifactId>
 				<version>${mybatis-generator.version}</version>
-				 <dependencies>
-			        <dependency>
-			        <groupId>mysql</groupId>
-			        <artifactId>mysql-connector-java</artifactId>
-			        <version>${mysql-connection.version}</version>
-			        </dependency>
-			        <dependency>
-			        <groupId>tk.mybatis</groupId>
-			        <artifactId>mapper</artifactId>
-			        <version>${mapper.version}</version>
-			        </dependency>
-			    </dependencies>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql-connection.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>tk.mybatis</groupId>
+						<artifactId>mapper</artifactId>
+						<version>${mapper.version}</version>
+					</dependency>
+				</dependencies>
 			</plugin>
-			   
+
 			<plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <port>8080</port>
-                    <path>/${buss.name}</path>
-                    <uriEncoding>UTF-8</uriEncoding>
-                    <finalName>${buss.name}</finalName>
-                    <server>tomcat7</server>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<port>8080</port>
+					<path>/${buss.name}</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<finalName>${buss.name}</finalName>
+					<server>tomcat7</server>
+				</configuration>
+			</plugin>
 		</plugins>
 
 		<resources>
@@ -157,11 +157,11 @@
 		<pagehelper.version>4.1.2</pagehelper.version>
 		<jsqlparser.version>0.9.4</jsqlparser.version>
 		<oauth2.version>1.0.1</oauth2.version>
-		
+
 		<!-- tools -->
 		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.12</slf4j.version>
-		<log4j.version>1.2.17</log4j.version>
+		<logback.version>1.1.7</logback.version>
 		<servlet.version>3.0.1</servlet.version>
 		<aspectj.version>1.6.12</aspectj.version>
 		<jaxp.version>1.4.2</jaxp.version>
@@ -287,7 +287,7 @@
 			<artifactId>persistence-api</artifactId>
 			<version>${persistence.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
@@ -351,17 +351,17 @@
 			<groupId>org.apache.oltu.oauth2</groupId>
 			<artifactId>org.apache.oltu.oauth2.client</artifactId>
 			<version>${oauth2.version}</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.apache.oltu.oauth2</groupId>
 			<artifactId>org.apache.oltu.oauth2.common</artifactId>
 			<version>${oauth2.version}</version>
-		</dependency>	
+		</dependency>
 		<dependency>
 			<groupId>org.apache.oltu.oauth2</groupId>
 			<artifactId>org.apache.oltu.oauth2.resourceserver</artifactId>
 			<version>${oauth2.version}</version>
-		</dependency>		
+		</dependency>
 		<dependency>
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-core</artifactId>
@@ -390,22 +390,14 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-simple</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>${slf4j.version}</version>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<version>${logback.version}</version>
 		</dependency>
-
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>${log4j.version}</version>
-		</dependency>
-
 	</dependencies>
 </project>

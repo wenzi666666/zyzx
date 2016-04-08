@@ -6,7 +6,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import net.tfedu.zhl.cloud.resource.asset.controller.AssetController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
@@ -32,17 +38,11 @@ import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
-import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
-
 @Service("zAssetService")
 public class ZAssetServiceImpl implements ZAssetService {
 	
 	
-	Logger logger = Logger.getLogger(ZAssetServiceImpl.class);
+	Logger logger = LoggerFactory.getLogger(ZAssetServiceImpl.class);
 
 	
 	@Autowired
