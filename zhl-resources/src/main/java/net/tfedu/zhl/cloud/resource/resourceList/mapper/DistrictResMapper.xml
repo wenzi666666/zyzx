@@ -110,7 +110,7 @@
          and jf.FileFormat = #{fileFormat}
     </if>
    
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
@@ -155,7 +155,7 @@
          and jf.FileFormat = #{fileFormat}
     </if>
    
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
@@ -197,14 +197,14 @@
     where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
      <if test="searchWord != null">
-         and a.Title like #{searchWord}
+         and a.Title like CONCAT('%',#{searchWord},'%')
       </if>
     
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
     </if>
    
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}

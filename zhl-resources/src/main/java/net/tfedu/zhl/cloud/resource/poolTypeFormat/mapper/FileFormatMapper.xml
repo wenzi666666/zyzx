@@ -30,11 +30,11 @@
                          open="(" separator="," close=")">
                          #{item}
                        </foreach>
-     <if test="resourceIds = null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
      
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
@@ -50,11 +50,11 @@
       a left join j_filetypedetail b on LOWER(fileExt) = b.FormatCode
       WHERE 1=1 and a.flag = 0 and b.flag = 0
       and a.fromFlag in (#{fromFlag})
-      <if test="resourceIds = null">
+      <if test="resourceIds.size() == 0 ">
          and a.id in ('')
      </if>
      
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">

@@ -149,7 +149,7 @@ public class DisResServiceImpl implements DisResService {
             districtId = disAndSchoolIds.getDistrictId();
         }
 
-        return selectAllDisRes_Preview(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, resId);
+        return selectDisRes_Preview(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, resId);
     }
     
     // 查询区本、校本资源信息，e备课
@@ -203,7 +203,7 @@ public class DisResServiceImpl implements DisResService {
             districtId = disAndSchoolIds.getDistrictId();
         }
 
-        return selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, removeTypeIds);
+        return selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, searchWord);
     }
 
 }

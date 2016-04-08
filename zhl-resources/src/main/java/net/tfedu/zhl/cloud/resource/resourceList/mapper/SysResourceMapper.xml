@@ -106,17 +106,17 @@
          and jf.FileFormat = #{fileFormat}
       </if>
 	
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0">
           and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
      </if>
                
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
@@ -162,17 +162,17 @@
          and jf.FileFormat = #{fileFormat}
       </if>
 	
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0 ">
           and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
      </if>
                
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0 ">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
@@ -219,20 +219,20 @@
       </if>
       
       <if test="searchWord != null">
-         and a.Title like #{searchWord}
+         and a.Title like CONCAT('%',#{searchWord},'%')    
       </if>
 	
-     <if test="typeIds != null">
+     <if test="typeIds.size() > 0">
           and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
      </if>
                
-     <if test="resourceIds == null">
+     <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
-     <if test="resourceIds != null ">
+     <if test="resourceIds.size() > 0 ">
          and a.id in <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
