@@ -1,5 +1,8 @@
 package net.tfedu.zhl.helper;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
 /**
  * 新的api标准 返回的json 对象
  * 
@@ -76,6 +79,7 @@ public class ResultJSON {
 
     @Override
     public String toString() {
+//        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).toString();
         return "[code :" + code + "  ;message:" + message + ";data:" + data.toString() + ";sign:" + sign + "]";
     }
 

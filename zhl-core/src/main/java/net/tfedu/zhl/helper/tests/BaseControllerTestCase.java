@@ -5,10 +5,15 @@ import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
 
 /**
  * Controller 单元测试基类
@@ -27,12 +32,18 @@ public abstract class BaseControllerTestCase {
     protected long startTime;
     protected long endTime;
 
+    @Autowired
+    private UserService userService;
+    
     /**
      * 初始化
      */
     @Before
     public void onSetUp() {
-
+        UserSimple us = userService.getUserSimpleById(761l," ");
+        request.addHeader("Authorization", us.getToken());
+        request.setAttribute("currentUserId", 761l); 
+//        request.setAttribute("request_key_CustomException", CustomException.SUCCESS);
         startTime = System.currentTimeMillis();
     }
 
