@@ -83,7 +83,9 @@ public class PersonalController {
 						long userId = currentUserId;
 						data =  assetService.getAllFirstLevelResType();
 						exception = CustomException.SUCCESS;
-					}
+					}else{
+		            	exception = CustomException.INVALIDACCESSTOKEN;
+		            }
 				}catch(Exception e){
 					exception = CustomException.getCustomExceptionByCode(e.getMessage());
 					//如果是普通的异常
@@ -122,7 +124,9 @@ public class PersonalController {
 						long userId = currentUserId;
 						data =  assetService.getAllFileFormat();
 						exception = CustomException.SUCCESS;
-					}
+					}else{
+		            	exception = CustomException.INVALIDACCESSTOKEN;
+		            }
 				}catch(Exception e){
 					exception = CustomException.getCustomExceptionByCode(e.getMessage());
 					//如果是普通的异常
@@ -190,7 +194,9 @@ public class PersonalController {
 				JPrepareContentViewUtil.convertToPurpose(page_result.getList(), resServiceLocal, currentResPath);
 				data = page_result;
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -239,7 +245,9 @@ public class PersonalController {
 				}else{
 					exception = CustomException.PARAMSERROR;
 				}
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -305,7 +313,9 @@ public class PersonalController {
 				JPrepareContentViewUtil.convertToPurpose(page_result.getList(), resServiceLocal, currentResPath);
 				data = page_result;
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -369,7 +379,9 @@ public class PersonalController {
 				JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
 				data = page_result;
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -409,7 +421,9 @@ public class PersonalController {
 				String ids  = request.getParameter("ids");
 				assetService.removeMyReview(ids);
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -452,7 +466,9 @@ public class PersonalController {
 				data = _result;
 				
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -517,7 +533,9 @@ public class PersonalController {
 				JPrepareContentViewUtil.convertToPurpose_view(_p.getList(), resServiceLocal, currentResPath);
 				data = _p;
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -555,7 +573,9 @@ public class PersonalController {
 				long userId = currentUserId;
 				data =  prepareService.getMyPrepareStatis(userId);
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -571,6 +591,54 @@ public class PersonalController {
 		return  result;
 	}
 
+	
+	
+	/**
+	 * 个人空间中的类型
+	 * 
+	 * tabCode: myPrepareRes,myUpload,myDownload,myView。不传递该参数时默认为myPrepareRes
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/personalTab/resType",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getResTypeForPersonal(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		try{
+			if(currentUserId!=null && exception==null){	
+				long userId = currentUserId;
+
+				String tabCode = request.getParameter("tabCode");
+				data = assetService.getResTypeForPersonalTab(tabCode, userId);
+				
+				
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
+	} 
+	
 	
 	
 

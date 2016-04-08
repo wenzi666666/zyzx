@@ -394,5 +394,30 @@ public class ZAssetServiceImpl implements ZAssetService {
 	}
 
 
+
+
+	@Override
+	public List<FirstLevelResType> getResTypeForPersonalTab(String tabCode,
+			Long userId) {
+		//myPrepareRes,myUpload,myDownload,myView。不传递该参数时默认为myPrepareRes
+		tabCode = tabCode==null?"myPrepareRes":tabCode.trim();
+		if("myPrepareRes".equals(tabCode)){
+			return assetMapper.getResTypeForMyPrepareRes(userId);
+		}
+		
+		if("myUpload".equals(tabCode)){
+			return assetMapper.getResTypeForMyUpload(userId);
+		}
+		if("myDownload".equals(tabCode)){
+			return assetMapper.getResTypeForMyDownload(userId);
+		}
+		if("myView".equals(tabCode)){
+			return assetMapper.getResTypeForMyView(userId);
+		}
+		
+		return null;
+	}
+
+
 }
 

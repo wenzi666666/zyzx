@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
@@ -77,6 +78,33 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	public List<String>  getAssetNavs(@Param("resId")Long resId,@Param("curTfcode")String curTfcode);
 	
 	
+	
+	/**
+	 * 查询我的备课资源中的资源类型
+	 * @param userId
+	 * @return
+	 */
+	public  List<FirstLevelResType> getResTypeForMyPrepareRes(Long userId);
+	
+	/**
+	 *  查询我的上传中的资源类型
+	 * @param userId
+	 * @return
+	 */
+	public  List<FirstLevelResType> getResTypeForMyUpload(Long userId);
+	
+	/**
+	 * 查询我的下载中的资源类型
+	 * @param userId
+	 * @return
+	 */	
+	public  List<FirstLevelResType> getResTypeForMyDownload(Long userId);
+	/**
+	 * 查询我的最近浏览资源中的资源类型
+	 * @param userId
+	 * @return
+	 */
+	public  List<FirstLevelResType> getResTypeForMyView(Long userId);
 	
 
 }

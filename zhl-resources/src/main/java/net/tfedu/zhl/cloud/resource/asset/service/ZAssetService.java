@@ -109,7 +109,13 @@ public interface ZAssetService {
 	public Pagination queryMyAssets(Long userId,Long unifyTypeId,String fileFormat,Integer page,Integer perPage);
 	
 	
-		
+	/**
+	 * 根据我的空间中的tab 获取对应的资源类型查询结果	
+	 * @param tabCode
+	 * @param userId
+	 * @return
+	 */
+	public List<FirstLevelResType> getResTypeForPersonalTab(String tabCode,Long userId);
 	
 	
 }
