@@ -5,9 +5,9 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `zhl_country`;
 CREATE TABLE `zhl_country` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '±‡∫≈',
-  `ccode` varchar(56) NOT NULL DEFAULT ' ' COMMENT '±‡∫≈',
-  `cname` varchar(32) NOT NULL DEFAULT ' ' COMMENT '√˚≥∆',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ÁºñÂè∑',
+  `ccode` varchar(56) NOT NULL DEFAULT ' ' COMMENT 'ÁºñÂè∑',
+  `cname` varchar(32) NOT NULL DEFAULT ' ' COMMENT 'ÂêçÁß∞',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
@@ -28,9 +28,9 @@ INSERT INTO `zhl_country` VALUES ('8', '1000', 'china');
 -- ----------------------------
 DROP TABLE IF EXISTS `j_rolegroup`;
 CREATE TABLE `j_rolegroup` (
-  `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT '±‡∫≈',
-  `group_id` bigint(15) NOT NULL DEFAULT '0' COMMENT '”√ªß◊È±‡∫≈',
-  `role_id` bigint(15) NOT NULL DEFAULT '0' COMMENT '”√ªß±‡∫≈',
+  `id` bigint(15) NOT NULL AUTO_INCREMENT COMMENT 'ÁºñÂè∑',
+  `group_id` bigint(15) NOT NULL DEFAULT '0' COMMENT 'Áî®Êà∑ÁªÑÁºñÂè∑',
+  `role_id` bigint(15) NOT NULL DEFAULT '0' COMMENT 'Áî®Êà∑ÁºñÂè∑',
   PRIMARY KEY (`id`),
   KEY `fk_j_usergroup_0` (`group_id`),
   KEY `fk_j_usergroup_1` (`role_id`)
@@ -40,16 +40,16 @@ CREATE TABLE `j_rolegroup` (
 -- Records of j_rolegroup
 -- ----------------------------
 ALTER TABLE `j_group`
-ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'œµÕ≥ƒ£øÈ',
-ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-π´π≤,1-◊”œµÕ≥◊‘∂®“Â';
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'Á≥ªÁªüÊ®°Âùó',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-ÂÖ¨ÂÖ±,1-Â≠êÁ≥ªÁªüËá™ÂÆö‰πâ';
 
 ALTER TABLE `j_role`
-ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'œµÕ≥ƒ£øÈ',
-ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-π´π≤,1-◊”œµÕ≥◊‘∂®“Â';
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'Á≥ªÁªüÊ®°Âùó',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-ÂÖ¨ÂÖ±,1-Â≠êÁ≥ªÁªüËá™ÂÆö‰πâ';
 
 ALTER TABLE `j_funclist`
-ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'œµÕ≥ƒ£øÈ',
-ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-π´π≤,1-◊”œµÕ≥◊‘∂®“Â';
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT 'Á≥ªÁªüÊ®°Âùó',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-ÂÖ¨ÂÖ±,1-Â≠êÁ≥ªÁªüËá™ÂÆö‰πâ';
 
 -- ----------------------------
 -- Records of j_usergroup
