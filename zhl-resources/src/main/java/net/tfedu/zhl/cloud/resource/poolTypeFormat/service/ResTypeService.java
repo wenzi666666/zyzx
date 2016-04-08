@@ -93,5 +93,17 @@ public interface ResTypeService {
      * 自建资源 ： 查询全部一级资源类型
      */
     public List<FirstLevelResType> getAllFirstLevelResType();
+    
+    /**
+     * 区本校本资源：查询资源类型，e备课
+     * 
+     * @return
+     */
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,int[] removeTypeIds);
+    
+    /**
+     * 系统资源：查询资源类型，e备课
+     */
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,int[] removeTypeIds); 
 
 }

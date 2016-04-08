@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -49,10 +50,19 @@ public class ResPreviewInfoController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 资源来源
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-                // 资源id
-                long resId = Long.parseLong(request.getParameter("resId"));
+            	// 资源来源
+            	int fromFlag = 0;
+            	
+            	// 资源id
+            	long resId = 0;
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+            		resId = Long.parseLong(request.getParameter("resId").toString().trim());
+            	}
+            	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+            		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+            	}
+            	 
 
                 // 查询一条资源的详细信息
                 previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);

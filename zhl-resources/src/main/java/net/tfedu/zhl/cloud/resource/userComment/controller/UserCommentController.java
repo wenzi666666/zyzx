@@ -61,25 +61,51 @@ public class UserCommentController {
                 // 修改用户评论
                 if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {// 修改用户评论
 
-                    long commentId = Long.parseLong(request.getParameter("commentId"));
-                    String displayContent = request.getParameter("displayContent");
-
+                    long commentId = 0;
+                    String displayContent = "";
+                    if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
+                    	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
+                    }
+                    
+                    if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
+                    	displayContent = request.getParameter("displayContent").toString().trim();
+                    }
+                    
                     userCommentService.updateUserComment(displayContent, commentId);
 
                 } else if (StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equals(_method)) {// 删除用户评论
 
-                    long commentId = Long.parseLong(request.getParameter("commentId"));
+                	 long commentId = 0;
+                	 if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
+                     	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
+                     }
+                  
 
                     userCommentService.deleteUserComment(commentId);
 
                 } else { // 新建用户评论
 
                     long userId = currentUserId;
-                    long resId = Long.parseLong(request.getParameter("resId"));
-                    String displayContent = request.getParameter("displayContent");
-                    int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-                    int ascore = Integer.parseInt(request.getParameter("ascore"));
-                    int isScore = Integer.parseInt(request.getParameter("isScore"));
+                    long resId = 0;
+                    String displayContent = "";
+                    int fromFlag = 0;
+                    int ascore = 0; //默认评分为0
+                    int isScore = 0; //0：评分，1：评论
+                    if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+                    	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+                     }
+                    if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
+                    	displayContent = request.getParameter("displayContent").toString().trim();
+                     }
+                    if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                    	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                     }
+                    if(StringUtils.isNotEmpty(request.getParameter("ascore"))){
+                    	ascore = Integer.parseInt(request.getParameter("ascore").toString().trim());
+                     }
+                    if(StringUtils.isNotEmpty(request.getParameter("isScore"))){
+                    	isScore = Integer.parseInt(request.getParameter("isScore").toString().trim());
+                     }
 
                     userCommentService.insertUserComment(resId, userId, displayContent, ascore, fromFlag, isScore);
                 }
@@ -130,10 +156,21 @@ public class UserCommentController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
                 long userId = currentUserId;
-                long resId = Long.parseLong(request.getParameter("resId"));
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
 
+                long resId = 0;
+              
+                int fromFlag = 0;
+                
+                if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+                	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+                 }
+               
+                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                 }
+                
                 myComments = userCommentService.getMyComments(fromFlag, resId, userId);
 
                 exception = CustomException.SUCCESS;
@@ -179,9 +216,20 @@ public class UserCommentController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
-                long userId = currentUserId;
-                long resId = Long.parseLong(request.getParameter("resId"));
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+            	
+            	 long userId = currentUserId;
+
+                 long resId = 0;
+               
+                 int fromFlag = 0;
+                 
+                 if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+                 	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+                  }
+                
+                 if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                 	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                  }
 
                 otherComments = userCommentService.getOtherComments(fromFlag, resId, userId);
 

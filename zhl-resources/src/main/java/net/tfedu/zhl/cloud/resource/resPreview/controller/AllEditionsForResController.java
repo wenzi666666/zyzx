@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -52,15 +53,26 @@ public class AllEditionsForResController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 资源id
-                long resId = Long.parseLong(request.getParameter("resId"));
-
-                // 资源来源
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-
-                // 当前所在结点
-                String curTfcode = request.getParameter("curTfcode");
-
+            	// 资源来源
+            	int fromFlag = 0;
+            	
+            	// 资源id
+            	long resId = 0;
+            	
+            	 // 当前所在结点
+            	String curTfcode = "";
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+            		resId = Long.parseLong(request.getParameter("resId").toString().trim());
+            	}
+            	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+            		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+            	}
+            	 
+            	if(StringUtils.isNotEmpty(request.getParameter("curTfcode"))){
+            		curTfcode = request.getParameter("curTfcode").toString().trim();
+            	}
+            	 
                 // 查询所有版本的资源目录
                 result = resPreviewService.getAllResNavs(resId, fromFlag, curTfcode);
 

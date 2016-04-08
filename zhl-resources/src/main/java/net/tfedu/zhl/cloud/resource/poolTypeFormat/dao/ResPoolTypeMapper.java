@@ -12,4 +12,7 @@ public interface ResPoolTypeMapper extends CoreMapper<ResPoolType> {
 
     // 根据库id查询所有资源类型id
     public List<Integer> getAllTypeIdsByPool(@Param("poolId") long poolId);
+    
+    // 根据库id查询所有资源类型id，e备课
+    public List<Integer> getAllTypeIdsByPool_EPrepare(@Param("poolId") long poolId,@Param("removeTypeIds")int[] removeTypeIds);
 }

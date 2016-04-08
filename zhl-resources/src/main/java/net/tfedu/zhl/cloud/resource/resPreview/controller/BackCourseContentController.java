@@ -48,7 +48,7 @@ public class BackCourseContentController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                String tfcode = request.getParameter("tfcode");
+                String tfcode = request.getParameter("tfcode").toString().trim();
 
                 // 查询课程目录
                 courseContent = resPreviewService.getPnodes(tfcode);

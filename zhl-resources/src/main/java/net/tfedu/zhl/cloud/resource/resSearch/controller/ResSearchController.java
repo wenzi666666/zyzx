@@ -8,19 +8,20 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 资源跨库检索的controller
@@ -70,21 +71,41 @@ public class ResSearchController {
             	//获取文件服务器的访问url 
 				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
 				String currentResPath = (String)request.getAttribute("currentResPath");
-
-                // 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
-
-                // 检索的关键词
-                String searchKeyword = request.getParameter("searchKeyword");
-
+				
+				// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
+				int fromFlag = 0;
+				
+				 // 检索的关键词
+                String searchKeyword = "";
+				
                 // 资源格式：全部，文本，图片......
-                String format = request.getParameter("format");
-
+                String format = "全部";
+                
                 // 页码
-                int page = Integer.parseInt(request.getParameter("page"));
-
+                int page = 1;
+                
                 // 每页记录数目
-                int perPage = Integer.parseInt(request.getParameter("perPage"));
+                int perPage = 10;
+                
+                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                	fromFlag =  Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                }
+                if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
+                	searchKeyword =  request.getParameter("searchKeyword").toString().trim();
+                }
+                
+                if(StringUtils.isNotEmpty(request.getParameter("format"))){
+                	format =  request.getParameter("format").toString().trim();
+                }
+                
+                if(StringUtils.isNotEmpty(request.getParameter("page"))){
+                	page =  Integer.parseInt(request.getParameter("page").toString().trim());
+                }
+                
+                if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
+                	perPage =  Integer.parseInt(request.getParameter("perPage").toString().trim());
+                }
+                
 
                 pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page,
                         perPage,currentUserId);

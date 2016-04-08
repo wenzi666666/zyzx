@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -51,10 +52,18 @@ public class SysResFormatController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 传递的参数
-                long poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-                String pTfcode = request.getParameter("tfcode");
-                int typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+            	String pTfcode = "";
+            	int typeId = 0;
+            	long poolId = 0;
+            	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
+            		pTfcode = request.getParameter("pTfcode").toString().trim();
+            	}
+                if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+                	typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+                }
+                if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
+                	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
+                }
 
                 // 根据 resourceIds和typeIds，查询资源格式
                 formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId);
