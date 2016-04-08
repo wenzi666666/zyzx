@@ -172,7 +172,7 @@
                 </foreach>
      </if>
      
-     <if test="typeIds > 0">
+     <if test="typeIds.size() > 0">
           and b.id in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
