@@ -18,10 +18,10 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
     @Test
     public void testResPreview() throws IOException {
         // 0 系统资源；1 自建资源；2 共享资源；3 校本资源；4 区本资源
-        int fromFlag = 0;
+        int fromFlag = 1;
 
         // 资源id
-        long resId = 1;
+        long resId = 2700616;
         
         long userId = 699230735;
 

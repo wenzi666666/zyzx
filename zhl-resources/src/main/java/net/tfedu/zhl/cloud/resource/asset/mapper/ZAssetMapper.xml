@@ -138,9 +138,9 @@
 	<!-- 自建资源的详细信息 -->
 	 <select id="getAssetPreviewInfo" parameterType="Long" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo">
 			select  a.id ,a.name as title,a.keyword,AssetDesc as des ,AssetSize as fsize ,p.MType,p.id as typeId
-		    ,0 as  DLoadTimes,0 as ClickTimes,1 as fromflag, a.name as fname, a.assetpath as fpath
-			,0 as userNum,0 as totalScore,0 as avgScore,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as FileExt,IsWjb as isDWJ
-			from  z_asset a 
+		    ,0 as DLoadTimes,0 as ClickTimes,1 as fromflag, a.name as fname, a.assetpath as fpath
+			,0 as userNum,0 as score,0 as avgScore,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as FileExt,IsWjb as isDWJ,1 as isLocal
+			from z_asset a 
 			LEFT JOIN x_resourcetype p  on p.id = a.unifytypeid 		
 			where a.id =  #{resId}
 			and a.flag =false and a.FileType = 'A'
