@@ -106,7 +106,11 @@
 			LEFT JOIN z_asset_syscourse  s on s.assetid = a.id
 			where a.iscourseware = true  and a.flag =false and a.FileType = 'A'
       and s.flag = false  
-			and a.userid = #{userId} and s.tfcode like #{tfcode} and a.name like  #{title}
+			and a.userid = #{userId} and s.tfcode like #{tfcode} 
+			<if test="title!=''">
+			and a.name like  #{title}
+			</if>
+			
  	)temp_result 
 	where  1 =1 
 	<if test=" 'title'== orderby">

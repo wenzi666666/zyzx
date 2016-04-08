@@ -145,7 +145,11 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         request.getServletContext().setInitParameter("hostLocal", "http://192.168.111.160/resources/");
         System.out.println(result.getCode());
         System.out.println(result.getData());
-
     }
 
+    
+
+    
+    
+    
 }
