@@ -126,7 +126,9 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                         currentUserId = us.getUserId();
                 	}
                     logger.debug("------------currentUserId----------"+currentUserId);
-
+                    if(currentUserId==null || currentUserId==0){
+                    	customException = CustomException.INVALIDACCESSTOKEN;
+                    }
             	}
             }
         }

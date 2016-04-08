@@ -62,7 +62,9 @@ public class BookSelfController {
 				String title = request.getParameter("title");
 				data =  bookSelfService.getAllMyBook(userId,title);
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -113,7 +115,9 @@ public class BookSelfController {
 					bookSelfService.addMyBook(userId, tfcode);
 				}
 				exception = CustomException.SUCCESS;				
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -162,7 +166,9 @@ public class BookSelfController {
 				BookSelfImgPathConvert.convert(list, resServiceLocal, currentResPath);
 				data = list ;
 				exception = CustomException.SUCCESS;				
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -214,7 +220,9 @@ public class BookSelfController {
 				JPrepareContentViewUtil.convertToPurpose_Asset(list, resServiceLocal, currentResPath);
 				data = list ;
 				exception = CustomException.SUCCESS;				
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -262,7 +270,9 @@ public class BookSelfController {
 					exception = CustomException.PARAMSERROR;
 				}
 				
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常

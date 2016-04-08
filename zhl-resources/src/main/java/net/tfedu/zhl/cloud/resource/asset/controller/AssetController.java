@@ -88,7 +88,9 @@ public class AssetController {
 				map.put("uploadPath", uploadPath);
 				data = map ; 
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -264,7 +266,9 @@ public class AssetController {
 						exception = CustomException.PARAMSERROR;
 					}
 				}				
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -330,7 +334,9 @@ public class AssetController {
 				data = page_result;
 				
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -424,7 +430,9 @@ public class AssetController {
 				
 				}
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常

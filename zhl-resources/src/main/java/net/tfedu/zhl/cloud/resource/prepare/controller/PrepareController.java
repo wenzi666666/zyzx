@@ -105,6 +105,8 @@ public class PrepareController {
                     data = map;
                 }
                 exception = CustomException.SUCCESS;
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -150,6 +152,8 @@ public class PrepareController {
                 } else {
                     exception = CustomException.PARAMSERROR;
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -197,6 +201,8 @@ public class PrepareController {
                 } else {
                     exception = CustomException.PARAMSERROR;
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -251,6 +257,8 @@ public class PrepareController {
                 } else {
                     exception = CustomException.PARAMSERROR;
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -316,6 +324,8 @@ public class PrepareController {
                     }
                 }
 
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -402,6 +412,8 @@ public class PrepareController {
                     }
 
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -449,6 +461,8 @@ public class PrepareController {
                 } else {
                     exception = CustomException.PARAMSERROR;
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -547,6 +561,8 @@ public class PrepareController {
                         data = record.getId();
                     }
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
 
         } catch (Exception e) {
@@ -624,6 +640,8 @@ public class PrepareController {
                 map.put("zippath", record.getZippath());
                 data = map;
                 exception = CustomException.SUCCESS;
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
 
         } catch (Exception e) {
@@ -689,6 +707,8 @@ public class PrepareController {
                     }
                 }
 
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
 
         } catch (Exception e) {
