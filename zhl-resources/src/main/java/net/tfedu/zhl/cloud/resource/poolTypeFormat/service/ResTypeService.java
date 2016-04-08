@@ -99,11 +99,11 @@ public interface ResTypeService {
      * 
      * @return
      */
-    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,int[] removeTypeIds);
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,List<Integer> removeTypeIds);
     
     /**
      * 系统资源：查询资源类型，e备课
      */
-    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,int[] removeTypeIds); 
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds); 
 
 }

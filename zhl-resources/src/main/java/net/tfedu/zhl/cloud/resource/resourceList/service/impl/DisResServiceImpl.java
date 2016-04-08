@@ -189,7 +189,7 @@ public class DisResServiceImpl implements DisResService {
     // 查询区本、校本资源信息，e备课
     @Override
 	public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,String searchWord,int[] removeTypeIds){
+            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds){
     	 // 根据父类型，查询所有的子类型
         List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypeIds);
 

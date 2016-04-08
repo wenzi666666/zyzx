@@ -175,8 +175,6 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-       
-         group by mtype
      </if>
   </select>
   
@@ -205,7 +203,6 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-         group by mtype
      </if>  
   </select>
   
@@ -221,12 +218,12 @@
          and a.id in ('')
      </if>
      <if test="resourceIds != null ">
-         and a.id in
+         and a.id in 
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-          group by mtype order by b.displayIndex asc
+                
      </if>  
      
   </select>

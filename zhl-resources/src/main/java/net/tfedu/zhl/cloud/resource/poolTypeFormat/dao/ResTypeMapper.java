@@ -75,7 +75,7 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * 
      * @return
      */
-    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")int[] removeTypeIds);
+    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")List<Integer> removeTypeIds);
 
     /**
      * 
@@ -96,11 +96,11 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * @param MType
      * @return
      */
-    public List<Integer> getTypesByPMTypeAndPool_EPrepare(@Param("poolId") long poolId, @Param("MType") int MType,@Param("removeTypeIds")int[] removeTypeIds);
+    public List<Integer> getTypesByPMTypeAndPool_EPrepare(@Param("poolId") long poolId, @Param("MType") int MType,@Param("removeTypeIds")List<Integer> removeTypeIds);
     
     /**
      * 
      * 区本校本资源：查询父类型及其所有子类型，e备课
      */
-    public List<Integer> getDisResTypesByPMType_EPrepare(@Param("MType") int MType,@Param("removeTypeIds")int[] removeTypeIds);
+    public List<Integer> getDisResTypesByPMType_EPrepare(@Param("MType") int MType,@Param("removeTypeIds")List<Integer> removeTypeIds);
 }
