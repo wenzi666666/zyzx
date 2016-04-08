@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -47,8 +48,11 @@ public class BackCourseContentController {
 
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
-
-                String tfcode = request.getParameter("tfcode").toString().trim();
+            	
+            	String tfcode = "";
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("tfcode")))
+                     tfcode = request.getParameter("tfcode").toString().trim();
 
                 // 查询课程目录
                 courseContent = resPreviewService.getPnodes(tfcode);
