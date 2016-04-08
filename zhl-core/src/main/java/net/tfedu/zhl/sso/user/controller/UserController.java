@@ -116,6 +116,8 @@ public class UserController {
                     String token = request.getHeader("Authorization");
                     userService.logout(token);
                     exception = CustomException.SUCCESS;
+                }else{
+                	exception = CustomException.INVALIDACCESSTOKEN;
                 }
             } catch (Exception e) {
                 exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -200,6 +202,8 @@ public class UserController {
             if (currentUserId != null && exception == null) {
                 data = userService.getUserSimpleById(id, model);
                 exception = CustomException.SUCCESS;
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -262,6 +266,8 @@ public class UserController {
                     exception = CustomException.SUCCESS;
                     data = "";
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
 
         } catch (Exception e) {
@@ -305,6 +311,8 @@ public class UserController {
                 userService.updateUserImage(userId, userImage);
                 exception = CustomException.SUCCESS;
                 data = "";
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             exception = CustomException.getCustomExceptionByCode(e.getMessage());
@@ -368,6 +376,8 @@ public class UserController {
                     }
 
                 }
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -454,7 +464,9 @@ public class UserController {
 				System.out.println("----autoLearning-----"+url);
 	    	    response.sendRedirect(url);
 			
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常
@@ -511,7 +523,9 @@ public class UserController {
 				map.put("uploadPath", uploadPath);
 				data = map ; 
 				exception = CustomException.SUCCESS;
-			}
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
 		}catch(Exception e){
 			exception = CustomException.getCustomExceptionByCode(e.getMessage());
 			//如果是普通的异常

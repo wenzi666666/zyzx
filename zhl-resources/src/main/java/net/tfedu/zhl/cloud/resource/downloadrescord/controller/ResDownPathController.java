@@ -84,6 +84,8 @@ public class ResDownPathController {
 				logger.debug("---------------获取资源的下载路径   结束----------".toString());
 				
 				exception = CustomException.SUCCESS;
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
             }
         	
 		} catch (Exception e) {
