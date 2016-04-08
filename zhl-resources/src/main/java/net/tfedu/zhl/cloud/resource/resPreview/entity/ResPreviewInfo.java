@@ -77,7 +77,7 @@ public class ResPreviewInfo implements Serializable {
     /**
      * 总的评分
      */
-    private int score;
+    private Integer score;
 
     /**
      * 平均评分
@@ -212,7 +212,7 @@ public class ResPreviewInfo implements Serializable {
     }
 
     public int getScore() {
-        return score;
+    	return score == null ? 0 : score;
     }
 
     public void setScore(int score) {
