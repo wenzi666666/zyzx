@@ -24,72 +24,98 @@
    <!-- 系统资源：得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool"  resultType="Integer">
       SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     
-     <if test="poolId != 0 and MType == 0">
-         where poolId = #{poolId}
-     </if>
-     <if test="MType != 0">
-         where (type_id = #{MType} or type_pid = #{MType})
-     </if>
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
+      
+       <if test="poolId != 0 and MType == 0">
+         and poolId = #{poolId}
+       </if>
+        <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+        </if>
+      
+      UNION all SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
+       <if test="poolId != 0 and MType == 0">
+         and poolId = #{poolId}
+       </if>
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+        </if>
+      ) temp 
   </select>
   
    <!-- 系统资源：e备课中，当类型选择为全部时，除去一些特定类型：得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer">
-      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     
-     <if test="poolId == 0 and MType == 0">
-         where type_pid not in 
-         
+      SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
+      <if test="poolId != 0">
+         and poolId = #{poolId}
+      </if>
+      <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+      </if>
+      
+      UNION all 
+      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
+      <if test="poolId != 0">
+         and poolId = #{poolId}
+      </if>
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+      </if>
+      ) temp 
+      <if test="MType == 0">
+         where type_id not in 
          <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     </if>
-     <if test="poolId != 0 and MType == 0">
-         where poolId = #{poolId} and (type_pid not in 
-         
-         <foreach item="item" index="index" collection="removeTypeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-         )
-     </if>
-     <if test="MType != 0">
-         where (type_id = #{MType} or type_pid = #{MType})
-     </if>
+     </if> 
   </select>
   
    <!-- 区本校本资源：得到父类型的所有子类型及其自身  -->
   <select id="getDisResTypesByPMType"  resultType="Integer">
       SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     <if test="MType != 0">
-         where (type_id = #{MType} or type_pid = #{MType})
-     </if>
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
+       <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+       </if>
+      UNION 
+      
+      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+       </if>
+      ) temp 
+      
+    
   </select>
   
   
   <!-- 区本校本资源：e备课，得到父类型的所有子类型及其自身  -->
   <select id="getDisResTypesByPMType_EPrepare"  resultType="Integer">
-      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
-     <if test="MType != 0">
-         where (type_id = #{MType} or type_pid = #{MType})
-     </if>
-     <if test="MType == 0">
-         where type_pid not in 
-         
+      SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
+      <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+      </if>
+      UNION 
+      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+      </if>
+      ) temp 
+       
+      <if test="MType == 0">
+      where type_id not in  
          <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                </foreach>
-     </if>
+                </foreach>  
+       </if>
   </select>
   
   
@@ -131,9 +157,9 @@
   <select id="getSysFirstLevelType"  resultMap="FirstTypeResultMap">
     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
     from z_resource a 
-    left join x_resourcetype b on a.MType = b.id 
+    left join x_resourcetype b on a.MType = b.id and b.flag = 0
     left join x_resourcetype pb on pb.Id=b.pid 
-    where a.flag = 0 and b.flag = 0
+    where a.flag = 0 
 
      <if test="resourceIds == null">
          and a.id in ('')
@@ -144,12 +170,13 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-         and a.mtype in
+         and b.id in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-         group by MType
+       
+         group by mtype
      </if>
   </select>
   
@@ -162,8 +189,8 @@
   </resultMap>
   <select id="getSysSecondLevelType"  resultMap="SecondTypeResultMap">
      select distinct b.mtype,b.id from z_resource a 
-     left join x_resourcetype b on a.MType = b.id 
-     where a.flag = 0 and b.flag = 0 and b.level = 2 
+     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+     where a.flag = 0 and b.level = 2 
      <if test="resourceIds == null">
          and a.id in ('')
      </if>
@@ -178,18 +205,18 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-         group by MType
+         group by mtype
      </if>  
   </select>
   
   <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
   <select id= "getDisResType" resultMap="SecondTypeResultMap">
-     select distinct case when b.PId=0 then b.MType ELSE pb.MType END MType,case when b.PId=0 then b.id ELSE pb.id END id
+     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
-     left join x_resourcetype b on a.MType = b.id 
+     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
      left join x_resourcetype pb on pb.Id = b.pid 
-     where a.flag = 0 and b.flag = 0 and (pb.flag = 0 or pb.flag is null)
-     and a.fromFlag in (#{fromFlag})
+     where a.flag = 0 and a.fromFlag in (#{fromFlag})
+     
      <if test="resourceIds == null">
          and a.id in ('')
      </if>
@@ -199,20 +226,25 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-          group by MType order by b.displayIndex asc
+          group by mtype order by b.displayIndex asc
      </if>  
      
   </select>
   
    <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本，e备课，除去特定的一些类型 -->
   <select id= "getDisResType_EPrepare" resultMap="SecondTypeResultMap">
-     select distinct case when b.PId=0 then b.MType ELSE pb.MType END MType,case when b.PId=0 then b.id ELSE pb.id END id
+     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
      left join x_resourcetype pb on pb.Id = b.pid and pb.flag = 0 
-     where a.flag = 0 and a.fromFlag in (#{fromFlag}) and id not in 
+     where a.flag = 0 and a.fromFlag in (#{fromFlag}) and b.id not in 
     
          <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+      and pb.id not in 
+      <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
@@ -226,7 +258,6 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-          group by MType order by b.displayIndex asc
      </if>  
   </select>
   
