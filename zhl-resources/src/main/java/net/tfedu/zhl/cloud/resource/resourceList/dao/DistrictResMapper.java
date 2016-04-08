@@ -20,8 +20,18 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
             @Param("schoolId") long schoolId, @Param("districtId") long districtId);
 
     // 查询一条区本、校本资源的详细信息
-    public ResPreviewInfo getDisResInfo(@Param("fromFlag") int fromFlag, @Param("resId") long resId);
+    public ResPreviewInfo getDisResInfo(@Param("fromFlag") int fromFlag, @Param("resId") long resId,@Param("userId")long userId);
 
     // 根据资源id，获得所有版本的structCode
     public List<String> getAllDisRescodes(@Param("resId") long resId, @Param("curTfcode") String curTfcode);
+    
+    // 查询区本、校本资源信息，用于资源预览页面的推荐
+    public List<DisResourceEntity> selectDisRes_Preview(@Param("fromFlag") int fromFlag, @Param("fileFormat") String fileFormat,
+            @Param("typeIds") List<Integer> typeIds, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,
+            @Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("resId")long resId);
+    
+    // 查询区本、校本资源信息，用于e备课
+    public List<DisResourceEntity> selectDisRes_EPrepare(@Param("fromFlag") int fromFlag, @Param("fileFormat") String fileFormat,
+            @Param("typeIds") List<Integer> typeIds, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,
+            @Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("searchWord")String searchWord);
 }

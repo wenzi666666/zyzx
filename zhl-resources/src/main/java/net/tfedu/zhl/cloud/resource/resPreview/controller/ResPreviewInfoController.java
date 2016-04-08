@@ -55,11 +55,13 @@ public class ResPreviewInfoController {
                 long resId = Long.parseLong(request.getParameter("resId"));
 
                 // 查询一条资源的详细信息
-                previewInfo = resPreviewService.getResPreviewInfo(resId, fromFlag);
+                previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);
 
                 exception = CustomException.SUCCESS;
 
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
         } catch (Exception e) {
             // TODO: handle exception
             // 捕获异常信息

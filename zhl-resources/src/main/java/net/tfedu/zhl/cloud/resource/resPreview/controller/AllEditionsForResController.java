@@ -65,7 +65,9 @@ public class AllEditionsForResController {
                 result = resPreviewService.getAllResNavs(resId, fromFlag, curTfcode);
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

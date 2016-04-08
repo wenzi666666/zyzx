@@ -60,7 +60,9 @@ public class SysResFormatController {
                 formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId);
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

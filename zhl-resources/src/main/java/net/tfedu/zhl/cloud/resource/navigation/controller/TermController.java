@@ -48,7 +48,9 @@ public class TermController {
             if (exception == null && currentUserId != null) {
                 terms = termService.selectAll();
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

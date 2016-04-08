@@ -22,11 +22,13 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 
         // 资源id
         long resId = 1;
+        
+        long userId = 699230735;
 
         ResPreviewInfo previewInfo = null;
 
         // 查询一条资源的详细信息
-        previewInfo = resPreviewService.getResPreviewInfo(resId, fromFlag);
+        previewInfo = resPreviewService.getResPreviewInfo(resId, userId,fromFlag);
 
         if (previewInfo != null) {
             log.info(previewInfo.toString());

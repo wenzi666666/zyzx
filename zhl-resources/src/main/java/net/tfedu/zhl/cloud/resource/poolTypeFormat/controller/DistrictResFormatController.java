@@ -53,7 +53,9 @@ public class DistrictResFormatController {
                 formats = resFormatService.getDisResFormats(tfcode, fromFlag);
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

@@ -85,7 +85,10 @@ public class UserCommentController {
                 }
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
+            
         } catch (Exception e) {
             // TODO: handle exception
             // 捕获异常信息
