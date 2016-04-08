@@ -26,6 +26,10 @@ import net.tfedu.zhl.sso.user.service.UserService;
 public abstract class BaseControllerTestCase {
 
     protected static Logger log = LoggerFactory.getLogger(BaseControllerTestCase.class);
+    
+    /**
+     * 注意，所有子类都不能新建request、response
+     */
     protected MockHttpServletRequest request =new MockHttpServletRequest("GET", "/");
     protected MockHttpServletResponse response = new MockHttpServletResponse();
 
