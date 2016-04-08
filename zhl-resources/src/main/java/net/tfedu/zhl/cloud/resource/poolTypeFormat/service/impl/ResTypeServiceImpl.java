@@ -175,6 +175,70 @@ public class ResTypeServiceImpl implements ResTypeService {
 
         return types;
     }
+    
+    /**
+     * 区本校本资源：查询资源类型，e备课
+     * 
+     * @return
+     */
+    @Override
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,int[] removeTypeIds) {
+        // 定义类型结果集
+        List<ResType> types = new ArrayList<ResType>();
+
+        // 根据tfcode获得区本校本资源ids
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("pTfcode", tfcode);
+        List<Long> resourceIds = getAllDisResIds(map);
+
+        // 查询资源类型
+        types = resTypeMapper.getDisResType_EPrepare(resourceIds, fromFlag, removeTypeIds);
+
+        // 资源类型中增加一个“全部”
+        ResType all = new ResType();
+        all.setId(0);
+        all.setMtype("全部");
+        types.add(0,all);
+
+        return types;
+    }
+    
+    /**
+     * 系统资源：查询资源类型，e备课
+     */
+    @Override
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,int[] removeTypeIds) {
+        List<ResType> types = new ArrayList<ResType>();
+
+        // 传递参数
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("pTfcode", pTfcode);
+        map.put("sys_from", SysFrom.sys_from);
+        // 查询当前结点下的所有资源Id
+        List<Long> resourceIds = getAllSysResIds(map);
+
+        // 根据资源库，查询所有资源类型id,e备课
+        List<Integer> typeIds = resPoolTypeMapper.getAllTypeIdsByPool_EPrepare(poolId, removeTypeIds);
+
+        /**
+         * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
+         */
+        if (poolId == 0 || poolId == 4) {
+            types = getSysFirstLevelType(resourceIds, typeIds);
+
+        } else { // 当资源库选择 “动画焦教具”、“名师微课”、“教学案例”
+                 // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
+            types = getSysSecondLevelType(resourceIds, typeIds);
+        }
+
+        // 资源类型中增加一个“全部”
+        ResType all = new ResType();
+        all.setId(0);
+        all.setMtype("全部");
+        types.add(0,all);
+
+        return types;
+    }
 
     @Override
     public List<FirstLevelResType> getAllFirstLevelResType() {

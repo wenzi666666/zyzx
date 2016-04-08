@@ -204,6 +204,32 @@
      
   </select>
   
+   <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本，e备课，除去特定的一些类型 -->
+  <select id= "getDisResType_EPrepare" resultMap="SecondTypeResultMap">
+     select distinct case when b.PId=0 then b.MType ELSE pb.MType END MType,case when b.PId=0 then b.id ELSE pb.id END id
+     from z_districts_resource a
+     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+     left join x_resourcetype pb on pb.Id = b.pid and pb.flag = 0 
+     where a.flag = 0 and a.fromFlag in (#{fromFlag}) and id not in 
+    
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+     
+     <if test="resourceIds == null">
+         and a.id in ('')
+     </if>
+     <if test="resourceIds != null ">
+         and a.id in
+                <foreach item="item" index="index" collection="resourceIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+          group by MType order by b.displayIndex asc
+     </if>  
+  </select>
+  
   
   <resultMap type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType" id="firstLevelResTypeMap">
         <id column="id" property="id" />

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -57,7 +58,7 @@ public class DistrictResTypeController {
                 
                 if(request.getParameter("isEPrepare") != null){//而备课
                 	//新的类型查询方法（去除一些类型）
-                	
+                	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, SysFrom.removeTypeIds);
                 	
                 } else {
                 	 types = resTypeService.getDisResTypes(tfcode, fromFlag);

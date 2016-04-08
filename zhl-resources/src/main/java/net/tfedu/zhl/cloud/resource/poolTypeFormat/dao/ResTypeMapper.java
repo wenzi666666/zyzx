@@ -69,6 +69,13 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * @return
      */
     public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag);
+    
+    /**
+     * 区本校本资源：查询资源类型，e备课
+     * 
+     * @return
+     */
+    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")int[] removeTypeIds);
 
     /**
      * 
