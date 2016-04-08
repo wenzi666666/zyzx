@@ -52,7 +52,7 @@ public class UserDefaultController {
             if (exception == null && currentUserId != null) {
                 long userId = currentUserId;
 
-                int type = 0;
+                int type = 1;
                 if(StringUtils.isNotEmpty(request.getParameter("type"))){
                 	type = Integer.parseInt(request.getParameter("type").toString().trim());
                 }

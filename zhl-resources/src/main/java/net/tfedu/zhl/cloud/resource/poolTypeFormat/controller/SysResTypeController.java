@@ -62,7 +62,7 @@ public class SysResTypeController {
                 	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
                 }
             	
-                if(request.getParameter("isEPrepare") != null){//而备课
+                if(request.getParameter("isEPrepare") != null){//e备课
                 	//新的类型查询方法（去除一些类型）
                 	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, SysFrom.removeTypeIds);
                 } else {
