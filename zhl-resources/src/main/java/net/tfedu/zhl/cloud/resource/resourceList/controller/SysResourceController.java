@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
@@ -88,16 +89,19 @@ public class SysResourceController {
                 
                
                 if(request.getParameter("isPreview") != null){ //若当前是 预览页面的资源推荐列表（需要将当前预览的这条资源显示为第一个）
-                	
+                	//要显示在查询结果第一个位置的资源id
+                	long resId = Long.parseLong(request.getParameter("resId"));
+                	pagination = sysResourceService.getAllSysRes_Preview(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, resId);
                 	
                 }  else if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
                 	
                 	//模糊查询的关键字
                 	String searchWord = request.getParameter("searchWord");
-                	//新的getAllSysRes_EPrepare(); 返
+                
+                	//e备课查询系统资源
+                	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, SysFrom.removeTypeIds);
                 	
                 } else {
-                	
                 	 // 查询出的系统资源信息
                     pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                             perPage);
@@ -117,7 +121,9 @@ public class SysResourceController {
 
                 exception = CustomException.SUCCESS;
 
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

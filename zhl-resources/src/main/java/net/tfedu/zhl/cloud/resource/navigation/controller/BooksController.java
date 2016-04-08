@@ -66,7 +66,9 @@ public class BooksController {
                 books = bookService.getAllBooks(pnodeId, proCode);
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

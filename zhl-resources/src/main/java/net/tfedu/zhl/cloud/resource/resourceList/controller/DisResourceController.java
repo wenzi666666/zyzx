@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -86,15 +87,17 @@ public class DisResourceController {
                 
                 if(request.getParameter("isPreview") != null){ //若当前是 预览页面的资源推荐列表（需要将当前预览的这条资源显示为第一个）
                 	
-                	//
+                	//要显示在查询结果第一个位置的资源id
+                	long resId = Long.parseLong(request.getParameter("resId"));
+                	pagination = disResService.selectAllDisRes_Preview(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, resId);
                 	
                 }  else if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
                 	
-                	//模糊查询的关键字
+                	//e备课 模糊查询的关键字
                 	String searchWord = request.getParameter("searchWord");
-                	//新的; 
+                	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, SysFrom.removeTypeIds);
                 	
-                } else {
+                } else { //普通区本校本资源接口
                 	
                 	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                              fromFlag);
@@ -117,7 +120,9 @@ public class DisResourceController {
                 logger.debug("查询到的资源总数：" + pagination.getTotalLines());
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

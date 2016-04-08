@@ -58,7 +58,9 @@ public class EditonController {
                 editions = editionService.getAllEditionsByTermAndSub(map);
 
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

@@ -53,7 +53,9 @@ public class BackCourseContentController {
                 // 查询课程目录
                 courseContent = resPreviewService.getPnodes(tfcode);
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

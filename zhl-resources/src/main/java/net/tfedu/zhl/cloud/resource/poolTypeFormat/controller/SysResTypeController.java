@@ -65,7 +65,9 @@ public class SysResTypeController {
                
                 exception = CustomException.SUCCESS;
 
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

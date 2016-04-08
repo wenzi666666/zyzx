@@ -38,18 +38,18 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
     // 根据resId和fromFlag，查询资源具体信息
     @Override
-    public ResPreviewInfo getResPreviewInfo(long resId, int fromFlag) {
+    public ResPreviewInfo getResPreviewInfo(long resId, long userId,int fromFlag) {
         ResPreviewInfo info = null;
         if (fromFlag == 0) {// 系统资源
-            info = sysResourceMapper.getSysResInfo(resId);
+            info = sysResourceMapper.getSysResInfo(resId,userId);
 
         } else if (fromFlag == 1) {// 自建资源
         	info = assetMapper.getAssetPreviewInfo(resId);
         } else if (fromFlag == 3) {// 校本资源
-            info = districtResMapper.getDisResInfo(fromFlag, resId);
+            info = districtResMapper.getDisResInfo(fromFlag, resId,userId);
 
         } else if (fromFlag == 4) {// 区本资源
-            info = districtResMapper.getDisResInfo(fromFlag, resId);
+            info = districtResMapper.getDisResInfo(fromFlag, resId,userId);
 
         }
 

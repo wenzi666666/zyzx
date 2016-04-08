@@ -58,13 +58,14 @@ public class DistrictResTypeController {
                 if(request.getParameter("isEPrepare") != null){//而备课
                 	//新的类型查询方法（去除一些类型）
                 	
+                	
                 } else {
                 	 types = resTypeService.getDisResTypes(tfcode, fromFlag);
 				}
-
-               
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

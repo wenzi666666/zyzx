@@ -31,7 +31,35 @@
          where poolId = #{poolId}
      </if>
      <if test="MType != 0">
-         where type_id = #{MType} or type_pid = #{MType}
+         where (type_id = #{MType} or type_pid = #{MType})
+     </if>
+  </select>
+  
+   <!-- 系统资源：e备课中，当类型选择为全部时，除去一些特定类型：得到父类型的所有子类型及其自身  -->
+  <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer">
+      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
+     
+     <if test="poolId == 0 and MType == 0">
+         where type_pid not in 
+         
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+     </if>
+     <if test="poolId != 0 and MType == 0">
+         where poolId = #{poolId} and (type_pid not in 
+         
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+         )
+     </if>
+     <if test="MType != 0">
+         where (type_id = #{MType} or type_pid = #{MType})
      </if>
   </select>
   
@@ -42,6 +70,25 @@
       x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
      <if test="MType != 0">
          where (type_id = #{MType} or type_pid = #{MType})
+     </if>
+  </select>
+  
+  
+  <!-- 区本校本资源：e备课，得到父类型的所有子类型及其自身  -->
+  <select id="getDisResTypesByPMType_EPrepare"  resultType="Integer">
+      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 UNION SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp 
+     <if test="MType != 0">
+         where (type_id = #{MType} or type_pid = #{MType})
+     </if>
+     <if test="MType == 0">
+         where type_pid not in 
+         
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
      </if>
   </select>
   
@@ -164,6 +211,6 @@
 	   <result column="code" property="code" />
   </resultMap>
   <select id="getAllFirstLevelResType" resultMap="firstLevelResTypeMap">
-  		select  id,mtype,code from x_resourcetype where flag =false and flag =false and pid = 0 order by displayindex
+  		select id,mtype,code from x_resourcetype where flag =false and flag =false and pid = 0 order by displayindex
   </select>
 </mapper>

@@ -52,7 +52,9 @@ public class TermSubjectController {
                 long termId = Long.parseLong(request.getParameter("termId").toString().trim());
                 subjects = termSubjectService.getAllSubjectsByTerm(termId);
                 exception = CustomException.SUCCESS;
-            }
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 
         } catch (Exception e) {
             // TODO: handle exception

@@ -80,4 +80,20 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * 自建资源 ： 查询全部一级资源类型
      */
     public List<FirstLevelResType> getAllFirstLevelResType();
+    
+    
+    /**
+     * 系统资源：根据资源库id，得到父类型的所有子类型及其自身，e备课
+     * 
+     * @param poolId
+     * @param MType
+     * @return
+     */
+    public List<Integer> getTypesByPMTypeAndPool_EPrepare(@Param("poolId") long poolId, @Param("MType") int MType,@Param("removeTypeIds")int[] removeTypeIds);
+    
+    /**
+     * 
+     * 区本校本资源：查询父类型及其所有子类型，e备课
+     */
+    public List<Integer> getDisResTypesByPMType_EPrepare(@Param("MType") int MType,@Param("removeTypeIds")int[] removeTypeIds);
 }
