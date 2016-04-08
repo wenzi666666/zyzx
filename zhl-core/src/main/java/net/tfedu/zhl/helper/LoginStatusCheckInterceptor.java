@@ -125,7 +125,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                 	if(us!=null){
                         currentUserId = us.getUserId();
                 	}
-                    logger.debug("------------currentUserId----------"+currentUserId;
+                    logger.debug("------------currentUserId----------"+currentUserId);
 
             	}
             }
