@@ -19,7 +19,62 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
  *
  */
 public class JPrepareConstant {
+	
+	
+	
+	
+	/**
+	 * 日志类型： 自建资源
+	 */
+	public static final String LOGTYPE_ASSET = "asset";
+	
+	
+	/**
+	 * 日志类型： 自建资源
+	 */
+	public static final String LOGTYPE_RESOURCE = "resource";
+	
+	/**
+	 * 日志类型： 共享资源
+	 */
+	public static final String LOGTYPE_SHARE_RES = "sharedres";
+	
 
+	/**
+	 * 日志类型： 区本资源
+	 */
+	public static final String LOGTYPE_DISTRICT_RES = "districtres";
+	
+	/**
+	 * 日志类型： 校本资源
+	 */
+	public static final String LOGTYPE_SCHOOL_RES = "schoolres";
+	
+	
+	 /**
+     * 将fromFlag转换成 备课夹中的conttype 1自建资源，2共享资源,3校本资源,4区本资源
+     * 
+     * @param conttype
+     * @return
+     */
+    public static String getLogTypeByFromflag(Integer fromFlag) {
+    	 switch (fromFlag) {
+         case fromFlag_sysRes:
+             return LOGTYPE_RESOURCE;
+         case fromFlag_localRes:
+             return LOGTYPE_ASSET;
+         case fromFlag_sharedRes:
+             return LOGTYPE_SHARE_RES;
+         case fromFlag_schoolRes:
+             return LOGTYPE_SCHOOL_RES;
+         case fromFlag_districtRes:
+             return LOGTYPE_DISTRICT_RES;
+         default:
+             return null;
+         }
+    }
+	
+	
     /**
      * 本地资源
      */
@@ -129,9 +184,14 @@ public class JPrepareConstant {
     public static void resetResourceViewUrl(List<ResourceSimpleInfo> list, String resServiceLocal,
             String currentResService) {
 
-        for (int i = 0; i < list.size(); i++) {
-            resetResourceViewUrl(list.get(i), resServiceLocal, currentResService);
-        }
+    	
+    	for (ResourceSimpleInfo resourceSimpleInfo : list) {
+    		if(null == resourceSimpleInfo){
+    			continue;
+    		}
+            resetResourceViewUrl(resourceSimpleInfo, resServiceLocal, currentResService);
+		}
+    	
 
     }
 
@@ -140,11 +200,14 @@ public class JPrepareConstant {
      * 
      * @param list
      */
-    public static void resetResourceDownLoadUrl(List<ResourceSimpleInfo> list, String resServiceLocal) {
+    public static void resetResourceDownLoadForZip(List<ResourceSimpleInfo> list, String resServiceLocal) {
         for (int i = 0; i < list.size(); i++) {
-            resetResourceDownLoadUrl(list.get(i), resServiceLocal);
+            resetResourceDownLoadForZip(list.get(i), resServiceLocal);
         }
     }
+    
+    
+    
 
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径
@@ -164,13 +227,60 @@ public class JPrepareConstant {
 
         info.setPath(path);
     }
+    
+    
+	/**
+ * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径
+ * 用于打包下载
+ * @param info
+ */
+public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String resServiceLocal){
+    String rescode = info.getRescode();
+    Integer fromflag= info.getFromflag();		
+    Boolean isnet = info.getIsnet();	    
+    Boolean isdwj= info.getIsdwj();	    
+    String path = info.getPath();
+
+    //如果是系统资源 
+    if(fromflag==fromFlag_sysRes){
+		String flag = path.substring(path.lastIndexOf("."),path.length());
+		
+		
+		//如果是加密swf\mp4的文件
+		if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+			String  url = "";
+			if(isdwj){
+				String _path =  path.replaceAll("\\\\", "/");
+				String _name = _path.substring(_path.lastIndexOf("/")+1,_path.length());
+				_path = _path.substring(0,_path.lastIndexOf("/"));
+				url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name,_path, resServiceLocal);
+			}else{
+				url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(path, "", resServiceLocal);
+			}
+			//获取exe文件的路径
+			String result =  HttpUtil.PostHttpWebRequest(url);
+			HashMap obj =  JSONObject.parseObject(result, HashMap.class);
+			path = (String)obj.get("filename");
+		}else{
+			if(isdwj){
+				path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
+			}
+		}
+    }
+	
+    
+    //重新赋值path
+    info.setPath(path);
+	
+}
 
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径 用于打包下载
      * 
      * @param info
+     * @param currentResService 
      */
-    public static void resetResourceDownLoadUrl(ResourceSimpleInfo info, String resServiceLocal) {
+    public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
         Boolean isnet = info.getIsnet();
@@ -189,23 +299,37 @@ public class JPrepareConstant {
                     String _name = _path.substring(_path.lastIndexOf("/") + 1, _path.length());
                     _path = _path.substring(0, _path.lastIndexOf("/"));
                     url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name, _path, resServiceLocal);
+                    path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, _name, _path);
                 } else {
-                    url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(path, "", resServiceLocal);
+                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
                 }
-                // 获取exe文件的路径
-                String result = HttpUtil.PostHttpWebRequest(url);
-                HashMap obj = JSONObject.parseObject(result, HashMap.class);
-                path = (String) obj.get("filename");
             } else {
                 if (isdwj) {
                     path = path.substring(0, path.indexOf(rescode)) + File.separator + rescode + ".zip";
                 }
+                
+                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
             }
+        }else{
+        	path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
         }
-
+        
+		path = path.replace(resServiceLocal, currentResService);
         // 重新赋值path
         info.setPath(path);
 
     }
+
+    /**
+     * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径 
+     * @param info
+     */
+	public static void resetResourceDownLoadURLWeb(List<ResourceSimpleInfo> list,
+			String resServiceLocal, String currentResService) {
+		for (int i = 0; i < list.size(); i++) {
+			resetResourceDownLoadUrlWeb(list.get(i), resServiceLocal,currentResService);
+        }
+
+	}
 
 }

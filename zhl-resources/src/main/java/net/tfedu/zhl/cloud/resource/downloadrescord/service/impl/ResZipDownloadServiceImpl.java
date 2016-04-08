@@ -74,4 +74,9 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
         return p;
     }
 
+	@Override
+	public void AddDownRecordList(List<ResDownRecord> list) {
+		mapper1.insertList(list);
+	}
+
 }

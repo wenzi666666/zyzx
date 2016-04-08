@@ -20,7 +20,7 @@ public class ResDownRecord implements Serializable {
     private Long resid;
 
     /**
-     * 下载资源的来源 0 系统资源 1 区校资源 2 共享资源
+     * 下载资源的来源 0 系统资源 1 自建资源 2 共享资源 3校本资源,4区本资源 
      */
     private Integer fromflag;
 

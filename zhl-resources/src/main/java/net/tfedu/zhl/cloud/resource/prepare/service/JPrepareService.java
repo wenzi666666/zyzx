@@ -122,6 +122,29 @@ public interface JPrepareService {
      * @return
      */
     public List<ResourceSimpleInfo> getResourceSimpleInfo(String[] ids, String[] fromFlags);
+    
+    
+    
+    /**
+     * 预览使用 
+     * 根据资源fromflag获取相应的 info
+     * 
+     * @param ids
+     * @param fromFlags
+     * @return
+     */
+    public List<ResourceSimpleInfo> getResourceSimpleInfoForView(String[] ids, String[] fromFlags,Long userId);
+    
+    
+    /**
+     * 下载使用 
+     * 根据资源fromflag获取相应的 info
+     * 
+     * @param ids
+     * @param fromFlags
+     * @return
+     */
+    public List<ResourceSimpleInfo> getResourceSimpleInfoForDownload(String[] ids, String[] fromFlags,Long userId);
 
     /**
      * 分页获取我的备课资源

@@ -42,4 +42,21 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
             @Param("fileFormat") String fileFormat, @Param("resourceIds") List<Long> resourceIds,
             @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy, @Param("typeIds") List<Integer> typeIds,@Param("searchWord")String searchWord);
 
+    
+    /**
+     * 更新点击次数（+1）
+     * @param rescode
+     */
+    public void updateClickTime(@Param("rescode") String rescode);
+    
+    
+    /**
+     * 更新下载次数（+1）
+     * @param rescode
+     */
+    public void updateDownloadTime(@Param("rescode") String rescode);
+    
+    
+    
+    
 }

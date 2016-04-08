@@ -521,7 +521,7 @@ public class PrepareController {
                     } else {
                         List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfo(ids, fromFlag);
                         // 将原始的path重置为可用对应的下载文件的路径
-                        JPrepareConstant.resetResourceDownLoadUrl(list, resServiceLocal);
+                        JPrepareConstant.resetResourceDownLoadForZip(list, resServiceLocal);
 
                         ResZipDownRecord record = new ResZipDownRecord();
                         record.setUserid(userId);
@@ -698,10 +698,78 @@ public class PrepareController {
                     if (ids.length == 0 || fromFlag.length != ids.length) {
                         exception = CustomException.PARAMSERROR;
                     } else {
-                        List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfo(ids, fromFlag);
+                        List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForView(ids, fromFlag,currentUserId);
                         // 将原始的path重置为可用的web链接
 
                         JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResService);
+                        data = list;
+                        exception = CustomException.SUCCESS;
+                    }
+                }
+
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+
+        } catch (Exception e) {
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            // 如果是普通的异常
+            if (exception.getStatus() == 500) {
+                e.printStackTrace();
+            }
+        } finally {
+            result.setCode(exception.getCode());
+            result.setMessage(exception.getMessage());
+            result.setData(data == null ? "" : data);
+            result.setSign("");
+        }
+        return result;
+
+    }
+    
+    
+    /**
+     * 
+     * 获取资源 的播放地址
+     * 
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/v1.0/res_down", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getDown(HttpServletRequest request, HttpServletResponse response) {
+        String resIds = request.getParameter("resIds");
+        String fromFlags = request.getParameter("fromFlags");
+
+        String resServiceLocal = (String) request.getAttribute("resServiceLocal");
+        String currentResService = (String) request.getAttribute("currentResPath");
+
+        // 返回json的结果对象
+        ResultJSON result = new ResultJSON();
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        // 返回
+        Object data = null;
+
+        try {
+
+            if (currentUserId != null && exception == null) {
+                // 参数传递有问题
+                if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)) {
+                    exception = CustomException.PARAMSERROR;
+                } else {
+                    String ids[] = resIds.split(",");
+                    String fromFlag[] = fromFlags.split(",");
+                    if (ids.length == 0 || fromFlag.length != ids.length) {
+                        exception = CustomException.PARAMSERROR;
+                    } else {
+                        List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForDownload(ids, fromFlag,currentUserId);
+                        // 将原始的path重置为可用的web链接
+
+                        JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResService);
                         data = list;
                         exception = CustomException.SUCCESS;
                     }

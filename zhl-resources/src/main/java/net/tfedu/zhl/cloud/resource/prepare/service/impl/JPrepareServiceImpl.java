@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
+import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResDownRecord;
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareContentMapper;
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareMapper;
 import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
@@ -17,10 +19,15 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
+import net.tfedu.zhl.sso.userlog.entity.JUserlog;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,11 +38,40 @@ import com.github.pagehelper.PageInfo;
 @Service("jPrepareService")
 public class JPrepareServiceImpl implements JPrepareService {
 
+	/**
+	 * 备课夹
+	 */
     @Autowired
     JPrepareMapper mapper;
 
+	/**
+	 * 备课夹内容
+	 */
     @Autowired
     JPrepareContentMapper contMapper;
+    
+	/**
+	 * 区校本资源
+	 */    
+    @Autowired
+    DistrictResMapper disResMapper; 
+    
+    
+    /**
+     * 系统资源
+     */
+    @Autowired
+    SysResourceMapper sysResMapper;
+    
+    /**
+     * 下载
+     */
+    @Autowired
+    ResDownRecordMapper downMapper;
+    
+    
+    @Autowired
+    JUserlogMapper logMapper;
 
     @Override
     public JPrepare addPrepare(JPrepare obj) {
@@ -254,5 +290,121 @@ public class JPrepareServiceImpl implements JPrepareService {
         }
         return list;
     }
+
+	@Override
+	public List<ResourceSimpleInfo> getResourceSimpleInfoForView(String[] ids,
+			String[] fromFlags,Long userId) {
+		// TODO Auto-generated method stub		
+		List<ResourceSimpleInfo>  list = this.getResourceSimpleInfo(ids, fromFlags);
+		
+		List<JUserlog> logList = new ArrayList<JUserlog>();
+		
+		Date time = Calendar.getInstance().getTime();
+		
+		String logTypeCode = "";
+		
+		//增加浏览记录、点击数  自建资源不处理
+		for (ResourceSimpleInfo resourceSimpleInfo : list) {
+
+			if(null == resourceSimpleInfo){
+				continue;
+			}
+			
+			
+			
+			String rescode = resourceSimpleInfo.getRescode();
+			switch(resourceSimpleInfo.getFromflag()){
+			
+			
+			//校本资源
+			case JPrepareConstant.fromFlag_schoolRes:
+				disResMapper.updateClickTime(rescode);
+				
+				break;
+			//区本资源
+			case JPrepareConstant.fromFlag_districtRes:
+				disResMapper.updateClickTime(rescode);
+				break;	
+			//系统资源
+			case JPrepareConstant.fromFlag_sysRes:
+				sysResMapper.updateClickTime(rescode);
+				break;	
+			}			
+			
+			
+			String  opertypecode = "view";
+			
+			JUserlog log = new JUserlog();
+			log.setUserid(userId);
+			log.setDownflag(false);
+			log.setCreatetime(time);
+			log.setAlltestnum(0);
+			log.setCorrtestnum(0);
+			log.setDuration("");
+			log.setFlag(false);
+			log.setIsflag(0);
+			log.setLogtypecode(JPrepareConstant.getLogTypeByFromflag(resourceSimpleInfo.getFromflag()));
+			log.setObjid(resourceSimpleInfo.getResid());
+			log.setObjname(resourceSimpleInfo.getTitle());
+			log.setOpertypecode(opertypecode);
+			log.setSubjectid(0l);
+			logList.add(log);
+		}
+		
+		if(logList.size()>0){
+			//批量插入浏览日志
+			logMapper.insertList(logList);
+		}
+		return list;
+	}
+
+	@Override
+	public List<ResourceSimpleInfo> getResourceSimpleInfoForDownload(
+			String[] ids, String[] fromFlags ,Long userId) {
+		// TODO Auto-generated method stub
+		List<ResourceSimpleInfo>  list = this.getResourceSimpleInfo(ids, fromFlags);		
+		List<ResDownRecord> downList =new ArrayList<ResDownRecord>();
+		Date time = Calendar.getInstance().getTime();
+		//增加下载记录、下载数   自建资源不处理
+		for (ResourceSimpleInfo resourceSimpleInfo : list) {
+			if(null == resourceSimpleInfo){
+				continue;
+			}
+			String rescode = resourceSimpleInfo.getRescode();
+
+			switch(resourceSimpleInfo.getFromflag()){			
+			//校本资源
+			case JPrepareConstant.fromFlag_schoolRes:
+				disResMapper.updateDownloadTime(rescode);
+				break;
+			//区本资源
+			case JPrepareConstant.fromFlag_districtRes:
+				disResMapper.updateDownloadTime(rescode);
+				break;	
+			//系统资源
+			case JPrepareConstant.fromFlag_sysRes:
+				sysResMapper.updateDownloadTime(rescode);				
+				break;					
+			}	
+			
+			//自建资源不处理
+			if(JPrepareConstant.fromFlag_localRes!=resourceSimpleInfo.getFromflag()){
+				//准备添加下载记录
+				ResDownRecord  record = new ResDownRecord();
+				record.setUserid(userId);
+				record.setFromflag(resourceSimpleInfo.getFromflag());
+				record.setResid(resourceSimpleInfo.getResid());
+				record.setDowndate(time);
+				record.setDowntime(time);
+				downList.add(record);
+			}
+		}
+		if(downList.size()>0){
+			//批量插入下载记录
+			downMapper.insertList(downList);
+		}
+		
+		return list;
+	}
 
 }

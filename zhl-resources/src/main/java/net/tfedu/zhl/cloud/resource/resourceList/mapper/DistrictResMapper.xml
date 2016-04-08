@@ -252,4 +252,16 @@ where a.id =#{resId} and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1
 	where res.id = #{resId} and nav.flag = false  
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
+ 
+ 
+ 
+ <!-- 更新点击次数（+1） -->
+ <update id="updateClickTime" parameterType="String">
+	 update z_districts_resource  set ClickTimes = ClickTimes+1  where rescode =#{rescode}
+ </update>
+ 
+ <!-- 更新下载次数（+1） --> 
+ <update id="updateDownloadTime" parameterType="String">
+ 	update z_districts_resource  set DLoadTimes = DLoadTimes+1  where rescode =#{rescode}
+ </update>
 </mapper>

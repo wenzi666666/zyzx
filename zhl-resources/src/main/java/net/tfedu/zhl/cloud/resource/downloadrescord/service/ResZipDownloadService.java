@@ -1,5 +1,8 @@
 package net.tfedu.zhl.cloud.resource.downloadrescord.service;
 
+import java.util.List;
+
+import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
@@ -45,5 +48,13 @@ public interface ResZipDownloadService {
      * @return
      */
     public Pagination getMydownload(Long userId, Long unifyTypeId, String fileFormat, Integer page, Integer prePage);
+    
+    
+    
+    /**
+     * 批量添加下载记录
+     * @param list
+     */
+    public void AddDownRecordList(List<ResDownRecord> list);
 
 }
