@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
@@ -49,7 +50,10 @@ public class TermSubjectController {
 
             if (exception == null && currentUserId != null) {
                 // 接收到的termId参数
-                long termId = Long.parseLong(request.getParameter("termId").toString().trim());
+            	long termId = 0;
+            	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
+            		termId = Long.parseLong(request.getParameter("termId").toString().trim());
+            	}
                 subjects = termSubjectService.getAllSubjectsByTerm(termId);
                 exception = CustomException.SUCCESS;
             } else {

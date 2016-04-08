@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.service.BookService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -60,7 +61,12 @@ public class BooksController {
         try {
 
             if (currentUserId != null && exception == null) {
-                long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+            	
+            	long pnodeId = 0;
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
+            		pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+            	}
 
                 // 根据所属版本和产品编码，查询所有的教材
                 books = bookService.getAllBooks(pnodeId, proCode);

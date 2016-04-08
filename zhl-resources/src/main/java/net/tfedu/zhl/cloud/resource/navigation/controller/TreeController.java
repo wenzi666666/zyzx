@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -55,7 +56,10 @@ public class TreeController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
                 // 接收传递过来的父结点id
-                Long pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+                long pnodeId = 0;
+                if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
+                	 pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+            	}
 
                 // 加载父结点的所有子结点（递归）
                 resultNodes = treeService.geTreeNodes(pnodeId);

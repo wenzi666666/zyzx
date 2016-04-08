@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -46,9 +47,14 @@ public class DistrictResFormatController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 资源类型id
-                String tfcode = request.getParameter("tfcode");
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+            	String tfcode = "";
+            	int fromFlag = 3;
+            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+            		tfcode = request.getParameter("tfcode").toString().trim();
+            	}
+                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                }
 
                 formats = resFormatService.getDisResFormats(tfcode, fromFlag);
 

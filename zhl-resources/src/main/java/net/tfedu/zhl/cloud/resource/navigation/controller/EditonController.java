@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -47,8 +48,16 @@ public class EditonController {
         List<JSyscourse> editions = null;
         try {
             if (currentUserId != null && exception == null) {
-                long termId = Long.parseLong(request.getParameter("termId").toString().trim());
-                long subjectId = Long.parseLong(request.getParameter("subjectId").toString().trim());
+            	 
+            	long termId = 0;
+            	long subjectId = 0;
+            	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
+            		termId = Long.parseLong(request.getParameter("termId").toString().trim());
+            	}
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("subjectId"))){
+            		subjectId = Long.parseLong(request.getParameter("subjectId").toString().trim());
+            	}
 
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("termId", termId);

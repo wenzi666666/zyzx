@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -51,10 +52,14 @@ public class DistrictResTypeController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 传递参数
-                String tfcode = request.getParameter("tfcode");
-                // 3校本 4区本
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+            	String tfcode = "";
+            	int fromFlag = 3;
+            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+            		tfcode = request.getParameter("tfcode").toString().trim();
+            	}
+                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+                }
                 
                 if(request.getParameter("isEPrepare") != null){//而备课
                 	//新的类型查询方法（去除一些类型）

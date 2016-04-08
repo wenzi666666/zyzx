@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -50,12 +51,17 @@ public class SysResTypeController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
-                // 传递的三个参数
-                long poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-
-                // 当前课程结点的tfcode
-                String pTfcode = request.getParameter("tfcode");
-                
+            	String pTfcode = "";
+            	
+            	long poolId = 0;
+            	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
+            		pTfcode = request.getParameter("pTfcode").toString().trim();
+            	}
+               
+                if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
+                	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
+                }
+            	
                 if(request.getParameter("isEPrepare") != null){//而备课
                 	//新的类型查询方法（去除一些类型）
                 	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, SysFrom.removeTypeIds);

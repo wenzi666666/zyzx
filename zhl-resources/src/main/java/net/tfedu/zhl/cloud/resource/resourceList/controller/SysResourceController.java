@@ -6,21 +6,22 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 系统资源 列表 controller
@@ -66,28 +67,44 @@ public class SysResourceController {
             	//获取文件服务器的访问url 
 				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
 				String currentResPath = (String)request.getAttribute("currentResPath");
-
-                // 资源库id
-                long poolId = Long.parseLong(request.getParameter("poolId"));
-
-                // 类型Id
-                int mTypeId = Integer.parseInt(request.getParameter("mTypeId"));
-
-                // 资源格式
-                String fileFormat = request.getParameter("fileFormat");
-
-                // 课程tfcode
-                String tfcode = request.getParameter("tfcode");
-
-                // 排序方式（综合排序；最多下载；最新发布）
-                int orderBy = Integer.parseInt(request.getParameter("orderBy"));
-
-                // 页码
-                int page = Integer.parseInt(request.getParameter("page"));
-
-                // 每页的记录数
-                int perPage = Integer.parseInt(request.getParameter("perPage"));
-                
+				 // 资源库id
+				long poolId = 0;
+				// 类型Id
+				int mTypeId = 0;
+				 // 资源格式
+				String fileFormat= "全部";
+				 // 课程tfcode
+				String tfcode = "";
+				// 排序方式（综合排序；最多下载；最新发布）
+				int orderBy = 0;
+				// 页码
+				int page = 1;
+				 // 每页的记录数
+				int perPage = 10;
+				
+				if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
+					poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("mTypeId"))){
+					mTypeId = Integer.parseInt(request.getParameter("mTypeId").toString().trim());
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("fileFormat"))){
+					fileFormat = request.getParameter("fileFormat").toString().trim();
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+					tfcode = request.getParameter("tfcode").toString().trim();
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
+					Integer.parseInt(request.getParameter("orderBy").toString().trim());
+					
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("page"))){
+					Integer.parseInt(request.getParameter("page").toString().trim());
+				}
+				if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
+					perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
+				}
+				
                
                 if(request.getParameter("isPreview") != null){ //若当前是 预览页面的资源推荐列表（需要将当前预览的这条资源显示为第一个）
                 	//要显示在查询结果第一个位置的资源id
