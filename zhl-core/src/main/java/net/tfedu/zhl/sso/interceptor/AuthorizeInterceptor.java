@@ -69,17 +69,33 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
 
         // 4判断是否有权限
         Set<String> funcs = us.getFuncPaths();
-        String url = request.getRequestURI();      
-        
-        if(!funcs.contains(url)){
-            customException = CustomException.WITHOUTAUTH;
+        String url = request.getRequestURI();
+
+        // 直接匹配
+        if (funcs.contains(url)) {
+            request.setAttribute("currentUserId", currentUserId);
+            customException = CustomException.SUCCESS;
             request.setAttribute(CustomException.request_key, customException);
-            return false;
+            return true;
         }
 
+        // 支持*号
+        for (String fun : funcs) {
+            if (fun.indexOf("*") > 0) {
+                if (url.startsWith(fun.substring(0, fun.length() - 1))) {
+                    request.setAttribute("currentUserId", currentUserId);
+                    customException = CustomException.SUCCESS;
+                    request.setAttribute(CustomException.request_key, customException);
+                    return true;
+                }
+            }
+        }
+
+        // 无匹配
         request.setAttribute("currentUserId", currentUserId);
+        customException = CustomException.WITHOUTAUTH;
         request.setAttribute(CustomException.request_key, customException);
-        return true;
+        return false;
     }
 
 }
