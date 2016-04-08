@@ -199,7 +199,7 @@ public class SysResourceServiceImpl implements SysResourceService {
     // e备课，查询系统资源（限制资源类型，资源title模糊查询）
     @Override
 	public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage,String searchWord,int[] removeTypeIds){
+            int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds){
     	 // 查询结果，封装为pagination
         Pagination<SysResourceEntity> pagination = null;
 

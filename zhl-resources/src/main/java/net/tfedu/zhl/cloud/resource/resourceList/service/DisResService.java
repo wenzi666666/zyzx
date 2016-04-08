@@ -39,6 +39,6 @@ public interface DisResService {
 
     // 查询区本、校本资源信息，e备课
     public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,String searchWord,int[] removeTypeIds);
+            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds);
 
 }

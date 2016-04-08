@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
@@ -32,7 +33,8 @@ public class SysResTypeServiceTest extends BaseServiceTestCase {
         long poolId = 4;
         String pTfcode = "RJCZ01010501";
 
-        types = resTypeService.getSysResTypes(poolId, pTfcode);
+       // types = resTypeService.getSysResTypes(poolId, pTfcode);
+        types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, SysFrom.removeTypeIds);
 
         Assert.isTrue(types.size() > 0);
 

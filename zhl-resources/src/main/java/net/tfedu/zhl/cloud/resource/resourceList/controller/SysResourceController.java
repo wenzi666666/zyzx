@@ -95,11 +95,11 @@ public class SysResourceController {
 					tfcode = request.getParameter("tfcode").toString().trim();
 				}
 				if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
-					Integer.parseInt(request.getParameter("orderBy").toString().trim());
+					orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
 					
 				}
 				if(StringUtils.isNotEmpty(request.getParameter("page"))){
-					Integer.parseInt(request.getParameter("page").toString().trim());
+					page = Integer.parseInt(request.getParameter("page").toString().trim());
 				}
 				if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
 					perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
@@ -108,13 +108,19 @@ public class SysResourceController {
                
                 if(request.getParameter("isPreview") != null){ //若当前是 预览页面的资源推荐列表（需要将当前预览的这条资源显示为第一个）
                 	//要显示在查询结果第一个位置的资源id
-                	long resId = Long.parseLong(request.getParameter("resId"));
+                	long resId = 0;
+                	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+                		resId = Long.parseLong(request.getParameter("resId").toString().trim());
+                	}
                 	pagination = sysResourceService.getAllSysRes_Preview(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, resId);
                 	
                 }  else if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
                 	
                 	//模糊查询的关键字
-                	String searchWord = request.getParameter("searchWord");
+                	String searchWord = "";
+                	if(StringUtils.isNotEmpty(request.getParameter("searchWord"))){
+                		searchWord = request.getParameter("searchWord").toString().trim();
+                	}
                 
                 	//e备课查询系统资源
                 	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, SysFrom.removeTypeIds);

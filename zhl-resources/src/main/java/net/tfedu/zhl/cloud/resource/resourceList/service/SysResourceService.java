@@ -31,7 +31,7 @@ public interface SysResourceService {
     
     // e备课，查询系统资源（限制资源类型，资源title模糊查询）
     public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage,String searchWord,int[] removeTypes);
+            int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds);
     
     // 分页查询系统资源信息  e备课
     public Pagination<SysResourceEntity> getSysResList_EPrepare(List<Integer> sys_from, String fileFormat,

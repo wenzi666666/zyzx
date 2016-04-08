@@ -182,7 +182,7 @@ public class ResTypeServiceImpl implements ResTypeService {
      * @return
      */
     @Override
-    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,int[] removeTypeIds) {
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,List<Integer> removeTypeIds) {
         // 定义类型结果集
         List<ResType> types = new ArrayList<ResType>();
 
@@ -207,7 +207,7 @@ public class ResTypeServiceImpl implements ResTypeService {
      * 系统资源：查询资源类型，e备课
      */
     @Override
-    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,int[] removeTypeIds) {
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds) {
         List<ResType> types = new ArrayList<ResType>();
 
         // 传递参数
