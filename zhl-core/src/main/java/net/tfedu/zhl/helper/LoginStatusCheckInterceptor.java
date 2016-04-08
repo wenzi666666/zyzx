@@ -55,13 +55,13 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
         String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
 
-        logger.debug("------------getHost---------getInitParameter----------");
         // 应用
         String host = request.getServletContext().getInitParameter("host");
         String host_local = request.getServletContext().getInitParameter("hostLocal");
         // 系统资源服务器地址
         String resService = request.getServletContext().getInitParameter("resService");
         String resServiceLocal = request.getServletContext().getInitParameter("resServiceLocal");
+        logger.debug("------------getHost---------getInitParameter----------");
 
         // 当前文件 资源服务器地址
         String currentResPath = "";
