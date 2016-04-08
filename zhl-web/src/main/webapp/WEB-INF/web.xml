@@ -27,6 +27,10 @@
 	<listener>
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>	
+	<!-- 禁用session -->
+    <listener>
+        <listener-class>net.tfedu.zhl.cloud.utils.http.SessionKiller</listener-class>
+    </listener>
 	<!-- Spring -->
 
 	<!-- 配置log4j配置文件路径 -->
