@@ -128,5 +128,17 @@ public interface ZAssetService {
      */
 	public Pagination getMyReviewComment(Long userId, Integer reviewType,Integer page,Integer perPage);
 	
+	/**
+	 * 批量复制    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	public void patchCopyAsset(List<Long> resIds,String tfcode);
 	
+	/**
+	 * 批量剪切    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	public void patchCutAsset(List<Long> resIds,String tfcode);
 }

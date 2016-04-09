@@ -434,5 +434,33 @@ public class ZAssetServiceImpl implements ZAssetService {
 		Pagination p = new PageInfoToPagination().transfer(list);
 		return p ;
 	}
+	
+	/**
+	 * 批量复制    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	@Override
+	public void patchCopyAsset(List<Long> resIds,String tfcode){
+		if(resIds != null || resIds.size() > 0)
+			for(int i = 0; i < resIds.size();i++){
+				long resId = resIds.get(i);
+				assetMapper.copyAsset(resId, tfcode);
+			}
+	}
+	
+	/**
+	 * 批量剪切    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	@Override
+	public void patchCutAsset(List<Long> resIds,String tfcode){
+		if(resIds != null || resIds.size() > 0)
+			for(int i = 0; i < resIds.size();i++){
+				long resId = resIds.get(i);
+				assetMapper.cutAsset(resId, tfcode);
+			}
+	}
 }
 

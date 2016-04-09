@@ -5,7 +5,6 @@ import java.util.List;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
-import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -107,6 +106,20 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	public  List<FirstLevelResType> getResTypeForMyView(Long userId);
 	
 
+	/**
+	 * 剪切一条自建资源
+	 * @param resId
+	 * @param tfcode
+	 */
+	public void cutAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
+	
+	
+	/**
+	 * 复制一条自建资源
+	 * @param resId
+	 * @param tfcode
+	 */
+	public void copyAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
 }
 
 
