@@ -249,12 +249,12 @@
 				)
 	</select> 
 	  
-  <!-- 批量剪切    自建资源 -->
+  <!-- 剪切一条自建资源 -->
   <update id="cutAsset" >
       update z_asset_syscourse set flag = 1 where assetid = #{resId} and tfcode = #{tfcode}
   </update>
   
-  <!-- 批量复制    自建资源 -->
+  <!-- 复制一条自建资源 -->
   <insert id="copyAsset" >
       insert into z_asset_syscourse(assetid,tfcode,flag) VALUES(#{resId},#{tfcode},0);
   </insert>
