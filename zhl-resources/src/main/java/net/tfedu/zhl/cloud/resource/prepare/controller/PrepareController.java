@@ -9,7 +9,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
@@ -769,9 +768,13 @@ public class PrepareController {
                         List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForDownload(ids, fromFlag,currentUserId);
                         // 将原始的path重置为可用的web链接
 
-                        JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResService);
-                        data = list;
+                        if(list != null && list.size() > 0){
+                        	 JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResService);
+                             data = list;
+                            
+                        }
                         exception = CustomException.SUCCESS;
+                       
                     }
                 }
 
