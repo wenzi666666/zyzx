@@ -10,12 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
@@ -27,6 +21,12 @@ import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.service.UserService;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -308,7 +308,7 @@ public class AssetController {
 				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
 				String currentResPath = (String)request.getAttribute("currentResPath");
 
-				long userId = currentUserId;
+				long userId = 390440126;
 				long unifyTypeId = 0 ;
 				int page = 1; 
 				int prePage = 10;
@@ -318,14 +318,19 @@ public class AssetController {
 				String _prePage = request.getParameter("perPage");
 				String fileFormat = request.getParameter("fileFormat");
 				if(StringUtils.isNotEmpty(_unifyTypeId)){
-					unifyTypeId  = Long.parseLong(_unifyTypeId);
+					unifyTypeId  = Long.parseLong(_unifyTypeId.toString().trim());
 				}
 				if(StringUtils.isNotEmpty(_page)){
-					page  = Integer.parseInt(_page);
+					page  = Integer.parseInt(_page.toString().trim());
 				}
 				if(StringUtils.isNotEmpty(_prePage)){
-					prePage  = Integer.parseInt(_prePage); 
+					prePage  = Integer.parseInt(_prePage.toString().trim()); 
 				}
+				
+				if(StringUtils.isNotEmpty(fileFormat)){
+					fileFormat  = fileFormat.toString().trim(); 
+				}
+				
 				Pagination page_result = assetService.queryMyAssets(userId, unifyTypeId, fileFormat, page, prePage);
 				
 				JPrepareContentViewUtil.convertToPurpose_Asset(page_result.getList(), resServiceLocal, currentResPath);

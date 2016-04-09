@@ -6,13 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
-
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetValuateMapper;
@@ -37,6 +30,13 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 @Service("zAssetService")
 public class ZAssetServiceImpl implements ZAssetService {
@@ -419,5 +419,20 @@ public class ZAssetServiceImpl implements ZAssetService {
 	}
 
 
+    /**
+     * 分页获取我的资源评论
+     * @param userId
+     * @param reviewType
+     * @param page
+     * @param perPage
+     * @return
+     */
+	@Override
+	public Pagination getMyReviewComment(Long userId, Integer reviewType,Integer page,Integer perPage) {
+		PageHelper.startPage(page, perPage);
+		List<ResourceReview> list  = reviewMapper.getMyReviewComment(userId, reviewType);
+		Pagination p = new PageInfoToPagination().transfer(list);
+		return p ;
+	}
 }
 

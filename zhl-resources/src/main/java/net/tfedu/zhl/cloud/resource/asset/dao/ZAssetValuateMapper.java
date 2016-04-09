@@ -2,11 +2,11 @@ package net.tfedu.zhl.cloud.resource.asset.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetValuate;
 import net.tfedu.zhl.helper.CoreMapper;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
 
@@ -35,5 +35,15 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
      * @return
      */
     public Integer getUnReviewedNum(Long userId);
+    
+    /**
+     * 查询用户的 评论
+     * 
+     * @param userId
+     * @param reviewType
+     *            评论级别 0 全部 1 好 2 中3 差
+     * @return
+     */
+    public List<ResourceReview> getMyReviewComment(@Param("userId") Long userId, @Param("reviewType") Integer reviewType);
 
 }

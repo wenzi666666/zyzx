@@ -20,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageInfo;
 
@@ -335,7 +334,7 @@ public class PersonalController {
 	
 	
 	/**
-	 * 分页获取分页我获取的资源评论
+	 * 分页我获取的资源评论
 	 * @param request
 	 * @param response
 	 * @return
@@ -642,6 +641,68 @@ public class PersonalController {
 	
 	
 
+	/**
+	 * 分页我获取的资源评论
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/resource/userReviewComment",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getMyReviewComment(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		try{
+			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+
+				
+				long userId = currentUserId;
+				int reviewType  = 0 ;
+				int page = 1; 
+				int prePage = 10;
+				
+				String _reviewType  = request.getParameter("reviewType");
+				String _page = request.getParameter("page");
+				String _prePage = request.getParameter("perPage");
+				if(StringUtils.isNotEmpty(_reviewType)){
+					reviewType   = Integer.parseInt(_reviewType);
+				}
+				if(StringUtils.isNotEmpty(_page)){
+					page  = Integer.parseInt(_page);
+				}
+				if(StringUtils.isNotEmpty(_prePage)){
+					prePage  = Integer.parseInt(_prePage); 
+				}
+				Pagination page_result = assetService.getMyReviewComment(userId, reviewType, page, prePage);
+				JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
+				data = page_result;
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
+	}
 	
 	
 	

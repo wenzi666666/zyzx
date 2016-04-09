@@ -118,4 +118,15 @@ public interface ZAssetService {
 	public List<FirstLevelResType> getResTypeForPersonalTab(String tabCode,Long userId);
 	
 	
+	 /**
+     * 分页获取我的资源评论
+     * @param userId
+     * @param reviewType
+     * @param page
+     * @param perPage
+     * @return
+     */
+	public Pagination getMyReviewComment(Long userId, Integer reviewType,Integer page,Integer perPage);
+	
+	
 }
