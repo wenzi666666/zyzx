@@ -105,14 +105,6 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 */
 	public  List<FirstLevelResType> getResTypeForMyView(Long userId);
 	
-
-	/**
-	 * 剪切一条自建资源
-	 * @param resId
-	 * @param tfcode
-	 */
-	public void cutAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
-	
 	
 	/**
 	 * 复制一条自建资源
@@ -120,6 +112,13 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param tfcode
 	 */
 	public void copyAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
+	
+	/**
+	 * 删除一条自建资源
+	 * @param resId
+	 * @param tfcode
+	 */
+	public void delAsset(@Param("resId")long resId);
 }
 
 

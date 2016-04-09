@@ -452,14 +452,17 @@ public class ZAssetServiceImpl implements ZAssetService {
 	/**
 	 * 批量剪切    自建资源
 	 * @param resIds
-	 * @param tfcode
+	 * @param tfcode 要剪切到的目标tfcode
 	 */
 	@Override
 	public void patchCutAsset(List<Long> resIds,String tfcode){
 		if(resIds != null || resIds.size() > 0)
 			for(int i = 0; i < resIds.size();i++){
 				long resId = resIds.get(i);
-				assetMapper.cutAsset(resId, tfcode);
+				//首先，将该资源从所有结点下删除
+				assetMapper.delAsset(resId);
+				//然后，复制资源到目标结点
+				assetMapper.copyAsset(resId, tfcode);
 			}
 	}
 }
