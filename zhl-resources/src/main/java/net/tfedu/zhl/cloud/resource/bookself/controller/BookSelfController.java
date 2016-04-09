@@ -58,9 +58,17 @@ public class BookSelfController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				
+				//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+				
 				long userId = currentUserId;
 				String title = request.getParameter("title");
-				data =  bookSelfService.getAllMyBook(userId,title);
+				
+				List<BookSelfView> list = bookSelfService.getAllMyBook(userId,title);
+				//增加对我的书架缩略图处理
+				BookSelfImgPathConvert.convert(list, resServiceLocal, currentResPath);		
+				data = list;
 				exception = CustomException.SUCCESS;
 			}else{
             	exception = CustomException.INVALIDACCESSTOKEN;
