@@ -56,7 +56,10 @@ public class DisResServiceImpl implements DisResService {
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
-        	list.get(i).setThumbnailpath(thumbnailpath.replaceAll("/", "\\"));
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
+        	}
         	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
@@ -113,7 +116,10 @@ public class DisResServiceImpl implements DisResService {
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
-        	list.get(i).setThumbnailpath(thumbnailpath.replaceAll("/", "\\"));
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
+        	}
         	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
@@ -167,7 +173,10 @@ public class DisResServiceImpl implements DisResService {
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
-        	list.get(i).setThumbnailpath(thumbnailpath.replaceAll("/", "\\"));
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
+        	}
         	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();

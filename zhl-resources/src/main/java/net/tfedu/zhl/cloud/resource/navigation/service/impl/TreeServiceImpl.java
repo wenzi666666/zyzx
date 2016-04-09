@@ -82,8 +82,10 @@ public class TreeServiceImpl implements TreeService {
     public List<TreeNode> geTreeNodes(long pnodeId) {
 
         // 查询父结点下的直接子结点
-        List<TreeNode> topChildren = getTopChildren(pnodeId);
-
+        //List<TreeNode> topChildren = getTopChildren(pnodeId);
+        
+        List<TreeNode> topChildren = jSyscourseMapper.getOneCourseInfo(pnodeId);
+     
         List<TreeNode> resultNodes = new ArrayList<TreeNode>();
 
         // 查询所有的子结点

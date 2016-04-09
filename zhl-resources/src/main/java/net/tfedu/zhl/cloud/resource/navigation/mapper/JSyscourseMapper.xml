@@ -71,5 +71,10 @@
   <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
 		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and flag = false order by orderNum
   </select>
+  
+  <!-- 根据id，查询一课程信息  -->
+  <select id="getOneCourseInfo" parameterType="Long" resultMap="TopChildrenResultMap">
+		select id,name label,tfcode from j_syscourse where id =#{id} and flag = false order by orderNum
+  </select>
  
 </mapper>

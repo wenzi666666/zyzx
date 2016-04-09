@@ -23,4 +23,7 @@ public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
 
     // 根据父结点id，查询子结点
     public List<TreeNode> getTopChildrenResultMap(long pnodeId);
+    
+    //根据课程结点id，获取课程的详细信息
+    public List<TreeNode> getOneCourseInfo(long id);
 }
