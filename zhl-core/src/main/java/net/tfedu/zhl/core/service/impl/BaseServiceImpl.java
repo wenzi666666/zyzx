@@ -2,6 +2,8 @@ package net.tfedu.zhl.core.service.impl;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.github.pagehelper.PageHelper;
@@ -21,6 +23,8 @@ import net.tfedu.zhl.helper.ResultJSON;
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
+    protected Logger log = LoggerFactory.getLogger("BaseServiceImpl");
+
     @Autowired
     CoreMapper<T> mapper;
 
@@ -29,43 +33,22 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public ResultJSON get(int id) {
-        try {
-            T data = mapper.selectByPrimaryKey(id);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        T data = mapper.selectByPrimaryKey(id);
+        result = defaultSuccess(data);
         return result;
     }
 
     @Override
     public ResultJSON insert(T c) {
-        try {
-            int data = mapper.insert(c);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        int data = mapper.insert(c);
+        result = defaultSuccess(data);
         return result;
     }
 
     @Override
     public ResultJSON delete(int id) {
-        try {
-            int data = mapper.deleteByPrimaryKey(id);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        int data = mapper.deleteByPrimaryKey(id);
+        result = defaultSuccess(data);
         return result;
     }
 
@@ -74,15 +57,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
     @Override
     public ResultJSON update(T c) {
-        try {
-            int data = mapper.updateByPrimaryKeySelective(c);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        int data = mapper.updateByPrimaryKeySelective(c);
+        result = defaultSuccess(data);
         return result;
     }
 
@@ -91,15 +67,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
     @Override
     public ResultJSON insert(List<T> datas) {
-        try {
-            int data = mapper.insertList(datas);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        int data = mapper.insertList(datas);
+        result = defaultSuccess(data);
         return result;
     }
 
@@ -109,20 +78,13 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public ResultJSON getPage(int pageNum, int pageSize) {
         // 用PageInfo对结果进行包装
-        try {
-            // Page插件必须放在查询语句之前紧挨的第一个位置
-            PageHelper.startPage(pageNum, pageSize);
-            PageHelper.orderBy("id desc");
-            // 这里不能放其它语句
-            List<T> list = mapper.selectAll();
-            PageInfo<T> page = new PageInfo<T>(list);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), page, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        // Page插件必须放在查询语句之前紧挨的第一个位置
+        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.orderBy("id desc");
+        // 这里不能放其它语句
+        List<T> list = mapper.selectAll();
+        PageInfo<T> page = new PageInfo<T>(list);
+        result = defaultSuccess(page);
         return result;
     }
 
@@ -131,15 +93,35 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
     @Override
     public ResultJSON select(T c) {
-        try {
-            List<T> data = mapper.select(c);
-            exception = CustomException.SUCCESS;
-            result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
-        } catch (Exception e) {
-            exception = CustomException.UNCUSTOM;
-            result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
-            e.printStackTrace();
-        }
+        List<T> data = mapper.select(c);
+        result = defaultSuccess(data);
+        return result;
+    }
+
+    /**
+     * 缺省成功处理
+     * 
+     * @param data
+     * @return
+     */
+    protected ResultJSON defaultSuccess(Object data) {
+        exception = CustomException.SUCCESS;
+        result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
+        return result;
+    }
+
+    /**
+     * 缺省错误处理
+     * 
+     * @param data
+     * @param e
+     * @return
+     */
+    protected ResultJSON defaultError(Exception e) {
+        exception = CustomException.UNCUSTOM;
+        result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
+        log.error("出错了：" + e.getMessage());
+        e.printStackTrace();
         return result;
     }
 
