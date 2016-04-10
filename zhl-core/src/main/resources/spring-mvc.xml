@@ -17,7 +17,10 @@
 	<mvc:default-servlet-handler/>
 	
     <!-- 扫描controller（controller层注入） -->
-    <context:component-scan base-package="net.tfedu.zhl.**.controller"/>
+    <context:component-scan base-package="net.tfedu.cloudplat.ebook" use-default-filters="false">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+    </context:component-scan>
 
     <!-- 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的 -->
 
@@ -61,12 +64,6 @@
         </property>  
     </bean>
 
-	<!-- Shiro相关的注解 
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"/>
-	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-	    <property name="securityManager" ref="securityManager"/>
-	</bean>
--->
     <!-- 对模型视图添加前后缀 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>

@@ -20,8 +20,8 @@ public enum CustomException {
     NOTOKEN("NoAccessToken","缺少token令牌",500),
     PARAMSERROR("ParamsERROR","参数异常",500),
     INVALIDACCESSTOKEN("InvalidAccessToken","提供的token无效",404),
-    INVALIDPASSWORD("InvalidPassword","原始密码无效",401)
-    
+    INVALIDPASSWORD("InvalidPassword","原始密码无效",401),
+    DATAACCESS("DataAccessException","数据访问错误",401)
     ;
     
     /**
