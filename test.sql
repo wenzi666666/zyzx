@@ -54,3 +54,39 @@ ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自�
 -- ----------------------------
 -- Records of j_usergroup
 -- ----------------------------
+-- ----------------------------
+-- Table structure for `r_group`
+-- ----------------------------
+DROP TABLE IF EXISTS `r_group`;
+CREATE TABLE `r_group` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `UserId` bigint(20) NOT NULL COMMENT '创建人',
+  `ClassId` bigint(20) NOT NULL DEFAULT '0' COMMENT '班级id',
+  `SchoolId` bigint(20) NOT NULL DEFAULT '0' COMMENT '学校id',
+  `Name` char(100) NOT NULL DEFAULT '' COMMENT '小组名称',
+  `ChkTime` datetime NOT NULL DEFAULT '2012-06-30 00:00:00' COMMENT '审核通过时间',
+  `Flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除，0-----否；1------是',
+  `model` varchar(32) NOT NULL DEFAULT ' ' COMMENT '系统模块',
+  `tag` bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自定义',
+  PRIMARY KEY (`Id`),
+  KEY `group_IDX1` (`UserId`),
+  KEY `group_IDX2` (`ClassId`),
+  KEY `group_IDX3` (`SchoolId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3340106 DEFAULT CHARSET=utf8 COMMENT='角色用的小组表（r_group）';
+
+-- ----------------------------
+-- Records of r_group
+-- ----------------------------
+
+-- ----------------------------
+-- Table structure for `r_groupuser`
+-- ----------------------------
+DROP TABLE IF EXISTS `r_groupuser`;
+CREATE TABLE `r_groupuser` (
+  `Id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '自增id',
+  `UserId` bigint(20) NOT NULL COMMENT '用户id',
+  `GroupId` bigint(20) NOT NULL COMMENT '小组id',
+  `Flag` bit(1) NOT NULL DEFAULT b'0' COMMENT '是否删除；0------否；1-----是',
+  PRIMARY KEY (`Id`),
+  KEY `j_groupuser_idx1` (`GroupId`)
+) ENGINE=InnoDB AUTO_INCREMENT=20740126 DEFAULT CHARSET=utf8 COMMENT='用户角色分组表（r_group_User）';
