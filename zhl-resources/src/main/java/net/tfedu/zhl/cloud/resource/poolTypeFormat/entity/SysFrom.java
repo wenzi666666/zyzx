@@ -10,14 +10,26 @@ public class SysFrom implements Serializable {
      */
     private static final long serialVersionUID = 8160030266758656476L;
 
-    // 资源来源0 平台资源 1 专家辅导资源 2三年无忧资源
+    /**
+     *  资源来源0 平台资源 1 专家辅导资源 2三年无忧资源
+     */
     public static List<Integer> sys_from = new ArrayList<Integer>();
 
-    // e备课，在查询系统资源、区本、校本资源时，当选择类型为全部时，排除掉哪些类型
+    /**
+     *  e备课，在查询系统资源、区本、校本资源时，当选择类型为全部时，排除掉哪些类型
+     */
     public static List<Integer> removeTypeIds = new ArrayList<Integer>();
     
-    //最新资源为最近30天内的资源
+    /**
+     * 最新资源为最近30天内的资源
+     */
     public static int expire = 30;
+    
+    /**
+     * 定义查询教材时的产品编码是zy
+     */
+    public static String proCode = "zy"; 
+    
 
     static {
         sys_from.add(0);
@@ -33,6 +45,5 @@ public class SysFrom implements Serializable {
         removeTypeIds.add(40);
         removeTypeIds.add(61);
     }
-    
-   
+
 }
