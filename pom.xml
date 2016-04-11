@@ -407,9 +407,9 @@
 
 		<!-- additional -->
 		<dependency>
-			<groupId>bitwalker</groupId>
+			<groupId>eu.bitwalker</groupId>
 			<artifactId>UserAgentUtils</artifactId>
-			<version>1.9</version>
+			<version>1.19</version>
 		</dependency>
 	</dependencies>
 </project>
