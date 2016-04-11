@@ -51,6 +51,12 @@ ALTER TABLE `j_funclist`
 ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '系统模块',
 ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自定义';
 
+ALTER TABLE `j_rolegroup`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '系统模块',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自定义';
+
+
+
 -- ----------------------------
 -- Records of j_usergroup
 -- ----------------------------
@@ -90,3 +96,11 @@ CREATE TABLE `r_groupuser` (
   PRIMARY KEY (`Id`),
   KEY `j_groupuser_idx1` (`GroupId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=20740126 DEFAULT CHARSET=utf8 COMMENT='用户角色分组表（r_group_User）';
+
+ALTER TABLE `r_groupuser`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '系统模块',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自定义';
+
+ALTER TABLE `j_roleconfig`
+ADD COLUMN `model`  varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT ' ' COMMENT '系统模块',
+ADD COLUMN `tag`  bit(1) NOT NULL DEFAULT b'0' COMMENT '0-公共,1-子系统自定义';
