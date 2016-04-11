@@ -23,7 +23,7 @@ import net.tfedu.zhl.helper.ResultJSON;
  */
 public class BaseServiceImpl<T> implements BaseService<T> {
 
-    protected Logger log = LoggerFactory.getLogger("BaseServiceImpl");
+    protected static Logger log = LoggerFactory.getLogger("BaseServiceImpl");
 
     @Autowired
     CoreMapper<T> mapper;
