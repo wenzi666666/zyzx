@@ -456,11 +456,16 @@ public class ZAssetServiceImpl implements ZAssetService {
 	 */
 	@Override
 	public void patchCutAsset(List<Long> resIds,String tfcode){
-		if(resIds != null || resIds.size() > 0)
+		if(resIds != null && resIds.size() > 0)
 			for(int i = 0; i < resIds.size();i++){
 				long resId = resIds.get(i);
+				
 				//首先，将该资源从所有结点下删除
-				assetMapper.delAsset(resId);
+				while(true){ //同步
+					assetMapper.delAsset(resId);
+					break;
+				}
+				
 				//然后，复制资源到目标结点
 				assetMapper.copyAsset(resId, tfcode);
 			}
