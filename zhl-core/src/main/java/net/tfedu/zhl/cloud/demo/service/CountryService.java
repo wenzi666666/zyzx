@@ -5,7 +5,7 @@ import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 
 /**
- * demo，请勿删除
+ * 定义业务逻辑的地方
  * 
  * @author bruce
  *

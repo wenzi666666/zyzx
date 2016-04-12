@@ -18,7 +18,12 @@ import net.tfedu.zhl.cloud.utils.datatype.ArrayUtil;
 import net.tfedu.zhl.helper.ResultJSON;
 
 /**
- * demo
+ * 
+ * Controller只处理三件事：
+ * 1、接受参数；
+ * 2、把参数传递给service
+ * 3、返回结果。
+ * 它没有处理业务逻辑的义务
  * @author Bruce
  *
  */

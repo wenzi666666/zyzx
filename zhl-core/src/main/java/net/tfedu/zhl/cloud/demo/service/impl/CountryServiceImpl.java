@@ -14,8 +14,8 @@ import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 
 /**
- * demo，勿删
- * 
+ * 这里才是写业务逻辑的地方
+ * 我们最容易犯的错误，就是在controller里面写业务逻辑
  * @author SKS
  *
  */
