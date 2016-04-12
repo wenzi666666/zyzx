@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
@@ -220,6 +221,76 @@ public class ResPreviewController {
             // 封装结果集
             resultJSON.setCode(exception.getCode());
             resultJSON.setData(courseContent);
+            resultJSON.setMessage(exception.getMessage());
+            resultJSON.setSign("");
+        }
+
+        return resultJSON;
+    }
+	
+	/**
+	 * 资源推荐，将当前预览的资源显示在第一条的位置
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/v1.0/resRecommendation", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getResRecommendation(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        /**
+         * 返回json的结果对象
+         */
+        ResultJSON resultJSON = new ResultJSON();
+
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+       
+        //查询结果
+        List<ResRecommendationEntity> recommendationEntity = new ArrayList<ResRecommendationEntity>();
+        
+        try {
+
+            // 当前用户已经登录系统
+            if (exception == null && currentUserId != null) {
+            	
+            	long resId = 0;
+            	int fromFlag = 0;
+            	String tfcode = "";
+            	int typeId = 0;
+            	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+            		resId = Long.parseLong(request.getParameter("resId").toString().trim());
+            	}
+            	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+            		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+            	}
+            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+            		tfcode = request.getParameter("tfcode").toString().trim();
+            	}
+            	if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+            		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+            	}
+            	
+            	
+            	
+                exception = CustomException.SUCCESS;
+            } else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
+
+        } catch (Exception e) {
+            // TODO: handle exception
+
+            // 捕获异常信息
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            e.printStackTrace();
+        } finally {
+            // 封装结果集
+            resultJSON.setCode(exception.getCode());
+            //resultJSON.setData();
             resultJSON.setMessage(exception.getMessage());
             resultJSON.setSign("");
         }

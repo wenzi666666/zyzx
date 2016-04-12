@@ -457,7 +457,7 @@ public class AssetController {
 
 	
 	/**
-	 * 批量复制我的上传
+	 * 批量复制、批量剪切，我的资源
 	 * @param request
 	 * @param response
 	 * @return
