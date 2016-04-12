@@ -168,11 +168,18 @@ public class ResSearchController {
     		
     		// 若当前用户已经登录系统
             if (exception == null && currentUserId != null) {
-            	// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
-                int fromFlag = Integer.parseInt(request.getParameter("fromFlag"));
+            	// 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
+            	int fromFlag = -1; //默认为全部
+            	
+            	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+            		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+            	}
 
                 // 检索的关键词
-                String searchKeyword = request.getParameter("searchKeyword");
+                String searchKeyword = "";
+                if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
+                	searchKeyword = request.getParameter("searchKeyword").toString().trim();
+                }
                 
                 resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from,currentUserId);
                 

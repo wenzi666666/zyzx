@@ -133,20 +133,17 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-     ,b.DisplayIndex asc,orderNum asc
+     ,a.DisplayIndex asc,orderNum asc
   </select>
   
   <!-- 区本校本资源：预览页面的推荐列表 -->
     <select id="selectDisRes_Preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
 
-    select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+    select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_districts_resource a 
 	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
-	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
-    
     where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
@@ -164,7 +161,7 @@
          and a.scopeId = #{districtId} 
     </if>
    
-     order by b.DisplayIndex asc,orderNum asc
+     order by a.DisplayIndex asc,d.orderNum asc
   </select>
   
    <!-- 区本校本资源：e备课 -->
@@ -213,7 +210,7 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-     ,b.DisplayIndex asc,orderNum asc
+     ,a.DisplayIndex asc,orderNum asc
   </select>
   
    <!-- 资源预览  获取一条区本/校本资源的详细信息 -->

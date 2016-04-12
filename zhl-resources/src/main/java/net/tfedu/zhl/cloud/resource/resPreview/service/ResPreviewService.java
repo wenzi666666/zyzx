@@ -73,4 +73,5 @@ public interface ResPreviewService {
      */
     public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
     
+    ;
 }

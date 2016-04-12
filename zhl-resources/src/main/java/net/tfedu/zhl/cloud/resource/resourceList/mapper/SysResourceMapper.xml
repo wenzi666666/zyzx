@@ -138,14 +138,10 @@
   <!-- 分页查询系统资源信息的所有记录，资源预览的推荐查询  -->
  <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
    
-    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0
-	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
 	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	left join j_syscourse d on  c.StructCode=d.TFcode and d.flag=0 
-	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
-	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
+	left join j_syscourse d on c.StructCode=d.TFcode and d.flag=0 
 	where a.flag = 0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
@@ -171,7 +167,7 @@
                          #{item}
                      </foreach>
      </if>
-     and c.StructCode like  CONCAT(#{tfcode},'%') order by DisplayIndex asc,orderNum asc                 
+     and c.StructCode like  CONCAT(#{tfcode},'%') order by a.DisplayIndex asc,d.orderNum asc                 
                                     
  </select>
  
