@@ -499,7 +499,12 @@ public class AssetController {
 				//批量剪切       自建资源
 				if(StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)){
 				
-					assetService.patchCutAsset(resIds, tfcode);
+					//要剪切到的目标课程结点tfcode
+					String des_tfcode = "";
+					if(StringUtils.isNotEmpty(request.getParameter("des_tfcode"))){
+						des_tfcode = request.getParameter("des_tfcode").toString().trim();
+					}
+					assetService.patchCutAsset(resIds, tfcode, des_tfcode);
 					
 				} else { //批量复制     自建资源
 					assetService.patchCopyAsset(resIds, tfcode);

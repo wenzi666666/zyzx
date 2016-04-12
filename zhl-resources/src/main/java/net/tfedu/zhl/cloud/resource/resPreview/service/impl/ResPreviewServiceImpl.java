@@ -1,20 +1,29 @@
 package net.tfedu.zhl.cloud.resource.resPreview.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
-import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
+import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 /**
  * 资源预览的 serviceImpl
@@ -31,9 +40,14 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     DistrictResMapper districtResMapper;
     @Resource
     JUserDefaultMapper jUserDefaultMapper;
+
+    @Resource
+    ResTypeMapper resTypeMapper;
     
     @Resource
     ZAssetMapper  assetMapper;
+    
+    @Resource ResSearchMapper resSearchMapper;
     
 
     // 根据resId和fromFlag，查询资源具体信息
@@ -106,11 +120,204 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         return info;
     }
 
-    // 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
+   /* // 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
     @Override
     public JUserDefault getPnodes(String tfcode) {
 
         return jUserDefaultMapper.getCourseContent(tfcode);
+    }*/
+    
+    /**
+     * 系统资源推荐列表
+     * @param tfcode
+     * @param typeId
+     * @param page
+     * @param perPage
+     * @param resId
+     * @param poolId
+     * @return
+     */
+    @Override
+	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from){
+    	
+    	// 查询结果，封装为pagination
+        Pagination<ResRecommendationEntity> pagination = null;
+
+        // 根据当前结点tfcode，以及sys_from，查询系统资源id
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("sys_from", SysFrom.sys_from);
+        map.put("pTfcode", tfcode);
+        List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
+
+        // 根据资源库id和父类型id，得到父类型的所有子类型及其自身
+        HashMap<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("poolId", poolId);
+        map1.put("typeId", typeId);
+        List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
+    	
+    	
+    	
+    	// Page插件必须放在查询语句之前紧挨的第一个位置
+        PageHelper.startPage(page, perPage);
+
+        // 查询系统资源
+        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds);
+        
+        if(page == 1){//若加载第一页，//将当前id放在第一个
+        	for (int i = 0; i < list.size(); i++) {
+            	
+            	if(list.get(i).getId() == resId){ 
+            		ResRecommendationEntity entity = new ResRecommendationEntity();
+            		entity = list.get(0);//暂存第一个
+            		list.add(0,list.get(i));//将当前id放在第一个
+            	}
+        	}
+        }
+        
+        for (int i = 0; i < list.size(); i++) {
+        	//将 / 替换为 \
+        	String fullPath = list.get(i).getFullPath();
+        	if(fullPath.indexOf("/") >= 0){
+        		fullPath = fullPath.replace("/", "\\");
+        		list.get(i).setFullPath(fullPath);
+        	}
+        	
+        }
+        // 封装结果集
+        PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
+
+        return transfer.transfer(list);
+    }
+    
+    /**
+     * 区本、校本资源推荐列表
+     * @param tfcode
+     * @param typeId
+     * @param fromFlag
+     * @param resId
+     * @param userId
+     * @param page
+     * @param perPage
+     * @return
+     */
+    @Override
+	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage){
+    	 // 根据父类型，查询所有的子类型
+        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(typeId);
+
+        long schoolId = 0;
+        long districtId = 0;
+
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+        
+        // Page插件必须放在查询语句之前紧挨的第一个位置
+        PageHelper.startPage(page, perPage);
+
+        // 查询资源
+        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId);
+
+        if(page == 1){//若加载第一页，//将当前id放在第一个
+        	for (int i = 0; i < list.size(); i++) {
+            	
+            	if(list.get(i).getId() == resId){ 
+            		ResRecommendationEntity entity = new ResRecommendationEntity();
+            		entity = list.get(0);//暂存第一个
+            		list.add(0,list.get(i));//将当前id放在第一个
+            	}
+        	}
+        }
+        
+        for (int i = 0; i < list.size(); i++) {
+        	//将 / 替换为 \
+        	String fullPath = list.get(i).getFullPath();
+        	if(fullPath.indexOf("/") >= 0){
+        		fullPath = fullPath.replace("/", "\\");
+        		list.get(i).setFullPath(fullPath);
+        	}
+        }
+
+        // 封装结果集
+        PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
+
+        return transfer.transfer(list);
+    }
+    
+    /**
+     * 资源检索结果的推荐列表
+     * @param tfcode
+     * @param fromFlag
+     * @param resId
+     * @param searchWord
+     * @param page
+     * @param perPage
+     * @return
+     */
+    @Override
+	public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage){
+    	// 存放查询结果
+        List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
+        // 封装结果集
+        PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
+
+        // 若输入的关键字为空，则返回为空
+        if (searchKeyword == null || searchKeyword.length() == 0)
+            return transfer.transfer(list);
+        
+        long schoolId = 0;
+        long districtId = 0;
+
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+  
+        // 查询满足条件的全部资源
+        if (fromFlag == -1) {
+
+            // Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
+            list = resSearchMapper.getAllResources_preview(searchKeyword, sys_from, schoolId, districtId);
+        } else if (fromFlag == 0) { // 系统资源
+
+            // Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
+            list = resSearchMapper.getAllSysResources_preview(searchKeyword, sys_from);
+        } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源
+
+        	
+            // Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
+            list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId);
+        }
+        
+        if(page == 1){//若加载第一页，//将当前id放在第一个
+        	for (int i = 0; i < list.size(); i++) {
+            	
+            	if(list.get(i).getId() == resId){ 
+            		ResRecommendationEntity entity = new ResRecommendationEntity();
+            		entity = list.get(0);//暂存第一个
+            		list.add(0,list.get(i));//将当前id放在第一个
+            	}
+        	}
+        }
+   
+        for (int i = 0; i < list.size(); i++) {
+        	//将 / 替换为 \
+        	String fullPath = list.get(i).getFullPath();
+        	if(fullPath.indexOf("/") >= 0){
+        		fullPath = fullPath.replace("/", "\\");
+        		list.get(i).setFullPath(fullPath);
+        	}
+        }
+        //将pageIn封装为自定义的pagination
+        return transfer.transfer(list);
     }
 }
 

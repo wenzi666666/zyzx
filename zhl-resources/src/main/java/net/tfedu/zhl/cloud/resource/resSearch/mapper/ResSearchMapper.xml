@@ -58,6 +58,7 @@
     order by avgScore desc
     
   </select>
+  
   <!-- 查询全部资源  -->
   <select id="getAllResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity">
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
@@ -178,4 +179,70 @@ union ALL
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
   </select>
+  
+  <!-- 检索范围为全部时，查询推荐列表  -->
+  <select id="getAllResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+	from z_resource a 
+	where a.flag = 0  and a.fromflag in (0,1,2)
+
+	<if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+ 
+union ALL
+
+  select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+  from z_districts_resource a 
+  where a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} 
+ 
+  <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+  </if>
+
+union ALL
+
+  select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+  from z_districts_resource a 
+  where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} 
+
+  <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+  </if>
+
+  </select>
+  
+  <!-- 根据检索的关键词，搜索满足条件的系统资源（用于预览页面的资源推荐列表）-->
+  <select id="getAllSysResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+	from z_resource a 
+	where a.flag = 0  
+	and a.fromFlag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null">
+         and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+     </if>
+  </select>
+  
+   <!-- 根据检索的关键词，搜索满足条件的区本、校本资源 -->
+  <select id="getAllDisResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+      
+    select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath
+	from z_districts_resource a 
+	where a.flag = 0 and fromFlag = #{fromFlag} 
+ 
+    <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId}
+    </if>
+    
+    <if test="searchKeyword != null">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+     </if>
+  </select>
+  
 </mapper>

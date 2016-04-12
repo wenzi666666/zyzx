@@ -101,62 +101,6 @@ public class DisResServiceImpl implements DisResService {
 
     }
     
-    // 查询区本、校本资源信息，资源预览页面的推荐
-    @Override
-	public Pagination<DisResourceEntity> selectDisRes_Preview(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,long resId){
-    	 // Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
-
-        // 查询资源
-        List<DisResourceEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, resId);
-        // 判断资源是否为最新
-        for (int i = 0; i < list.size(); i++) {
-        	
-        	
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        	
-            // 最后更新日期
-            Date date = list.get(i).getUpdateDT();
-            // 得到当前日期的前多少天
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -SysFrom.expire);
-            Date expireDate = calendar.getTime();
-            // 比较
-            if (date.getTime() >= expireDate.getTime())
-                list.get(i).setNew(true);
-        }
-
-        // 封装结果集
-        PageInfoToPagination<DisResourceEntity> transfer = new PageInfoToPagination<DisResourceEntity>();
-
-        return transfer.transfer(list);
-    }
-
-    // 查询区本、校本资源信息，资源预览页面的推荐
-    @Override
-	public Pagination<DisResourceEntity> selectAllDisRes_Preview(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,long resId){
-    	 // 根据父类型，查询所有的子类型
-        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
-
-        long schoolId = 0;
-        long districtId = 0;
-
-        // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
-
-        return selectDisRes_Preview(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, resId);
-    }
     
     // 查询区本、校本资源信息，e备课
     @Override

@@ -24,10 +24,71 @@ public class ResRecommendationEntity implements Serializable{
     /**
      * 资源来源
      */
-    private int fromflag;
+    private int fromFlag;
+    
+    /**
+     * 全路径
+     */
+    private String fullPath;
+    
     
     /**
      * 文件缩略图地址
      */
     private String thumbnailpath;
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+	public String getTitle() {
+		return Title;
+	}
+
+
+	public void setTitle(String title) {
+		Title = title;
+	}
+
+
+	public int getFromFlag() {
+		return fromFlag;
+	}
+
+
+	public void setFromFlag(int fromFlag) {
+		this.fromFlag = fromFlag;
+	}
+
+
+	public String getFullPath() {
+		return fullPath;
+	}
+
+
+	public void setFullPath(String fullPath) {
+		this.fullPath = fullPath;
+	}
+
+
+	public String getThumbnailpath() {
+		return thumbnailpath;
+	}
+
+
+	public void setThumbnailpath(String thumbnailpath) {
+		this.thumbnailpath = thumbnailpath;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

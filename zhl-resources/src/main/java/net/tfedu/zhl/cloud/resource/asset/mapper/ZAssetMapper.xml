@@ -251,12 +251,12 @@
   
   <!-- 复制一条自建资源 -->
   <insert id="copyAsset" >
-      insert into z_asset_syscourse(assetid,tfcode,flag) VALUES(#{resId},#{tfcode},0);
+      insert into z_asset_syscourse(assetid,tfcode,flag) VALUES(#{resId},#{des_tfcode},0);
   </insert>
   
   <!-- 删除一条自建资源 -->
   <update id="delAsset" >
-      update z_asset_syscourse set flag = 1 where assetid = #{resId}
+      update z_asset_syscourse set flag = 1 where assetid = #{resId} and tfcode = #{tfcode}
   </update>
  
 </mapper>

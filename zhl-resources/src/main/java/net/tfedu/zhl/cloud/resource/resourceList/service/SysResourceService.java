@@ -21,13 +21,6 @@ public interface SysResourceService {
     public Pagination<SysResourceEntity> getAllSysRes(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage);
     
-    // 资源预览页面推荐列表  查询系统资源
-    public Pagination<SysResourceEntity> getAllSysRes_Preview(long poolId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage,long resId);
-    
-    // 分页查询系统资源信息  资源预览页面推荐列表
-    public Pagination<SysResourceEntity> getSysResList_Preview(List<Integer> sys_from, String fileFormat,
-            List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,long resId);
     
     // e备课，查询系统资源（限制资源类型，资源title模糊查询）
     public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
