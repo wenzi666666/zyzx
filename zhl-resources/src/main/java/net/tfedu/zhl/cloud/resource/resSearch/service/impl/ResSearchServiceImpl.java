@@ -63,17 +63,17 @@ public class ResSearchServiceImpl implements ResSearchService {
         }
   
         // 查询满足条件的全部资源
-        if (fromFlag == 0) {
+        if (fromFlag == -1) {
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
             list = resSearchMapper.getAllResources(searchKeyword, format, sys_from,schoolId, districtId);
-        } else if (fromFlag == 1) { // 系统资源
+        } else if (fromFlag == 0) { // 系统资源
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
             list = resSearchMapper.getAllSysResources(searchKeyword, format, sys_from);
-        } else { // 校本资源、区本资源
+        } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源
 
         	
             // Page插件必须放在查询语句之前紧挨的第一个位置
