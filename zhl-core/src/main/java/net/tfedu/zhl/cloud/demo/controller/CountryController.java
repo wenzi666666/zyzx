@@ -28,6 +28,9 @@ import net.tfedu.zhl.helper.ResultJSON;
  *
  * 每个类级别的url应该不同，通过url地址，就能直接找到对应的controller
  *
+ * controller不需要进行异常处理，所有的异常处理，都统一放到GlobalExceptionHandler里面去做。
+ * 日志也是，除非自己需要记日志，否则其它的信息，全部由统一的日志来处理。
+ * 
  */
 @Controller
 @RequestMapping("/country*")
