@@ -14,10 +14,13 @@ import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +37,9 @@ public class ResPreviewController {
 
 	@Resource
     ResPreviewService resPreviewService;
+	
+	 //写入日志
+    Logger logger = LoggerFactory.getLogger(ResPreviewController.class);
 	
 	
 	/**
@@ -259,6 +265,10 @@ public class ResPreviewController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
             	
+            	//获取文件服务器的访问url 
+				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+				String currentResPath = (String)request.getAttribute("currentResPath");
+            	
             	//当前预览的资源id
             	long resId = 0;
             	
@@ -302,15 +312,13 @@ public class ResPreviewController {
             		perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
             	}
             	
-            	
-            	//是否我资源检索（0：否；1：是）默认为非资源检索页
-            	int isSearch = 0; 
-            	
             	if(StringUtils.isNotEmpty(request.getParameter("isSearch"))){ //从资源检索页面跳转到预览页面的
             		
             		if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
             			searchKeyword = request.getParameter("searchKeyword").toString().trim();
-            		}            	
+            		}   
+            		
+            		pagination = resPreviewService.searchRecommendation(tfcode, fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
             		
             	} else { //从系统资源、区本资源、校本资源跳转过来的
             		
@@ -320,12 +328,26 @@ public class ResPreviewController {
             			if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
                     		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
                     	}
-            			
+            			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
             			
             		} else { //区本、校本资源
-						
+            			if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+                    		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+                    	}
+						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage);
 					}
 				}
+            	
+            	//生成文件的缩略图路径
+                ResThumbnailPathUtil.convertToPurpos_recommendation(pagination.getList(), resServiceLocal, currentResPath);
+                
+                logger.debug("课程id：" + tfcode);
+
+                logger.debug("查询结果的当前页：" + pagination.getPage());
+                logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+                logger.debug("查询到的资源总页：" + pagination.getTotal());
+                logger.debug("查询到的资源总数：" + pagination.getTotalLines());
+            	
                 exception = CustomException.SUCCESS;
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;

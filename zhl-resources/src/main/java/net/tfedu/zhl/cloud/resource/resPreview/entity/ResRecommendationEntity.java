@@ -36,6 +36,21 @@ public class ResRecommendationEntity implements Serializable{
      * 文件缩略图地址
      */
     private String thumbnailpath;
+    
+    /**
+     * 文件扩展名
+     */
+    private String FileExt;
+
+
+	public String getFileExt() {
+		return FileExt;
+	}
+
+
+	public void setFileExt(String fileExt) {
+		FileExt = fileExt;
+	}
 
 
 	public Long getId() {

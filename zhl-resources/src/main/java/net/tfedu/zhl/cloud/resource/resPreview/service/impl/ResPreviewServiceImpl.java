@@ -164,7 +164,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds);
         
         if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < list.size(); i++) {
+        	for (int i = 0; i < perPage && i < list.size(); i++) {
             	
             	if(list.get(i).getId() == resId){ 
             		ResRecommendationEntity entity = new ResRecommendationEntity();
@@ -222,7 +222,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId);
 
         if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < list.size(); i++) {
+        	for (int i = 0; i < perPage && i < list.size(); i++) {
             	
             	if(list.get(i).getId() == resId){ 
             		ResRecommendationEntity entity = new ResRecommendationEntity();
@@ -298,7 +298,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         }
         
         if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < list.size(); i++) {
+        	for (int i = 0; i < perPage && i < list.size(); i++) {
             	
             	if(list.get(i).getId() == resId){ 
             		ResRecommendationEntity entity = new ResRecommendationEntity();
@@ -319,5 +319,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         //将pageIn封装为自定义的pagination
         return transfer.transfer(list);
     }
+  
 }
 

@@ -131,16 +131,15 @@ public class ResSearchServiceImpl implements ResSearchService {
         }
         
         // 查询全部资源的格式
-        if (fromFlag == 0) {
+        if (fromFlag == -1) {
 
         	resultList = resSearchMapper.getAllFileFormats(searchKeyword, sys_from,schoolId,districtId);
         	
-        } else if (fromFlag == 1) { // 系统资源的格式
+        } else if (fromFlag == 0) { // 系统资源的格式
 
         	resultList = resSearchMapper.getSysFileFormats(searchKeyword, sys_from);
-        } else { // 校本资源、区本资源的格式
+        } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源的格式
 
-        	
             resultList = resSearchMapper.getDisFileFormats(searchKeyword, fromFlag,schoolId,districtId);
         }
         
