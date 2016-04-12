@@ -111,14 +111,14 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param resId
 	 * @param tfcode
 	 */
-	public void copyAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
+	public void copyAsset(@Param("resId")long resId,@Param("des_tfcode")String tfcode);
 	
 	/**
 	 * 删除一条自建资源
 	 * @param resId
 	 * @param tfcode
 	 */
-	public void delAsset(@Param("resId")long resId);
+	public void delAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
 }
 
 

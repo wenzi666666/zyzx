@@ -140,7 +140,7 @@ public interface ZAssetService {
 	 * @param resIds
 	 * @param tfcode
 	 */
-	public void patchCutAsset(List<Long> resIds,String tfcode);
+	public void patchCutAsset(List<Long> resIds,String tfcode,String des_tfcode);
 	
 	
 }

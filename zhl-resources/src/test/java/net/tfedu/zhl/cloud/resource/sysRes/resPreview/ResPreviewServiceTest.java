@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
@@ -72,7 +71,7 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	/**
 	 * 从资源预览页面返回时，查询对应的所有目录
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
     public void testResCourseContents() throws IOException {
         String tfcode = "RJXX0101";
@@ -82,5 +81,5 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
             System.out.println(content.getId() + ":" + content.getTfcode() + ":" + content.getTermId() + ":"
                     + content.getSubjectId() + ":" + content.getEditionId());
         }
-    }
+    }*/
 }

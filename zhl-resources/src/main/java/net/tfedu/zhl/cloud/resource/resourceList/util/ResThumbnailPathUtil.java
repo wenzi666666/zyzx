@@ -12,7 +12,7 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * 系统资源、区本资源、校本资源的缩略图路径获取
+ * 系统资源、区本资源、校本资源、资源检索结果的缩略图路径获取
  * @author WeiCuicui
  *
  * @param <T>

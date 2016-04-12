@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.resSearch.dao;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -65,5 +66,39 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      * @return
      */
     public List<String> getSysFileFormats(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
+    
+   
+    /**
+     * 检索范围为全部时，查询推荐列表
+     * 
+     * @param searchKeyword
+     * @param format
+     * @param sys_from
+     * @return
+     */
+    public List<ResRecommendationEntity> getAllResources_preview(@Param("searchKeyword") String searchKeyword,
+             @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
+
+    /**
+     * 检索范围为系统资源时时，查询推荐列表
+     * 
+     * @param searchKeyword
+     * @param format
+     * @param sys_from
+     * @return
+     */
+    public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
+            
+
+    /**
+     * 检索范围为区本、校本资源时，查询推荐列表
+     * 
+     * @param searchKeyword
+     * @param fromFlag
+     * @param format
+     * @return
+     */
+    public List<ResRecommendationEntity> getAllDisResources_preview(@Param("searchKeyword") String searchKeyword,
+            @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
 
 }

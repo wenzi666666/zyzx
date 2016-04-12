@@ -2,9 +2,10 @@ package net.tfedu.zhl.cloud.resource.resPreview.service;
 
 import java.util.List;
 
-import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
 /**
  * 资源预览service接口
@@ -14,12 +15,62 @@ import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
  */
 public interface ResPreviewService {
 
-    // 根据resId和fromFlag，查询资源具体信息
+    /**
+     *  根据resId和fromFlag，查询资源具体信息
+     * @param resId
+     * @param userId
+     * @param fromFlag
+     * @return
+     */
     public ResPreviewInfo getResPreviewInfo(long resId, long userId,int fromFlag);
 
-    // 对一个资源进行预览时，查询该资源所在的所有版本目录
+    /**
+     *  对一个资源进行预览时，查询该资源所在的所有版本目录
+     * @param resId
+     * @param fromFlag
+     * @param curTfcode
+     * @return
+     */
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode);
 
-    // 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
-    public JUserDefault getPnodes(String tfcode);
+    /*// 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
+    public JUserDefault getPnodes(String tfcode);*/
+    
+    /**
+     * 系统资源推荐列表
+     * @param tfcode
+     * @param typeId
+     * @param page
+     * @param perPage
+     * @param resId
+     * @param poolId
+     * @return
+     */
+    public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from);
+    
+    /**
+     * 区本、校本资源推荐列表
+     * @param tfcode
+     * @param typeId
+     * @param fromFlag
+     * @param resId
+     * @param userId
+     * @param page
+     * @param perPage
+     * @return
+     */
+    public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage);
+    
+    /**
+     * 资源检索结果的推荐列表
+     * @param tfcode
+     * @param fromFlag
+     * @param resId
+     * @param searchWord
+     * @param page
+     * @param perPage
+     * @return
+     */
+    public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
+    
 }
