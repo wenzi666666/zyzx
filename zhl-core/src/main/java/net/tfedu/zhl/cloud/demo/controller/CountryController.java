@@ -26,6 +26,8 @@ import net.tfedu.zhl.helper.ResultJSON;
  * 它没有处理业务逻辑的义务
  * @author Bruce
  *
+ * 每个类级别的url应该不同，通过url地址，就能直接找到对应的controller
+ *
  */
 @Controller
 @RequestMapping("/country*")
