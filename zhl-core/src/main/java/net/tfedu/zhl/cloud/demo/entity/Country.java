@@ -1,8 +1,12 @@
 package net.tfedu.zhl.cloud.demo.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
 @Table(name = "zhl_country")
 public class Country implements Serializable {
@@ -48,5 +52,10 @@ public class Country implements Serializable {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+    
+    @Override
+    public String toString(){
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
     }
 }
