@@ -128,6 +128,7 @@ union ALL
     <if test="searchKeyword != null">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
+    and FileFormat is not null
   </select>
   
   <!-- 根据关键字,fromFlag，查询校本\区本资源检索结果的格式  -->
@@ -146,10 +147,12 @@ union ALL
     <if test="searchKeyword != null">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
+    and FileFormat is not null
   </select>
   
   <!-- 根据关键字,查询全部资源检索结果的格式   -->
   <select id="getAllFileFormats" resultType="String">
+  select distinct FileFormat from (
     SELECT DISTINCT FileFormat from z_resource a 
 	left join j_filetypedetail b on a.fileExt = b.FormatCode and b.flag = 0  
 	WHERE 1=1 and a.flag = 0 
@@ -178,6 +181,7 @@ union ALL
     <if test="searchKeyword != null">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
+    ) formatTable where FileFormat is not null
   </select>
   
   <!-- 检索范围为全部时，查询推荐列表  -->

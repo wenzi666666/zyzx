@@ -176,10 +176,10 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \
-        	String fullPath = list.get(i).getFullPath();
-        	if(fullPath.indexOf("/") >= 0){
-        		fullPath = fullPath.replace("/", "\\");
-        		list.get(i).setFullPath(fullPath);
+        	String thumbnailpath = list.get(i).getThumbnailpath();
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
         	}
         	
         }
@@ -234,10 +234,10 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \
-        	String fullPath = list.get(i).getFullPath();
-        	if(fullPath.indexOf("/") >= 0){
-        		fullPath = fullPath.replace("/", "\\");
-        		list.get(i).setFullPath(fullPath);
+        	String thumbnailpath = list.get(i).getThumbnailpath();
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
         	}
         }
 
@@ -310,10 +310,10 @@ public class ResPreviewServiceImpl implements ResPreviewService {
    
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \
-        	String fullPath = list.get(i).getFullPath();
-        	if(fullPath.indexOf("/") >= 0){
-        		fullPath = fullPath.replace("/", "\\");
-        		list.get(i).setFullPath(fullPath);
+        	String thumbnailpath = list.get(i).getThumbnailpath();
+        	if(thumbnailpath.indexOf("/") >= 0){
+        	    thumbnailpath = thumbnailpath.replace("/", "\\");
+        		list.get(i).setThumbnailpath(thumbnailpath);
         	}
         }
         //将pageIn封装为自定义的pagination
