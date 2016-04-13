@@ -62,7 +62,7 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
      */
     public List<ResRecommendationEntity> selectDisRes_Preview(@Param("fromFlag") int fromFlag,
             @Param("typeIds") List<Integer> typeIds, @Param("tfcode") String tfcode, 
-            @Param("schoolId") long schoolId, @Param("districtId") long districtId);
+            @Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("resId")long resId);
     
     /**
      *  查询区本、校本资源信息，用于e备课

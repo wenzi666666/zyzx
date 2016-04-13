@@ -77,7 +77,7 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      * @return
      */
     public List<ResRecommendationEntity> getAllResources_preview(@Param("searchKeyword") String searchKeyword,
-             @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
+             @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
 
     /**
      * 检索范围为系统资源时时，查询推荐列表
@@ -87,7 +87,7 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      * @param sys_from
      * @return
      */
-    public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
+    public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from,@Param("resId")long resId);
             
 
     /**
@@ -99,6 +99,6 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      * @return
      */
     public List<ResRecommendationEntity> getAllDisResources_preview(@Param("searchKeyword") String searchKeyword,
-            @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
+            @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
 
 }

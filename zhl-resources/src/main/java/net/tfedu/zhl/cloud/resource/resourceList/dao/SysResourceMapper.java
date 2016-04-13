@@ -90,6 +90,6 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @return
      */
     public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("resourceIds") List<Long> resourceIds,
-            @Param("tfcode") String tfcode,@Param("typeIds") List<Integer> typeIds);
+            @Param("tfcode") String tfcode,@Param("typeIds") List<Integer> typeIds,@Param("resId")long resId);
     
 }

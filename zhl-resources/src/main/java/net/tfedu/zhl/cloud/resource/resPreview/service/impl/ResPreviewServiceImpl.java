@@ -140,9 +140,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     @Override
 	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from){
     	
-    	// 查询结果，封装为pagination
-        Pagination<ResRecommendationEntity> pagination = null;
-
         // 根据当前结点tfcode，以及sys_from，查询系统资源id
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("sys_from", SysFrom.sys_from);
@@ -161,18 +158,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         PageHelper.startPage(page, perPage);
 
         // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds);
-        
-        if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < perPage && i < list.size(); i++) {
-            	
-            	if(list.get(i).getId() == resId){ 
-            		ResRecommendationEntity entity = new ResRecommendationEntity();
-            		entity = list.get(0);//暂存第一个
-            		list.add(0,list.get(i));//将当前id放在第一个
-            	}
-        	}
-        }
+        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds,resId);
         
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \
@@ -219,19 +205,8 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         PageHelper.startPage(page, perPage);
 
         // 查询资源
-        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId);
+        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId);
 
-        if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < perPage && i < list.size(); i++) {
-            	
-            	if(list.get(i).getId() == resId){ 
-            		ResRecommendationEntity entity = new ResRecommendationEntity();
-            		entity = list.get(0);//暂存第一个
-            		list.add(0,list.get(i));//将当前id放在第一个
-            	}
-        	}
-        }
-        
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
@@ -283,30 +258,20 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllResources_preview(searchKeyword, sys_from, schoolId, districtId);
+            list = resSearchMapper.getAllResources_preview(searchKeyword, sys_from, schoolId, districtId,resId);
         } else if (fromFlag == 0) { // 系统资源
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllSysResources_preview(searchKeyword, sys_from);
+            list = resSearchMapper.getAllSysResources_preview(searchKeyword, sys_from,resId);
         } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源
 
         	
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId);
+            list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId,resId);
         }
         
-        if(page == 1){//若加载第一页，//将当前id放在第一个
-        	for (int i = 0; i < perPage && i < list.size(); i++) {
-            	
-            	if(list.get(i).getId() == resId){ 
-            		ResRecommendationEntity entity = new ResRecommendationEntity();
-            		entity = list.get(0);//暂存第一个
-            		list.add(0,list.get(i));//将当前id放在第一个
-            	}
-        	}
-        }
    
         for (int i = 0; i < list.size(); i++) {
         	//将 / 替换为 \

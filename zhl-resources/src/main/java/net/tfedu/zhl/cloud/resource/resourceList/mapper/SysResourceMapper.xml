@@ -142,7 +142,7 @@
 	from z_resource a 
 	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
 	left join j_syscourse d on c.StructCode=d.TFcode and d.flag=0 
-	where a.flag = 0 and a.fromflag in 
+	where a.id = #{resId} and a.flag = 0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -167,7 +167,40 @@
                          #{item}
                      </foreach>
      </if>
-     and c.StructCode like  CONCAT(#{tfcode},'%') order by a.DisplayIndex asc,d.orderNum asc                 
+     and c.StructCode like  CONCAT(#{tfcode},'%')
+     
+     union all 
+   
+    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+	from z_resource a 
+	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
+	left join j_syscourse d on c.StructCode=d.TFcode and d.flag=0 
+	where a.flag = 0 and a.id != #{resId} and a.fromflag in 
+	
+	            <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+	
+	 and d.typeFlag in (0,1) 
+	
+     <if test="typeIds.size() > 0 ">
+          and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+     </if>
+               
+     <if test="resourceIds.size() == 0 ">
+         and a.id in ('')
+     </if>
+     <if test="resourceIds.size() > 0 ">
+         and a.id in <foreach item="item" index="index" collection="resourceIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+     </if>
+     and c.StructCode like  CONCAT(#{tfcode},'%')             
                                     
  </select>
  
