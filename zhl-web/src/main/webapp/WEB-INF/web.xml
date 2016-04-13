@@ -25,9 +25,9 @@
 	</listener>
 
 	<!-- 禁用session -->
-    <listener>
-        <listener-class>net.tfedu.zhl.cloud.utils.http.SessionKiller</listener-class>
-    </listener>
+	<listener>
+		<listener-class>net.tfedu.zhl.cloud.utils.http.SessionKiller</listener-class>
+	</listener>
 	<!-- Spring -->
 
 	<!-- 配置log4j配置文件路径 -->
@@ -36,20 +36,14 @@
 		<param-value>classpath:logback.xml</param-value>
 	</context-param>
 
-	<!-- Shiro配置
 	<filter>
-		<filter-name>shiroFilter</filter-name>
-		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-		<init-param>  
-            <param-name>targetFilterLifecycle</param-name>  
-            <param-value>true</param-value>  
-        </init-param>
+		<filter-name>cors</filter-name>
+		<filter-class>net.tfedu.cloudplat.ebook.core.webapp.filter.SimpleCORSFilter</filter-class>
 	</filter>
 	<filter-mapping>
-		<filter-name>shiroFilter</filter-name>
+		<filter-name>cors</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	 -->
 
 	<!-- 配置Spring字符编码过滤器 -->
 	<filter>
@@ -84,7 +78,7 @@
 		<!-- 拦截所有/api/* 的请求,交给DispatcherServlet处理,性能最好 -->
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
+
 	<!-- 首页 -->
 	<welcome-file-list>
 		<welcome-file>/security/tologin</welcome-file>
@@ -108,32 +102,32 @@
 
 
 
-	
-	
-	
-	
-    
-<!-- 资源应用访问路径   为此web服务的访问方式   一般为 http://ip:端口/    必须以‘/’结尾  -->
+
+
+
+
+
+	<!-- 资源应用访问路径 为此web服务的访问方式 一般为 http://ip:端口/ 必须以‘/’结尾 -->
 	<context-param>
 		<param-name>host</param-name>
-			<param-value>http://192.168.111.160:8080/zhl-resources/</param-value>
+		<param-value>http://192.168.111.160:8080/zhl-resources/</param-value>
 	</context-param>
-<!-- 资源应用访问LOCAL   为此web服务的访问方式   一般为 http://ip:端口/    必须以‘/’结尾  -->
+	<!-- 资源应用访问LOCAL 为此web服务的访问方式 一般为 http://ip:端口/ 必须以‘/’结尾 -->
 	<context-param>
 		<param-name>hostLocal</param-name>
 		<param-value>http://192.168.111.160:8080/zhl-resources/</param-value>
 	</context-param>
-  <!-- 文件服务器 （IIS服务器地址 传、下载、访问）    一般为 http://ip:端口/down/    必须以‘/’结尾 其中down为文件服务     --> 
-  <context-param>
-    <param-name>resService</param-name>
-    <param-value>http://192.168.111.22:8099/down/</param-value>
-  </context-param>
-  <!-- 文件服务器 （IIS服务器地址 传、下载、访问）  一般为 http://ip:端口/down/    必须以‘/’结尾  --> 
-  <context-param>
-    <param-name>resServiceLocal</param-name>
-    <param-value>http://192.168.111.22:8099/down/</param-value>
-  </context-param> 
-	
-	
+	<!-- 文件服务器 （IIS服务器地址 传、下载、访问） 一般为 http://ip:端口/down/ 必须以‘/’结尾 其中down为文件服务 -->
+	<context-param>
+		<param-name>resService</param-name>
+		<param-value>http://192.168.111.22:8099/down/</param-value>
+	</context-param>
+	<!-- 文件服务器 （IIS服务器地址 传、下载、访问） 一般为 http://ip:端口/down/ 必须以‘/’结尾 -->
+	<context-param>
+		<param-name>resServiceLocal</param-name>
+		<param-value>http://192.168.111.22:8099/down/</param-value>
+	</context-param>
+
+
 
 </web-app>
