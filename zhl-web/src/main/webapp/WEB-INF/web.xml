@@ -38,7 +38,7 @@
 
 	<filter>
 		<filter-name>cors</filter-name>
-		<filter-class>net.tfedu.cloudplat.ebook.core.webapp.filter.SimpleCORSFilter</filter-class>
+		<filter-class>net.tfedu.zhl.sso.users.filter.SimpleCORSFilter</filter-class>
 	</filter>
 	<filter-mapping>
 		<filter-name>cors</filter-name>
