@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
@@ -498,10 +499,13 @@ public class PrepareController {
         // 返回
         Object data = null;
 
-        String resIds = request.getParameter("resIds");
-        String fromFlags = request.getParameter("fromFlags");
+        String resIds = request.getParameter("ids");
+        String fromFlags = request.getParameter("fromflags");
         String hostLocal = (String) request.getAttribute("hostLocal");
         String resServiceLocal = (String) request.getAttribute("resServiceLocal");
+        
+        
+        
 
         try {
             if (currentUserId != null && exception == null) {
@@ -625,6 +629,11 @@ public class PrepareController {
 
         try {
 
+        	
+            String resServiceLocal = (String) request.getAttribute("resServiceLocal");
+    		String currentResPath = (String)request.getAttribute("currentResPath");
+
+        	
             if (currentUserId != null && exception == null) {
                 String _id = request.getParameter("id");
                 long id = 0;
@@ -633,10 +642,15 @@ public class PrepareController {
                 }
 
                 ResZipDownRecord record = resZipDownloadService.getZipDownRecord(id);
+                String zippath = record.getZippath();
+                //转换为最终的下载路径
+                zippath = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, zippath);
+                zippath = zippath.replace(resServiceLocal, currentResPath);
+                
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("id", record.getId());
                 map.put("status", record.getStatus());
-                map.put("zippath", record.getZippath());
+                map.put("zippath", zippath);
                 data = map;
                 exception = CustomException.SUCCESS;
             }else{

@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.personal.controller;
 
-import static org.junit.Assert.*;
-
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
@@ -70,4 +68,18 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     	
     }
 
+    
+    
+    
+    @Test
+    public void testGetAutolearning(){
+    	request.setAttribute("currentUserId", 1l);
+    	ResultJSON json = this.controller.autoLearning(request, response);
+    	System.out.println(json.toString());
+    	
+    }
+    
+    
+    
+    
 }

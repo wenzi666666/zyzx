@@ -53,47 +53,6 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object controller) throws Exception {
         logger.debug("------------preHandle-------------------");
 
-        String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
-
-        // 应用
-        String host = request.getServletContext().getInitParameter("host");
-        String host_local = request.getServletContext().getInitParameter("hostLocal");
-        // 系统资源服务器地址
-        String resService = request.getServletContext().getInitParameter("resService");
-        String resServiceLocal = request.getServletContext().getInitParameter("resServiceLocal");
-        logger.debug("------------getHost---------getInitParameter----------");
-
-        // 当前文件 资源服务器地址
-        String currentResPath = "";
-
-        if (host == null || host_local == null || resService == null || resServiceLocal == null) {
-            request.setAttribute("message", "系统应用配置信息错误");
-            logger.error("--------系统应用配置信息错误------------");
-        }
-        else {
-            if (host.contains(URI)) {
-                currentResPath = resService;
-            }
-            else if (host_local.contains(URI)) {
-                currentResPath = resServiceLocal;
-            }
-            else {
-                logger.error("--------系统应用配置信息错误----host----host_local---URI-" + URI);
-            }
-        }
-
-        // 如果内网地址有多个的话 取第一个
-        if (host_local.indexOf(",") > 0) {
-            request.setAttribute("hostLocal", host_local.split(",")[0]);
-        }
-        else {
-            request.setAttribute("hostLocal", host_local);
-        }
-        // 指定资源服务器的内网地址和当前地址
-        request.setAttribute("resServiceLocal", resServiceLocal);
-        request.setAttribute("currentResPath", currentResPath);
-
-        
         logger.debug("------------start-----get----Authorization----------");
 
         // 用户登录状态相关检查

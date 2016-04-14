@@ -1,21 +1,33 @@
 package net.tfedu.zhl.cloud.resource.personal.controller;
 
+import java.net.URLEncoder;
+import java.util.HashMap;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.fileservice.Base64;
+import net.tfedu.zhl.fileservice.MD5;
+import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.userlog.service.UserLogService;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,8 +71,19 @@ public class PersonalController {
 	 */
 	@Resource
 	UserLogService  userLogService ; 
+
 	
 	
+    @Resource
+    private UserService userService;
+
+    @Resource
+    private RegisterService registerService;
+	
+    
+    @Autowired
+    private ResourceWebConfig resourceWebConfig ;
+    
 	/**
 	 * 获取统一资源类型
 	 * @return
@@ -704,6 +727,95 @@ public class PersonalController {
 		return  result;
 	}
 	
+	/**
+	 * 
+	 * 跳转到自主学习中心
+	 * 教师学生通用接口
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/autoLearning")
+	@ResponseBody
+	public ResultJSON  autoLearning(HttpServletRequest request, HttpServletResponse response){
+		
+		
+		/**
+		 * 默认使用这个
+		 */
+		String host = "http://fd.zhihaole.net/";
+		String sub = "0101";
+		String term = "GZ";
+		
+		//拦截器读取配置文件  写入request
+		String currentFDHost = (String)request.getAttribute("currentFdHost");		
+
+		
+		String _host = resourceWebConfig.getCurrentFdHost(request);
+		
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		try{
+			if(currentUserId!=null && exception==null){	
+				long userId = currentUserId;
+				SRegister record =  registerService.getRegister(userId);
+				String userName = record.getName();
+				Long roleId = record.getRoleid();
+				String userPwd = PWDEncrypt.getPWD(record.getPwd());
+				
+				
+				HashMap<String,String> map = userService.getUserTermAndSubject(userId);
+				if(map!=null){
+					
+					
+					sub = map.get("subjectcode");
+					term = map.get("termcode");
+					
+					if(sub.contains(",")){
+						sub = sub.split(",")[0];
+					}
+					
+				}
+				
+				
+				String params = "user=" + userName + "&pass=" + userPwd + "&page=1"+"&grd="+term.toUpperCase()+"&sub="+sub+"&ST="+(1==roleId?"S":2==roleId?"T":5==roleId?"J":"S");				
+				String sign = MD5.MD5(params + "&key=9k8i78jug6hd93kjf84h");
+				String s = params + "&sign=" + sign;
+				byte[] sbytes;
+				sbytes =xxtea.encrypt(s.getBytes("utf-8"),
+						"9k8i78jug6hd93kjf84h".getBytes());
+				s = Base64.encode(sbytes, 0, sbytes.length);
+				s = URLEncoder.encode(s, "utf-8");
+				
+				String str = ((currentFDHost!=null && !"".equals(currentFDHost)&& currentFDHost.length() > 0 )? currentFDHost : host )+ "eblogin.do?s=";				
+				String url = str +s ;
+				data = url ;
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+            result.setMessage(exception.getMessage());
+            result.setData(data == null ? "" : data);
+            result.setSign("");
+		}
+		return result;
+	}
 	
+	
+
 	
 }

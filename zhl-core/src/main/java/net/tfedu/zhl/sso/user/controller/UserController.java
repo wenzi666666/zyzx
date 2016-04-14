@@ -1,12 +1,23 @@
 package net.tfedu.zhl.sso.user.controller;
 
-import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.cloud.utils.security.VerificationCodeGenerator;
+import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
+import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,22 +27,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
-import net.tfedu.zhl.cloud.utils.security.VerificationCodeGenerator;
-import net.tfedu.zhl.fileservice.Base64;
-import net.tfedu.zhl.fileservice.MD5;
-import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
-import net.tfedu.zhl.fileservice.xxtea;
-import net.tfedu.zhl.helper.CustomException;
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
-import net.tfedu.zhl.sso.users.entity.SRegister;
-import net.tfedu.zhl.sso.users.service.RegisterService;
 
 @Controller
 @RequestMapping("/resRestAPI")
@@ -147,6 +142,7 @@ public class UserController {
                 //如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
 				if(user.getUserImage()!=null && user.getUserImage().trim().contains(ZhlResourceCenterWrap.userimage_upload_prefix)){
 					//获取文件服务器的访问url 
+					
 					String resServiceLocal = (String)request.getAttribute("resServiceLocal");
 					String currentResPath = (String)request.getAttribute("currentResPath");
 					String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, user.getUserImage()) ;
@@ -396,91 +392,6 @@ public class UserController {
 
     
 
-	/**
-	 * 
-	 * 跳转到自主学习中心
-	 * 教师学生通用接口
-	 * @param request
-	 * @param response
-	 * @return
-	 */
-	@RequestMapping(value="/v1.0/autoLearning")
-	public ModelAndView  autoLearning(HttpServletRequest request, HttpServletResponse response){
-		
-		
-		/**
-		 * 默认使用这个
-		 */
-		String host = "http://fd.zhihaole.net/";
-		String sub = "0101";
-		String term = "GZ";
-		
-		//拦截器读取配置文件  写入request
-		String currentFDHost = (String)request.getAttribute("currentFdHost");		
-
-		
-		
-		//返回json的结果对象
-		ResultJSON result = new ResultJSON();
-		//异常
-		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
-		//当前登录用户id 
-		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
-		//返回
-		Object data = null;
-		try{
-			if(currentUserId!=null && exception==null){	
-				long userId = currentUserId;
-				SRegister record =  registerService.getRegister(userId);
-				String userName = record.getName();
-				Long roleId = record.getRoleid();
-				String userPwd = PWDEncrypt.getPWD(record.getPwd());
-				
-				
-				HashMap<String,String> map = userService.getUserTermAndSubject(userId);
-				if(map!=null){
-					
-					
-					sub = map.get("subjectcode");
-					term = map.get("termcode");
-					
-					if(sub.contains(",")){
-						sub = sub.split(",")[0];
-					}
-					
-				}
-				
-				
-				String params = "user=" + userName + "&pass=" + userPwd + "&page=1"+"&grd="+term.toUpperCase()+"&sub="+sub+"&ST="+(1==roleId?"S":2==roleId?"T":5==roleId?"J":"S");				
-				String sign = MD5.MD5(params + "&key=9k8i78jug6hd93kjf84h");
-				String s = params + "&sign=" + sign;
-				byte[] sbytes;
-				sbytes =xxtea.encrypt(s.getBytes("utf-8"),
-						"9k8i78jug6hd93kjf84h".getBytes());
-				s = Base64.encode(sbytes, 0, sbytes.length);
-				s = URLEncoder.encode(s, "utf-8");
-				
-				String str = ((currentFDHost!=null && !"".equals(currentFDHost)&& currentFDHost.length() > 0 )? currentFDHost : host )+ "eblogin.do?s=";				
-				String url = str +s ;
-				System.out.println("----autoLearning-----"+url);
-	    	    response.sendRedirect(url);
-			
-			}else{
-            	exception = CustomException.INVALIDACCESSTOKEN;
-            }
-		}catch(Exception e){
-			exception = CustomException.getCustomExceptionByCode(e.getMessage());
-			//如果是普通的异常
-			if(exception.getStatus()==500){
-				e.printStackTrace();
-			}
-		}finally{
-
-		}
-		return null;
-	}
-	
-	
 
     
     /**
