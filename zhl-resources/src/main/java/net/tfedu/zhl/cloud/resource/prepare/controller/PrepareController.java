@@ -646,7 +646,7 @@ public class PrepareController {
                 String _id = request.getParameter("id");
                 long id = 0;
                 if (StringUtils.isNotEmpty(_id)) {
-                    id = Long.parseLong(_id);
+                    id = Long.parseLong(_id.trim());
                 }
 
                 ResZipDownRecord record = resZipDownloadService.getZipDownRecord(id);

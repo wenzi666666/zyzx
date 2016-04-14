@@ -48,6 +48,7 @@ public class ResZipDownloadServiceImpl implements ResZipDownloadService {
                 r.setFromflag(Integer.parseInt(flags[i]));
                 r.setDowndate(c.getTime());
                 r.setDowntime(c.getTime());
+                r.setUserid(obj.getUserid());
                 list.add(r);
             }
             mapper1.insertList(list);
