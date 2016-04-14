@@ -70,10 +70,10 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         return info;
     }
 
-    // 对一个资源进行预览时，查询该资源所在的所有版本目录
+    // 对一个资源进行预览时，查询该资源所在目录
     @Override
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode) {
-        List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
+    	List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
         List<String> structCodes  = null;
         String resFrom = "";
         if (fromFlag == 0) {// 系统资源
@@ -120,12 +120,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         return info;
     }
 
-   /* // 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
-    @Override
-    public JUserDefault getPnodes(String tfcode) {
-
-        return jUserDefaultMapper.getCourseContent(tfcode);
-    }*/
+  
     
     /**
      * 系统资源推荐列表

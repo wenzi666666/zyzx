@@ -25,7 +25,7 @@ public interface ResPreviewService {
     public ResPreviewInfo getResPreviewInfo(long resId, long userId,int fromFlag);
 
     /**
-     *  对一个资源进行预览时，查询该资源所在的所有版本目录
+     *  对一个资源进行预览时，查询该资源所在目录
      * @param resId
      * @param fromFlag
      * @param curTfcode
@@ -33,8 +33,6 @@ public interface ResPreviewService {
      */
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode);
 
-    /*// 根据当前目录结点的tfcode，查找其所在学段、学科、版本、教材等目录
-    public JUserDefault getPnodes(String tfcode);*/
     
     /**
      * 系统资源推荐列表
@@ -72,6 +70,4 @@ public interface ResPreviewService {
      * @return
      */
     public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
-    
-    ;
 }
