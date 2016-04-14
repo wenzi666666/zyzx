@@ -81,6 +81,9 @@ public class PersonalController {
     private RegisterService registerService;
 	
     
+    /**
+     * web配置组件
+     */
     @Autowired
     private ResourceWebConfig resourceWebConfig ;
     
@@ -187,8 +190,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = resourceWebConfig.getResServiceLocal();
+				String currentResPath = resourceWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -308,8 +311,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = resourceWebConfig.getResServiceLocal();
+				String currentResPath = resourceWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -376,9 +379,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
-
+				String resServiceLocal = resourceWebConfig.getResServiceLocal();
+				String currentResPath = resourceWebConfig.getCurrentResPath(request);
 				
 				long userId = currentUserId;
 				int reviewType  = 0 ;
@@ -526,8 +528,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = resourceWebConfig.getResServiceLocal();
+				String currentResPath = resourceWebConfig.getCurrentResPath(request);
 
 				long userId = currentUserId;
 				long unifyTypeId = 0 ;
@@ -684,8 +686,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = resourceWebConfig.getResServiceLocal();
+				String currentResPath = resourceWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -748,10 +750,9 @@ public class PersonalController {
 		String term = "GZ";
 		
 		//拦截器读取配置文件  写入request
-		String currentFDHost = (String)request.getAttribute("currentFdHost");		
+		String currentFDHost = resourceWebConfig.getCurrentFdHost(request);		
 
 		
-		String _host = resourceWebConfig.getCurrentFdHost(request);
 		
 		//返回json的结果对象
 		ResultJSON result = new ResultJSON();
