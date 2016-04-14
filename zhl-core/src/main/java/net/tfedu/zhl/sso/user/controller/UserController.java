@@ -37,6 +37,9 @@ public class UserController {
 
     @Resource
     private RegisterService registerService;
+    
+    
+    
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
