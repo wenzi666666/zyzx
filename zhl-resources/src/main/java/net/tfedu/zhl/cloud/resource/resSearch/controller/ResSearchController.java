@@ -8,13 +8,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -36,6 +36,9 @@ public class ResSearchController {
 
     @Resource
     ResSearchService resSearchService;
+    
+    @Resource
+    private CommonWebConfig commonWebConfig;
     
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResSearchController.class);
@@ -70,9 +73,8 @@ public class ResSearchController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-            	ResourceWebConfig webConfig = new ResourceWebConfig();
-				String resServiceLocal = webConfig.getResServiceLocal();
-				String currentResPath = (String)request.getAttribute("currentResPath");
+            	String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				
 				// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
 				int fromFlag = 0;

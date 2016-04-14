@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
@@ -16,6 +15,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -43,6 +43,9 @@ public class ResourceListController {
     
     @Resource
     DisResService disResService;
+    
+    @Resource
+    private CommonWebConfig commonWebConfig;
     
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResourceListController.class);
@@ -77,9 +80,8 @@ public class ResourceListController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-            	ResourceWebConfig webConfig = new ResourceWebConfig();
-				String resServiceLocal = webConfig.getResServiceLocal();
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				 // 资源库id
 				long poolId = 0;
 				// 类型Id
@@ -196,9 +198,8 @@ public class ResourceListController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-            	ResourceWebConfig webConfig = new ResourceWebConfig();
-				String resServiceLocal = webConfig.getResServiceLocal();
-				String currentResPath = (String)request.getAttribute("currentResPath");
+            	String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				
                 long userId = currentUserId; // 获得用户id
      

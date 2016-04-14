@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
@@ -17,6 +16,7 @@ import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -38,6 +38,9 @@ public class ResPreviewController {
 
 	@Resource
     ResPreviewService resPreviewService;
+	
+	@Resource
+    private CommonWebConfig commonWebConfig;
 	
 	 //写入日志
     Logger logger = LoggerFactory.getLogger(ResPreviewController.class);
@@ -212,9 +215,8 @@ public class ResPreviewController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-            	ResourceWebConfig webConfig = new ResourceWebConfig();
-				String resServiceLocal = webConfig.getResServiceLocal();
-				String currentResPath = (String)request.getAttribute("currentResPath");
+            	String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
             	
             	//当前预览的资源id
             	long resId = 0;
