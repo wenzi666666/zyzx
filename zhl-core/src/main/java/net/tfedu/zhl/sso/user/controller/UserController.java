@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.cloud.utils.security.VerificationCodeGenerator;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -37,6 +38,11 @@ public class UserController {
 
     @Resource
     private RegisterService registerService;
+    
+    
+    @Resource
+    private CommonWebConfig commonWebConfig;
+    
 
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
@@ -141,10 +147,12 @@ public class UserController {
 
                 //如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
 				if(user.getUserImage()!=null && user.getUserImage().trim().contains(ZhlResourceCenterWrap.userimage_upload_prefix)){
-					//获取文件服务器的访问url 
 					
-					String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-					String currentResPath = (String)request.getAttribute("currentResPath");
+					//获取文件服务器的访问url 
+					String resServiceLocal = commonWebConfig.getResServiceLocal();
+					String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+					
 					String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, user.getUserImage()) ;
 					temp = temp.replace(resServiceLocal, currentResPath);
 					user.setUserImage(temp);
@@ -418,9 +426,9 @@ public class UserController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
-				String hostLocal = (String)request.getAttribute("hostLocal");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				String hostLocal =commonWebConfig.getHostLocalOne();
 				
 				long userId = currentUserId;
 				JUser  user =  userService.getUserById(userId);

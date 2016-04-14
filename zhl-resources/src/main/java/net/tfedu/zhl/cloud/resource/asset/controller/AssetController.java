@@ -17,6 +17,7 @@ import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.zhldowncenter;
 import net.tfedu.zhl.helper.CustomException;
@@ -49,7 +50,12 @@ public class AssetController {
 	 * 自建资源service
 	 */
 	@Resource
-	ZAssetService  assetService ;	
+	ZAssetService  assetService ;
+	
+	
+	
+    @Resource
+    private CommonWebConfig commonWebConfig;
 	
 	/**
 	 * 前端web端获取上传文件路径（支持格式转换）
@@ -72,9 +78,9 @@ public class AssetController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
-				String hostLocal = (String)request.getAttribute("hostLocal");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				String hostLocal = commonWebConfig.getHostLocalOne();
 				
 				long userId = currentUserId;
 				JUser  user =  userService.getUserById(userId);
@@ -173,10 +179,12 @@ public class AssetController {
 					//新建资源
 
 					//获取文件服务器的访问url 
-					String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-					String currentResPath = (String)request.getAttribute("currentResPath");
-					String hostLocal = (String)request.getAttribute("hostLocal");
-
+					String resServiceLocal = commonWebConfig.getResServiceLocal();
+					String currentResPath = commonWebConfig.getCurrentResPath(request);
+					String hostLocal = commonWebConfig.getHostLocalOne();
+					
+					
+					
 					String _names = request.getParameter("names");
 					String _unifTypeIds = request.getParameter("unifTypeIds");
 					String _tfcodes = request.getParameter("tfcodes");
@@ -307,8 +315,8 @@ public class AssetController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				long userId = 390440126;
 				long unifyTypeId = 0 ;
@@ -386,9 +394,10 @@ public class AssetController {
 				String _method = request.getParameter("_method");
 				if(StringUtils.isNotEmpty(_method)&&RequestMethod.PUT.name().equalsIgnoreCase(_method)){
 					//获取文件服务器的访问url 
-					String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-					String currentResPath = (String)request.getAttribute("currentResPath");
-					String hostLocal = (String)request.getAttribute("hostLocal");
+					String resServiceLocal = commonWebConfig.getResServiceLocal();
+					String currentResPath = commonWebConfig.getCurrentResPath(request);
+					String hostLocal = commonWebConfig.getHostLocalOne();
+					
 					
 					String name = request.getParameter("name");
 					String unifTypeId = request.getParameter("unifTypeId");

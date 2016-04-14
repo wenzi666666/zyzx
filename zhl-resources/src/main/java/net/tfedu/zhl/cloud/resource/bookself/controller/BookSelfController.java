@@ -12,6 +12,7 @@ import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -36,7 +37,9 @@ public class BookSelfController {
 	BookSelfService bookSelfService;
 	
 	
-	
+    @Resource
+    private CommonWebConfig commonWebConfig;
+    	
 	/**
 	 * 获取我的全部书架
 	 * @param request
@@ -59,8 +62,8 @@ public class BookSelfController {
 			if(currentUserId!=null && exception==null){	
 				
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				
 				long userId = currentUserId;
 				String title = request.getParameter("title");
@@ -164,8 +167,8 @@ public class BookSelfController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -215,8 +218,8 @@ public class BookSelfController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -268,8 +271,8 @@ public class BookSelfController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
-				String currentResPath = (String)request.getAttribute("currentResPath");
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				String name = request.getParameter("name");
 				if(StringUtils.isNotEmpty(name)){
 					bookSelfService.renameAsset(id, name);
