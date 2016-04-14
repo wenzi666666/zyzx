@@ -29,7 +29,7 @@ public interface TreeService {
      *            是最终返回的所有子节点集合
      * @return
      */
-    public List<TreeNode> getAllChildren(List<TreeNode> topChildren, List<TreeNode> resultTrees);
+    public List<TreeNode> getAllChildren(TreeNode parentNode,List<TreeNode> topChildren, List<TreeNode> resultTrees);
 
     /**
      * 加载父结点及其所有的子结点

@@ -25,7 +25,7 @@ public class TreeNode implements Serializable {
     private List<TreeNode> children;
 
     // 当前层的第几个结点
-    private int i;
+    private String i;
 
     // 结点的tfcode
     private String tfcode;
@@ -70,11 +70,11 @@ public class TreeNode implements Serializable {
         this.children = children;
     }
 
-    public int getI() {
+    public String getI() {
         return i;
     }
 
-    public void setI(int i) {
+    public void setI(String i) {
         this.i = i;
     }
 
