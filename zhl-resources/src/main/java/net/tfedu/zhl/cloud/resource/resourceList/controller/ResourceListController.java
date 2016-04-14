@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
@@ -76,7 +77,8 @@ public class ResourceListController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+            	ResourceWebConfig webConfig = new ResourceWebConfig();
+				String resServiceLocal = webConfig.getResServiceLocal();
 				String currentResPath = (String)request.getAttribute("currentResPath");
 				 // 资源库id
 				long poolId = 0;
@@ -170,7 +172,7 @@ public class ResourceListController {
     }
     
     /**
-     * 查询区本、校本资源类型
+     * 查询区本、校本资源列表
      * @param request
      * @param response
      * @return
@@ -194,7 +196,8 @@ public class ResourceListController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+            	ResourceWebConfig webConfig = new ResourceWebConfig();
+				String resServiceLocal = webConfig.getResServiceLocal();
 				String currentResPath = (String)request.getAttribute("currentResPath");
 				
                 long userId = currentUserId; // 获得用户id

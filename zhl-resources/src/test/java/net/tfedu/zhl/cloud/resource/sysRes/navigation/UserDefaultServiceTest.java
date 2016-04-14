@@ -42,7 +42,7 @@ public class UserDefaultServiceTest extends BaseServiceTestCase{
 	 */
 	@Test
 	public void testUpdateUserDefaultService() throws IOException{
-		String tfcode = "SHXX02010101";
+		String tfcode = "SHXX020101";
 		long userId = 8978979;
 		userDefaultService.updateUserHistoryDefault(userId,tfcode,SysFrom.type);
 	}

@@ -53,7 +53,9 @@ public class UserDefaultServiceImpl implements UserDefaultService {
         map1.put("userId", userId);
         map1.put("type", SysFrom.type);
         
-        if(jUserDefaultMapper.getUserHistoryDefault(map1) == null){//若之前没有历史结点记录，则新增一条历史记录
+        JUserDefault userDefault = jUserDefaultMapper.getUserHistoryDefault(map1);
+        
+        if(userDefault == null){//若之前没有历史结点记录，则新增一条历史记录
         	jUserDefaultMapper.addUserHistoryDefault(map);
         } else { //更新历史记录
         	jUserDefaultMapper.updateUserHistoryDefault(map);

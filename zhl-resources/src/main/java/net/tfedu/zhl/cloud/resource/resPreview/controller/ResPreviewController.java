@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
@@ -211,7 +212,8 @@ public class ResPreviewController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+            	ResourceWebConfig webConfig = new ResourceWebConfig();
+				String resServiceLocal = webConfig.getResServiceLocal();
 				String currentResPath = (String)request.getAttribute("currentResPath");
             	
             	//当前预览的资源id

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
@@ -69,7 +70,8 @@ public class ResSearchController {
             if (exception == null && currentUserId != null) {
             	
             	//获取文件服务器的访问url 
-				String resServiceLocal = (String)request.getAttribute("resServiceLocal");
+            	ResourceWebConfig webConfig = new ResourceWebConfig();
+				String resServiceLocal = webConfig.getResServiceLocal();
 				String currentResPath = (String)request.getAttribute("currentResPath");
 				
 				// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
