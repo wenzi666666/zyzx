@@ -40,13 +40,14 @@
    <update id="updateUserHistoryDefault" parameterType="HashMap" >
         update j_syscourse_user_default set tfcode = #{tfcode} where userId = #{userId} and type = #{type} and flag = false
    </update>
-    
-   <!-- 从资源预览页面，点击目录结点，要跳转到相应的资源查询页面，这里查询的是跳转后所在页面的目录 -->
+  
+  <!-- 从资源预览页面，点击目录结点，要跳转到相应的资源查询页面，这里查询的是跳转后所在页面的目录 -->  
+  <!--  
    <select id="getCourseContent" resultMap="HistoryResultMap">
 		select sys.id,sys.tfcode fcode,sys.TermId TermId,sys.SubjectId SubjectId, 
         (select edi.id from j_syscourse edi where edi.termid = TermId and edi.subjectid = SubjectId and flag = false and pnodeid = 0 and LOCATE(edi.tfcode,fcode) > 0 )editionId,
         (select book.id from j_syscourse book where book.pnodeid = editionId and flag = false and LOCATE(book.tfcode,fcode) > 0 )bookid 
         from j_syscourse sys  
         where sys.tfcode = #{tfcode} and sys.flag = false 
-    </select>
+    </select> -->
 </mapper>
