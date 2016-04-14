@@ -20,6 +20,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
 import net.tfedu.zhl.helper.CustomException;
@@ -47,6 +48,10 @@ public class PrepareController {
 
     @Resource
     ResZipDownloadService resZipDownloadService;
+    
+    @Resource
+    private CommonWebConfig commonWebConfig;
+    
 
     /**
      * 新增编辑 备课夹 v1.0
@@ -242,8 +247,9 @@ public class PrepareController {
 
         try {
 
-            String resServiceLocal = (String) request.getAttribute("resServiceLocal");
-            String currentResPath = (String) request.getAttribute("currentResPath");
+			//获取文件服务器的访问url 
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+			String currentResPath = commonWebConfig.getCurrentResPath(request);
 
             if (currentUserId != null && exception == null) {
                 if (prepareId > 0) {
@@ -501,8 +507,8 @@ public class PrepareController {
 
         String resIds = request.getParameter("ids");
         String fromFlags = request.getParameter("fromflags");
-        String hostLocal = (String) request.getAttribute("hostLocal");
-        String resServiceLocal = (String) request.getAttribute("resServiceLocal");
+        String hostLocal = commonWebConfig.getHostLocalOne();
+        String resServiceLocal = commonWebConfig.getResServiceLocal();
         
         
         
@@ -630,8 +636,10 @@ public class PrepareController {
         try {
 
         	
-            String resServiceLocal = (String) request.getAttribute("resServiceLocal");
-    		String currentResPath = (String)request.getAttribute("currentResPath");
+			//获取文件服务器的访问url 
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+			String currentResPath = commonWebConfig.getCurrentResPath(request);
+
 
         	
             if (currentUserId != null && exception == null) {
@@ -687,8 +695,10 @@ public class PrepareController {
         String resIds = request.getParameter("resIds");
         String fromFlags = request.getParameter("fromFlags");
 
-        String resServiceLocal = (String) request.getAttribute("resServiceLocal");
-        String currentResService = (String) request.getAttribute("currentResPath");
+		//获取文件服务器的访问url 
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+
 
         // 返回json的结果对象
         ResultJSON result = new ResultJSON();
@@ -714,7 +724,7 @@ public class PrepareController {
                         List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForView(ids, fromFlag,currentUserId);
                         // 将原始的path重置为可用的web链接
 
-                        JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResService);
+                        JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResPath);
                         data = list;
                         exception = CustomException.SUCCESS;
                     }
@@ -755,8 +765,9 @@ public class PrepareController {
         String resIds = request.getParameter("resIds");
         String fromFlags = request.getParameter("fromFlags");
 
-        String resServiceLocal = (String) request.getAttribute("resServiceLocal");
-        String currentResService = (String) request.getAttribute("currentResPath");
+		//获取文件服务器的访问url 
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
 
         // 返回json的结果对象
         ResultJSON result = new ResultJSON();
@@ -783,7 +794,7 @@ public class PrepareController {
                         // 将原始的path重置为可用的web链接
 
                         if(list != null && list.size() > 0){
-                        	 JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResService);
+                        	 JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResPath);
                              data = list;
                             
                         }

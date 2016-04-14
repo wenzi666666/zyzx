@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
@@ -17,6 +16,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
@@ -85,7 +85,7 @@ public class PersonalController {
      * web配置组件
      */
     @Autowired
-    private ResourceWebConfig resourceWebConfig ;
+    private CommonWebConfig commonWebConfig ;
     
 	/**
 	 * 获取统一资源类型
@@ -190,8 +190,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = resourceWebConfig.getResServiceLocal();
-				String currentResPath = resourceWebConfig.getCurrentResPath(request);
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -311,8 +311,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = resourceWebConfig.getResServiceLocal();
-				String currentResPath = resourceWebConfig.getCurrentResPath(request);
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -379,8 +379,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = resourceWebConfig.getResServiceLocal();
-				String currentResPath = resourceWebConfig.getCurrentResPath(request);
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				
 				long userId = currentUserId;
 				int reviewType  = 0 ;
@@ -528,8 +528,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = resourceWebConfig.getResServiceLocal();
-				String currentResPath = resourceWebConfig.getCurrentResPath(request);
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				long userId = currentUserId;
 				long unifyTypeId = 0 ;
@@ -686,8 +686,8 @@ public class PersonalController {
 		try{
 			if(currentUserId!=null && exception==null){	
 				//获取文件服务器的访问url 
-				String resServiceLocal = resourceWebConfig.getResServiceLocal();
-				String currentResPath = resourceWebConfig.getCurrentResPath(request);
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 				
 				long userId = currentUserId;
@@ -750,7 +750,7 @@ public class PersonalController {
 		String term = "GZ";
 		
 		//拦截器读取配置文件  写入request
-		String currentFDHost = resourceWebConfig.getCurrentFdHost(request);		
+		String currentFDHost = commonWebConfig.getCurrentFdHost(request);		
 
 		
 		
