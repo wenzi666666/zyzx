@@ -380,14 +380,12 @@ public class ZhlResourceCenterWrap {
 	 * 将历史文件发送给文件服务器进行格式转换
 	 * 
 	 */
-	public static void sendFileToConvert(String fileName,HttpServletRequest request,long userId){
-		String basePath = request.getServletContext().getInitParameter("hostLocal");
-		String paths[] = basePath.split(",");
+	public static void sendFileToConvert(String fileName,HttpServletRequest request,long userId,String hostLocal,String resServiceLocal){
 		
 		//回调函数action
-		String returnUrl = paths[0] + "historyConvert_insert.action";
+		String returnUrl = hostLocal + "historyConvert_insert.action";
 		
-		String resSerPath = request.getServletContext().getInitParameter("resServiceLocal");
+		String resSerPath = resServiceLocal;
 		
 		//回调函数action
 		new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileConvertTask(fileName, "rename&userId=" + userId, returnUrl);
