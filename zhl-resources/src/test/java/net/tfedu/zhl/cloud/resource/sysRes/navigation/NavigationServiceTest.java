@@ -23,7 +23,7 @@ import org.junit.Test;
 import org.springframework.util.Assert;
 
 /**
- * 目录 单元测试
+ * 目录service 单元测试
  * @author WeiCuicui
  *
  */
@@ -37,11 +37,9 @@ public class NavigationServiceTest extends BaseServiceTestCase{
     
     @Resource BookService bookService;
     
-    @Resource
-    TreeService treeService;
+    @Resource TreeService treeService;
     
-    @Resource 
-	
+   
     /**
      * 查询学段
      * @throws IOException
