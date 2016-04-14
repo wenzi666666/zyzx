@@ -228,7 +228,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * @return
      */
     @Override
-	public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage){
+	public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage){
     	// 存放查询结果
         List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
         // 封装结果集
