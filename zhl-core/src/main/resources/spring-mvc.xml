@@ -15,6 +15,31 @@
 	<mvc:annotation-driven />
 	
 	<mvc:default-servlet-handler/>
+		
+		
+ 	<context:component-scan base-package="cn.outofmemory.hellospring.properties.annotation"/>
+ 		
+ 	<context:component-scan base-package="net.tfedu.zhl.**.config" />
+ 		
+    <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath*:business_*.properties</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
+        <property name="properties" ref="configProperties" />
+    </bean>    
+    
+    <!-- 使用方法  -->
+    <!-- 
+    @Value("#{configProperties['ftp_username']}")
+    private String username;
+     -->
+	
+	
+
 	
     <!-- 扫描controller（controller层注入） -->
     <context:component-scan base-package="net.tfedu.zhl" use-default-filters="false">
@@ -26,12 +51,15 @@
 
     <mvc:interceptors>
 <!--         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+		
  -->       
         <mvc:interceptor>
         	<mvc:mapping path="/resRestAPI/**/**"/>
         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
         </mvc:interceptor>
+        
     </mvc:interceptors>
+    
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
         <property name="defaultLocale" value="zh_CN"/>
