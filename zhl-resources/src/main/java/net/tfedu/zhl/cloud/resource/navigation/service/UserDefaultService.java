@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.navigation.service;
 
-import java.util.HashMap;
-
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 
 /**
@@ -12,13 +10,17 @@ import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
  */
 public interface UserDefaultService {
 
-    // 查询用户历史选择的学段、学科、版本、教材
-    public JUserDefault getUserHistoryDefault(HashMap<String, Object> map);
+    /**
+     *  查询用户历史选择的学段、学科、版本、教材
+     * @param map
+     * @return
+     */
+    public JUserDefault getUserHistoryDefault(long userId,int type);
 
-    // 增加用户历史选择
-    public void addUserHistoryDefault(HashMap<String, Object> map);
-
-    // 更新用户历史选择
-    public void updateUserHistoryDefault(HashMap<String, Object> map);
+    /**
+     *  增加或修改用户历史选择
+     * @param map
+     */
+    public void updateUserHistoryDefault(long userId,String tfcode,int type);
 
 }

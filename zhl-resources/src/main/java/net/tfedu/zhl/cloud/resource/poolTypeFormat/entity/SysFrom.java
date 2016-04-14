@@ -30,6 +30,11 @@ public class SysFrom implements Serializable {
      */
     public static String proCode = "zy"; 
     
+    /**
+     * 用户历史记录表中的type字段
+     */
+    public static int type = 1; //系统课程目录
+    
 
     static {
         sys_from.add(0);

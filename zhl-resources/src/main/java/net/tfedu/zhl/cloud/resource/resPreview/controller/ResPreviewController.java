@@ -246,9 +246,6 @@ public class ResPreviewController {
             	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
             		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
             	}
-            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-            		tfcode = request.getParameter("tfcode").toString().trim();
-            	}
             	
             	if(StringUtils.isNotEmpty(request.getParameter("page"))){
             		page = Integer.parseInt(request.getParameter("page").toString().trim());
@@ -263,22 +260,24 @@ public class ResPreviewController {
             			searchKeyword = request.getParameter("searchKeyword").toString().trim();
             		}   
             		
-            		pagination = resPreviewService.searchRecommendation(tfcode, fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
+            		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
             		
             	} else { //从系统资源、区本资源、校本资源跳转过来的
             		
+            		if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+                		tfcode = request.getParameter("tfcode").toString().trim();
+                	}
+            		if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+                		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+                	}
+                	
             		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
             			poolId = Integer.parseInt(request.getParameter("poolId").toString().trim());
             			
-            			if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-                    		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-                    	}
             			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
             			
             		} else { //区本、校本资源
-            			if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-                    		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-                    	}
+            			
 						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage);
 					}
 				}

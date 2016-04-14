@@ -208,7 +208,7 @@ public class JUserDefault implements Serializable {
 
     @Override
     public String toString() {
-        return "userDefault[userId: + " + userid + " + ,tfcode: + " + tfcode + " + ,termId: + " + termId
+        return "userDefault[Id: + " + id + " + ,tfcode: + " + tfcode + " + ,termId: + " + termId
                 + " + ,subjectId: + " + subjectId + " + ,editionid: + " + editionId + " + ,bookId: + " + bookId + "]";
     }
 }

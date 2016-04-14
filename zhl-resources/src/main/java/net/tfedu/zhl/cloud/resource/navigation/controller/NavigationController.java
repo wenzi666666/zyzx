@@ -351,17 +351,10 @@ public class NavigationController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
-                long userId = currentUserId;
-
-                int type = 1;
-                if(StringUtils.isNotEmpty(request.getParameter("type"))){
-                	type = Integer.parseInt(request.getParameter("type").toString().trim());
-                }
-
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("userId", userId);
-                map.put("type", type);
-                userDefault = userDefaultService.getUserHistoryDefault(map);
+               
+            	long userId = currentUserId;
+               
+                userDefault = userDefaultService.getUserHistoryDefault(userId,SysFrom.type);
 
                 exception = CustomException.SUCCESS;
             } else {
@@ -413,34 +406,13 @@ public class NavigationController {
                 // 用户id
                 long userId = currentUserId;
 
-                // 类型： 1：系统资源
-                int type = Integer.parseInt(request.getParameter("type").toString().trim());
-
                 // 结点tfcode
                 String tfcode = request.getParameter("tfcode");
-
-                // 方法
-                String _method = request.getParameter("_method");
-
-                // 封装参数
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("userId", userId);
-                map.put("type", type);
-                map.put("tfcode", tfcode);
-
-                if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {
-
-                    // 修改用户历史选择
-                    userDefaultService.updateUserHistoryDefault(map);
-
-                } else {
-
-                    // 增加用户历史选择
-                    userDefaultService.addUserHistoryDefault(map);
-                }
-
+                           
+                // 修改用户历史选择
+                userDefaultService.updateUserHistoryDefault(userId,tfcode,SysFrom.type);
+    
                 exception = CustomException.SUCCESS;
-
             }
 
         } catch (Exception e) {

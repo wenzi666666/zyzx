@@ -69,5 +69,5 @@ public interface ResPreviewService {
      * @param perPage
      * @return
      */
-    public Pagination<ResRecommendationEntity> searchRecommendation(String tfcode,int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
+    public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
 }
