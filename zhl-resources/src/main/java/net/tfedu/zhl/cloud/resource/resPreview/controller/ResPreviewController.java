@@ -108,7 +108,7 @@ public class ResPreviewController {
     }
 	
 	/**
-	 * 根据资源id，查询一条资源的所有版本目录（用于从资源检索结果页跳转到预览页面）
+	 * 根据资源id，查询所在目录
 	 * @param request
 	 * @param response
 	 * @return
@@ -180,61 +180,6 @@ public class ResPreviewController {
 
         return resultJSON;
     }
-	
-	/**
-	 * 从资源预览页面跳转回到资源列表页时，加载资源目录
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws IOException
-	 *//*
-	@RequestMapping(value = "/v1.0/backCourseContent", method = RequestMethod.GET)
-    @ResponseBody
-    public ResultJSON getCourseContent(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        *//**
-         * 返回json的结果对象
-         *//*
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        JUserDefault courseContent = null;
-        try {
-
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	String tfcode = "";
-            	
-            	if(StringUtils.isNotEmpty(request.getParameter("tfcode")))
-                     tfcode = request.getParameter("tfcode").toString().trim();
-
-                // 查询课程目录
-                courseContent = resPreviewService.getPnodes(tfcode);
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // 封装结果集
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(courseContent);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
-
-        return resultJSON;
-    }*/
 	
 	/**
 	 * 资源推荐，将当前预览的资源显示在第一条的位置

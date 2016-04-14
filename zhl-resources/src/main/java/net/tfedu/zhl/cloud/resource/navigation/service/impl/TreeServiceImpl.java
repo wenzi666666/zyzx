@@ -35,27 +35,31 @@ public class TreeServiceImpl implements TreeService {
         return jSyscourseMapper.getTopChildrenResultMap(pnodeId);
     }
 
+  
     /**
      * 根据提供的节点集合递归查询集合里每个节点的子节点，最终统一返回所有的子节点
-     * 
+     * @param parentNode
+     *     父结点
      * @param topChildren
-     *            是当前节点的直接子节点集合
+     *     是当前节点的直接子节点集合
      * @param resultTrees
-     *            是最终返回的所有子节点集合
+     *     是最终返回的所有子节点集合
      * @return
      */
     @Override
-    public List<TreeNode> getAllChildren(List<TreeNode> topChildren, List<TreeNode> resultTrees) {
+    public List<TreeNode> getAllChildren(TreeNode parentNode,List<TreeNode> topChildren, List<TreeNode> resultTrees) {
         for (int i = 0; i < topChildren.size(); i++) {
             TreeNode node = topChildren.get(i);
 
-            // 设置当前结点属于第几个结点
-            node.setI(i + 1);
 
             // 如果当前节点是叶子节点，跳过不进行递归查询子节点
             if (node.isLeaf()) {
                 continue;
             }
+            
+            // 设置当前结点属于第几个结点
+            int sort = i + 1;
+            node.setI(parentNode.getI() + "." + sort );
 
             // 查询children
             List<TreeNode> children = getTopChildren(node.getId());
@@ -67,7 +71,7 @@ public class TreeServiceImpl implements TreeService {
             }
 
             // 递归调用
-            getAllChildren(children, resultTrees);
+            getAllChildren(node,children, resultTrees);
         }
 
         return resultTrees;
@@ -95,13 +99,14 @@ public class TreeServiceImpl implements TreeService {
             // 加入到结果集中
             resultNodes.add(node);
 
-            // 设置当前结点属于第几个结点
-            node.setI(i + 1);
-
             // 如果当前节点是叶子节点，跳过不进行递归查询子节点
             if (node.isLeaf()) {
                 continue;
             }
+            
+            // 设置当前结点属于第几个结点
+            int sort = i + 1;
+            node.setI(sort + "");
 
             // 查询children
             List<TreeNode> children = getTopChildren(node.getId());
@@ -112,8 +117,8 @@ public class TreeServiceImpl implements TreeService {
                 node.setChildren(children);
             }
 
-            // 递归调用
-            getAllChildren(children, resultNodes);
+            // 递归调用，node是父结点
+            getAllChildren(node,children, resultNodes);
         }
 
         return resultNodes;
