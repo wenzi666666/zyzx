@@ -95,15 +95,39 @@
   	update z_asset  set name =#{name},UpdateTime=now() where id = #{id};
   </update>
   
-  <!-- 获取用户的课件  注意time 为 updatetime  -->  
-  <select id="queryUserCourseware" resultMap="viewMap">
   
-	select  resId,rescode,title,unifytype,time,imgpath,filesuffix from  (	 
+  
+  
+       <!-- 用户的课件资源前端展示信息 -->
+   <resultMap id="courseWareViewMap" type="net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView"> 		
+      <result column="resid"  property="resId" />
+      <result column="rescode"  property="resCode" />
+      <result column="title"  property="title" />
+      <result column="unifytype" property="unifyType" />
+      <result column="time"  property="time" />
+      <result column="imgpath"  property="imgPath" />
+      <result column="filesuffix" property="fileSuffix" />
+
+      <result column="updatetime"  property="updatetime" />
+      <result column="size" property="size" />
+      <result column="tfcode"  property="tfcode" />
+      <result column="tf_title" property="tf_title" />
+   </resultMap>
+  
+  
+  
+  
+  <!-- 获取用户的课件  注意time 为 updatetime  -->  
+  <select id="queryUserCourseware" resultMap="courseWareViewMap">
+  
+	select  resId,rescode,title,unifytype,time,imgpath,filesuffix,size,updatetime,tfcode,tf_title from  (	 
 			select  a.id as resId,a.resourceid as rescode,a.name as title,a.updatetime,a.createTime as time,p.id as unifyTypeId,a.assetSize  as size 
 			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			,c.tfcode,c.name as tf_title 
 			from  z_asset a 
 			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId
 			LEFT JOIN z_asset_syscourse  s on s.assetid = a.id
+			LEFT JOIN j_syscourse c on c.tfcode = s.tfcode 
 			where a.iscourseware = true  and a.flag =false and a.FileType = 'A'
       and s.flag = false  
 			and a.userid = #{userId} and s.tfcode like #{tfcode} 

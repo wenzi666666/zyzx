@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.asset.dao;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
@@ -50,7 +51,7 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param orderby
 	 * @return
 	 */
-	public List<ZAssetView> queryUserCourseware(@Param("userId") Long userId,@Param("tfcode") String tfcode
+	public List<CourseWareView> queryUserCourseware(@Param("userId") Long userId,@Param("tfcode") String tfcode
 				,@Param("title") String title,@Param("orderby") String orderby);
 	
 	

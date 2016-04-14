@@ -1,15 +1,11 @@
 package net.tfedu.zhl.cloud.resource.bookself.controller;
 
-import static org.junit.Assert.*;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
-
-import com.sun.tools.internal.xjc.generator.bean.ImplStructureStrategy.Result;
 
 public class BookSelfControllerTest extends BaseControllerTestCase {
 

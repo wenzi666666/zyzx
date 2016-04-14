@@ -101,7 +101,16 @@ public class ZAssetView implements Serializable {
         this.fileSuffix = fileSuffix;
     }
 
-    @Override
+    
+    public String getResCode() {
+		return resCode;
+	}
+
+	public void setResCode(String resCode) {
+		this.resCode = resCode;
+	}
+
+	@Override
     public String toString() {
         return "[ZAssetView:{resId:" + resId + ";title:" + title + ";resCode:" + resCode + ";unifyType:" + unifyType
                 + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";

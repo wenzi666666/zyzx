@@ -6,7 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
+import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfImgPathConvert;
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
@@ -227,8 +227,9 @@ public class BookSelfController {
 				String title = request.getParameter("title");
 				String orderby = request.getParameter("orderby");
 
-				List<ZAssetView> list = bookSelfService.queryUserCourseware(userId, tfcode, title, orderby);
-				JPrepareContentViewUtil.convertToPurpose_Asset(list, resServiceLocal, currentResPath);
+				List<CourseWareView> list = bookSelfService.queryUserCourseware(userId, tfcode, title, orderby);
+				
+				JPrepareContentViewUtil.convertToPurpose_CourseWare(list, resServiceLocal, currentResPath);
 				data = list ;
 				exception = CustomException.SUCCESS;				
 			}else{
