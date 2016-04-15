@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.prepare.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -542,7 +543,7 @@ public class PrepareController {
                         // 增加下载记录
                         resZipDownloadService.addZipDownRecord(record);
                         Long recordId = record.getId();
-                        rollBackUrl = hostLocal + "/resRestAPI/zipDownload_status?id=" + recordId;// 回调函数
+                        rollBackUrl = hostLocal + "/resRestAPI/v1.0/zipDownload_status?id=" + recordId;// 回调函数
                         // 创建打包任务
                         ZipTaskContent content = new ZipTaskContent();
                         // 指定打包文件路径
@@ -828,6 +829,9 @@ public class PrepareController {
 
         System.out.println("1212112");
 
+        Date  d =new Date(1460603943000l);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        System.out.println(format.format(d));
     }
 
 }
