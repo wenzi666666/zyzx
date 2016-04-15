@@ -54,18 +54,11 @@ public class ResTypeServiceImpl implements ResTypeService {
         return resTypeMapper.getAllDisResIds(map);
     }
 
-    /**
-     * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
-     */
-    @Override
-    public List<Integer> getAllTypeIdsByPool(long poolId) {
-        return resPoolTypeMapper.getAllTypeIdsByPool(poolId);
-    }
-
-    @Override
+   
     /**
      * 系统资源：当资源库选择 “全部” 或 “教学素材” 时，显示所有一级类型
      */
+    @Override
     public List<ResType> getSysFirstLevelType(List<Long> resourceIds, List<Integer> typeIds) {
         return resTypeMapper.getSysFirstLevelType(resourceIds, typeIds);
     }
@@ -79,6 +72,27 @@ public class ResTypeServiceImpl implements ResTypeService {
     }
 
     /**
+     * 系统资源：根据资源库id和父类型id，得到父类型的所有子类型及其自身
+     * 
+     * @param map
+     * @return
+     */
+    @Override
+    public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType) {
+        return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
+    }
+    
+    
+    /**
+     * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
+     */
+    @Override
+    public List<Integer> getAllTypeIdsByPool(long poolId) {
+        return resPoolTypeMapper.getAllTypeIdsByPool(poolId);
+    }
+
+
+    /**
      * 区本校本资源：根据资源ids和fromFlag（区本/校本），查询资源类型
      * 
      * @param resourceIds
@@ -88,17 +102,6 @@ public class ResTypeServiceImpl implements ResTypeService {
     @Override
     public List<ResType> getDisResType(List<Long> resourceIds, int fromFlag) {
         return resTypeMapper.getDisResType(resourceIds, fromFlag);
-    }
-
-    /**
-     * 根据资源库id，得到父类型的所有子类型及其自身
-     * 
-     * @param map
-     * @return
-     */
-    @Override
-    public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType) {
-        return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
     }
 
     /**

@@ -15,14 +15,17 @@
   
    <!-- 系统资源，根据资源库id，查询所有的typeIds -->
   <select id="getAllTypeIdsByPool"  resultType="Integer">
-     SELECT distinct type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-     a.resTypeId = b.ID where a.flag=0 and b.flag=0  
+     SELECT distinct type_id from 
+     (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+     a.resTypeId = b.ID and b.flag=0 where a.flag=0   
      <if test="poolId != 0">   <!-- poolId == 0 时，查询全部资源库下的资源类型 -->
           and poolId = #{poolId}
      </if>
      
-     UNION all SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-     x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
+     UNION all 
+     
+     SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+     x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 where a.flag=0 
      <if test="poolId != 0">   <!-- poolId == 0 时，查询全部资源库下的资源类型 -->
           and poolId = #{poolId}
      </if>
@@ -33,12 +36,15 @@
   <!-- 系统资源，根据资源库id，查询所有的typeIds，e备课   -->
   <select id="getAllTypeIdsByPool_EPrepare" resultType="Integer">
      SELECT distinct type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-     a.resTypeId = b.ID where a.flag=0 and b.flag=0 
+     a.resTypeId = b.ID and b.flag=0 where a.flag=0  
      <if test="poolId != 0">   <!-- poolId == 0 时，查询全部资源库下的资源类型 -->
           and poolId = #{poolId}
      </if>
-     UNION all SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-     x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
+     
+     UNION all 
+     
+     SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+     x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 where a.flag=0  
      <if test="poolId != 0">   <!-- poolId == 0 时，查询全部资源库下的资源类型 -->
           and poolId = #{poolId}
      </if>

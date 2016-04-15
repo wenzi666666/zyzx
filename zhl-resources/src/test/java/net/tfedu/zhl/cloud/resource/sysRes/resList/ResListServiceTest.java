@@ -32,6 +32,8 @@ public class ResListServiceTest extends BaseServiceTestCase{
     @Resource
     DisResService disResService;
     
+    
+    
     /**
      * 系统资源列表查询的Service单元测试
      * @throws IOException
@@ -74,6 +76,8 @@ public class ResListServiceTest extends BaseServiceTestCase{
             }
         }
     }
+    
+    
     
     /**
      * 区本、校本资源列表查询的单元测试

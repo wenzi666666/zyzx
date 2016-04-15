@@ -21,133 +21,24 @@
     </constructor>
   </resultMap>
   
-   <!-- 系统资源：得到父类型的所有子类型及其自身  -->
-  <select id="getTypesByPMTypeAndPool"  resultType="Integer">
-      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
-      
-       <if test="poolId != 0 and MType == 0">
-         and poolId = #{poolId}
-       </if>
-        <if test="MType != 0">
-         and (b.id = #{MType} or b.pid = #{MType})
-        </if>
-      
-      UNION all SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
-       <if test="poolId != 0 and MType == 0">
-         and poolId = #{poolId}
-       </if>
-       <if test="MType != 0">
-         and (a.id = #{MType} or a.pid = #{MType})
-        </if>
-      ) temp 
-  </select>
-  
-   <!-- 系统资源：e备课中，当类型选择为全部时，除去一些特定类型：得到父类型的所有子类型及其自身  -->
-  <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer">
-      SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
-      <if test="poolId != 0">
-         and poolId = #{poolId}
-      </if>
-      <if test="MType != 0">
-         and (b.id = #{MType} or b.pid = #{MType})
-      </if>
-      
-      UNION all 
-      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
-      <if test="poolId != 0">
-         and poolId = #{poolId}
-      </if>
-       <if test="MType != 0">
-         and (a.id = #{MType} or a.pid = #{MType})
-      </if>
-      ) temp 
-      <if test="MType == 0">
-         where type_id not in 
-         <foreach item="item" index="index" collection="removeTypeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-     </if> 
-  </select>
-  
-   <!-- 区本校本资源：得到父类型的所有子类型及其自身  -->
-  <select id="getDisResTypesByPMType"  resultType="Integer">
-      SELECT DISTINCT type_id  from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
-       <if test="MType != 0">
-         and (b.id = #{MType} or b.pid = #{MType})
-       </if>
-      UNION 
-      
-      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
-       <if test="MType != 0">
-         and (a.id = #{MType} or a.pid = #{MType})
-       </if>
-      ) temp 
-      
-    
-  </select>
-  
-  
-  <!-- 区本校本资源：e备课，得到父类型的所有子类型及其自身  -->
-  <select id="getDisResTypesByPMType_EPrepare"  resultType="Integer">
-      SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
-      <if test="MType != 0">
-         and (b.id = #{MType} or b.pid = #{MType})
-      </if>
-      UNION 
-      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0
-       <if test="MType != 0">
-         and (a.id = #{MType} or a.pid = #{MType})
-      </if>
-      ) temp 
-       
-      <if test="MType == 0">
-      where type_id not in  
-         <foreach item="item" index="index" collection="removeTypeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>  
-       </if>
-  </select>
-  
+  <!--  **************************  系统资源    类型相关   ************************** -->
   
   <!-- 根据sys_from, 父结点tfcode，查询系统资源的所有id -->
   <resultMap id="SysResIdsMap"  type="Long">
        <result column="sys_id" property="id" />
   </resultMap>
   <select id="getAllSysResIds"  parameterType="HashMap"  resultMap="SysResIdsMap">
-  
-      select a.Id sys_id from z_resource a 
-      left join z_resnav c on a.ResCode=c.ResCode 
-      left join j_syscourse d on c.StructCode=d.tfcode  
-      where a.flag=0 and c.flag=0 and d.flag=0 and a.fromFlag in 
+      select a.Id sys_id 
+      from z_resource a 
+      left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
+      left join j_syscourse d on c.StructCode=d.tfcode and d.flag=0 
+      where a.flag=0 and a.fromFlag in 
                 <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-      and c.StructCode like  CONCAT(#{pTfcode},'%')
+      and (c.StructCode like CONCAT(#{pTfcode},'%'))
   </select>
-  
-  <!-- 根据父结点tfcode，查询区本、校本资源的所有id -->
-  <resultMap id="DisResIdsMap"  type="Long">
-       <result column="dis_id" property="id" />
-  </resultMap>
-  <select id="getAllDisResIds"  parameterType="HashMap"  resultMap="DisResIdsMap"> 
-	select a.Id dis_id from z_districts_resource a 
-	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
-	LEFT JOIN j_syscourse d on c.StructCode=d.tfcode
-    where a.flag=0 and c.flag=0 and d.flag=0 and
-    c.StructCode like CONCAT(#{pTfcode},'%')
-  </select>
-  
   
   <!-- 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型   -->
   <resultMap id="FirstTypeResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType">
@@ -156,10 +47,10 @@
   </resultMap>
   <select id="getSysFirstLevelType"  resultMap="FirstTypeResultMap">
     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
-    from z_resource a 
-    left join x_resourcetype b on a.MType = b.id and b.flag = 0
-    left join x_resourcetype pb on pb.Id=b.pid 
-    where a.flag = 0 
+	from z_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0
+	left join x_resourcetype pb on pb.Id=b.pid 
+	where a.flag = 0 
 
      <if test="resourceIds.size() == 0">
          and a.id in ('')
@@ -170,27 +61,21 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     </if>
-     
-     <if test="typeIds.size() > 0">
-          and b.id in
+         <if test="typeIds.size() > 0">
+          and a.mtype in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
+         </if>
      </if>
   </select>
   
-  <!-- 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。
-              当资源库为“理化生实验”时，只显示“全部”。
-     -->
-  <resultMap id="SecondTypeResultMap"  type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType">
-       <id column="id" property="id" />
-	   <result column="mtype" property="mtype" />
-  </resultMap>
-  <select id="getSysSecondLevelType"  resultMap="SecondTypeResultMap">
-     select distinct b.mtype,b.id from z_resource a 
-     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+  <!-- 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
+  <select id="getSysSecondLevelType"  resultMap="FirstTypeResultMap">
+     select distinct b.mtype,b.id 
+	 from z_resource a 
+	 left join x_resourcetype b on a.MType = b.id and b.flag = 0 
      where a.flag = 0 and b.level = 2 
      <if test="resourceIds.size() == 0">
          and a.id in ('')
@@ -201,24 +86,68 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     </if>  
-     <if test="typeIds.size() > 0">
-      and a.mtype in
+        <if test="typeIds.size() > 0">
+        and a.mtype in
                 <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> 
-     </if>
+        </if>
+     </if> 
   </select>
   
-  <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
-  <select id= "getDisResType" resultMap="SecondTypeResultMap">
+   <!-- 系统资源：根据 poolId、父类型typeId, 得到父类型的所有子类型及其自身  -->
+  <select id="getTypesByPMTypeAndPool"  resultType="Integer">
+     SELECT DISTINCT type_id from 
+    (SELECT b.id type_id,b.pid,a.poolId 
+     from z_res_pooltype a 
+     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
+     where a.flag=0 
+       <if test="poolId != 0 and MType == 0">
+         and poolId = #{poolId}
+       </if>
+        <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+        </if>
+      
+      UNION all 
+
+      SELECT a.id type_id,a.pid,b.poolId
+      from x_resourcetype a 
+      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
+      where a.flag=0 
+       <if test="poolId != 0 and MType == 0">
+         and poolId = #{poolId}
+       </if>
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+        </if>
+      ) temp  
+  </select>
+  
+  
+ <!-- **************************  区本、校本资源    类型相关   **************************  -->
+ 
+ <!-- 根据父结点tfcode，查询区本、校本资源的所有id -->
+  <resultMap id="DisResIdsMap"  type="Long">
+       <result column="dis_id" property="id" />
+  </resultMap>
+  <select id="getAllDisResIds"  parameterType="HashMap"  resultMap="DisResIdsMap"> 
+	select a.Id dis_id from z_districts_resource a 
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0 
+	LEFT JOIN j_syscourse d on c.StructCode=d.tfcode and d.flag=0 
+    where a.flag=0 and
+    c.StructCode like CONCAT(#{pTfcode},'%')
+  </select>
+ 
+ <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
+  <select id= "getDisResType" resultMap="FirstTypeResultMap">
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid 
-     where a.flag = 0 and a.fromFlag in (#{fromFlag})
-     
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0 or pb.flag is null)
+     where a.flag = 0  
+     and a.fromFlag in (#{fromFlag})
      <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
@@ -229,30 +158,47 @@
                          #{item}
                 </foreach>
                 
-     </if>  
-     
+     </if>
+     order by b.displayIndex asc  
+  </select>
+ 
+   <!-- 区本、校本资源：得到父类型的所有子类型及其自身。  -->
+  <select id="getDisResTypesByPMType"  resultType="Integer">
+      SELECT DISTINCT type_id from (SELECT b.id type_id from x_resourcetype b 
+      where b.flag=0 
+       <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+       </if>
+      ) temp 
   </select>
   
-   <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本，e备课，除去特定的一些类型 -->
-  <select id= "getDisResType_EPrepare" resultMap="SecondTypeResultMap">
+ <!-- ************************** e备课 资源类型 相关   **************************  --> 
+ 
+  <!-- 区本校本资源：得到父类型的所有子类型及其自身  -->
+  <select id="getDisResTypesByPMType_EPrepare"  resultType="Integer">
+      SELECT DISTINCT type_id from (SELECT b.id type_id from x_resourcetype b where b.flag=0 
+      <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+       </if>
+      ) temp 
+      
+      where type_id not in  
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+         </foreach> 
+  </select>
+
+
+   <!-- 区本校本资源： 资源类型查询 -->
+  <select id= "getDisResType_EPrepare" resultMap="FirstTypeResultMap">
+  select mtype,id from (
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid and pb.flag = 0 
-     where a.flag = 0 and a.fromFlag in (#{fromFlag}) 
-     
-     and b.id not in 
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0 or pb.flag is null)
+     where a.flag = 0 and a.fromFlag in (#{fromFlag})
     
-      <foreach item="item" index="index" collection="removeTypeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-      and pb.id not in 
-      <foreach item="item" index="index" collection="removeTypeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-     
      <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
@@ -262,10 +208,44 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     </if>  
+     </if>)tmp 
+     where id not in 
+      <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
   </select>
   
+  <!-- 系统资源：得到父类型的所有子类型及其自身  -->
+  <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer">
+      SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
+      a.resTypeId = b.ID and b.flag=0 where a.flag=0 
+      <if test="poolId != 0">
+         and poolId = #{poolId}
+      </if>
+      <if test="MType != 0">
+         and (b.id = #{MType} or b.pid = #{MType})
+      </if>
+      
+      UNION all 
+      
+      SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 where a.flag=0 
+      <if test="poolId != 0">
+         and poolId = #{poolId}
+      </if>
+       <if test="MType != 0">
+         and (a.id = #{MType} or a.pid = #{MType})
+      </if>
+      ) temp 
+      where type_id not in 
+         <foreach item="item" index="index" collection="removeTypeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+  </select>
   
+
   <resultMap type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType" id="firstLevelResTypeMap">
         <id column="id" property="id" />
 	   <result column="mtype" property="mtype" />
