@@ -143,4 +143,15 @@ public interface ZAssetService {
 	public void patchCutAsset(List<Long> resIds,String tfcode,String des_tfcode);
 	
 	
+	
+	 /**
+     * 分页获取（备课夹中）未评论的资源
+     * @param userId
+     * @param reviewType
+     * @param page
+     * @param perPage
+     * @return
+     */
+	public Pagination getUnReview(Long userId,Integer page,Integer perPage);
+	
 }

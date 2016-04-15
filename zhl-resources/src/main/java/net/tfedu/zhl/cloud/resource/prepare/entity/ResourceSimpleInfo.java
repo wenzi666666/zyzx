@@ -42,8 +42,27 @@ public class ResourceSimpleInfo {
      * 文件路径
      */
     private String path;
+    
+    
+    
+    /**
+     * 是否是（系统资源中的）多媒体教辅
+     */
+    private Boolean isebook;
+    
+    
+    
+    
 
-    public String getRescode() {
+    public Boolean getIsebook() {
+		return isebook;
+	}
+
+	public void setIsebook(Boolean isebook) {
+		this.isebook = isebook;
+	}
+
+	public String getRescode() {
         return rescode;
     }
 
@@ -104,7 +123,9 @@ public class ResourceSimpleInfo {
         return new StringBuffer().append("[\"ResourceSimpleInfo\":{").append("\"resid\":\"" + resid + "\";")
                 .append("\"rescode\":\"" + rescode + "\";").append("\"title\":\"" + title + "\";")
                 .append("\"fromflag\":\"" + fromflag + "\";").append("\"isnet\":\"" + isnet + "\";")
-                .append("\"isdwj\":\"" + isdwj + "\";").append("\"path\":\"" + path + "\"").append("}]").toString();
+                .append("\"isdwj\":\"" + isdwj + "\";")
+                .append("\"isebook\":\"" + isebook + "\";")
+                .append("\"path\":\"" + path + "\"").append("}]").toString();
     }
 
 }

@@ -14,6 +14,13 @@ import javax.servlet.http.HttpServletRequest;
  * @version:
  */
 public class ZhlResourceCenterWrap {
+	
+	
+	/**
+	 * 指定播放pdf文件的系统资源文件格式或需要转换为pdf的自建资源
+	 */
+	public static final String file_pattern_pdf= ".kdh.caj.doc.docx.ppt.pptx.pptm.xls.xlsx.xlsm.pdf.teb.nh";
+
 
 	private static final String CustomerID = "100798967857546";
 	private static final String CustomerKey = "JWJ83OPR0985LJL";
@@ -163,7 +170,16 @@ public class ZhlResourceCenterWrap {
 		return getWebPlayUrl(serverURL, EBookPath, true, diskOrder)
 				+ "&mode=ebook";
 	}
-
+	/**
+	 * 获取电子教辅路径
+	 * 
+	 * @param args
+	 * 
+	 */
+	public static String GetEBookPlayerURL(String EBookPath, String serverURL
+			) {
+		return GetEBookPlayerURL(EBookPath, serverURL, default_diskOrder);
+	}
 	/**
 	 * 返回 资源的播放路径
 	 * 
