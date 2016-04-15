@@ -458,6 +458,7 @@ public class PersonalController {
 					prePage  = Integer.parseInt(_prePage); 
 				}
 				Pagination page_result = assetService.getUnReview(userId, page, prePage);
+				
 				JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
 				data = page_result;
 				exception = CustomException.SUCCESS;

@@ -57,7 +57,18 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
      * @param userId
      * @return
      */
-    public List<HashMap<String, String>> getUnReviewedRes(Long userId);
+    public List<HashMap<String, Object>> getUnReviewedRes(Long userId);
+    
+    
+    
+    /**
+     * 获取当前的为评论的资源
+     * @param userId
+     * @param sysList
+     * @param disList
+     * @return
+     */
+    public List<ResourceReview> getUnReviewedResPager(@Param("userId")Long userId,@Param("sysList")List sysList,@Param("disList")List disList);
     
     
 }

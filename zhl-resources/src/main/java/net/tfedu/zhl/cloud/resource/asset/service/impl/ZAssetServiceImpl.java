@@ -477,12 +477,34 @@ public class ZAssetServiceImpl implements ZAssetService {
 	@Override
 	public Pagination getUnReview(Long userId, Integer page, Integer perPage) {
 
-
 		
 		
+		PageHelper.startPage(page, perPage);
+		List<HashMap<String, Object>> list = reviewMapper.getUnReviewedRes(userId);
 		
 		
-		return null;
+		List<Long> sysList = new ArrayList<Long>();//所有的系统资源
+		List<Long> disList = new ArrayList<Long>();//所有的区本、校本资源
+		
+		List<ResourceReview> result = null ;
+		if(list!=null){
+			for (int i = 0; i < list.size(); i++) {
+				HashMap<String, Object> hashMap = list.get(i);
+				long _id = (Long)hashMap.get("contid");
+				int _conttype = (Integer)hashMap.get("conttype");
+				if(_conttype==2||_conttype==10){
+					sysList.add(_id);
+				}else if(_conttype==11 ||_conttype==12){
+					disList.add(_id);
+				}
+			}
+			result = reviewMapper.getUnReviewedResPager(userId, sysList, disList);
+		}
+		
+		
+		Pagination pa = new PageInfoToPagination().transfer(list);
+		pa.setList(result);
+		return pa;
 	}
 }
 

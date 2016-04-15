@@ -80,7 +80,7 @@
   <!-- 获取当前用户所有备课夹中未进行评论的资源数目(自建资源不需评论)  -->
   	<select id="getUnReviewedNum" parameterType="Long" resultType="Integer">
 			  	
-			select  count(1) as  unReviewNumber  from (
+			select  count(DISTINCT contid,conttype) as  unReviewNumber  from (
 			select c.contId,c.contType
 			,CASE WHEN  (contType=1 or contType=9) then 2 when (contType=2 or contType=10) then 1 WHEN contType=11 THEN 4 WHEN conttype =12 THEN 3 END as atype 
 			from  j_lession_prepare p 
@@ -96,8 +96,8 @@
   	 <!-- 获取当前用户所有备课夹中未进行评论的资源(自建资源不需评论)  -->
   	<select id="getUnReviewedRes" parameterType="Long" resultType="HashMap">
 			  	
-			select  contId,contType as  unReviewNumber  from (
-			select c.contId,c.contType
+			select DISTINCT contid,conttype  from (
+			select c.contId,c.contType,c.createtime
 			,CASE WHEN  (contType=1 or contType=9) then 2 when (contType=2 or contType=10) then 1 WHEN contType=11 THEN 4 WHEN conttype =12 THEN 3 END as atype 
 			from  j_lession_prepare p 
 			LEFT JOIN j_prepare_content c on c.preId = p.id 
@@ -107,8 +107,51 @@
 			where NOT EXISTS (
 			select id  from z_assetevaluate t where t.flag = false and t.userid = #{userId} and t.AssetId = temp_t.contId and t.Atype = temp_t.atype 
 			)
+			order by createtime desc
   	</select>
   	
+  	
+  	
+  	<select id="getUnReviewedResPager" resultMap="resourceReviewMap">
+
+	select * from (
+		
+		<if test="sysList.size()>0">
+		select 0 as id,z.id as resid
+		,(select max(c.createtime) from j_lession_prepare p,j_prepare_content c where p.userid =#{userId} and p.flag =false
+				and c.preid = p.id and c.contId = z.id and c.contType in (2,10) )as time
+		,'' as content,0 as score,0 as fromflag,z.title,z.rescode,concat(z.fpath,'/',z.fname) as imgpath
+		,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as	filesuffix
+		from z_resource z
+		where z.flag =false and z.id in (
+		<foreach collection="sysList" item="item" index="index" separator=",">
+			#{item}
+		</foreach>
+		)
+		</if>
+		
+		
+		<if test="sysList.size()>0 and disList.size()>0">
+			union all
+		</if>
+		
+		<if test="disList.size()>0">
+		
+		select 0 as id,r.id as resid
+		,(select max(c.createtime) from j_lession_prepare p,j_prepare_content c where p.userid =#{userId} and p.flag =false
+				and c.preid = p.id and c.contId = r.id and c.contType in (11,12) )as time
+		,'' as content,0 as score,r.fromflag as fromflag,r.title,r.rescode,r.fullpath as imgpath
+		,reverse(left(reverse(fname),locate('.',reverse(fname))-1)) as		filesuffix
+		from z_districts_resource r
+		where r.flag =false and r.id in(
+		<foreach collection="disList" item="item" index="index" separator=",">
+			#{item}
+		</foreach>
+		)
+		</if>
+		
+	)ttt ORDER BY time desc 
+  	</select>
   	
   	
   	
