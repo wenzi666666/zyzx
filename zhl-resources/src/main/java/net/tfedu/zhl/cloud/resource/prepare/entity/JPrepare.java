@@ -16,6 +16,9 @@ public class JPrepare implements Serializable {
 
     private Date createtime;
 
+    private Date updatetime;
+
+    
     private String title;
 
     /**
@@ -39,11 +42,12 @@ public class JPrepare implements Serializable {
     @Column(name = "subjectId")
     private Long subjectid;
 
-    public JPrepare(Long id, Long userid, Date createtime, String title, Long courseid, Boolean flag, Long ordernum,
+    public JPrepare(Long id, Long userid, Date createtime, Date updatetime, String title, Long courseid, Boolean flag, Long ordernum,
             String tfcode, Long subjectid) {
         this.id = id;
         this.userid = userid;
         this.createtime = createtime;
+        this.updatetime = updatetime;
         this.title = title;
         this.courseid = courseid;
         this.flag = flag;
@@ -196,4 +200,13 @@ public class JPrepare implements Serializable {
     public void setSubjectid(Long subjectid) {
         this.subjectid = subjectid;
     }
+
+	public Date getUpdatetime() {
+		return updatetime;
+	}
+
+	public void setUpdatetime(Date updatetime) {
+		this.updatetime = updatetime;
+	}
+    
 }

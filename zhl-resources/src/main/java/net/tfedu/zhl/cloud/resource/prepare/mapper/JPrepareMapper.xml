@@ -10,6 +10,7 @@
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="userId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="updatetime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="courseId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
@@ -255,6 +256,19 @@
 	)tep2
   </select>
   
+  
+  
+      <!-- 获取最新更新的备课夹（3个）-->
+  <select id="getLatestPrepare" resultMap="viewResultMap" parameterType="Long">
+  	SELECT
+	id,
+	title,
+	'' as timeLabel
+	FROM
+		j_lession_prepare
+	WHERE flag = false 
+	AND userid = #{userId} ORDER BY updatetime desc limit 3 
+  </select>
   
  
  

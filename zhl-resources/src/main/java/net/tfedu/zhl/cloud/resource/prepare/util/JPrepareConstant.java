@@ -370,5 +370,50 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         }
 
 	}
+	 /**
+     * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径 用于客户端下载
+     * @param info
+     */
+	public static void resetResourceDownLoadURLForEPrepareClient(List<ResourceSimpleInfo> list,
+			String resServiceLocal, String currentResService) {
+		for (int i = 0; i < list.size(); i++) {
+			resetResourceDownLoadURLForEPrepareClient(list.get(i), resServiceLocal,currentResService);
+        }
 
+	}
+	  /**
+     * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径 用于客户端下载
+     * 
+     * @param info
+     * @param currentResService 
+     */
+    public static void resetResourceDownLoadURLForEPrepareClient(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
+        String rescode = info.getRescode();
+        Integer fromflag = info.getFromflag();
+        Boolean isnet = info.getIsnet();
+        Boolean isdwj = info.getIsdwj();
+        String path = info.getPath();
+
+        // 如果是系统资源
+        if (fromflag == fromFlag_sysRes) {
+            String flag = path.substring(path.lastIndexOf("."), path.length());
+
+            if (isdwj) {
+                path = path.substring(0, path.indexOf(rescode)) + File.separator + rescode + ".zip";
+                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
+            }else  if (ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
+                // 如果是加密swf\mp4的文件
+            	path = ZhlResourceCenterWrap.getDownUrlForSysRes(resServiceLocal, path, isdwj);
+            } else {
+                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
+            }
+        }else{
+        	path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
+        }
+        
+		path = path.replace(resServiceLocal, currentResService);
+        // 重新赋值path
+        info.setPath(path);
+
+    }
 }

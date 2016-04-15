@@ -407,4 +407,10 @@ public class JPrepareServiceImpl implements JPrepareService {
 		return list;
 	}
 
+	@Override
+	public List<JPrepareView> getLatestPrepare(Long userId) {
+		// TODO Auto-generated method stub
+		return mapper.getLatestPrepare(userId);
+	}
+
 }

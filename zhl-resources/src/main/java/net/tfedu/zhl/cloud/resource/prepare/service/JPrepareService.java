@@ -176,5 +176,16 @@ public interface JPrepareService {
      */
     public List<UserPrepareStatisInfo> getMyPrepareStatis(Long userId);
 
+    
+    /**
+     * 获取最新更新的备课夹（3个）
+     * @param userId
+     * @return
+     */
+    public List<JPrepareView>  getLatestPrepare(Long userId);
+    
+    
+    
+    
 }
 

@@ -187,6 +187,49 @@ public class PrepareController {
         return result;
     }
 
+    
+
+    /**
+     * 获取最新更新的备课夹（3个）
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "/v1.0/latestPrepare", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getLatestPrepare(HttpServletRequest request, HttpServletResponse response) {
+        // 返回json的结果对象
+        ResultJSON result = new ResultJSON();
+        // 异常
+        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        // 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        // 返回
+        Object data = null;
+
+        try {
+            if (currentUserId != null && exception == null) {
+                long userId = currentUserId;
+                data = jPrepareService.getLatestPrepare(userId);
+                exception = CustomException.SUCCESS;
+            }else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+        } catch (Exception e) {
+            exception = CustomException.getCustomExceptionByCode(e.getMessage());
+            // 如果是普通的异常
+            if (exception.getStatus() == 500) {
+                e.printStackTrace();
+            }
+        } finally {
+            result.setCode(exception.getCode());
+            result.setMessage(exception.getMessage());
+            result.setData(data == null ? "" : data);
+            result.setSign("");
+        }
+        return result;
+    }
+
     /**
      * 获取整本书下的备课夹列表
      * 
@@ -789,6 +832,7 @@ public class PrepareController {
     public ResultJSON getDown(HttpServletRequest request, HttpServletResponse response) {
         String resIds = request.getParameter("resIds");
         String fromFlags = request.getParameter("fromFlags");
+        String clientType = request.getParameter("clientType");//browser,ePrepareClient
 
 		//获取文件服务器的访问url 
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
@@ -820,7 +864,13 @@ public class PrepareController {
                         // 将原始的path重置为可用的web链接
 
                         if(list != null && list.size() > 0){
-                        	 JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResPath);
+                        	//如果是e备课客户端,返回加密文件
+                        	 if("ePrepareClient".equals(clientType)){
+                            	 JPrepareConstant.resetResourceDownLoadURLForEPrepareClient(list, resServiceLocal, currentResPath);
+                        	 }else{
+                        	
+                            	 JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResPath);
+                        	 }
                              data = list;
                             
                         }
@@ -849,6 +899,9 @@ public class PrepareController {
 
     }
 
+    
+    
+    
     public static void main(String[] args) {
         String s = "20150416160806813.swf";
 

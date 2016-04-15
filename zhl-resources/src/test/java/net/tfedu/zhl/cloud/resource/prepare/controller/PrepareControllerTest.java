@@ -19,7 +19,6 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     @Test
     public void testAddPrepare() {
-        request = this.newPost("/resRestAPI/v1.0/prepare");
         request.addParameter("tfcode", "RJCZ010109");
         request.addParameter("title", "title_RJCZ010109");
 
@@ -31,8 +30,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     @Test
     public void testEditPrepare() {
-        request = this.newPost("/resRestAPI/v1.0/prepare");
-        request.addParameter("id", "140252");
+        request.addParameter("id", "525");
         request.addParameter("title", "140252_title_RJCZ010109");
         request.addParameter("_method", "PATCH");
 
@@ -41,7 +39,32 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         System.out.println(result.getData());
 
     }
+    
+    
+    @Test
+    public void testAddPrepareContent() {
+        long prepareId = 525;
+//        request = this.newPost("/resRestAPI/v1.0/prepareContent/" + prepareId);
+        request.addParameter("resIds", "4319500105,212992,212991");
+        request.addParameter("fromFlags", "0,0,0");
+        result = controller.addPrepareContent(prepareId, request, response);
 
+    }
+    
+    
+    @Test
+    public void testGetlatestPrepare(){
+    	
+    	request.setAttribute("currentUserId", 390400126l);
+    	result = controller.getLatestPrepare(request, response);
+    	System.out.println(result.toString());
+    	
+    }
+    
+    
+    
+    
+/*
     @Test
     public void testDEletePrepare() {
         request = this.newPost("/resRestAPI/v1.0/prepare");
@@ -89,15 +112,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     }
 
-    @Test
-    public void testAddPrepareContent() {
-        long prepareId = 140252;
-        request = this.newPost("/resRestAPI/v1.0/prepareContent/" + prepareId);
-        request.addParameter("resIds", "4319500105,212992,212991");
-        request.addParameter("fromFlags", "0,0,0");
-        result = controller.addPrepareContent(prepareId, request, response);
-
-    }
+  
 
     @Test
     public void testdelPrepareContent() {
@@ -150,7 +165,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     }
 
     
-  
+  */
 
     
     
