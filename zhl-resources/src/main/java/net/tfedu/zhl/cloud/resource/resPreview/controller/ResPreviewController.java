@@ -266,23 +266,29 @@ public class ResPreviewController {
             		
             		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
             		
-            	} else { //从系统资源、区本资源、校本资源跳转过来的
+            	} else { //从自建资源、系统资源、区本资源、校本资源跳转过来的
             		
-            		if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-                		tfcode = request.getParameter("tfcode").toString().trim();
-                	}
-            		if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-                		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-                	}
-                	
-            		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
-            			poolId = Integer.parseInt(request.getParameter("poolId").toString().trim());
+            		if(fromFlag == 1){ //为当前预览的自建资源推荐相同结点下的系统、区本、校本资源
             			
-            			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
+            			pagination = resPreviewService.myResByUploadRecommendation(currentUserId, resId, sys_from, page, perPage);
             			
-            		} else { //区本、校本资源
-            			
-						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage);
+            		} else {
+            			if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+                    		tfcode = request.getParameter("tfcode").toString().trim();
+                    	}
+                		if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+                    		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+                    	}
+                    	
+                		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
+                			poolId = Integer.parseInt(request.getParameter("poolId").toString().trim());
+                			
+                			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
+                			
+                		} else { //区本、校本资源
+                			
+    						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage);
+    					}
 					}
 				}
             	

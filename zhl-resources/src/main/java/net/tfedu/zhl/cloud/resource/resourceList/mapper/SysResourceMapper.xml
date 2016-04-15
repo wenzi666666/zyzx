@@ -300,4 +300,44 @@
  	update z_resource  set DLoadTimes = DLoadTimes+1  where rescode =#{rescode}
  </update>
  
+ <!-- 根据tfcode，查询该课程结点下的所有系统、区本、校本资源  -->
+ <select id="getAllResByTfcode" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+ 
+    select distinct a.id,a.name Title,1 fromFlag,a.assetPath fullPath,a.assetPath as thumbnailpath,reverse(left(reverse(assetpath),locate('.',reverse(assetpath)))) as FileExt
+	from z_asset a where a.id = #{resId} and a.flag = 0 and a.FileType = 'A'
+	 
+     union all 
+   
+    select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+	from z_resource a 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on c.StructCode=d.TFcode 
+	where a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
+	            <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+	
+	 and d.typeFlag in (0,1) and c.StructCode like  CONCAT(#{tfcode},'%')  
+	 
+	 union all 
+	
+	select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+	from z_districts_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
+    where a.flag = 0 and a.scopeId = #{schoolId} and c.StructCode like  CONCAT(#{tfcode},'%')   
+
+    union all 
+    
+    select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+	from z_districts_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
+    where a.flag = 0 and a.scopeId = #{districtId} and c.StructCode like  CONCAT(#{tfcode},'%')    
+
+ </select>
+ 
 </mapper>

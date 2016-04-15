@@ -12,4 +12,9 @@
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  
+  <!-- 根据resId，查询所在的第一个课程结点   -->
+  <select id="getFirstCourseByResId" resultType="String">
+     select tfcode from z_asset_syscourse where assetid = #{resId} and flag = 0 limit 1
+  </select>
 </mapper>

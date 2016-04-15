@@ -506,5 +506,21 @@ public class ZAssetServiceImpl implements ZAssetService {
 		pa.setList(result);
 		return pa;
 	}
+	
+	/**
+	 * 批量删除    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	@Override
+	public void patchDelAsset(List<Long> resIds,String tfcode){
+		if(resIds != null && resIds.size() > 0)
+			for(int i = 0; i < resIds.size();i++){
+				long resId = resIds.get(i);
+				
+				//删除一条资源
+				assetMapper.delAsset(resId,tfcode);
+			}
+	}
 }
 
