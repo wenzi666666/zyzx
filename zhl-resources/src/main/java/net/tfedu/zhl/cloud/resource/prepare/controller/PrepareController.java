@@ -10,7 +10,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
@@ -27,11 +26,14 @@ import net.tfedu.zhl.fileservice.ZipTaskContent;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 备课夹相关接口
@@ -52,6 +54,9 @@ public class PrepareController {
     
     @Resource
     private CommonWebConfig commonWebConfig;
+    
+    
+    Logger logger = LoggerFactory.getLogger(PrepareController.class);
     
 
     /**
@@ -90,8 +95,12 @@ public class PrepareController {
                     prepare.setId(prepareId);
                     prepare.setTitle(title.trim());
                     jPrepareService.editPrepare(prepare);
+
+                	logger.debug("编辑id为"+prepareId+"的备课夹的标题为："+title);
+
                     // 否则为delete备课夹
                 } else if (StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)) {
+                	logger.debug("删除id为"+prepareId+"的备课夹");
 
                     jPrepareService.deletePrepareById(prepareId);
 
@@ -108,6 +117,7 @@ public class PrepareController {
 
                     HashMap<String, Long> map = new HashMap<String, Long>();
                     map.put("id", prepare.getId());
+                	logger.debug("新建id为"+prepare.getId()+"的备课夹");
                     data = map;
                 }
                 exception = CustomException.SUCCESS;
@@ -154,6 +164,7 @@ public class PrepareController {
                 String tfcode = request.getParameter("tfcode");
                 if (StringUtils.isNotEmpty(tfcode)) {
                     data = jPrepareService.queryPrepareList(tfcode, userId);
+                    logger.debug("获取节点"+tfcode+"下的所有当前用户（"+userId+"）的备课夹");
                     exception = CustomException.SUCCESS;
                 } else {
                     exception = CustomException.PARAMSERROR;
@@ -203,6 +214,7 @@ public class PrepareController {
                 if (StringUtils.isNotEmpty(tfcode)) {
                 	title = title==null?"":title.trim();
                     data = jPrepareService.queryPrepareAndTimeScopeList(tfcode,title, userId);
+                    logger.debug("获取节点"+tfcode+"下的所有当前用户（"+userId+"）的备课夹,title like '"+title+"%'");
                     exception = CustomException.SUCCESS;
                 } else {
                     exception = CustomException.PARAMSERROR;
@@ -600,17 +612,21 @@ public class PrepareController {
      */
     @RequestMapping(value = "/v1.0/zipDownload_status", method = RequestMethod.GET)
     @ResponseBody
-    public void updateZipDownloadStatus(HttpServletRequest request, HttpServletResponse response) {
+    public String updateZipDownloadStatus(HttpServletRequest request, HttpServletResponse response) {
         String _id = request.getParameter("id");
         long id = 0;
         if (StringUtils.isNotEmpty(_id)) {
+            logger.debug("更新历史的打包下载的状态,id='"+_id+"'");
             id = Long.parseLong(_id);
+            ResZipDownRecord record = new ResZipDownRecord();
+            record.setId(id);
+            record.setStatus(true);
+            resZipDownloadService.updateZipDownRecord(record);
+        	return "SUCCESS";
+        }else{
+        	return "ERROR";
         }
 
-        ResZipDownRecord record = new ResZipDownRecord();
-        record.setId(id);
-        record.setStatus(true);
-        resZipDownloadService.updateZipDownRecord(record);
 
     }
 
@@ -649,12 +665,19 @@ public class PrepareController {
                 if (StringUtils.isNotEmpty(_id)) {
                     id = Long.parseLong(_id.trim());
                 }
+                logger.debug("获取指定的历史打包下载的状态,id='"+_id+"'");
 
                 ResZipDownRecord record = resZipDownloadService.getZipDownRecord(id);
                 String zippath = record.getZippath();
-                //转换为最终的下载路径
-                zippath = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, zippath);
-                zippath = zippath.replace(resServiceLocal, currentResPath);
+                //如果打包成功
+                if(record.getStatus()){
+                    //转换为最终的下载路径
+                    zippath = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, zippath);
+                    zippath = zippath.replace(resServiceLocal, currentResPath);
+                	
+                }else{
+                	zippath =  "";
+                }
                 
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("id", record.getId());
@@ -722,7 +745,8 @@ public class PrepareController {
                     if (ids.length == 0 || fromFlag.length != ids.length) {
                         exception = CustomException.PARAMSERROR;
                     } else {
-                        List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForView(ids, fromFlag,currentUserId);
+                        logger.debug("获取资源 的播放地址,resIds='"+resIds+"',fromFlags='"+fromFlags+"'");
+                       List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForView(ids, fromFlag,currentUserId);
                         // 将原始的path重置为可用的web链接
 
                         JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResPath);
@@ -754,7 +778,7 @@ public class PrepareController {
     
     /**
      * 
-     * 获取资源 的播放地址
+     * 获取资源 的下载地址
      * 
      * @param request
      * @param response
@@ -791,6 +815,7 @@ public class PrepareController {
                     if (ids.length == 0 || fromFlag.length != ids.length) {
                         exception = CustomException.PARAMSERROR;
                     } else {
+                        logger.debug("获取资源 的下载地址,resIds='"+resIds+"',fromFlags='"+fromFlags+"'");
                         List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForDownload(ids, fromFlag,currentUserId);
                         // 将原始的path重置为可用的web链接
 

@@ -25,6 +25,8 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.service.UserService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,6 +58,12 @@ public class AssetController {
 	
     @Resource
     private CommonWebConfig commonWebConfig;
+    
+    
+    
+    
+    Logger logger = LoggerFactory.getLogger(AssetController.class);
+
 	
 	/**
 	 * 前端web端获取上传文件路径（支持格式转换）
@@ -82,9 +90,14 @@ public class AssetController {
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
 				String hostLocal = commonWebConfig.getHostLocalOne();
 				
+				
+				
 				long userId = currentUserId;
 				JUser  user =  userService.getUserById(userId);
 				long schoolId = user.getSchoolid();
+
+				logger.debug("获取用户的上传路径,userId="+userId);
+
 				//组装上传路径
 				String uploadPath = ZhlResourceCenterWrap.getUserUploadPath(userId, schoolId);
 				//获取上传文件路径
@@ -123,17 +136,28 @@ public class AssetController {
 	 * @return
 	 */
 	@RequestMapping(value="/v1.0/resource/uploadConvertCallBack",method=RequestMethod.GET)
-	public void  uploadConvertCallBack(HttpServletRequest request, HttpServletResponse response){
-		//获得文件服务器返回的extend参数
-		String ext = zhldowncenter.GetOriginQueryString(request.getParameter("ext")); 
-		//从extend参数中获得userId
-		int index = ext.indexOf("=");
-		long userId = Long.parseLong(ext.substring(index + 1,ext.length())); 
-		//获得文件服务器返回的file参数
-		String resPath = request.getParameter("file");
+	@ResponseBody
+	public String  uploadConvertCallBack(HttpServletRequest request, HttpServletResponse response){
+		try {
+			//获得文件服务器返回的extend参数
+			String ext = zhldowncenter.GetOriginQueryString(request.getParameter("ext")); 
+			//从extend参数中获得userId
+			int index = ext.indexOf("=");
+			long userId = Long.parseLong(ext.substring(index + 1,ext.length())); 
+			//获得文件服务器返回的file参数
+			String resPath = request.getParameter("file");
 
-		assetService.setTypeConvertSucceed(userId, resPath);
-		
+			assetService.setTypeConvertSucceed(userId, resPath);
+	
+			logger.debug("文件服务格式转换后的回调,userId="+userId+",resPath="+resPath);
+
+			
+			return "SUCCESS";
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "ERROR";
+		}
 	}
 	
 	
@@ -171,6 +195,8 @@ public class AssetController {
 					if(StringUtils.isNotEmpty(resIds)){
 						assetService.delAsset(resIds);
 						exception = CustomException.SUCCESS;
+						logger.debug("删除资源,resIds="+resIds);
+
 					}else{
 						exception = CustomException.PARAMSERROR;
 					}
@@ -184,7 +210,7 @@ public class AssetController {
 					String hostLocal = commonWebConfig.getHostLocalOne();
 					
 					
-					
+
 					String _names = request.getParameter("names");
 					String _unifTypeIds = request.getParameter("unifTypeIds");
 					String _tfcodes = request.getParameter("tfcodes");
@@ -201,6 +227,9 @@ public class AssetController {
 							StringUtils.isNotEmpty(_paths)&&StringUtils.isNotEmpty(_sizes)&&StringUtils.isNotEmpty(_iscoursewares)
 							&&StringUtils.isNotEmpty(_islocals)
 							){						
+						logger.debug("新建资源,names="+_names);
+						
+						
 						String names[] = _names.split(",");
 						String unifTypeIds[] = _unifTypeIds.split(",");
 						String tfcodes[] = _tfcodes.split(",");
@@ -341,6 +370,8 @@ public class AssetController {
 					fileFormat  = fileFormat.toString().trim(); 
 				}
 				
+				logger.debug("分页获取资源,userId="+userId+",unifyTypeId="+unifyTypeId+",fileFormat="+fileFormat+",page="+page+",prePage="+prePage);
+
 				Pagination page_result = assetService.queryMyAssets(userId, unifyTypeId, fileFormat, page, prePage);
 				
 				JPrepareContentViewUtil.convertToPurpose_Asset(page_result.getList(), resServiceLocal, currentResPath);
@@ -443,6 +474,8 @@ public class AssetController {
 					//新版资源类型
 					assetService.updateAsset(a, resServiceLocal, currentResPath, hostLocal);
 				
+					logger.debug("编辑资源,"+a.toString());
+
 				}
 				exception = CustomException.SUCCESS;
 			}else{
@@ -507,7 +540,7 @@ public class AssetController {
 				
 				//批量剪切       自建资源
 				if(StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)){
-				
+					logger.debug("批量剪切,resIdString="+resIdString);
 					//要剪切到的目标课程结点tfcode
 					String des_tfcode = "";
 					if(StringUtils.isNotEmpty(request.getParameter("des_tfcode"))){
@@ -516,6 +549,7 @@ public class AssetController {
 					assetService.patchCutAsset(resIds, tfcode, des_tfcode);
 					
 				} else { //批量复制     自建资源
+					logger.debug("批量复制     自建资源,resIds="+resIds.toString());
 					assetService.patchCopyAsset(resIds, tfcode);
 				}
 				exception = CustomException.SUCCESS;
