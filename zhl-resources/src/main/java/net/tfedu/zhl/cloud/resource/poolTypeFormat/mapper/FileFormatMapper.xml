@@ -15,15 +15,15 @@
     </constructor>
   </resultMap>
   
-  <!-- 系统资源，查询资源列表格式统计，查询结果例如：文本，图片... -->
+  <!-- 系统资源，查询资源格式，文本，图片... -->
   <resultMap id="FileFormatsResultMap"  type="String">
        <result column="FileFormat" property="fileformat" />
   </resultMap>
   <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
       SELECT DISTINCT FileFormat from z_resource a 
-      left join j_filetypedetail b on fileExt = b.FormatCode 
+      left join j_filetypedetail b on LOWER(fileExt) = b.FormatCode 
       left join x_resourcetype c on a.MType = c.id 
-      left join x_resourcetype pb on pb.Id=c.pid  
+      left join x_resourcetype pb on pb.Id = c.pid  
       WHERE 1=1 and a.flag = 0 and b.flag = 0 and c.flag = 0 
      
       and a.mtype in  <foreach item="item" index="index" collection="typeIds" 
@@ -44,7 +44,7 @@
   </select>
   
   
-  <!-- 区本校本资源，查询资源列表格式统计，查询结果例如：文本，图片... -->
+  <!-- 区本校本资源，查询资源格式，文本，图片... -->
   <select id="getDisResFormatsByMType"  resultMap="FileFormatsResultMap">
       SELECT DISTINCT FileFormat from z_districts_resource 
       a left join j_filetypedetail b on LOWER(fileExt) = b.FormatCode
@@ -61,6 +61,7 @@
                          #{item}
                 </foreach>
      </if>
+     
   </select>
 
   <select id="getAllFileFormat" resultType="String">

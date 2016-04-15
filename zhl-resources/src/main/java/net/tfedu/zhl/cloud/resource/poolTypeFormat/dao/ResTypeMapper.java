@@ -82,7 +82,7 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * 区本校本资源：查询父类型及其所有子类型
      */
     public List<Integer> getDisResTypesByPMType(@Param("MType") int MType);
-
+    
     /**
      * 自建资源 ： 查询全部一级资源类型
      */

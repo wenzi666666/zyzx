@@ -84,9 +84,8 @@ public class DisResServiceImpl implements DisResService {
     public Pagination<DisResourceEntity> selectAllDisRes(long userId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage, int fromFlag) {
 
-        // 根据父类型，查询所有的子类型
-        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
-
+    	List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
+  
         long schoolId = 0;
         long districtId = 0;
 

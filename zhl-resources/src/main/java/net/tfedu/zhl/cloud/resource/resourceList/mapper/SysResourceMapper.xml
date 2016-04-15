@@ -83,17 +83,16 @@
  <select id="SelectSysResources"  resultMap="SysResourceMap">
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
-
 	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0
+	left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
-	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	left join j_syscourse d on  c.StructCode=d.TFcode and d.flag=0 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on  c.StructCode=d.TFcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and a.fromflag in 
+	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -122,7 +121,7 @@
                          #{item}
                      </foreach>
      </if>
-     and c.StructCode like  CONCAT(#{pTfcode},'%')               
+     and c.StructCode like CONCAT(#{pTfcode},'%')               
      <if test="orderBy == 0"><!-- 综合排序 -->
         order by avgScore desc
      </if>
@@ -140,9 +139,9 @@
    
     select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
-	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	left join j_syscourse d on c.StructCode=d.TFcode and d.flag=0 
-	where a.id = #{resId} and a.flag = 0 and a.fromflag in 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on c.StructCode=d.TFcode 
+	where a.id = #{resId} and a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -173,9 +172,9 @@
    
     select distinct a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
-	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	left join j_syscourse d on c.StructCode=d.TFcode and d.flag=0 
-	where a.flag = 0 and a.id != #{resId} and a.fromflag in 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on c.StructCode=d.TFcode 
+	where a.flag = 0 and a.id != #{resId} and c.flag=0 and d.flag=0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -212,13 +211,13 @@
 	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, a.fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0
+	left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on a.FileExt=jf.FormatCode and jf.flag = 0 
-	left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	left join j_syscourse d on  c.StructCode=d.TFcode and d.flag=0 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on  c.StructCode=d.TFcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and a.fromflag in
+	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0  and a.fromflag in
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
