@@ -70,4 +70,14 @@ public interface ResPreviewService {
      * @return
      */
     public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
+    
+    /**
+     * 个人中心 - 我的上传  资源推荐（推荐 相同课程结点下的系统、区本、校本资源）
+     * @param resId
+     * @param sys_from
+     * @param page
+     * @param perPage
+     * @return
+     */
+    public Pagination<ResRecommendationEntity> myResByUploadRecommendation(long userId,long resId,List<Integer> sys_from,int page,int perPage);
 }
