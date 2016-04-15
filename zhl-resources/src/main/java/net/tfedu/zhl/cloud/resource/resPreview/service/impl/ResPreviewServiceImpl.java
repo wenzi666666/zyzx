@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
+import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
@@ -48,6 +49,8 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     ZAssetMapper  assetMapper;
     
     @Resource ResSearchMapper resSearchMapper;
+    
+    @Resource ZAssetSyscourseMapper zAssetSyscourseMapper;
     
 
     // 根据resId和fromFlag，查询资源具体信息
@@ -276,6 +279,43 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         		list.get(i).setThumbnailpath(thumbnailpath);
         	}
         }
+        //将pageIn封装为自定义的pagination
+        return transfer.transfer(list);
+    }
+    
+    /**
+     * 个人中心 - 我的上传  资源推荐（推荐 相同课程结点下的系统、区本、校本资源）
+     * @param resId
+     * @param sys_from
+     * @param page
+     * @param perPage
+     * @return
+     */
+    @Override
+	public Pagination<ResRecommendationEntity> myResByUploadRecommendation(long userId,long resId,List<Integer> sys_from,int page,int perPage){
+    	
+    	// 存放查询结果
+        List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
+        // 封装结果集
+        PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
+
+    	
+    	//根据resId获取课程结点tfcode
+    	String tfcode = zAssetSyscourseMapper.getFirstCourseByResId(resId);
+    	
+    	long schoolId = 0;
+        long districtId = 0;
+
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+    	
+    	//查询tfcode下的系统资源、区本、校本资源
+    	list = sysResourceMapper.getAllResByTfcode(resId, sys_from, tfcode, schoolId, districtId);
+    	
         //将pageIn封装为自定义的pagination
         return transfer.transfer(list);
     }

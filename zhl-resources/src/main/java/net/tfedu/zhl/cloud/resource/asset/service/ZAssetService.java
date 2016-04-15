@@ -142,5 +142,12 @@ public interface ZAssetService {
 	 */
 	public void patchCutAsset(List<Long> resIds,String tfcode,String des_tfcode);
 	
+	/**
+	 * 批量删除    自建资源
+	 * @param resIds
+	 * @param tfcode
+	 */
+	public void patchDelAsset(List<Long> resIds,String tfcode);
+	
 	
 }

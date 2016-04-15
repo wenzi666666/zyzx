@@ -506,7 +506,7 @@ public class AssetController {
 				}
 				
 				//批量剪切       自建资源
-				if(StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)){
+				if(StringUtils.isNotEmpty(_method) && _method.equals("CUT")){
 				
 					//要剪切到的目标课程结点tfcode
 					String des_tfcode = "";
@@ -518,6 +518,71 @@ public class AssetController {
 				} else { //批量复制     自建资源
 					assetService.patchCopyAsset(resIds, tfcode);
 				}
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;		
+		
+	}
+	
+	
+	/**
+	 * 批量删除，我的资源
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/resource/asset/patchdelete",method=RequestMethod.POST)
+	@ResponseBody
+	public ResultJSON  patchDelAsset(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		
+		Object data = null;
+		
+		try{
+			if(currentUserId != null && exception == null){	
+				
+				String _method = request.getParameter("_method");
+				
+				//目录结点的tfcode
+				String tfcode = "";
+				if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+					tfcode = request.getParameter("tfcode").toString().trim();
+				}
+				
+				//资源id
+				List<Long> resIds = new ArrayList<Long>();
+				String resIdString = "";
+				if(StringUtils.isNotEmpty(request.getParameter("resIds"))){
+					resIdString = request.getParameter("resIds").toString().trim();
+					String[] ids = resIdString.split(",");
+					for(int i = 0; i < ids.length;i++){
+						resIds.add(Long.parseLong(ids[i].toString().trim()));
+					}
+				}
+				
+				//批量删除     自建资源
+				if(StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)){
+				     assetService.patchDelAsset(resIds, tfcode);
+				} 
 				exception = CustomException.SUCCESS;
 			}else{
             	exception = CustomException.INVALIDACCESSTOKEN;
