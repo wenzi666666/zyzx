@@ -421,6 +421,63 @@ public class PersonalController {
 		return  result;
 	}
 	
+	/**
+	 * 分页未评论的资源
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/resource/unReview",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getUnReview(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		try{
+			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				
+				long userId = currentUserId;
+				int page = 1; 
+				int prePage = 10;
+				
+				String _page = request.getParameter("page");
+				String _prePage = request.getParameter("perPage");
+				
+				if(StringUtils.isNotEmpty(_page)){
+					page  = Integer.parseInt(_page);
+				}
+				if(StringUtils.isNotEmpty(_prePage)){
+					prePage  = Integer.parseInt(_prePage); 
+				}
+				Pagination page_result = assetService.getUnReview(userId, page, prePage);
+				JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
+				data = page_result;
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
+	}
 	
 	
 	/**

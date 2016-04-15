@@ -80,6 +80,19 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     }
     
     
-    
+    @Test
+    public void testgetUnReview(){
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        
+        ResultJSON result = controller.getUnReview(request, response);
+    	
+        System.out.println(result.toString());
+        
+    	
+    }
     
 }

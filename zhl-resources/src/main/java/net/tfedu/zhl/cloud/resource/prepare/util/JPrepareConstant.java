@@ -7,6 +7,8 @@ import java.util.List;
 import com.alibaba.druid.util.HttpClientUtils;
 import com.alibaba.fastjson.JSONObject;
 
+import net.tfedu.zhl.cloud.resource.asset.service.impl.ZAssetServiceImpl;
+import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.fileservice.HttpUtil;
@@ -212,6 +214,9 @@ public class JPrepareConstant {
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径
      * 
+     * 自建资源、区本、校本 播放原文件或转码后的文件
+     * 
+     * 
      * @param info
      */
     public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
@@ -221,8 +226,42 @@ public class JPrepareConstant {
         Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
+        Boolean isebook = info.getIsebook();
+        
+        
+		String flag = path.substring(path.lastIndexOf("."),path.length());
+      
+        //如果是系统资源 
+        if(0==fromflag){
+        	
+        	if(isebook){
+        			
+        	}
+        	//加密文件的处理
+        	else if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+    			path =path.replace(".swf", ".tfswf").replace(".mp4", ".tfmp4");
+    		}
+    		//文本文件的处理
+    		else if(ZhlResourceCenterWrap.file_pattern_pdf.indexOf(flag)>=0){
+    			//转码文件的处理
+    			path = path.substring(0,path.lastIndexOf("."))+".pdf";
+    		}
+    		
+        	
+        }else{
+        	//自建资源、区本、校本 播放原文件或转码后的文件
+        	if(AssetTypeConvertConstant.isNeedConvert(path)	){
+        		path = AssetTypeConvertConstant.convertType(path);
+        	}
+        }
+        
+		if(isebook){
+	        path = ZhlResourceCenterWrap.GetEBookPlayerURL(path, resServiceLocal);
+		}else{
+	        path = ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
+		}
+        
 
-        path = ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
         path = path.replace(resServiceLocal, currentResService);
 
         info.setPath(path);

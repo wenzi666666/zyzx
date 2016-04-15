@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.asset.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
@@ -36,6 +37,8 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
      */
     public Integer getUnReviewedNum(Long userId);
     
+    
+    
     /**
      * 查询用户的 评论
      * 
@@ -46,4 +49,15 @@ public interface ZAssetValuateMapper extends CoreMapper<ZAssetValuate> {
      */
     public List<ResourceReview> getMyReviewComment(@Param("userId") Long userId, @Param("reviewType") Integer reviewType);
 
+    
+    
+    /**
+     * 获取当前用户所有备课夹中未进行评论的系统、区本、校本资源
+     * 
+     * @param userId
+     * @return
+     */
+    public List<HashMap<String, String>> getUnReviewedRes(Long userId);
+    
+    
 }
