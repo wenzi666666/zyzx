@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
@@ -120,6 +121,13 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param tfcode
 	 */
 	public void delAsset(@Param("resId")long resId,@Param("tfcode")String tfcode);
+	
+	/**
+	 * 获取资源编辑时需要的信息
+	 * @param id
+	 * @return
+	 */
+	public ZAssetEditInfo getEditInfo(Long id);
 }
 
 

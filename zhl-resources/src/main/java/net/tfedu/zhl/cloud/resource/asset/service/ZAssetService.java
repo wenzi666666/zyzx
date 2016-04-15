@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 
@@ -160,5 +161,15 @@ public interface ZAssetService {
      * @return
      */
 	public Pagination getUnReview(Long userId,Integer page,Integer perPage);
+	
+	
+	
+	
+	/**
+	 * 获取资源编辑时需要的信息
+	 * @param id
+	 * @return
+	 */
+	public ZAssetEditInfo getEditInfo(Long id);
 	
 }

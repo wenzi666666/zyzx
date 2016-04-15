@@ -13,6 +13,7 @@ import net.tfedu.zhl.cloud.resource.asset.dao.ZTypeConvertMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetSyscourse;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetValuate;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
@@ -304,6 +305,8 @@ public class ZAssetServiceImpl implements ZAssetService {
 		//批量添加资源的导航信息
 		List<ZAssetSyscourse> asList = new ArrayList<ZAssetSyscourse>();
 		for (int i=0;i<list.size();i++) {
+			int scope = scope_list.get(i);
+			
 			ZAsset asset = list.get(i);
 			String  tfcode = codes.get(i);
 			long resid= asset.getId();
@@ -311,6 +314,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 			as.setAssetid(resid);
 			as.setTfcode(tfcode);
 			as.setFlag(false);
+			as.setSharescope(scope);
 			asList.add(as);
 			
 			//取消资源添加
@@ -521,6 +525,15 @@ public class ZAssetServiceImpl implements ZAssetService {
 				//删除一条资源
 				assetMapper.delAsset(resId,tfcode);
 			}
+	}
+
+
+
+
+	@Override
+	public ZAssetEditInfo getEditInfo(Long id) {
+		// TODO Auto-generated method stub
+		return assetMapper.getEditInfo(id);
 	}
 }
 

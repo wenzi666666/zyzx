@@ -389,7 +389,7 @@ public class PersonalController {
 				
 				String _reviewType  = request.getParameter("reviewType");
 				String _page = request.getParameter("page");
-				String _prePage = request.getParameter("perPage");
+				String _prePage = request.getParameter("perpage");
 				if(StringUtils.isNotEmpty(_reviewType)){
 					reviewType   = Integer.parseInt(_reviewType);
 				}
@@ -449,7 +449,7 @@ public class PersonalController {
 				int prePage = 10;
 				
 				String _page = request.getParameter("page");
-				String _prePage = request.getParameter("perPage");
+				String _prePage = request.getParameter("perpage");
 				
 				if(StringUtils.isNotEmpty(_page)){
 					page  = Integer.parseInt(_page);

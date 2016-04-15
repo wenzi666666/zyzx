@@ -283,6 +283,28 @@
       update z_asset_syscourse set flag = 1 where assetid = #{resId} and tfcode = #{tfcode}
   </update>
  
+ 
+ <resultMap type="net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo" id="editInfoMap">
+ 	<id column="id" property="id"/>
+ 	<result column="title" property="title"/>
+ 	<result column="assetdesc" property="assetdesc"/>
+ 	<result column="assetpath" property="assetpath"/>
+ 	<result column="assetsize" property="assetsize"/>
+ 	<result column="keyword" property="keyword"/>
+ 	<result column="sharescope" property="sharescope"/>
+ 	<result column="tfcode" property="tfcode"/>
+ </resultMap>
+ 
+ <select id="getEditInfo" parameterType="Long" resultMap="editInfoMap">
+	 
+	select a.id,a.name as title,a.assetdesc,a.assetpath,a.assetsize,
+	a.keyword as keyword,sys.sharescope,sys.tfcode
+	from z_asset a
+	LEFT JOIN z_asset_syscourse sys on sys.assetid = a.id 
+	where a.id = #{id}
+	ORDER BY a.id desc,sys.id asc  LIMIT 1 
+ </select>
+ 
 </mapper>
 
 

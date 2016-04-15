@@ -25,12 +25,21 @@ public class ZAssetSyscourse {
      * 逻辑删除表示
      */
     private Boolean flag;
+    
+    
+    /**
+     * 共享范围   0 个人可见 1 校本共享 2 区本共享
+     * 
+     */
+    private Integer sharescope;
+    
 
-    public ZAssetSyscourse(Long id, Long assetid, String tfcode, Boolean flag) {
+    public ZAssetSyscourse(Long id, Long assetid, String tfcode, Boolean flag,Integer sharescope) {
         this.id = id;
         this.assetid = assetid;
         this.tfcode = tfcode;
         this.flag = flag;
+        this.sharescope = sharescope;
     }
 
     public ZAssetSyscourse() {
@@ -112,4 +121,15 @@ public class ZAssetSyscourse {
     public void setFlag(Boolean flag) {
         this.flag = flag;
     }
+
+	public Integer getSharescope() {
+		return sharescope;
+	}
+
+	public void setSharescope(Integer sharescope) {
+		this.sharescope = sharescope;
+	}
+    
+    
+    
 }

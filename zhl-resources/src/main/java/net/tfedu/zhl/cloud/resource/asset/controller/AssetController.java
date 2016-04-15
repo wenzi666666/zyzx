@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -398,7 +399,56 @@ public class AssetController {
 		
 	}
 	
-	
+	/**
+	 * 获取单个资源信息(准备编辑)
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/resource/asset/{id}",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON  getAssetOne(@PathVariable Long id,HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
+		
+		try{
+			if(currentUserId!=null && exception==null){	
+				long userId = currentUserId;
+				if(id>0){
+					ZAssetEditInfo info =  assetService.getEditInfo(id);
+					
+					data = info ;
+					exception = CustomException.SUCCESS;
+				}else{
+					
+					exception = CustomException.PARAMSERROR;
+				}
+				
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;		
+		
+	}	
 	
 
 	/**

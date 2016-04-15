@@ -182,6 +182,8 @@ public class ZAsset {
      */
     @Column(name = "unifyTypeId")
     private Integer unifytypeid;
+    
+
 
     /**
      * 上传资源的文档内容

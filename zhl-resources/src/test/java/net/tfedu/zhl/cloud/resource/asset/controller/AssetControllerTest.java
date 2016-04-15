@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.asset.controller;
 import javax.annotation.Resource;
 
 
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
@@ -13,10 +14,13 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	@Resource
 	AssetController assetController;
 	
-	@Test
+	
+	ResultJSON result = null;
+	
+/*	@Test
 	public  void testquery(){
 		
-		request = this.newGet("/resRestAPI/v1.0/resource/asset");
+//		request = this.newGet("/resRestAPI/v1.0/resource/asset");
 		
 		
 	}
@@ -42,6 +46,21 @@ public class AssetControllerTest extends BaseControllerTestCase {
 		
 		
 	}
+	
+*/
+	
+	
+	
+	@Test
+	public  void testgetAssetOne(){
+		
+		result =  assetController.getAssetOne(105l, request, response);
+		System.out.println(result.toString());
+		
+	}
+	
+	
+	
 	
 	
 	
