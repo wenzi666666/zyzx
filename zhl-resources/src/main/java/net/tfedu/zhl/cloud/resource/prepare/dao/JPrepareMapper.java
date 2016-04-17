@@ -56,6 +56,20 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      */
     public List<JPrepareView> queryPrepareAndTimeScopeList(@Param("tfcode")String tfcode,@Param("title")String title,@Param("userId") Long userId);
 
+  
+    
+    /**
+     * 获取学段学科下的备课夹及其时间范围
+     * 
+     * @param termId
+     * @param subjectId
+     * @param title
+     * @param userId
+     * @return
+     */
+    public List<JPrepareView> queryPrepareByTermAndSubject(@Param("termId")Long termId,@Param("subjectId")Long subjectId,@Param("title")String title, @Param("userId")Long userId);
+
+    
     /**
      * 获取备课夹内容列表(其中缩略图、文件后缀需要工具类继续处理)
      * 

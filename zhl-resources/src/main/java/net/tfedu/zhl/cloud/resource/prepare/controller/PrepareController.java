@@ -255,16 +255,29 @@ public class PrepareController {
         try {
             if (currentUserId != null && exception == null) {
                 long userId = currentUserId;
-                String tfcode = request.getParameter("tfcode");
+                long  termId = 0 ;
+                long subjectId = 0 ;
+                
                 String title =  request.getParameter("title");
-                if (StringUtils.isNotEmpty(tfcode)) {
+                String _termId =  request.getParameter("termId");
+                String _subjectId =  request.getParameter("subjectId");
+                if(StringUtils.isNotEmpty(_termId)){
+                	termId = Long.parseLong(_termId);
+                }
+                if(StringUtils.isNotEmpty(_subjectId)){
+                	subjectId = Long.parseLong(_subjectId);
+                }
+                
+                
+                if (termId!=0&&subjectId!=0) {
                 	title = title==null?"":title.trim();
-                    data = jPrepareService.queryPrepareAndTimeScopeList(tfcode,title, userId);
-                    logger.debug("获取节点"+tfcode+"下的所有当前用户（"+userId+"）的备课夹,title like '"+title+"%'");
+                    data = jPrepareService.queryPrepareAndTimeScopeList(termId, subjectId, title, userId);
+                    logger.debug("获取学段("+termId+")、学科("+subjectId+")下的所有当前用户（"+userId+"）的备课夹,title like '"+title+"%'");
                     exception = CustomException.SUCCESS;
                 } else {
                     exception = CustomException.PARAMSERROR;
                 }
+            
             }else{
             	exception = CustomException.INVALIDACCESSTOKEN;
             }

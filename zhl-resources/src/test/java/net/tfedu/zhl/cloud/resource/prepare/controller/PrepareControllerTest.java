@@ -63,6 +63,17 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     
     
     
+    @Test
+    public void testGetPrepare4BookList() {
+
+    	request.setAttribute("currentUserId", 390400126l);
+    	request.setParameter("termId", "3");
+    	request.setParameter("subjectId", "1");
+        result = controller.getPrepare4book(request, response);
+
+        System.out.println(result.toString());
+    }
+    
     
 /*
     @Test
@@ -89,17 +100,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     }
 
-    @Test
-    public void testGetPrepare4BookList() {
-        request = this.newGet("/resRestAPI/v1.0/prepare4book");
-
-        request.addParameter("tfcode", "RJCZ010109");
-
-        result = controller.getPrepare4book(request, response);
-
-        System.out.println(result.getData());
-
-    }
+ 
 
     @Test
     public void testGetPrepareContent() {

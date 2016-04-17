@@ -82,6 +82,19 @@ public interface JPrepareService {
      */
     public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode,String title, Long userId);
 
+
+    /**
+     * 获取学段学科下的备课夹及其时间范围
+     * 
+     * @param termId
+     * @param subjectId
+     * @param title
+     * @param userId
+     * @return
+     */
+    public List<JPrepareView> queryPrepareAndTimeScopeList(Long termId,Long subjectId,String title, Long userId);
+
+    
     /**
      * 获取备课夹内容列表
      * 

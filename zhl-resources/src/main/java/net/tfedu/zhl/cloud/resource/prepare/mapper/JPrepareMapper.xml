@@ -99,6 +99,31 @@
   </select>
   
   
+      <!-- 获取备课夹及其时间范围 -->
+  <select id="queryPrepareByTermAndSubject" resultMap="viewResultMap">
+  	SELECT
+	p.id,
+	p.title,
+	(CASE WHEN p.updatetime > DATE_SUB(CURDATE(), INTERVAL 1 WEEK) then 'withinweek'
+	   WHEN  p.updatetime > DATE_SUB(CURDATE(), INTERVAL 1 MONTH) then 'withinmonth'
+	   ELSE  'moreearly' END) as timeLabel,p.tfcode
+	FROM
+		j_lession_prepare p
+  LEFT JOIN j_syscourse s on s.tfcode = p.tfcode 
+ 
+	WHERE
+  1 = 1 
+	AND p.userid =  #{userId} AND p.flag = false 
+  and s.TermId = #{termId} and s.SubjectId = #{subjectId}
+	<if test="title!=''">
+		AND title like #{title}	
+	</if>
+	ORDER BY p.updatetime desc
+
+  </select>
+  
+  
+  
   
   
  
