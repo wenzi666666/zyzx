@@ -91,9 +91,11 @@ public class PrepareController {
                 }
                 // 是否为编辑备课夹
                 if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equalsIgnoreCase(_method)) {
+                    Date currentDate = Calendar.getInstance().getTime();
                     JPrepare prepare = new JPrepare();
                     prepare.setId(prepareId);
                     prepare.setTitle(title.trim());
+                    prepare.setUpdatetime(currentDate);
                     jPrepareService.editPrepare(prepare);
 
                 	logger.debug("编辑id为"+prepareId+"的备课夹的标题为："+title);
@@ -113,6 +115,7 @@ public class PrepareController {
                     prepare.setCreatetime(currentDate);
                     prepare.setTfcode(tfcode);
                     prepare.setTitle(title.trim());
+                    
                     jPrepareService.addPrepare(prepare);
 
                     HashMap<String, Long> map = new HashMap<String, Long>();

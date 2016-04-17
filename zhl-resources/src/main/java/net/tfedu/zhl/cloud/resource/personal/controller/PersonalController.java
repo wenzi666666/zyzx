@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.personal.controller;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
+import net.tfedu.zhl.cloud.resource.customizeres.entity.CustomizeResResult;
+import net.tfedu.zhl.cloud.resource.customizeres.service.CustomizeResService;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
@@ -79,6 +82,9 @@ public class PersonalController {
 
     @Resource
     private RegisterService registerService;
+    
+    @Resource
+    private CustomizeResService customizeResService;
 	
     
     /**
@@ -872,6 +878,63 @@ public class PersonalController {
             result.setSign("");
 		}
 		return result;
+	}
+	
+	
+	
+	
+
+	/**
+	 * 获取资源定制信息
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/customizeRes",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getCustomizeRes(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		try{
+			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+				
+				long userId = currentUserId;
+
+				List<CustomizeResResult> resultList =  customizeResService.getCustomizeResResult();
+				for (CustomizeResResult customizeResResult : resultList) {
+					if(customizeResResult!=null &&customizeResResult.getList()!=null){
+						JPrepareContentViewUtil.convertToPurpose_Asset(customizeResResult.getList()
+																		, resServiceLocal, currentResPath);
+					}
+				}
+				data = resultList;
+				exception = CustomException.SUCCESS;
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
 	}
 	
 	

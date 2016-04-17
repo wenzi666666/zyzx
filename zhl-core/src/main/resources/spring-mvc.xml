@@ -44,7 +44,7 @@
     <!-- 扫描controller（controller层注入） -->
     <context:component-scan base-package="net.tfedu.zhl" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
-        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+        <!-- <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" /> -->
     </context:component-scan>
 
     <!-- 会自动注册DefaultAnnotationHandlerMapping与AnnotationMethodHandlerAdapter 两个bean,是spring MVC为@Controllers分发请求所必须的 -->

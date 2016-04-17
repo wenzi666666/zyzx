@@ -89,22 +89,36 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public void deletePrepareById(Long id) {
+        Date currentDate = Calendar.getInstance().getTime();
+
     	JPrepare p = new JPrepare();
     	p.setFlag(true);
     	p.setId(id);
+    	p.setUpdatetime(currentDate);
         mapper.updateByPrimaryKeySelective(p);
     }
 
     @Override
     public JPrepareContent addPrepareContent(JPrepareContent content) {
         // TODO Auto-generated method stub
-        contMapper.insert(content);
+        Date currentDate = Calendar.getInstance().getTime();
+
+        //增加内容
+    	contMapper.insert(content);
+    	//更新内容排序
         mapper.update_default_prepare_content_order();
+        
+        //更新备课夹的更新时间
+        JPrepare obj = new JPrepare();
+        obj.setId(content.getPreid());
+        obj.setUpdatetime(currentDate);
+        mapper.updateByPrimaryKeySelective(obj);
         return content;
     }
 
     @Override
     public void editPrepareContent(JPrepareContent content) {
+    	
         contMapper.updateByPrimaryKeySelective(content);
     }
 
@@ -114,10 +128,28 @@ public class JPrepareServiceImpl implements JPrepareService {
     	record.setId(id);
     	record.setFlag(true);
         contMapper.updateByPrimaryKeySelective(record);
+        
+        
+        JPrepareContent content =  contMapper.selectByPrimaryKey(id);
+        Date currentDate = Calendar.getInstance().getTime();
+       //更新备课夹的更新时间
+        JPrepare obj = new JPrepare();
+        obj.setId(content.getPreid());
+        obj.setUpdatetime(currentDate);
+        mapper.updateByPrimaryKeySelective(obj);
+   
+        
     }
 
     @Override
     public void clearPrepareContentByPrepareId(Long prepareId) {
+        Date currentDate = Calendar.getInstance().getTime();
+       //更新备课夹的更新时间
+        JPrepare obj = new JPrepare();
+        obj.setId(prepareId);
+        obj.setUpdatetime(currentDate);
+        mapper.updateByPrimaryKeySelective(obj);
+        
         mapper.clearPrepareContentByPrepareId(prepareId);
     }
 
@@ -144,7 +176,16 @@ public class JPrepareServiceImpl implements JPrepareService {
     @Override
     public void removeResourceFromPrepare(Long prepareId, Integer contType, Long contId) {
         // TODO Auto-generated method stub
-        mapper.removeResourceFromPrepare(prepareId, contType, contId);
+    	mapper.removeResourceFromPrepare(prepareId, contType, contId);
+    	
+    	
+        Date currentDate = Calendar.getInstance().getTime();
+       //更新备课夹的更新时间
+        JPrepare obj = new JPrepare();
+        obj.setId(prepareId);
+        obj.setUpdatetime(currentDate);
+        mapper.updateByPrimaryKeySelective(obj);
+
     }
 
     @Override
@@ -187,6 +228,15 @@ public class JPrepareServiceImpl implements JPrepareService {
                 cont.setCreatetime(currentDate);
                 contMapper.insert(cont);
                 mapper.update_default_prepare_content_order();
+                
+                
+                
+                //更新备课夹的更新时间
+                 JPrepare obj = new JPrepare();
+                 obj.setId(prepare.getId());
+                 obj.setUpdatetime(currentDate);
+                 mapper.updateByPrimaryKeySelective(obj);
+
             }
         }
     }
