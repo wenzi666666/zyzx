@@ -54,6 +54,10 @@ public class DisResServiceImpl implements DisResService {
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
         	
+        	DisResourceEntity entity = list.get(i);
+        	if(null == entity){
+        		continue;
+        	}
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
@@ -113,7 +117,10 @@ public class DisResServiceImpl implements DisResService {
         List<DisResourceEntity> list = districtResMapper.selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, searchWord);
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
-        	
+        	DisResourceEntity entity = list.get(i);
+        	if(null == entity){
+        		continue;
+        	}
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();

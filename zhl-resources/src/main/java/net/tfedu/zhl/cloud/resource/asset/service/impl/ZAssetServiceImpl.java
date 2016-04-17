@@ -197,9 +197,9 @@ public class ZAssetServiceImpl implements ZAssetService {
 		//检测是否
 		for (int i=0;i<list.size();i++) {
 			ZAsset asset = list.get(i);
+			//共享范围   0 个人可见 1 校本共享 2 区本共享
 			int scope = scope_list.get(i);
-			int _scope = scope==1?3:4;
-			long _scopeId = _scope==3?schoolid:districtid;
+			
 			
 			//0：转码完成，1：未完成
 			int isfinished = 1 ;
@@ -218,6 +218,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 			asset.setIsfinished(isfinished);
 			
 			if(scope>0){
+				
+				//区本资源表中的  资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
+				int _scope = scope==1?5:4;
+				long _scopeId = _scope==5?schoolid:districtid;
+
+				
+				
+				
 				String assetPath =asset.getAssetpath();
 				String tfcode = codes.get(i);
 				//组装区本、校本路径
