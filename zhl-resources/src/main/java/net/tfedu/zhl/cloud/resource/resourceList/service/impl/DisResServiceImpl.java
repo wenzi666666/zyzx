@@ -14,6 +14,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 
 import org.springframework.stereotype.Service;
 
@@ -56,7 +57,7 @@ public class DisResServiceImpl implements DisResService {
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
+        	if(StringUtils.isNotEmpty(thumbnailpath) &&thumbnailpath.indexOf("/") >= 0){
         	    thumbnailpath = thumbnailpath.replace("/", "\\");
         		list.get(i).setThumbnailpath(thumbnailpath);
         	}
@@ -116,7 +117,7 @@ public class DisResServiceImpl implements DisResService {
         	
         	//将 / 替换为 \
         	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
+        	if(StringUtils.isNotEmpty(thumbnailpath) && thumbnailpath.indexOf("/") >= 0){
         	    thumbnailpath = thumbnailpath.replace("/", "\\");
         		list.get(i).setThumbnailpath(thumbnailpath);
         	}
