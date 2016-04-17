@@ -177,6 +177,9 @@ public class JPrepareContentViewUtil {
 			for (int i = 0; i < list.size(); i++) {
 				ZAssetView view = list.get(i);
 				String imgPath = view.getImgPath();
+				if(imgPath==null){
+					continue;
+				}
 				// imgPath 以http开头 并且size 为0或空
 				if(( imgPath.startsWith("http")|| imgPath.startsWith("HTTP"))){
 					//设置文件后缀  html

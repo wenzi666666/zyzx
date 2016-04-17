@@ -95,4 +95,15 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     	
     }
     
+    
+    @Test
+    public void testcustomizeRes(){
+    	
+        ResultJSON result = controller.getCustomizeRes(request, response);
+        System.out.println(result.toString());
+    	
+    }
+    
+    
+    
 }
