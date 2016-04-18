@@ -57,7 +57,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	}
 	
 	/**
-	 * 资源检索结果的资源推荐列表
+	 * 资源检索结果   的资源推荐列表
 	 * @throws IOException
 	 */
 	@Test
@@ -78,7 +78,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	}
 	
 	/**
-	 * 系统资源的资源推荐列表
+	 * 系统资源   的资源推荐列表
 	 * @throws IOException
 	 */
 	@Test
@@ -101,7 +101,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	}
 	
 	/**
-	 * 区本、校本资源的资源推荐列表
+	 * 区本、校本资源     的资源推荐列表
 	 * @throws IOException
 	 */
 	@Test

@@ -26,7 +26,7 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
     ResSearchService resSearchService;
 
     /**
-     * 资源检索结果service单元测试
+     * 资源检索结果的列表
      * @throws IOException
      */
     @Test
@@ -65,7 +65,7 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
     }
     
     /**
-     * 资源检索结果的格式 单元测试
+     * 资源检索结果的格式 
      * @throws IOException
      */
     @Test

@@ -27,7 +27,7 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	@Resource ResPreviewService resPreviewService;
 	
 	/**
-	 * 根据resId，查询一条资源的详细信息service单元测试
+	 * 根据resId，查询一条资源的详细信息
 	 * @throws IOException
 	 */
 	@Test
@@ -44,7 +44,7 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	}
 	
 	/**
-	 * 查询资源的所有版本service单元测试
+	 * 根据resId，获取资源的所有版本信息
 	 * @throws IOException
 	 */
 	@Test
@@ -72,7 +72,7 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
     }
 	
 	/**
-	 * 资源检索结果的资源推荐列表
+	 * 资源检索结果      的推荐列表
 	 * @throws IOException
 	 */
 	@Test
@@ -91,8 +91,63 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 		
 	}
 	
-/*	@Test
+	/**
+	 * 系统资源     的推荐列表
+	 * @throws IOException
+	 */
+	@Test
 	public void testGetSysResRecommendation()throws IOException{
+		long resId = 3;
+		int fromFlag = 0;
+		int page = 1;
+		int perPage = 20;
+		long poolId = 0;
+		String tfcode = "RJCZ010109";
+		int typeId = 0;
 		
-	}*/
+		Pagination<ResRecommendationEntity> list = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, SysFrom.sys_from);
+	
+		Assert.isTrue(list.getList().size() > 0);
+	}
+	
+	/**
+	 * 区本、校本资源     的推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetDisResRecommendation()throws IOException{
+		
+		long userId = 699230735;
+		long resId = 690105;
+		int fromFlag = 3;
+		int page = 1;
+		int perPage = 20;
+		long poolId = 0;
+		String tfcode = "RJCZ010109";
+		int typeId = 0;
+		
+	    Pagination<ResRecommendationEntity> list = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, userId, page, perPage);
+	    
+	    //Assert.isTrue(list.getList().size() > 0);
+	}
+	
+	
+	/**
+	 * 个人中心 - 我的上传   推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetResRecommendation_upload()throws IOException{
+		
+		long userId = 390440126;
+		long resId = 164882577;
+		int fromFlag = 1;
+		int page = 1;
+		int perPage = 20;
+		
+	    Pagination<ResRecommendationEntity> list = resPreviewService.myResByUploadRecommendation(userId, resId, SysFrom.sys_from, page, perPage);
+	
+	    Assert.isTrue(list.getList().size() > 0);
+	
+	}
 }

@@ -13,7 +13,7 @@ import org.junit.Test;
 import org.springframework.util.Assert;
 
 /**
- * 用户评论的service测试
+ * 用户评论相关service测试
  * 
  * @author WeiCuicui
  *
@@ -22,18 +22,54 @@ public class UserCommentServiceTest extends BaseServiceTestCase {
 
     @Resource
     UserCommentService userCommentService;
+    
+    /**
+     * 增加用户评论
+     * @throws IOException
+     */
+    @Test
+    public void testAddUserComments()throws IOException{
+
+        String displayContent = "goodgoodgood";
+        
+        // 资源来源
+        int fromFlag = 0;
+
+        long resId = 31250;
+
+        long userId = 699230735;
+        
+        int ascore = 5;
+        int isScore = 0;
+        
+        userCommentService.insertUserComment(resId, userId,displayContent, ascore,fromFlag,isScore);
+
+	}
+    
+    /**
+     * 修改用户评论
+     * @throws IOException
+     */
+    @Test
+    public void testUpdateUserComments()throws IOException{
+
+        String displayContent = "goodgoodgood";
+        
+        long commentId = 10600;
+        
+        userCommentService.updateUserComment(displayContent, commentId);
+
+	}
+    
+   
 
     /**
-     * 用户评论测试
+     * 查询我的评论
      * 
      * @throws IOException
      */
     @Test
-    public void testUserComment() throws IOException {
-
-        long commentId = 10600;
-
-        String displayContent = "goodgoodgood";
+    public void testGetMyComments() throws IOException {
 
         // 资源来源
         int fromFlag = 0;
@@ -42,33 +78,46 @@ public class UserCommentServiceTest extends BaseServiceTestCase {
 
         long userId = 699230735;
 
-        int ascore = 5;
-        int isScore = 0;
-
-        System.out.println(fromFlag);
-
         // 查询我的评论
         List<UserComment> comments = userCommentService.getMyComments(fromFlag, resId, userId);
         Assert.isTrue(comments.size() > 0);
         for (int i = 0; i < comments.size(); i++)
             log.info(comments.get(i).toString());
-
-        System.out.println("他人评论");
-
-        /*
-         * //查询其他人的评论 List<UserComment> otherComments =
-         * userCommentService.getOtherComments(fromFlag, resId, userId);
-         * Assert.isTrue(otherComments.size() > 0); for(int i = 0;i <
-         * otherComments.size();i++) log.info(otherComments.get(i).toString());
-         */
-        /*
-         * //增加 userCommentService.insertUserComment(resId, userId,
-         * displayContent, ascore,fromFlag,isScore);
-         * 
-         * //修改 userCommentService.updateUserComment(displayContent, commentId);
-         * 
-         * //删除 userCommentService.deleteUserComment(commentId);
-         */
-
     }
+    
+
+    /**
+     * 查询其他人的评论
+     * 
+     * @throws IOException
+     */
+    @Test
+    public void testGetOtherComments() throws IOException {
+    	// 资源来源
+        int fromFlag = 0;
+
+        long resId = 31250;
+
+        long userId = 699230735;
+        
+        // 查询他人的评论
+        List<UserComment> comments = userCommentService.getOtherComments(fromFlag, resId, userId);
+        Assert.isTrue(comments.size() > 0);
+        for (int i = 0; i < comments.size(); i++)
+            log.info(comments.get(i).toString());
+        
+    }
+    
+    /**
+     * 删除用户评论
+     * @throws IOException
+     */
+    @Test
+    public void testDeleteUserComments()throws IOException{
+
+        long commentId = 10600;
+        
+        userCommentService.deleteUserComment(commentId);
+
+	}
 }
