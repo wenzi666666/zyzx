@@ -237,10 +237,7 @@ public class JPrepareConstant {
         	if(isebook){
         			
         	}
-        	//加密文件的处理
-        	else if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
-    			path =path.replace(".swf", ".tfswf").replace(".mp4", ".tfmp4");
-    		}
+        	
     		//文本文件的处理
     		else if(ZhlResourceCenterWrap.file_pattern_pdf.indexOf(flag)>=0){
     			//转码文件的处理

@@ -18,13 +18,28 @@ public class BookSelfControllerTest extends BaseControllerTestCase {
 	@Test
 	public void test() {
 		
-		request.setParameter("tfcode", "CXCZ01010101");
-		request.setAttribute("currentUserId", 390320126l);
-		request.setAttribute("resServiceLocal", "http://192.168.111.22:8099/down/");
-		request.setAttribute("currentResPath", "http://192.168.111.22:8099/down/");
 		ResultJSON json =  controller.getUserCourseware(request, response);
 		System.out.println(json.toString());
 		
 	}
+	
+	@Test
+	public void testGETMYbook() {
+		
+    	request.setAttribute("currentUserId", 390400126l);
+		ResultJSON json =  controller.getMyBook(request, response);
+		System.out.println(json.toString());
+		
+	}
+	@Test
+	public void testGETSysBook() {
+		
+		request.setParameter("tfcode", "CXCZ01010101");
+		ResultJSON json =  controller.getSysBook(request, response);
+		System.out.println(json.toString());
+		
+	}
+	
+	
 
 }

@@ -31,7 +31,8 @@
 	select * from  (
 	  SELECT s.id,
 	  if(pt.bookname is null,if(p.name=s.name,s.name,concat(IFNULL(p.name,''),s.name)),concat(IFNULL(p.name,''),pt.bookname)) as title
-	   ,s.tfcode,1 as ismybook,CONCAT(s.EbookPath,'/',s.tfcode,'.jpg') as imgpath,if(s.UpdateTime is null,s.CreateDT,s.UpdateTime) as time   
+	   ,s.tfcode,1 as ismybook,CONCAT(s.EbookPath,'/',s.tfcode,'.jpg') as imgpath,if(s.UpdateTime is null,s.CreateDT,s.UpdateTime) as time
+	   ,pt.orderno   
 	  FROM j_syscourse_user  su
 		LEFT JOIN j_syscourse s on s.id = su.syscourseId
 	    LEFT JOIN j_syscourse p on p.id = s.PnodeId
@@ -45,6 +46,7 @@
 	<if test="title !='' and title !=null and title != 'null' ">
 		where title like #{title}
 	</if>
+	order by orderno
   </select>
   
   
@@ -78,6 +80,8 @@
 		LEFT JOIN j_subject b on b.id = s.subjectid
 		LEFT JOIN j_syscourse_user  su  on (su.syscourseid  =  s.id and Su.userid = #{userId})
 		where s.tfcode  like CONCAT(#{tfcode},'%') and length(s.tfcode) = (length(#{tfcode}) + 2)  and pt.proCode = 'zy'
+		order by pt.orderno
+		
   </select>
 
 </mapper>

@@ -68,7 +68,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     	request.setAttribute("currentUserId", 390400126l);
     	request.setParameter("termId", "3");
-    	request.setParameter("subjectId", "1");
+    	request.setParameter("subjectId", "2");
         result = controller.getPrepare4book(request, response);
 
         System.out.println(result.toString());
@@ -148,11 +148,12 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     }
 
+  
+    
+  */
     @Test
     public void testgetViewUrl() {
-        long prepareId = 140252;
-        String url = "http://192.168.111.22:8099/down";
-        request.addParameter("resIds", "4319500105,212992,212991");
+        request.addParameter("resIds", "50892,212992,212991");
         request.addParameter("fromFlags", "0,0,0");
         request.setServerName("192.168.111.160");
         request.setServerPort(8080);
@@ -164,9 +165,6 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         System.out.println(result.getCode());
         System.out.println(result.getData());
     }
-
-    
-  */
 
     
     
