@@ -72,6 +72,10 @@ public class ResPreviewController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	//获取文件服务器的访问url 
+            	String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
             	// 资源来源
             	int fromFlag = 0;
@@ -89,6 +93,9 @@ public class ResPreviewController {
 
                 // 查询一条资源的详细信息
                 previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);
+                
+                //生成缩略图
+                ResThumbnailPathUtil.convertToPurpos_resPreview(previewInfo, resServiceLocal, currentResPath);
 
                 exception = CustomException.SUCCESS;
 

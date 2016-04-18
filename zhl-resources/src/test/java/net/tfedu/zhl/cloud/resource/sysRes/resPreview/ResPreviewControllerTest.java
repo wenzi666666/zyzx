@@ -42,7 +42,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	/**
 	 * 资源预览页面的资源推荐列表
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetAllRes()throws IOException{
 		
@@ -55,5 +55,5 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}
+	}*/
 }
