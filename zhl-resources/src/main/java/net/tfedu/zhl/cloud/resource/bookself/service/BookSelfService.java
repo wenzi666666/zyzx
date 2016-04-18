@@ -63,5 +63,16 @@ public interface BookSelfService {
 	 * 重命名课件
 	 */
 	public void renameAsset(Long id,String name);
+
+
+	/**
+	 * 检索用户书架教材下的全部课件
+	 * @param userId
+	 * @param title
+	 * @param orderby
+	 * @return
+	 */
+	public List<CourseWareView> queryUserCoursewareAll(long userId,
+			String title, String orderby);
 	
 }

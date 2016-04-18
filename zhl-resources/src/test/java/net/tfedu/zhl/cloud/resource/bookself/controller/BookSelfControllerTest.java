@@ -41,5 +41,13 @@ public class BookSelfControllerTest extends BaseControllerTestCase {
 	}
 	
 	
+	@Test
+	public void testqueryUserCoursewareAll(){
+    	request.setAttribute("currentUserId", 390410126l);	
+		ResultJSON json =  controller.getUserCourseware(request, response);
+		System.out.println(json.toString());
+
+	}
+	
 
 }

@@ -90,6 +90,17 @@ public class BookSelfServiceImpl implements BookSelfService {
 		assetMapper.renameAsset(id, name);
 	}
 
+	@Override
+	public List<CourseWareView> queryUserCoursewareAll(long userId,
+			String title, String orderby) {
+		title = title==null?"":("%"+title.trim()+"%");
+		orderby = orderby==null?"":orderby.trim();
+		
+		
+
+		return assetMapper.queryUserCoursewareAll(userId, title, orderby);
+	}
+
 
 	
 }

@@ -252,6 +252,59 @@ public class BookSelfController {
 	
 	
 	/**
+	 * 检索用户书架教材下的全部课件
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value="/v1.0/coursewareAll",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getUserCoursewareAll(HttpServletRequest request, HttpServletResponse response){
+		//返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		//异常
+		CustomException exception = (CustomException)request.getAttribute(CustomException.request_key);
+		//当前登录用户id 
+		Long currentUserId  =  (Long)request.getAttribute("currentUserId");
+		//返回
+		Object data = null;
+		
+		try{
+			if(currentUserId!=null && exception==null){	
+				//获取文件服务器的访问url 
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+				
+				long userId = currentUserId;
+				String title = request.getParameter("title");
+				String orderby = request.getParameter("orderby");
+
+				List<CourseWareView> list = bookSelfService.queryUserCoursewareAll(userId, title, orderby);
+				
+				JPrepareContentViewUtil.convertToPurpose_CourseWare(list, resServiceLocal, currentResPath);
+				data = list ;
+				exception = CustomException.SUCCESS;				
+			}else{
+            	exception = CustomException.INVALIDACCESSTOKEN;
+            }
+		}catch(Exception e){
+			exception = CustomException.getCustomExceptionByCode(e.getMessage());
+			//如果是普通的异常
+			if(exception.getStatus()==500){
+				e.printStackTrace();
+			}
+		}finally{
+			result.setCode(exception.getCode());
+			result.setMessage(exception.getMessage());
+			result.setData(data==null?"":data);
+			result.setSign("");			
+		}
+		return  result;
+	}
+	
+	
+	/**
 	 * 重命名课件
 	 * @param request
 	 * @param response

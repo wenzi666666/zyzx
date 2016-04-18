@@ -157,6 +157,50 @@
   </select>
   
   
+  
+  <!-- 检索用户书架教材下的全部课件  注意time 为 updatetime  -->  
+  <select id="queryUserCoursewareAll" resultMap="courseWareViewMap">
+  
+	select  resId,rescode,title,unifytype,time,imgpath,filesuffix,size,updatetime,tfcode,tf_title from  (	 
+			select  a.id as resId,a.resourceid as rescode,a.name as title,a.updatetime,a.createTime as time,p.id as unifyTypeId,a.assetSize  as size 
+			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			,c.tfcode,c.name as tf_title 
+			from  z_asset a 
+			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId
+			LEFT JOIN z_asset_syscourse  s on s.assetid = a.id
+			LEFT JOIN j_syscourse c on c.tfcode = s.tfcode 
+			where a.iscourseware = true  and a.flag =false and a.FileType = 'A'
+      and s.flag = false  
+			and a.userid = #{userId}
+			<if test="title!=''">
+			and a.name like  #{title}
+			</if>
+			and EXISTS (			 
+             select c1.tfcode from j_syscourse_user su LEFT JOIN j_syscourse c1 on c1.id =  su.syscourseid where su.flag =false 
+             			and su.userid =#{userId} and c1.flag = false  and locate(c.tfcode,c1.tfcode)>0 
+			)
+ 	)temp_result 
+	where  1 =1 
+	<if test=" 'title'== orderby">
+		ORDER BY title desc, updatetime desc,size desc 	
+	</if>
+	
+	<if test=" 'updatetime'== orderby">
+		ORDER BY updatetime desc,title desc, size desc 		
+	</if>
+	
+	<if test=" 'size'== orderby">
+		ORDER BY  size desc ,updatetime desc,title desc		
+	</if>
+	
+	<if test=" ''== orderby or null == orderby ">
+			ORDER BY title desc, updatetime desc,size desc 	
+	</if>
+  </select>
+  
+  
+  
+  
 	<!-- 自建资源的资源导航信息 -->
 	<select id="getAssetNavs" resultType="String">
 		select  t.tfcode  from z_asset_syscourse  t

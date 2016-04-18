@@ -56,6 +56,17 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 				,@Param("title") String title,@Param("orderby") String orderby);
 	
 	
+    /**
+	 * 检索用户书架教材下的全部课件
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @param orderby
+	 * @return
+	 */
+	public List<CourseWareView> queryUserCoursewareAll(@Param("userId") Long userId
+				,@Param("title") String title,@Param("orderby") String orderby);
+	
 	/**
 	 * 重命名课件
 	 */
