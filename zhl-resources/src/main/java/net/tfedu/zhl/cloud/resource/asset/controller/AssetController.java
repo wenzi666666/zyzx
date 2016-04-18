@@ -348,7 +348,7 @@ public class AssetController {
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
 
-				long userId = 390440126;
+				long userId = currentUserId;
 				long unifyTypeId = 0 ;
 				int page = 1; 
 				int prePage = 10;
