@@ -18,12 +18,12 @@
 		</encoder>
 	</appender>
 
-	<logger name="net.tfedu" level="DEBUG">
+	<logger name="net.tfedu" level="DEBUG" addtivity="false">
 		<appender-ref ref="console" />
 	</logger>
 
-	<root level="WARN">
-	    <appender-ref ref="console" />
+	<root level="WARN" > 
+	  <!--   <appender-ref ref="console" /> -->
 		<appender-ref ref="rollingFile" />
 	</root>
 
