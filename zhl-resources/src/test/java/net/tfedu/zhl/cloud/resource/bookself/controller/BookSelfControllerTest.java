@@ -26,7 +26,7 @@ public class BookSelfControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testGETMYbook() {
 		
-    	request.setAttribute("currentUserId", 390400126l);
+    	request.setAttribute("currentUserId", 390320126l);
 		ResultJSON json =  controller.getMyBook(request, response);
 		System.out.println(json.toString());
 		
@@ -43,8 +43,8 @@ public class BookSelfControllerTest extends BaseControllerTestCase {
 	
 	@Test
 	public void testqueryUserCoursewareAll(){
-    	request.setAttribute("currentUserId", 390410126l);	
-		ResultJSON json =  controller.getUserCourseware(request, response);
+    	request.setAttribute("currentUserId", 390320126l);	
+		ResultJSON json =  controller.getUserCoursewareAll(request, response);
 		System.out.println(json.toString());
 
 	}
