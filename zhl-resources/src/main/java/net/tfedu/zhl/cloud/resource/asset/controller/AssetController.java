@@ -347,7 +347,9 @@ public class AssetController {
 				//获取文件服务器的访问url 
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-
+				String hostLocal = commonWebConfig.getHostLocalOne();
+				
+				
 				long userId = currentUserId;
 				long unifyTypeId = 0 ;
 				int page = 1; 
@@ -373,7 +375,7 @@ public class AssetController {
 				
 				logger.debug("分页获取资源,userId="+userId+",unifyTypeId="+unifyTypeId+",fileFormat="+fileFormat+",page="+page+",prePage="+prePage);
 
-				Pagination page_result = assetService.queryMyAssets(userId, unifyTypeId, fileFormat, page, prePage);
+				Pagination page_result = assetService.queryMyAssets(userId, unifyTypeId, fileFormat, page, prePage,hostLocal,resServiceLocal);
 				
 				JPrepareContentViewUtil.convertToPurpose_Asset(page_result.getList(), resServiceLocal, currentResPath);
 				

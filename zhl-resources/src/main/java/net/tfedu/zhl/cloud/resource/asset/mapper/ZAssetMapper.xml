@@ -63,12 +63,14 @@
       <result column="time"  property="time" />
       <result column="imgpath"  property="imgPath" />
       <result column="filesuffix" property="fileSuffix" />
+      <result column="isfinished" property="isFinished" />
    </resultMap>
   
   <select id="queryMyAssets" resultMap="viewMap">
-	select  resId,rescode,title,unifytype,time,imgpath,filesuffix from  (	 
+	select  resId,rescode,title,unifytype,time,imgpath,filesuffix,isfinished from  (	 
 			select  a.id as resId,a.resourceid as rescode,a.name as title,a.createTime as time,p.id as unifyTypeId
 			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			,a.isfinished 
 			from  z_asset a 
 			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId		
 			where a.userid = #{userId}

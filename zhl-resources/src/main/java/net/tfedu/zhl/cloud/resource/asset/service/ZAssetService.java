@@ -107,7 +107,7 @@ public interface ZAssetService {
 	 * @param perPage
 	 * @return
 	 */
-	public Pagination queryMyAssets(Long userId,Long unifyTypeId,String fileFormat,Integer page,Integer perPage);
+	public Pagination queryMyAssets(Long userId,Long unifyTypeId,String fileFormat,Integer page,Integer perPage,String hostLocal,String resServiceLocal);
 	
 	
 	/**

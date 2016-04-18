@@ -110,7 +110,10 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 	@Test
 	public void testquery(){
 		Long userId = 390330126l;
-		Pagination p =  zAssetService.queryMyAssets(userId, 0l, null, 1, 10);
+		String hostLocal = "http://192.168.111.160:8080/zhl-resources/";
+		String resServiceLocal = "http://192.168.111.22:8099/down/";
+		
+		Pagination p =  zAssetService.queryMyAssets(userId, 0l, null, 1, 10,hostLocal,resServiceLocal);
 		List list = p.getList();
 		for (int i = 0; i < list.size(); i++) {
 			System.out.println(list.get(i).toString());

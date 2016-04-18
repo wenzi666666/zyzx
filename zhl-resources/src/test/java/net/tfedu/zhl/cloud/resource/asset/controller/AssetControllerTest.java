@@ -62,6 +62,17 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	
 	
 	
+	@Test
+	public void testQueryMyAssets(){
+		
+    	request.setAttribute("currentUserId", 390320126l);
+
+		result = assetController.queryAsset(request, response);
+		
+		System.out.println(result==null?"":result.getData().toString());
+		
+	}
+	
 	
 	
 	

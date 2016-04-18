@@ -6,6 +6,7 @@ import java.util.List;
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
+import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.sso.userlog.entity.ResourceViewLog;
@@ -166,12 +167,21 @@ public class JPrepareContentViewUtil {
 	
     /**
 	 * 将 ResourceReview (资源评论记录) 中的imagePath 转换生成有效数据
+	 * ,并对未完成转换的资源重新处理
+	 * 
+	 * 
+	 * 
 	 * 注意网络资源的处理
 	 * @param list
 	 * @param resUrlLocal  文件服务器的内网地址
 	 * @param currnetResUrl    浏览器上的当前的（可用内、外网文件服务器）地址
+	 * 
+	 * 
+	 * 
 	 */
 	public static void convertToPurpose_Asset(List<ZAssetView> list,String resUrlLocal,String currnetResUrl){
+		
+		
 		
 		if(list!=null && list.size()>0){
 			for (int i = 0; i < list.size(); i++) {
@@ -180,6 +190,9 @@ public class JPrepareContentViewUtil {
 				if(imgPath==null){
 					continue;
 				}
+				
+				
+				
 				// imgPath 以http开头 并且size 为0或空
 				if(( imgPath.startsWith("http")|| imgPath.startsWith("HTTP"))){
 					//设置文件后缀  html
@@ -206,6 +219,12 @@ public class JPrepareContentViewUtil {
 						view.setImgPath("");
 					}
 				}
+				
+				
+				
+				
+				
+				
 			}
 		}		
 	}

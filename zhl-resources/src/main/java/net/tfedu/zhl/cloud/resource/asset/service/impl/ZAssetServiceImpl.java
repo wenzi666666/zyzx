@@ -16,6 +16,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetSyscourse;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetValuate;
+import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
@@ -37,6 +38,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 
 @Service("zAssetService")
@@ -398,9 +400,55 @@ public class ZAssetServiceImpl implements ZAssetService {
 
 	@Override
 	public Pagination queryMyAssets(Long userId, Long unifyTypeId,
-			String fileFormat, Integer page, Integer perPage) {
+			String fileFormat, Integer page, Integer perPage,String hostLocal,String resServiceLocal) {
 		PageHelper.startPage(page, perPage);
-		List<ZAsset> list  = assetMapper.queryMyAssets(userId, unifyTypeId, fileFormat);
+		List<ZAssetView> list  = assetMapper.queryMyAssets(userId, unifyTypeId, fileFormat);
+		
+		//格式转换检查
+		for (ZAssetView view : list) {
+
+			//(需要转换的)是否已经完成格式转换  0：转码完成，1：未完成
+			int isFinished = view.getIsFinished() ;
+			if(1== isFinished){					
+				//是否需要转格式，否 直接更新状态，是  创建转换任务
+				if(AssetTypeConvertConstant.isNeedConvert(view.getImgPath())){
+					
+					//检测是否已经完成格式转换
+					ZTypeConvert obj =  convertMapper.getConvertRecord(userId, view.getImgPath());				
+					if(null == obj){
+						//检测是否存在转换完成后的文件
+						String path  = AssetTypeConvertConstant.convertType(view.getImgPath());
+	                    // 判断是否存在
+	                    String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, path);
+	                    if (StringUtils.isNotEmpty(s)) {
+	                        HashMap m = JSONObject.parseObject(s, HashMap.class);
+	                        if (m != null && ((Integer) m.get("FileSize") > 0)) {
+	                            
+	                        	isFinished = 0 ;
+	                        }
+	                    } 
+	                    
+	                    if(1==isFinished){
+	                    	ZhlResourceCenterWrap.sendFileToConvert(view.getImgPath(),userId, hostLocal, resServiceLocal);	
+	                    }
+						
+					}else{
+						isFinished = 0 ;
+					}
+				}else{
+					isFinished =  0 ;
+					
+				}
+				if(isFinished==0){
+					view.setIsFinished(isFinished);
+					ZAsset z = new ZAsset();
+					z.setId(view.getResId());
+					z.setIsfinished(isFinished);
+					assetMapper.updateByPrimaryKeySelective(z);
+				}
+			}
+		}
+		
 		Pagination p = new PageInfoToPagination().transfer(list);		
 		return p ;
 	}

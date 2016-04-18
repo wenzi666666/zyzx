@@ -396,10 +396,10 @@ public class ZhlResourceCenterWrap {
 	 * 将历史文件发送给文件服务器进行格式转换
 	 * 
 	 */
-	public static void sendFileToConvert(String fileName,HttpServletRequest request,long userId,String hostLocal,String resServiceLocal){
+	public static void sendFileToConvert(String fileName,long userId,String hostLocal,String resServiceLocal){
 		
 		//回调函数action
-		String returnUrl = hostLocal + "historyConvert_insert.action";
+		String returnUrl = hostLocal + "/v1.0/resource/uploadConvertCallBack";
 		
 		String resSerPath = resServiceLocal;
 		

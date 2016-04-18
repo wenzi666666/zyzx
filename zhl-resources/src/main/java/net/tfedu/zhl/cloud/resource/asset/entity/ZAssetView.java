@@ -26,15 +26,21 @@ public class ZAssetView implements Serializable {
     private String imgPath;
 
     private String fileSuffix;
+    
+    /**
+     * 文件转码，0：转码完成，1：未完成
+     */
+    private Integer isFinished;
 
     public ZAssetView(Long resId, String title, String resCode, String unifyType, Date time, String imgPath,
-            String fileSuffix) {
+            String fileSuffix,Integer isFinished) {
         this.title = title;
         this.resId = resId;
         this.unifyType = unifyType;
         this.time = time;
         this.imgPath = imgPath;
         this.fileSuffix = fileSuffix;
+        this.isFinished = isFinished;
     }
 
     public ZAssetView() {
@@ -110,10 +116,18 @@ public class ZAssetView implements Serializable {
 		this.resCode = resCode;
 	}
 
+	public Integer getIsFinished() {
+		return isFinished;
+	}
+
+	public void setIsFinished(Integer isFinished) {
+		this.isFinished = isFinished;
+	}
+
 	@Override
     public String toString() {
         return "[ZAssetView:{resId:" + resId + ";title:" + title + ";resCode:" + resCode + ";unifyType:" + unifyType
-                + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";
+                + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + ";isFinished:" + isFinished+ "}]";
     }
 
 }
