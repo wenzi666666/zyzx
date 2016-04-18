@@ -21,15 +21,15 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 
 	@Resource ResPreviewController  controller;
 
-	/**
+/*	*//**
 	 * 查询一条资源的详细信息controller单元测试
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetOneResController() throws IOException {
 
-		request.setParameter("resId", "12");
-		request.setParameter("fromFlag", "0");
+		request.setParameter("resId", "870217");
+		request.setParameter("fromFlag", "3");
 		
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
 		
@@ -39,10 +39,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		
 	}
 	
-	/**
+	*//**
 	 * 根据resId，查询资源的所有版本目录
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetAllLists()throws IOException{
 		request.setParameter("resId", "12");
@@ -56,10 +56,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 资源检索结果   的资源推荐列表
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetResRecommendation_search()throws IOException{
 		
@@ -77,10 +77,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 系统资源   的资源推荐列表
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetSysResRecommendation()throws IOException{
 		
@@ -98,7 +98,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}
+	}*/
 	
 	/**
 	 * 区本、校本资源     的资源推荐列表
@@ -107,12 +107,13 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetDisResRecommendation()throws IOException{
 		
-		request.setParameter("resId", "690105");
+		request.setParameter("currentUserId", "390440126");
+		request.setParameter("resId", "870234");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
 		
-		request.setParameter("tfcode", "RJCZ010109");
+		request.setParameter("tfcode", "CZYW010101");
 		request.setParameter("typeId", "0");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
@@ -125,7 +126,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	/**
 	 * 个人中心-我的上传  的资源推荐列表
 	 * @throws IOException
-	 */
+	 *//*
 	@Test
 	public void testGetResRecommendation_upload()throws IOException{
 		
@@ -140,5 +141,5 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}
+	}*/
 }

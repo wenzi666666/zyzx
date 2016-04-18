@@ -32,8 +32,8 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	 */
 	@Test
 	public void testGetOneResService()throws IOException{
-		long resId = 12;
-		int fromFlag = 0;
+		long resId = 870217;
+		int fromFlag = 3;
 		long userId = 699230735;
 		
 		ResPreviewInfo info = resPreviewService.getResPreviewInfo(resId, userId, fromFlag);
@@ -118,12 +118,12 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	public void testGetDisResRecommendation()throws IOException{
 		
 		long userId = 699230735;
-		long resId = 690105;
+		long resId = 870217;
 		int fromFlag = 3;
 		int page = 1;
 		int perPage = 20;
 		long poolId = 0;
-		String tfcode = "RJCZ010109";
+		String tfcode = "CZYW010101";
 		int typeId = 0;
 		
 	    Pagination<ResRecommendationEntity> list = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, userId, page, perPage);

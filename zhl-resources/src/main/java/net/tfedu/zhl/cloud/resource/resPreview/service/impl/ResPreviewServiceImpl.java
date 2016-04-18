@@ -161,16 +161,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
         // 查询系统资源
         List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds,resId);
-        
-        for (int i = 0; i < list.size(); i++) {
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        	
-        }
+  
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
 
@@ -208,15 +199,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
         // 查询资源
         List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId);
-
-        for (int i = 0; i < list.size(); i++) {
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        }
 
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
@@ -273,16 +255,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             PageHelper.startPage(page, perPage);
             list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId,resId);
         }
-        
-   
-        for (int i = 0; i < list.size(); i++) {
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        }
+
         //将pageIn封装为自定义的pagination
         return transfer.transfer(list);
     }

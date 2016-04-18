@@ -14,7 +14,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 
 import org.springframework.stereotype.Service;
 
@@ -59,13 +58,7 @@ public class DisResServiceImpl implements DisResService {
         		continue;
         	}
         	
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(StringUtils.isNotEmpty(thumbnailpath) &&thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        	
+                	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
             // 得到当前日期的前多少天
@@ -122,12 +115,6 @@ public class DisResServiceImpl implements DisResService {
         		continue;
         	}
         	
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(StringUtils.isNotEmpty(thumbnailpath) && thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
         	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
