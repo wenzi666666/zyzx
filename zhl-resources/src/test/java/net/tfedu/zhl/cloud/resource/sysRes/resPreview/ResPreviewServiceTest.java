@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
+import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 import org.junit.Test;
@@ -28,9 +31,9 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	 * @throws IOException
 	 */
 	@Test
-	public void testResPreviewService()throws IOException{
-		long resId = 164882428;
-		int fromFlag = 1;
+	public void testGetOneResService()throws IOException{
+		long resId = 12;
+		int fromFlag = 0;
 		long userId = 699230735;
 		
 		ResPreviewInfo info = resPreviewService.getResPreviewInfo(resId, userId, fromFlag);
@@ -69,17 +72,27 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
     }
 	
 	/**
-	 * 从资源预览页面返回时，查询对应的所有目录
+	 * 资源检索结果的资源推荐列表
 	 * @throws IOException
-	 *//*
+	 */
 	@Test
-    public void testResCourseContents() throws IOException {
-        String tfcode = "RJXX0101";
-        JUserDefault content = resPreviewService.getPnodes(tfcode);
-        Assert.isTrue(content != null);
-        if (content != null) {
-            System.out.println(content.getId() + ":" + content.getTfcode() + ":" + content.getTermId() + ":"
-                    + content.getSubjectId() + ":" + content.getEditionId());
-        }
-    }*/
+	public void testGetResRecommendation_search()throws IOException{
+		
+		int fromFlag = 0;
+		long resId = 3;
+		int page = 1;
+		int perPage = 10;
+		String searchKeyword = "数学";
+		long userId = 699230735;
+		
+		Pagination<ResRecommendationEntity> list = resPreviewService.searchRecommendation(fromFlag, resId, userId, searchKeyword, SysFrom.sys_from, page, perPage);
+		
+		Assert.isTrue(list.getList().size() > 0);
+		
+	}
+	
+/*	@Test
+	public void testGetSysResRecommendation()throws IOException{
+		
+	}*/
 }

@@ -144,7 +144,7 @@
 	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
-    where a.flag = 0 and a.id = #{resId} and c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and a.id = #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
@@ -169,7 +169,7 @@
 	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
-    where a.flag = 0 a.id != #{resId} and c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 

@@ -249,7 +249,7 @@ public class ResPreviewInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "previewInfo[resId=" + id + ",title=" + Title + ",keyword=" + keyWord + ",des=" + Des + "]";
+        return "previewInfo[resId=" + id + ",title=" + Title + ",keyword=" + keyWord + ",des=" + Des + ",fpath="+ Fpath +",fname="+ fname +"]";
     }
 
 }

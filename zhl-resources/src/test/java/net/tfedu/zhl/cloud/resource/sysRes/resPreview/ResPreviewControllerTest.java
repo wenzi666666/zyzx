@@ -28,8 +28,8 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetOneResController() throws IOException {
 
-		request.setParameter("resId", "164882428");
-		request.setParameter("fromFlag", "1");
+		request.setParameter("resId", "12");
+		request.setParameter("fromFlag", "0");
 		
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
 		
@@ -40,20 +40,105 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	}
 	
 	/**
-	 * 资源预览页面的资源推荐列表
+	 * 根据resId，查询资源的所有版本目录
 	 * @throws IOException
-	 *//*
+	 */
 	@Test
-	public void testGetAllRes()throws IOException{
+	public void testGetAllLists()throws IOException{
+		request.setParameter("resId", "12");
+		request.setParameter("fromFlag", "0");
+		request.setParameter("curTfcode", "RJCZ010109");
 		
-		request.setParameter("resId", "164882420");
-		request.setParameter("userId", "699230735");
-		request.setParameter("fromFlag", "1");
+		ResultJSON json =  controller.getAllLists(request, response);
 		
+        JsonUtil.toJsonString(json);
+        
+        Assert.isTrue("OK".equals(json.getCode()));
+	}
+	
+	/**
+	 * 资源检索结果的资源推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetResRecommendation_search()throws IOException{
+		
+		request.setParameter("resId", "3");
+		request.setParameter("fromFlag", "0");
+		request.setParameter("page", "1");
+		request.setParameter("perPage", "20");
+		request.setParameter("isSearch", "1");
+		request.setParameter("searchKeyword", "数学");
+
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
 		JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}*/
+	}
+	
+	/**
+	 * 系统资源的资源推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetSysResRecommendation()throws IOException{
+		
+		request.setParameter("resId", "3");
+		request.setParameter("fromFlag", "0");
+		request.setParameter("page", "1");
+		request.setParameter("perPage", "20");
+		
+		request.setParameter("poolId", "0");
+		request.setParameter("tfcode", "RJCZ010109");
+		request.setParameter("typeId", "0");
+
+		ResultJSON json =  controller.getResRecommendation(request, response);
+		
+		JsonUtil.toJsonString(json);
+        
+        Assert.isTrue("OK".equals(json.getCode()));
+	}
+	
+	/**
+	 * 区本、校本资源的资源推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetDisResRecommendation()throws IOException{
+		
+		request.setParameter("resId", "690105");
+		request.setParameter("fromFlag", "3");
+		request.setParameter("page", "1");
+		request.setParameter("perPage", "20");
+		
+		request.setParameter("tfcode", "RJCZ010109");
+		request.setParameter("typeId", "0");
+
+		ResultJSON json =  controller.getResRecommendation(request, response);
+		
+		JsonUtil.toJsonString(json);
+        
+        Assert.isTrue("OK".equals(json.getCode()));
+	}
+	
+	/**
+	 * 个人中心-我的上传  的资源推荐列表
+	 * @throws IOException
+	 */
+	@Test
+	public void testGetResRecommendation_upload()throws IOException{
+		
+		request.setParameter("currentUserId", "390440126");
+		request.setParameter("resId", "164882577");
+		request.setParameter("fromFlag", "1");
+		request.setParameter("page", "1");
+		request.setParameter("perPage", "20");
+
+		ResultJSON json =  controller.getResRecommendation(request, response);
+		
+		JsonUtil.toJsonString(json);
+        
+        Assert.isTrue("OK".equals(json.getCode()));
+	}
 }

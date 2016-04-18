@@ -59,8 +59,6 @@ public class ResListControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testDisResController()throws IOException{
-		
-		request.setParameter("userId", "390440126");
         
 		request.setParameter("fromFlag", "3");
 		
@@ -68,7 +66,7 @@ public class ResListControllerTest extends BaseControllerTestCase{
 		
 		request.setParameter("fileFormat", "全部");
 		
-		request.setParameter("tfcode", "RJGZ040101");
+		request.setParameter("tfcode", "RJCZ010109");
 		
 		request.setParameter("orderBy", "0");
 		

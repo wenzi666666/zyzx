@@ -42,25 +42,27 @@ public class ResThumbnailPathUtil {
 					//设置文件后缀  html
 					view.setFileExt("html");
 				} else {
-					//设置文件后缀
-					view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
-					//组装缩略图路径(约定)
-					thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
-					
-					//判断是否存在
-					String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
-					if(StringUtils.isNotEmpty(s)){
-						HashMap m = JSONObject.parseObject(s, HashMap.class);
-						if(m != null && ((Integer)m.get("FileSize") > 0)){
-							//获取缩略图的地址（内网）
-							thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
-							//替换
-							thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
-							view.setThumbnailpath(thumbnailpath);
-							
+					if(thumbnailpath.lastIndexOf(".") != -1){
+						//设置文件后缀
+						view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+						//组装缩略图路径(约定)
+						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+						
+						//判断是否存在
+						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						if(StringUtils.isNotEmpty(s)){
+							HashMap m = JSONObject.parseObject(s, HashMap.class);
+							if(m != null && ((Integer)m.get("FileSize") > 0)){
+								//获取缩略图的地址（内网）
+								thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+								//替换
+								thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+								view.setThumbnailpath(thumbnailpath);
+								
+							}
+						} else {
+							view.setThumbnailpath("");
 						}
-					} else {
-						view.setThumbnailpath("");
 					}
 				}
 			}
@@ -88,25 +90,27 @@ public class ResThumbnailPathUtil {
 					//设置文件后缀  html
 					view.setFileExt("html");
 				} else {
-					//设置文件后缀
-					view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
-					//组装缩略图路径(约定)
-					thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
-					
-					//判断是否存在
-					String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
-					if(StringUtils.isNotEmpty(s)){
-						HashMap m = JSONObject.parseObject(s, HashMap.class);
-						if(m != null && ((Integer)m.get("FileSize") > 0)){
-							//获取缩略图的地址（内网）
-							thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
-							//替换
-							thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
-							view.setThumbnailpath(thumbnailpath);
-							
+					if(thumbnailpath.lastIndexOf(".") != -1){
+						//设置文件后缀
+						view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+						//组装缩略图路径(约定)
+						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+						
+						//判断是否存在
+						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						if(StringUtils.isNotEmpty(s)){
+							HashMap m = JSONObject.parseObject(s, HashMap.class);
+							if(m != null && ((Integer)m.get("FileSize") > 0)){
+								//获取缩略图的地址（内网）
+								thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+								//替换
+								thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+								view.setThumbnailpath(thumbnailpath);
+								
+							}
+						} else {
+							view.setThumbnailpath("");
 						}
-					} else {
-						view.setThumbnailpath("");
 					}
 				}
 			}
@@ -137,26 +141,29 @@ public class ResThumbnailPathUtil {
 					//设置文件后缀  html
 					view.setFileExt("html");
 				} else {
-					//设置文件后缀
-					view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
-					//组装缩略图路径(约定)
-					thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
-					
-					//判断是否存在
-					String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
-					if(StringUtils.isNotEmpty(s)){
-						HashMap m = JSONObject.parseObject(s, HashMap.class);
-						if(m != null && ((Integer)m.get("FileSize") > 0)){
-							//获取缩略图的地址（内网）
-							thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
-							//替换
-							thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
-							view.setThumbnailpath(thumbnailpath);
-							
+					if(thumbnailpath.lastIndexOf(".") != -1){
+						//设置文件后缀
+						view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+						//组装缩略图路径(约定)
+						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+						
+						//判断是否存在
+						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						if(StringUtils.isNotEmpty(s)){
+							HashMap m = JSONObject.parseObject(s, HashMap.class);
+							if(m != null && ((Integer)m.get("FileSize") > 0)){
+								//获取缩略图的地址（内网）
+								thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+								//替换
+								thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+								view.setThumbnailpath(thumbnailpath);
+								
+							}
+						} else {
+							view.setThumbnailpath("");
 						}
-					} else {
-						view.setThumbnailpath("");
 					}
+					
 				}
 			}
 		}		
@@ -186,25 +193,28 @@ public class ResThumbnailPathUtil {
 					//设置文件后缀  html
 					view.setFileExt("html");
 				} else {
-					//设置文件后缀
-					view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
-					//组装缩略图路径(约定)
-					thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
 					
-					//判断是否存在
-					String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
-					if(StringUtils.isNotEmpty(s)){
-						HashMap m = JSONObject.parseObject(s, HashMap.class);
-						if(m != null && ((Integer)m.get("FileSize") > 0)){
-							//获取缩略图的地址（内网）
-							thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
-							//替换
-							thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
-							view.setThumbnailpath(thumbnailpath);
-							
+					if(thumbnailpath.lastIndexOf(".") != -1){
+						//设置文件后缀
+						view.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+						//组装缩略图路径(约定)
+						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+						
+						//判断是否存在
+						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						if(StringUtils.isNotEmpty(s)){
+							HashMap m = JSONObject.parseObject(s, HashMap.class);
+							if(m != null && ((Integer)m.get("FileSize") > 0)){
+								//获取缩略图的地址（内网）
+								thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+								//替换
+								thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+								view.setThumbnailpath(thumbnailpath);
+								
+							}
+						} else {
+							view.setThumbnailpath("");
 						}
-					} else {
-						view.setThumbnailpath("");
 					}
 				}
 			}
@@ -232,25 +242,27 @@ public class ResThumbnailPathUtil {
 				//设置文件后缀  html
 				info.setFileExt("html");
 			} else {
-				//设置文件后缀
-				info.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
-				//组装缩略图路径(约定)
-				thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
-				
-				//判断是否存在
-				String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
-				if(StringUtils.isNotEmpty(s)){
-					HashMap m = JSONObject.parseObject(s, HashMap.class);
-					if(m != null && ((Integer)m.get("FileSize") > 0)){
-						//获取缩略图的地址（内网）
-						thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
-						//替换
-						thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
-						info.setFpath(thumbnailpath);
-						
+				if(thumbnailpath.lastIndexOf(".") != -1){
+					//设置文件后缀
+					info.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+					//组装缩略图路径(约定)
+					thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+					
+					//判断是否存在
+					String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+					if(StringUtils.isNotEmpty(s)){
+						HashMap m = JSONObject.parseObject(s, HashMap.class);
+						if(m != null && ((Integer)m.get("FileSize") > 0)){
+							//获取缩略图的地址（内网）
+							thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+							//替换
+							thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+							info.setFpath(thumbnailpath);
+							
+						}
+					} else {
+						info.setFpath("");
 					}
-				} else {
-					info.setFpath("");
 				}
 			}
 		}		
