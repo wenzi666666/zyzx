@@ -26,7 +26,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	 * @throws IOException
 	 */
 	@Test
-	public void test() throws IOException {
+	public void testGetOneResController() throws IOException {
 
 		request.setParameter("resId", "164882428");
 		request.setParameter("fromFlag", "1");
@@ -40,7 +40,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	}
 	
 	/**
-	 * 
+	 * 资源预览页面的资源推荐列表
 	 * @throws IOException
 	 */
 	@Test

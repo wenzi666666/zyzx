@@ -59,6 +59,8 @@ public class ResListControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testDisResController()throws IOException{
+		
+		request.setParameter("userId", "390440126");
         
 		request.setParameter("fromFlag", "3");
 		

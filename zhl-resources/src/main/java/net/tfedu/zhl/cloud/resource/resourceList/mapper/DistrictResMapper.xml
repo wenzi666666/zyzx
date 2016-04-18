@@ -119,10 +119,10 @@
      </if>
      
     <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId}
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
      <if test="fromFlag == 4">
-         and a.scopeId = #{districtId}
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
     <if test="orderBy == 0"><!-- 综合排序 -->
         order by avgScore desc
@@ -155,10 +155,10 @@
      </if>
      
     <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} 
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
      <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} 
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
     
     union all 
@@ -180,10 +180,10 @@
      </if>
      
     <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} 
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
      <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} 
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
    
   </select>
@@ -220,10 +220,10 @@
      </if>
      
     <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId}
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
      <if test="fromFlag == 4">
-         and a.scopeId = #{districtId}
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
     <if test="orderBy == 0"><!-- 综合排序 -->
         order by avgScore desc

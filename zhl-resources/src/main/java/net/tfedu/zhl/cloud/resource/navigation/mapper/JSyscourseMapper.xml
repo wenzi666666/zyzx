@@ -58,7 +58,7 @@
 	select s.id, case when bookname is NULL then s.Name
 	else bookname end as name, s.tfcode from j_syscourse s
 	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
-	where pnodeid =#{pnodeId} and s.flag = false and proCode = #{proCode}
+	where pnodeid =#{pnodeId} and s.flag = false and proCode = #{proCode} order by orderNo
 
   </select>
   
