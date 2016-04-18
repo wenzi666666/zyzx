@@ -83,7 +83,7 @@
  <select id="SelectSysResources"  resultMap="SysResourceMap">
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
-	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as a.fromFlag,
+	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id 
@@ -137,7 +137,7 @@
   <!-- 分页查询系统资源信息的所有记录，资源预览的推荐查询  -->
  <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
    
-    select distinct a.id,a.Title,0 as a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+    select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
 	left join z_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.TFcode 
@@ -170,7 +170,7 @@
      
      union all 
    
-    select distinct a.id,a.Title,0 as a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+    select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
 	left join z_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.TFcode 
@@ -208,7 +208,7 @@
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 
-	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as a.fromFlag,
+	m.res_time,a.UpdateDT,a.FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id 
@@ -265,7 +265,7 @@
  
  <!-- 资源预览  获取一条系统资源的详细信息 -->
  <select id="getSysResInfo" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo">
-   select distinct * from (select a.id,a.Title,a.keyWord,a.Des,a.fSize,e.MType,e.id typeId,a.DLoadTimes,a.ClickTimes,0 as a.fromflag,a.fname,a.Fpath,
+   select distinct * from (select a.id,a.Title,a.keyWord,a.Des,a.fSize,e.MType,e.id typeId,a.DLoadTimes,a.ClickTimes,0 as fromflag,a.fname,a.Fpath,
    (select COUNT(tt.id) from z_assetevaluate tt where tt.assetId = a.id and tt.flag = 0 and tt.IsScore = 0 and tt.aType = 1)userNum, 
    (select ascore from z_assetevaluate ttt where ttt.assetId = a.id and ttt.flag = 0 and ttt.IsScore = 0 and ttt.aType = 1 and ttt.UserId = #{userId} ) score,
    (SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from  z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore,a.FileExt,a.isDWJ 
@@ -308,7 +308,7 @@
 	 
      union all 
    
-    select distinct a.id,a.Title,0 as a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
+    select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,a.FileExt
 	from z_resource a 
 	left join z_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.TFcode 
