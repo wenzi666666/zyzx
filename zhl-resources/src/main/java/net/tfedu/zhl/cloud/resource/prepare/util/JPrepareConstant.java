@@ -229,39 +229,43 @@ public class JPrepareConstant {
         Boolean isebook = info.getIsebook();
         
         
-		String flag = path.substring(path.lastIndexOf("."),path.length());
-      
-        //如果是系统资源 
-        if(0==fromflag){
-        	
-        	if(isebook){
-        			
-        	}
-        	
-    		//文本文件的处理
-    		else if(ZhlResourceCenterWrap.file_pattern_pdf.indexOf(flag)>=0){
-    			//转码文件的处理
-    			path = path.substring(0,path.lastIndexOf("."))+".pdf";
+        if(!isnet){
+    		String flag = path.substring(path.lastIndexOf("."),path.length());
+    	      
+            //如果是系统资源 
+            if(0==fromflag){
+            	
+            	if(isebook){
+            			
+            	}
+            	
+        		//文本文件的处理
+        		else if(ZhlResourceCenterWrap.file_pattern_pdf.indexOf(flag)>=0){
+        			//转码文件的处理
+        			path = path.substring(0,path.lastIndexOf("."))+".pdf";
+        		}
+        		
+            	
+            }else{
+            	//自建资源、区本、校本 播放原文件或转码后的文件
+            	if(AssetTypeConvertConstant.isNeedConvert(path)	){
+            		path = AssetTypeConvertConstant.convertType(path);
+            	}
+            }
+            
+    		if(isebook){
+    	        path = ZhlResourceCenterWrap.GetEBookPlayerURL(path, resServiceLocal);
+    		}else{
+    	        path = ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
     		}
-    		
-        	
-        }else{
-        	//自建资源、区本、校本 播放原文件或转码后的文件
-        	if(AssetTypeConvertConstant.isNeedConvert(path)	){
-        		path = AssetTypeConvertConstant.convertType(path);
-        	}
+            
+
+            path = path.replace(resServiceLocal, currentResService);
+
+            info.setPath(path);        	
         }
         
-		if(isebook){
-	        path = ZhlResourceCenterWrap.GetEBookPlayerURL(path, resServiceLocal);
-		}else{
-	        path = ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
-		}
-        
 
-        path = path.replace(resServiceLocal, currentResService);
-
-        info.setPath(path);
     }
     
     
