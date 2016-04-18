@@ -69,7 +69,11 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             info = districtResMapper.getDisResInfo(fromFlag, resId,userId);
 
         }
-
+        
+        //fpath中设置存储全路径
+        String path = info.getFpath() + "/" + info.getFname();
+        info.setFpath(path);
+       
         return info;
     }
 
@@ -313,6 +317,8 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             districtId = disAndSchoolIds.getDistrictId();
         }
     	
+        // Page插件必须放在查询语句之前紧挨的第一个位置
+        PageHelper.startPage(page, perPage);
     	//查询tfcode下的系统资源、区本、校本资源
     	list = sysResourceMapper.getAllResByTfcode(resId, sys_from, tfcode, schoolId, districtId);
     	
