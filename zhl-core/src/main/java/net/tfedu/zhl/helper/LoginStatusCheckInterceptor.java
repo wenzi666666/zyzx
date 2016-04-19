@@ -51,10 +51,6 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object controller) throws Exception {
-        logger.debug("------------preHandle-------------------");
-
-        logger.debug("------------start-----get----Authorization----------");
-
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
         CustomException customException = null;
@@ -74,15 +70,13 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
                 currentUserId = user.getId();*/
             	
             	
-                logger.debug("------------token-------------------" + token);
             	ValueWrapper o = cacheManager.getCache("UserSimpleCache").get(token);
-                logger.debug("------------getCache----------");
                 if(o!=null){
                 	UserSimple us  = (UserSimple)(o.get());
                 	if(us!=null){
                         currentUserId = us.getUserId();
                 	}
-                    logger.debug("------------currentUserId----------"+currentUserId);
+                    logger.debug("------------token-------------------" + token+"------------currentUserId----------"+currentUserId);
                     if(currentUserId==null || currentUserId==0){
                     	customException = CustomException.INVALIDACCESSTOKEN;
                     }
