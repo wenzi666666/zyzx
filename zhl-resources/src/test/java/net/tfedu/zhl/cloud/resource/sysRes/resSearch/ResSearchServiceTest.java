@@ -1,11 +1,11 @@
 package net.tfedu.zhl.cloud.resource.sysRes.resSearch;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -49,8 +49,14 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
 
         // 每页记录数目
         int perPage = 10;
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 
-        pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page, perPage,userId);
+        pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page, perPage,userId,30);
 
         if (pagination != null) {
             System.out.println(pagination.getPage());
@@ -74,7 +80,13 @@ public class ResSearchServiceTest extends BaseServiceTestCase {
 		int fromFlag = 1; //系统资源
 		long userId = 699230735;
 		
-		List<String> list = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from,userId);
+		//系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+		
+		List<String> list = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,userId);
 		
 		Assert.isTrue(list.size() > 0);
 		

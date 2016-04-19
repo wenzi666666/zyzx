@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
@@ -41,6 +41,9 @@ public class ResPreviewController {
 	
 	@Resource
     private CommonWebConfig commonWebConfig;
+	
+	@Resource
+    private ResourceWebConfig resourceWebConfig;
 	
 	 //写入日志
     Logger logger = LoggerFactory.getLogger(ResPreviewController.class);
@@ -224,6 +227,7 @@ public class ResPreviewController {
             	//获取文件服务器的访问url 
             	String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
             	
             	//当前预览的资源id
             	long resId = 0;
@@ -249,7 +253,7 @@ public class ResPreviewController {
             	//每页多少条记录
             	int perPage = 10;
             	
-            	List<Integer> sys_from = SysFrom.sys_from;
+            	
             	
             	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
             		resId = Long.parseLong(request.getParameter("resId").toString().trim());

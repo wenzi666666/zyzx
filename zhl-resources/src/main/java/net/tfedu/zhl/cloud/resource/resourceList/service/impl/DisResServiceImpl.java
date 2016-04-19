@@ -7,7 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
@@ -42,7 +41,7 @@ public class DisResServiceImpl implements DisResService {
     // 查询区本、校本资源信息
     @Override
     public Pagination<DisResourceEntity> selectDisRes(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage) {
+            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,int expire) {
         // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
@@ -63,7 +62,7 @@ public class DisResServiceImpl implements DisResService {
             Date date = list.get(i).getUpdateDT();
             // 得到当前日期的前多少天
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -SysFrom.expire);
+            calendar.add(Calendar.DATE, -expire);
             Date expireDate = calendar.getTime();
             // 比较
             if (date.getTime() >= expireDate.getTime())
@@ -80,7 +79,7 @@ public class DisResServiceImpl implements DisResService {
     // 查询区本、校本资源信息
     @Override
     public Pagination<DisResourceEntity> selectAllDisRes(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag) {
+            int orderBy, int page, int perPage, int fromFlag,int expire) {
 
     	List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(mTypeId);
   
@@ -94,7 +93,7 @@ public class DisResServiceImpl implements DisResService {
             districtId = disAndSchoolIds.getDistrictId();
         }
 
-        return selectDisRes(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage);
+        return selectDisRes(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage,expire);
 
     }
     
@@ -102,7 +101,7 @@ public class DisResServiceImpl implements DisResService {
     // 查询区本、校本资源信息，e备课
     @Override
 	public Pagination<DisResourceEntity> selectDisRes_EPrepare(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,String searchWord){
+            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,String searchWord,int expire){
     	 // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
@@ -120,7 +119,7 @@ public class DisResServiceImpl implements DisResService {
             Date date = list.get(i).getUpdateDT();
             // 得到当前日期的前多少天
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -SysFrom.expire);
+            calendar.add(Calendar.DATE, -expire);
             Date expireDate = calendar.getTime();
             // 比较
             if (date.getTime() >= expireDate.getTime())
@@ -136,7 +135,7 @@ public class DisResServiceImpl implements DisResService {
     // 查询区本、校本资源信息，e备课
     @Override
 	public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds){
+            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds,int expire){
     	 // 根据父类型，查询所有的子类型
         List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypeIds);
 
@@ -150,7 +149,7 @@ public class DisResServiceImpl implements DisResService {
             districtId = disAndSchoolIds.getDistrictId();
         }
 
-        return selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, searchWord);
+        return selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, searchWord,expire);
     }
 
 }

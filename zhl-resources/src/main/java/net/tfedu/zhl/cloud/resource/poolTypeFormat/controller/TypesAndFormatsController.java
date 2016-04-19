@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
@@ -41,6 +41,9 @@ public class TypesAndFormatsController {
 	
 	@Resource
     ResPoolService resPoolService;
+	
+	@Resource
+    private ResourceWebConfig resourceWebConfig;
 	
 	/**
      * 查询所有的资源库
@@ -114,8 +117,12 @@ public class TypesAndFormatsController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 
             	String pTfcode = "";
+            	
+            	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
             	
             	long poolId = 0;
             	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
@@ -128,9 +135,9 @@ public class TypesAndFormatsController {
             	
                 if(request.getParameter("isEPrepare") != null){//e备课
                 	//新的类型查询方法（去除一些类型）
-                	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, SysFrom.removeTypeIds);
+                	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode,removeTypeIds,sys_from);
                 } else {
-                	types = resTypeService.getSysResTypes(poolId, pTfcode);
+                	types = resTypeService.getSysResTypes(poolId, pTfcode,sys_from);
 				}
 
                
@@ -182,6 +189,7 @@ public class TypesAndFormatsController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
 
+            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
             	String pTfcode = "";
             	int typeId = 0;
             	long poolId = 0;
@@ -196,7 +204,7 @@ public class TypesAndFormatsController {
                 }
 
                 // 根据 resourceIds和typeIds，查询资源格式
-                formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId);
+                formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
 
                 exception = CustomException.SUCCESS;
             } else {
@@ -244,6 +252,8 @@ public class TypesAndFormatsController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
+            	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 
             	String tfcode = "";
             	int fromFlag = 3;
@@ -256,7 +266,7 @@ public class TypesAndFormatsController {
                 
                 if(request.getParameter("isEPrepare") != null){//而备课
                 	//新的类型查询方法（去除一些类型）
-                	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, SysFrom.removeTypeIds);
+                	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);
                 	
                 } else {
                 	 types = resTypeService.getDisResTypes(tfcode, fromFlag);

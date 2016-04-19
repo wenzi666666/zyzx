@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
@@ -41,7 +40,7 @@ public class ResSearchServiceImpl implements ResSearchService {
      */
     @Override
     public Pagination<ResSearchResultEntity> getResources(int fromFlag, List<Integer> sys_from, String searchKeyword,
-            String format, int page, int perPage,long userId) {
+            String format, int page, int perPage,long userId,int expire) {
 
         // 存放查询结果
         List<ResSearchResultEntity> list = new ArrayList<ResSearchResultEntity>();
@@ -84,18 +83,11 @@ public class ResSearchServiceImpl implements ResSearchService {
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
         	
-        	//将 / 替换为 \
-        	String thumbnailpath = list.get(i).getThumbnailpath();
-        	if(thumbnailpath.indexOf("/") >= 0){
-        	    thumbnailpath = thumbnailpath.replace("/", "\\");
-        		list.get(i).setThumbnailpath(thumbnailpath);
-        	}
-        	
             // 最后更新日期
             Date date = list.get(i).getUpdateDT();
             // 得到当前日期的前多少天
             Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -SysFrom.expire);
+            calendar.add(Calendar.DATE, -expire);
             Date expireDate = calendar.getTime();
             // 比较
             if (date.getTime() >= expireDate.getTime())

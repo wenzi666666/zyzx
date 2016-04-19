@@ -6,7 +6,6 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 
 import org.junit.Test;
@@ -21,6 +20,7 @@ public class UserDefaultServiceTest extends BaseServiceTestCase{
 
 	@Resource UserDefaultService userDefaultService;
 	
+	
 	/**
 	 * 查询用户历史选择结点
 	 * @throws IOException
@@ -29,7 +29,7 @@ public class UserDefaultServiceTest extends BaseServiceTestCase{
 	public void testGetUserDefaultService() throws IOException{
 		long userId = 699230735;
 		
-		JUserDefault userDefault = userDefaultService.getUserHistoryDefault(userId,SysFrom.type);
+		JUserDefault userDefault = userDefaultService.getUserHistoryDefault(userId,1);
 		
 		Assert.isTrue(userDefault != null);
        
@@ -44,7 +44,7 @@ public class UserDefaultServiceTest extends BaseServiceTestCase{
 	public void testUpdateUserDefaultService() throws IOException{
 		String tfcode = "SHXX020101";
 		long userId = 8978979;
-		userDefaultService.updateUserHistoryDefault(userId,tfcode,SysFrom.type);
+		userDefaultService.updateUserHistoryDefault(userId,tfcode,1);
 	}
 	
 }

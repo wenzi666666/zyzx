@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 
 import org.springframework.stereotype.Service;
@@ -69,7 +68,7 @@ public class ResFormatServiceImpl implements ResFormatService {
 
     // 获得系统资源格式
     @Override
-    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId) {
+    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from) {
         List<String> formats = new ArrayList<String>();
 
         // 根据poolId和typeId，查询父类型下所有子类型及其自身
@@ -78,7 +77,7 @@ public class ResFormatServiceImpl implements ResFormatService {
         // 参数
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", pTfcode);
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         // 查询当前结点下的所有资源Id
         List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
 

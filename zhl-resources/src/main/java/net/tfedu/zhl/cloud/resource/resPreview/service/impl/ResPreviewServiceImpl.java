@@ -10,7 +10,6 @@ import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
@@ -144,7 +143,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     	
         // 根据当前结点tfcode，以及sys_from，查询系统资源id
         HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         map.put("pTfcode", tfcode);
         List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
 

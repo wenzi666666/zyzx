@@ -1,12 +1,13 @@
 package net.tfedu.zhl.cloud.resource.resourceList.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -47,6 +48,9 @@ public class ResourceListController {
     @Resource
     private CommonWebConfig commonWebConfig;
     
+    @Resource
+    private ResourceWebConfig resourceWebConfig;
+    
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResourceListController.class);
 
@@ -82,6 +86,9 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				int expire = resourceWebConfig.getExpire(request);
+				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 				 // 资源库id
 				long poolId = 0;
 				// 类型Id
@@ -130,12 +137,12 @@ public class ResourceListController {
                 	}
                 
                 	//e备课查询系统资源
-                	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, SysFrom.removeTypeIds);
+                	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, removeTypeIds,sys_from,expire);
                 	
                 } else {
                 	 // 查询出的系统资源信息
                     pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
-                            perPage);
+                            perPage,sys_from,expire);
 				}
                 
                 //生成文件的缩略图路径
@@ -200,6 +207,8 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
             	String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				int expire = resourceWebConfig.getExpire(request);
 				
                 long userId = currentUserId; // 获得用户id
      
@@ -251,12 +260,12 @@ public class ResourceListController {
                 	if(StringUtils.isNotEmpty(request.getParameter("searchWord"))){
                 		searchWord = request.getParameter("searchWord").toString().trim();
                 	}
-                	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, SysFrom.removeTypeIds);
+                	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, removeTypeIds,expire);
                 	
                 } else { //普通区本校本资源接口
                 	
                 	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
-                             fromFlag);
+                             fromFlag,expire);
 				}
 
                

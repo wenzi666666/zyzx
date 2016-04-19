@@ -14,7 +14,6 @@ import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.term.entity.JTerm;
@@ -38,6 +37,7 @@ public class NavigationServiceTest extends BaseServiceTestCase{
     @Resource BookService bookService;
     
     @Resource TreeService treeService;
+    
     
    
     /**
@@ -105,7 +105,9 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 		
 		long pnodeId = 101140105; //版本的id
 		
-		List<JSyscourse> books= bookService.getAllBooks(pnodeId, SysFrom.proCode);
+		String proCode = "zy";
+		
+		List<JSyscourse> books= bookService.getAllBooks(pnodeId, proCode);
 		
 		Assert.isTrue(books.size() > 0);
 		

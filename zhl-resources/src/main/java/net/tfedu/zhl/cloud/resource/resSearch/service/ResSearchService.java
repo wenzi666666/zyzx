@@ -19,7 +19,7 @@ public interface ResSearchService {
      */
 
     public Pagination<ResSearchResultEntity> getResources(int fromFlag, List<Integer> sys_from, String searchKeyword,
-            String format, int page, int perPage,long userId);
+            String format, int page, int perPage,long userId,int expire);
     
    
     /**

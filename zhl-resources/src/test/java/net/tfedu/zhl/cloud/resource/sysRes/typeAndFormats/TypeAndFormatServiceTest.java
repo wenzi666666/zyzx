@@ -8,7 +8,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
@@ -35,8 +34,15 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
      */
     @Test
     public void testGetAllSysIds()throws IOException{
+    	
+    	//系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+    	
     	 HashMap<String, Object> map = new HashMap<String, Object>();
-         map.put("sys_from", SysFrom.sys_from);
+         map.put("sys_from", sys_from);
          map.put("pTfcode", "RJGZ040101");
          List<Long> ids = resTypeService.getAllSysResIds(map);
          
@@ -114,8 +120,14 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 		
 		List<ResType> types = new ArrayList<ResType>();
 		
+		//系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         map.put("pTfcode", "RJGZ040101");
         List<Long> resourceIds = resTypeService.getAllSysResIds(map);
          
@@ -138,9 +150,15 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 	@Test
 	public void testGetSysSecondLevelType()throws IOException{
         List<ResType> types = new ArrayList<ResType>();
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         map.put("pTfcode", "RJGZ040101");
         List<Long> resourceIds = resTypeService.getAllSysResIds(map);
          
@@ -212,8 +230,14 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 
         long poolId = 4;
         String pTfcode = "RJCZ01010501";
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 
-        types = resTypeService.getSysResTypes(poolId, pTfcode);
+        types = resTypeService.getSysResTypes(poolId, pTfcode, sys_from);
         Assert.isTrue(types.size() > 0);
 
         for (int i = 0; i < types.size(); i++) {
@@ -234,8 +258,25 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 
         long poolId = 4;
         String pTfcode = "RJCZ01010501";
+        
+        //要排除的资源类型
+        List<Integer> removeTypeIds = new ArrayList<Integer>();
+        removeTypeIds.add(25);
+        removeTypeIds.add(34);
+        removeTypeIds.add(43);
+        removeTypeIds.add(36);
+        removeTypeIds.add(22);
+        removeTypeIds.add(37);
+        removeTypeIds.add(40);
+        removeTypeIds.add(61);
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 
-        types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, SysFrom.removeTypeIds);
+        types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode, removeTypeIds,sys_from);
 
         Assert.isTrue(types.size() > 0);
 
@@ -258,9 +299,15 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         long poolId = 6;
         String pTfcode = "RJCZ01010501";
         int typeId = 1;
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 
         // 根据 resourceIds和typeIds，查询资源格式
-        formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId);
+        formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
 
         Assert.isTrue(formats.size() > 0);
         System.out.println(formats.size());
@@ -310,9 +357,20 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 
         // 定义类型结果集
         List<ResType> types = new ArrayList<ResType>();
+        
+        //要排除的资源类型
+        List<Integer> removeTypeIds = new ArrayList<Integer>();
+        removeTypeIds.add(25);
+        removeTypeIds.add(34);
+        removeTypeIds.add(43);
+        removeTypeIds.add(36);
+        removeTypeIds.add(22);
+        removeTypeIds.add(37);
+        removeTypeIds.add(40);
+        removeTypeIds.add(61);
 
         // 查询类型id
-        types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, SysFrom.removeTypeIds);
+        types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);
 
         Assert.isTrue(types.size() > 0);
         System.out.println(types.size());
