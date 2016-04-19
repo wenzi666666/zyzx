@@ -44,7 +44,7 @@ public interface ResPreviewService {
      * @param poolId
      * @return
      */
-    public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from);
+    public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy);
     
     /**
      * 区本、校本资源推荐列表
@@ -57,7 +57,7 @@ public interface ResPreviewService {
      * @param perPage
      * @return
      */
-    public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage);
+    public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy);
     
     /**
      * 资源检索结果的推荐列表
