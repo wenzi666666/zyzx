@@ -23,5 +23,5 @@ public interface ResFormatService {
     public List<String> getDisResFormats(String tfcode, int fromFlag);
 
     // 获得系统资源格式
-    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId);
+    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from);
 }

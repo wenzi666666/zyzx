@@ -50,7 +50,7 @@
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id and b.flag = 0
 	left join x_resourcetype pb on pb.Id=b.pid 
-	where a.flag = 0 
+	where a.flag = 0 and b.MType is not null and pb.MType is not null
 
      <if test="resourceIds.size() == 0">
          and a.id in ('')
@@ -76,7 +76,7 @@
      select distinct b.mtype,b.id 
 	 from z_resource a 
 	 left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     where a.flag = 0 and b.level = 2 
+     where a.flag = 0 and b.level = 2 and b.mtype is not null
      <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
@@ -145,9 +145,9 @@
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0 or pb.flag is null)
-     where a.flag = 0  
-     and a.fromFlag in (#{fromFlag})
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
+     where a.flag = 0 and a.fromFlag in (#{fromFlag})
+     and b.MType is not null and pb.MType is not null
      <if test="resourceIds.size() == 0">
          and a.id in ('')
      </if>
@@ -196,7 +196,7 @@
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
      left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0 or pb.flag is null)
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
      where a.flag = 0 and a.fromFlag in (#{fromFlag})
     
      <if test="resourceIds.size() == 0">
@@ -214,6 +214,7 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
+     and mtype is not null
   </select>
   
   <!-- 系统资源：得到父类型的所有子类型及其自身  -->

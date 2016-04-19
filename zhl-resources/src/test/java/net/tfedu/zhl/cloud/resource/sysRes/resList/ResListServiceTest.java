@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.sysRes.resList;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -31,8 +32,7 @@ public class ResListServiceTest extends BaseServiceTestCase{
     
     @Resource
     DisResService disResService;
-    
-    
+   
     
     /**
      * 系统资源列表查询的Service单元测试
@@ -62,9 +62,15 @@ public class ResListServiceTest extends BaseServiceTestCase{
 
         // 每页的记录数
         int perPage = 10;
+        
+        //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
 
         // 查询出的系统资源信息
-        pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage);
+        pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,sys_from,30);
         if (pagination != null) {
             System.out.println(pagination.getPage());
             System.out.println(pagination.getPerPage());
@@ -109,7 +115,7 @@ public class ResListServiceTest extends BaseServiceTestCase{
         int fromFlag = 3;
 
         pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
-                fromFlag);
+                fromFlag,30);
         if (pagination != null) {
             System.out.println(pagination.getPage());
             System.out.println(pagination.getPerPage());

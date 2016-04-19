@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 
 import org.springframework.stereotype.Service;
 
@@ -23,7 +22,6 @@ public class UserDefaultServiceImpl implements UserDefaultService {
     @Resource
     JUserDefaultMapper jUserDefaultMapper;
 
-    
     /**
      *  查询用户历史选择的学段、学科、版本、教材
      */
@@ -32,7 +30,7 @@ public class UserDefaultServiceImpl implements UserDefaultService {
     	
     	HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userId", userId);
-        map.put("type", SysFrom.type);
+        map.put("type", type);
         return jUserDefaultMapper.getUserHistoryDefault(map);
     }
 
@@ -46,12 +44,12 @@ public class UserDefaultServiceImpl implements UserDefaultService {
     	// 封装参数
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("userId", userId);
-        map.put("type", SysFrom.type);
+        map.put("type", type);
         map.put("tfcode", tfcode);
         
         HashMap<String, Object> map1 = new HashMap<String, Object>();
         map1.put("userId", userId);
-        map1.put("type", SysFrom.type);
+        map1.put("type", type);
         
         JUserDefault userDefault = jUserDefaultMapper.getUserHistoryDefault(map1);
         

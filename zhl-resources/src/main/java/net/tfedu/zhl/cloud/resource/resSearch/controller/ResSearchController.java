@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -39,6 +39,9 @@ public class ResSearchController {
     
     @Resource
     private CommonWebConfig commonWebConfig;
+    
+    @Resource
+    private ResourceWebConfig resourceWebConfig;
     
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResSearchController.class);
@@ -75,6 +78,8 @@ public class ResSearchController {
             	//获取文件服务器的访问url 
             	String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
+				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+				int expire = resourceWebConfig.getExpire(request);
 				
 				// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
 				int fromFlag = 0;
@@ -111,8 +116,8 @@ public class ResSearchController {
                 }
                 
 
-                pagination = resSearchService.getResources(fromFlag, SysFrom.sys_from, searchKeyword, format, page,
-                        perPage,currentUserId);
+                pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
+                        perPage,currentUserId,expire);
                 
                 //生成文件的缩略图路径
                 ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
@@ -175,6 +180,8 @@ public class ResSearchController {
             	// 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
             	int fromFlag = -1; //默认为全部
             	
+            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+            	
             	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
             		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
             	}
@@ -185,7 +192,7 @@ public class ResSearchController {
                 	searchKeyword = request.getParameter("searchKeyword").toString().trim();
                 }
                 
-                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, SysFrom.sys_from,currentUserId);
+                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
                 
                 exception = CustomException.SUCCESS;
             }

@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
@@ -18,7 +19,6 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -56,6 +56,9 @@ public class NavigationController {
 	 
 	 @Resource
 	 UserDefaultService userDefaultService;
+	 
+	 @Resource
+	 private ResourceWebConfig resourceWebConfig;
 	 
 	/**
 	 *  查询所有学段
@@ -240,6 +243,8 @@ public class NavigationController {
 
             if (currentUserId != null && exception == null) {
             	
+            	String proCode = resourceWebConfig.getProCode();
+            	
             	long pnodeId = 0;
             	
             	if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
@@ -247,7 +252,7 @@ public class NavigationController {
             	}
 
                 // 根据所属版本和产品编码，查询所有的教材
-                books = bookService.getAllBooks(pnodeId, SysFrom.proCode);
+                books = bookService.getAllBooks(pnodeId, proCode);
 
                 exception = CustomException.SUCCESS;
             } else {
@@ -352,9 +357,10 @@ public class NavigationController {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
                
+            	int type = resourceWebConfig.getType(request);
             	long userId = currentUserId;
                
-                userDefault = userDefaultService.getUserHistoryDefault(userId,SysFrom.type);
+                userDefault = userDefaultService.getUserHistoryDefault(userId,type);
 
                 exception = CustomException.SUCCESS;
             } else {
@@ -405,12 +411,14 @@ public class NavigationController {
             if (exception == null && currentUserId != null) {
                 // 用户id
                 long userId = currentUserId;
+                
+                int type = resourceWebConfig.getType(request);
 
                 // 结点tfcode
                 String tfcode = request.getParameter("tfcode");
                            
                 // 修改用户历史选择
-                userDefaultService.updateUserHistoryDefault(userId,tfcode,SysFrom.type);
+                userDefaultService.updateUserHistoryDefault(userId,tfcode,type);
     
                 exception = CustomException.SUCCESS;
             }

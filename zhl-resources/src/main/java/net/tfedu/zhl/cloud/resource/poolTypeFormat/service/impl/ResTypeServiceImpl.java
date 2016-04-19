@@ -10,7 +10,6 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 
 import org.springframework.stereotype.Service;
@@ -146,13 +145,13 @@ public class ResTypeServiceImpl implements ResTypeService {
      * 系统资源：查询资源类型
      */
     @Override
-    public List<ResType> getSysResTypes(long poolId, String pTfcode) {
+    public List<ResType> getSysResTypes(long poolId, String pTfcode,List<Integer> sys_from) {
         List<ResType> types = new ArrayList<ResType>();
 
         // 传递参数
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", pTfcode);
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         // 查询当前结点下的所有资源Id
         List<Long> resourceIds = getAllSysResIds(map);
 
@@ -210,13 +209,13 @@ public class ResTypeServiceImpl implements ResTypeService {
      * 系统资源：查询资源类型，e备课
      */
     @Override
-    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds) {
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds,List<Integer> sys_from) {
         List<ResType> types = new ArrayList<ResType>();
 
         // 传递参数
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", pTfcode);
-        map.put("sys_from", SysFrom.sys_from);
+        map.put("sys_from", sys_from);
         // 查询当前结点下的所有资源Id
         List<Long> resourceIds = getAllSysResIds(map);
 

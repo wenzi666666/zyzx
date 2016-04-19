@@ -87,7 +87,7 @@ public interface ResTypeService {
     /**
      * 系统资源：查询资源类型
      */
-    public List<ResType> getSysResTypes(long poolId, String pTfcode);
+    public List<ResType> getSysResTypes(long poolId, String pTfcode,List<Integer> sys_from);
 
     /**
      * 自建资源 ： 查询全部一级资源类型
@@ -104,6 +104,6 @@ public interface ResTypeService {
     /**
      * 系统资源：查询资源类型，e备课
      */
-    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds); 
+    public List<ResType> getSysResTypes_EPrepare(long poolId, String pTfcode,List<Integer> removeTypeIds,List<Integer> sys_from); 
 
 }

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.SysFrom;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
@@ -85,7 +84,13 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 		String searchKeyword = "数学";
 		long userId = 699230735;
 		
-		Pagination<ResRecommendationEntity> list = resPreviewService.searchRecommendation(fromFlag, resId, userId, searchKeyword, SysFrom.sys_from, page, perPage);
+		 //系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+		
+		Pagination<ResRecommendationEntity> list = resPreviewService.searchRecommendation(fromFlag, resId, userId, searchKeyword, sys_from, page, perPage);
 		
 		Assert.isTrue(list.getList().size() > 0);
 		
@@ -98,14 +103,19 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 	@Test
 	public void testGetSysResRecommendation()throws IOException{
 		long resId = 3;
-		int fromFlag = 0;
 		int page = 1;
 		int perPage = 20;
 		long poolId = 0;
 		String tfcode = "RJCZ010109";
 		int typeId = 0;
 		
-		Pagination<ResRecommendationEntity> list = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, SysFrom.sys_from);
+		//系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+		
+		Pagination<ResRecommendationEntity> list = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
 	
 		Assert.isTrue(list.getList().size() > 0);
 	}
@@ -122,7 +132,6 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 		int fromFlag = 3;
 		int page = 1;
 		int perPage = 20;
-		long poolId = 0;
 		String tfcode = "CZYW010101";
 		int typeId = 0;
 		
@@ -141,11 +150,16 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 		
 		long userId = 390440126;
 		long resId = 164882577;
-		int fromFlag = 1;
 		int page = 1;
 		int perPage = 20;
 		
-	    Pagination<ResRecommendationEntity> list = resPreviewService.myResByUploadRecommendation(userId, resId, SysFrom.sys_from, page, perPage);
+		//系统资源的来源
+        List<Integer> sys_from = new ArrayList<Integer>();
+        sys_from.add(0);
+        sys_from.add(1);
+        sys_from.add(2);
+		
+	    Pagination<ResRecommendationEntity> list = resPreviewService.myResByUploadRecommendation(userId, resId, sys_from, page, perPage);
 	
 	    Assert.isTrue(list.getList().size() > 0);
 	

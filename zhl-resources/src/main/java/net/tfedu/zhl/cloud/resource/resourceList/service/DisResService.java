@@ -19,19 +19,19 @@ public interface DisResService {
 
     // 查询区本、校本资源信息
     public Pagination<DisResourceEntity> selectDisRes(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage);
+            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,int expire);
 
     // 查询区本、校本资源信息
     public Pagination<DisResourceEntity> selectAllDisRes(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag);
+            int orderBy, int page, int perPage, int fromFlag,int expire);
     
     
     // 查询区本、校本资源信息，e备课
     public Pagination<DisResourceEntity> selectDisRes_EPrepare(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,String searchWord);
+            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,String searchWord,int expire);
 
     // 查询区本、校本资源信息，e备课
     public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds);
+            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds,int expire);
 
 }
