@@ -44,6 +44,8 @@ public class BookSelfControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testqueryUserCoursewareAll(){
     	request.setAttribute("currentUserId", 390320126l);	
+    	request.setParameter("title", "3");
+    	request.setParameter("orderby", "title");
 		ResultJSON json =  controller.getUserCoursewareAll(request, response);
 		System.out.println(json.toString());
 

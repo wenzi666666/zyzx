@@ -177,7 +177,7 @@
 			</if>
 			and EXISTS (			 
              select c1.tfcode from j_syscourse_user su LEFT JOIN j_syscourse c1 on c1.id =  su.syscourseid where su.flag =false 
-             			and su.userid =#{userId} and c1.flag = false  and locate(c.tfcode,c1.tfcode)>0 
+             			and su.userid =#{userId} and c1.flag = false  and locate(c1.tfcode,c.tfcode)>0 
 			)
  	)temp_result 
 	where  1 =1 
