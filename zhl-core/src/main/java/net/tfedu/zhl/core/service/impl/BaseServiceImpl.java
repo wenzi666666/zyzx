@@ -11,7 +11,6 @@ import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.helper.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 /**
@@ -29,8 +28,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     CoreMapper<T> mapper;
 
     protected ResultJSON result;
-    protected CustomException exception;
-
+    
     @Override
     public ResultJSON get(int id) {
         T data = mapper.selectByPrimaryKey(id);
@@ -105,8 +103,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return
      */
     protected ResultJSON defaultSuccess(Object data) {
-        exception = CustomException.SUCCESS;
-        result = new ResultJSON(exception.getCode(), exception.getMessage(), data, "");
+        result = new ResultJSON("ok", "成功", data, "");
         return result;
     }
 
@@ -118,8 +115,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return
      */
     protected ResultJSON defaultError(Exception e) {
-        exception = CustomException.UNCUSTOM;
-        result = new ResultJSON(exception.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON("unknown", e.getMessage(), "", "");
         log.error("出错了：" + e.getMessage());
         e.printStackTrace();
         return result;
