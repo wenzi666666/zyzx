@@ -299,6 +299,7 @@ public class AssetController {
 								
 							}
 							assetService.addAssetBatch(list, tfcode_list,scope_list,resServiceLocal,currentResPath,hostLocal);
+							data = list ; 
 							exception = CustomException.SUCCESS;
 						}
 					}else{
