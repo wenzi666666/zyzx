@@ -104,7 +104,18 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     	
     }
     
-    
+    @Test
+    public void testgetMyPrepareResource(){
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        ResultJSON result = controller.getMyPrepareResource(request, response);
+        System.out.println(result.toString());
 
+    	
+    }
   
 }
