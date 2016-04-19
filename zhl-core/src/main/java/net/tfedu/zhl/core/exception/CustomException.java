@@ -1,7 +1,7 @@
 package net.tfedu.zhl.core.exception;
 
 /**
- * 服务基础异常
+ * 自定义异常，java常规方式提供异常定义
  * 
  * @author bruce
  *
