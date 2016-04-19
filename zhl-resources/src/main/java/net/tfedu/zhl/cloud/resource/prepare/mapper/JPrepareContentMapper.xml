@@ -52,11 +52,11 @@
 			from  j_prepare_content  t  
 			LEFT JOIN z_asset a on a.id = t.contId 
 			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId		
-			LEFT JOIN j_lession_prepare  pre on  (pre.id = t.preId and pre.userid = #{userId} )
+			LEFT JOIN j_lession_prepare  pre on  pre.id = t.preId
 			where t.flag = false  and t.contType in (1,9)
 			and a.flag =false and a.FileType = 'A'
 	        and pre.flag = false 	
-	      
+	      	and pre.userid = #{userId} 
 		  UNION ALL 
 			select distinct  0 as  id,z.Id as resId,z.title,z.CreateDT  as  time,0 as fromFlag,p.id as unifyTypeId
 			,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline,CONCAT(z.FPath,'/',z.Fname) as imgPath 
@@ -65,21 +65,22 @@
 			LEFT JOIN z_resource  z on t.contId = z.Id
 			LEFT JOIN x_resourcetype p  on p.id = z.MType
 			LEFT JOIN z_res_medium m on m.res_code = z.ResCode
-			LEFT JOIN j_lession_prepare  pre on  (pre.id = t.preId and pre.userid = #{userId}  )
+			LEFT JOIN j_lession_prepare  pre on pre.id = t.preId
 			where t.flag = false  and t.contType in (2,10)
 			and z.flag = false 
 	    	and pre.flag = false 
+	    	and pre.userid = #{userId} 
 		UNION ALL  
 			select distinct   0 as id,r.id as resId,r.title,r.CreateDT as time ,fromFlag as fromFlag,p.id as unifyTypeId
 			,p.MType as unifyType,r.FSize as size,'' as timeline,r.fullpath as imgPath ,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix,0 as orderIdx
 			from  j_prepare_content  t  
 			LEFT JOIN z_districts_resource r on r.id = t.contId
 			LEFT JOIN x_resourcetype p on p.id = r.MType
-			LEFT JOIN j_lession_prepare  pre on  (pre.id = t.preId and pre.userid = #{userId}  )
+			LEFT JOIN j_lession_prepare  pre on pre.id = t.preId 
 			where t.flag = false  and t.contType in (11,12)
 			and r.flag = false 
 	   		and pre.flag = false   
-	        
+	    	and pre.userid = #{userId} 
 	        
 	)temp_result 
 	where  1 =1 

@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.resPreview.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * 资源预览页面的资源推荐列表信息
@@ -38,6 +39,51 @@ public class ResRecommendationEntity implements Serializable{
     private String thumbnailpath;
     
     /**
+     * 更新日期
+     */
+    private Date UpdateDT;
+    
+    /**
+     * 下载次数
+     */
+    private Integer DLoadTimes;
+    
+    /**
+     * 评论的平均分
+     */
+    private int avgScore;
+    
+    public Date getUpdateDT() {
+		return UpdateDT;
+	}
+
+
+	public void setUpdateDT(Date updateDT) {
+		UpdateDT = updateDT;
+	}
+
+
+	public Integer getDLoadTimes() {
+		return DLoadTimes;
+	}
+
+
+	public void setDLoadTimes(Integer dLoadTimes) {
+		DLoadTimes = dLoadTimes;
+	}
+
+
+	public int getAvgScore() {
+		return avgScore;
+	}
+
+
+	public void setAvgScore(int avgScore) {
+		this.avgScore = avgScore;
+	}
+
+
+	/**
      * 文件扩展名
      */
     private String FileExt;

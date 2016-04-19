@@ -115,7 +115,8 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
         sys_from.add(1);
         sys_from.add(2);
 		
-		Pagination<ResRecommendationEntity> list = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
+        int orderBy = 0;
+		Pagination<ResRecommendationEntity> list = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy);
 	
 		Assert.isTrue(list.getList().size() > 0);
 	}
@@ -135,7 +136,9 @@ public class ResPreviewServiceTest extends BaseServiceTestCase {
 		String tfcode = "CZYW010101";
 		int typeId = 0;
 		
-	    Pagination<ResRecommendationEntity> list = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, userId, page, perPage);
+		int orderBy = 0;
+		
+	    Pagination<ResRecommendationEntity> list = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, userId, page, perPage,orderBy);
 	    
 	    //Assert.isTrue(list.getList().size() > 0);
 	}

@@ -90,7 +90,7 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @return
      */
     public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("resourceIds") List<Long> resourceIds,
-            @Param("tfcode") String tfcode,@Param("typeIds") List<Integer> typeIds,@Param("resId")long resId);
+            @Param("tfcode") String tfcode,@Param("typeIds") List<Integer> typeIds,@Param("resId")long resId,@Param("orderBy")int orderBy);
     
     /**
      * 根据自建资源resId、tfcode，查询tfcode下的系统、区本、校本资源

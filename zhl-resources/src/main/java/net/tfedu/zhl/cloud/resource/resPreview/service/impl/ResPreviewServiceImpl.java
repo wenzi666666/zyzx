@@ -139,7 +139,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * @return
      */
     @Override
-	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from){
+	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
     	
         // 根据当前结点tfcode，以及sys_from，查询系统资源id
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -159,7 +159,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         PageHelper.startPage(page, perPage);
 
         // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds,resId);
+        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds,resId,orderBy);
   
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
@@ -179,7 +179,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * @return
      */
     @Override
-	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage){
+	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy){
     	 // 根据父类型，查询所有的子类型
         List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(typeId);
 
@@ -197,7 +197,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         PageHelper.startPage(page, perPage);
 
         // 查询资源
-        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId);
+        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId,orderBy);
 
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();

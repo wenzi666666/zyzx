@@ -253,6 +253,9 @@ public class ResPreviewController {
             	//每页多少条记录
             	int perPage = 10;
             	
+            	//排序方式
+            	int orderBy = 0;
+            	
             	
             	
             	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
@@ -284,6 +287,11 @@ public class ResPreviewController {
             			pagination = resPreviewService.myResByUploadRecommendation(currentUserId, resId, sys_from, page, perPage);
             			
             		} else {
+            			
+            			if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
+            				orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
+            			}
+            			
             			if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
                     		tfcode = request.getParameter("tfcode").toString().trim();
                     	}
@@ -294,11 +302,11 @@ public class ResPreviewController {
                 		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
                 			poolId = Integer.parseInt(request.getParameter("poolId").toString().trim());
                 			
-                			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from);
+                			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy);
                 			
                 		} else { //区本、校本资源
                 			
-    						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage);
+    						pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage,orderBy);
     					}
 					}
 				}
