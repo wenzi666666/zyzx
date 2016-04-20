@@ -77,6 +77,17 @@ public class ResultJSON {
         this.sign = sign;
     }
 
+    
+    /**
+     * 返回成功
+     * @param data
+     * @return
+     */
+    public static ResultJSON getSuccess(Object data){
+    	return new ResultJSON("OK", "成功", data==null?"":data, "");
+    	
+    }
+    
     @Override
     public String toString() {
 //        return new ToStringBuilder(this, ToStringStyle.SIMPLE_STYLE).toString();

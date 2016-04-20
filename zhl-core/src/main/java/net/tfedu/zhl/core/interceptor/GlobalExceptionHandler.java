@@ -16,6 +16,7 @@ import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.InvalidPasswordException;
 import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.NoLoginException;
+import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnCustomException;
@@ -122,6 +123,16 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleInvalidPasswordException(HttpServletRequest request, HttpServletResponse response,
             InvalidPasswordException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+    
+    
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoTokenException.class)
+    @ResponseBody
+    public ResultJSON handleNoTokenException(HttpServletRequest request, HttpServletResponse response,
+    		NoTokenException e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
