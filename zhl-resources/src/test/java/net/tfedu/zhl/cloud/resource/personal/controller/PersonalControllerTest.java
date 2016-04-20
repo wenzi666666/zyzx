@@ -5,6 +5,7 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Assert;
 
 public class PersonalControllerTest extends BaseControllerTestCase {
 
@@ -161,8 +162,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         request.setAttribute("currentUserId", 390320126l);
         request.setParameter("unifyTypeId", "1");
         ResultJSON result = controller.getMyViewList(request, response);
-        System.out.println(result.toString());
-
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
     	
     }
     

@@ -98,7 +98,7 @@ public class MessageController {
 	 */
 	@RequestMapping(value = "/v1.0/message/{id}", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON getUserNewMessage(@PathVariable("id") Long id,
+	public ResultJSON updateMessageStatus(@PathVariable("id") Long id,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		String _method = request.getParameter("_method");

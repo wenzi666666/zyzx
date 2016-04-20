@@ -28,6 +28,6 @@ public interface RegisterService {
      * @param password
      * @return
      */
-    public SRegister login(String userName, String password);
+    public SRegister login(String userName, String password)    throws Exception;
 
 }

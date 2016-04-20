@@ -73,6 +73,17 @@ public interface JPrepareService {
      * @return
      */
     public List<JPrepareView> queryPrepareList(String tfcode, Long userId);
+    
+
+    /**
+     * 分页获取备课夹
+     * @param tfcode
+     * @param userId
+     * @param page
+     * @param perPage
+     * @return
+     */
+    public Pagination queryPreparePage(String tfcode, Long userId,Integer page,Integer perPage);
 
     /**
      * 获取备课夹及其时间范围
@@ -179,7 +190,7 @@ public interface JPrepareService {
      * @param resIds
      * @param fromFlags
      */
-    public void removeMyPrepareContentResource(Long userId, String resIds, String fromFlags);
+    public void removeMyPrepareContentResource(Long userId, String resIds, String fromFlags)throws Exception;
 
     /**
      * 获取我的备课夹的信息统计

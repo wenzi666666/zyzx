@@ -329,5 +329,8 @@ public class UserController {
 
 		return ResultJSON.getSuccess(data);
 	}
+	
+	
+	
 
 }

@@ -7,7 +7,10 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+@Transactional
 public class AssetControllerTest extends BaseControllerTestCase {
 
 	
@@ -17,11 +20,10 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	
 	ResultJSON result = null;
 	
-/*	@Test
+	@Test
 	public  void testquery(){
 		
-//		request = this.newGet("/resRestAPI/v1.0/resource/asset");
-		
+	
 		
 	}
 	
@@ -47,15 +49,15 @@ public class AssetControllerTest extends BaseControllerTestCase {
 		
 	}
 	
-*/
+
 	
 	
 	
 	@Test
-	public  void testgetAssetOne(){
+	public  void testgetAssetOne() throws Exception{
 		
 		result =  assetController.getAssetOne(105l, request, response);
-		System.out.println(result.toString());
+		Assert.isTrue("ok".equals(result.getCode()));
 		
 	}
 	
@@ -69,7 +71,7 @@ public class AssetControllerTest extends BaseControllerTestCase {
 
 		result = assetController.queryAsset(request, response);
 		
-		System.out.println(result==null?"":result.getData().toString());
+		Assert.isTrue("ok".equals(result.getCode()));
 		
 	}
 	

@@ -20,7 +20,7 @@ public interface ResZipDownloadService {
      * @param obj
      * @return
      */
-    public void addZipDownRecord(ResZipDownRecord obj);
+    public void addZipDownRecord(ResZipDownRecord obj)    throws Exception;
 
     /**
      * 更新打包下载的记录（的状态）

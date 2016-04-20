@@ -6,7 +6,11 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
+
+@Transactional
 public class PrepareControllerTest extends BaseControllerTestCase {
 
     @Resource
@@ -64,7 +68,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     
     
     @Test
-    public void testGetPrepare4BookList() {
+    public void testGetPrepare4BookList() throws Exception {
 
     	request.setAttribute("currentUserId", 390400126l);
     	request.setParameter("termId", "3");
@@ -88,17 +92,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     }
 
-    @Test
-    public void testGetPrepareList() {
-        request = this.newGet("/resRestAPI/v1.0/prepare");
 
-        request.addParameter("tfcode", "RJCZ010109");
-
-        result = controller.getPrepare(request, response);
-
-        System.out.println(result.getData());
-
-    }
 
  
 
@@ -152,7 +146,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     
   */
     @Test
-    public void testgetViewUrl() {
+    public void testgetViewUrl() throws Exception {
 //        request.addParameter("resIds", "50892,212992,212991");
 //        request.addParameter("fromFlags", "0,0,0");
         request.addParameter("resIds", "870142");
@@ -168,6 +162,30 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         System.out.println(result.getData());
     }
 
+    @Test
+    public void testGetPrepareList() throws Exception {
+
+        request.addParameter("tfcode", "RJCZ010109");
+    	request.setAttribute("currentUserId", 390400126l);
+
+        result = controller.getPrepare(request, response);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
+    
+    
+    @Test
+    public void testGetPreparePage() throws Exception {
+
+    	request.setAttribute("currentUserId", 390400126l);
+        request.addParameter("tfcode", "RJCZ010109");
+        
+        result = controller.getPreparePage(request, response);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
     
 
     

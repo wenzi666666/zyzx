@@ -13,7 +13,6 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
-import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
@@ -21,11 +20,10 @@ import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
 import net.tfedu.zhl.sso.userlog.entity.JUserlog;
 
@@ -33,7 +31,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 
 @Service("jPrepareService")
 public class JPrepareServiceImpl implements JPrepareService {
@@ -310,16 +307,16 @@ public class JPrepareServiceImpl implements JPrepareService {
      * @param fromFlags
      */
     @Override
-    public void removeMyPrepareContentResource(Long userId, String resIds, String fromFlags) {
+    public void removeMyPrepareContentResource(Long userId, String resIds, String fromFlags) 
+    throws Exception{
         // 非空判断
         if (StringUtils.isEmpty(resIds) || StringUtils.isEmpty(fromFlags)) {
-            throw new RuntimeException(CustomException.PARAMSERROR.getCode());
-        }
+			throw new ParamsException();
+		}
         String[] resId = resIds.split(",");
         String[] fromFlag = fromFlags.split(",");
         if (resId.length != fromFlag.length) {
-            throw new RuntimeException(CustomException.PARAMSERROR.getCode());
-        }
+			throw new ParamsException();        }
         for (int i = 0; i < fromFlag.length; i++) {
             long _resId = Long.parseLong(resId[i]);
             int _contType = JPrepareConstant.getContTypeByFromFlag(Integer.parseInt(fromFlag[i]));
@@ -468,6 +465,19 @@ public class JPrepareServiceImpl implements JPrepareService {
 			Long subjectId, String title, Long userId) {
 		
 		return mapper.queryPrepareByTermAndSubject(termId, subjectId, StringUtils.isEmpty(title)?"":("%"+title+"%"), userId);
+	}
+
+	@Override
+	public Pagination queryPreparePage(String tfcode, Long userId,
+			Integer page, Integer perPage) {
+		
+		PageHelper.startPage(page, perPage);
+		List<JPrepareView> list= queryPrepareList(tfcode, userId);
+		
+		Pagination _page = new PageInfoToPagination().transfer(list);
+		
+		
+		return _page;
 	}
 
 }

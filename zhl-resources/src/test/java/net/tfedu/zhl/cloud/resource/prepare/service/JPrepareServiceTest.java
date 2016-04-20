@@ -243,7 +243,7 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testremoveMyPrepareContentResource() {
+    public void testremoveMyPrepareContentResource() throws Exception {
         long userId = 390330126;
         String resIds = "4319500105,212992,212991";
         String fromFlags = "0,0,0";

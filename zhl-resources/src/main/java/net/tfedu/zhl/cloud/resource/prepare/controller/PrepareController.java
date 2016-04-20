@@ -21,6 +21,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.cloud.utils.http.RequestUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -155,6 +156,48 @@ public class PrepareController {
 		return ResultJSON.getSuccess(data);
 	}
 
+	/**
+	 * 分页获取节点下的备课夹
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/prepare_page", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getPreparePage(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		// 返回
+		Object data = null;
+
+		
+		int page = 1;
+		int prePage = 10;
+
+		String _page = request.getParameter("page");
+		String _prePage = request.getParameter("perPage");
+
+		if (StringUtils.isNotEmpty(_page)) {
+			page = Integer.parseInt(_page);
+		}
+		if (StringUtils.isNotEmpty(_prePage)) {
+			prePage = Integer.parseInt(_prePage);
+		}
+		
+		
+		long userId = currentUserId;
+		String tfcode = request.getParameter("tfcode");
+		if (StringUtils.isNotEmpty(tfcode)) {
+			data = jPrepareService.queryPreparePage(tfcode, userId, page, prePage);
+			logger.debug("分页获取节点" + tfcode + "下的所有当前用户（" + userId + "）的备课夹：page="+page+";prePage="+prePage);
+		} else {
+			throw new ParamsException();
+		}
+
+		return ResultJSON.getSuccess(data);
+	}
 	/**
 	 * 获取最新更新的备课夹（3个）
 	 * 
