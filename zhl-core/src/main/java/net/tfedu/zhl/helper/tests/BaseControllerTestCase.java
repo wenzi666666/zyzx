@@ -44,9 +44,9 @@ public abstract class BaseControllerTestCase {
      */
     @Before
     public void onSetUp() {
-        UserSimple us = userService.getUserSimpleById(761l," ");
+        UserSimple us = userService.getUserSimpleById(1l," ");
         request.addHeader("Authorization", us.getToken());
-        request.setAttribute("currentUserId", 761l); 
+        request.setAttribute("currentUserId", 1l); 
 //        request.setAttribute("request_key_CustomException", CustomException.SUCCESS);
         startTime = System.currentTimeMillis();
     }

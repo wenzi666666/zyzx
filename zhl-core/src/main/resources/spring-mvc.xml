@@ -55,6 +55,7 @@
  -->       
         <mvc:interceptor>
         	<mvc:mapping path="/resRestAPI/**/**"/>
+        	<mvc:exclude-mapping path="/resRestAPI/**/users/login"/>
         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
         </mvc:interceptor>
         

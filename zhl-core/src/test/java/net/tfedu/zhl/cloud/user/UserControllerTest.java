@@ -15,22 +15,16 @@ public class UserControllerTest extends BaseControllerTestCase {
     UserController controller;
 
     @Test
-    public void testGetUserInfo() {
+    public void testGetUserInfo() throws Exception {
 
-        request = newGet("/resRestAPI/v1.0/users/{id}");
-        request.addHeader("Authorization", "f07b6038-f339-4ace-bf69-460e61d4e8e7");
-        request.setAttribute(CustomException.request_key, "OK");
         ResultJSON result = controller.getUserInfo(1l, request, response);
         System.out.println(result.toString());
 
     }
 
     @Test
-    public void testUpdateUserInfo() {
+    public void testUpdateUserInfo() throws Exception {
 
-        request = newPost("/resRestAPI/v1.0/users/{id}");
-
-        request.addHeader("Authorization", "xxxxxxxtoken");
 
         request.setParameter("trueName", "admin_trueName_trueName");
         request.setParameter("termId", "2");
@@ -46,15 +40,13 @@ public class UserControllerTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testUpdatePwd() {
+    public void testUpdatePwd() throws Exception {
 
-        String url = "/v1.0/users/password";
 
-        request = newPost(url);
-        request.addHeader("Authorization", "xxxxxxxtoken");
 
-        request.setParameter("oldPassword", "123456");
-        request.setParameter("newPassword", "666666");
+
+        request.setParameter("oldPassword", "000000");
+        request.setParameter("newPassword", "000000");
         request.setParameter("_method", "PATCH");
 
         ResultJSON result = controller.updateUserPwd(request, response);
@@ -64,12 +56,9 @@ public class UserControllerTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testLogin() {
-        String url = "/v1.0/users/login";
-        request = newPost(url);
-        request.setParameter("user_name", "admin");
-        request.setParameter("user_pwd", "666666");
-
+    public void testLogin() throws Exception {
+        request.setParameter("user_name", "csls10");
+        request.setParameter("user_pwd", "000000");
         ResultJSON result = controller.Login(request, response);
 
         System.out.println(result.toString());
@@ -77,24 +66,20 @@ public class UserControllerTest extends BaseControllerTestCase {
     }
 
     @Test
-    public void testLogout() {
-        String url = "/v1.0/users/login";
-        request = newPost(url);
+    public void testLogout() throws Exception {
         request.setParameter("_method", "DELETE");
-        request.addHeader("Authorization", "1e2c2b8f-8f77-4e60-80e6-41ddb89ea0e6");
         ResultJSON result = controller.Login(request, response);
 
         System.out.println(result.toString());
     }
 
     @Test
-    public void testUpdateImage() {
+    public void testUpdateImage() throws Exception {
 
-        long userId = 1;
-        String url = "/v1.0/users/userimage/" + userId;
-        request = newPost(url);
+        long userId = 390320126l;
+    	request.setAttribute("currentUserId", 390320126l);
+
         request.setParameter("userImage", "/person/head/Icon10.jpg");
-        request.addHeader("Authorization", "57ce77b6-97a8-4874-837a-3356b8953534");
         ResultJSON result = controller.updateUserImage(userId, request, response);
 
         System.out.println(result.toString());
