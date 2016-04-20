@@ -141,8 +141,8 @@ public class UserController {
 				temp = temp.replace(resServiceLocal, currentResPath);
 				user.setUserImage(temp);
 
-				data = user;
 			}
+			data = user;
 
 		}
 		return ResultJSON.getSuccess(data);
