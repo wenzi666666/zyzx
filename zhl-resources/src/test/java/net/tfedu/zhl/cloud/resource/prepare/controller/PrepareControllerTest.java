@@ -17,7 +17,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
      */
     private ResultJSON result = new ResultJSON();
 
-    @Test
+ /*   @Test
     public void testAddPrepare() {
         request.addParameter("tfcode", "RJCZ010109");
         request.addParameter("title", "title_RJCZ010109");
@@ -50,7 +50,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         result = controller.addPrepareContent(prepareId, request, response);
 
     }
-    
+    */
     
     @Test
     public void testGetlatestPrepare(){

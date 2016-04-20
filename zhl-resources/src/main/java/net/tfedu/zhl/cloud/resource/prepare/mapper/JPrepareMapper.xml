@@ -25,6 +25,7 @@
   		<result column="id" property="id" javaType="java.lang.Long"/>
   		<result column="title" property="title" javaType="java.lang.String"/>
   		<result column="timeLabel" property="timeLabel" javaType="java.lang.String"/>
+  		<result column="contentnumber" property="contentNumber" javaType="java.lang.Integer"/>
    </resultMap>
   
 
@@ -289,8 +290,9 @@
 	id,
 	title,
 	'' as timeLabel
+	,(select  COUNT(1) from j_prepare_content c where c.flag = false and c.preId =p.id and c.contType in (1,2,9,10,11,12) ) as contentnumber
 	FROM
-		j_lession_prepare
+		j_lession_prepare p
 	WHERE flag = false 
 	AND userid = #{userId} ORDER BY updatetime desc limit 3 
   </select>

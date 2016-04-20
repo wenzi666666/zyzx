@@ -24,8 +24,26 @@ public class JPrepareView implements Serializable {
      * 时间范围
      */
     private String timeLabel;
+    
+    
+    /**
+     * 内容（资源）条数
+     */
+    private Integer contentNumber;
+    
+    
+    
+    
 
-    public Long getId() {
+    public Integer getContentNumber() {
+		return contentNumber;
+	}
+
+	public void setContentNumber(Integer contentNumber) {
+		this.contentNumber = contentNumber;
+	}
+
+	public Long getId() {
         return id;
     }
 
@@ -51,7 +69,7 @@ public class JPrepareView implements Serializable {
 
     @Override
     public String toString() {
-        return "[ prepareView: { id:" + this.id + "; title:" + title + ";timeLabel:" + timeLabel + " } ]";
+        return "[ prepareView: { id:" + this.id + "; title:" + title + ";timeLabel:" + timeLabel + ";contentNumber:" + contentNumber+ " } ]";
     }
 
 }
