@@ -103,7 +103,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return
      */
     protected ResultJSON defaultSuccess(Object data) {
-        result = new ResultJSON("ok", "成功", data, "");
+        result = new ResultJSON("OK", "成功", data, "");
         return result;
     }
 
