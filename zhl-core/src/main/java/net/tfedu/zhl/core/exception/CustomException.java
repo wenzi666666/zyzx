@@ -13,6 +13,8 @@ public class CustomException extends Exception {
      */
     private static final long serialVersionUID = -2264593730959108392L;
     
+    public static final String request_key = "request_key_CustomException";
+    
     protected String code;
 
     
