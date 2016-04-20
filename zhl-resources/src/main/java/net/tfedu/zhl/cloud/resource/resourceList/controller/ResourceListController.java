@@ -86,7 +86,7 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 				int expire = resourceWebConfig.getExpire(request);
 				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 				 // 资源库id
@@ -206,7 +206,7 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
             	String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 				int expire = resourceWebConfig.getExpire(request);
 				
                 long userId = currentUserId; // 获得用户id

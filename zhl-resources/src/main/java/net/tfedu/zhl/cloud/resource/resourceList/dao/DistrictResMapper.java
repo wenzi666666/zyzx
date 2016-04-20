@@ -78,7 +78,7 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
      */
     public List<DisResourceEntity> selectDisRes_EPrepare(@Param("fromFlag") int fromFlag, @Param("fileFormat") String fileFormat,
             @Param("typeIds") List<Integer> typeIds, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,
-            @Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("searchWord")String searchWord);
+            @Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("searchWord") String searchWord);
     
     /**
      * 更新点击次数（+1）
