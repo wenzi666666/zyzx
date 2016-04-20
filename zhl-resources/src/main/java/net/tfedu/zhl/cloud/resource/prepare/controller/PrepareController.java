@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.prepare.controller;
 
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -579,6 +580,8 @@ public class PrepareController {
 
         String resIds = request.getParameter("ids");
         String fromFlags = request.getParameter("fromflags");
+        //下载的zip包的名称
+        String zipname = request.getParameter("zipname");
         String hostLocal = commonWebConfig.getHostLocalOne();
         String resServiceLocal = commonWebConfig.getResServiceLocal();
         
@@ -592,7 +595,7 @@ public class PrepareController {
                 String rollBackUrl = "";// 回调函数
 
                 // 参数传递有问题
-                if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)) {
+                if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds) || StringUtils.isEmpty(zipname)) {
                     exception = CustomException.PARAMSERROR;
                 } else {
                     String ids[] = resIds.split(",");
@@ -610,6 +613,7 @@ public class PrepareController {
                         record.setIds(resIds);
                         record.setStatus(false);
                         record.setZippath(zippath);
+                        record.setZipname(zipname==null?"":zipname.trim());
                         record.setTime(Calendar.getInstance().getTime());
                         // 增加下载记录
                         resZipDownloadService.addZipDownRecord(record);
@@ -732,8 +736,14 @@ public class PrepareController {
                 if(record.getStatus()){
                     //转换为最终的下载路径
                     zippath = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, zippath);
-                    zippath = zippath.replace(resServiceLocal, currentResPath);
+                	String zipname = record.getZipname();
                 	
+                	//增加title,支持下载文件的重命名
+            		if(zipname!=null && !"".equals(zipname)){
+            			zippath +=   (zippath.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(zipname, "utf-8");
+            		}
+                    
+                    zippath = zippath.replace(resServiceLocal, currentResPath);
                 }else{
                 	zippath =  "";
                 }

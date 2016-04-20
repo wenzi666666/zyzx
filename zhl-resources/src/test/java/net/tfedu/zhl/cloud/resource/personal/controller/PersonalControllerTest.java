@@ -14,7 +14,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
 	PersonalController controller;
 	
 	
-    
+  /*  
     @Test
     public void testGetResTypeForPersonal(){
 //    	request.setParameter("", "");
@@ -102,7 +102,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         ResultJSON result = controller.getCustomizeRes(request, response);
         System.out.println(result.toString());
     	
-    }
+    }*/
     
     @Test
     public void testgetMyPrepareResource(){
@@ -112,10 +112,58 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         request.setContextPath("/zhl-resources");
         request.setScheme("http");
         request.setAttribute("currentUserId", 390320126l);
+        request.setParameter("unifyTypeId", "1");
+
         ResultJSON result = controller.getMyPrepareResource(request, response);
+        
         System.out.println(result.toString());
 
     	
     }
-  
+    @Test
+    public void testgetMyDown(){
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        request.setParameter("unifyTypeId", "1");
+        ResultJSON result = controller.getMyDownload(request, response);
+        System.out.println(result.toString());
+
+    	
+    }
+    
+    
+    @Test
+    public void testgetMyreview(){
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        request.setParameter("unifyTypeId", "1");
+        ResultJSON result = controller.getMyReview(request, response);
+        System.out.println(result.toString());
+
+    	
+    }
+    
+    @Test
+    public void testgetMyview(){
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        request.setParameter("unifyTypeId", "1");
+        ResultJSON result = controller.getMyViewList(request, response);
+        System.out.println(result.toString());
+
+    	
+    }
+    
 }

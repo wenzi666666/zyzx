@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService {
             subjectMapper.udpateTeacherSubject(userId, subjectId);
             subjectMapper.removeRepeatData(userId);
         }
-
+        
     }
 
     /**

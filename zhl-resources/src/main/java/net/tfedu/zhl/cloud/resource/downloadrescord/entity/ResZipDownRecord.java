@@ -29,6 +29,12 @@ public class ResZipDownRecord implements Serializable {
      * 生成的压缩包的保存路径
      */
     private String zippath;
+    
+    
+    /**
+     * 压缩包的下载名称
+     */
+    private String zipname;
 
     /**
      * 是否打包完成 false 为完成 true 已经完成
@@ -41,7 +47,7 @@ public class ResZipDownRecord implements Serializable {
     private String ids;
 
     public ResZipDownRecord(Long id, Long userid, Date time, String fromflags, String zippath, Boolean status,
-            String ids) {
+            String ids,String zipname) {
         this.id = id;
         this.userid = userid;
         this.time = time;
@@ -49,6 +55,7 @@ public class ResZipDownRecord implements Serializable {
         this.zippath = zippath;
         this.status = status;
         this.ids = ids;
+        this.zipname = zipname;
     }
 
     public ResZipDownRecord() {
@@ -182,4 +189,14 @@ public class ResZipDownRecord implements Serializable {
     public void setIds(String ids) {
         this.ids = ids == null ? null : ids.trim();
     }
+
+	public String getZipname() {
+		return zipname;
+	}
+
+	public void setZipname(String zipname) {
+		this.zipname = zipname;
+	}
+    
+    
 }

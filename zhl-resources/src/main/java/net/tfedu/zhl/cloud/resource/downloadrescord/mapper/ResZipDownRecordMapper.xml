@@ -11,6 +11,7 @@
       <arg column="time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="fromflags" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="zippath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zipname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="ids" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
@@ -36,7 +37,7 @@
    <!--获取下载记录中的资源 -->
   <select id="getMydownload" resultMap="viewPrepareContMap" > 	
   	 SELECT id,title,resId,fromFlag,unifytype,size,timeline,time,imgpath,filesuffix from  (
-		SELECT t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time 
+		SELECT t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time,p.id as unifyTypeId
 			,a.name as title,p.MType as  unifyType,a.AssetSize as size,'' as timeline,a.AssetPath as imgPath 
 		  ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1))  as fileSuffix,0 as orderIdx
 		FROM z_resdown_record t 
@@ -46,7 +47,7 @@
 		and a.flag = FALSE and a.filetype = 'A'
 		
 		UNION ALL
-		select  t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time 
+		select  t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time ,p.id as unifyTypeId
 		,z.title,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline,CONCAT(z.FPath,'/',z.Fname) as imgPath 
 		,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix,0 as orderIdx		
 		FROM
@@ -58,7 +59,7 @@
 		and z.flag = FALSE 
 		
 		UNION ALL
-		select  t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time 
+		select  t.id ,t.resid,t.fromflag,CONCAT(t.downdate,' ',t.downtime)as time ,p.id as unifyTypeId
 		,r.title,p.MType as unifyType,r.FSize as size,'' as timeline,r.fullpath as imgPath 
 		,REVERSE(LEFT(REVERSE(fname),LOCATE('.',REVERSE(fname))-1)) as fileSuffix,0 as orderIdx
 		FROM

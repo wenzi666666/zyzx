@@ -461,21 +461,30 @@ public class ZAssetServiceImpl implements ZAssetService {
 			Long userId) {
 		//myPrepareRes,myUpload,myDownload,myView。不传递该参数时默认为myPrepareRes
 		tabCode = tabCode==null?"myPrepareRes":tabCode.trim();
+		List<FirstLevelResType>  list = null;
 		if("myPrepareRes".equals(tabCode)){
-			return assetMapper.getResTypeForMyPrepareRes(userId);
-		}
-		
+			list =  assetMapper.getResTypeForMyPrepareRes(userId);
+		} else		
 		if("myUpload".equals(tabCode)){
-			return assetMapper.getResTypeForMyUpload(userId);
-		}
+			list =  assetMapper.getResTypeForMyUpload(userId);
+		}else
 		if("myDownload".equals(tabCode)){
-			return assetMapper.getResTypeForMyDownload(userId);
-		}
+			list =  assetMapper.getResTypeForMyDownload(userId);
+		}else
 		if("myView".equals(tabCode)){
-			return assetMapper.getResTypeForMyView(userId);
+			list =  assetMapper.getResTypeForMyView(userId);
 		}
 		
-		return null;
+		if(null == list){
+			list =  new ArrayList<FirstLevelResType>();
+		}
+		
+		FirstLevelResType e  = new FirstLevelResType();
+		e.setId(0l);
+		e.setCode("all");
+		e.setMtype("全部");
+		list.add(0, e);		
+		return list;
 	}
 
 

@@ -65,7 +65,7 @@
 		LEFT JOIN x_resourcetype p on  p.id = r.mtype
 		where  t.logtypecode in ('districtres','schoolres') and r.flag =false  and t.userid = #{userId} and t.flag = false and t.isflag = 0 
 		GROUP BY objid 
-		)temp_tab
+		)temp_result
 		where  1 =1 
 	
 		<if test="unifyTypeId>0">
