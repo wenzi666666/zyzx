@@ -11,8 +11,17 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import net.tfedu.zhl.core.exception.DataAccessException;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.InvalidPasswordException;
+import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.NoLoginException;
+import net.tfedu.zhl.core.exception.OutOfDateException;
+import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.core.exception.UnCustomException;
+import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
+import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 @ControllerAdvice
@@ -21,7 +30,7 @@ public class GlobalExceptionHandler {
     ResultJSON result;
 
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(SQLException.class)
+    @ExceptionHandler(value = { SQLException.class, DataAccessException.class })
     @ResponseBody
     public ResultJSON handleSQLException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         result = new ResultJSON("sqlError", e.getMessage(), "", "");
@@ -29,7 +38,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(value = { Exception.class, RuntimeException.class })
+    @ExceptionHandler(value = { Exception.class, RuntimeException.class, UnCustomException.class })
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         result = new ResultJSON("unKnown", e.getMessage(), "", "");
@@ -44,12 +53,75 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
-    
+
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(WithoutUserException.class)
     @ResponseBody
     public ResultJSON handleWithoutUserException(HttpServletRequest request, HttpServletResponse response,
             WithoutUserException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(NoAuthorizationException.class)
+    @ResponseBody
+    public ResultJSON handleNoAuthorizationException(HttpServletRequest request, HttpServletResponse response,
+            NoAuthorizationException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(WrongPassWordException.class)
+    @ResponseBody
+    public ResultJSON handleWrongPassWordException(HttpServletRequest request, HttpServletResponse response,
+            WrongPassWordException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(OutOfDateException.class)
+    @ResponseBody
+    public ResultJSON handleOutOfDateException(HttpServletRequest request, HttpServletResponse response,
+            OutOfDateException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(UnusualErrorException.class)
+    @ResponseBody
+    public ResultJSON handleUnusualErrorException(HttpServletRequest request, HttpServletResponse response,
+            UnusualErrorException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(ParamsException.class)
+    @ResponseBody
+    public ResultJSON handleParamsException(HttpServletRequest request, HttpServletResponse response,
+            ParamsException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidAccessTokenException.class)
+    @ResponseBody
+    public ResultJSON handleInvalidAccessTokenException(HttpServletRequest request, HttpServletResponse response,
+            InvalidAccessTokenException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(InvalidPasswordException.class)
+    @ResponseBody
+    public ResultJSON handleInvalidPasswordException(HttpServletRequest request, HttpServletResponse response,
+            InvalidPasswordException e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
