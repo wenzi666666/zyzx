@@ -85,7 +85,7 @@ public class ResSearchController {
 				int fromFlag = 0;
 				
 				 // 检索的关键词
-                String searchKeyword = "";
+                String searchKeyword = request.getParameter("searchKeyword");
 				
                 // 资源格式：全部，文本，图片......
                 String format = "全部";
@@ -98,10 +98,7 @@ public class ResSearchController {
                 
                 if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
                 	fromFlag =  Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                }
-                if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
-                	searchKeyword =  request.getParameter("searchKeyword").toString().trim();
-                }
+                }         
                 
                 if(StringUtils.isNotEmpty(request.getParameter("format"))){
                 	format =  request.getParameter("format").toString().trim();
@@ -115,22 +112,29 @@ public class ResSearchController {
                 	perPage =  Integer.parseInt(request.getParameter("perPage").toString().trim());
                 }
                 
+                // 若输入的关键字为空，则返回为空
+                if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
+                	exception = CustomException.LACKOFSEARCHWORD; //异常信息，缺少检索关键词
+                else {
+                	
+					searchKeyword = searchKeyword.toString().trim();
+					
+                	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
+                            perPage,currentUserId,expire);
+                    
+                    //生成文件的缩略图路径
+                    ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
+                    
+                    logger.debug("检索关键字：" + searchKeyword);
+                    logger.debug("资源格式：" + format);
+                    logger.debug("资源来源fromFlag：" + fromFlag);
+                    logger.debug("检索结果的当前页：" + pagination.getPage());
+                    logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
+                    logger.debug("检索到的资源总页：" + pagination.getTotal());
+                    logger.debug("检索到的资源总数：" + pagination.getTotalLines());
 
-                pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
-                        perPage,currentUserId,expire);
-                
-                //生成文件的缩略图路径
-                ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
-                
-                logger.debug("检索关键字：" + searchKeyword);
-                logger.debug("资源格式：" + format);
-                logger.debug("资源来源fromFlag：" + fromFlag);
-                logger.debug("检索结果的当前页：" + pagination.getPage());
-                logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
-                logger.debug("检索到的资源总页：" + pagination.getTotal());
-                logger.debug("检索到的资源总数：" + pagination.getTotalLines());
-
-                exception = CustomException.SUCCESS;
+                    exception = CustomException.SUCCESS;
+				}
 
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;
@@ -177,6 +181,7 @@ public class ResSearchController {
     		
     		// 若当前用户已经登录系统
             if (exception == null && currentUserId != null) {
+            	
             	// 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
             	int fromFlag = -1; //默认为全部
             	
@@ -192,10 +197,18 @@ public class ResSearchController {
                 	searchKeyword = request.getParameter("searchKeyword").toString().trim();
                 }
                 
-                resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
-                
-                exception = CustomException.SUCCESS;
-            }
+                // 若输入的关键字为空，则返回为空
+                if (searchKeyword == null || searchKeyword.length() == 0)
+                	exception = CustomException.LACKOFSEARCHWORD; //异常信息，缺少检索关键词
+                else {
+                	
+                	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
+                    
+                    exception = CustomException.SUCCESS;
+                }
+            }  else {
+            	exception = CustomException.INVALIDACCESSTOKEN;
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception

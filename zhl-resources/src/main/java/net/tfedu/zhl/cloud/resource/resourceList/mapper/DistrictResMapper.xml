@@ -221,7 +221,7 @@
     
     where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
-     <if test="searchWord != null">
+     <if test="searchWord != null and searchWord != ''">
          and a.Title like CONCAT('%',#{searchWord},'%')
       </if>
     

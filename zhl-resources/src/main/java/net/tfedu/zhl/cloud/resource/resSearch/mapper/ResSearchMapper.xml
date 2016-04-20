@@ -23,7 +23,7 @@
          and jf.FileFormat = #{format}
     </if>
 
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
     order by avgScore desc
@@ -52,7 +52,7 @@
          and a.scopeId = #{districtId}
     </if>
     
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
     order by avgScore desc
@@ -74,7 +74,7 @@
 	<if test="format != '全部'">
          and jf.FileFormat = #{format}
     </if>
-	<if test="searchKeyword != null">
+	<if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
@@ -91,7 +91,7 @@ union ALL
   <if test="format != '全部'">
          and jf.FileFormat = #{format}
   </if>
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
@@ -108,7 +108,7 @@ union ALL
   <if test="format != '全部'">
          and jf.FileFormat = #{format}
   </if>
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
   order by avgScore desc
@@ -125,7 +125,7 @@ union ALL
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
     and FileFormat is not null
@@ -144,7 +144,7 @@ union ALL
          and a.scopeId = #{districtId}
     </if>
 	
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
     and FileFormat is not null
@@ -160,7 +160,7 @@ union ALL
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
      
@@ -169,7 +169,7 @@ union ALL
     SELECT DISTINCT FileFormat from z_districts_resource a
 	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
 	WHERE 1=1 and a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId}
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
      
@@ -178,7 +178,7 @@ union ALL
     SELECT DISTINCT FileFormat from z_districts_resource a
 	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
 	WHERE 1=1 and a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId}
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
     ) formatTable where FileFormat is not null
@@ -192,7 +192,7 @@ union ALL
 	from z_resource a 
 	where a.flag = 0  and a.fromflag in (0,1,2)
 
-	<if test="searchKeyword != null">
+	<if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
@@ -202,7 +202,7 @@ union ALL
   from z_districts_resource a 
   where a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} 
  
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
@@ -212,7 +212,7 @@ union ALL
   from z_districts_resource a 
   where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} 
 
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>) res_all_1 where id = #{resId}
   
@@ -222,7 +222,7 @@ union ALL
 	from z_resource a 
 	where a.flag = 0  and a.fromflag in (0,1,2)
 
-	<if test="searchKeyword != null">
+	<if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
@@ -232,7 +232,7 @@ union ALL
   from z_districts_resource a 
   where a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} 
  
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
@@ -242,7 +242,7 @@ union ALL
   from z_districts_resource a 
   where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} 
 
-  <if test="searchKeyword != null">
+  <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>) res_all_2 where id != #{resId}
 
@@ -257,7 +257,7 @@ union ALL
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
    
@@ -270,7 +270,7 @@ union ALL
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
      
@@ -290,7 +290,7 @@ union ALL
          and a.scopeId = #{districtId}
     </if>
     
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
      
@@ -307,7 +307,7 @@ union ALL
          and a.scopeId = #{districtId}
     </if>
     
-    <if test="searchKeyword != null">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
     

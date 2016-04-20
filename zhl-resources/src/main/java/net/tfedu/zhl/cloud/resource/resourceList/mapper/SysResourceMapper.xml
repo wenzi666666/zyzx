@@ -244,7 +244,7 @@
          and jf.FileFormat = #{fileFormat}
       </if>
       
-      <if test="searchWord != null">
+      <if test="searchWord != null and searchWord != '' ">
          and a.Title like CONCAT('%',#{searchWord},'%')    
       </if>
 	
