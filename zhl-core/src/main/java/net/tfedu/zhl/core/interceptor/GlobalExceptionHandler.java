@@ -34,6 +34,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleSQLException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         result = new ResultJSON("DataAccessError", e.getMessage(), "", "");
+        e.printStackTrace();
         return result;
     }
 
@@ -42,6 +43,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         result = new ResultJSON("Server Error", e.getMessage(), "", "");
+        e.printStackTrace();
         return result;
     }
 

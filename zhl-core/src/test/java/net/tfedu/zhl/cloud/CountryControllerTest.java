@@ -13,7 +13,8 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 /**
- * @Transactional 注释标签是表明此测试类的事务启用，这样所有的测试方案都会自动的 rollback， 即您不用自己清除自己所做的任何对数据库的变更了
+ * @Transactional 注释标签是表明此测试类的事务启用，这样所有的测试方案都会自动的 rollback，
+ *  即您不用自己清除自己所做的任何对数据库的变更了
  * @author bruce
  *
  */
