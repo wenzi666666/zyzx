@@ -1,18 +1,17 @@
 package net.tfedu.zhl.cloud.resource.prepare.util;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 
-import com.alibaba.druid.util.HttpClientUtils;
-import com.alibaba.fastjson.JSONObject;
-
-import net.tfedu.zhl.cloud.resource.asset.service.impl.ZAssetServiceImpl;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
-import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.fileservice.HttpUtil;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * （资源中心）备课夹 常量
@@ -319,13 +318,15 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
      * 
      * @param info
      * @param currentResService 
+     * @throws UnsupportedEncodingException 
      */
-    public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
+    public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) throws UnsupportedEncodingException {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
         Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
+        String title = info.getTitle();
 
         // 如果是系统资源
         if (fromflag == fromFlag_sysRes) {
@@ -354,6 +355,10 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         	path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
         }
         
+		//增加title,支持下载文件的重命名
+		if(title!=null && !"".equals(title.trim())){
+			path +=   (path.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(title, "utf-8");
+		}
 		path = path.replace(resServiceLocal, currentResService);
         // 重新赋值path
         info.setPath(path);
@@ -363,9 +368,10 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的下载路径 
      * @param info
+     * @throws UnsupportedEncodingException 
      */
 	public static void resetResourceDownLoadURLWeb(List<ResourceSimpleInfo> list,
-			String resServiceLocal, String currentResService) {
+			String resServiceLocal, String currentResService) throws UnsupportedEncodingException {
 		for (int i = 0; i < list.size(); i++) {
 			resetResourceDownLoadUrlWeb(list.get(i), resServiceLocal,currentResService);
         }

@@ -11,6 +11,7 @@
       <arg column="time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="fromflags" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="zippath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zipname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="ids" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>

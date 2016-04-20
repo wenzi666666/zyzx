@@ -66,19 +66,12 @@ public class UserController {
        // 返回
        Object data = null;
 
-       try {
-       	
-       		data = VerificationCodeGenerator.getCode();
-       		exception = CustomException.SUCCESS;
-       } catch (Exception e) {
-           e.printStackTrace();
-           exception = CustomException.getCustomExceptionByCode(e.getMessage());
-       } finally {
-           result.setCode(exception.getCode());
-           result.setMessage(exception.getMessage());
-           result.setData(data == null ? "" : data);
-           result.setSign("");
-       }
+ 	   data = VerificationCodeGenerator.getCode();
+   	   exception = CustomException.SUCCESS;
+       result.setCode(exception.getCode());
+       result.setMessage(exception.getMessage());
+       result.setData(data == null ? "" : data);
+       result.setSign("");
        return result;
    }
     
@@ -267,7 +260,10 @@ public class UserController {
                 if (!RequestMethod.PATCH.name().equals(_method)) {// _method!=patch
                     exception = CustomException.PARAMSERROR;
                 } else {
-                    userService.updateUserInfo(userId, trueName, male, termId, subjectId);
+
+                	String token = request.getHeader("Authorization");
+                	userService.updateUserInfo(userId, trueName, male, termId, subjectId);
+                    
                     exception = CustomException.SUCCESS;
                     data = "";
                 }
