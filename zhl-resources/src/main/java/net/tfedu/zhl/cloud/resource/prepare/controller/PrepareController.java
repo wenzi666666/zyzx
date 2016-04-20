@@ -595,7 +595,7 @@ public class PrepareController {
                 String rollBackUrl = "";// 回调函数
 
                 // 参数传递有问题
-                if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)) {
+                if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds) || StringUtils.isEmpty(zipname)) {
                     exception = CustomException.PARAMSERROR;
                 } else {
                     String ids[] = resIds.split(",");
@@ -613,7 +613,7 @@ public class PrepareController {
                         record.setIds(resIds);
                         record.setStatus(false);
                         record.setZippath(zippath);
-                        record.setZipname(zipname);
+                        record.setZipname(zipname==null?"":zipname.trim());
                         record.setTime(Calendar.getInstance().getTime());
                         // 增加下载记录
                         resZipDownloadService.addZipDownRecord(record);
