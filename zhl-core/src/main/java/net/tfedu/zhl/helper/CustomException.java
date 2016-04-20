@@ -21,7 +21,8 @@ public enum CustomException {
     PARAMSERROR("ParamsERROR","参数异常",500),
     INVALIDACCESSTOKEN("InvalidAccessToken","提供的token无效",404),
     INVALIDPASSWORD("InvalidPassword","原始密码无效",401),
-    DATAACCESS("DataAccessException","数据访问错误",401)
+    DATAACCESS("DataAccessException","数据访问错误",401),
+    LACKOFSEARCHWORD("WithoutSearchword","缺少检索关键字",401)
     ;
     
     /**
@@ -65,6 +66,7 @@ public enum CustomException {
                 :code.equalsIgnoreCase(CustomException.PARAMSERROR.code)?CustomException.PARAMSERROR
                 :code.equalsIgnoreCase(CustomException.INVALIDACCESSTOKEN.code)?CustomException.INVALIDACCESSTOKEN
                 :code.equalsIgnoreCase(CustomException.INVALIDPASSWORD.code)?CustomException.INVALIDPASSWORD
+                :code.equalsIgnoreCase(CustomException.LACKOFSEARCHWORD.code)?CustomException.LACKOFSEARCHWORD
                 :CustomException.UNCUSTOM;
         return e;
     }

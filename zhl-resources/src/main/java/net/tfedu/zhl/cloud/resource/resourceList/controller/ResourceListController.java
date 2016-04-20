@@ -86,7 +86,7 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 				int expire = resourceWebConfig.getExpire(request);
 				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 				 // 资源库id
@@ -131,34 +131,33 @@ public class ResourceListController {
                if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
                 	
                 	//模糊查询的关键字
-                	String searchWord = "";
-                	if(StringUtils.isNotEmpty(request.getParameter("searchWord"))){
-                		searchWord = request.getParameter("searchWord").toString().trim();
-                	}
-                
+                	String searchWord = request.getParameter("searchWord");
+            
                 	//e备课查询系统资源
                 	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, removeTypeIds,sys_from,expire);
-                	
+                	//生成文件的缩略图路径
+                    ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
+                    exception = CustomException.SUCCESS;
+                    
                 } else {
+                	
                 	 // 查询出的系统资源信息
                     pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                             perPage,sys_from,expire);
+                    //生成文件的缩略图路径
+                    ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
+                    exception = CustomException.SUCCESS;
 				}
-                
-                //生成文件的缩略图路径
-                ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
-                
+               
                 logger.debug("系统资源的课程id：" + tfcode);
-                
                 logger.debug("系统资源的资源格式：" + fileFormat);
-              
-                logger.debug("查询结果的当前页：" + pagination.getPage());
-                logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
-                logger.debug("查询到的资源总页：" + pagination.getTotal());
-                logger.debug("查询到的资源总数：" + pagination.getTotalLines());
-
-                exception = CustomException.SUCCESS;
-
+                if(pagination != null){
+                	 logger.debug("查询结果的当前页：" + pagination.getPage());
+                     logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+                     logger.debug("查询到的资源总页：" + pagination.getTotal());
+                     logger.debug("查询到的资源总数：" + pagination.getTotalLines());
+                }
+               
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;
 			}
@@ -207,7 +206,7 @@ public class ResourceListController {
             	//获取文件服务器的访问url 
             	String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> removeTypeIds = resourceWebConfig.getSys_from(request);
+				List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 				int expire = resourceWebConfig.getExpire(request);
 				
                 long userId = currentUserId; // 获得用户id
@@ -256,35 +255,36 @@ public class ResourceListController {
                 if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
                 	
                 	//e备课 模糊查询的关键字
-                	String searchWord = "";
-                	if(StringUtils.isNotEmpty(request.getParameter("searchWord"))){
-                		searchWord = request.getParameter("searchWord").toString().trim();
-                	}
+                	String searchWord = request.getParameter("searchWord");
+                	
                 	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, removeTypeIds,expire);
                 	
+                	//生成文件的缩略图路径
+                    ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
+                    exception = CustomException.SUCCESS;
+ 
                 } else { //普通区本校本资源接口
                 	
                 	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
                              fromFlag,expire);
+                	 //生成文件的缩略图路径
+                     ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
+                     exception = CustomException.SUCCESS;
 				}
 
-               
-                //生成文件的缩略图路径
-                ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
-               
                 if(fromFlag == 3)
                 	logger.debug(fromFlag + " : 校本资源");
                 else if(fromFlag == 4)
                 	logger.debug(fromFlag + " : 区本资源");
                 
                 logger.debug("校本 / 区本资源的资源格式：" + fileFormat);
-                
-                logger.debug("查询结果的当前页：" + pagination.getPage());
-                logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
-                logger.debug("查询到的资源总页：" + pagination.getTotal());
-                logger.debug("查询到的资源总数：" + pagination.getTotalLines());
+                if(pagination != null){
+               	    logger.debug("查询结果的当前页：" + pagination.getPage());
+                    logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+                    logger.debug("查询到的资源总页：" + pagination.getTotal());
+                    logger.debug("查询到的资源总数：" + pagination.getTotalLines());
+                }
 
-                exception = CustomException.SUCCESS;
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;
 			}

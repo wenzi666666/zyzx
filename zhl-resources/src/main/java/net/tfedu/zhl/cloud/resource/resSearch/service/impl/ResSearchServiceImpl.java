@@ -47,9 +47,6 @@ public class ResSearchServiceImpl implements ResSearchService {
         // 封装结果集
         PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 
-        // 若输入的关键字为空，则返回为空
-        if (searchKeyword == null || searchKeyword.length() == 0)
-            return transfer.transfer(list);
         
         long schoolId = 0;
         long districtId = 0;
@@ -106,9 +103,7 @@ public class ResSearchServiceImpl implements ResSearchService {
      */
     @Override
 	public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from,long userId){
-    	 // 若输入的关键字为空，则返回为空
-        if (searchKeyword == null || searchKeyword.length() == 0)
-            return null;
+    	 
         
         List<String> resultList = new ArrayList<String>();
         
