@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.resList;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.resourceList.controller.ResourceListController;
@@ -25,10 +23,10 @@ public class ResListControllerTest extends BaseControllerTestCase{
 	 * 系统资源controller单元测试
 	 * @param request
 	 * @param response
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testSysResController()throws IOException{
+	public void testSysResController()throws Exception{
 		
 		request.setParameter("poolId", "0");
 		
@@ -55,10 +53,10 @@ public class ResListControllerTest extends BaseControllerTestCase{
 	 * 区本、校本资源controller单元测试
 	 * @param request
 	 * @param response
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testDisResController()throws IOException{
+	public void testDisResController()throws Exception{
         
 		request.setParameter("fromFlag", "3");
 		
