@@ -11,6 +11,11 @@ import net.tfedu.zhl.helper.CoreMapper;
 
 import org.apache.ibatis.annotations.Param;
 
+/**
+ * 区本校本资源查询mapper
+ * @author WeiCuicui
+ *
+ */
 public interface DistrictResMapper extends CoreMapper<DistrictRes> {
     /**
      *  获得区、校id

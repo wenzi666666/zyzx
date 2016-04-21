@@ -8,19 +8,36 @@ import net.tfedu.zhl.helper.CoreMapper;
 
 public interface UserCommentMapper extends CoreMapper<UserComment> {
 
-    // 插入一条记录
+    /**
+     *  插入一条评论 / 评分
+     * @param map
+     */
     public void insertMyComment(HashMap<String, Object> map);
 
-    // 修改我的评论
+    /**
+     * 修改我的评论
+     * @param map
+     */
     public void updateComment(HashMap<String, Object> map);
 
-    // 删除我的评论
+    /**
+     *  删除我的评论
+     * @param commentId
+     */
     public void deleteComment(long commentId);
 
-    // 查询我的评论
+    /**
+     * 查询我的评论
+     * @param map
+     * @return
+     */
     public List<UserComment> getMyComments(HashMap<String, Object> map);
 
-    // 查询我的评论
+    /**
+     * 查询我的评论
+     * @param map
+     * @return
+     */
     public List<UserComment> getOtherComments(HashMap<String, Object> map);
 
 }

@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.resSearch;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.resSearch.controller.ResSearchController;
@@ -23,10 +21,10 @@ public class ResSearchControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 资源检索结果列表
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testResSearchResult()throws IOException{
+	public void testResSearchResult()throws Exception{
 		
 		request.setParameter("fromFlag", "0");
 		request.setParameter("format", "全部");
@@ -45,10 +43,10 @@ public class ResSearchControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 资源检索结果的格式
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testResSearchResultFormats()throws IOException{
+	public void testResSearchResultFormats()throws Exception{
 		
 		request.setParameter("searchKeyword", "乐");
 		request.setParameter("fromFlag", "0");

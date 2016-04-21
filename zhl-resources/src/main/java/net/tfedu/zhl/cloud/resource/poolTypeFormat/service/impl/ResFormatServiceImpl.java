@@ -27,31 +27,6 @@ public class ResFormatServiceImpl implements ResFormatService {
     FileFormatMapper fileFormatMapper;
 
     /**
-     *  根据资源库id，得到父类型的所有子类型及其自身
-     */
-    @Override
-    public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType) {
-        return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
-    }
-
-    /**
-     *  系统资源，根据资源ids和typeIds，查询得到资源格式
-     */
-    @Override
-    public List<String> getSysResFormatsByMType(List<Long> resourceIds, List<Integer> typeIds) {
-        return fileFormatMapper.getSysResFormatsByMType(resourceIds, typeIds);
-    }
-
-    /**
-     *  区本校本资源，查询资源格式
-     */
-    @Override
-    public List<String> getDisResFormatsByMType(List<Long> resourceIds, int fromFlag) {
-
-        return fileFormatMapper.getDisResFormatsByMType(resourceIds, fromFlag);
-    }
-
-    /**
      *  查询区本校本资源格式
      */
     @Override
@@ -66,7 +41,7 @@ public class ResFormatServiceImpl implements ResFormatService {
         List<Long> resourceIds = resTypeMapper.getAllDisResIds(map);
 
         // 查询资源格式
-        formats = getDisResFormatsByMType(resourceIds, fromFlag);
+        formats = fileFormatMapper.getDisResFormatsByMType(resourceIds, fromFlag);
 
         // 查询结果中增加一个 “全部”
         formats.add(0, "全部");
@@ -75,15 +50,15 @@ public class ResFormatServiceImpl implements ResFormatService {
     }
 
     /**
-     *  获得系统资源格式(non-Javadoc)
-     * @see net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService#getSysResFormats(long, java.lang.String, int, java.util.List)
+     *  获得系统资源格式
+     * 
      */
     @Override
     public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from) {
         List<String> formats = new ArrayList<String>();
 
         // 根据poolId和typeId，查询父类型下所有子类型及其自身
-        List<Integer> typeIds = getTypesByPMTypeAndPool(poolId, typeId);
+        List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
 
         // 参数
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -94,7 +69,7 @@ public class ResFormatServiceImpl implements ResFormatService {
         List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
 
         // 查询资源格式
-        formats = getSysResFormatsByMType(resourceIds, typeIds);
+        formats = fileFormatMapper.getSysResFormatsByMType(resourceIds, typeIds);
 
         // 查询结果中增加一个 “全部”
         formats.add(0, "全部");

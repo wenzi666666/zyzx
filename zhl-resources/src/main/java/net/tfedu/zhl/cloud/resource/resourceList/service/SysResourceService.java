@@ -13,20 +13,71 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
  */
 public interface SysResourceService {
 
-    // 分页查询系统资源信息
+    /**
+     * 分页查询系统资源信息
+     * @param sys_from
+     * @param fileFormat
+     * @param resourceIds
+     * @param tfcode
+     * @param orderBy
+     * @param typeIds
+     * @param page
+     * @param perPage
+     * @param expire
+     * @return
+     */
     public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from, String fileFormat,
             List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,int expire);
 
-    // 查询系统资源列表
+    /**
+     * 查询系统资源列表
+     * @param poolId
+     * @param mTypeId
+     * @param fileFormat
+     * @param tfcode
+     * @param orderBy
+     * @param page
+     * @param perPage
+     * @param sys_from
+     * @param expire
+     * @return
+     */
     public Pagination<SysResourceEntity> getAllSysRes(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,List<Integer> sys_from,int expire);
     
     
-    // e备课，查询系统资源（限制资源类型，资源title模糊查询）
+    /**
+     * 查询系统资源（限制资源类型，资源title模糊查询），e备课
+     * @param poolId
+     * @param mTypeId
+     * @param fileFormat
+     * @param tfcode
+     * @param orderBy
+     * @param page
+     * @param perPage
+     * @param searchWord
+     * @param removeTypeIds
+     * @param sys_from
+     * @param expire
+     * @return
+     */
     public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds,List<Integer> sys_from,int expire);
     
-    // 分页查询系统资源信息  e备课
+    /**
+     *  分页查询系统资源信息 ，e备课
+     * @param sys_from
+     * @param fileFormat
+     * @param resourceIds
+     * @param tfcode
+     * @param orderBy
+     * @param typeIds
+     * @param page
+     * @param perPage
+     * @param searchWord
+     * @param expire
+     * @return
+     */
     public Pagination<SysResourceEntity> getSysResList_EPrepare(List<Integer> sys_from, String fileFormat,
             List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,String searchWord,int expire);
 }

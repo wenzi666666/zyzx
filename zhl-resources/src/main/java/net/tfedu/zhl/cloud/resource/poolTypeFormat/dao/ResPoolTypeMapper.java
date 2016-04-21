@@ -7,12 +7,25 @@ import net.tfedu.zhl.helper.CoreMapper;
 
 import org.apache.ibatis.annotations.Param;
 
-//资源库、资源类型的关联表的mapper
+/**
+ * 资源库、资源类型的关联表的mapper
+ * @author WeiCuicui
+ *
+ */
 public interface ResPoolTypeMapper extends CoreMapper<ResPoolType> {
 
-    // 根据库id查询所有资源类型id
+    /**
+     * 根据库id查询所有资源类型id
+     * @param poolId
+     * @return
+     */
     public List<Integer> getAllTypeIdsByPool(@Param("poolId") long poolId);
     
-    // 根据库id查询所有资源类型id，e备课
+    /**
+     * 根据库id查询所有资源类型id，e备课
+     * @param poolId
+     * @param removeTypeIds
+     * @return
+     */
     public List<Integer> getAllTypeIdsByPool_EPrepare(@Param("poolId") long poolId,@Param("removeTypeIds")List<Integer> removeTypeIds);
 }

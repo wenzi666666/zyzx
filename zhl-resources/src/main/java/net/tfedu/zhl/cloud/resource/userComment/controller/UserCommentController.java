@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.userComment.controller;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.userComment.entity.UserComment;
 import net.tfedu.zhl.cloud.resource.userComment.service.UserCommentService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -37,97 +36,90 @@ public class UserCommentController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/myComments", method = RequestMethod.POST)
     @ResponseBody
-    public ResultJSON updateUserComment(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
+    public ResultJSON updateUserComment(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	
+    	// 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
+        
+    	// 方法
+        String _method = request.getParameter("_method");
 
-                // 方法
-                String _method = request.getParameter("_method");
+        // 修改用户评论
+        if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {// 修改用户评论
 
-                // 修改用户评论
-                if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {// 修改用户评论
-
-                    long commentId = 0;
-                    String displayContent = "";
-                    if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
-                    	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
-                    }
-                    
-                    if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
-                    	displayContent = request.getParameter("displayContent").toString().trim();
-                    }
-                    
-                    userCommentService.updateUserComment(displayContent, commentId);
-
-                } else if (StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equals(_method)) {// 删除用户评论
-
-                	 long commentId = 0;
-                	 if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
-                     	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
-                     }
-                  
-
-                    userCommentService.deleteUserComment(commentId);
-
-                } else { // 新建用户评论
-
-                    long userId = currentUserId;
-                    long resId = 0;
-                    String displayContent = "";
-                    int fromFlag = 0;
-                    int ascore = 0; //默认评分为0
-                    int isScore = 0; //0：评分，1：评论
-                    if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-                    	resId = Long.parseLong(request.getParameter("resId").toString().trim());
-                     }
-                    if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
-                    	displayContent = request.getParameter("displayContent").toString().trim();
-                     }
-                    if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                    	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                     }
-                    if(StringUtils.isNotEmpty(request.getParameter("ascore"))){
-                    	ascore = Integer.parseInt(request.getParameter("ascore").toString().trim());
-                     }
-                    if(StringUtils.isNotEmpty(request.getParameter("isScore"))){
-                    	isScore = Integer.parseInt(request.getParameter("isScore").toString().trim());
-                     }
-
-                    userCommentService.insertUserComment(resId, userId, displayContent, ascore, fromFlag, isScore);
-                }
-
-                exception = CustomException.SUCCESS;
+            long commentId = 0;
+            String displayContent = "";
+            if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
+            	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
             } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
+				throw new ParamsException();
 			}
             
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData("");
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
+            if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
+            	displayContent = request.getParameter("displayContent").toString().trim();
+            }  else {
+				throw new ParamsException();
+			}
+            
+            userCommentService.updateUserComment(displayContent, commentId);
 
-        return resultJSON;
+        } else if (StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equals(_method)) {// 删除用户评论
+
+        	 long commentId = 0;
+        	 if(StringUtils.isNotEmpty(request.getParameter("commentId"))){
+             	commentId = Long.parseLong(request.getParameter("commentId").toString().trim());
+             } else {
+				throw new ParamsException();
+			 }
+          
+            userCommentService.deleteUserComment(commentId);
+
+        } else { // 新建用户评论
+
+            long userId = currentUserId;
+            long resId = 0;
+            String displayContent = "";
+            int fromFlag = 0;
+            int ascore = 0; //默认评分为0
+            int isScore = 0; //0：评分，1：评论
+            if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+            	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+            } else {
+				throw new ParamsException();
+			}
+            
+            if(StringUtils.isNotEmpty(request.getParameter("displayContent"))){
+            	displayContent = request.getParameter("displayContent").toString().trim();
+            } else {
+				throw new ParamsException();
+			}
+            
+            if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+            	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+            } else {
+				throw new ParamsException();
+			}
+            
+            if(StringUtils.isNotEmpty(request.getParameter("ascore"))){
+            	ascore = Integer.parseInt(request.getParameter("ascore").toString().trim());
+            } else {
+				throw new ParamsException();
+			}
+            
+            if(StringUtils.isNotEmpty(request.getParameter("isScore"))){
+            	isScore = Integer.parseInt(request.getParameter("isScore").toString().trim());
+            } else {
+				throw new ParamsException();
+			}
+
+            userCommentService.insertUserComment(resId, userId, displayContent, ascore, fromFlag, isScore);
+        }
+        
+        return ResultJSON.getSuccess("");
     }
 
     /**
@@ -136,58 +128,38 @@ public class UserCommentController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/myComments", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getMycomments(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+    public ResultJSON getMycomments(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
 
         List<UserComment> myComments = null;
 
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-                long userId = currentUserId;
+        long userId = currentUserId;
 
-                long resId = 0;
-              
-                int fromFlag = 0;
-                
-                if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-                	resId = Long.parseLong(request.getParameter("resId").toString().trim());
-                 }
-               
-                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                 }
-                
-                myComments = userCommentService.getMyComments(fromFlag, resId, userId);
-
-                exception = CustomException.SUCCESS;
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(myComments);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
-
-        return resultJSON;
+        long resId = 0;
+      
+        int fromFlag = 0;
+        
+        if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+        	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
+       
+        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+        }  else {
+			throw new ParamsException();
+		}
+        
+        myComments = userCommentService.getMyComments(fromFlag, resId, userId);
+        
+        return ResultJSON.getSuccess(myComments);
     }
 
     /**
@@ -196,58 +168,37 @@ public class UserCommentController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/otherComments", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getOthercomments(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+    public ResultJSON getOthercomments(HttpServletRequest request, HttpServletResponse response) throws Exception {
+       
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
 
         List<UserComment> otherComments = null;
 
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	 long userId = currentUserId;
+        long userId = currentUserId;
 
-                 long resId = 0;
-               
-                 int fromFlag = 0;
-                 
-                 if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-                 	resId = Long.parseLong(request.getParameter("resId").toString().trim());
-                  }
-                
-                 if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                 	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                  }
-
-                otherComments = userCommentService.getOtherComments(fromFlag, resId, userId);
-
-                exception = CustomException.SUCCESS;
-            }
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(otherComments);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
+        long resId = 0;
+      
+        int fromFlag = 0;
+        
+        if(StringUtils.isNotEmpty(request.getParameter("resId"))){
+        	resId = Long.parseLong(request.getParameter("resId").toString().trim());
+        } else {
+        	throw new ParamsException();
         }
+       
+        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
 
-        return resultJSON;
+        otherComments = userCommentService.getOtherComments(fromFlag, resId, userId);
+        
+        return ResultJSON.getSuccess(otherComments);
     }
-
 }

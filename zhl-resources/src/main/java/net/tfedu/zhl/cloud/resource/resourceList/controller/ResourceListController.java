@@ -16,7 +16,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.slf4j.Logger;
@@ -74,9 +74,12 @@ public class ResourceListController {
 		//e备课排除的资源类型
 		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 		
-		
+		//判断是否为最新资源的期限
 		int expire = resourceWebConfig.getExpire(request);
+		
+		//资源来源
 		List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+		
 		 // 资源库id
 		long poolId = 0;
 		// 类型Id
@@ -94,28 +97,46 @@ public class ResourceListController {
 		
 		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
 			poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("mTypeId"))){
-			mTypeId = Integer.parseInt(request.getParameter("mTypeId").toString().trim());
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("fileFormat"))){
-			fileFormat = request.getParameter("fileFormat").toString().trim();
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-			tfcode = request.getParameter("tfcode").toString().trim();
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
-			orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
-			
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("page"))){
-			page = Integer.parseInt(request.getParameter("page").toString().trim());
-		}
-		if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
-			perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		} else {
+			throw new ParamsException();
 		}
 		
-       
+		if(StringUtils.isNotEmpty(request.getParameter("mTypeId"))){
+			mTypeId = Integer.parseInt(request.getParameter("mTypeId").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		
+		if(StringUtils.isNotEmpty(request.getParameter("fileFormat"))){
+			fileFormat = request.getParameter("fileFormat").toString().trim();
+		} else {
+			throw new ParamsException();
+		}
+		
+		if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+			tfcode = request.getParameter("tfcode").toString().trim();
+		} else {
+			throw new ParamsException();
+		}
+		
+		if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
+			orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		
+		if(StringUtils.isNotEmpty(request.getParameter("page"))){
+			page = Integer.parseInt(request.getParameter("page").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		
+		if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
+			perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		
        if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
         	
         	//模糊查询的关键字
@@ -123,18 +144,18 @@ public class ResourceListController {
     
         	//e备课查询系统资源
         	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, removeTypeIds,sys_from,expire);
+        	
         	//生成文件的缩略图路径
             ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
-           
             
         } else {
         	
         	 // 查询出的系统资源信息
             pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                     perPage,sys_from,expire);
+            
             //生成文件的缩略图路径
-            ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
-           
+            ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);   
 		}
        
         logger.debug("系统资源的课程id：" + tfcode);
@@ -159,120 +180,107 @@ public class ResourceListController {
     @RequestMapping(value = "/v1.0/districtResource", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getDisResource(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+        
         // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
+    	long userId = (Long) request.getAttribute("currentUserId");
         Pagination<DisResourceEntity> pagination = null;
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	//获取文件服务器的访问url 
-            	String resServiceLocal = commonWebConfig.getResServiceLocal();
-				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
-				int expire = resourceWebConfig.getExpire(request);
-				
-                long userId = currentUserId; // 获得用户id
-     
-				// 类型Id
-				int mTypeId = 0;
-				 // 资源格式
-				String fileFormat= "全部";
-				 // 课程tfcode
-				String tfcode = "";
-				// 排序方式（综合排序；最多下载；最新发布）
-				int orderBy = 0;
-				// 页码
-				int page = 1;
-				 // 每页的记录数
-				int perPage = 10;
-				
-				 // 资源来源
-                int fromFlag = 3;
-               
+        
+        //获取文件服务器的访问url 
+    	String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
+		int expire = resourceWebConfig.getExpire(request);
+
+
+		// 类型Id
+		int mTypeId = 0;
+		 // 资源格式
+		String fileFormat= "全部";
+		 // 课程tfcode
+		String tfcode = "";
+		// 排序方式（综合排序；最多下载；最新发布）
+		int orderBy = 0;
+		// 页码
+		int page = 1;
+		 // 每页的记录数
+		int perPage = 10;
+		
+		 // 资源来源
+        int fromFlag = 3;
+       
+	
+		if(StringUtils.isNotEmpty(request.getParameter("mTypeId"))){
+			mTypeId = Integer.parseInt(request.getParameter("mTypeId").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("fileFormat"))){
+			fileFormat = request.getParameter("fileFormat").toString().trim();
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+			tfcode = request.getParameter("tfcode").toString().trim();
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
+			orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
 			
-				if(StringUtils.isNotEmpty(request.getParameter("mTypeId"))){
-					mTypeId = Integer.parseInt(request.getParameter("mTypeId").toString().trim());
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("fileFormat"))){
-					fileFormat = request.getParameter("fileFormat").toString().trim();
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-					tfcode = request.getParameter("tfcode").toString().trim();
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
-					orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
-					
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("page"))){
-					page = Integer.parseInt(request.getParameter("page").toString().trim());
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
-					perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
-				}
-				if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-					fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-				}
-                
-               
-                if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
-                	
-                	//e备课 模糊查询的关键字
-                	String searchWord = request.getParameter("searchWord");
-                	
-                	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, removeTypeIds,expire);
-                	
-                	//生成文件的缩略图路径
-                    ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
-                    exception = CustomException.SUCCESS;
- 
-                } else { //普通区本校本资源接口
-                	
-                	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
-                             fromFlag,expire);
-                	 //生成文件的缩略图路径
-                     ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
-                     exception = CustomException.SUCCESS;
-				}
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("page"))){
+			page = Integer.parseInt(request.getParameter("page").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
+			perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+		if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+			fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+		} else {
+			throw new ParamsException();
+		}
+        
+       
+        if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
+        	
+        	//e备课 模糊查询的关键字
+        	String searchWord = request.getParameter("searchWord");
+        	
+        	pagination = disResService.selectAllDisRes_EPrepare(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, fromFlag, searchWord, removeTypeIds,expire);
+        	
+        	//生成文件的缩略图路径
+            ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
+          
 
-                if(fromFlag == 3)
-                	logger.debug(fromFlag + " : 校本资源");
-                else if(fromFlag == 4)
-                	logger.debug(fromFlag + " : 区本资源");
-                
-                logger.debug("校本 / 区本资源的资源格式：" + fileFormat);
-                if(pagination != null){
-               	    logger.debug("查询结果的当前页：" + pagination.getPage());
-                    logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
-                    logger.debug("查询到的资源总页：" + pagination.getTotal());
-                    logger.debug("查询到的资源总数：" + pagination.getTotalLines());
-                }
+        } else { //普通区本校本资源接口
+        	
+        	 pagination = disResService.selectAllDisRes(userId, mTypeId, fileFormat, tfcode, orderBy, page, perPage,
+                     fromFlag,expire);
+        	 //生成文件的缩略图路径
+             ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
+            
+		}
 
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // 封装结果集
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(pagination);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
+        if(fromFlag == 3)
+        	logger.debug(fromFlag + " : 校本资源");
+        else if(fromFlag == 4)
+        	logger.debug(fromFlag + " : 区本资源");
+        
+        logger.debug("校本 / 区本资源的资源格式：" + fileFormat);
+        if(pagination != null){
+       	    logger.debug("查询结果的当前页：" + pagination.getPage());
+            logger.debug("查询结果每页资源数目：" + pagination.getPerPage());
+            logger.debug("查询到的资源总页：" + pagination.getTotal());
+            logger.debug("查询到的资源总数：" + pagination.getTotalLines());
         }
-
-        return resultJSON;
+        
+        return ResultJSON.getSuccess(pagination);
 
     }
 }

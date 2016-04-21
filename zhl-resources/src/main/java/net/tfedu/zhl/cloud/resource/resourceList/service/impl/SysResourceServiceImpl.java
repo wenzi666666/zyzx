@@ -39,7 +39,6 @@ public class SysResourceServiceImpl implements SysResourceService {
      * @return
      */
     @Override
-    // 分页查询系统资源信息
     public Pagination<SysResourceEntity> getSysResList(List<Integer> sys_from, String fileFormat,
             List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,int expire) {
 
@@ -71,7 +70,9 @@ public class SysResourceServiceImpl implements SysResourceService {
 
     }
 
-    // 查询系统资源列表
+    /**
+     * 查询系统资源列表
+     */
     @Override
     public Pagination<SysResourceEntity> getAllSysRes(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,List<Integer> sys_from,int expire) {
@@ -96,7 +97,9 @@ public class SysResourceServiceImpl implements SysResourceService {
     }
     
     
-    // 分页查询系统资源信息  e备课
+    /**
+     * 分页查询系统资源信息  e备课
+     */
     @Override
 	public Pagination<SysResourceEntity> getSysResList_EPrepare(List<Integer> sys_from, String fileFormat,
             List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,String searchWord,int expire){
@@ -126,7 +129,9 @@ public class SysResourceServiceImpl implements SysResourceService {
         return transfer.transfer(list);
     }
     
-    // e备课，查询系统资源（限制资源类型，资源title模糊查询）
+    /**
+     * 查询系统资源（限制资源类型，资源title模糊查询），e备课
+     */
     @Override
 	public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds,List<Integer> sys_from,int expire){
