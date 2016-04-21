@@ -38,7 +38,7 @@ public class GlobalExceptionHandler {
 
     ResultJSON result;
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(value = { SQLException.class, DataAccessException.class })
     @ResponseBody
     public ResultJSON handleSQLException(HttpServletRequest request, HttpServletResponse response, Exception e) {
@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(value = { Exception.class, RuntimeException.class, UnCustomException.class })
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
@@ -56,7 +56,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(value = { IOException.class })
     @ResponseBody
     public ResultJSON handleRuntimeIOException(HttpServletRequest request, HttpServletResponse response, Exception e) {
@@ -65,7 +65,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(NoLoginException.class)
     @ResponseBody
     public ResultJSON handleNoLoginException(HttpServletRequest request, HttpServletResponse response,
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(WithoutUserException.class)
     @ResponseBody
     public ResultJSON handleWithoutUserException(HttpServletRequest request, HttpServletResponse response,
@@ -83,7 +83,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(NoAuthorizationException.class)
     @ResponseBody
     public ResultJSON handleNoAuthorizationException(HttpServletRequest request, HttpServletResponse response,
@@ -92,7 +92,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(WrongPassWordException.class)
     @ResponseBody
     public ResultJSON handleWrongPassWordException(HttpServletRequest request, HttpServletResponse response,
@@ -101,7 +101,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(OutOfDateException.class)
     @ResponseBody
     public ResultJSON handleOutOfDateException(HttpServletRequest request, HttpServletResponse response,
@@ -110,7 +110,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(UnusualErrorException.class)
     @ResponseBody
     public ResultJSON handleUnusualErrorException(HttpServletRequest request, HttpServletResponse response,
@@ -119,7 +119,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(ParamsException.class)
     @ResponseBody
     public ResultJSON handleParamsException(HttpServletRequest request, HttpServletResponse response,
@@ -128,7 +128,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(InvalidAccessTokenException.class)
     @ResponseBody
     public ResultJSON handleInvalidAccessTokenException(HttpServletRequest request, HttpServletResponse response,
@@ -137,7 +137,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(InvalidPasswordException.class)
     @ResponseBody
     public ResultJSON handleInvalidPasswordException(HttpServletRequest request, HttpServletResponse response,
@@ -146,7 +146,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(NoTokenException.class)
     @ResponseBody
     public ResultJSON handleNoTokenException(HttpServletRequest request, HttpServletResponse response,
@@ -155,7 +155,7 @@ public class GlobalExceptionHandler {
         return result;
     }
 
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ResponseStatus(value = HttpStatus.OK)
     @ExceptionHandler(PrepareContentExistException.class)
     @ResponseBody
     public ResultJSON handlePrepareContentExistException(HttpServletRequest request, HttpServletResponse response,
