@@ -26,26 +26,34 @@ public class ResFormatServiceImpl implements ResFormatService {
     @Resource
     FileFormatMapper fileFormatMapper;
 
-    // 根据资源库id，得到父类型的所有子类型及其自身
+    /**
+     *  根据资源库id，得到父类型的所有子类型及其自身
+     */
     @Override
     public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType) {
         return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
     }
 
-    // 系统资源，根据资源ids和typeIds，查询得到资源格式
+    /**
+     *  系统资源，根据资源ids和typeIds，查询得到资源格式
+     */
     @Override
     public List<String> getSysResFormatsByMType(List<Long> resourceIds, List<Integer> typeIds) {
         return fileFormatMapper.getSysResFormatsByMType(resourceIds, typeIds);
     }
 
-    // 区本校本资源，查询资源格式
+    /**
+     *  区本校本资源，查询资源格式
+     */
     @Override
     public List<String> getDisResFormatsByMType(List<Long> resourceIds, int fromFlag) {
 
         return fileFormatMapper.getDisResFormatsByMType(resourceIds, fromFlag);
     }
 
-    // 查询区本校本资源格式
+    /**
+     *  查询区本校本资源格式
+     */
     @Override
     public List<String> getDisResFormats(String tfcode, int fromFlag) {
 
@@ -66,7 +74,10 @@ public class ResFormatServiceImpl implements ResFormatService {
         return formats;
     }
 
-    // 获得系统资源格式
+    /**
+     *  获得系统资源格式(non-Javadoc)
+     * @see net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService#getSysResFormats(long, java.lang.String, int, java.util.List)
+     */
     @Override
     public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from) {
         List<String> formats = new ArrayList<String>();
@@ -78,6 +89,7 @@ public class ResFormatServiceImpl implements ResFormatService {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", pTfcode);
         map.put("sys_from", sys_from);
+        
         // 查询当前结点下的所有资源Id
         List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
 

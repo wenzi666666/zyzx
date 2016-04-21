@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -51,45 +50,15 @@ public class TypesAndFormatsController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/pools", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getAllPools(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        List<ResPool> pools = new ArrayList<ResPool>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-
-                // 查询所有资源库
-                pools = resPoolService.getAllPools();
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(pools);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
-
-        return resultJSON;
+    public ResultJSON getAllPools(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    
+        List<ResPool> pools = resPoolService.getAllPools();
+      
+        return ResultJSON.getSuccess(pools);
     }
 	
 	
@@ -98,70 +67,48 @@ public class TypesAndFormatsController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/sysResource/types", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getSysResTypesByPool(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
+            throws Exception {
+		
+        //查询结果
         List<ResType> types = new ArrayList<ResType>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+        
+        //资源来源
+        List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 
-            	String pTfcode = "";
-            	
-            	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
-            	
-            	long poolId = 0;
-            	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
-            		pTfcode = request.getParameter("pTfcode").toString().trim();
-            	}
-               
-                if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
-                	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-                }
-            	
-                if(request.getParameter("isEPrepare") != null){//e备课
-                	//新的类型查询方法（去除一些类型）
-                	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode,removeTypeIds,sys_from);
-                } else {
-                	types = resTypeService.getSysResTypes(poolId, pTfcode,sys_from);
-				}
-
-               
-                exception = CustomException.SUCCESS;
-
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-
-        } finally {
-
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(types);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign(" ");
-        }
-
-        return resultJSON;
+        //父结点tfcode
+    	String pTfcode = "";
+    	
+    	//e备课需要排除的类型
+    	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
+    	
+    	//资源库id
+    	long poolId = 0;
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
+    		pTfcode = request.getParameter("pTfcode").toString().trim();
+    	} else {
+    		throw new ParamsException();
+    	}
+       
+        if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
+        	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
+    	
+        if(request.getParameter("isEPrepare") != null){//e备课
+        	//新的类型查询方法（去除一些类型）
+        	types = resTypeService.getSysResTypes_EPrepare(poolId, pTfcode,removeTypeIds,sys_from);
+        } else {
+        	types = resTypeService.getSysResTypes(poolId, pTfcode,sys_from);
+		}
+        
+        return ResultJSON.getSuccess(types);
     }
 	
 	/**
@@ -169,62 +116,45 @@ public class TypesAndFormatsController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/sysResource/formats", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getSysResFormatsByMtype(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
+            throws Exception {
+      
         List<String> formats = new ArrayList<String>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
+        
+        //系统资源来源
+        List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+        
+    	String pTfcode = "";
+    	int typeId = 0;
+    	long poolId = 0;
+    	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
+    		pTfcode = request.getParameter("pTfcode").toString().trim();
+    	} else {
+			throw new ParamsException();
+		}
+    	
+    	
+        if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
+        	typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
+        
+        
+        if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
+        	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
 
-            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
-            	String pTfcode = "";
-            	int typeId = 0;
-            	long poolId = 0;
-            	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
-            		pTfcode = request.getParameter("pTfcode").toString().trim();
-            	}
-                if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-                	typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-                }
-                if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
-                	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-                }
-
-                // 根据 resourceIds和typeIds，查询资源格式
-                formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(formats);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
-
-        return resultJSON;
+        // 根据 resourceIds和typeIds，查询资源格式
+        formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
+        
+        return ResultJSON.getSuccess(formats);
     }
 	
 	/**
@@ -232,63 +162,44 @@ public class TypesAndFormatsController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/districtResource/types", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getDisResTypesByPool(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
+            throws Exception {
+		
+		List<ResType> types = null;
+       
+        //e备课需要排除的资源类型
+        List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        // 定义类型结果集
-        List<ResType> types = new ArrayList<ResType>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
-
-            	String tfcode = "";
-            	int fromFlag = 3;
-            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-            		tfcode = request.getParameter("tfcode").toString().trim();
-            	}
-                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                }
-                
-                if(request.getParameter("isEPrepare") != null){//而备课
-                	//新的类型查询方法（去除一些类型）
-                	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);
-                	
-                } else {
-                	 types = resTypeService.getDisResTypes(tfcode, fromFlag);
-				}
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(types);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign(" ");
-        }
-
-        return resultJSON;
+    	String tfcode = "";
+    	
+    	//资源来源 3 校本；4 区本
+    	int fromFlag = 3;
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+    		tfcode = request.getParameter("tfcode").toString().trim();
+    	} else {
+			throw new ParamsException();
+		}
+    	
+        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
+        
+        if(request.getParameter("isEPrepare") != null){//而备课
+        	//新的类型查询方法（去除一些类型）
+        	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);
+        	
+        } else {
+        	 types = resTypeService.getDisResTypes(tfcode, fromFlag);
+		}
+        
+        return ResultJSON.getSuccess(types);
     }
 	
 	/**
@@ -296,55 +207,31 @@ public class TypesAndFormatsController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/districtResource/formats", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getDisFormats(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-
+    public ResultJSON getDisFormats(HttpServletRequest request, HttpServletResponse response) throws Exception {
+      
         // 格式
         List<String> formats = new ArrayList<String>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
+        String tfcode = "";
+    	int fromFlag = 3;
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+    		tfcode = request.getParameter("tfcode").toString().trim();
+    	} else {
+			throw new ParamsException();
+		}
+    	
+        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+        } else {
+			throw new ParamsException();
+		}
 
-            	String tfcode = "";
-            	int fromFlag = 3;
-            	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-            		tfcode = request.getParameter("tfcode").toString().trim();
-            	}
-                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                }
-
-                formats = resFormatService.getDisResFormats(tfcode, fromFlag);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(formats);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-        }
-
-        return resultJSON;
+        formats = resFormatService.getDisResFormats(tfcode, fromFlag);
+        
+        return ResultJSON.getSuccess(formats);
     }
 }
