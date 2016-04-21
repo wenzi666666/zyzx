@@ -114,8 +114,22 @@ public interface JPrepareService {
      * @param userId
      * @return
      */
-    public List<JPrepareView> queryPrepareAndTimeScopeList(Long termId,Long subjectId,String title, Long userId);
+    public List<JPrepareView> queryPrepareAndTimeScopeList(Long termId,Long subjectId,String title, Long userId,String timeLabel);
 
+    
+    /**
+     * 分页获取学段学科下的备课夹及其时间范围
+     * @param termId
+     * @param subjectId
+     * @param title
+     * @param userId
+     * @param page
+     * @param perPage
+     * @return
+     */
+    public Pagination<JPrepareView> queryPrepareByTermSubject(Long termId,Long subjectId,String title, Long userId
+    		,Integer page,Integer perPage,String timeLabel);
+    
     
     /**
      * 获取备课夹内容列表

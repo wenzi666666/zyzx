@@ -53,6 +53,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         request.addParameter("resIds", "4319500105,212992,212991");
         request.addParameter("fromFlags", "0,0,0");
         result = controller.addPrepareContent(prepareId, request, response);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
   
@@ -62,7 +63,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     	
     	request.setAttribute("currentUserId", 390400126l);
     	result = controller.getLatestPrepare(request, response);
-    	System.out.println(result.toString());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
     	
     }
     
@@ -73,10 +74,11 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     	request.setAttribute("currentUserId", 390400126l);
     	request.setParameter("termId", "3");
-    	request.setParameter("subjectId", "2");
-        result = controller.getPrepare4book(request, response);
+    	request.setParameter("subjectId", "1");
+    	
+        result = controller.getPrepare4book(1, 8, request, response);
 
-        System.out.println(result.toString());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
     }
     
     

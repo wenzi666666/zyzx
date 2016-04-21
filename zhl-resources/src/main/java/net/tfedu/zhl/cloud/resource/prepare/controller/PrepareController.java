@@ -219,7 +219,7 @@ public class PrepareController {
 	}
 
 	/**
-	 * 获取整本书下的备课夹列表
+	 * 分页获取整本书下的备课夹列表
 	 * 
 	 * @param request
 	 * @param response
@@ -227,7 +227,7 @@ public class PrepareController {
 	 */
 	@RequestMapping(value = "/v1.0/prepare4book", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getPrepare4book(HttpServletRequest request,
+	public ResultJSON getPrepare4book(Integer page,Integer perPage, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
@@ -241,19 +241,29 @@ public class PrepareController {
 		String title = request.getParameter("title");
 		String _termId = request.getParameter("termId");
 		String _subjectId = request.getParameter("subjectId");
+		//时间范围：withinweek、withinmonth、moreearly
+		String timeLabel =  request.getParameter("timeLabel");
+		
+		
+		
 		if (StringUtils.isNotEmpty(_termId)) {
 			termId = Long.parseLong(_termId);
 		}
 		if (StringUtils.isNotEmpty(_subjectId)) {
 			subjectId = Long.parseLong(_subjectId);
 		}
+		
+		if(page ==null){
+			page = 1;
+		}
 
+		if(perPage == null){
+			perPage = 8 ;
+		}
+		
 		if (termId != 0 && subjectId != 0) {
 			title = title == null ? "" : title.trim();
-			data = jPrepareService.queryPrepareAndTimeScopeList(termId,
-					subjectId, title, userId);
-			logger.debug("获取学段(" + termId + ")、学科(" + subjectId + ")下的所有当前用户（"
-					+ userId + "）的备课夹,title like '" + title + "%'");
+			data = jPrepareService.queryPrepareByTermSubject(termId, subjectId, title, userId, page, perPage,timeLabel);
 		} else {
 			throw new ParamsException();
 

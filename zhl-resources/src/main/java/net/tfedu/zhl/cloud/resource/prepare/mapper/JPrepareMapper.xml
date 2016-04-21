@@ -100,8 +100,9 @@
   </select>
   
   
-      <!-- 获取备课夹及其时间范围 -->
-  <select id="queryPrepareByTermAndSubject" resultMap="viewResultMap">
+      <!-- 获取备课夹及其时间范围 
+      
+    <select id="queryPrepareByTermAndSubject" resultMap="viewResultMap">
   	SELECT
 	p.id,
 	p.title,
@@ -120,6 +121,39 @@
 		AND title like #{title}	
 	</if>
 	ORDER BY p.updatetime desc
+
+  </select>    
+      
+      -->
+    <!-- timeLabel:withinweek、withinmonth、moreearly  -->  
+  <select id="queryPrepareByTermAndSubject" resultMap="viewResultMap">
+  
+  	SELECT
+	p.id,
+	p.title,
+	#{timeLabel} as timeLabel,p.tfcode
+	FROM
+		j_lession_prepare p
+  LEFT JOIN j_syscourse s on s.tfcode = p.tfcode 
+ 
+	WHERE
+  1 = 1 
+	AND p.userid =  #{userId} AND p.flag = false 
+  and s.TermId = #{termId} and s.SubjectId = #{subjectId}
+	<if test="title!=''">
+		AND title like #{title}	
+	</if>
+
+	<if test="'withinweek'==timeLabel">
+		AND p.updatetime >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+	</if>
+	<if test="'withinmonth'==timeLabel ">
+		AND p.updatetime >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+	</if>
+	<if test="'moreearly'==timeLabel ">
+		AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH)- p.updatetime > 0 
+	</if>	
+		ORDER BY p.updatetime desc
 
   </select>
   

@@ -65,9 +65,10 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      * @param subjectId
      * @param title
      * @param userId
+     * @param timeLabel  withinweek、withinmonth、moreearly
      * @return
      */
-    public List<JPrepareView> queryPrepareByTermAndSubject(@Param("termId")Long termId,@Param("subjectId")Long subjectId,@Param("title")String title, @Param("userId")Long userId);
+    public List<JPrepareView> queryPrepareByTermAndSubject(@Param("termId")Long termId,@Param("subjectId")Long subjectId,@Param("title")String title, @Param("userId")Long userId, @Param("timeLabel")String timeLabel);
 
     
     /**

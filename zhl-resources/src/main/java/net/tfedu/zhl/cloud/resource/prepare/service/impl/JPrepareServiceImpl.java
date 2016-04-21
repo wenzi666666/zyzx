@@ -474,9 +474,13 @@ public class JPrepareServiceImpl implements JPrepareService {
 
 	@Override
 	public List<JPrepareView> queryPrepareAndTimeScopeList(Long termId,
-			Long subjectId, String title, Long userId) {
+			Long subjectId, String title, Long userId,String timeLabel) {
 		
-		return mapper.queryPrepareByTermAndSubject(termId, subjectId, StringUtils.isEmpty(title)?"":("%"+title+"%"), userId);
+		//withinweek、withinmonth、moreearly
+		timeLabel = timeLabel==null?"withinweek":timeLabel.trim();
+
+		return mapper.queryPrepareByTermAndSubject(termId, subjectId, StringUtils.isEmpty(title)?"":("%"+title+"%"), userId,timeLabel);
+	
 	}
 
 	@Override
@@ -544,6 +548,16 @@ public class JPrepareServiceImpl implements JPrepareService {
 		PageHelper.startPage(page, perPage);
 		List<JPrepareContentView> list =  queryPrepareContentList(prepareId);
 		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
+	}
+
+	@Override
+	public Pagination<JPrepareView> queryPrepareByTermSubject(Long termId,
+			Long subjectId, String title, Long userId, Integer page,
+			Integer perPage,String timeLabel) {
+
+		PageHelper.startPage(page, perPage);
+		List<JPrepareView>  list = queryPrepareAndTimeScopeList(termId, subjectId, title, userId,timeLabel);
+		return new PageInfoToPagination<JPrepareView>().transfer(list);
 	}
 
 }
