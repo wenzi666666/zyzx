@@ -69,12 +69,12 @@
 		<result column="tfcode" property="tfcode" />
   </resultMap>
   <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and s.visible = 1 and s.typeFlag in (0,1) and flag = false order by orderNum
+		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and visible = 1 and typeFlag in (0,1) and flag = false order by orderNum
   </select>
   
   <!-- 根据id，查询一课程信息  -->
   <select id="getOneCourseInfo" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where id =#{id} and flag = false and s.visible = 1 and s.typeFlag in (0,1) order by orderNum
+		select id,name label,tfcode from j_syscourse where id =#{id} and flag = false and visible = 1 and typeFlag in (0,1) order by orderNum
   </select>
  
 </mapper>

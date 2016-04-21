@@ -13,13 +13,23 @@ import net.tfedu.zhl.helper.CoreMapper;
  */
 public interface JUserDefaultMapper extends CoreMapper<JUserDefault> {
 
-    // 查询用户历史选择的学段、学科、版本、教材
+    /**
+     *  查询用户历史选择的学段、学科、版本、教材
+     * @param map
+     * @return
+     */
     public JUserDefault getUserHistoryDefault(HashMap<String, Object> map);
 
-    // 增加用户历史选择
+    /**
+     *  增加用户历史选择
+     * @param map
+     */
     public void addUserHistoryDefault(HashMap<String, Object> map);
 
-    // 更新用户历史选择
+    /**
+     *  更新用户历史选择
+     * @param map
+     */
     public void updateUserHistoryDefault(HashMap<String, Object> map);
 
 }

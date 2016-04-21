@@ -1,8 +1,6 @@
 package net.tfedu.zhl.cloud.resource.sysRes.navigation;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,6 +13,8 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.term.entity.JTerm;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
@@ -43,10 +43,10 @@ public class NavigationServiceTest extends BaseServiceTestCase{
     
     /**
      * 查询学段
-     * @throws IOException
-     *//*
+     * @throws Exception
+     */
 	@Test
-	public void testGetAllTerms() throws IOException{
+	public void testGetAllTerms() throws Exception{
 		List<JTerm> terms = termService.selectAll();
 		
 		Assert.isTrue(terms.size() > 0);
@@ -56,12 +56,12 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 	    }
 	} 
     
-    *//**
+    /**
      * 根据学段，查询学科
-     * @throws IOException
-     *//*
+     * @throws Exception
+     */
 	@Test
-	public void testGetSubjectsByTerm() throws IOException{
+	public void testGetSubjectsByTerm() throws Exception{
 		
 		long termId = 1;
 		
@@ -72,22 +72,19 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 	    for (int i = 0; i < subjects.size(); i++) {
 	         System.out.println(subjects.get(i).getId() + ":" + subjects.get(i).getName());
 	    }
-	} */
+	} 
 	
 	/**
      * 根据学段、学科，查询版本
-     * @throws IOException
+     * @throws Exception
      */
 	@Test
-	public void testGetEditions() throws IOException{
+	public void testGetEditions() throws Exception{
 		
 		long termId = 1;
 		long subjectId = 1;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("termId", termId);
-		map.put("subjectId", subjectId);
 		
-		List<JSyscourse> editions= editionService.getAllEditionsByTermAndSub(map);
+		List<JSyscourse> editions= editionService.getAllEditionsByTermAndSub(termId,subjectId);
 		
 		Assert.isTrue(editions.size() > 0);
 		
@@ -99,10 +96,10 @@ public class NavigationServiceTest extends BaseServiceTestCase{
     
 	/**
      * 根据版本，查询教材
-     * @throws IOException
+     * @throws Exception
      */
 	@Test
-	public void testGetBooks() throws IOException{
+	public void testGetBooks() throws Exception{
 		
 		long pnodeId = 101140105; //版本的id
 		
@@ -120,10 +117,10 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 	
 	/**
 	 * 根据父结点id，查询课程目录树service单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testTreeService() throws IOException {
+    public void testTreeService() throws Exception {
         long pnodeId = 67527;
         List<TreeNode> resultNodes = new ArrayList<TreeNode>();
         resultNodes = treeService.geTreeNodes(pnodeId);

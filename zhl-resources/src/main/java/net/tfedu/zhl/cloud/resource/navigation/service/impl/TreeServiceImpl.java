@@ -22,20 +22,7 @@ public class TreeServiceImpl implements TreeService {
 
     @Resource
     JSyscourseMapper jSyscourseMapper;
-
-    /**
-     * 查询某父节点下的直接子节点(即不包含孙子节点等)
-     * 
-     * @param pTfcode
-     *            父结点的tfcode
-     * @return
-     */
-    @Override
-    public List<TreeNode> getTopChildren(long pnodeId) {
-        return jSyscourseMapper.getTopChildrenResultMap(pnodeId);
-    }
-
-  
+    
     /**
      * 根据提供的节点集合递归查询集合里每个节点的子节点，最终统一返回所有的子节点
      * @param parentNode
@@ -62,7 +49,7 @@ public class TreeServiceImpl implements TreeService {
             node.setI(parentNode.getI() + "." + sort );
 
             // 查询children
-            List<TreeNode> children = getTopChildren(node.getId());
+            List<TreeNode> children = jSyscourseMapper.getTopChildrenResultMap(node.getId());
             if (children == null || children.size() == 0) {
                 node.setLeaf(true);
             } else {
@@ -86,10 +73,9 @@ public class TreeServiceImpl implements TreeService {
     public List<TreeNode> geTreeNodes(long pnodeId) {
 
         // 查询父结点下的直接子结点
-        //List<TreeNode> topChildren = getTopChildren(pnodeId);
-        
         List<TreeNode> topChildren = jSyscourseMapper.getOneCourseInfo(pnodeId);
-     
+        
+        //父结点及其所有的子结点
         List<TreeNode> resultNodes = new ArrayList<TreeNode>();
 
         // 查询所有的子结点
@@ -109,7 +95,7 @@ public class TreeServiceImpl implements TreeService {
             node.setI(sort + "");
 
             // 查询children
-            List<TreeNode> children = getTopChildren(node.getId());
+            List<TreeNode> children = jSyscourseMapper.getTopChildrenResultMap(node.getId());
             if (children == null || children.size() == 0) {
                 node.setLeaf(true);
             } else {
