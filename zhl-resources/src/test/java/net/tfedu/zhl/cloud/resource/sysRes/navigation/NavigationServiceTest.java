@@ -15,8 +15,6 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
-import net.tfedu.zhl.sso.term.entity.JTerm;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
@@ -28,22 +26,25 @@ import org.springframework.util.Assert;
  */
 public class NavigationServiceTest extends BaseServiceTestCase{
 
-    @Resource TermService termService;
-    
-    @Resource TermSubjectService termSubjectService;
-    
-    @Resource EditionService editionService;
-    
-    @Resource BookService bookService;
+	 @Resource
+	 TermService termService;
+	 
+	 @Resource
+	 TermSubjectService termSubjectService;
+	 
+	 @Resource
+	 EditionService editionService;
+	 
+	 @Resource
+	 BookService bookService;
     
     @Resource TreeService treeService;
     
     
-   
     /**
      * 查询学段
      * @throws IOException
-     */
+     *//*
 	@Test
 	public void testGetAllTerms() throws IOException{
 		List<JTerm> terms = termService.selectAll();
@@ -55,10 +56,10 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 	    }
 	} 
     
-    /**
+    *//**
      * 根据学段，查询学科
      * @throws IOException
-     */
+     *//*
 	@Test
 	public void testGetSubjectsByTerm() throws IOException{
 		
@@ -71,7 +72,7 @@ public class NavigationServiceTest extends BaseServiceTestCase{
 	    for (int i = 0; i < subjects.size(); i++) {
 	         System.out.println(subjects.get(i).getId() + ":" + subjects.get(i).getName());
 	    }
-	} 
+	} */
 	
 	/**
      * 根据学段、学科，查询版本

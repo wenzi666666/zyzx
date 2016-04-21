@@ -40,16 +40,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class NavigationController {
 	
 	 @Resource
-	 BookService bookService;
+	 TermService termService;
+	 
+	 @Resource
+	 TermSubjectService termSubjectService;
 	 
 	 @Resource
 	 EditionService editionService;
 	 
 	 @Resource
-	 TermService termService;
-	 
-	 @Resource
-	 TermSubjectService termSubjectService;
+	 BookService bookService;
 	 
 	 @Resource
 	 TreeService treeService;
@@ -83,7 +83,7 @@ public class NavigationController {
         try {
             // 当前用户已经登录系统
             if (exception == null && currentUserId != null) {
-                terms = termService.selectAll();
+                //terms = termService.selectAll();
                 exception = CustomException.SUCCESS;
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;
@@ -133,7 +133,7 @@ public class NavigationController {
             	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
             		termId = Long.parseLong(request.getParameter("termId").toString().trim());
             	}
-                subjects = termSubjectService.getAllSubjectsByTerm(termId);
+                //subjects = termSubjectService.getAllSubjectsByTerm(termId);
                 exception = CustomException.SUCCESS;
             } else {
             	exception = CustomException.INVALIDACCESSTOKEN;

@@ -13,4 +13,25 @@
       <arg column="code" jdbcType="CHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  <!-- 获得所有学段 -->
+  <resultMap id="AllTermsMap" type="net.tfedu.zhl.sso.term.entity.JTerm" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+  </resultMap>
+  <select id="getAllTerms" resultMap="AllTermsMap">
+		select id,name from j_term where name not like '其他%' and flag = false 
+  </select>
+  
+  <!-- 选择特定学段下的学科  -->
+  <resultMap id="SubjectResultMap" type="net.tfedu.zhl.sso.subject.entity.JSubject" >
+		<id column="id" property="id" />
+		<result column="name" property="name" />
+  </resultMap>
+  <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
+		select s.id,s.name
+		from j_term_subject ts 
+		left join j_subject s on s.id = ts.subjectId
+		where ts.flag = false and s.flag = false and ts.termId=#{termId}
+  </select>
 </mapper>
