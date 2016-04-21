@@ -68,7 +68,7 @@ public interface JPrepareService {
      * @param content
      * @return
      */
-    public void deletePrepareContentById(Long id);
+    public void deletePrepareContentById(Long id) throws Exception;
 
     /**
      * 清空目标备课夹下的所有备课夹
@@ -124,6 +124,15 @@ public interface JPrepareService {
      * @return
      */
     public List<JPrepareContentView> queryPrepareContentList(Long prepareId);
+    
+    
+    /**
+     * 分页获取备课夹内容列表
+     * 
+     * @param prepareId
+     * @return
+     */
+    public Pagination<JPrepareContentView> queryPrepareContentPage(Long prepareId,Integer page,Integer perPage);
 
     /**
      * 删除备课夹中指定的类型的资源

@@ -21,8 +21,8 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.cloud.utils.http.RequestUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -173,7 +173,6 @@ public class PrepareController {
 		// 返回
 		Object data = null;
 
-		
 		int page = 1;
 		int prePage = 10;
 
@@ -186,19 +185,21 @@ public class PrepareController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			prePage = Integer.parseInt(_prePage);
 		}
-		
-		
+
 		long userId = currentUserId;
 		String tfcode = request.getParameter("tfcode");
 		if (StringUtils.isNotEmpty(tfcode)) {
-			data = jPrepareService.queryPreparePage(tfcode, userId, page, prePage);
-			logger.debug("分页获取节点" + tfcode + "下的所有当前用户（" + userId + "）的备课夹：page="+page+";prePage="+prePage);
+			data = jPrepareService.queryPreparePage(tfcode, userId, page,
+					prePage);
+			logger.debug("分页获取节点" + tfcode + "下的所有当前用户（" + userId
+					+ "）的备课夹：page=" + page + ";prePage=" + prePage);
 		} else {
 			throw new ParamsException();
 		}
 
 		return ResultJSON.getSuccess(data);
 	}
+
 	/**
 	 * 获取最新更新的备课夹（3个）
 	 * 
@@ -270,7 +271,7 @@ public class PrepareController {
 	 */
 	@RequestMapping(value = "/v1.0/prepareContent/{prepareId}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON querPrepareContent(@PathVariable Long prepareId,
+	public ResultJSON queryPrepareContent(@PathVariable Long prepareId,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
@@ -291,6 +292,48 @@ public class PrepareController {
 					currentResPath);
 
 			data = list;
+
+		} else {
+			throw new ParamsException();
+		}
+
+		return ResultJSON.getSuccess(data);
+	}
+
+	/**
+	 * 分页获取备课夹内容列表
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/prepareContentPage/{prepareId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON queryPrepareContentPage(@PathVariable Long prepareId,
+			Integer perPage, Integer page, HttpServletRequest request)
+			throws Exception {
+		// 返回
+		Object data = null;
+		
+		if(page ==null){
+			page = 1;
+		}
+
+		if(perPage == null){
+			perPage = 10 ;
+		}
+
+		// 获取文件服务器的访问url
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+		if (prepareId > 0) {
+			// 获取备课夹内容
+			Pagination<JPrepareContentView> _page = jPrepareService
+					.queryPrepareContentPage(prepareId, page, perPage);
+			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
+					currentResPath);
+			data = _page;
 
 		} else {
 			throw new ParamsException();
@@ -329,7 +372,7 @@ public class PrepareController {
 				throw new ParamsException();
 			} else {
 				Date currentDate = Calendar.getInstance().getTime();
-				if(ids.length == 1){
+				if (ids.length == 1) {
 					JPrepareContent cont = new JPrepareContent();
 					String _fromFlag = fromFlag[0];
 					String _resId = ids[0];
@@ -340,9 +383,8 @@ public class PrepareController {
 					cont.setCreatetime(currentDate);
 					jPrepareService.addPrepareContent(cont);
 
-					
-				}else{
-					List<JPrepareContent> list = new ArrayList<JPrepareContent>(); 
+				} else {
+					List<JPrepareContent> list = new ArrayList<JPrepareContent>();
 					for (int i = 0; i < fromFlag.length; i++) {
 						String _fromFlag = fromFlag[i];
 						String _resId = ids[i];
@@ -351,7 +393,8 @@ public class PrepareController {
 						cont.setPreid(prepareId);
 						cont.setContid(Long.parseLong(_resId));
 						cont.setConttype(JPrepareConstant
-								.getContTypeByFromFlag(Integer.parseInt(_fromFlag)));
+								.getContTypeByFromFlag(Integer
+										.parseInt(_fromFlag)));
 						cont.setCreatetime(currentDate);
 						list.add(cont);
 					}

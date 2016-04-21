@@ -127,7 +127,7 @@ public class JPrepareServiceImpl implements JPrepareService {
     }
 
     @Override
-    public void deletePrepareContentById(Long id) {
+    public void deletePrepareContentById(Long id) throws Exception{
     	JPrepareContent record = new JPrepareContent();
     	record.setId(id);
     	record.setFlag(true);
@@ -135,12 +135,17 @@ public class JPrepareServiceImpl implements JPrepareService {
         
         
         JPrepareContent content =  contMapper.selectByPrimaryKey(id);
-        Date currentDate = Calendar.getInstance().getTime();
-       //更新备课夹的更新时间
-        JPrepare obj = new JPrepare();
-        obj.setId(content.getPreid());
-        obj.setUpdatetime(currentDate);
-        mapper.updateByPrimaryKeySelective(obj);
+
+        if(content!=null){
+            Date currentDate = Calendar.getInstance().getTime();
+            //更新备课夹的更新时间
+             JPrepare obj = new JPrepare();
+             obj.setId(content.getPreid());
+             obj.setUpdatetime(currentDate);
+             mapper.updateByPrimaryKeySelective(obj);
+        }else{
+        	throw new ParamsException();
+        }
    
         
     }
@@ -496,6 +501,7 @@ public class JPrepareServiceImpl implements JPrepareService {
 				//批量sql排重
 				
 				List<Long> preIds = new ArrayList<Long>();
+				List<JPrepareContent> ls_remove = new ArrayList<JPrepareContent>();
 				for (JPrepareContent content : list) {
 					if(!preIds.contains(content.getPreid())){
 						preIds.add(content.getPreid());
@@ -503,8 +509,12 @@ public class JPrepareServiceImpl implements JPrepareService {
 					//排重
 			        Boolean isExist = contMapper.isPrepareContentExist(content.getPreid(), content.getContid(), content.getConttype());
 			        if(isExist!=null &&true==isExist){
-			        	list.remove(content);
+			        	ls_remove.add(content);
 			        }					
+				}
+				
+				for (JPrepareContent jPrepareContent : ls_remove) {
+					list.remove(jPrepareContent);
 				}
 		        
 		        if(list.size()>0){
@@ -526,6 +536,14 @@ public class JPrepareServiceImpl implements JPrepareService {
 			}
 		}
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Pagination<JPrepareContentView> queryPrepareContentPage(Long prepareId, Integer page,
+			Integer perPage) {
+		PageHelper.startPage(page, perPage);
+		List<JPrepareContentView> list =  queryPrepareContentList(prepareId);
+		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
 	}
 
 }

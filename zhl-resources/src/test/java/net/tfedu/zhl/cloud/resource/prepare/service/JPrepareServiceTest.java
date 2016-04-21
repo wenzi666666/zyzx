@@ -153,9 +153,10 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
      * 
      * @param content
      * @return
+     * @throws Exception 
      */
     @Test
-    public void testdeletePrepareContentById() {
+    public void testdeletePrepareContentById() throws Exception {
         jPrepareService.deletePrepareContentById(560617l);
 
     }

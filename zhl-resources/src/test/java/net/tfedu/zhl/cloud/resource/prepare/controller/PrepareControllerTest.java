@@ -6,6 +6,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
@@ -21,14 +22,14 @@ public class PrepareControllerTest extends BaseControllerTestCase {
      */
     private ResultJSON result = new ResultJSON();
 
- /*   @Test
+    @Test
     public void testAddPrepare() {
         request.addParameter("tfcode", "RJCZ010109");
         request.addParameter("title", "title_RJCZ010109");
 
         result = controller.addPrepare(request, response);
 
-        System.out.println(result.getData().toString());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
 
@@ -40,21 +41,21 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
         result = controller.addPrepare(request, response);
 
-        System.out.println(result.getData());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
     
     
     @Test
-    public void testAddPrepareContent() {
+    @Rollback
+    public void testAddPrepareContent() throws Exception {
         long prepareId = 525;
-//        request = this.newPost("/resRestAPI/v1.0/prepareContent/" + prepareId);
         request.addParameter("resIds", "4319500105,212992,212991");
         request.addParameter("fromFlags", "0,0,0");
         result = controller.addPrepareContent(prepareId, request, response);
 
     }
-    */
+  
     
     @Test
     public void testGetlatestPrepare(){
@@ -79,72 +80,57 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     }
     
     
-/*
+
     @Test
     public void testDEletePrepare() {
-        request = this.newPost("/resRestAPI/v1.0/prepare");
         request.addParameter("id", "140253");
         request.addParameter("_method", "DELETE");
 
         result = controller.addPrepare(request, response);
 
-        System.out.println(result.getData());
-
-    }
-
-
-
- 
-
-    @Test
-    public void testGetPrepareContent() {
-        long prepareId = 140249;
-        request = this.newGet("/resRestAPI/v1.0/prepareContent/" + prepareId);
-
-        result = controller.querPrepareContent(prepareId, request, response);
-
-        System.out.println(result.getData());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
 
   
 
     @Test
-    public void testdelPrepareContent() {
-        long id = 560626;
-        request = this.newPost("/resRestAPI/v1.0/prepareContent");
-        request.addParameter("ids", "560626");
+    @Rollback
+    public void testdelPrepareContent() throws Exception {
+        request.addParameter("ids", "1365");
         result = controller.delPrepareContent(request, response);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
 
     @Test
-    public void testclearPrepareContent() {
-        long id = 140252;
-        request = this.newPost("/resRestAPI/v1.0/prepareContent");
+    public void testclearPrepareContent() throws Exception {
         request.addParameter("id", "140252");
         request.addParameter("_method", "CLEAR");
         result = controller.delPrepareContent(request, response);
-        System.out.println(result.getCode());
-        System.out.println(result.getData());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
     }
 
-    public void testFillREsource() {
+    public void testFillREsource() throws Exception {
 
         String rescode = "newzy020101806612";
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
 
-        request = this.newPost("/resRestAPI/v1.0/prepareContentFill");
-        request.addParameter("rescode", "rescode");
+        request.addParameter("rescode", rescode);
         request.addParameter("_method", "RESOURCEFILL");
         result = controller.fillPrepareContent(request, response);
-        System.out.println(result.getCode());
-        System.out.println(result.getData());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
 
     }
 
   
     
-  */
+ 
     @Test
     public void testgetViewUrl() throws Exception {
 //        request.addParameter("resIds", "50892,212992,212991");
@@ -158,8 +144,8 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         
         result = controller.getResViewUrl(request, response);
         
-        System.out.println(result.getCode());
-        System.out.println(result.getData());
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
     }
 
     @Test
@@ -189,6 +175,32 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     
 
     
+    
+    
+    
+    
+    @Test
+    public void testGetPrepareContent() throws Exception {
+        long prepareId = 140249;
+        result = controller.queryPrepareContent(prepareId, request, response);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
+
+    
+    
+    
+    
+    @Test
+    public void testGetPrepareContentPage() throws Exception {
+        long prepareId = 140249;
+        result = controller.queryPrepareContentPage(prepareId, 2, 1, request);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
+
     
     
 }
