@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.tfedu.zhl.cloud.utils.datatype.DateConverter;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 
 /**
  * Convenience class for setting and retrieving cookies.
@@ -68,5 +69,6 @@ public final class RequestUtil {
                 }
             }
         }
-    }
+    }  
+    
 }

@@ -15,6 +15,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -215,14 +216,14 @@ public class TypesAndFormatsController {
       
         // 格式
         List<String> formats = new ArrayList<String>();
-        String tfcode = "";
+        String tfcode = ControllerHelper.getParameter(request, "tfcode");
     	int fromFlag = 3;
     	
-    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-    		tfcode = request.getParameter("tfcode").toString().trim();
-    	} else {
-			throw new ParamsException();
-		}
+//    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
+//    		tfcode = request.getParameter("tfcode").toString().trim();
+//    	} else {
+//			throw new ParamsException();
+//		}
     	
         if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
         	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
