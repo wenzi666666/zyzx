@@ -129,9 +129,22 @@ public class DisResourceEntity implements Serializable {
      * 全路径
      */
     private String fullpath;
+    
+    /**
+     * 资源上传者
+     */
+    private String author;
 
 
-    public String getFullpath() {
+    public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getFullpath() {
 		return fullpath;
 	}
 
