@@ -75,6 +75,9 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     	request.setAttribute("currentUserId", 390400126l);
     	request.setParameter("termId", "3");
     	request.setParameter("subjectId", "1");
+       // <!-- timeLabel:withinweek、withinmonth、moreearly  -->  
+
+    	request.setParameter("timeLabel", "moreearly");
     	
         result = controller.getPrepare4book(1, 8, request, response);
 
