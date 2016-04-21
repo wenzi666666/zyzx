@@ -1,6 +1,7 @@
 
 package net.tfedu.zhl.cloud.resource.prepare.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -85,9 +86,10 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
      * 
      * @param content
      * @return
+     * @throws Exception 
      */
     @Test
-    public void testaddPrepareContent() {
+    public void testaddPrepareContent() throws Exception {
         Date currentDate = Calendar.getInstance().getTime();
 
         // 将资源加入备课夹
@@ -100,7 +102,37 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
         jPrepareService.addPrepareContent(cont);
 
     }
+    /**
+     * 增加备课夹内容
+     * 
+     * @param content
+     * @return
+     * @throws Exception 
+     */
+    @Test
+    public void testaddPrepareContentList() throws Exception {
+        Date currentDate = Calendar.getInstance().getTime();
 
+        // 将资源加入备课夹
+        JPrepareContent cont = new JPrepareContent();
+        cont.setPreid(140249l);
+        cont.setContid(212994l);
+        cont.setConttype(JPrepareConstant.CONTTYPE_SYSRES);
+        cont.setCreatetime(currentDate);
+        // 将资源加入备课夹
+        JPrepareContent cont2 = new JPrepareContent();
+        cont2.setPreid(140249l);
+        cont2.setContid(212995l);
+        cont2.setConttype(JPrepareConstant.CONTTYPE_SYSRES);
+        cont2.setCreatetime(currentDate);
+        
+        List<JPrepareContent> list = new ArrayList<JPrepareContent>();
+        list.add(cont);
+        list.add(cont2);
+        
+        jPrepareService.addPrepareContentList(list);
+
+    }
     /**
      * 修改备课夹内容
      * 

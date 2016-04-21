@@ -24,6 +24,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.core.exception.PrepareContentExistException;
 import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
 import net.tfedu.zhl.sso.userlog.entity.JUserlog;
 
@@ -96,9 +97,15 @@ public class JPrepareServiceImpl implements JPrepareService {
     }
 
     @Override
-    public JPrepareContent addPrepareContent(JPrepareContent content) {
+    public void addPrepareContent(JPrepareContent content) throws Exception{
         // TODO Auto-generated method stub
-        Date currentDate = Calendar.getInstance().getTime();
+        
+        //排重
+        Boolean isExist = contMapper.isPrepareContentExist(content.getPreid(), content.getContid(), content.getConttype());
+        if(isExist!=null &&true==isExist){
+        	throw new PrepareContentExistException();
+        }
+        
 
         //增加内容
     	contMapper.insert(content);
@@ -106,11 +113,11 @@ public class JPrepareServiceImpl implements JPrepareService {
         mapper.update_default_prepare_content_order();
         
         //更新备课夹的更新时间
+        Date currentDate = Calendar.getInstance().getTime();
         JPrepare obj = new JPrepare();
         obj.setId(content.getPreid());
         obj.setUpdatetime(currentDate);
         mapper.updateByPrimaryKeySelective(obj);
-        return content;
     }
 
     @Override
@@ -478,6 +485,47 @@ public class JPrepareServiceImpl implements JPrepareService {
 		
 		
 		return _page;
+	}
+
+	@Override
+	public void addPrepareContentList(List<JPrepareContent> list) throws Exception{
+		if(list!=null && list.size()>0){
+			if(list.size()==1){
+				addPrepareContent(list.get(0));
+			}else{
+				//批量sql排重
+				
+				List<Long> preIds = new ArrayList<Long>();
+				for (JPrepareContent content : list) {
+					if(!preIds.contains(content.getPreid())){
+						preIds.add(content.getPreid());
+					}
+					//排重
+			        Boolean isExist = contMapper.isPrepareContentExist(content.getPreid(), content.getContid(), content.getConttype());
+			        if(isExist!=null &&true==isExist){
+			        	list.remove(content);
+			        }					
+				}
+		        
+		        if(list.size()>0){
+		        	//增加内容
+			    	contMapper.insertList(list);
+			    	//更新内容排序
+			        mapper.update_default_prepare_content_order();
+			        //更新备课夹的更新时间
+			        Date currentDate = Calendar.getInstance().getTime();
+			        for (Long id : preIds) {
+				        JPrepare obj = new JPrepare();
+				        obj.setId(id);
+				        obj.setUpdatetime(currentDate);
+				        mapper.updateByPrimaryKeySelective(obj);
+					}
+		        }
+
+		        
+			}
+		}
+		// TODO Auto-generated method stub
 	}
 
 }

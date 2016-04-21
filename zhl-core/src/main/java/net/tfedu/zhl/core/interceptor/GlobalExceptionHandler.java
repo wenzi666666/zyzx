@@ -19,6 +19,7 @@ import net.tfedu.zhl.core.exception.NoLoginException;
 import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.core.exception.PrepareContentExistException;
 import net.tfedu.zhl.core.exception.UnCustomException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
@@ -138,4 +139,17 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
+    
+    
+    
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(PrepareContentExistException.class)
+    @ResponseBody
+    public ResultJSON handlePrepareContentExistException(HttpServletRequest request, HttpServletResponse response,
+    		PrepareContentExistException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+    
+    
 }

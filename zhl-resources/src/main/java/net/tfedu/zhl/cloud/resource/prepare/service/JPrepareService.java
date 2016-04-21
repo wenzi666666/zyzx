@@ -41,7 +41,18 @@ public interface JPrepareService {
      * @param content
      * @return
      */
-    public JPrepareContent addPrepareContent(JPrepareContent content);
+    public void addPrepareContent(JPrepareContent content)throws Exception;
+    
+    
+    /**
+     * 批量增加备课夹内容
+     * 
+     * @param content
+     * @return
+     */
+    public void addPrepareContentList(List<JPrepareContent> list)throws Exception;
+    
+    
 
     /**
      * 修改备课夹内容

@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.prepare.controller;
 
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -327,18 +328,34 @@ public class PrepareController {
 			if (ids.length == 0 || fromFlag.length != ids.length) {
 				throw new ParamsException();
 			} else {
-				for (int i = 0; i < fromFlag.length; i++) {
-					String _fromFlag = fromFlag[i];
-					String _resId = ids[i];
-					Date currentDate = Calendar.getInstance().getTime();
-					// 将资源加入备课夹
+				Date currentDate = Calendar.getInstance().getTime();
+				if(ids.length == 1){
 					JPrepareContent cont = new JPrepareContent();
+					String _fromFlag = fromFlag[0];
+					String _resId = ids[0];
 					cont.setPreid(prepareId);
 					cont.setContid(Long.parseLong(_resId));
 					cont.setConttype(JPrepareConstant
 							.getContTypeByFromFlag(Integer.parseInt(_fromFlag)));
 					cont.setCreatetime(currentDate);
 					jPrepareService.addPrepareContent(cont);
+
+					
+				}else{
+					List<JPrepareContent> list = new ArrayList<JPrepareContent>(); 
+					for (int i = 0; i < fromFlag.length; i++) {
+						String _fromFlag = fromFlag[i];
+						String _resId = ids[i];
+						// 将资源加入备课夹
+						JPrepareContent cont = new JPrepareContent();
+						cont.setPreid(prepareId);
+						cont.setContid(Long.parseLong(_resId));
+						cont.setConttype(JPrepareConstant
+								.getContTypeByFromFlag(Integer.parseInt(_fromFlag)));
+						cont.setCreatetime(currentDate);
+						list.add(cont);
+					}
+					jPrepareService.addPrepareContentList(list);
 				}
 			}
 		}

@@ -33,4 +33,18 @@ public interface JPrepareContentMapper extends CoreMapper<JPrepareContent> {
      */
     public void removeMyPrepareContentResource(Long userId, Long contId, Integer contType);
 
+    
+    
+    
+    
+    /**
+     * 备课夹内容是否已经存在
+     * @return
+     */
+    public Boolean isPrepareContentExist( @Param("prepareId") Long prepareId,@Param("contId") Long contId, @Param("contType")  Integer contType);
+    
+    
+    
+    
+    
 }

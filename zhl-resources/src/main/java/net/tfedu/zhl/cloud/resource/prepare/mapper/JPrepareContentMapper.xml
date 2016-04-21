@@ -99,6 +99,11 @@
   
   
   
+  <select id="isPrepareContentExist" resultType="Boolean">
+  	select  id>0 from j_prepare_content  where flag = false and preid = #{prepareId} and contId = #{contId} and contType = #{contType} 
+  </select>
+  
+  
   
 
 </mapper>
