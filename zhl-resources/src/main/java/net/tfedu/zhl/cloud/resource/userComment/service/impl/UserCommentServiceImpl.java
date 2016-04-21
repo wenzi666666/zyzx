@@ -24,7 +24,9 @@ public class UserCommentServiceImpl implements UserCommentService {
     @Resource
     UserCommentMapper userCommentMapper;
 
-    // 增加一条用户评论/评分
+    /**
+     * 增加一条用户评论/评分
+     */
     @Override
     public void insertUserComment(long resId, long userId, String displayContent, int ascore, int fromFlag,
             int isScore) {
@@ -41,7 +43,9 @@ public class UserCommentServiceImpl implements UserCommentService {
         userCommentMapper.insertMyComment(map);
     }
 
-    // 修改用户评论
+    /**
+     *  修改用户评论
+     */
     @Override
     public void updateUserComment(String displayContent, long commentId) {
         HashMap<String, Object> map = new HashMap<String, Object>();
@@ -51,7 +55,9 @@ public class UserCommentServiceImpl implements UserCommentService {
         userCommentMapper.updateComment(map);
     }
 
-    // 删除用户评论
+    /**
+     * 删除用户评论
+     */
     @Override
     public void deleteUserComment(long commentId) {
     	
@@ -62,7 +68,9 @@ public class UserCommentServiceImpl implements UserCommentService {
         userCommentMapper.updateByPrimaryKeySelective(record);
     }
 
-    // 查询我的评论
+    /**
+     * 查询我的评论
+     */
     @Override
     public List<UserComment> getMyComments(int fromFlag, long resId, long userId) {
 
@@ -77,7 +85,9 @@ public class UserCommentServiceImpl implements UserCommentService {
         return userCommentMapper.getMyComments(map);
     }
 
-    // 查询他人评论
+    /**
+     *  查询他人评论
+     */
     @Override
     public List<UserComment> getOtherComments(int fromFlag, long resId, long userId) {
 

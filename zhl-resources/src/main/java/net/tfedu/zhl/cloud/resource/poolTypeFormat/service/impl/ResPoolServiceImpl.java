@@ -23,7 +23,9 @@ public class ResPoolServiceImpl implements ResPoolService {
     @Resource
     ResPoolMapper resPoolMapper;
 
-    // 查询所有资源库
+    /**
+     *  查询所有资源库
+     */
     @Override
     public List<ResPool> getAllPools() {
 

@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.resPreview;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.resPreview.controller.ResPreviewController;
@@ -23,10 +21,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 
 	/**
 	 * 查询一条资源的详细信息controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetOneResController() throws IOException {
+	public void testGetOneResController() throws Exception {
 
 		request.setParameter("resId", "870217");
 		request.setParameter("fromFlag", "3");
@@ -41,10 +39,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 根据resId，查询资源的所有版本目录
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetAllLists()throws IOException{
+	public void testGetAllLists()throws Exception{
 		request.setParameter("resId", "12");
 		request.setParameter("fromFlag", "0");
 		request.setParameter("curTfcode", "RJCZ010109");
@@ -58,10 +56,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 资源检索结果   的资源推荐列表
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetResRecommendation_search()throws IOException{
+	public void testGetResRecommendation_search()throws Exception{
 		
 		request.setParameter("resId", "3");
 		request.setParameter("fromFlag", "0");
@@ -79,10 +77,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 系统资源   的资源推荐列表
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetSysResRecommendation()throws IOException{
+	public void testGetSysResRecommendation()throws Exception{
 		
 		request.setParameter("resId", "3");
 		request.setParameter("fromFlag", "0");
@@ -102,10 +100,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 区本、校本资源     的资源推荐列表
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetDisResRecommendation()throws IOException{
+	public void testGetDisResRecommendation()throws Exception{
 		
 		request.setParameter("currentUserId", "390440126");
 		request.setParameter("resId", "870234");
@@ -125,10 +123,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 个人中心-我的上传  的资源推荐列表
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetResRecommendation_upload()throws IOException{
+	public void testGetResRecommendation_upload()throws Exception{
 		
 		request.setParameter("currentUserId", "390440126");
 		request.setParameter("resId", "164882577");

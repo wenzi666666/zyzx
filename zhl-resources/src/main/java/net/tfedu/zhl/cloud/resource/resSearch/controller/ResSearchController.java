@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.resSearch.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,8 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.LackOfSearchword;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.slf4j.Logger;
@@ -52,108 +52,86 @@ public class ResSearchController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping("/v1.0/resSearchResults")
     @ResponseBody
-    public ResultJSON getAllResources(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-
+    public ResultJSON getAllResources(HttpServletRequest request, HttpServletResponse response) throws Exception {
+       
         // 分页查询结果
         Pagination<ResSearchResultEntity> pagination = null;
 
-        try {
-
-            // 若当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	//获取文件服务器的访问url 
-            	String resServiceLocal = commonWebConfig.getResServiceLocal();
-				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				List<Integer> sys_from = resourceWebConfig.getSys_from(request);
-				int expire = resourceWebConfig.getExpire(request);
-				
-				// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
-				int fromFlag = 0;
-				
-				 // 检索的关键词
-                String searchKeyword = request.getParameter("searchKeyword");
-				
-                // 资源格式：全部，文本，图片......
-                String format = "全部";
-                
-                // 页码
-                int page = 1;
-                
-                // 每页记录数目
-                int perPage = 10;
-                
-                if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-                	fromFlag =  Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-                }         
-                
-                if(StringUtils.isNotEmpty(request.getParameter("format"))){
-                	format =  request.getParameter("format").toString().trim();
-                }
-                
-                if(StringUtils.isNotEmpty(request.getParameter("page"))){
-                	page =  Integer.parseInt(request.getParameter("page").toString().trim());
-                }
-                
-                if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
-                	perPage =  Integer.parseInt(request.getParameter("perPage").toString().trim());
-                }
-                
-                // 若输入的关键字为空，则返回为空
-                if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
-                	exception = CustomException.LACKOFSEARCHWORD; //异常信息，缺少检索关键词
-                else {
-                	
-					searchKeyword = searchKeyword.toString().trim();
-					
-                	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
-                            perPage,currentUserId,expire);
-                    
-                    //生成文件的缩略图路径
-                    ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
-                    
-                    logger.debug("检索关键字：" + searchKeyword);
-                    logger.debug("资源格式：" + format);
-                    logger.debug("资源来源fromFlag：" + fromFlag);
-                    logger.debug("检索结果的当前页：" + pagination.getPage());
-                    logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
-                    logger.debug("检索到的资源总页：" + pagination.getTotal());
-                    logger.debug("检索到的资源总数：" + pagination.getTotalLines());
-
-                    exception = CustomException.SUCCESS;
-				}
-
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // 封装结果集
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(pagination);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
+        //获取文件服务器的访问url 
+    	String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+		List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+		int expire = resourceWebConfig.getExpire(request);
+		
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+		// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
+		int fromFlag = 0;
+		
+		 // 检索的关键词
+        String searchKeyword = request.getParameter("searchKeyword");
+		
+        // 资源格式：全部，文本，图片......
+        String format = "全部";
+        
+        // 页码
+        int page = 1;
+        
+        // 每页记录数目
+        int perPage = 10;
+        
+        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+        	fromFlag =  Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+        } else {
+			throw new ParamsException();
+		}        
+        
+        if(StringUtils.isNotEmpty(request.getParameter("format"))){
+        	format =  request.getParameter("format").toString().trim();
+        } else {
+			throw new ParamsException();
+		}   
+        
+        if(StringUtils.isNotEmpty(request.getParameter("page"))){
+        	page =  Integer.parseInt(request.getParameter("page").toString().trim());
+        } else {
+			throw new ParamsException();
+		}   
+        
+        if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
+        	perPage =  Integer.parseInt(request.getParameter("perPage").toString().trim());
+        } else {
+			throw new ParamsException();
+		}   
+        
+        // 若输入的关键字为空，则返回为空
+        if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
+        	throw new LackOfSearchword(); //异常信息，缺少检索关键词
+        else {
+        	
+			searchKeyword = searchKeyword.toString().trim();
+			
+        	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
+                    perPage,currentUserId,expire);
+            
+            //生成文件的缩略图路径
+            ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
+            
+            logger.debug("检索关键字：" + searchKeyword);
+            logger.debug("资源格式：" + format);
+            logger.debug("资源来源fromFlag：" + fromFlag);
+            logger.debug("检索结果的当前页：" + pagination.getPage());
+            logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
+            logger.debug("检索到的资源总页：" + pagination.getTotal());
+            logger.debug("检索到的资源总数：" + pagination.getTotalLines());
+            
+            return ResultJSON.getSuccess(pagination);
         }
-
-        return resultJSON;
     }
     
     /**
@@ -161,70 +139,42 @@ public class ResSearchController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping("/v1.0/resSearchResults/formats")
     @ResponseBody
-    public ResultJSON getResFormats(HttpServletRequest request,HttpServletResponse response)throws IOException{
-    	 /**
-         * 返回json的结果对象
-         */
-        ResultJSON resultJSON = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
+    public ResultJSON getResFormats(HttpServletRequest request,HttpServletResponse response)throws Exception{
+   
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
         
         List<String> resultList = new ArrayList<String>();
-    	try {
-    		
-    		// 若当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-            	
-            	// 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
-            	int fromFlag = -1; //默认为全部
-            	
-            	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
-            	
-            	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-            		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-            	}
-
-                // 检索的关键词
-                String searchKeyword = "";
-                if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
-                	searchKeyword = request.getParameter("searchKeyword").toString().trim();
-                }
-                
-                // 若输入的关键字为空，则返回为空
-                if (searchKeyword == null || searchKeyword.length() == 0)
-                	exception = CustomException.LACKOFSEARCHWORD; //异常信息，缺少检索关键词
-                else {
-                	
-                	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
-                    
-                    exception = CustomException.SUCCESS;
-                }
-            }  else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			// 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-		} finally {
-			
-			// 封装结果集
-            resultJSON.setCode(exception.getCode());
-            resultJSON.setData(resultList);
-            resultJSON.setMessage(exception.getMessage());
-            resultJSON.setSign("");
-		}
+        
+        // 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
+    	int fromFlag = -1; //默认为全部
     	
-    	return resultJSON;
+    	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
+    		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
+    	} else {
+			throw new ParamsException();
+		}
+
+        // 检索的关键词
+        String searchKeyword = "";
+        if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
+        	searchKeyword = request.getParameter("searchKeyword").toString().trim();
+        }
+        
+        // 若输入的关键字为空，则返回为空
+        if (searchKeyword == null || searchKeyword.length() == 0)
+        	throw new LackOfSearchword(); //异常信息，缺少检索关键词
+        else {
+        	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
+        }
+        
+        return ResultJSON.getSuccess(resultList);
     }
 
 }

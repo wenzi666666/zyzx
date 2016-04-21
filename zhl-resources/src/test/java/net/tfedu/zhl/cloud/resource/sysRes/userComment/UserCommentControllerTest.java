@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.userComment;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.userComment.controller.UserCommentController;
@@ -23,10 +21,10 @@ public class UserCommentControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 添加评论
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testAddUserComments()throws IOException{
+	public void testAddUserComments()throws Exception{
 		request.setParameter("resId", "31250");
 		request.setParameter("displayContent", "It is good.");
 		request.setParameter("fromFlag", "0");
@@ -42,10 +40,10 @@ public class UserCommentControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 修改评论
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testUpdateUserComments()throws IOException{
+	public void testUpdateUserComments()throws Exception{
 		request.setParameter("_method", "PATCH");
 		request.setParameter("commentId", "10600");
 		request.setParameter("displayContent", "It is good.");
@@ -60,10 +58,10 @@ public class UserCommentControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 查询我的评论
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetMycomments()throws IOException{
+	public void testGetMycomments()throws Exception{
 		request.setParameter("resId", "31250");
 		request.setParameter("fromFlag", "0");
 		
@@ -76,10 +74,10 @@ public class UserCommentControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 查询其他人的评论
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetOtherComments()throws IOException{
+	public void testGetOtherComments()throws Exception{
 		request.setParameter("resId", "31250");
 		request.setParameter("fromFlag", "0");
 		
@@ -92,10 +90,10 @@ public class UserCommentControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 删除评论
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testDeleteUserComments()throws IOException{
+	public void testDeleteUserComments()throws Exception{
 		request.setParameter("_method", "DELETE");
 		request.setParameter("commentId", "10600");
 		

@@ -10,18 +10,22 @@ import java.util.List;
  */
 public interface ResFormatService {
 
-    // 根据资源库id，得到父类型的所有子类型及其自身
-    public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType);
 
-    // 系统资源，根据资源ids和typeIds，查询得到资源格式
-    public List<String> getSysResFormatsByMType(List<Long> resourceIds, List<Integer> typeIds);
-
-    // 区本校本资源，根据资源ids和typeIds，查询得到资源格式
-    public List<String> getDisResFormatsByMType(List<Long> resourceIds, int fromFlag);
-
-    // 查询区本校本资源格式
+    /**
+     * 查询区本校本资源格式
+     * @param tfcode
+     * @param fromFlag
+     * @return
+     */
     public List<String> getDisResFormats(String tfcode, int fromFlag);
 
-    // 获得系统资源格式
+    /**
+     * 获得系统资源格式
+     * @param poolId
+     * @param pTfcode
+     * @param typeId
+     * @param sys_from
+     * @return
+     */
     public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from);
 }

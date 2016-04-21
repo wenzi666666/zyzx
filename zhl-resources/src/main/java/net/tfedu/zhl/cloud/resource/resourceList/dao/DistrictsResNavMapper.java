@@ -10,6 +10,4 @@ public interface DistrictsResNavMapper extends CoreMapper<DistrictsResNav> {
 	 */
 	public void insertWithoutSyscourseId(DistrictsResNav nav);
 	
-	
-	
 }

@@ -52,7 +52,9 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     @Resource ZAssetSyscourseMapper zAssetSyscourseMapper;
     
 
-    // 根据resId和fromFlag，查询资源具体信息
+    /**
+     * 根据resId和fromFlag，查询资源具体信息
+     */
     @Override
     public ResPreviewInfo getResPreviewInfo(long resId, long userId,int fromFlag) {
         ResPreviewInfo info = null;
@@ -76,7 +78,9 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         return info;
     }
 
-    // 对一个资源进行预览时，查询该资源所在目录
+    /**
+     * 对一个资源进行预览时，查询该资源所在目录
+     */
     @Override
     public List<List<ResNavEntity>> getAllResNavs(long resId, int fromFlag, String curTfcode) {
     	List<List<ResNavEntity>> info = new ArrayList<List<ResNavEntity>>();
