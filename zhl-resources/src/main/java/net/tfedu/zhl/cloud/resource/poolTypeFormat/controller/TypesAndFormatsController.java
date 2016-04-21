@@ -217,20 +217,8 @@ public class TypesAndFormatsController {
         // 格式
         List<String> formats = new ArrayList<String>();
         String tfcode = ControllerHelper.getParameter(request, "tfcode");
-    	int fromFlag = 3;
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	
-//    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-//    		tfcode = request.getParameter("tfcode").toString().trim();
-//    	} else {
-//			throw new ParamsException();
-//		}
-    	
-        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-        } else {
-			throw new ParamsException();
-		}
-
         formats = resFormatService.getDisResFormats(tfcode, fromFlag);
         
         return ResultJSON.getSuccess(formats);
