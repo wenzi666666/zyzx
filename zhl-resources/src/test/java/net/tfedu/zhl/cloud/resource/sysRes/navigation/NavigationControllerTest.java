@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.navigation;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.navigation.controller.NavigationController;
@@ -23,10 +21,10 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 学段controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void getAllTermsTest()throws IOException{
+	public void getAllTermsTest()throws Exception{
 		
         ResultJSON json = navigationController.selectAllTerms(request, response);
 
@@ -36,10 +34,10 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 学科controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testGetAllSubjectsByTerm() throws IOException {
+    public void testGetAllSubjectsByTerm() throws Exception {
         request.setParameter("termId", "1");
       
         ResultJSON json = navigationController.getAllSubjectsByTerm(request, response);
@@ -50,10 +48,10 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 根据学段、学科查询版本controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testEditionController() throws IOException {
+    public void testEditionController() throws Exception {
 
         request.setParameter("termId", "1");
         request.setParameter("subjectId", "1");
@@ -67,10 +65,10 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 根据版本id，查询教材controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testBooksController() throws IOException {
+    public void testBooksController() throws Exception {
        
         request.setParameter("pnodeId", "101140105");
         
@@ -84,10 +82,10 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 根据父结点id，目录树
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testTreesController() throws IOException {
+    public void testTreesController() throws Exception {
 		
 		request.setParameter("pnodeId", "67527");
 

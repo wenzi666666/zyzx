@@ -12,6 +12,11 @@ import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
  */
 public interface BookService {
 
-    // 根据特定版本，获得版本下的所有教材
+    /**
+     *  根据特定版本，获得版本下的所有教材
+     * @param pnodeId
+     * @param proCode
+     * @return
+     */
     public List<JSyscourse> getAllBooks(long pnodeId, String proCode);
 }

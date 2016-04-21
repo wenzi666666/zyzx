@@ -11,13 +11,20 @@ import net.tfedu.zhl.cloud.resource.navigation.service.BookService;
 
 import org.springframework.stereotype.Service;
 
+/**
+ * 获取教材
+ * @author WeiCuicui
+ *
+ */
 @Service("bookService")
 public class BookServiceImpl implements BookService {
 
     @Resource
     JSyscourseMapper jSyscourseMapper;
 
-    // 获得所有教材信息
+    /**
+     *  获得所有教材信息
+     */
     @Override
     public List<JSyscourse> getAllBooks(long pnodeId, String proCode) {
 

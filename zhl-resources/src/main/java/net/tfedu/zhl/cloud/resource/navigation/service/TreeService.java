@@ -12,13 +12,6 @@ import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
  */
 public interface TreeService {
 
-    /**
-     * 查询某父节点下的直接子节点(即不包含孙子节点等)
-     * 
-     * @param pid
-     * @return
-     */
-    public List<TreeNode> getTopChildren(long pnodeId);
 
     /**
      * 根据提供的节点集合递归查询集合里每个节点的子节点，最终统一返回所有的子节点

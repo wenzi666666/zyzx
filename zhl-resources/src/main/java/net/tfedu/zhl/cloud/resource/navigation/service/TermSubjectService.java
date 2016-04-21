@@ -1,7 +1,7 @@
 package net.tfedu.zhl.cloud.resource.navigation.service;
 
-import net.tfedu.zhl.core.service.BaseService;
-import net.tfedu.zhl.helper.ResultJSON;
+import java.util.List;
+
 import net.tfedu.zhl.sso.subject.entity.JSubject;
 
 /**
@@ -10,9 +10,13 @@ import net.tfedu.zhl.sso.subject.entity.JSubject;
  * @author WeiCuicui
  *
  */
-public interface TermSubjectService extends BaseService<JSubject> {
+public interface TermSubjectService {
 
-    // 查询学段下的所有学科
-    public ResultJSON getAllSubjectsByTerm(Long termId);
+    /**
+     *  查询学段下的所有学科
+     * @param termId
+     * @return
+     */
+    public List<JSubject> getAllSubjectsByTerm(Long termId);
 
 }

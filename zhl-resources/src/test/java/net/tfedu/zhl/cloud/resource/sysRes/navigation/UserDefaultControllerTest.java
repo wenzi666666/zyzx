@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.navigation;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.navigation.controller.NavigationController;
@@ -19,10 +17,10 @@ public class UserDefaultControllerTest extends BaseControllerTestCase {
     /**
      * 查询用户历史记录
      * 
-     * @throws IOException
+     * @throws Exception
      */
     @Test
-    public void testGetUserDefaultController() throws IOException {
+    public void testGetUserDefaultController() throws Exception {
        
         ResultJSON json = navigationController.getUserDefault(request, response);
         JsonUtil.toJsonString(json);
@@ -32,10 +30,10 @@ public class UserDefaultControllerTest extends BaseControllerTestCase {
     /**
      * 修改用户历史记录
      * 
-     * @throws IOException
+     * @throws Exception
      */
     @Test
-    public void testUpdateUserDefaultController() throws IOException {
+    public void testUpdateUserDefaultController() throws Exception {
        
         request.setParameter("tfcode", "SHXX02010101");
 

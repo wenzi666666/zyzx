@@ -12,7 +12,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
 import org.springframework.stereotype.Service;
 
 /**
- * 根据学段、学科，查询所有教材版本
+ * 根据学段、学科，查询所有版本
  * 
  * @author WeiCuicui
  *
@@ -23,9 +23,14 @@ public class EditionServiceImpl implements EditionService {
     @Resource
     JSyscourseMapper jSyscourseMapper;
 
-    // 参数 map中存放 termId，subjectId
+    /**
+     *  根据学段、学科，查询所有版本
+     */
     @Override
-    public List<JSyscourse> getAllEditionsByTermAndSub(HashMap<String, Object> map) {
+    public List<JSyscourse> getAllEditionsByTermAndSub(long termId,long subjectId) {
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("termId", termId);
+        map.put("subjectId", subjectId);
         return jSyscourseMapper.getAllEditions(map);
     }
 

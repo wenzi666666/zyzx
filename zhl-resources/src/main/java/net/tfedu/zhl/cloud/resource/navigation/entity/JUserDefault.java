@@ -10,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * 用户历史选择信息实体类
+ * @author WeiCuicui
+ *
+ */
 @Table(name = "j_syscourse_user_default")
 public class JUserDefault implements Serializable {
     private static final long serialVersionUID = 8160030266758656476L;

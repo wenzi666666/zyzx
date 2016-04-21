@@ -1,8 +1,5 @@
 package net.tfedu.zhl.cloud.resource.navigation.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,7 +17,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.term.entity.JTerm;
@@ -65,43 +62,15 @@ public class NavigationController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/terms", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON selectAllTerms(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
+	public ResultJSON selectAllTerms(HttpServletRequest request, HttpServletResponse response) throws Exception {
+     
+        List<JTerm> terms = termService.selectAll();
 
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        List<JTerm> terms = null;
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-                //terms = termService.selectAll();
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 获得异常信息并输出
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            result.setCode(exception.getCode());
-            result.setData(terms);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+        return ResultJSON.getSuccess(terms);
 	 }
 	
 	 /**
@@ -109,48 +78,23 @@ public class NavigationController {
 	  * @param request
 	  * @param response
 	  * @return
-	  * @throws IOException
+	  * @throws Exception
 	  */
     @RequestMapping(value = "/v1.0/subjects", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getAllSubjectsByTerm(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
+            throws Exception {
+    	
         List<JSubject> subjects = null;
-        try {
-
-            if (exception == null && currentUserId != null) {
-                // 接收到的termId参数
-            	long termId = 0;
-            	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
-            		termId = Long.parseLong(request.getParameter("termId").toString().trim());
-            	}
-                //subjects = termSubjectService.getAllSubjectsByTerm(termId);
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 捕获异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            result.setCode(exception.getCode());
-            result.setData(subjects);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-        return result;
+        
+    	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
+    		long termId = Long.parseLong(request.getParameter("termId").toString().trim());
+    		subjects = termSubjectService.getAllSubjectsByTerm(termId);
+    	} else {
+			throw new ParamsException();
+		}
+    	
+    	return ResultJSON.getSuccess(subjects);
     }
     
     /**
@@ -158,60 +102,31 @@ public class NavigationController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/editions", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getAllEditions(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        List<JSyscourse> editions = null;
-        try {
-            if (currentUserId != null && exception == null) {
-            	 
-            	long termId = 0;
-            	long subjectId = 0;
-            	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
-            		termId = Long.parseLong(request.getParameter("termId").toString().trim());
-            	}
-            	
-            	if(StringUtils.isNotEmpty(request.getParameter("subjectId"))){
-            		subjectId = Long.parseLong(request.getParameter("subjectId").toString().trim());
-            	}
-
-                HashMap<String, Object> map = new HashMap<String, Object>();
-                map.put("termId", termId);
-                map.put("subjectId", subjectId);
-
-                // 根据学段、学科，查询所有教材版本
-                editions = editionService.getAllEditionsByTermAndSub(map);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 获得异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-
-        } finally {
-            result.setCode(exception.getCode());
-            result.setData(editions);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+    public ResultJSON getAllEditions(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+    	List<JSyscourse> editions = null;
+    	
+    	long termId = 0;
+    	long subjectId = 0;
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
+    		termId = Long.parseLong(request.getParameter("termId").toString().trim());
+    	} else {
+    		throw new ParamsException();
+		}
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("subjectId"))){
+    	    subjectId = Long.parseLong(request.getParameter("subjectId").toString().trim());
+    	} else {
+    		throw new ParamsException();
+		}
+    	
+    	editions = editionService.getAllEditionsByTermAndSub(termId, subjectId);
+    	return ResultJSON.getSuccess(editions);
     }
 
 
@@ -221,58 +136,30 @@ public class NavigationController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/books", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getAllBooksByEdition(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
+            throws Exception {
+    	
+    	List<JSyscourse> books = null;
 
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
+    	//产品码
+    	String proCode = resourceWebConfig.getProCode();
+    	
+    	//父结点id
+    	long pnodeId = 0;
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
+    		pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+    		// 根据所属版本和产品编码，查询所有的教材
+            books = bookService.getAllBooks(pnodeId, proCode);
+    	} else {
+			throw new ParamsException();
+		}
 
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-
-        List<JSyscourse> books = null;
-        try {
-
-            if (currentUserId != null && exception == null) {
-            	
-            	String proCode = resourceWebConfig.getProCode();
-            	
-            	long pnodeId = 0;
-            	
-            	if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
-            		pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
-            	}
-
-                // 根据所属版本和产品编码，查询所有的教材
-                books = bookService.getAllBooks(pnodeId, proCode);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-
-            // 记录异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            result.setCode(exception.getCode());
-            result.setData(books);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+        return ResultJSON.getSuccess(books);
     }
     
     /**
@@ -281,162 +168,75 @@ public class NavigationController {
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/contents", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getTreeNodes(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-        List<TreeNode> resultNodes = new ArrayList<TreeNode>();
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-                // 接收传递过来的父结点id
-                long pnodeId = 0;
-                if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
-                	 pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
-            	}
-
-                // 加载父结点的所有子结点（递归）
-                resultNodes = treeService.geTreeNodes(pnodeId);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-
-            // 补货异常信息
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-
-        } finally {
-            result.setCode(exception.getCode());
-            result.setData(resultNodes);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+    public ResultJSON getTreeNodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	
+    	List<TreeNode> nodes = null;
+    	// 接收传递过来的父结点id
+        long pnodeId = 0;
+        if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
+        	 pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
+        	 // 加载父结点的所有子结点（递归）
+             nodes = treeService.geTreeNodes(pnodeId);
+    	} else {
+			throw new ParamsException();
+		}
+        
+        return ResultJSON.getSuccess(nodes);
     }
     
     /**
-     *  查询用户历史选择 使用GET方法
+     * 查询用户历史选择 使用GET方法
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/history", method = RequestMethod.GET)
     @ResponseBody
-    public ResultJSON getUserDefault(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResultJSON getUserDefault(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
-
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
-
-        // 定义用户历史选择
-        JUserDefault userDefault = null;
-        try {
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-               
-            	int type = resourceWebConfig.getType(request);
-            	long userId = currentUserId;
-               
-                userDefault = userDefaultService.getUserHistoryDefault(userId,type);
-
-                exception = CustomException.SUCCESS;
-            } else {
-            	exception = CustomException.INVALIDACCESSTOKEN;
-			}
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 获得异常信息，并打印
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-
-            e.printStackTrace();
-        } finally {
-            // 封装result
-            result.setCode(exception.getCode());
-            result.setData(userDefault);
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+    	//课程目录类型
+    	int type = resourceWebConfig.getType(request);
+    	// 当前登录用户id
+    	long userId = (Long) request.getAttribute("currentUserId");
+       
+    	JUserDefault userDefault = userDefaultService.getUserHistoryDefault(userId,type);
+    	
+    	return ResultJSON.getSuccess(userDefault);
     }
 
     /**
-     *  修改、增加用户历史选择
+     * 修改、增加用户历史选择
      * @param request
      * @param response
      * @return
-     * @throws IOException
+     * @throws Exception
      */
     @RequestMapping(value = "/v1.0/history", method = RequestMethod.POST)
     @ResponseBody
-    public ResultJSON updateUserDefault(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public ResultJSON updateUserDefault(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-        /**
-         * 返回json的结果对象
-         */
-        ResultJSON result = new ResultJSON();
+    	// 用户id
+        long userId = (Long) request.getAttribute("currentUserId");
+        
+        int type = resourceWebConfig.getType(request);
 
-        // 异常
-        CustomException exception = (CustomException) request.getAttribute(CustomException.request_key);
-        // 当前登录用户id
-        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        // 结点tfcode
+        String tfcode = request.getParameter("tfcode");
+        
+        if (StringUtils.isNotEmpty(tfcode)) {
+        	tfcode = request.getParameter("tfcode").toString().trim();
+        	// 修改用户历史选择
+            userDefaultService.updateUserHistoryDefault(userId,tfcode,type);
+        } else {
+			throw new ParamsException();
+		}
 
-        try {
-
-            // 当前用户已经登录系统
-            if (exception == null && currentUserId != null) {
-                // 用户id
-                long userId = currentUserId;
-                
-                int type = resourceWebConfig.getType(request);
-
-                // 结点tfcode
-                String tfcode = request.getParameter("tfcode");
-                           
-                // 修改用户历史选择
-                userDefaultService.updateUserHistoryDefault(userId,tfcode,type);
-    
-                exception = CustomException.SUCCESS;
-            }
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            // 获得异常信息，并打印
-            exception = CustomException.getCustomExceptionByCode(e.getMessage());
-            e.printStackTrace();
-        } finally {
-            // 封装result
-            result.setCode(exception.getCode());
-            result.setData("");
-            result.setMessage(exception.getMessage());
-            result.setSign("");
-        }
-
-        return result;
+        return ResultJSON.getSuccess("");
     }
 
 }

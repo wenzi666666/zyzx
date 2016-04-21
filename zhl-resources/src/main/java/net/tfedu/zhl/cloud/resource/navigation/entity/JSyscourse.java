@@ -8,7 +8,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+/**
+ * 课程实体类
+ * @author WeiCuicui
+ *
+ */
 @Table(name = "j_syscourse")
 public class JSyscourse implements Serializable {
 
