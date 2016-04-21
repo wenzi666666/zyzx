@@ -1,5 +1,6 @@
 package net.tfedu.zhl.core.interceptor;
 
+import java.io.IOException;
 import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,12 @@ import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
 
+/**
+ * 全局错误处理
+ * 
+ * @author bruce
+ *
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -45,6 +52,15 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
         result = new ResultJSON("Server Error", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
+        e.printStackTrace();
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(value = { IOException.class })
+    @ResponseBody
+    public ResultJSON handleRuntimeIOException(HttpServletRequest request, HttpServletResponse response, Exception e) {
+        result = new ResultJSON("IO Error", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
         e.printStackTrace();
         return result;
     }
@@ -129,27 +145,23 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
-    
-    
+
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(NoTokenException.class)
     @ResponseBody
     public ResultJSON handleNoTokenException(HttpServletRequest request, HttpServletResponse response,
-    		NoTokenException e) {
+            NoTokenException e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
-    
-    
-    
+
     @ResponseStatus(value = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(PrepareContentExistException.class)
     @ResponseBody
     public ResultJSON handlePrepareContentExistException(HttpServletRequest request, HttpServletResponse response,
-    		PrepareContentExistException e) {
+            PrepareContentExistException e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
-    
-    
+
 }
