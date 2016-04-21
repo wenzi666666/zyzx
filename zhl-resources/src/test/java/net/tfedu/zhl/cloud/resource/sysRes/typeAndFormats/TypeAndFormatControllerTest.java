@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.sysRes.typeAndFormats;
 
-import java.io.IOException;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.controller.TypesAndFormatsController;
@@ -18,10 +16,10 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 查询所有的资源库 controller单元测试
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-    public void testGetAllTerms() throws IOException {
+    public void testGetAllTerms() throws Exception {
       
         ResultJSON json = typesAndFormatsController.getAllPools(request, response);
 
@@ -34,7 +32,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 * 系统资源   类型
 	 */
 	@Test
-	public void testGetSysTypes()throws IOException{
+	public void testGetSysTypes()throws Exception{
 		
 		request.setParameter("pTfcode", "RJGZ040101"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
@@ -48,7 +46,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 * 系统资源   类型  e备课
 	 */
 	@Test
-	public void testGetSysTypes_ePrepare()throws IOException{
+	public void testGetSysTypes_ePrepare()throws Exception{
 		
 		request.setParameter("pTfcode", "RJGZ040101"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
@@ -61,10 +59,10 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 系统资源   格式
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetSysFormats()throws IOException{
+	public void testGetSysFormats()throws Exception{
 		request.setParameter("pTfcode", "RJGZ040101");
 		request.setParameter("typeId", "0");
 		request.setParameter("poolId", "0");
@@ -76,10 +74,10 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 区本、校本资源   类型
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetDisTypes()throws IOException{
+	public void testGetDisTypes()throws Exception{
 		request.setParameter("tfcode", "RJGZ040101");
 		request.setParameter("fromFlag", "3");
 		
@@ -90,10 +88,10 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 区本、校本资源   类型 e备课
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetDisTypes_ePrepare()throws IOException{
+	public void testGetDisTypes_ePrepare()throws Exception{
 		request.setParameter("tfcode", "RJGZ040101");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("isEPrepare", "1");
@@ -105,10 +103,10 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	
 	/**
 	 * 区本、校本资源   格式
-	 * @throws IOException
+	 * @throws Exception
 	 */
 	@Test
-	public void testGetDisFormats()throws IOException{
+	public void testGetDisFormats()throws Exception{
 		request.setParameter("tfcode", "RJGZ040101");
 		request.setParameter("fromFlag", "3");
 		
