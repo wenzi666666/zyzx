@@ -130,7 +130,7 @@ public class ResSearchController {
         String searchKeyword = request.getParameter("searchKeyword");
       
         // 若输入的关键字为空，则返回为空
-        if (searchKeyword == null || searchKeyword.length() == 0)
+        if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
         	throw new LackOfSearchword(); //异常信息，缺少检索关键词
         else {
         	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
