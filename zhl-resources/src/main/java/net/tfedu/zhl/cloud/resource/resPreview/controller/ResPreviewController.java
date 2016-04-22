@@ -16,7 +16,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
-import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.slf4j.Logger;
@@ -68,24 +68,10 @@ public class ResPreviewController {
 		// 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
     	// 资源来源
-    	int fromFlag = 0;
-    	
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	// 资源id
-    	long resId = 0;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-    		resId = Long.parseLong(request.getParameter("resId").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-    		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-    	}  else {
-			throw new ParamsException();
-		}
-    	 
-
+    	long resId = ControllerHelper.getLongParameter(request, "resId");
+ 
         // 查询一条资源的详细信息
         previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);
         
@@ -110,30 +96,11 @@ public class ResPreviewController {
         List<List<ResNavEntity>> result = new ArrayList<List<ResNavEntity>>();
 
         // 资源来源
-    	int fromFlag = 0;
-    	
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	// 资源id
-    	long resId = 0;
-    	
+    	long resId = ControllerHelper.getLongParameter(request, "resId");
     	 // 当前所在结点
-    	String curTfcode = "";
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-    		resId = Long.parseLong(request.getParameter("resId").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-    		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	 
-    	if(StringUtils.isNotEmpty(request.getParameter("curTfcode"))){
-    		curTfcode = request.getParameter("curTfcode").toString().trim();
-    	} else {
-			throw new ParamsException();
-		}
+    	String curTfcode = ControllerHelper.getParameter(request, "curTfcode");
     	 
         // 查询一条资源的所有版本目录
         result = resPreviewService.getAllResNavs(resId, fromFlag, curTfcode);
@@ -162,64 +129,24 @@ public class ResPreviewController {
 		
 		// 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
-    	
+
+    	String tfcode = "";
+
     	//当前预览的资源id
-    	long resId = 0;
+    	long resId = ControllerHelper.getLongParameter(request, "resId");
     	
     	//资源来源
-    	int fromFlag = 0;
-    	
-    	//资源的tfcode
-    	String tfcode = "";
-    	
-    	//资源类型id，默认为全部
-    	int typeId = 0;
-    	
-    	//资源库id，默认为全部
-    	long poolId = 0;
-    	
-    	//检索关键字
-    	String searchKeyword = "";
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	
     	//当前页码
-    	int page = 1;
+    	int page = ControllerHelper.getIntParameter(request, "page");
     	
     	//每页多少条记录
-    	int perPage = 10;
-    	
-    	//排序方式
-    	int orderBy = 0;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("resId"))){
-    		resId = Long.parseLong(request.getParameter("resId").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-    		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("page"))){
-    		page = Integer.parseInt(request.getParameter("page").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
-    		perPage = Integer.parseInt(request.getParameter("perPage").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
+    	int perPage = ControllerHelper.getIntParameter(request, "perPage");   
     	
     	if(StringUtils.isNotEmpty(request.getParameter("isSearch"))){ //从资源检索页面跳转到预览页面的
-    		
-    		if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
-    			searchKeyword = request.getParameter("searchKeyword").toString().trim();
-    		}   
-    		
+    		//检索关键字
+        	String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword"); 
     		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
     		
     	} else { //从自建资源、系统资源、区本资源、校本资源跳转过来的
@@ -229,24 +156,20 @@ public class ResPreviewController {
     			
     		} else { //系统、区本、校本
     			
-    			if(StringUtils.isNotEmpty(request.getParameter("orderBy"))){
-    				orderBy = Integer.parseInt(request.getParameter("orderBy").toString().trim());
-    			}
-    			
-    			if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-            		tfcode = request.getParameter("tfcode").toString().trim();
-            	}
-        		if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-            		typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-            	}
-            	
+    			//排序方式
+    	    	int orderBy = ControllerHelper.getIntParameter(request, "orderBy");
+    	    	
+    	    	//资源的tfcode
+    	    	tfcode = ControllerHelper.getParameter(request, "tfcode");
+    	    	
+    			//资源类型id，默认为全部
+    	    	int typeId = ControllerHelper.getIntParameter(request, "typeId");
+
         		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
-        			poolId = Integer.parseInt(request.getParameter("poolId").toString().trim());
-        			
+        			//资源库id，默认为全部
+        	    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
         			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy);
-        			
         		} else { //区本、校本资源
-        			
 					pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage,orderBy);
 				}
 			}

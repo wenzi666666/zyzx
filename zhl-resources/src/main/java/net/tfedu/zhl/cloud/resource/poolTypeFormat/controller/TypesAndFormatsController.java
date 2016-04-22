@@ -13,8 +13,6 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -82,25 +80,13 @@ public class TypesAndFormatsController {
         List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 
         //父结点tfcode
-    	String pTfcode = "";
+    	String pTfcode = ControllerHelper.getParameter(request, "pTfcode");
     	
     	//e备课需要排除的类型
     	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
     	
     	//资源库id
-    	long poolId = 0;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
-    		pTfcode = request.getParameter("pTfcode").toString().trim();
-    	} else {
-    		throw new ParamsException();
-    	}
-       
-        if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
-        	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-        } else {
-			throw new ParamsException();
-		}
+    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
     	
         if(request.getParameter("isEPrepare") != null){//e备课
         	//新的类型查询方法（去除一些类型）
@@ -129,28 +115,9 @@ public class TypesAndFormatsController {
         //系统资源来源
         List<Integer> sys_from = resourceWebConfig.getSys_from(request);
         
-    	String pTfcode = "";
-    	int typeId = 0;
-    	long poolId = 0;
-    	if(StringUtils.isNotEmpty(request.getParameter("pTfcode"))){
-    		pTfcode = request.getParameter("pTfcode").toString().trim();
-    	} else {
-			throw new ParamsException();
-		}
-    	
-    	
-        if(StringUtils.isNotEmpty(request.getParameter("typeId"))){
-        	typeId = Integer.parseInt(request.getParameter("typeId").toString().trim());
-        } else {
-			throw new ParamsException();
-		}
-        
-        
-        if(StringUtils.isNotEmpty(request.getParameter("poolId"))){
-        	poolId = Long.parseLong(request.getParameter("poolId").toString().trim());
-        } else {
-			throw new ParamsException();
-		}
+    	String pTfcode = ControllerHelper.getParameter(request, "pTfcode");
+    	int typeId = ControllerHelper.getIntParameter(request, "typeId");
+    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
 
         // 根据 resourceIds和typeIds，查询资源格式
         formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
@@ -175,23 +142,11 @@ public class TypesAndFormatsController {
         //e备课需要排除的资源类型
         List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 
-    	String tfcode = "";
-    	
+    	String tfcode = ControllerHelper.getParameter(request, "tfcode");
+
     	//资源来源 3 校本；4 区本
-    	int fromFlag = 3;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("tfcode"))){
-    		tfcode = request.getParameter("tfcode").toString().trim();
-    	} else {
-			throw new ParamsException();
-		}
-    	
-        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-        	fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-        } else {
-			throw new ParamsException();
-		}
-        
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
+   
         if(request.getParameter("isEPrepare") != null){//而备课
         	//新的类型查询方法（去除一些类型）
         	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);

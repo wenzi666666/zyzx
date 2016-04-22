@@ -12,10 +12,9 @@ import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.LackOfSearchword;
-import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.slf4j.Logger;
@@ -71,51 +70,25 @@ public class ResSearchController {
         Long currentUserId = (Long) request.getAttribute("currentUserId");
 		
 		// 检索范围 0 全部资源 1 系统资源 3 校本资源 4 区本资源
-		int fromFlag = 0;
+		int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
 		
 		 // 检索的关键词
         String searchKeyword = request.getParameter("searchKeyword");
 		
         // 资源格式：全部，文本，图片......
-        String format = "全部";
+        String format = ControllerHelper.getParameter(request, "format");
         
         // 页码
-        int page = 1;
+        int page = ControllerHelper.getIntParameter(request, "page");
         
         // 每页记录数目
-        int perPage = 10;
-        
-        if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-        	fromFlag =  Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-        } else {
-			throw new ParamsException();
-		}        
-        
-        if(StringUtils.isNotEmpty(request.getParameter("format"))){
-        	format =  request.getParameter("format").toString().trim();
-        } else {
-			throw new ParamsException();
-		}   
-        
-        if(StringUtils.isNotEmpty(request.getParameter("page"))){
-        	page =  Integer.parseInt(request.getParameter("page").toString().trim());
-        } else {
-			throw new ParamsException();
-		}   
-        
-        if(StringUtils.isNotEmpty(request.getParameter("perPage"))){
-        	perPage =  Integer.parseInt(request.getParameter("perPage").toString().trim());
-        } else {
-			throw new ParamsException();
-		}   
+        int perPage = ControllerHelper.getIntParameter(request, "perPage");
         
         // 若输入的关键字为空，则返回为空
         if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
         	throw new LackOfSearchword(); //异常信息，缺少检索关键词
         else {
-        	
 			searchKeyword = searchKeyword.toString().trim();
-			
         	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
                     perPage,currentUserId,expire);
             
@@ -151,22 +124,11 @@ public class ResSearchController {
         List<String> resultList = new ArrayList<String>();
         
         // 检索范围 -1 全部  0 全部资源 1 系统资源 3 校本资源 4 区本资源
-    	int fromFlag = -1; //默认为全部
-    	
+    	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("fromFlag"))){
-    		fromFlag = Integer.parseInt(request.getParameter("fromFlag").toString().trim());
-    	} else {
-			throw new ParamsException();
-		}
-
         // 检索的关键词
-        String searchKeyword = "";
-        if(StringUtils.isNotEmpty(request.getParameter("searchKeyword"))){
-        	searchKeyword = request.getParameter("searchKeyword").toString().trim();
-        }
-        
+        String searchKeyword = request.getParameter("searchKeyword");
+      
         // 若输入的关键字为空，则返回为空
         if (searchKeyword == null || searchKeyword.length() == 0)
         	throw new LackOfSearchword(); //异常信息，缺少检索关键词

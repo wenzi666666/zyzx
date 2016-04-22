@@ -90,6 +90,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		request.setParameter("poolId", "0");
 		request.setParameter("tfcode", "RJCZ010109");
 		request.setParameter("typeId", "0");
+		request.setParameter("orderBy", "0");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
@@ -113,6 +114,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		
 		request.setParameter("tfcode", "CZYW010101");
 		request.setParameter("typeId", "0");
+		request.setParameter("orderBy", "0");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
