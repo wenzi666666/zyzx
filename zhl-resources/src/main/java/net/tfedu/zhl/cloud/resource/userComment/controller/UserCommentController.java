@@ -45,7 +45,7 @@ public class UserCommentController {
     	// 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");       
     	// 方法
-        String _method = ControllerHelper.getParameter(request, "_method");
+        String _method = request.getParameter("_method");
         
         // 修改用户评论
         if (StringUtils.isNotEmpty(_method) && RequestMethod.PATCH.name().equals(_method)) {// 修改用户评论
