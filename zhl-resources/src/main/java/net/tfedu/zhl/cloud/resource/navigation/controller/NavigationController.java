@@ -16,8 +16,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.term.entity.JTerm;
@@ -87,13 +86,8 @@ public class NavigationController {
     	
         List<JSubject> subjects = null;
         
-    	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
-    		long termId = Long.parseLong(request.getParameter("termId").toString().trim());
-    		subjects = termSubjectService.getAllSubjectsByTerm(termId);
-    	} else {
-			throw new ParamsException();
-		}
-    	
+        long termId = ControllerHelper.getLongParameter(request, "termId");
+        subjects = termSubjectService.getAllSubjectsByTerm(termId);
     	return ResultJSON.getSuccess(subjects);
     }
     
@@ -110,21 +104,8 @@ public class NavigationController {
         
     	List<JSyscourse> editions = null;
     	
-    	long termId = 0;
-    	long subjectId = 0;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("termId"))){
-    		termId = Long.parseLong(request.getParameter("termId").toString().trim());
-    	} else {
-    		throw new ParamsException();
-		}
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("subjectId"))){
-    	    subjectId = Long.parseLong(request.getParameter("subjectId").toString().trim());
-    	} else {
-    		throw new ParamsException();
-		}
-    	
+    	long termId = ControllerHelper.getLongParameter(request, "termId");
+    	long subjectId = ControllerHelper.getLongParameter(request, "subjectId");
     	editions = editionService.getAllEditionsByTermAndSub(termId, subjectId);
     	return ResultJSON.getSuccess(editions);
     }
@@ -149,16 +130,10 @@ public class NavigationController {
     	String proCode = resourceWebConfig.getProCode();
     	
     	//父结点id
-    	long pnodeId = 0;
-    	
-    	if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
-    		pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
-    		// 根据所属版本和产品编码，查询所有的教材
-            books = bookService.getAllBooks(pnodeId, proCode);
-    	} else {
-			throw new ParamsException();
-		}
-
+    	long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
+    
+    	// 根据所属版本和产品编码，查询所有的教材
+        books = bookService.getAllBooks(pnodeId, proCode);
         return ResultJSON.getSuccess(books);
     }
     
@@ -176,15 +151,9 @@ public class NavigationController {
     	
     	List<TreeNode> nodes = null;
     	// 接收传递过来的父结点id
-        long pnodeId = 0;
-        if(StringUtils.isNotEmpty(request.getParameter("pnodeId"))){
-        	 pnodeId = Long.parseLong(request.getParameter("pnodeId").toString().trim());
-        	 // 加载父结点的所有子结点（递归）
-             nodes = treeService.geTreeNodes(pnodeId);
-    	} else {
-			throw new ParamsException();
-		}
-        
+        long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
+        // 加载父结点的所有子结点（递归）
+        nodes = treeService.geTreeNodes(pnodeId);
         return ResultJSON.getSuccess(nodes);
     }
     
@@ -226,16 +195,10 @@ public class NavigationController {
         int type = resourceWebConfig.getType(request);
 
         // 结点tfcode
-        String tfcode = request.getParameter("tfcode");
+        String tfcode = ControllerHelper.getParameter(request, "tfcode");
         
-        if (StringUtils.isNotEmpty(tfcode)) {
-        	tfcode = request.getParameter("tfcode").toString().trim();
-        	// 修改用户历史选择
-            userDefaultService.updateUserHistoryDefault(userId,tfcode,type);
-        } else {
-			throw new ParamsException();
-		}
-
+        // 修改用户历史选择
+        userDefaultService.updateUserHistoryDefault(userId,tfcode,type);
         return ResultJSON.getSuccess("");
     }
 
