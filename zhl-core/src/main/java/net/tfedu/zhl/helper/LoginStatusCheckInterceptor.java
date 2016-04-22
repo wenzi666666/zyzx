@@ -69,13 +69,15 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             	if(us!=null){
                     currentUserId = us.getUserId();
             	}
-                if(currentUserId==null || currentUserId==0){
-                	//token 无效
-                	flag = false ;
-                	throw  new InvalidAccessTokenException();
-                }
         	}
         }
+
+        if(currentUserId==null || currentUserId==0){
+        	//token 无效
+        	flag = false ;
+        	throw  new InvalidAccessTokenException();
+        }
+
         
         request.setAttribute("currentUserId", currentUserId);
         return flag;
