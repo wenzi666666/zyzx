@@ -32,6 +32,6 @@
 		select s.id,s.name
 		from j_term_subject ts 
 		left join j_subject s on s.id = ts.subjectId
-		where ts.flag = false and s.flag = false and ts.termId=#{termId}
+		where ts.flag = false and s.flag = false and ts.termId=#{termId} order by s.id
   </select>
 </mapper>
