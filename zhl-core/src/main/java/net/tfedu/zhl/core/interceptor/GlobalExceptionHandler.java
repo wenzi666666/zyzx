@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { Exception.class, RuntimeException.class, UnCustomException.class })
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        result = new ResultJSON("Server Error", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
+        result = new ResultJSON("ServerError", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
         e.printStackTrace();
         return result;
     }
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { IOException.class })
     @ResponseBody
     public ResultJSON handleRuntimeIOException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        result = new ResultJSON("IO Error", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
+        result = new ResultJSON("IOError", e.getCause().getClass() + "," + e.getCause().getMessage(), "", "");
         e.printStackTrace();
         return result;
     }
