@@ -54,9 +54,12 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
         Long currentUserId = null;
+        //默认继续往下走
+        boolean flag = true ;
         
         if(StringUtils.isEmpty(token)) {
         	//缺少token
+        	flag = false ;
             throw new NoTokenException();
         }
         else {
@@ -68,13 +71,14 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             	}
                 if(currentUserId==null || currentUserId==0){
                 	//token 无效
+                	flag = false ;
                 	throw  new InvalidAccessTokenException();
                 }
         	}
         }
         
         request.setAttribute("currentUserId", currentUserId);
-        return true;
+        return flag;
     }
 
 }
