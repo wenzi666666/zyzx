@@ -600,5 +600,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 		// TODO Auto-generated method stub
 		return assetMapper.getEditInfo(id);
 	}
+
+
+
+
+	@Override
+	public List<FirstLevelResType> getAllResType() {
+		// TODO Auto-generated method stub
+		return typeMapper.getAllResType();
+	}
 }
 

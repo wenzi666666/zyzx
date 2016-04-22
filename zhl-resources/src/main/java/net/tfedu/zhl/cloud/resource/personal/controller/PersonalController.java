@@ -88,7 +88,7 @@ public class PersonalController {
 	private CommonWebConfig commonWebConfig;
 
 	/**
-	 * 获取统一资源类型
+	 * 获取统一资源类型(改为获取全部)
 	 * 
 	 * @return
 	 */
@@ -97,7 +97,7 @@ public class PersonalController {
 	public ResultJSON getUnifyType(HttpServletRequest request,
 			HttpServletResponse response) {
 		// 返回
-		Object data = assetService.getAllFirstLevelResType();
+		Object data = assetService.getAllResType();
 		return ResultJSON.getSuccess(data);
 	}
 

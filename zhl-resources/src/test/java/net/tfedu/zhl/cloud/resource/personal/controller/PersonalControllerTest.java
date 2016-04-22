@@ -166,4 +166,18 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     	
     }
     
+    
+    /**
+     * 
+     */
+    @Test
+    public void testgetUnifyType(){
+    	
+        ResultJSON result = controller.getUnifyType(request, response);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    	
+    	
+    }
+    
 }

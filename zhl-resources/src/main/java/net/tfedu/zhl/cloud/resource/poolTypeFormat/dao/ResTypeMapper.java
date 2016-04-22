@@ -88,6 +88,11 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<FirstLevelResType> getAllFirstLevelResType();
     
+    /**
+     * 自建资源 ： 查询全部类型
+     */
+    public List<FirstLevelResType> getAllResType();
+    
     
     /**
      * 系统资源：根据资源库id，得到父类型的所有子类型及其自身，e备课

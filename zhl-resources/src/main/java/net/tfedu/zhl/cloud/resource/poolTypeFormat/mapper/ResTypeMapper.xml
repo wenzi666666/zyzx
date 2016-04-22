@@ -255,4 +255,9 @@
   <select id="getAllFirstLevelResType" resultMap="firstLevelResTypeMap">
   		select id,mtype,code from x_resourcetype where flag =false and flag =false and pid = 0 order by displayindex
   </select>
+   <select id="getAllResType" resultMap="firstLevelResTypeMap">
+  		select id,mtype,code from x_resourcetype where flag =false and flag =false order by displayindex
+  </select> 
+  
+  
 </mapper>

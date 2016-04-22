@@ -17,6 +17,13 @@ public interface ZAssetService {
 	public List<FirstLevelResType> getAllFirstLevelResType();
 	
 	
+	/**
+	 * 获取全部的资源类型
+	 * @return
+	 */
+	public List<FirstLevelResType> getAllResType();
+	
+	
 	
 	
 	/**
