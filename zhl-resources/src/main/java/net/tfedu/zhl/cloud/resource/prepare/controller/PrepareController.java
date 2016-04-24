@@ -115,10 +115,7 @@ public class PrepareController {
 
 			jPrepareService.addPrepare(prepare);
 
-			HashMap<String, Long> map = new HashMap<String, Long>();
-			map.put("id", prepare.getId());
-			logger.debug("新建id为" + prepare.getId() + "的备课夹");
-			data = map;
+			data = prepare;
 		}
 
 		return ResultJSON.getSuccess(data);

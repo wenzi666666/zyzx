@@ -332,5 +332,9 @@
   </select>
   
  
+ <!-- 查询标题是否重名 -->
+ <select id="getRepeatTimes" resultType="Integer">
+ 	select  count(1) as num from j_lession_prepare where userid =#{userId} and flag = false and title =#{title} and tfcode =#{tfcode}
+ </select>
  
 </mapper>

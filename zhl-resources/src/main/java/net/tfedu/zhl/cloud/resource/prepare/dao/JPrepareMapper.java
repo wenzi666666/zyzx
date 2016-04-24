@@ -13,6 +13,19 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.helper.CoreMapper;
 
 public interface JPrepareMapper extends CoreMapper<JPrepare> {
+	
+	
+	
+	/**
+	 * 查询标题是否重名
+	 * @param title
+	 * @param userid
+	 * @return
+	 */
+	public Integer getRepeatTimes(@Param("tfcode")String tfcode,@Param("title")String title,@Param("userId")Long userId );
+	
+	
+	
 
     /**
      * 清空目标备课夹下的所有备课夹内容

@@ -74,6 +74,13 @@ public class JPrepareServiceImpl implements JPrepareService {
     @Override
     public JPrepare addPrepare(JPrepare obj) {
         // TODO Auto-generated method stub
+    	
+    	int repeatTimes = mapper.getRepeatTimes(obj.getTfcode(), obj.getTitle(), obj.getUserid());
+    	
+    	if(repeatTimes>0){
+    		obj.setTitle(obj.getTitle()+"("+repeatTimes+")");
+    	}
+    	
         mapper.insert(obj);
         // 更新排序字段
         mapper.update_default_prepare_order();

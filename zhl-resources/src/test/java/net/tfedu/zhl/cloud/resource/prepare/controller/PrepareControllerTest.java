@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 
-@Transactional
+
 public class PrepareControllerTest extends BaseControllerTestCase {
 
     @Resource
