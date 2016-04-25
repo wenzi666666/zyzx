@@ -7,7 +7,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
@@ -54,10 +53,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 		 }
     }
     
-    /**
+/*    *//**
      * 区本、校本资源，获取当前结点下的所有资源id
      * @throws IOException
-     */
+     *//*
     @Test
     public void testGetAllDisIds()throws IOException{
     	HashMap<String, Object> map = new HashMap<String, Object>();
@@ -67,18 +66,18 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         
         System.out.println(ids.size());
         
-        /*Assert.isTrue(ids.size() > 0);
+        Assert.isTrue(ids.size() > 0);
         for (int i = 0; i < ids.size(); i++) {
 			System.out.print(ids.get(i) + " ");
 			if(i % 10 == 0)
 				System.out.println();
-		}*/
+		}
         
     }
 	
-	/**
+	*//**
 	 * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
-	 */
+	 *//*
 	@Test
 	public void testGetAllTypeIdsByPool()throws IOException{
 		long poolId = 0;
@@ -93,9 +92,9 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         }
 	}
 	
-	/**
+	*//**
 	 * 系统资源：根据资源库id和父类型id，得到父类型的所有子类型及其自身
-	 */
+	 *//*
 	@Test
 	public void testGetTypesByPMTypeAndPool()throws IOException{
 		
@@ -112,9 +111,9 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         }
 	}
 	
-	/**
+	*//**
 	 * 系统资源：当资源库选择 “全部” 或 “教学素材” 时，显示所有一级类型
-	 */
+	 *//*
 	@Test
 	public void testGetSysFirstLevelType()throws IOException{
 		
@@ -144,9 +143,9 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         }
 	}
 	
-	/**
+	*//**
 	 * 系统资源：当资源库选择 “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
-	 */
+	 *//*
 	@Test
 	public void testGetSysSecondLevelType()throws IOException{
         List<ResType> types = new ArrayList<ResType>();
@@ -173,12 +172,12 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
                 System.out.println();
             System.out.print(types.get(i) + ",");
         }
-	}
+	}*/
 	
 	
 	/**
 	 * 区本校本资源：根据资源ids和fromFlag（区本/校本），查询资源类型
-	 */
+	 *//*
 	@Test
 	public void testGetDisResType()throws IOException{
 		List<ResType> types = new ArrayList<ResType>();
@@ -191,17 +190,17 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         
         System.out.println(types.size());
         
-        /*Assert.isTrue(types.size() > 0);
+        Assert.isTrue(types.size() > 0);
  		for (int i = 0; i < types.size(); i++) {
             if (i % 10 == 0)
                 System.out.println();
             System.out.print(types.get(i) + ",");
-        }*/
+        }
 	}
 	
-	/**
+	*//**
 	 * 区本校本资源：根据父类型Id，查询父类型及其所有子类型
-	 */
+	 *//*
 	@Test
 	public void testGetDisResTypesByPMType()throws IOException{
 		int MType = 1;
@@ -210,19 +209,19 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 		
 		System.out.println(types.size());
 		
-		/*Assert.isTrue(types.size() > 0);
+		Assert.isTrue(types.size() > 0);
 		
  		for (int i = 0; i < types.size(); i++) {
             if (i % 10 == 0)
                 System.out.println();
             System.out.print(types.get(i) + ",");
-        }*/
+        }
 	}
 
-	/**
+	*//**
 	 * 系统资源类型  单元测试
 	 * @throws IOException
-	 */
+	 *//*
     @Test
     public void testResTypeService() throws IOException {
 
@@ -247,10 +246,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         }
     }
     
-    /**
+    *//**
 	 * 系统资源类型  单元测试  e备课
 	 * @throws IOException
-	 */
+	 *//*
     @Test
     public void testResTypeService_ePrepare() throws IOException {
 
@@ -287,10 +286,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         }
     }
     
-    /**
+    *//**
      * 系统资源格式  单元测试
      * @throws IOException
-     */
+     *//*
     @Test
     public void testSysFormatService() throws IOException {
 
@@ -319,10 +318,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
 
     }
     
-    /**
+    *//**
      * 校本、区本资源类型  单元测试
      * @throws IOException
-     */
+     *//*
     @Test
     public void testDisResTypeService() throws IOException {
 
@@ -343,10 +342,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
             System.out.print(types.get(i) + ",");
     }
     
-    /**
+    *//**
      * 校本、区本资源类型  单元测试  e备课
      * @throws IOException
-     */
+     *//*
     @Test
     public void testDisResTypeService_ePrepare() throws IOException {
 
@@ -378,10 +377,10 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
             System.out.print(types.get(i) + ",");
     }
     
-    /**
+    *//**
      * 区本校本资源格式  单元测试
      * @throws IOException
-     */
+     *//*
     @Test
     public void testDisResFormatService() throws IOException {
         // 格式
@@ -397,5 +396,5 @@ public class TypeAndFormatServiceTest extends BaseServiceTestCase{
         System.out.println(formats.size());
         for (int i = 0; i < formats.size(); i++)
             System.out.print(formats.get(i) + ",");
-    }
+    }*/
 }
