@@ -102,6 +102,21 @@ public class PersonalController {
 	}
 
 	/**
+	 * 获取资源类型(根据文件的后缀)
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/resource/unifyType4ext", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getUnifyType4ext(String ext) throws Exception{
+		// 返回
+		Object data = assetService.getTypeForExt(ext);
+		return ResultJSON.getSuccess(data);
+	}
+
+	
+	
+	/**
 	 * 获取文件格式
 	 * 
 	 * @return

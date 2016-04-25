@@ -20,6 +20,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZTypeConvert;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
+import net.tfedu.zhl.cloud.resource.extrelativeteachingtype.dao.ExtRelativeTeachingTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
@@ -30,6 +31,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictsResNav;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
@@ -80,6 +82,10 @@ public class ZAssetServiceImpl implements ZAssetService {
 	
 	@Autowired
 	DistrictsResNavMapper districtResNavMapper;
+	
+	
+	@Autowired
+	ExtRelativeTeachingTypeMapper relateTypeMapper;
 	
 	@Override
 	public List<FirstLevelResType> getAllFirstLevelResType() {
@@ -608,6 +614,22 @@ public class ZAssetServiceImpl implements ZAssetService {
 	public List<FirstLevelResType> getAllResType() {
 		// TODO Auto-generated method stub
 		return typeMapper.getAllResType();
+	}
+
+
+
+
+	@Override
+	public List<FirstLevelResType> getTypeForExt(String ext)throws Exception {
+		// TODO Auto-generated method stub
+		if(StringUtils.isEmpty(ext) || (!ext.startsWith("."))){
+			throw new ParamsException();
+		}
+		
+		
+		
+		
+		return relateTypeMapper.getTypeForExt(ext);
 	}
 }
 
