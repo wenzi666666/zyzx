@@ -13,7 +13,6 @@ import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
-import net.tfedu.zhl.core.exception.LackOfSearchword;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -73,7 +72,7 @@ public class ResSearchController {
 		int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
 		
 		 // 检索的关键词
-        String searchKeyword = request.getParameter("searchKeyword");
+        String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword");
 		
         // 资源格式：全部，文本，图片......
         String format = ControllerHelper.getParameter(request, "format");
@@ -84,27 +83,22 @@ public class ResSearchController {
         // 每页记录数目
         int perPage = ControllerHelper.getIntParameter(request, "perPage");
         
-        // 若输入的关键字为空，则返回为空
-        if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
-        	throw new LackOfSearchword(); //异常信息，缺少检索关键词
-        else {
-			searchKeyword = searchKeyword.toString().trim();
-        	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
-                    perPage,currentUserId,expire);
-            
-            //生成文件的缩略图路径
-            ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
-            
-            logger.debug("检索关键字：" + searchKeyword);
-            logger.debug("资源格式：" + format);
-            logger.debug("资源来源fromFlag：" + fromFlag);
-            logger.debug("检索结果的当前页：" + pagination.getPage());
-            logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
-            logger.debug("检索到的资源总页：" + pagination.getTotal());
-            logger.debug("检索到的资源总数：" + pagination.getTotalLines());
-            
-            return ResultJSON.getSuccess(pagination);
-        }
+        searchKeyword = searchKeyword.toString().trim();
+    	pagination = resSearchService.getResources(fromFlag, sys_from, searchKeyword, format, page,
+                perPage,currentUserId,expire);
+        
+        //生成文件的缩略图路径
+        ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
+        
+        logger.debug("检索关键字：" + searchKeyword);
+        logger.debug("资源格式：" + format);
+        logger.debug("资源来源fromFlag：" + fromFlag);
+        logger.debug("检索结果的当前页：" + pagination.getPage());
+        logger.debug("检索结果每页资源数目：" + pagination.getPerPage());
+        logger.debug("检索到的资源总页：" + pagination.getTotal());
+        logger.debug("检索到的资源总数：" + pagination.getTotalLines());
+        
+        return ResultJSON.getSuccess(pagination);
     }
     
     /**
@@ -127,14 +121,10 @@ public class ResSearchController {
     	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
         // 检索的关键词
-        String searchKeyword = request.getParameter("searchKeyword");
-      
-        // 若输入的关键字为空，则返回为空
-        if (searchKeyword == null || searchKeyword.toString().trim().length() == 0)
-        	throw new LackOfSearchword(); //异常信息，缺少检索关键词
-        else {
-        	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
-        }
+    	String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword");
+    	
+    	searchKeyword = searchKeyword.toString().trim();
+    	resultList = resSearchService.getFileFormats(searchKeyword, fromFlag, sys_from,currentUserId);
         
         return ResultJSON.getSuccess(resultList);
     }
