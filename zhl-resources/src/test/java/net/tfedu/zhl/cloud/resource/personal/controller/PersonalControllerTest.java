@@ -186,7 +186,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     @Test
     public void testgetUnifyType4ext() throws Exception{
     	
-    	String ext = "doc";
+    	String ext = ".doc";
         ResultJSON result = controller.getUnifyType4ext(ext);
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 

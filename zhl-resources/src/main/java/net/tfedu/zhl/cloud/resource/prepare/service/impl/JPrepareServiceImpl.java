@@ -73,9 +73,10 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public JPrepare addPrepare(JPrepare obj) {
-        // TODO Auto-generated method stub
     	
-    	int repeatTimes = mapper.getRepeatTimes(obj.getTfcode(), obj.getTitle(), obj.getUserid());
+//    	int repeatTimes = mapper.getRepeatTimes(obj.getTfcode(), obj.getTitle(), obj.getUserid());
+    	
+    	int repeatTimes = mapper.getAllRepeatTimes(obj.getTitle(), obj.getUserid());
     	
     	if(repeatTimes>0){
     		obj.setTitle(obj.getTitle()+"("+repeatTimes+")");
