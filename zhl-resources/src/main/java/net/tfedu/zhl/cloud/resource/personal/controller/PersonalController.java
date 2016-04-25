@@ -8,6 +8,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageInfo;
+
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.customizeres.entity.CustomizeResResult;
@@ -24,19 +32,12 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.userlog.service.UserLogService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.github.pagehelper.PageInfo;
 
 /**
  * 个人空间 controller
@@ -477,11 +478,12 @@ public class PersonalController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/v1.0/resource/userReviewComment", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getMyReviewComment(HttpServletRequest request,
-			HttpServletResponse response) {
+			HttpServletResponse response) throws Exception {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -491,22 +493,22 @@ public class PersonalController {
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
 
 		long userId = currentUserId;
-		int reviewType = 0;
-		int page = 1;
-		int prePage = 10;
+		int reviewType = ControllerHelper.getIntWithDefault(request, "reviewType");
+		int page = ControllerHelper.getPage(request);
+		int prePage = ControllerHelper.getPageSize(request);
 
-		String _reviewType = request.getParameter("reviewType");
-		String _page = request.getParameter("page");
-		String _prePage = request.getParameter("perPage");
-		if (StringUtils.isNotEmpty(_reviewType)) {
-			reviewType = Integer.parseInt(_reviewType);
-		}
-		if (StringUtils.isNotEmpty(_page)) {
-			page = Integer.parseInt(_page);
-		}
-		if (StringUtils.isNotEmpty(_prePage)) {
-			prePage = Integer.parseInt(_prePage);
-		}
+//		String _reviewType = request.getParameter("reviewType");
+//		String _page = ControllerHelper.getPage(request);
+//		String _prePage = request.getParameter("perPage");
+//		if (StringUtils.isNotEmpty(_reviewType)) {
+//			reviewType = Integer.parseInt(_reviewType);
+//		}
+//		if (StringUtils.isNotEmpty(_page)) {
+//			page = Integer.parseInt(_page);
+//		}
+//		if (StringUtils.isNotEmpty(_prePage)) {
+//			prePage = Integer.parseInt(_prePage);
+//		}
 		Pagination page_result = assetService.getMyReviewComment(userId,
 				reviewType, page, prePage);
 		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(),

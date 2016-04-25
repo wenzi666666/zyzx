@@ -50,6 +50,24 @@ public class ControllerHelper {
     }
 
     /**
+     * 获取单个参数值，如果获取失败，则赋值0
+     * 
+     * @param request
+     * @param paramName
+     * @return 整数
+     * @throws ParamsException
+     */
+    public static int getIntWithDefault(HttpServletRequest request, String paramName) throws ParamsException {
+        int param;
+        if (StringUtils.isNotEmpty(request.getParameter(paramName))) {
+            param = Integer.parseInt(request.getParameter(paramName).toString().trim());
+        } else {
+            param = 0;
+        }
+        return param;
+    }
+
+    /**
      * 获取单个参数值
      * 
      * @param request
@@ -69,6 +87,7 @@ public class ControllerHelper {
 
     /**
      * 获取页码
+     * 
      * @param request
      * @return
      * @throws ParamsException
@@ -77,9 +96,10 @@ public class ControllerHelper {
         String strPageNum = request.getParameter("page");
         return StringUtils.isNotEmpty(strPageNum) ? Integer.parseInt(strPageNum) : 1;
     }
-    
+
     /**
      * 获取页大小
+     * 
      * @param request
      * @return
      * @throws ParamsException
