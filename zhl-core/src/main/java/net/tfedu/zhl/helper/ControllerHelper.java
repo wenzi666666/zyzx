@@ -7,59 +7,85 @@ import net.tfedu.zhl.core.exception.ParamsException;
 
 /**
  * Controller助手类
+ * 
  * @author bruce
  *
  */
 public class ControllerHelper {
-    
+
     /**
      * 获取单个参数值
+     * 
      * @param request
      * @param paramName
      * @return 字符串
      * @throws ParamsException
      */
-    public static String getParameter(HttpServletRequest request, String paramName) throws ParamsException{
+    public static String getParameter(HttpServletRequest request, String paramName) throws ParamsException {
         String param;
-        if(StringUtils.isNotEmpty(request.getParameter(paramName))){
+        if (StringUtils.isNotEmpty(request.getParameter(paramName))) {
             param = request.getParameter(paramName).toString().trim();
         } else {
             throw new ParamsException();
         }
         return param;
     }
-    
+
     /**
      * 获取单个参数值
+     * 
      * @param request
      * @param paramName
      * @return 整数
      * @throws ParamsException
      */
-    public static int getIntParameter(HttpServletRequest request, String paramName) throws ParamsException{
-        int param; 
-        if(StringUtils.isNotEmpty(request.getParameter(paramName))){
+    public static int getIntParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        int param;
+        if (StringUtils.isNotEmpty(request.getParameter(paramName))) {
             param = Integer.parseInt(request.getParameter(paramName).toString().trim());
         } else {
             throw new ParamsException();
         }
         return param;
     }
-    
+
     /**
      * 获取单个参数值
+     * 
      * @param request
      * @param paramName
      * @return 长整形
      * @throws ParamsException
      */
-    public static long getLongParameter(HttpServletRequest request, String paramName) throws ParamsException{
-        long param; 
-        if(StringUtils.isNotEmpty(request.getParameter(paramName))){
+    public static long getLongParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        long param;
+        if (StringUtils.isNotEmpty(request.getParameter(paramName))) {
             param = Long.parseLong(request.getParameter(paramName).toString().trim());
         } else {
             throw new ParamsException();
         }
         return param;
+    }
+
+    /**
+     * 获取页码
+     * @param request
+     * @return
+     * @throws ParamsException
+     */
+    public static int getPage(HttpServletRequest request) throws ParamsException {
+        String strPageNum = request.getParameter("page");
+        return StringUtils.isNotEmpty(strPageNum) ? Integer.parseInt(strPageNum) : 1;
+    }
+    
+    /**
+     * 获取页大小
+     * @param request
+     * @return
+     * @throws ParamsException
+     */
+    public static int getPageSize(HttpServletRequest request) throws ParamsException {
+        String strPageSize = request.getParameter("perPage");
+        return StringUtils.isNotEmpty(strPageSize) ? Integer.parseInt(strPageSize) : 10;
     }
 }
