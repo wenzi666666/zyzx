@@ -31,6 +31,8 @@ public class JPrepareContentView implements Serializable {
     private Date time;
 
     private String imgPath;
+    
+    private String fpath ;
 
     private String fileSuffix;
 
@@ -162,7 +164,16 @@ public class JPrepareContentView implements Serializable {
         this.fileSuffix = fileSuffix;
     }
 
-    @Override
+    
+    public String getFpath() {
+		return fpath;
+	}
+
+	public void setFpath(String fpath) {
+		this.fpath = fpath;
+	}
+
+	@Override
     public String toString() {
         return "[prepareContentView:{id:" + id + ";title:" + title + ";resId:" + resId + ";fromFlag:" + fromFlag
                 + ";unifyType:" + unifyType + ";imgPath:" + imgPath + ";fileSuffix:" + fileSuffix + "}]";

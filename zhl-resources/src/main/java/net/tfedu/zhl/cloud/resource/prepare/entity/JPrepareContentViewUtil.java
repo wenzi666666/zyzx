@@ -42,6 +42,13 @@ public class JPrepareContentViewUtil {
                 JPrepareContentView view = list.get(i);
                 String imgPath = view.getImgPath();
                 String size = view.getSize();
+                String fpath = view.getFpath();
+                if(StringUtils.isEmpty(fpath)){//
+                	fpath = imgPath;
+                	view.setFpath(fpath);
+                }
+                
+                
                 // imgPath 以http开头 并且size 为0或空
                 if ((StringUtils.isEmpty(size) || "0".equals(size))
                         && (imgPath.startsWith("http") || imgPath.startsWith("HTTP"))) {
