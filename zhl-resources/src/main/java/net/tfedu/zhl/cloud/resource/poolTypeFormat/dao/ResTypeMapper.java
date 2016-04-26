@@ -72,20 +72,36 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
 
+   /* *//**
+     * 区本校本资源：查询资源类型
+     * 
+     * @return
+     *//*
+    public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag);
+    
+    *//**
+     * 区本校本资源：查询资源类型，e备课
+     * 
+     * @return
+     *//*
+    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")List<Integer> removeTypeIds);
+*/
+    
     /**
      * 区本校本资源：查询资源类型
      * 
      * @return
      */
-    public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag);
+    public List<ResType> getDisResType(@Param("fromFlag") int fromFlag, @Param("pTfcode") String pTfcode,@Param("schoolId") long schoolId, @Param("districtId") long districtId);
     
     /**
      * 区本校本资源：查询资源类型，e备课
      * 
      * @return
      */
-    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")List<Integer> removeTypeIds);
-
+    public List<ResType> getDisResType_EPrepare(@Param("fromFlag") int fromFlag, @Param("pTfcode") String pTfcode,@Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("removeTypes")List<Integer> removeTypes);
+    
+    
     /**
      * 
      * 区本校本资源：查询父类型及其所有子类型

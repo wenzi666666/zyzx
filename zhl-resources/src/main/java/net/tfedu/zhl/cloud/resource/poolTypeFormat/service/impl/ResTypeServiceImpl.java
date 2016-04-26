@@ -11,7 +11,11 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 /**
@@ -30,6 +34,11 @@ public class ResTypeServiceImpl implements ResTypeService {
     // 资源库、资源类型的关联表的mapper
     @Resource
     ResPoolTypeMapper resPoolTypeMapper;
+    
+    @Resource DistrictResMapper districtResMapper;
+    
+    //写入日志
+    Logger logger = LoggerFactory.getLogger(ResTypeServiceImpl.class);
     
     
     /**
@@ -94,17 +103,30 @@ public class ResTypeServiceImpl implements ResTypeService {
      * @return
      */
     @Override
-    public List<ResType> getDisResTypes(String tfcode, int fromFlag) {
+    public List<ResType> getDisResTypes(String tfcode, int fromFlag,long userId) {
         // 定义类型结果集
         List<ResType> types = new ArrayList<ResType>();
 
-        // 根据tfcode获得区本校本资源ids
+       /* // 根据tfcode获得区本校本资源ids
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", tfcode);
-        List<Long> resourceIds = getAllDisResIds(map);
+        List<Long> resourceIds = getAllDisResIds(map);*/
+        
+        long schoolId = 0;
+        long districtId = 0;
+
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+        
+        logger.debug("schoolId: " + schoolId);
+        logger.debug("districtId: " + districtId);
 
         // 查询资源类型
-        types = resTypeMapper.getDisResType(resourceIds, fromFlag);
+        types = resTypeMapper.getDisResType(fromFlag,tfcode,schoolId,districtId);
 
         // 资源类型中增加一个“全部”
         ResType all = new ResType();
@@ -123,17 +145,30 @@ public class ResTypeServiceImpl implements ResTypeService {
      * @return
      */
     @Override
-    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,List<Integer> removeTypeIds) {
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,long userId,List<Integer> removeTypeIds) {
         // 定义类型结果集
         List<ResType> types = new ArrayList<ResType>();
 
-        // 根据tfcode获得区本校本资源ids
+        /*// 根据tfcode获得区本校本资源ids
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("pTfcode", tfcode);
-        List<Long> resourceIds = getAllDisResIds(map);
+        List<Long> resourceIds = getAllDisResIds(map);*/
+        
+        long schoolId = 0;
+        long districtId = 0;
 
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+
+        logger.debug("schoolId: " + schoolId);
+        logger.debug("districtId: " + districtId);
+        
         // 查询资源类型
-        types = resTypeMapper.getDisResType_EPrepare(resourceIds, fromFlag, removeTypeIds);
+        types = resTypeMapper.getDisResType_EPrepare(fromFlag,tfcode, schoolId,districtId,removeTypeIds);
 
         // 资源类型中增加一个“全部”
         ResType all = new ResType();
@@ -214,17 +249,17 @@ public class ResTypeServiceImpl implements ResTypeService {
     }
 
 
-    /**
+   /* *//**
      * 区本校本资源：根据资源ids和fromFlag（区本/校本），查询资源类型
      * 
      * @param resourceIds
      * @param fromFlag
      * @return
-     */
+     *//*
     @Override
     public List<ResType> getDisResType(List<Long> resourceIds, int fromFlag) {
         return resTypeMapper.getDisResType(resourceIds, fromFlag);
-    }
+    }*/
 
     /**
      * 区本校本资源：查询父类型及其所有子类型
