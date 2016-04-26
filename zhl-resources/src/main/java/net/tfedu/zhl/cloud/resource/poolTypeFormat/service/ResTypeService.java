@@ -77,8 +77,8 @@ public interface ResTypeService {
      * @param resourceIds
      * @param fromFlag
      * @return
-     */
-    public List<ResType> getDisResType(List<Long> resourceIds, int fromFlag);
+     *//*
+    public List<ResType> getDisResType(List<Long> resourceIds, int fromFlag);*/
 
     /**
      * 根据资源库id，得到父类型的所有子类型及其自身
@@ -101,7 +101,7 @@ public interface ResTypeService {
      * 
      * @return
      */
-    public List<ResType> getDisResTypes(String tfcode, int fromFlag);
+    public List<ResType> getDisResTypes(String tfcode, int fromFlag,long userId);
 
    
 
@@ -115,7 +115,7 @@ public interface ResTypeService {
      * 
      * @return
      */
-    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,List<Integer> removeTypeIds);
+    public List<ResType> getDisResType_EPrepare(String tfcode, int fromFlag,long userId,List<Integer> removeTypeIds);
     
     
     

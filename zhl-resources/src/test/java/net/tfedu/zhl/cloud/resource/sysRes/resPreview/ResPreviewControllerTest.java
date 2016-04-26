@@ -26,9 +26,9 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetOneResController() throws Exception {
 
-		request.setParameter("resId", "870217");
+		request.setParameter("resId", "870235");
 		request.setParameter("fromFlag", "3");
-		request.setParameter("isEPrepare", "1");
+		//request.setParameter("isEPrepare", "1");
 		
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
 		
@@ -41,7 +41,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	/**
 	 * 根据resId，查询资源的所有版本目录
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetAllLists()throws Exception{
 		request.setParameter("resId", "12");
@@ -55,10 +55,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 资源检索结果   的资源推荐列表
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetResRecommendation_search()throws Exception{
 		
@@ -76,10 +76,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 系统资源   的资源推荐列表
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetSysResRecommendation()throws Exception{
 		
@@ -100,10 +100,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 区本、校本资源     的资源推荐列表
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetDisResRecommendation()throws Exception{
 		
@@ -124,10 +124,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	/**
+	*//**
 	 * 个人中心-我的上传  的资源推荐列表
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetResRecommendation_upload()throws Exception{
 		
@@ -142,5 +142,5 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}
+	}*/
 }

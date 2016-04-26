@@ -120,7 +120,7 @@ public class TypesAndFormatsController {
     	long poolId = ControllerHelper.getLongParameter(request, "poolId");
 
         // 根据 resourceIds和typeIds，查询资源格式
-        formats = resFormatService.getSysResFormats(poolId, pTfcode, typeId,sys_from);
+        formats = resFormatService.getSysResFormats( pTfcode,typeId,sys_from);
         
         return ResultJSON.getSuccess(formats);
     }
@@ -138,6 +138,8 @@ public class TypesAndFormatsController {
             throws Exception {
 		
 		List<ResType> types = null;
+		
+		long userId = (Long) request.getAttribute("currentUserId");
        
         //e备课需要排除的资源类型
         List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
@@ -149,10 +151,10 @@ public class TypesAndFormatsController {
    
         if(request.getParameter("isEPrepare") != null){//而备课
         	//新的类型查询方法（去除一些类型）
-        	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag, removeTypeIds);
+        	types = resTypeService.getDisResType_EPrepare(tfcode, fromFlag,userId, removeTypeIds);
         	
         } else {
-        	 types = resTypeService.getDisResTypes(tfcode, fromFlag);
+        	 types = resTypeService.getDisResTypes(tfcode, fromFlag,userId);
 		}
         
         return ResultJSON.getSuccess(types);
@@ -169,12 +171,14 @@ public class TypesAndFormatsController {
     @ResponseBody
     public ResultJSON getDisFormats(HttpServletRequest request, HttpServletResponse response) throws Exception {
       
+		long userId = (Long) request.getAttribute("currentUserId");
         // 格式
         List<String> formats = new ArrayList<String>();
         String tfcode = ControllerHelper.getParameter(request, "tfcode");
     	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
+    	int mtype = ControllerHelper.getIntParameter(request, "typeId");
     	
-        formats = resFormatService.getDisResFormats(tfcode, fromFlag);
+        formats = resFormatService.getDisResFormats(mtype,tfcode,fromFlag,userId);
         
         return ResultJSON.getSuccess(formats);
     }

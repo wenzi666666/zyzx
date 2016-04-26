@@ -17,7 +17,7 @@ public interface ResFormatService {
      * @param fromFlag
      * @return
      */
-    public List<String> getDisResFormats(String tfcode, int fromFlag);
+    public List<String> getDisResFormats(int mtype,String tfcode,int fromFlag,long userId);
 
     /**
      * 获得系统资源格式
@@ -27,5 +27,5 @@ public interface ResFormatService {
      * @param sys_from
      * @return
      */
-    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from);
+    public List<String> getSysResFormats(String pTfcode, int typeId,List<Integer> sys_from);
 }

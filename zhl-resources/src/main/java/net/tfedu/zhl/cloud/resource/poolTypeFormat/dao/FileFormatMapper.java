@@ -21,17 +21,17 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
      * @param typeIds
      * @return
      */
-    public List<String> getSysResFormatsByMType(@Param("resourceIds") List<Long> resourceIds,
-            @Param("typeIds") List<Integer> typeIds);
+    public List<String> getSysResFormatsByMType(@Param("tfcode") String tfcode,
+            @Param("mtype") int mtype,@Param("sys_from") List<Integer> sys_from);
 
     /**
      * 区本校本资源，根据资源ids和typeIds，查询得到资源格式
      * @param resourceIds
      * @param fromFlag
-     * @return
+     * @return 
      */
-    public List<String> getDisResFormatsByMType(@Param("resourceIds") List<Long> resourceIds,
-            @Param("fromFlag") int fromFlag);
+    public List<String> getDisResFormatsByMType(@Param("mtype") int mtype,
+            @Param("tfcode") String tfcode,@Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
 
     /**
      * 查询全部资源格式

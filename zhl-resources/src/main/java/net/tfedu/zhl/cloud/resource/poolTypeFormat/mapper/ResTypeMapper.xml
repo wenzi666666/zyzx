@@ -230,6 +230,8 @@
   </select>
    
 
+
+
    <!-- 系统资源：根据 poolId、父类型typeId, 得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool"  resultType="Integer">
      SELECT DISTINCT type_id from 
@@ -282,6 +284,21 @@
  
  <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
   <select id= "getDisResType" resultMap="FirstTypeResultMap">
+     select mtype,id from (
+     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
+     from z_districts_resource a
+     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0
+     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
+     where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
+     <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
+    </if>
+     order by b.displayIndex
+    )tmp where mtype is not null
 
      <!-- select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
@@ -300,11 +317,33 @@
                 </foreach>
                 
      </if>
-     order by b.displayIndex asc -->  
+     order by b.displayIndex asc   -->
   </select>
   
   <!-- e备课，  区本校本资源： 资源类型查询， fromFlag用以区分校本、区本-->
   <select id= "getDisResType_EPrepare" resultMap="FirstTypeResultMap">
+     select mtype,id from (
+     select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
+     from z_districts_resource a
+     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0
+     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
+     where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
+     <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
+    </if>
+     order by b.displayIndex
+    )tmp where mtype is not null 
+    <if test="removeTypes.size() > 0">   <!-- e备课，去除一些特定类型 -->
+          and id not in <foreach item="item" index="index" collection="removeTypes" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+     </if>
+  <!--   
   select mtype,id from (
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
@@ -327,8 +366,13 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     and mtype is not null
+     and mtype is not null -->
   </select>
+  
+  
+  
+  
+  
   
   
  
@@ -343,8 +387,6 @@
     where a.flag=0 and
     c.StructCode like CONCAT(#{pTfcode},'%')
   </select>
- 
- 
  
    <!-- 区本、校本资源：得到父类型的所有子类型及其自身。  -->
   <select id="getDisResTypesByPMType"  resultType="Integer">
@@ -372,9 +414,6 @@
                          #{item}
          </foreach> 
   </select>
-
-
-   
   
   <!-- 系统资源：得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer">
