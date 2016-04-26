@@ -50,7 +50,29 @@ public class ZAssetEditInfo {
 	 * 目录节点（上传至）
 	 */
 	private String tfcode ;
+	
+	
+	/**
+	 * 学段id
+	 */
+	public String termId;
+	
+	/**
+	 * 学段id
+	 */
+	public String subjectId;
+	
 
+	/**
+	 * 资源类型id
+	 */
+	public String unifytypeId;
+	
+	/**
+	 * 资源类型描述
+	 */
+	public String mtype ;
+	
 
 	public Long getId() {
 		return id;
@@ -129,6 +151,46 @@ public class ZAssetEditInfo {
 
 	public void setTfcode(String tfcode) {
 		this.tfcode = tfcode;
+	}
+
+
+	public String getTermId() {
+		return termId;
+	}
+
+
+	public void setTermId(String termId) {
+		this.termId = termId;
+	}
+
+
+	public String getSubjectId() {
+		return subjectId;
+	}
+
+
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+
+
+	public String getUnifytypeId() {
+		return unifytypeId;
+	}
+
+
+	public void setUnifytypeId(String unifytypeId) {
+		this.unifytypeId = unifytypeId;
+	}
+
+
+	public String getMtype() {
+		return mtype;
+	}
+
+
+	public void setMtype(String mtype) {
+		this.mtype = mtype;
 	}
 
 	

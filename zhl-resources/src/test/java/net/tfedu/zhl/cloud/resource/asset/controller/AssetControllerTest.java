@@ -56,8 +56,8 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	@Test
 	public  void testgetAssetOne() throws Exception{
 		
-		result =  assetController.getAssetOne(105l, request, response);
-		Assert.isTrue("ok".equals(result.getCode()));
+		result =  assetController.getAssetOne(164882909l, request, response);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		
 	}
 	

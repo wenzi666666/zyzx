@@ -604,7 +604,13 @@ public class ZAssetServiceImpl implements ZAssetService {
 	@Override
 	public ZAssetEditInfo getEditInfo(Long id) {
 		// TODO Auto-generated method stub
-		return assetMapper.getEditInfo(id);
+		ZAssetEditInfo info = assetMapper.getEditInfo(id);
+		
+		
+		
+		
+		
+		return info;
 	}
 
 

@@ -121,15 +121,9 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 		
 	}
 
+
 	
-	public static void main(String[] args) {
-		ArrayList<Integer> scope_list = new ArrayList<Integer>();
-		scope_list.add(Integer.parseInt("1"));
-		scope_list.add(Integer.parseInt("2"));
-		
-		System.out.println(scope_list.contains(1));
-		System.out.println(scope_list.contains(0));
-	}
+	
 
 }
 

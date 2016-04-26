@@ -339,16 +339,23 @@
  	<result column="keyword" property="keyword"/>
  	<result column="sharescope" property="sharescope"/>
  	<result column="tfcode" property="tfcode"/>
+ 	<result column="termid" property="termId"/>
+ 	<result column="subjectid" property="subjectId"/>
+ 	<result column="mtype" property="mtype"/>
+ 	<result column="unifytypeid" property="unifytypeId"/>
+
+
  </resultMap>
  
  <select id="getEditInfo" parameterType="Long" resultMap="editInfoMap">
-	 
-	select a.id,a.name as title,a.assetdesc,a.assetpath,a.assetsize,
-	a.keyword as keyword,sys.sharescope,sys.tfcode
+  select a.id,a.name as title,a.assetdesc,a.assetpath,a.assetsize,p.id as unifytypeid,p.MType as mtype,
+	a.keyword as keyword,sys.sharescope,sys.tfcode,s.termid,s.subjectid
 	from z_asset a
 	LEFT JOIN z_asset_syscourse sys on sys.assetid = a.id 
-	where a.id = #{id}
-	ORDER BY a.id desc,sys.id asc  LIMIT 1 
+	LEFT JOIN x_resourcetype p on p.id = a.unifyTypeId 
+  LEFT JOIN j_syscourse s  on s.id = sys.id
+	where a.id = #{id}   and  s.flag = false 
+  ORDER BY sys.id limit  1 
  </select>
  
 </mapper>
