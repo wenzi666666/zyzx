@@ -71,14 +71,21 @@ public class ResPreviewController {
     	int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
     	// 资源id
     	long resId = ControllerHelper.getLongParameter(request, "resId");
- 
-        // 查询一条资源的详细信息
-        previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);
+    	
+    	String isEPrepare = request.getParameter("isEPrepare");
+    	
+    	if(isEPrepare != null){ //来自e备课，则fpath中存储的是相对路径，不需要缩略图
+    		// 查询一条资源的详细信息
+            previewInfo = resPreviewService.getResPreviewInfo_ePrepare(resId,currentUserId, fromFlag);
+            return ResultJSON.getSuccess(previewInfo);
+    	} else {
+    		// 查询一条资源的详细信息
+            previewInfo = resPreviewService.getResPreviewInfo(resId,currentUserId, fromFlag);
+            //生成缩略图
+            ResThumbnailPathUtil.convertToPurpos_resPreview(previewInfo, resServiceLocal, currentResPath);
+            return ResultJSON.getSuccess(previewInfo);
+		}
         
-        //生成缩略图
-        ResThumbnailPathUtil.convertToPurpos_resPreview(previewInfo, resServiceLocal, currentResPath);
-
-        return ResultJSON.getSuccess(previewInfo);
     }
 	
 	/**

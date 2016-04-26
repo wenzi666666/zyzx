@@ -34,7 +34,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetSysTypes()throws Exception{
 		
-		request.setParameter("pTfcode", "RJGZ040101"); //设置课程结点tfcode
+		request.setParameter("pTfcode", "RJCZ01010501"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
 		
 		ResultJSON json = typesAndFormatsController.getSysResTypesByPool(request, response);
@@ -48,7 +48,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetSysTypes_ePrepare()throws Exception{
 		
-		request.setParameter("pTfcode", "RJGZ040101"); //设置课程结点tfcode
+		request.setParameter("pTfcode", "RJCZ01010501"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
 		request.setParameter("isEPrepare", "1");
 		

@@ -28,6 +28,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 
 		request.setParameter("resId", "870217");
 		request.setParameter("fromFlag", "3");
+		request.setParameter("isEPrepare", "1");
 		
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
 		

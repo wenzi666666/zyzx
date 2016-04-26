@@ -77,6 +77,31 @@ public class ResPreviewServiceImpl implements ResPreviewService {
        
         return info;
     }
+    
+    /**
+     *  e备课   根据resId和fromFlag，查询资源具体信息
+     * @param resId
+     * @param userId
+     * @param fromFlag
+     * @return
+     */
+    @Override
+	public ResPreviewInfo getResPreviewInfo_ePrepare(long resId, long userId,int fromFlag){
+    	ResPreviewInfo info = null;
+        if (fromFlag == 0) {// 系统资源
+            info = sysResourceMapper.getSysResInfo(resId,userId);
+
+        } else if (fromFlag == 1) {// 自建资源
+        	info = assetMapper.getAssetPreviewInfo(resId);
+        } else if (fromFlag == 3) {// 校本资源
+            info = districtResMapper.getDisResInfo(fromFlag, resId,userId);
+
+        } else if (fromFlag == 4) {// 区本资源
+            info = districtResMapper.getDisResInfo(fromFlag, resId,userId);
+
+        }
+        return info;
+    }
 
     /**
      * 对一个资源进行预览时，查询该资源所在目录
