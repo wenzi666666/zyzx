@@ -20,42 +20,36 @@
        <result column="FileFormat" property="fileformat" />
   </resultMap>
   <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
-  SELECT DISTINCT FileFormat FROM (
-
-  (select DISTINCT a.mtype,a.fname,a.id
-  from z_resource a 
-  left join z_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.fromFlag in 
-  <foreach item="item" index="index" collection="sys_from" 
-                         open="(" separator="," close=")">
-                         #{item}
-  </foreach>
   
-  ) as tmp
-
-  left join j_filetypedetail b 
-  on LOWER(REVERSE(LEFT(REVERSE(tmp.fname),LOCATE('.',REVERSE(tmp.fname))))) = b.FormatCode
-
-  left JOIN 
-  (
+  select DISTINCT FileFormat from (
    SELECT a.id type_id,a.pid type_pid
    from x_resourcetype a 
    where a.flag=0 
    <if test="mtype != 0">
          and a.id = mtype
    </if>
-
    UNION 
    SELECT a.id type_id,a.pid type_pid
    from x_resourcetype a 
    where a.flag=0 
-   
-    <if test="mtype != 0">
+   <if test="mtype != 0">
          and a.pid = mtype
     </if>
-   
-   ) as temp on temp.type_id = tmp.mtype
-   ) where FileFormat is not null
+   ) as temp 
+  left JOIN 
+ (select DISTINCT a.mtype,b.FileFormat
+  from z_resource a 
+  left join z_resnav c on a.ResCode=c.ResCode
+  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.fromFlag in 
+  <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+  </foreach>
+  
+  ) as tmp on temp.type_id = tmp.mtype 
+  where FileFormat is not null
+ 
       <!-- SELECT DISTINCT FileFormat from z_resource a 
       left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode 
       left join x_resourcetype c on a.MType = c.id 
@@ -82,33 +76,15 @@
   
   <!-- 区本校本资源，查询资源格式，文本，图片... -->
   <select id="getDisResFormatsByMType"  resultMap="FileFormatsResultMap">
-  SELECT DISTINCT FileFormat FROM (
-
-  (select DISTINCT a.mtype,a.fname,a.id
-  from z_districts_resource a 
-  left join z_districts_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') 
-   <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
-    </if>
-     <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
-    </if>
-  
-  
-  ) as tmp
-
-  left join j_filetypedetail b 
-  on LOWER(REVERSE(LEFT(REVERSE(tmp.fname),LOCATE('.',REVERSE(tmp.fname))))) = b.FormatCode
-
-  left JOIN 
-  (
+  SELECT DISTINCT FileFormat FROM 
+ (
   SELECT a.id type_id,a.pid type_pid
   from x_resourcetype a 
   where a.flag=0 
   <if test="mtype != 0">
          and a.id = mtype
-    </if>
+   </if>
+ 
   UNION 
   SELECT a.id type_id,a.pid type_pid
   from x_resourcetype a 
@@ -116,9 +92,26 @@
   <if test="mtype != 0">
          and a.pid = mtype
     </if>
-  ) as temp on temp.type_id = tmp.mtype
+  
+  ) as temp 
+  
 
-  ) where FileFormat is not null
+ LEFT JOIN
+
+(select DISTINCT a.mtype,b.FileFormat
+  from z_districts_resource a 
+  left join z_districts_resnav c on a.ResCode=c.ResCode
+  left join j_filetypedetail b 
+  on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') 
+  <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
+    </if>
+     <if test="fromFlag == 4">
+         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
+    </if>
+  ) as tmp on temp.type_id = tmp.mtype
+ where FileFormat is not null
   
      <!--  SELECT DISTINCT FileFormat from z_districts_resource 
       a left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode
