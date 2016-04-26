@@ -12,7 +12,10 @@ import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import net.tfedu.zhl.helper.CustomException;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.NoAuthorizationException;
+import net.tfedu.zhl.core.exception.NoLoginException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 
@@ -31,23 +34,14 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
             throws Exception {
         // 1判断是否请求是否需要拦截, 拦截器自动处理，配置一下excludedUrls
         // 获取参数
-        String token = request.getHeader("Authorization");
-        CustomException customException = null; // (CustomException)request.getAttribute(CustomException.request_key);
+        String token = ControllerHelper.getHeaderParameter(request, "Authorization");
         // 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
-
-        if (token == null) {
-            customException = CustomException.NOTOKEN;
-            request.setAttribute(CustomException.request_key, customException);
-            return false;
-        }
 
         // 2判断是否登录
         ValueWrapper obj = cacheManager.getCache("UserSimpleCache").get(token);
         if (obj == null) {
-            customException = CustomException.NULOGIN;
-            request.setAttribute(CustomException.request_key, customException);
-            return false;
+            throw new NoLoginException();
         }
 
         // 3判断用户token是否有效
@@ -60,11 +54,9 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         loginTime.setTime(us.getLogintime());
         loginTime.add(Calendar.HOUR_OF_DAY, validTime);
 
-        if (now.before(loginTime)) {
-            customException = CustomException.OUTOFDATE;
-            request.setAttribute(CustomException.request_key, customException);
+        if (now.before(loginTime)) {            
             cacheManager.getCache("UserSimpleCache").evict(token);
-            return false;
+            throw new InvalidAccessTokenException();
         }
 
         // 4判断是否有权限
@@ -74,8 +66,6 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         // 直接匹配
         if (funcs.contains(url)) {
             request.setAttribute("currentUserId", currentUserId);
-            customException = CustomException.SUCCESS;
-            request.setAttribute(CustomException.request_key, customException);
             return true;
         }
 
@@ -84,18 +74,13 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
             if (fun.indexOf("*") > 0) {
                 if (url.startsWith(fun.substring(0, fun.length() - 1))) {
                     request.setAttribute("currentUserId", currentUserId);
-                    customException = CustomException.SUCCESS;
-                    request.setAttribute(CustomException.request_key, customException);
                     return true;
                 }
             }
         }
 
         // 无匹配
-        request.setAttribute("currentUserId", currentUserId);
-        customException = CustomException.WITHOUTAUTH;
-        request.setAttribute(CustomException.request_key, customException);
-        return false;
+        throw new NoAuthorizationException();
     }
 
 }

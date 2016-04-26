@@ -23,6 +23,7 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.PrepareContentExistException;
 import net.tfedu.zhl.core.exception.UnCustomException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
+import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -163,5 +164,15 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
+    
+    @ResponseStatus(value = HttpStatus.OK)
+    @ExceptionHandler(WithoutAuthorizationException.class)
+    @ResponseBody
+    public ResultJSON handleWithoutAuthorizationException(HttpServletRequest request, HttpServletResponse response,
+            WithoutAuthorizationException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
+    
 
 }

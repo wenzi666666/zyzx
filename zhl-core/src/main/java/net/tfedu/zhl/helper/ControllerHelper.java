@@ -30,6 +30,24 @@ public class ControllerHelper {
         }
         return param;
     }
+    
+    /**
+     * 获取单个参数值
+     * 
+     * @param request
+     * @param paramName
+     * @return 字符串
+     * @throws ParamsException
+     */
+    public static String getHeaderParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        String param;
+        if (StringUtils.isNotEmpty(request.getHeader(paramName))) {
+            param = request.getHeader(paramName).toString().trim();
+        } else {
+            throw new ParamsException();
+        }
+        return param;
+    }
 
     /**
      * 获取单个参数值
