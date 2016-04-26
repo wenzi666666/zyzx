@@ -7,6 +7,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -139,6 +140,32 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @return
 	 */
 	public ZAssetEditInfo getEditInfo(Long id);
+	
+	
+
+	
+	
+	/**
+	 * 获取当前查询条件下的资源类型
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @return
+	 */
+	public  List<FirstLevelResType> getCourseAssetUnifyType(@Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
+	
+	
+	/**
+	 * 获取当前查询条件下的资源
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @return
+	 */
+	public  List<JPrepareContentView> getCourseAssetPage(@Param("unifyTypeId")Integer unifyTypeId,@Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
+	
+	
+	
 }
 
 

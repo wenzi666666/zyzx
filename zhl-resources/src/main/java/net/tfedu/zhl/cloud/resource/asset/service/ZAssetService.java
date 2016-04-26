@@ -7,7 +7,9 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.helper.ResultJSON;
 
 public interface ZAssetService {
 	
@@ -185,5 +187,29 @@ public interface ZAssetService {
 	 * @return
 	 */
 	public ZAssetEditInfo getEditInfo(Long id);
+	
+	/**
+	 * 获取当前查询条件下的资源类型
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @return
+	 */
+	public ResultJSON  getCourseAssetUnifyType(Long userId,String tfcode,String title);
+	
+	
+	
+	/**
+	 * 获取当前查询条件下的自建资源
+	 * @param userId
+	 * @param tfcode
+	 * @param title
+	 * @param page
+	 * @param perPage
+	 * @return
+	 */
+	public Pagination<JPrepareContentView>  getCourseAssetPage(Integer unifyTypeId,Long userId,String tfcode,String title,Integer page,Integer perPage);
+	
+	
 	
 }

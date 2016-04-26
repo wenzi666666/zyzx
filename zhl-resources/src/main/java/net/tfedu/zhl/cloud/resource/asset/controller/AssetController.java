@@ -22,6 +22,7 @@ import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.zhldowncenter;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.service.UserService;
@@ -527,4 +528,64 @@ public class AssetController {
 
 	}
 
+	
+	/**
+	 * 获取当前查询条件下的资源类型
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParamsException 
+	 */
+	@RequestMapping(value = "/v1.0/resource/courseAsset/assetType", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getCourseAssetType(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParamsException {
+	
+		
+		String tfcode = ControllerHelper.getParameter(request, "tfcode");
+		String title = request.getParameter("title");
+		// 当前登录用户id
+		Long userId = (Long) request.getAttribute("currentUserId");		
+		return assetService.getCourseAssetUnifyType(userId, tfcode, title==null?"":title.trim());
+
+	}
+
+	
+	/**
+	 * 获取当前查询条件下的资源类型
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParamsException 
+	 */
+	@RequestMapping(value = "/v1.0/resource/courseAsset/asset", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getCourseAsset(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParamsException {
+		
+		// 获取文件服务器的访问url
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+		
+		String tfcode = ControllerHelper.getParameter(request, "tfcode");
+		String title = request.getParameter("title");
+		title = title==null?"":title.trim();
+		int unifyTypeId =  ControllerHelper.getIntWithDefault(request, "unifyTypeId");
+		int page = ControllerHelper.getPage(request);
+		int perPage = ControllerHelper.getPageSize(request);
+		// 当前登录用户id
+		Long userId = (Long) request.getAttribute("currentUserId");	
+		
+		Pagination _page = assetService.getCourseAssetPage(unifyTypeId,userId, tfcode, title, page, perPage);
+		if(_page!=null && _page.getList()!=null){
+			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
+					currentResPath);
+		}
+		return ResultJSON.getSuccess(_page);
+	}
+
+	
 }

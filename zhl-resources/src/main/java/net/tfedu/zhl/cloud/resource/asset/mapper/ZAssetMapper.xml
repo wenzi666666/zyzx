@@ -347,6 +347,7 @@
 
  </resultMap>
  
+ <!--  准备编辑信息 -->
  <select id="getEditInfo" parameterType="Long" resultMap="editInfoMap">
   select a.id,a.name as title,a.assetdesc,a.assetpath,a.assetsize,p.id as unifytypeid,p.MType as mtype,
 	a.keyword as keyword,sys.sharescope,sys.tfcode,s.termid,s.subjectid
@@ -358,6 +359,54 @@
   ORDER BY sys.id limit  1 
  </select>
  
+ 
+ 
+ <!-- 获取节点下 ， title的  用户自建资源 的所有类型 -->
+ <select id="getCourseAssetUnifyType" resultType="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType">
+	select id,code,mtype from x_resourcetype p  where p.id in (
+	select DISTINCT a.unifytypeid from z_asset a  
+	LEFT JOIN z_asset_syscourse s on s.assetid = a.id
+				where a.flag =false and a.FileType = 'A'
+	      and s.flag = false  
+				and a.userid =#{userId}  
+				and s.tfcode like #{tfcode} 
+				
+			<if test="title!=''">
+			and a.name like  #{title}
+			</if>				
+	)ORDER BY code 
+ </select>
+ 
+ <!--  获取当前查询条件下的资源   -->
+ <select id="getCourseAssetPage" resultType="net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView">
+ 	select  resId,title,0 as fromflag,unifytype,time,imgpath,filesuffix,size from  (	 
+			select  a.id as resId,a.resourceid as rescode,a.name as title,a.updatetime,a.createTime as time,p.id as unifyTypeId,a.assetSize  as size 
+			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
+			,c.tfcode,c.name as tf_title 
+			from  z_asset a 
+			LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId
+			LEFT JOIN z_asset_syscourse  s on s.assetid = a.id
+			LEFT JOIN j_syscourse c on c.tfcode = s.tfcode 
+			where a.flag =false and a.FileType = 'A'
+      and s.flag = false  
+			and a.userid =#{userId} 
+			and s.tfcode like #{tfcode} 
+			<if test="title!=''">
+			and a.name like  #{title}
+			</if>	
+			<if test=" unifyTypeId>0 ">
+      		and a.unifytypeid =#{unifyTypeId}		
+			</if>	
+ 	)temp_result 
+ </select>
+ 
+ 
+ 
+ 
 </mapper>
+
+
+
+
 
 

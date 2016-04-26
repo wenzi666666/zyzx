@@ -24,6 +24,7 @@ import net.tfedu.zhl.cloud.resource.extrelativeteachingtype.dao.ExtRelativeTeach
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictsResNavMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
@@ -33,6 +34,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.slf4j.Logger;
@@ -636,6 +638,27 @@ public class ZAssetServiceImpl implements ZAssetService {
 		
 		
 		return relateTypeMapper.getTypeForExt(ext);
+	}
+
+
+
+
+	@Override
+	public ResultJSON getCourseAssetUnifyType(Long userId, String tfcode,
+			String title) {
+		
+		return ResultJSON.getSuccess(assetMapper.getCourseAssetUnifyType(userId, tfcode+"%", "%"+title+"%"));
+	}
+
+
+
+
+	@Override
+	public Pagination<JPrepareContentView> getCourseAssetPage(Integer unifyTypeId,Long userId, String tfcode,
+			String title, Integer page, Integer perPage) {
+		PageHelper.startPage(page, perPage);
+		List<JPrepareContentView>  list = assetMapper.getCourseAssetPage(unifyTypeId,userId, tfcode+"%", "%"+title+"%");
+		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
 	}
 }
 
