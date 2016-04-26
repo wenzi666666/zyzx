@@ -24,6 +24,13 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
 	 */
 	public Integer getRepeatTimes(@Param("tfcode")String tfcode,@Param("title")String title,@Param("userId")Long userId );
 	
+	/**
+	 * 查询标题是否重名(用户的全部备课夹)
+	 * @param title
+	 * @param userid
+	 * @return
+	 */
+	public Integer getAllRepeatTimes(@Param("title")String title,@Param("userId")Long userId );
 	
 	
 
