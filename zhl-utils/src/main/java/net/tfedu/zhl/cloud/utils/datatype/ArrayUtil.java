@@ -73,7 +73,7 @@ public class ArrayUtil {
             return new ArrayList<T>();
         }
         List<T> list = new ArrayList<T>(array.length);
-        for (T s : list) {
+        for (T s : array) {
             list.add(s);
         }
         return list;
