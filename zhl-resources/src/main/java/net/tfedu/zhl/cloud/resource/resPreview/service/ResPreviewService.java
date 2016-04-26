@@ -23,6 +23,15 @@ public interface ResPreviewService {
      * @return
      */
     public ResPreviewInfo getResPreviewInfo(long resId, long userId,int fromFlag);
+    
+    /**
+     *  e备课   根据resId和fromFlag，查询资源具体信息
+     * @param resId
+     * @param userId
+     * @param fromFlag
+     * @return
+     */
+    public ResPreviewInfo getResPreviewInfo_ePrepare(long resId, long userId,int fromFlag);
 
     /**
      *  对一个资源进行预览时，查询该资源所在目录
