@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResDownRecord;
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareContentMapper;
@@ -25,6 +28,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.PrepareContentExistException;
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
 import net.tfedu.zhl.sso.userlog.entity.JUserlog;
 
@@ -566,6 +570,45 @@ public class JPrepareServiceImpl implements JPrepareService {
 		PageHelper.startPage(page, perPage);
 		List<JPrepareView>  list = queryPrepareAndTimeScopeList(termId, subjectId, title, userId,timeLabel);
 		return new PageInfoToPagination<JPrepareView>().transfer(list);
+	}
+
+	@Override
+	public ResultJSON copyPrepare(Long prepareId,String tfcode) throws Exception {
+		Date time = Calendar.getInstance().getTime();
+		
+		JPrepare obj =  mapper.selectByPrimaryKey(prepareId);
+
+		JPrepareContent record = new JPrepareContent();
+		record.setPreid(prepareId);
+		List<JPrepareContent> list = contMapper.select(record);				
+		for (JPrepareContent jPrepareContent : list) {
+			jPrepareContent.setId(null);
+			jPrepareContent.setCreatetime(time);
+		}
+		
+		obj.setId(null);
+		obj.setUpdatetime(time);
+		obj.setTfcode(tfcode);
+		mapper.insert(obj);
+		if(list!=null&& list.size()>0){
+			contMapper.insertList(list);
+		}
+		return ResultJSON.getSuccess("");
+	
+	}
+
+	@Override
+	public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception {
+		
+		
+		
+		JPrepare obj = new JPrepare();
+		
+		obj.setId(prepareId);
+		obj.setTfcode(tfcode);
+		editPrepare(obj);
+		
+		return ResultJSON.getSuccess("");
 	}
 
 }

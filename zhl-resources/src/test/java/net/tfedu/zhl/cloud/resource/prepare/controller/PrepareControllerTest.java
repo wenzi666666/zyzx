@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -224,8 +227,35 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     	request.setParameter("clientType", "ePrepareClient");
         result = controller.getDown(request, response);
 
-    	
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	
     }
+    
+    
+    @Test
+    public void copyPrepare() throws Exception {
+		
+    	long prepareId = 828l;
+    	String tfcode = "CCXX01010901";
+    	
+    	result = controller.copyPrepare(prepareId, tfcode);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	}
+	
+
+    @Test
+	public void movePrepare() throws Exception {
+
+    	long prepareId = 828l;
+    	String tfcode = "CCXX010109";
+		result =  controller.movePrepare(prepareId, tfcode);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+	}
+    
+    
+    
     
     
 }

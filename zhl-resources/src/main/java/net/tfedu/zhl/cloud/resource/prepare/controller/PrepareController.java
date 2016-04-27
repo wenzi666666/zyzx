@@ -799,6 +799,44 @@ public class PrepareController {
 		return ResultJSON.getSuccess(data);
 
 	}
+	
+	
+	
+	
+	/**
+	 *  复制备课夹
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/prepareCopy", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON copyPrepare(Long prepareId,String tfcode) throws Exception {
+		
+
+		return jPrepareService.copyPrepare(prepareId, tfcode);
+
+	}
+	
+	/**
+	 * 
+	 * 移动备课夹
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/prepareMove", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception {
+
+		return jPrepareService.movePrepare(prepareId, tfcode);
+
+	}
+	
+	
+	
 
 	public static void main(String[] args) {
 		String s = "20150416160806813.swf";

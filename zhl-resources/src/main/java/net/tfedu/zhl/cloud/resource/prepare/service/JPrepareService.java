@@ -2,6 +2,9 @@ package net.tfedu.zhl.cloud.resource.prepare.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
@@ -10,6 +13,7 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.helper.ResultJSON;
 
 public interface JPrepareService {
 
@@ -243,7 +247,24 @@ public interface JPrepareService {
     public List<JPrepareView>  getLatestPrepare(Long userId);
     
     
+    /**
+     * 复制备课夹
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public ResultJSON copyPrepare(Long prepareId,String tfcode) throws Exception;
     
+    
+    /**
+     * 移动备课夹
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception;
     
 }
 
