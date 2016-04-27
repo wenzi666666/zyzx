@@ -28,7 +28,7 @@ public interface ResFormatService {
      * @param sys_from
      * @return
      */
-    public List<String> getSysResFormats(String pTfcode, int typeId,List<Integer> sys_from);
+    public List<String> getSysResFormats(String pTfcode, int typeId,List<Integer> sys_from,long poolId);
     
 	
     //******代码优化之前的********//

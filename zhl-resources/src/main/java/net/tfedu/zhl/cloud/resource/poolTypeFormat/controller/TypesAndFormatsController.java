@@ -117,11 +117,11 @@ public class TypesAndFormatsController {
         
     	String pTfcode = ControllerHelper.getParameter(request, "pTfcode");
     	int typeId = ControllerHelper.getIntParameter(request, "typeId");
-    	//long poolId = ControllerHelper.getLongParameter(request, "poolId");
+    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
 
         // 根据 resourceIds和typeIds，查询资源格式
         //formats = resFormatService.getSysResFormats(poolId,pTfcode,typeId,sys_from);
-    	formats = resFormatService.getSysResFormats(pTfcode,typeId,sys_from);
+    	formats = resFormatService.getSysResFormats(pTfcode,typeId,sys_from,poolId);
         return ResultJSON.getSuccess(formats);
     }
 	

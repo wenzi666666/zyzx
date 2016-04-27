@@ -30,13 +30,16 @@
                          #{item}
   </foreach>
   and a.mtype in (
-  SELECT DISTINCT type_id from 
-  (SELECT b.id type_id from x_resourcetype b 
-      where b.flag=0 
-      <if test="mtype != 0">
+  SELECT b.id type_id 
+  from z_res_pooltype a 
+  inner join x_resourcetype b on a.resTypeId = b.id
+  where b.flag = 0 
+   <if test="poolId != 0">
+         and poolId = #{poolId}
+   </if>
+   <if test="mtype != 0">
          and (b.id = #{mtype} or b.pid = #{mtype})
-       </if>
-      ) temp 
+   </if>
   )
    
  <!-- 优化之前的 -->
@@ -79,13 +82,10 @@
          and a.scopeId = #{districtId} and a.scope = 4 
     </if>
   and a.mtype in (
-  SELECT DISTINCT type_id from 
-  (SELECT b.id type_id from x_resourcetype b 
-      where b.flag=0 
-      <if test="mtype != 0">
-         and (b.id = #{mtype} or b.pid = #{mtype})
-       </if>
-      ) temp 
+  SELECT b.id type_id from x_resourcetype b where b.flag=0 
+    <if test="mtype != 0">
+      and (b.id = #{mtype} or b.pid = #{mtype})
+    </if> 
   )
   
   
