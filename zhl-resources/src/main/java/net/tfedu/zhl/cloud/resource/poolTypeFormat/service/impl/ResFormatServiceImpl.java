@@ -68,7 +68,7 @@ public class ResFormatServiceImpl implements ResFormatService {
      * 
      */
     @Override
-    public List<String> getSysResFormats(String pTfcode,int typeId,List<Integer> sys_from) {
+    public List<String> getSysResFormats(String pTfcode,int typeId,List<Integer> sys_from,long poolId) {
         List<String> formats = new ArrayList<String>();
 
         /*// 根据poolId和typeId，查询父类型下所有子类型及其自身
@@ -86,7 +86,7 @@ public class ResFormatServiceImpl implements ResFormatService {
         //formats = fileFormatMapper.getSysResFormatsByMType(resourceIds, typeIds);
         
         
-        formats = fileFormatMapper.getSysResFormatsByMType(pTfcode,typeId,sys_from);
+        formats = fileFormatMapper.getSysResFormatsByMType(pTfcode,typeId,sys_from,poolId);
         // 查询结果中增加一个 “全部”
         formats.add(0, "全部");
 
