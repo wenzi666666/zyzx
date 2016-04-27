@@ -136,8 +136,6 @@ public class ResTypeServiceImpl implements ResTypeService {
 
         return types;
     }
-
-    
     
     /**
      * 区本校本资源：查询资源类型，e备课

@@ -17,7 +17,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	/**
 	 * 查询所有的资源库 controller单元测试
 	 * @throws Exception
-	 *//*
+	 */
 	@Test
     public void testGetAllTerms() throws Exception {
       
@@ -28,13 +28,13 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
     }
 	
-	*//**
+	/**
 	 * 系统资源   类型
-	 *//*
+	 */
 	@Test
 	public void testGetSysTypes()throws Exception{
 		
-		request.setParameter("pTfcode", "RJCZ01010501"); //设置课程结点tfcode
+		request.setParameter("pTfcode", "RJCZ0101"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
 		
 		ResultJSON json = typesAndFormatsController.getSysResTypesByPool(request, response);
@@ -42,13 +42,13 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	*//**
+	/**
 	 * 系统资源   类型  e备课
-	 *//*
+	 */
 	@Test
 	public void testGetSysTypes_ePrepare()throws Exception{
 		
-		request.setParameter("pTfcode", "RJCZ01010501"); //设置课程结点tfcode
+		request.setParameter("pTfcode", "RJCZ0101"); //设置课程结点tfcode
 		request.setParameter("poolId", "0");
 		request.setParameter("isEPrepare", "1");
 		
@@ -57,20 +57,20 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
         Assert.isTrue("OK".equals(json.getCode()));
 	}
 	
-	*//**
+	/**
 	 * 系统资源   格式
 	 * @throws Exception
-	 *//*
+	 */
 	@Test
 	public void testGetSysFormats()throws Exception{
-		request.setParameter("pTfcode", "RJGZ040101");
-		request.setParameter("typeId", "0");
-		request.setParameter("poolId", "0");
+		request.setParameter("pTfcode", "RJCZ010105");
+		request.setParameter("typeId", "57");
+		//request.setParameter("poolId", "0");
 		
 		ResultJSON json = typesAndFormatsController.getSysResFormatsByMtype(request, response);
 		JsonUtil.toJsonString(json);
         Assert.isTrue("OK".equals(json.getCode()));
-	}*/
+	}
 	
 	/**
 	 * 区本、校本资源   类型
@@ -78,7 +78,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes()throws Exception{
-		request.setParameter("tfcode", "CZYW010101");
+		request.setParameter("tfcode", "RJCZ010105");
 		request.setParameter("fromFlag", "3");
 		
 		ResultJSON json = typesAndFormatsController.getDisResTypesByPool(request, response);
@@ -92,7 +92,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes_ePrepare()throws Exception{
-		request.setParameter("tfcode", "RJGZ040101");
+		request.setParameter("tfcode", "RJCZ010105");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("isEPrepare", "1");
 		
@@ -107,7 +107,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisFormats()throws Exception{
-		request.setParameter("tfcode", "RJGZ040101");
+		request.setParameter("tfcode", "RJCZ010105");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("typeId", "0");
 		

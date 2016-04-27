@@ -20,36 +20,26 @@
        <result column="FileFormat" property="fileformat" />
   </resultMap>
   <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
-  
-  select DISTINCT FileFormat from (
-   SELECT a.id type_id,a.pid type_pid
-   from x_resourcetype a 
-   where a.flag=0 
-   <if test="mtype != 0">
-         and a.id = mtype
-   </if>
-   UNION 
-   SELECT a.id type_id,a.pid type_pid
-   from x_resourcetype a 
-   where a.flag=0 
-   <if test="mtype != 0">
-         and a.pid = mtype
-    </if>
-   ) as temp 
-  left JOIN 
- (select DISTINCT a.mtype,b.FileFormat
+  select DISTINCT b.FileFormat
   from z_resource a 
-  left join z_resnav c on a.ResCode=c.ResCode
-  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.fromFlag in 
+  inner join z_resnav c on a.ResCode=c.ResCode
+  inner join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
   </foreach>
-  
-  ) as tmp on temp.type_id = tmp.mtype 
-  where FileFormat is not null
- 
+  and a.mtype in (
+  SELECT DISTINCT type_id from 
+  (SELECT b.id type_id from x_resourcetype b 
+      where b.flag=0 
+      <if test="mtype != 0">
+         and (b.id = #{mtype} or b.pid = #{mtype})
+       </if>
+      ) temp 
+  )
+   
+ <!-- 优化之前的 -->
       <!-- SELECT DISTINCT FileFormat from z_resource a 
       left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode 
       left join x_resourcetype c on a.MType = c.id 
@@ -76,59 +66,86 @@
   
   <!-- 区本校本资源，查询资源格式，文本，图片... -->
   <select id="getDisResFormatsByMType"  resultMap="FileFormatsResultMap">
-  SELECT DISTINCT FileFormat FROM 
- (
-  SELECT a.id type_id,a.pid type_pid
+  select DISTINCT b.FileFormat
+  from z_districts_resource a 
+  left join z_districts_resnav c on a.ResCode=c.ResCode
+  left join j_filetypedetail b 
+  on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag = #{fromFlag} 
+   <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId} and a.scope = 5 
+    </if>
+    <if test="fromFlag == 4">
+         and a.scopeId = #{districtId} and a.scope = 4 
+    </if>
+  and a.mtype in (
+  SELECT DISTINCT type_id from 
+  (SELECT b.id type_id from x_resourcetype b 
+      where b.flag=0 
+      <if test="mtype != 0">
+         and (b.id = #{mtype} or b.pid = #{mtype})
+       </if>
+      ) temp 
+  )
+  
+  
+  <!--  SELECT DISTINCT FileFormat FROM 
+  (
+  SELECT a.id,a.pid
   from x_resourcetype a 
   where a.flag=0 
   <if test="mtype != 0">
          and a.id = mtype
    </if>
- 
   UNION 
-  SELECT a.id type_id,a.pid type_pid
+  SELECT a.id,a.pid
   from x_resourcetype a 
   where a.flag=0 
   <if test="mtype != 0">
          and a.pid = mtype
     </if>
-  
   ) as temp 
-  
-
- LEFT JOIN
-
-(select DISTINCT a.mtype,b.FileFormat
+  inner JOIN
+  (select DISTINCT a.mtype,b.FileFormat
   from z_districts_resource a 
   left join z_districts_resnav c on a.ResCode=c.ResCode
   left join j_filetypedetail b 
   on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') 
-  <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
+  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag = #{fromFlag}
+    <if test="fromFlag == 3">
+         and a.scopeId = #{schoolId} and a.scope = 5 
     </if>
-     <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
+    <if test="fromFlag == 4">
+         and a.scopeId = #{districtId} and a.scope = 4 
     </if>
-  ) as tmp on temp.type_id = tmp.mtype
- where FileFormat is not null
-  
-     <!--  SELECT DISTINCT FileFormat from z_districts_resource 
-      a left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode
-      WHERE 1=1 and a.flag = 0 and b.flag = 0
-      and a.fromFlag in (#{fromFlag})
-      <if test="resourceIds.size() == 0 ">
-         and a.id in ('')
-     </if>
-     
-     <if test="resourceIds.size() > 0 ">
+  ) as tmp on temp.id = tmp.mtype  -->
+   
+  <!-- 优化之前的代码 -->
+    <!-- SELECT DISTINCT FileFormat from z_districts_resource 
+    a left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode
+    WHERE 1=1 and a.flag = 0 and b.flag = 0
+    and a.fromFlag in (#{fromFlag})
+    <if test="typeIds.size() > 0 ">
+    and a.mtype in  <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                       </foreach>
+    </if>
+    
+    <if test="typeIds.size() == 0 ">
+      and a.mtype in ('')
+    </if>
+    
+    <if test="resourceIds.size() == 0 ">
+    and a.id in ('')
+    </if>
+    <if test="resourceIds.size() > 0 ">
          and a.id in
                 <foreach item="item" index="index" collection="resourceIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
      </if> -->
-     
   </select>
 
   <select id="getAllFileFormat" resultType="String">
