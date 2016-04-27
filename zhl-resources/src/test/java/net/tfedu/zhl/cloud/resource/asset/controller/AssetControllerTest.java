@@ -40,6 +40,21 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	
 	@Test
 	public void testupdate(){
+		long id  = 164882966;
+		request.setParameter("_method", "PUT");
+		request.setParameter("name", "微型学习视频的设计研究_edit");
+		request.setParameter("unifTypeId", "1");
+		request.setParameter("scope", "0");
+		request.setParameter("keyword", "视频");
+		request.setParameter("desc", "学习视频的设计研");
+		request.setParameter("path", "upFile\\2016\\390440126\\10105\\2016042715352584924-46.pdf");
+		request.setParameter("size", "683695");
+		
+		result = 	assetController.updateAsset(id, request, response);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	
+		
+		
 		
 		
 		

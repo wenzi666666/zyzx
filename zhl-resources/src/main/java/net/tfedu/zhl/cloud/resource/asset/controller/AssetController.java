@@ -396,19 +396,19 @@ public class AssetController {
 			ZAsset a = new ZAsset();
 			a.setId(id);
 
-			if (StringUtils.isEmpty(path)) {
+			if (!StringUtils.isEmpty(path)) {
 				a.setAssetpath(path);
 
 			}
-			if (StringUtils.isEmpty(size)) {
+			if (!StringUtils.isEmpty(size)) {
 				a.setAssetsize(size);
 
 			}
-			if (StringUtils.isEmpty(desc)) {
+			if (!StringUtils.isEmpty(desc)) {
 				a.setAssetdesc(desc);
 
 			}
-			if (StringUtils.isEmpty(unifTypeId)) {
+			if (!StringUtils.isEmpty(unifTypeId)) {
 
 				// 新版资源类型
 				a.setUnifytypeid(Integer.parseInt(unifTypeId));
@@ -416,11 +416,11 @@ public class AssetController {
 				a.setTypeid(Long.parseLong(unifTypeId));
 
 			}
-			if (StringUtils.isEmpty(name)) {
+			if (!StringUtils.isEmpty(name)) {
 				a.setName(name);
 
 			}
-			if (StringUtils.isEmpty(keyword)) {
+			if (!StringUtils.isEmpty(keyword)) {
 				a.setKeyword(keyword);
 
 			}
