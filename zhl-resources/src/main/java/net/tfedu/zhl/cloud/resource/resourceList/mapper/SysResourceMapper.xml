@@ -82,8 +82,52 @@
  </resultMap>
  <!-- 分页查询系统资源信息的所有记录 -->
  <select id="SelectSysResources"  resultMap="SysResourceMap">
-   
-    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+   select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+	m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
+	(SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
+	from z_resource a 
+	left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
+	left join z_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on  c.StructCode=d.TFcode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
+	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
+	
+	            <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+	
+	 and d.typeFlag in (0,1) and d.tfcode like CONCAT(#{pTfcode},'%')
+	 <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+     </if>
+     
+      and a.mtype in (
+      SELECT b.id type_id 
+      from x_resourcetype b 
+      left join z_res_pooltype a on a.resTypeId = b.id
+      where b.flag = 0
+      <if test="poolId != 0">
+         and poolId = #{poolId}
+      </if>
+      <if test="mtype != 0">
+         and (b.id = #{mtype} or b.pid = #{mtype})
+      </if>
+    )
+	 <if test="orderBy == 0">
+        order by avgScore desc
+     </if>
+     <if test="orderBy == 1">
+        order by DloadTimes desc
+     </if>
+     <if test="orderBy == 2">
+        order by UpdateDT desc
+     </if>
+     ,DisplayIndex asc,orderNum asc,id
+ 
+    <!-- select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 	m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
 	(SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
@@ -123,16 +167,16 @@
                      </foreach>
      </if>
      and c.StructCode like CONCAT(#{pTfcode},'%')               
-     <if test="orderBy == 0"><!-- 综合排序 -->
+     <if test="orderBy == 0">综合排序
         order by avgScore desc
      </if>
-     <if test="orderBy == 1"><!-- 最多下载 -->
+     <if test="orderBy == 1">最多下载
         order by DloadTimes desc
      </if>
-     <if test="orderBy == 2"><!-- 最新发布 -->
+     <if test="orderBy == 2">最新发布
         order by UpdateDT desc
      </if>
-     ,DisplayIndex asc,orderNum asc,id                                  
+     ,DisplayIndex asc,orderNum asc,id  -->                                 
  </select>
  
   <!-- 分页查询系统资源信息的所有记录，资源预览的推荐查询  -->

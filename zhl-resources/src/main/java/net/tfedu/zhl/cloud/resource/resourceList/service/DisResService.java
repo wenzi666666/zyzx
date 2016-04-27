@@ -27,9 +27,26 @@ public interface DisResService {
      * @param perPage
      * @param expire
      * @return
-     */
+     *//*
     public Pagination<DisResourceEntity> selectDisRes(int fromFlag, String fileFormat, List<Integer> typeIds,
             String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,int expire);
+
+    *//**
+     * 查询区本、校本资源信息
+     * @param userId
+     * @param mTypeId
+     * @param fileFormat
+     * @param tfcode
+     * @param orderBy
+     * @param page
+     * @param perPage
+     * @param fromFlag
+     * @param expire
+     * @return
+     *//*
+    public Pagination<DisResourceEntity> selectAllDisRes(long userId, int mTypeId, String fileFormat, String tfcode,
+            int orderBy, int page, int perPage, int fromFlag,int expire);*/
+
 
     /**
      * 查询区本、校本资源信息
