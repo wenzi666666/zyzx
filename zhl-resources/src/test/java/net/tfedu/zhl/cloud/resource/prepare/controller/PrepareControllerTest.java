@@ -208,4 +208,24 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     
     
+    
+    @Test
+    public void testgetDown() throws Exception{
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+    	
+    
+    	
+    	request.setParameter("resIds", "164767");
+    	request.setParameter("fromFlags", "0");
+    	request.setParameter("clientType", "ePrepareClient");
+        result = controller.getDown(request, response);
+
+    	
+    }
+    
+    
 }

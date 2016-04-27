@@ -410,7 +410,8 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
                 path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
             }else  if (ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
                 // 如果是加密swf\mp4的文件
-            	path = ZhlResourceCenterWrap.getDownUrlForSysRes(resServiceLocal, path, isdwj);
+            	path = path.replace(".swf", ".tfswf").replace(".mp4", ".tfmp4");
+            	path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
             } else {
                 path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
             }
