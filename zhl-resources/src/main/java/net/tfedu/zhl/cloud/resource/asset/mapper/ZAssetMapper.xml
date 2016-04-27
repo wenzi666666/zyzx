@@ -379,7 +379,7 @@
  
  <!--  获取当前查询条件下的资源   -->
  <select id="getCourseAssetPage" resultType="net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView">
- 	select  resId,title,0 as fromflag,unifytype,time,imgpath,filesuffix,size from  (	 
+ 	select  resId,title,1 as fromflag,unifytype,time,imgpath,filesuffix,size from  (	 
 			select  a.id as resId,a.resourceid as rescode,a.name as title,a.updatetime,a.createTime as time,p.id as unifyTypeId,a.assetSize  as size 
 			,p.MType as  unifyType,a.AssetPath as imgPath ,REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))-1)) as fileSuffix
 			,c.tfcode,c.name as tf_title 
