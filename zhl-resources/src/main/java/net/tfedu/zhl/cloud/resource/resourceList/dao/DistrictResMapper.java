@@ -34,9 +34,24 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
      * @param schoolId
      * @param districtId
      * @return
-     */
+     *//*
     public List<DisResourceEntity> selectDisRes(@Param("fromFlag") int fromFlag, @Param("fileFormat") String fileFormat,
             @Param("typeIds") List<Integer> typeIds, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,
+            @Param("schoolId") long schoolId, @Param("districtId") long districtId);*/
+    
+    /**
+     * 查询区本、校本资源信息
+     * @param fromFlag
+     * @param fileFormat
+     * @param typeIds
+     * @param tfcode
+     * @param orderBy
+     * @param schoolId
+     * @param districtId
+     * @return
+     */
+    public List<DisResourceEntity> selectDisRes(@Param("fromFlag") int fromFlag, @Param("fileFormat") String fileFormat,@Param("mtype")int mtype,
+             @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,
             @Param("schoolId") long schoolId, @Param("districtId") long districtId);
 
     /**

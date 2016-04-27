@@ -22,8 +22,8 @@
   <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
   select DISTINCT b.FileFormat
   from z_resource a 
-  inner join z_resnav c on a.ResCode=c.ResCode
-  inner join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  left join z_resnav c on a.ResCode=c.ResCode
+  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
   where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -31,8 +31,8 @@
   </foreach>
   and a.mtype in (
   SELECT b.id type_id 
-  from z_res_pooltype a 
-  inner join x_resourcetype b on a.resTypeId = b.id
+  from x_resourcetype b 
+  left join z_res_pooltype a on a.resTypeId = b.id
   where b.flag = 0 
    <if test="poolId != 0">
          and poolId = #{poolId}

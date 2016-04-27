@@ -28,10 +28,24 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @param orderBy
      * @param typeIds
      * @return
-     */
+     *//*
     public List<SysResourceEntity> SelectSysResources(@Param("sys_from") List<Integer> sys_from,
             @Param("fileFormat") String fileFormat, @Param("resourceIds") List<Long> resourceIds,
-            @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy, @Param("typeIds") List<Integer> typeIds);
+            @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy, @Param("typeIds") List<Integer> typeIds);*/
+	
+	/**
+     * 查询系统资源列表
+     * @param sys_from
+     * @param fileFormat
+     * @param resourceIds
+     * @param tfcode
+     * @param orderBy
+     * @param typeIds
+     * @return
+     */
+    public List<SysResourceEntity> SelectSysResources(@Param("poolId")long poolId,@Param("sys_from") List<Integer> sys_from,@Param("mtype")int mtype,
+            @Param("fileFormat") String fileFormat, @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy);
+           
 
     /**
      * 获取一条系统资源的详细信息
