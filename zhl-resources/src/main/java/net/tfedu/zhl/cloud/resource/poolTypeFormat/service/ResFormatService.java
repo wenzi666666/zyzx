@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service;
 
 import java.util.List;
 
+
 /**
  * 资源格式 service
  * 
@@ -28,4 +29,24 @@ public interface ResFormatService {
      * @return
      */
     public List<String> getSysResFormats(String pTfcode, int typeId,List<Integer> sys_from);
+    
+	
+    //******代码优化之前的********//
+	/**
+     * 查询区本校本资源格式
+     * @param tfcode
+     * @param fromFlag
+     * @return
+     *//*
+    public List<String> getDisResFormats(String tfcode, int fromFlag,int MType);
+
+    *//**
+     * 获得系统资源格式
+     * @param poolId
+     * @param pTfcode
+     * @param typeId
+     * @param sys_from
+     * @return
+     *//*
+    public List<String> getSysResFormats(long poolId, String pTfcode, int typeId,List<Integer> sys_from);*/
 }
