@@ -171,7 +171,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
      * 
      */
     @Test
-    public void testgetUnifyType(){
+    public void testGetUnifyType(){
     	
         ResultJSON result = controller.getUnifyType(request, response);
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
@@ -184,7 +184,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
      * 
      */
     @Test
-    public void testgetUnifyType4ext() throws Exception{
+    public void testGetUnifyType4ext() throws Exception{
     	
     	String ext = ".doc";
         ResultJSON result = controller.getUnifyType4ext(ext);
@@ -193,6 +193,18 @@ public class PersonalControllerTest extends BaseControllerTestCase {
     	
     	
     } 
+    
+    
+    
+    @Test
+    public void testPrepareStatis()throws Exception{
+    	
+    	request.setAttribute("currentUserId", 390410126l);
+        ResultJSON result = controller.prepareStatis(request, response);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
     
     
 }

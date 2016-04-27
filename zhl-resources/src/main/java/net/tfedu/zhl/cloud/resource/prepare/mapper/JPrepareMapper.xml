@@ -299,14 +299,13 @@
   
   <select id="getBookPrepareStatis" resultMap="prepareStatisMap" >
   	SELECT   preparenums,resourcenums,nodefinishednums,(nodeallnumbers-nodefinishednums) as nodeomitnums from (
-		select  sum( IF(childrennum=0,1,0) ) as nodeallnumbers,sum(prenum) as preparenums 
+		select  sum(1) as nodeallnumbers,sum(prenum) as preparenums 
 			,sum(if(prenum=0,0,1)) as nodefinishednums,sum(resnum) as resourcenums
 		from (
 			SELECT 	id,tfcode
 			,(select count(1) from j_lession_prepare t where t.tfcode = p.tfcode  and userid =#{userId} and flag =FALSE ) as prenum
 			,(select count(c.id) from j_lession_prepare t,j_prepare_content c where t.tfcode = p.tfcode and t.flag =false 
 									and userid = #{userId} and t.id = c.preId and c.flag = false and c.contType in (1,2,9,10,11,12) ) as resnum 
-			,(SELECT count(1)	FROM	j_syscourse pp	WHERE	pp.pnodeid = p.id	AND pp.flag = FALSE ) AS childrennum
 			FROM
 				j_syscourse p
 			WHERE

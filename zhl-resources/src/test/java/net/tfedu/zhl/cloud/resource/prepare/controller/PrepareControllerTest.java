@@ -138,10 +138,10 @@ public class PrepareControllerTest extends BaseControllerTestCase {
  
     @Test
     public void testgetViewUrl() throws Exception {
-//        request.addParameter("resIds", "50892,212992,212991");
-//        request.addParameter("fromFlags", "0,0,0");
-        request.addParameter("resIds", "870142");
-        request.addParameter("fromFlags", "4");
+        request.addParameter("resIds", "50892,212992,212991");
+        request.addParameter("fromFlags", "0,0,0");
+//        request.addParameter("resIds", "870142");
+//        request.addParameter("fromFlags", "4");
         request.setServerName("192.168.111.160");
         request.setServerPort(8080);
         request.setContextPath("/zhl-resources");
