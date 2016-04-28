@@ -28,7 +28,7 @@
        <id column="id" property="id" />
 	   <result column="mtype" property="mtype" />
   </resultMap>
-  <select id="getSysFirstLevelType"  resultMap="FirstTypeResultMap" flushCache="false" useCache="true" >
+  <select id="getSysFirstLevelType"  resultMap="FirstTypeResultMap" >
   select DISTINCT id,mtype from (
   select case when temp.pid = 0 then temp.id else temp.pid end id,case when temp.pid = 0 then temp.mtype else temp.pmtype end mtype from 
   (select DISTINCT a.mtype from z_resource a 
@@ -89,7 +89,7 @@
   </select>
   
   <!-- e备课， 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型   -->
-  <select id="getSysFirstLevelType_ePrepare"  resultMap="FirstTypeResultMap" flushCache="false" useCache="true">
+  <select id="getSysFirstLevelType_ePrepare"  resultMap="FirstTypeResultMap" >
   select DISTINCT id,mtype from (
   select case when temp.pid = 0 then temp.id else temp.pid end id,case when temp.pid = 0 then temp.mtype else temp.pmtype end mtype from 
   (select DISTINCT a.mtype from z_resource a 
@@ -131,7 +131,7 @@
     
     
   <!-- 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
-  <select id="getSysSecondLevelType"  resultMap="FirstTypeResultMap" flushCache="false" useCache="true">
+  <select id="getSysSecondLevelType"  resultMap="FirstTypeResultMap" >
   select DISTINCT id,mtype from (
   select temp.id,temp.mtype from 
   (select DISTINCT a.mtype from z_resource a 
@@ -189,7 +189,7 @@
   </select>
   
   <!-- e备课， 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
-  <select id="getSysSecondLevelType_ePrepare"  resultMap="FirstTypeResultMap" flushCache="false" useCache="true">
+  <select id="getSysSecondLevelType_ePrepare"  resultMap="FirstTypeResultMap" >
   select DISTINCT id,mtype from (
   select temp.id,temp.mtype from 
   (select DISTINCT a.mtype from z_resource a 
@@ -233,7 +233,7 @@
 
 
    <!-- 系统资源：根据 poolId、父类型typeId, 得到父类型的所有子类型及其自身  -->
-  <select id="getTypesByPMTypeAndPool"  resultType="Integer" flushCache="false" useCache="true">
+  <select id="getTypesByPMTypeAndPool"  resultType="Integer" >
      SELECT DISTINCT type_id from 
     (SELECT b.id type_id,b.pid,a.poolId 
      from z_res_pooltype a 
@@ -265,7 +265,7 @@
   <resultMap id="SysResIdsMap"  type="Long">
        <result column="sys_id" property="id" />
   </resultMap>
-  <select id="getAllSysResIds"  parameterType="HashMap"  resultMap="SysResIdsMap" flushCache="false" useCache="true">
+  <select id="getAllSysResIds"  parameterType="HashMap"  resultMap="SysResIdsMap" >
       select a.Id sys_id 
       from z_resource a 
       left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
@@ -416,7 +416,7 @@
   </select>
   
   <!-- 系统资源：得到父类型的所有子类型及其自身  -->
-  <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer" flushCache="false" useCache="true">
+  <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer" >
       SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
       a.resTypeId = b.ID and b.flag=0 where a.flag=0 
       <if test="poolId != 0">

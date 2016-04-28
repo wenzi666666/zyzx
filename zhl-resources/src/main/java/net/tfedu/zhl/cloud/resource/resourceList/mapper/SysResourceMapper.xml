@@ -30,7 +30,7 @@
        
  </resultMap>
  <!-- 分页查询系统资源信息的所有记录 -->
- <select id="SelectSysResources"  resultMap="SysResourceMap" flushCache="false" useCache="true" >
+ <select id="SelectSysResources"  resultMap="SysResourceMap" >
    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 	m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
 	(SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
@@ -144,7 +144,7 @@
  </select>
  
   <!-- 分页查询系统资源信息的所有记录，资源预览的推荐查询  -->
- <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" flushCache="false" useCache="true">
+ <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
     
     select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
     (SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
@@ -293,7 +293,7 @@
  </select>
  
  <!-- 分页查询系统资源信息的所有记录，e备课  -->
- <select id="getAllSysRes_EPrepare"  resultMap="SysResourceMap" flushCache="false" useCache="true">
+ <select id="getAllSysRes_EPrepare"  resultMap="SysResourceMap">
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 
@@ -428,9 +428,6 @@
 	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
     where a.flag = 0 and a.scopeId = #{districtId} and c.StructCode like  CONCAT(#{tfcode},'%')    
 
- </select>
- 
- <!--  增加缓存机制  mybatis二级缓存  -->
- <cache/>       
+ </select>  
         
 </mapper>
