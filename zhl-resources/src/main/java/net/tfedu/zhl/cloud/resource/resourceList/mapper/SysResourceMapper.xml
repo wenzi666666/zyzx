@@ -1,58 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper" >
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource" >
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <constructor >
-      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="ResCode" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Provider" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Title" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="keyWord" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="FPath" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="Fname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="Creator" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Author" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="CreateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="UpdateDT" jdbcType="TIMESTAMP" javaType="java.util.Date" />
-      <arg column="FSize" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="TypeLean" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="oldMType" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="IsLocal" jdbcType="BIT" javaType="java.lang.Boolean" />
-      <arg column="Editor" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="ThumbnailName" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="ThumbnailNote" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="ThumbnailPath" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="EduPlace" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="SuitTerm" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Copyright" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="UpLoadScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="DLoadTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="DLoadScore" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="ClickTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="SCTimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="Rdes" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
-      <arg column="fromflag" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="isDWJ" jdbcType="BIT" javaType="java.lang.Boolean" />
-      <arg column="FileExt" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="authorunit" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="displayLevel" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="NewTeachingtype" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="MType" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="displayIndex" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="Fullpath" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="speaker" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="speakerUnit" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="Resolution" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="unifyTypeid" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="Des" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
   
- 
  <!-- 分页查询系统资源信息的每一条记录信息 -->
  <resultMap id="SysResourceMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity" >
        <result column="Id" property="Id" />
@@ -81,7 +30,7 @@
        
  </resultMap>
  <!-- 分页查询系统资源信息的所有记录 -->
- <select id="SelectSysResources"  resultMap="SysResourceMap">
+ <select id="SelectSysResources"  resultMap="SysResourceMap" flushCache="false" useCache="true" >
    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 	m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
 	(SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
@@ -195,7 +144,7 @@
  </select>
  
   <!-- 分页查询系统资源信息的所有记录，资源预览的推荐查询  -->
- <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+ <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" flushCache="false" useCache="true">
     
     select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
     (SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
@@ -344,7 +293,7 @@
  </select>
  
  <!-- 分页查询系统资源信息的所有记录，e备课  -->
- <select id="getAllSysRes_EPrepare"  resultMap="SysResourceMap">
+ <select id="getAllSysRes_EPrepare"  resultMap="SysResourceMap" flushCache="false" useCache="true">
    
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
 
@@ -442,7 +391,7 @@
  </update>
  
  <!-- 根据tfcode，查询该课程结点下的所有系统、区本、校本资源  -->
- <select id="getAllResByTfcode" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
+ <select id="getAllResByTfcode" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
  
     select distinct a.id,a.name Title,1 fromFlag,a.assetPath fullPath,a.assetPath as thumbnailpath,REVERSE(LEFT(REVERSE(a.assetPath),LOCATE('.',REVERSE(a.assetPath)))) as FileExt
 	from z_asset a where a.id = #{resId} and a.flag = 0 and a.FileType = 'A'
@@ -481,4 +430,7 @@
 
  </select>
  
+ <!--  增加缓存机制  mybatis二级缓存  -->
+ <cache/>       
+        
 </mapper>
