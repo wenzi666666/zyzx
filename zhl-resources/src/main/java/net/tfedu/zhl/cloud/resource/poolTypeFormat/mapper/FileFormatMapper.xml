@@ -19,7 +19,7 @@
   <resultMap id="FileFormatsResultMap"  type="String">
        <result column="FileFormat" property="fileformat" />
   </resultMap>
-  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
+  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap" flushCache="false" useCache="true">
   select DISTINCT b.FileFormat
   from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
