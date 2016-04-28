@@ -34,7 +34,7 @@ public class ResListControllerTest extends BaseControllerTestCase{
 		
 		request.setParameter("fileFormat", "全部");
 		
-		request.setParameter("tfcode", "RJGZ040101");
+		request.setParameter("tfcode", "RJCZ0101");
 		
 		request.setParameter("orderBy", "0");
 		

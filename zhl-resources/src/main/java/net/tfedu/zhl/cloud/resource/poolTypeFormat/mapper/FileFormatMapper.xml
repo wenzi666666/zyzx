@@ -19,7 +19,7 @@
   <resultMap id="FileFormatsResultMap"  type="String">
        <result column="FileFormat" property="fileformat" />
   </resultMap>
-  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap">
+  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap" >
   select DISTINCT b.FileFormat
   from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
@@ -30,16 +30,31 @@
                          #{item}
   </foreach>
   and a.mtype in (
-  SELECT b.id type_id 
-  from x_resourcetype b 
-  left join z_res_pooltype a on a.resTypeId = b.id
-  where b.flag = 0 
-   <if test="poolId != 0">
+  SELECT DISTINCT type_id from 
+    (SELECT b.id type_id,b.pid,a.poolId 
+     from z_res_pooltype a 
+     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
+     where a.flag=0 
+       <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
-   </if>
-   <if test="mtype != 0">
+       </if>
+        <if test="mtype != 0">
          and (b.id = #{mtype} or b.pid = #{mtype})
-   </if>
+        </if>
+      
+      UNION all 
+
+      SELECT a.id type_id,a.pid,b.poolId
+      from x_resourcetype a 
+      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
+      where a.flag=0 
+       <if test="poolId != 0 and mtype == 0">
+         and poolId = #{poolId}
+       </if>
+       <if test="mtype != 0">
+         and (a.id = #{mtype} or a.pid = #{mtype})
+        </if>
+      ) temp  
   )
    
  <!-- 优化之前的 -->
