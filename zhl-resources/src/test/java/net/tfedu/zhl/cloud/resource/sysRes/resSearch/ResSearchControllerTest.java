@@ -28,7 +28,7 @@ public class ResSearchControllerTest extends BaseControllerTestCase{
 		
 		request.setParameter("fromFlag", "0");
 		request.setParameter("format", "全部");
-		request.setParameter("searchKeyword", "乐");
+		request.setParameter("searchKeyword", "数学");
 		request.setParameter("userId", "699230735");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
@@ -48,7 +48,7 @@ public class ResSearchControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testResSearchResultFormats()throws Exception{
 		
-		request.setParameter("searchKeyword", "乐");
+		request.setParameter("searchKeyword", "数学");
 		request.setParameter("fromFlag", "0");
 		request.setParameter("userId", "699230735");
 	

@@ -63,9 +63,9 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetSysFormats()throws Exception{
-		request.setParameter("pTfcode", "RJCZ010105");
-		request.setParameter("typeId", "57");
-		//request.setParameter("poolId", "0");
+		request.setParameter("pTfcode", "RJCZ0101");
+		request.setParameter("typeId", "0");
+		request.setParameter("poolId", "0");
 		
 		ResultJSON json = typesAndFormatsController.getSysResFormatsByMtype(request, response);
 		JsonUtil.toJsonString(json);
@@ -78,7 +78,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes()throws Exception{
-		request.setParameter("tfcode", "RJCZ010105");
+		request.setParameter("tfcode", "RJCZ0101");
 		request.setParameter("fromFlag", "3");
 		
 		ResultJSON json = typesAndFormatsController.getDisResTypesByPool(request, response);
@@ -92,7 +92,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes_ePrepare()throws Exception{
-		request.setParameter("tfcode", "RJCZ010105");
+		request.setParameter("tfcode", "RJCZ0101");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("isEPrepare", "1");
 		
@@ -107,7 +107,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisFormats()throws Exception{
-		request.setParameter("tfcode", "RJCZ010105");
+		request.setParameter("tfcode", "RJCZ0101");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("typeId", "0");
 		
