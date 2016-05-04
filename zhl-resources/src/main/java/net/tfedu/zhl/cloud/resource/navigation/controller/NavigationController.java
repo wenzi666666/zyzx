@@ -150,10 +150,12 @@ public class NavigationController {
     public ResultJSON getTreeNodes(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	
     	List<TreeNode> nodes = null;
+    	//产品码
+    	String proCode = resourceWebConfig.getProCode();
     	// 接收传递过来的父结点id
         long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
         // 加载父结点的所有子结点（递归）
-        nodes = treeService.geTreeNodes(pnodeId);
+        nodes = treeService.getTreeNodes(pnodeId,proCode);
         return ResultJSON.getSuccess(nodes);
     }
     

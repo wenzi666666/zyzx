@@ -33,7 +33,8 @@
   select case when temp.pid = 0 then temp.id else temp.pid end id,case when temp.pid = 0 then temp.mtype else temp.pmtype end mtype from 
   (select DISTINCT a.mtype from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
+  left join j_syscourse d on c.StructCode = d.TFcode
+  where a.flag = 0 and c.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -44,7 +45,7 @@
   from z_res_pooltype a 
   LEFT JOIN x_resourcetype b on a.resTypeId = b.id
   left JOIN x_resourcetype pb on b.pid = pb.id 
-  where a.flag=0 and b.flag=0 
+  where a.flag=0 and b.flag=0 and pb.flag = 0
 
   <if test="poolId != 0">   <!-- poolId == 0 时，查询全部资源库下的资源类型 -->
           and poolId = #{poolId} 
@@ -61,7 +62,7 @@
 
   ) as temp 
   on temp.id = tmp.mtype 
-  ) tmpType where id is not null;
+  ) tmpType where id > 0;
 
    <!--  select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
 	from z_resource a 
@@ -94,7 +95,8 @@
   select case when temp.pid = 0 then temp.id else temp.pid end id,case when temp.pid = 0 then temp.mtype else temp.pmtype end mtype from 
   (select DISTINCT a.mtype from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
+  left join j_syscourse d on c.StructCode = d.TFcode
+  where a.flag = 0 and c.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -120,13 +122,13 @@
           and poolId = #{poolId} 
      </if>
   ) as temp on temp.id = tmp.mtype 
-  ) tmpType where id is not null 
+  ) tmpType where id > 0 
   <if test="removeTypes.size() > 0">   <!-- e备课，去除一些特定类型 -->
           and id not in <foreach item="item" index="index" collection="removeTypes" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-     </if>;
+     </if>
   </select>
     
     
@@ -136,7 +138,8 @@
   select temp.id,temp.mtype from 
   (select DISTINCT a.mtype from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
+  left join j_syscourse d on c.StructCode = d.TFcode
+  where a.flag = 0 and c.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -163,7 +166,7 @@
      </if>
   ) as temp 
   on temp.id = tmp.mtype 
-  ) tmpType where id is not null
+  ) tmpType where id > 0
 
      <!-- select distinct b.mtype,b.id 
 	 from z_resource a 
@@ -194,7 +197,8 @@
   select temp.id,temp.mtype from 
   (select DISTINCT a.mtype from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in 
+  left join j_syscourse d on c.StructCode = d.TFcode
+  where a.flag = 0 and c.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') and a.fromFlag in
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -220,7 +224,7 @@
      </if> 
   ) as temp 
   on temp.id = tmp.mtype 
-  ) tmpType where id is not null 
+  ) tmpType where id > 0
    <if test="removeTypes.size() > 0">   <!-- e备课，去除一些特定类型 -->
           and id not in <foreach item="item" index="index" collection="removeTypes" 
                          open="(" separator="," close=")">
@@ -237,8 +241,8 @@
      SELECT DISTINCT type_id from 
     (SELECT b.id type_id,b.pid,a.poolId 
      from z_res_pooltype a 
-     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
-     where a.flag=0 
+     LEFT JOIN x_resourcetype b on a.resTypeId = b.id 
+     where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and MType == 0">
          and poolId = #{poolId}
        </if>
@@ -250,8 +254,8 @@
 
       SELECT a.id type_id,a.pid,b.poolId
       from x_resourcetype a 
-      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
-      where a.flag=0 
+      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId 
+      where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and MType == 0">
          and poolId = #{poolId}
        </if>
@@ -268,9 +272,9 @@
   <select id="getAllSysResIds"  parameterType="HashMap"  resultMap="SysResIdsMap" >
       select a.Id sys_id 
       from z_resource a 
-      left join z_resnav c on a.ResCode=c.ResCode and c.flag=0 
-      left join j_syscourse d on c.StructCode=d.tfcode and d.flag=0 
-      where a.flag=0 and a.fromFlag in 
+      left join z_resnav c on a.ResCode=c.ResCode  
+      left join j_syscourse d on c.StructCode=d.tfcode
+      where a.flag=0 and c.flag=0 and d.flag=0 and a.fromFlag in 
                 <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -287,10 +291,11 @@
      select mtype,id from (
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
-     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0
-     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
-     where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
+     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
+     left join j_syscourse d on c.StructCode=d.tfcode 
+     left join x_resourcetype b on a.MType = b.id 
+     left join x_resourcetype pb on pb.Id = b.pid 
+     where a.flag = 0 and c.flag=0 and d.flag = 0 and b.flag = 0 and pb.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
      <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
@@ -298,7 +303,7 @@
          and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
      order by b.displayIndex
-    )tmp where mtype is not null
+    )tmp where id > 0
 
      <!-- select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
@@ -325,10 +330,11 @@
      select mtype,id from (
      select distinct case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id
      from z_districts_resource a
-     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0
-     left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-     left join x_resourcetype pb on pb.Id = b.pid and (pb.flag = 0)
-     where a.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
+     LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
+     left join j_syscourse d on c.StructCode=d.tfcode 
+     left join x_resourcetype b on a.MType = b.id 
+     left join x_resourcetype pb on pb.Id = b.pid 
+     where a.flag = 0 and c.flag=0 and d.flag = 0 and b.flag = 0 and pb.flag = 0 and c.StructCode like CONCAT(#{pTfcode},'%') 
      <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
     </if>
@@ -336,7 +342,7 @@
          and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
      order by b.displayIndex
-    )tmp where mtype is not null 
+    )tmp where id > 0 
     <if test="removeTypes.size() > 0">   <!-- e备课，去除一些特定类型 -->
           and id not in <foreach item="item" index="index" collection="removeTypes" 
                          open="(" separator="," close=")">
@@ -382,9 +388,9 @@
   </resultMap>
   <select id="getAllDisResIds"  parameterType="HashMap"  resultMap="DisResIdsMap"> 
 	select a.Id dis_id from z_districts_resource a 
-	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode and c.flag=0 
-	LEFT JOIN j_syscourse d on c.StructCode=d.tfcode and d.flag=0 
-    where a.flag=0 and
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
+	LEFT JOIN j_syscourse d on c.StructCode=d.tfcode 
+    where a.flag=0 and c.flag=0 and d.flag=0 and
     c.StructCode like CONCAT(#{pTfcode},'%')
   </select>
  
@@ -418,7 +424,7 @@
   <!-- 系统资源：得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool_EPrepare"  resultType="Integer" >
       SELECT DISTINCT type_id from (SELECT b.id type_id,b.pid type_pid,a.poolId poolId,a.id from z_res_pooltype a LEFT JOIN x_resourcetype b on 
-      a.resTypeId = b.ID and b.flag=0 where a.flag=0 
+      a.resTypeId = b.ID where a.flag=0 and b.flag=0 
       <if test="poolId != 0">
          and poolId = #{poolId}
       </if>
@@ -429,7 +435,7 @@
       UNION all 
       
       SELECT a.id type_id,a.pid type_pid,b.poolId poolId,b.id from  
-      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 where a.flag=0 
+      x_resourcetype a LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId where a.flag=0 and b.flag=0 
       <if test="poolId != 0">
          and poolId = #{poolId}
       </if>

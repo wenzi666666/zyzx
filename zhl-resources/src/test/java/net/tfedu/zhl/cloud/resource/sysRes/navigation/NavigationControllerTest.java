@@ -87,7 +87,7 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	@Test
     public void testTreesController() throws Exception {
 		
-		request.setParameter("pnodeId", "67527");
+		request.setParameter("pnodeId", "67475");
 
         ResultJSON json = navigationController.getTreeNodes(request, response);
 

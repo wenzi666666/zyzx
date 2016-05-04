@@ -73,8 +73,11 @@
   </select>
   
   <!-- 根据id，查询一课程信息  -->
-  <select id="getOneCourseInfo" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where id =#{id} and flag = false and visible = 1 and typeFlag in (0,1) order by orderNum
+  <select id="getOneCourseInfo" resultMap="TopChildrenResultMap">
+    select s.id, case when bookname is NULL then s.Name
+	else bookname end as label, s.tfcode from j_syscourse s
+	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
+	where s.id =#{id} and s.flag = false and proCode =#{proCode} and s.visible = 1 and s.typeFlag in (0,1) 
   </select>
  
 </mapper>

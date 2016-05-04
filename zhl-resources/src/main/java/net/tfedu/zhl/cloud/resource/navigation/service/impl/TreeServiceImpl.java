@@ -70,10 +70,10 @@ public class TreeServiceImpl implements TreeService {
      * @return
      */
     @Override
-    public List<TreeNode> geTreeNodes(long pnodeId) {
+    public List<TreeNode> getTreeNodes(long pnodeId,String proCode) {
 
         // 查询父结点下的直接子结点
-        List<TreeNode> topChildren = jSyscourseMapper.getOneCourseInfo(pnodeId);
+        List<TreeNode> topChildren = jSyscourseMapper.getOneCourseInfo(pnodeId,proCode);
         
         //父结点及其所有的子结点
         List<TreeNode> resultNodes = new ArrayList<TreeNode>();

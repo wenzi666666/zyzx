@@ -23,18 +23,20 @@
   select DISTINCT b.FileFormat
   from z_resource a 
   left join z_resnav c on a.ResCode=c.ResCode
+  left join j_syscourse d on c.StructCode=d.tfcode 
   left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
+  where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
   <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
   </foreach>
   and a.mtype in (
   SELECT DISTINCT type_id from 
-    (SELECT b.id type_id,b.pid,a.poolId 
+    (SELECT b.id type_id 
      from z_res_pooltype a 
-     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
-     where a.flag=0 
+     LEFT JOIN x_resourcetype b 
+     on a.resTypeId = b.id
+     where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -44,10 +46,11 @@
       
       UNION all 
 
-      SELECT a.id type_id,a.pid,b.poolId
+      SELECT a.id type_id
       from x_resourcetype a 
-      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
-      where a.flag=0 
+      LEFT JOIN z_res_pooltype b 
+      on a.Pid = b.resTypeId  
+      where a.flag=0 and b.flag=0
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -87,9 +90,9 @@
   select DISTINCT b.FileFormat
   from z_districts_resource a 
   left join z_districts_resnav c on a.ResCode=c.ResCode
-  left join j_filetypedetail b 
-  on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag = #{fromFlag} 
+  left join j_syscourse d on c.StructCode=d.tfcode 
+  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
+  where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag = #{fromFlag} 
    <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5 
     </if>

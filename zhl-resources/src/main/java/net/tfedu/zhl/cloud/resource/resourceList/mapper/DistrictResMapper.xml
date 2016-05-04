@@ -47,13 +47,13 @@
 	,(select case when a.AuthorFromFlag = 0 then '后台管理员' else u.trueName end auhtor ) author 
 	from z_districts_resource a 
     left join j_user u on u.id = a.authorid
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
+	left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
 	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
-	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
+	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and b.flag = 0 and jf.flag = 0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
@@ -91,10 +91,10 @@
     (select case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore
     from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore
 	from z_districts_resource a 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
-	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
-    where a.flag = 0 and a.id = #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
+	left join x_resourcetype b on a.MType = b.id 
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on c.StructCode=d.tfcode 
+    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
@@ -119,10 +119,10 @@
     (select case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore
     from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore
 	from z_districts_resource a 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
-	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
-    where a.flag = 0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
+	left join x_resourcetype b on a.MType = b.id 
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
+	left join j_syscourse d on c.StructCode=d.tfcode 
+    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
@@ -161,13 +161,13 @@
 	,(select case when a.AuthorFromFlag = 0 then '后台管理员' else u.trueName end auhtor ) author 
 	from z_districts_resource a 
     left join j_user u on u.id = a.authorid 
-	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
-	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and b.flag = 0 and jf.flag = 0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
     
     <if test="searchWord != null and searchWord != ''">
          and a.Title like CONCAT('%',#{searchWord},'%')
@@ -213,18 +213,18 @@
 (select case when COUNT(t.assetId) = 0 then 0 else (sum(t.Ascore) / COUNT(t.assetId)) end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore,
 a.isLocal,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.isDWJ
 from z_districts_resource a 
-left join z_districts_resnav b on a.ResCode=b.ResCode and b.flag=0 
-left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
+left join z_districts_resnav b on a.ResCode=b.ResCode 
+left join j_syscourse c on c.tfcode = b.StructCode  
 left join x_resourcetype e on a.MType = e.id 
-where a.id =#{resId} and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1 
+where a.id =#{resId} and b.flag=0 and c.flag=0 and a.fromflag = #{fromFlag} and a.flag=0 ) a limit 1 
  </select>
  
  <!-- 根据区本校本资源id，查询其对应的所有版本的rescode -->
  <select id="getAllDisRescodes" resultType="String">
     select StructCode from z_districts_resnav nav 
-	LEFT JOIN z_districts_resource res on nav.ResCode = res.ResCode and res.flag = false 
-	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode and sys.flag = false
-	where res.id = #{resId} and nav.flag = false  
+	LEFT JOIN z_districts_resource res on nav.ResCode = res.ResCode 
+	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode 
+	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
  

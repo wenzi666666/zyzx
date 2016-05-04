@@ -29,6 +29,6 @@ public interface TreeService {
      * 
      * @return
      */
-    public List<TreeNode> geTreeNodes(long pnodeId);
+    public List<TreeNode> getTreeNodes(long pnodeId,String proCode);
 
 }

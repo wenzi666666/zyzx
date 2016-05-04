@@ -7,6 +7,8 @@ import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode;
 import net.tfedu.zhl.helper.CoreMapper;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
  * 根据学段、学科，获得所有教材版本
  * 
@@ -41,5 +43,5 @@ public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
      * @param id
      * @return
      */
-    public List<TreeNode> getOneCourseInfo(long id);
+    public List<TreeNode> getOneCourseInfo(@Param("id")long id,@Param("proCode")String proCode);
 }

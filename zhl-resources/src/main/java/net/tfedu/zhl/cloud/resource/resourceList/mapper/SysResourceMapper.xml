@@ -36,12 +36,12 @@
 	(SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
 	left join z_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on  c.StructCode=d.TFcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
+	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and jf.flag = 0 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -57,8 +57,8 @@
       SELECT DISTINCT type_id from 
     (SELECT b.id type_id,b.pid,a.poolId 
      from z_res_pooltype a 
-     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
-     where a.flag=0 
+     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID 
+     where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -70,8 +70,8 @@
 
       SELECT a.id type_id,a.pid,b.poolId
       from x_resourcetype a 
-      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
-      where a.flag=0 
+      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId 
+      where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -180,8 +180,8 @@
       SELECT DISTINCT type_id from 
     (SELECT b.id type_id,b.pid,a.poolId 
      from z_res_pooltype a 
-     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID and b.flag=0 
-     where a.flag=0 
+     LEFT JOIN x_resourcetype b on a.resTypeId = b.ID 
+     where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -193,8 +193,8 @@
 
       SELECT a.id type_id,a.pid,b.poolId
       from x_resourcetype a 
-      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId and b.flag=0 
-      where a.flag=0 
+      LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId 
+      where a.flag=0 and b.flag=0 
        <if test="poolId != 0 and mtype == 0">
          and poolId = #{poolId}
        </if>
@@ -302,12 +302,12 @@
 	
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
 	left join z_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on  c.StructCode=d.TFcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0  and a.fromflag in
+	where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and jf.flag = 0 and a.fromflag in
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
@@ -360,9 +360,10 @@
    (select ascore from z_assetevaluate ttt where ttt.assetId = a.id and ttt.flag = 0 and ttt.IsScore = 0 and ttt.aType = 1 and ttt.UserId = #{userId} ) score,
    (SELECT case when COUNT(t.assetId) = 0 then 0 else (sum(t.Ascore) / COUNT(t.assetId)) end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.isDWJ 
    from z_resource a 
-   left join z_resnav b on a.ResCode=b.ResCode and b.flag=0 
-   left join j_syscourse c on c.tfcode = b.StructCode and c.flag=0 
-   left join x_resourcetype e on a.MType = e.id where a.id =#{resId} and a.flag=0 ) a limit 1
+   left join z_resnav b on a.ResCode=b.ResCode 
+   left join j_syscourse c on c.tfcode = b.StructCode 
+   left join x_resourcetype e on a.MType = e.id 
+   where b.flag=0 and c.flag=0 and a.flag=0 and a.id =#{resId} ) a limit 1
  </select>
  
  <!-- 根据一个structCode 查询  一个版本的 目录-->
@@ -373,9 +374,9 @@
  <!-- 根据系统资源id，查询其对应的所有版本的StructCode -->
  <select id="getAllRescodes" resultType="String">
     select StructCode from z_resnav nav 
-	LEFT JOIN z_resource res on nav.ResCode = res.ResCode and res.flag = false 
-	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode and sys.flag = false 
-	where res.id = #{resId} and nav.flag = false 
+	LEFT JOIN z_resource res on nav.ResCode = res.ResCode 
+	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode 
+	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false 
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc limit 1
  </select>
  
