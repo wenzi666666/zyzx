@@ -48,12 +48,12 @@
 	from z_districts_resource a 
     left join j_user u on u.id = a.authorid
 	left join x_resourcetype b on a.MType = b.id 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
-	LEFT JOIN z_districts_resnav c on c.flag=0 and a.ResCode=c.ResCode 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
+	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and b.flag = 0 and jf.flag = 0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
@@ -113,7 +113,6 @@
     
     union all 
     
-
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt,UpdateDT,DloadTimes,avgScore from (select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,
     REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
     (select case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore
@@ -162,12 +161,12 @@
 	from z_districts_resource a 
     left join j_user u on u.id = a.authorid 
 	left join x_resourcetype b on a.MType = b.id 
-	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
-	left join j_syscourse d on d.flag=0 and c.StructCode=d.tfcode 
+	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and b.flag = 0 and jf.flag = 0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and d.flag=0 and b.flag = 0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
     
     <if test="searchWord != null and searchWord != ''">
          and a.Title like CONCAT('%',#{searchWord},'%')

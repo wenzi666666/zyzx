@@ -1,7 +1,6 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -166,40 +165,40 @@ public class ResTypeServiceImpl implements ResTypeService {
 
         return types;
     }
-    
-    /**
+/*    
+    *//**
      * 区本校本资源： 获取当前节点下所有资源id
      * 
      * @param map
      * @return
-     */
+     *//*
     @Override
     public List<Long> getAllDisResIds(HashMap<String, Object> map) {
         return resTypeMapper.getAllDisResIds(map);
     }
     
-    /**
+    *//**
      * 系统资源：根据资源库id和父类型id，得到父类型的所有子类型及其自身
      * 
      * @param map
      * @return
-     */
+     *//*
     @Override
     public List<Integer> getTypesByPMTypeAndPool(long poolId, int MType) {
         return resTypeMapper.getTypesByPMTypeAndPool(poolId, MType);
     }
     
     
-    /**
+    *//**
      * 区本校本资源：查询父类型及其所有子类型
      * 
      * @param MType
      * @return
-     */
+     *//*
     @Override
     public List<Integer> getDisResTypesByPMType(int MType) {
         return resTypeMapper.getDisResTypesByPMType(MType);
-    }
+    }*/
 
 
     @Override

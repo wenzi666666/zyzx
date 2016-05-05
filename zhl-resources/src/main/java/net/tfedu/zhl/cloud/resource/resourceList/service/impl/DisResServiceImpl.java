@@ -80,15 +80,28 @@ public class DisResServiceImpl implements DisResService {
         return transfer.transfer(list);
 
     }
-    
-    
+
     /**
-     * 根据类型ids，所在区id / 校id，查询区本、校本资源信息，e备课
+     * 查询区本、校本资源信息，e备课
      */
     @Override
-	public Pagination<DisResourceEntity> selectDisRes_EPrepare(int fromFlag, String fileFormat, List<Integer> typeIds,
-            String tfcode, int orderBy, long schoolId, long districtId, int page, int perPage,String searchWord,int expire){
-    	 // Page插件必须放在查询语句之前紧挨的第一个位置
+	public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
+            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds,int expire){
+    	
+    	// 根据父类型，查询所有的子类型
+        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypeIds);
+
+        long schoolId = 0;
+        long districtId = 0;
+
+        // 根据userId查询schoolId 和 districtId
+        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
+        if (disAndSchoolIds != null) {
+            schoolId = disAndSchoolIds.getSchoolId();
+            districtId = disAndSchoolIds.getDistrictId();
+        }
+        
+        // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
         // 查询资源
@@ -116,28 +129,7 @@ public class DisResServiceImpl implements DisResService {
         PageInfoToPagination<DisResourceEntity> transfer = new PageInfoToPagination<DisResourceEntity>();
 
         return transfer.transfer(list);
-    }
 
-    /**
-     * 查询区本、校本资源信息，e备课
-     */
-    @Override
-	public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
-            int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds,int expire){
-    	 // 根据父类型，查询所有的子类型
-        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypeIds);
-
-        long schoolId = 0;
-        long districtId = 0;
-
-        // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
-
-        return selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, page, perPage, searchWord,expire);
     }
 
 }

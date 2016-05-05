@@ -26,7 +26,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetOneResController() throws Exception {
 
-		request.setParameter("resId", "870235");
+		request.setParameter("resId", "870537");
 		request.setParameter("fromFlag", "3");
 		//request.setParameter("isEPrepare", "1");
 		

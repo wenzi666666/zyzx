@@ -19,19 +19,6 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface SysResourceMapper extends CoreMapper<SysResource> {
 
-    /**
-     * 查询系统资源列表
-     * @param sys_from
-     * @param fileFormat
-     * @param resourceIds
-     * @param tfcode
-     * @param orderBy
-     * @param typeIds
-     * @return
-     *//*
-    public List<SysResourceEntity> SelectSysResources(@Param("sys_from") List<Integer> sys_from,
-            @Param("fileFormat") String fileFormat, @Param("resourceIds") List<Long> resourceIds,
-            @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy, @Param("typeIds") List<Integer> typeIds);*/
 	
 	/**
      * 查询系统资源列表
@@ -44,9 +31,46 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @return
      */
     public List<SysResourceEntity> SelectSysResources(@Param("poolId")long poolId,@Param("sys_from") List<Integer> sys_from,@Param("mtype")int mtype,
-            @Param("fileFormat") String fileFormat, @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy);
-           
+            @Param("fileFormat") String fileFormat, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("typeIds")List<Integer> typeIds);
+    
+    
+    /**
+     * e备课：查询系统资源（限制资源类型，资源title模糊查询）
+     * @param sys_from
+     * @param fileFormat
+     * @param resourceIds
+     * @param tfcode
+     * @param orderBy
+     * @param typeIds
+     * @param searchWord
+     * @return
+     */
+    public List<SysResourceEntity> getAllSysRes_EPrepare(@Param("poolId")long poolId,@Param("sys_from") List<Integer> sys_from,@Param("mtype")int mtype,
+            @Param("fileFormat") String fileFormat, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("removeTypes") List<Integer> removeTypes,@Param("searchWord")String searchWord,@Param("typeIds")List<Integer> typeIds);
 
+        
+    /**
+     * 资源预览页面：系统资源推荐
+     * @return
+     */
+    public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("mtype") int mtype,
+    		@Param("poolId") long poolId,@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy,@Param("typeIds")List<Integer> typeIds);
+    
+    
+    /**
+     * 根据自建资源resId、tfcode，查询tfcode下的系统、区本、校本资源
+     * @param resId 
+     *      自建资源id
+     * @param sys_from
+     *      系统资源 sysFrom
+     * @param tfcode
+     * @param schoolId
+     * @param districtId
+     * @return
+     */
+    public List<ResRecommendationEntity> getAllResByTfcode(@Param("resId") long resId,@Param("sys_from") List<Integer> sys_from,@Param("tfcode") String tfcode,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
+    
+    
     /**
      * 获取一条系统资源的详细信息
      * @param resId
@@ -70,21 +94,7 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      */
     public List<String> getAllRescodes(@Param("resId") long resId, @Param("curTfcode") String curTfcode);
     
-    /**
-     * e备课，查询系统资源（限制资源类型，资源title模糊查询）
-     * @param sys_from
-     * @param fileFormat
-     * @param resourceIds
-     * @param tfcode
-     * @param orderBy
-     * @param typeIds
-     * @param searchWord
-     * @return
-     */
-    public List<SysResourceEntity> getAllSysRes_EPrepare(@Param("sys_from") List<Integer> sys_from,
-            @Param("fileFormat") String fileFormat, @Param("resourceIds") List<Long> resourceIds,
-            @Param("pTfcode") String tfcode, @Param("orderBy") int orderBy, @Param("typeIds") List<Integer> typeIds,@Param("searchWord")String searchWord);
-
+    
     
     /**
      * 更新点击次数（+1）
@@ -98,33 +108,5 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @param rescode
      */
     public void updateDownloadTime(@Param("rescode") String rescode);
-    
-    /**
-     * 资源预览页面的资源推荐
-     * @return
-     *//*
-    public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("resourceIds") List<Long> resourceIds,
-            @Param("tfcode") String tfcode,@Param("typeIds") List<Integer> typeIds,@Param("resId")long resId,@Param("orderBy")int orderBy);*/
-    
-    /**
-     * 资源预览页面的资源推荐
-     * @return
-     */
-    public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("mtype") int mtype,
-    		@Param("poolId") long poolId,@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy);
-    
-    
-    /**
-     * 根据自建资源resId、tfcode，查询tfcode下的系统、区本、校本资源
-     * @param resId 
-     *      自建资源id
-     * @param sys_from
-     *      系统资源 sysFrom
-     * @param tfcode
-     * @param schoolId
-     * @param districtId
-     * @return
-     */
-    public List<ResRecommendationEntity> getAllResByTfcode(@Param("resId") long resId,@Param("sys_from") List<Integer> sys_from,@Param("tfcode") String tfcode,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
-    
+
 }

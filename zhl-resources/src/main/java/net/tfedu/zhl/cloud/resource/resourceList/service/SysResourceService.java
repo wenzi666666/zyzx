@@ -49,20 +49,4 @@ public interface SysResourceService {
     public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds,List<Integer> sys_from,int expire);
     
-    /**
-     *  分页查询系统资源信息 ，e备课
-     * @param sys_from
-     * @param fileFormat
-     * @param resourceIds
-     * @param tfcode
-     * @param orderBy
-     * @param typeIds
-     * @param page
-     * @param perPage
-     * @param searchWord
-     * @param expire
-     * @return
-     */
-    public Pagination<SysResourceEntity> getSysResList_EPrepare(List<Integer> sys_from, String fileFormat,
-            List<Long> resourceIds, String tfcode, int orderBy, List<Integer> typeIds, int page, int perPage,String searchWord,int expire);
 }
