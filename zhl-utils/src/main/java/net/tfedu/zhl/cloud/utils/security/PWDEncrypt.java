@@ -84,16 +84,6 @@ public class PWDEncrypt {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-        String s = "pwd";
-        String t = "8542331";
-        String pwd = PWDEncrypt.doEncrypt(t);
-        // System.out.println(t);
-        // System.out.println(pwd.getBytes());
-        System.out.println(PWDEncrypt.doEncrypt(t));
-        byte[] by = PWDEncrypt.doEncryptByte("23423");
-        byte[] temp = PWDEncrypt.doEncrypt("TFEDU1A2B3C4D5E6F7G8H9I").getBytes();
-
-        System.out.println(PWDEncrypt.getPWD(by));
-
+        System.out.println(PWDEncrypt.doEncrypt("123456"));
     }
 }
