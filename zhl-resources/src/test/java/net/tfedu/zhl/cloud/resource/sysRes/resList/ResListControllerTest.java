@@ -58,13 +58,13 @@ public class ResListControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testDisResController()throws Exception{
         
-		request.setParameter("fromFlag", "3");
+		request.setParameter("fromFlag", "4");
 		
 		request.setParameter("mTypeId", "0");
 		
 		request.setParameter("fileFormat", "全部");
 		
-		request.setParameter("tfcode", "RJCZ010109");
+		request.setParameter("tfcode", "RJCZ0101");
 		
 		request.setParameter("orderBy", "0");
 		

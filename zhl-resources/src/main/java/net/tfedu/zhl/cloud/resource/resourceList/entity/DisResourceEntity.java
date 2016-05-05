@@ -152,9 +152,10 @@ public class DisResourceEntity implements Serializable {
 		this.fullpath = fullpath;
 	}
     
-    public String getThumbnailpath() {
+	public String getThumbnailpath() {
 		return thumbnailpath;
 	}
+
 
 	public void setThumbnailpath(String thumbnailpath) {
 		this.thumbnailpath = thumbnailpath;
