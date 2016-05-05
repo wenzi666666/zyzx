@@ -26,39 +26,14 @@
   left join j_syscourse d on c.StructCode=d.tfcode 
   left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
   where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
-  <foreach item="item" index="index" collection="sys_from" 
+       <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
-  </foreach>
-  and a.mtype in (
-  SELECT DISTINCT type_id from 
-    (SELECT b.id type_id 
-     from z_res_pooltype a 
-     LEFT JOIN x_resourcetype b 
-     on a.resTypeId = b.id
-     where a.flag=0 and b.flag=0 
-       <if test="poolId != 0 and mtype == 0">
-         and poolId = #{poolId}
-       </if>
-        <if test="mtype != 0">
-         and (b.id = #{mtype} or b.pid = #{mtype})
-        </if>
-      
-      UNION all 
-
-      SELECT a.id type_id
-      from x_resourcetype a 
-      LEFT JOIN z_res_pooltype b 
-      on a.Pid = b.resTypeId  
-      where a.flag=0 and b.flag=0
-       <if test="poolId != 0 and mtype == 0">
-         and poolId = #{poolId}
-       </if>
-       <if test="mtype != 0">
-         and (a.id = #{mtype} or a.pid = #{mtype})
-        </if>
-      ) temp  
-  )
+       </foreach>
+  and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                 </foreach>
    
  <!-- 优化之前的 -->
       <!-- SELECT DISTINCT FileFormat from z_resource a 

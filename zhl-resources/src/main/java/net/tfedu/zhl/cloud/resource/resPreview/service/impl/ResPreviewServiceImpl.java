@@ -167,11 +167,14 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     @Override
 	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
     
+    	//根据资源库id、父类型id，查询资源父类型及其子类型
+    	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
+    	
     	// Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
         // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from,typeId,poolId, tfcode,resId,orderBy);
+        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from,typeId,poolId, tfcode,resId,orderBy,typeIds);
   
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();

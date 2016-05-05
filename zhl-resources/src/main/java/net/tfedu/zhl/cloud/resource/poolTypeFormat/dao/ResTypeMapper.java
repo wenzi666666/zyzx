@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
@@ -17,27 +16,24 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ResTypeMapper extends CoreMapper<ResType> {
 
-    /**
-     * 
-     * 系统资源ids
-     * 
-     * @param map
-     * @return
-     */
-    public List<Long> getAllSysResIds(HashMap<String, Object> map);
-
-    /**
-     * 区本、校本资源ids
-     * 
-     * @param map
-     * @return
-     */
-    public List<Long> getAllDisResIds(HashMap<String, Object> map);
-
-    
+   /**
+    * 系统资源，当资源库id为0或4时，查询所有一级类型
+    * @param poolId
+    * @param pTfcode
+    * @param sys_from
+    * @return
+    */
     public List<ResType> getSysFirstLevelType(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
     
+    /**
+     * e备课，当资源库id为0或4时，查询所有一级类型
+     * @param poolId
+     * @param pTfcode
+     * @param sys_from
+     * @param removeTypes
+     * @return
+     */
     public List<ResType> getSysFirstLevelType_ePrepare(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
 
@@ -51,6 +47,14 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
     public List<ResType> getSysSecondLevelType(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
     
+    /**
+     * e备课
+     * @param poolId
+     * @param pTfcode
+     * @param sys_from
+     * @param removeTypes
+     * @return
+     */
     public List<ResType> getSysSecondLevelType_ePrepare(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
 
@@ -63,6 +67,13 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
 
+    
+    /**
+     * 
+     * 区本校本资源：查询父类型及其所有子类型
+     */
+    public List<Integer> getDisResTypesByPMType(@Param("MType") int MType);
+    
     
     /**
      * 区本校本资源：查询资源类型
@@ -79,11 +90,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
     public List<ResType> getDisResType_EPrepare(@Param("fromFlag") int fromFlag, @Param("pTfcode") String pTfcode,@Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("removeTypes")List<Integer> removeTypes);
     
     
-    /**
-     * 
-     * 区本校本资源：查询父类型及其所有子类型
-     */
-    public List<Integer> getDisResTypesByPMType(@Param("MType") int MType);
     
     /**
      * 自建资源 ： 查询全部一级资源类型
