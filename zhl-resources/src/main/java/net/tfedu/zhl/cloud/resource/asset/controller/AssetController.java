@@ -395,6 +395,7 @@ public class AssetController {
 
 			ZAsset a = new ZAsset();
 			a.setId(id);
+		
 
 			if (!StringUtils.isEmpty(path)) {
 				a.setAssetpath(path);

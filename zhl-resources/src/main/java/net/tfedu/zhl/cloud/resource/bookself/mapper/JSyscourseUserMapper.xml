@@ -73,7 +73,7 @@
 		select  s.id
 		,if(pt.bookname is null,if(p.name=s.name,s.name,concat(IFNULL(p.name,''),s.name)),concat(IFNULL(p.name,''),pt.bookname)) as title 
 		,s.tfcode,CONCAT(s.EbookPath,'/',s.tfcode,'.jpg') as imgpath
-		, if(Su.id is NULL,0,1 ) as ismybook 
+		, if(su.flag = false ,1,0 ) as ismybook 
 		from  j_syscourse s 
 		LEFT JOIN j_syscourse p on p.id = s.PnodeId
 		LEFT JOIN j_producttfcodecontrast pt on pt.tfcode = s.TFcode
