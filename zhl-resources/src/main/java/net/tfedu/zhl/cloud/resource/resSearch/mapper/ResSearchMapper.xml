@@ -26,7 +26,7 @@
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
-    order by avgScore desc
+    order by id
      
   </select>
   
@@ -55,7 +55,7 @@
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
-    order by avgScore desc
+    order by id
     
   </select>
   
@@ -78,7 +78,7 @@
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
-union ALL
+union 
 
   select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
   m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,0 DisplayIndex,1 diskorder,a.fromFlag,
@@ -95,7 +95,7 @@ union ALL
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
-union ALL
+union 
 
   select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
   m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,0 DisplayIndex,1 diskorder,a.fromFlag,
@@ -111,7 +111,7 @@ union ALL
   <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
-  order by avgScore desc
+  order by id
 
   </select>
   
@@ -152,6 +152,36 @@ union ALL
   
   <!-- 根据关键字,查询全部资源检索结果的格式   -->
   <select id="getAllFileFormats" resultType="String" >
+    SELECT DISTINCT FileFormat from z_resource a 
+	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
+	WHERE 1=1 and a.flag = 0 and FileFormat is not null
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null and searchKeyword != ''">
+         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))  
+    </if>
+     
+     union 
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
+	WHERE 1=1 and a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} and a.scope = 5 and FileFormat is not null
+    <if test="searchKeyword != null and searchKeyword != ''">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+     
+     union 
+     
+    SELECT DISTINCT FileFormat from z_districts_resource a
+	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
+	WHERE 1=1 and a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} and a.scope = 4 and FileFormat is not null
+    <if test="searchKeyword != null and searchKeyword != ''">
+        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+    </if>
+    
+  <!-- 
   select distinct FileFormat from (
     SELECT DISTINCT FileFormat from z_resource a 
 	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
@@ -181,14 +211,13 @@ union ALL
     <if test="searchKeyword != null and searchKeyword != ''">
         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
-    ) formatTable where FileFormat is not null
+    ) formatTable where FileFormat is not null -->
   </select>
   
   <!-- 检索范围为全部时，查询推荐列表  -->
   <select id="getAllResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity"  >
-  
-  select * from 
-  (select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
+ 
+    select id,Title,fromFlag,fullPath,thumbnailpath,FileExt from (select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_resource a 
 	where a.flag = 0  and a.fromflag in (0,1,2)
 
@@ -196,7 +225,7 @@ union ALL
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
-union ALL
+  union ALL
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
@@ -206,53 +235,22 @@ union ALL
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
-union ALL
+  union ALL
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
   where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} and a.scope = 4
 
-  <if test="searchKeyword != null and searchKeyword != ''">
+    <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-  </if>) res_all_1 where id = #{resId}
-  
-  union all 
-  
-    select * from (select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-	from z_resource a 
-	where a.flag = 0  and a.fromflag in (0,1,2)
-
-	<if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-    </if>
- 
-union ALL
-
-  select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-  from z_districts_resource a 
-  where a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} and a.scope = 5
- 
-  <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-  </if>
-
-union ALL
-
-  select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-  from z_districts_resource a 
-  where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} and a.scope = 4
-
-  <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-  </if>) res_all_2 where id != #{resId}
-
+    </if>) resTmp order by case when id = #{resId} then 0 else 1 end asc 
   </select>
   
   <!-- 检索范围为系统资源时，查询推荐列表 -->
   <select id="getAllSysResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
     select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_resource a 
-	where a.flag = 0  and a.id = #{resId}
+	where a.flag = 0
 	and a.fromFlag in <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
@@ -260,28 +258,14 @@ union ALL
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
-   
-   union all
-   
-    select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-	from z_resource a 
-	where a.flag = 0  and a.id != #{resId}
-	and a.fromFlag in <foreach item="item" index="index" collection="sys_from" 
-                         open="(" separator="," close=")">
-                         #{item}
-                     </foreach>
-    <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-     </if>
-     
+     order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
   
    <!-- 检索范围为区本 或 校本时，查询推荐列表  -->
   <select id="getAllDisResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
-      
     select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_districts_resource a 
-	where a.flag = 0 and fromFlag = #{fromFlag} and a.id = #{resId}
+	where a.flag = 0 and fromFlag = #{fromFlag} 
  
     <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5
@@ -293,24 +277,7 @@ union ALL
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
-     
-     union all
-      
-    select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-	from z_districts_resource a 
-	where a.flag = 0 and fromFlag = #{fromFlag} and a.id != #{resId}
- 
-    <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} and a.scope = 5
-    </if>
-     <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} and a.scope = 4
-    </if>
-    
-    <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-     </if>
-    
+      order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
   
 </mapper>

@@ -21,8 +21,8 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
      * @param typeIds
      * @return
      */
-    public List<String> getSysResFormatsByMType(@Param("tfcode") String tfcode,
-            @Param("mtype") int mtype,@Param("sys_from") List<Integer> sys_from,@Param("poolId") long poolId,@Param("typeIds")List<Integer> typeIds);
+    public List<String> getSysResFormatsByMType(@Param("tfcode") String tfcode,@Param("sys_from") List<Integer> sys_from,@Param("typeIds")List<Integer> typeIds);
+            
 
     /**
      * 区本校本资源，根据资源ids和typeIds，查询得到资源格式

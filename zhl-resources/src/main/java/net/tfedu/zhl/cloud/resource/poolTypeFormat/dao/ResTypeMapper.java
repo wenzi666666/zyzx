@@ -16,6 +16,17 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface ResTypeMapper extends CoreMapper<ResType> {
 
+	/**
+     * 系统资源：根据资源库id、父类型id，得到父类型的所有子类型及其自身
+     * 
+     * @param poolId
+     * @param MType
+     * @return
+     */
+    public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
+
+    
+	
    /**
     * 系统资源，当资源库id为0或4时，查询所有一级类型
     * @param poolId
@@ -57,15 +68,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<ResType> getSysSecondLevelType_ePrepare(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
-
-    /**
-     * 系统资源：根据资源库id、父类型id，得到父类型的所有子类型及其自身
-     * 
-     * @param poolId
-     * @param MType
-     * @return
-     */
-    public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
 
     
     /**

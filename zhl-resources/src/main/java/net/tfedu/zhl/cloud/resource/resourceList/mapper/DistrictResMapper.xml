@@ -94,23 +94,8 @@
 	left join x_resourcetype b on a.MType = b.id 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.tfcode 
-    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
-    
-     <if test="typeIds.size() > 0">
-         and (b.id in <foreach item="item" index="index" collection="typeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-              )
-     </if>
-     
-    <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
-    </if>
-     <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
-    </if>
-    
+    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId}   
+
     union all 
     
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt,UpdateDT,DloadTimes,avgScore from (select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,

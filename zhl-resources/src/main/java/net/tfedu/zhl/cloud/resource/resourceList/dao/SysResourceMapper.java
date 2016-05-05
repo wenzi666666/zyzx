@@ -30,8 +30,8 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @param typeIds
      * @return
      */
-    public List<SysResourceEntity> SelectSysResources(@Param("poolId")long poolId,@Param("sys_from") List<Integer> sys_from,@Param("mtype")int mtype,
-            @Param("fileFormat") String fileFormat, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("typeIds")List<Integer> typeIds);
+    public List<SysResourceEntity> SelectSysResources(@Param("sys_from") List<Integer> sys_from,@Param("fileFormat") String fileFormat, 
+            @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("typeIds")List<Integer> typeIds);
     
     
     /**
@@ -45,16 +45,16 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @param searchWord
      * @return
      */
-    public List<SysResourceEntity> getAllSysRes_EPrepare(@Param("poolId")long poolId,@Param("sys_from") List<Integer> sys_from,@Param("mtype")int mtype,
-            @Param("fileFormat") String fileFormat, @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("removeTypes") List<Integer> removeTypes,@Param("searchWord")String searchWord,@Param("typeIds")List<Integer> typeIds);
+    public List<SysResourceEntity> getAllSysRes_EPrepare(@Param("sys_from") List<Integer> sys_from,@Param("fileFormat") String fileFormat, 
+            @Param("tfcode") String tfcode, @Param("orderBy") int orderBy,@Param("searchWord")String searchWord,@Param("typeIds")List<Integer> typeIds);
 
         
     /**
      * 资源预览页面：系统资源推荐
      * @return
      */
-    public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,@Param("mtype") int mtype,
-    		@Param("poolId") long poolId,@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy,@Param("typeIds")List<Integer> typeIds);
+    public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,
+    		@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy,@Param("typeIds")List<Integer> typeIds);
     
     
     /**

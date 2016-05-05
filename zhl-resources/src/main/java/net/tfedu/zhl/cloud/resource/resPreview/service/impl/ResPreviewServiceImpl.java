@@ -174,7 +174,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         PageHelper.startPage(page, perPage);
 
         // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from,typeId,poolId, tfcode,resId,orderBy,typeIds);
+        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from,tfcode,resId,orderBy,typeIds);
   
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();

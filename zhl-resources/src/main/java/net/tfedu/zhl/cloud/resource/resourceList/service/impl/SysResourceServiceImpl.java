@@ -47,7 +47,7 @@ public class SysResourceServiceImpl implements SysResourceService {
         PageHelper.startPage(page, perPage);
         
         // 查询系统资源
-        List<SysResourceEntity> list = sysResourceMapper.SelectSysResources(poolId,sys_from, mTypeId,fileFormat,tfcode, orderBy,typeIds);
+        List<SysResourceEntity> list = sysResourceMapper.SelectSysResources(sys_from, fileFormat,tfcode, orderBy,typeIds);
                
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
@@ -83,7 +83,7 @@ public class SysResourceServiceImpl implements SysResourceService {
         PageHelper.startPage(page, perPage);
 
         // 查询系统资源
-        List<SysResourceEntity> list = sysResourceMapper.getAllSysRes_EPrepare(poolId,sys_from, mTypeId,fileFormat,tfcode, orderBy, removeTypeIds,searchWord,typeIds);
+        List<SysResourceEntity> list = sysResourceMapper.getAllSysRes_EPrepare(sys_from, fileFormat,tfcode, orderBy, searchWord,typeIds);
                
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {

@@ -22,7 +22,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	/**
 	 * 查询一条资源的详细信息controller单元测试
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetOneResController() throws Exception {
 
@@ -38,10 +38,10 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		
 	}
 	
-	/**
+	*//**
 	 * 根据resId，查询资源的所有版本目录
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
 	public void testGetAllLists()throws Exception{
 		request.setParameter("resId", "12");
@@ -53,7 +53,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
         JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}
+	}*/
 	
 	/**
 	 * 资源检索结果   的资源推荐列表
@@ -62,12 +62,12 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetResRecommendation_search()throws Exception{
 		
-		request.setParameter("resId", "3");
-		request.setParameter("fromFlag", "0");
+		request.setParameter("resId", "870580");
+		request.setParameter("fromFlag", "3");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
 		request.setParameter("isSearch", "1");
-		request.setParameter("searchKeyword", "数学");
+		request.setParameter("searchKeyword", "p");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		

@@ -64,9 +64,10 @@ public class ResFormatServiceImpl implements ResFormatService {
     public List<String> getSysResFormats(String pTfcode,int typeId,List<Integer> sys_from,long poolId) {
         List<String> formats = new ArrayList<String>();
         
+        //获取系统资源类型
         List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
         
-        formats = fileFormatMapper.getSysResFormatsByMType(pTfcode,typeId,sys_from,poolId,typeIds);
+        formats = fileFormatMapper.getSysResFormatsByMType(pTfcode,sys_from,typeIds);
         // 查询结果中增加一个 “全部”
         formats.add(0, "全部");
 
