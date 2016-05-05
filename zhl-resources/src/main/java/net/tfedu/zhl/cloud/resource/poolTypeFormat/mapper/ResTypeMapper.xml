@@ -234,8 +234,6 @@
   </select>
    
 
-
-
    <!-- 系统资源：根据 poolId、父类型typeId, 得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool"  resultType="Integer" >
      SELECT DISTINCT type_id from 
@@ -375,12 +373,6 @@
      and mtype is not null -->
   </select>
   
-  
-  
-  
-  
-  
-  
  
  <!-- 根据父结点tfcode，查询区本、校本资源的所有id -->
   <resultMap id="DisResIdsMap"  type="Long">
@@ -393,8 +385,9 @@
     where a.flag=0 and c.flag=0 and d.flag=0 and
     c.StructCode like CONCAT(#{pTfcode},'%')
   </select>
+  
  
-   <!-- 区本、校本资源：得到父类型的所有子类型及其自身。  -->
+ <!-- 区本、校本资源：得到父类型的所有子类型及其自身。  -->
   <select id="getDisResTypesByPMType"  resultType="Integer">
       SELECT DISTINCT type_id from (SELECT b.id type_id from x_resourcetype b 
       where b.flag=0 
@@ -403,6 +396,8 @@
        </if>
       ) temp 
   </select>
+  
+  
   
  <!-- ************************** e备课 资源类型 相关   **************************  --> 
  

@@ -166,21 +166,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      */
     @Override
 	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
-    	
-        /*// 根据当前结点tfcode，以及sys_from，查询系统资源id
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("sys_from", sys_from);
-        map.put("pTfcode", tfcode);
-        List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
-
-        // 根据资源库id和父类型id，得到父类型的所有子类型及其自身
-        HashMap<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("poolId", poolId);
-        map1.put("typeId", typeId);
-        List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);*/
-    	
-    	
-    	
+    
     	// Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
 
@@ -193,45 +179,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         return transfer.transfer(list);
     }
     
-    /**
-     * 系统资源推荐列表
-     * @param tfcode
-     * @param typeId
-     * @param page
-     * @param perPage
-     * @param resId
-     * @param poolId
-     * @return
-     *//*
-    @Override
-	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
-    	
-        // 根据当前结点tfcode，以及sys_from，查询系统资源id
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        map.put("sys_from", sys_from);
-        map.put("pTfcode", tfcode);
-        List<Long> resourceIds = resTypeMapper.getAllSysResIds(map);
 
-        // 根据资源库id和父类型id，得到父类型的所有子类型及其自身
-        HashMap<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("poolId", poolId);
-        map1.put("typeId", typeId);
-        List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
-    	
-    	
-    	
-    	// Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
-
-        // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from, resourceIds, tfcode, typeIds,resId,orderBy);
-  
-        // 封装结果集
-        PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
-
-        return transfer.transfer(list);
-    }*/
-    
     /**
      * 区本、校本资源推荐列表
      * @param tfcode

@@ -34,15 +34,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<Long> getAllDisResIds(HashMap<String, Object> map);
 
-    /**
-     * 系统资源：当资源库选择 “全部” 或 “教学素材” 时，显示所有一级类型
-     * 
-     * @param resourceIds
-     * @param typeIds
-     * @return
-     */
-    /*public List<ResType> getSysFirstLevelType(@Param("resourceIds") List<Long> resourceIds,
-            @Param("typeIds") List<Integer> typeIds);*/
     
     public List<ResType> getSysFirstLevelType(@Param("poolId") long poolId,
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
@@ -64,7 +55,7 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
             @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
 
     /**
-     * 系统资源：根据资源库id，得到父类型的所有子类型及其自身
+     * 系统资源：根据资源库id、父类型id，得到父类型的所有子类型及其自身
      * 
      * @param poolId
      * @param MType
@@ -72,20 +63,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
 
-   /* *//**
-     * 区本校本资源：查询资源类型
-     * 
-     * @return
-     *//*
-    public List<ResType> getDisResType(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag);
-    
-    *//**
-     * 区本校本资源：查询资源类型，e备课
-     * 
-     * @return
-     *//*
-    public List<ResType> getDisResType_EPrepare(@Param("resourceIds") List<Long> resourceIds, @Param("fromFlag") int fromFlag,@Param("removeTypeIds")List<Integer> removeTypeIds);
-*/
     
     /**
      * 区本校本资源：查询资源类型

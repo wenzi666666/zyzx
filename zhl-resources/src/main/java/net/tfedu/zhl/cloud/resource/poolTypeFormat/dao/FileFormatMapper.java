@@ -34,25 +34,6 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
             @Param("tfcode") String tfcode,@Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
 
     
-    //******代码优化之前的*********//
-	/**
-     * 系统资源，根据资源ids和typeIds，查询得到资源格式
-     * @param resourceIds
-     * @param typeIds
-     * @return
-     *//*
-    public List<String> getSysResFormatsByMType(@Param("resourceIds") List<Long> resourceIds,
-            @Param("typeIds") List<Integer> typeIds);
-
-    *//**
-     * 区本校本资源，根据资源ids和typeIds，查询得到资源格式
-     * @param resourceIds
-     * @param fromFlag
-     * @return
-     *//*
-    public List<String> getDisResFormatsByMType(@Param("resourceIds") List<Long> resourceIds,
-            @Param("fromFlag") int fromFlag,@Param("typeIds") List<Integer> typeIds);*/
-    
     /**
      * 查询全部资源格式
      * @return
