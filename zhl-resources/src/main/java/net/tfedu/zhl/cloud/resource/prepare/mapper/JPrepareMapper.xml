@@ -78,7 +78,7 @@
 	WHERE
 		tfcode LIKE #{0}
 	AND userid = #{1} AND flag = false 
-	ORDER BY ordernum desc
+	ORDER BY updatetime desc
   </select>
     <!-- 获取备课夹及其时间范围 -->
   <select id="queryPrepareAndTimeScopeList" resultMap="viewResultMap">
