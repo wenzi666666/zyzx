@@ -33,8 +33,8 @@
   
   <!-- 系统资源：根据 poolId、父类型typeId, 得到父类型的所有子类型及其自身  -->
   <select id="getTypesByPMTypeAndPool"  resultType="Integer" >
-     SELECT DISTINCT type_id from 
-    (SELECT b.id type_id,b.pid,a.poolId 
+     
+    SELECT b.id 
      from z_res_pooltype a 
      LEFT JOIN x_resourcetype b on a.resTypeId = b.id 
      where a.flag=0 and b.flag=0 
@@ -45,9 +45,9 @@
          and (b.id = #{MType} or b.pid = #{MType})
         </if>
       
-      UNION all 
+      UNION 
 
-      SELECT a.id type_id,a.pid,b.poolId
+      SELECT a.id 
       from x_resourcetype a 
       LEFT JOIN z_res_pooltype b on a.Pid = b.resTypeId 
       where a.flag=0 and b.flag=0 
@@ -57,7 +57,7 @@
        <if test="MType != 0">
          and (a.id = #{MType} or a.pid = #{MType})
         </if>
-      ) temp  
+      
   </select>
   
   <!-- 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型   -->
