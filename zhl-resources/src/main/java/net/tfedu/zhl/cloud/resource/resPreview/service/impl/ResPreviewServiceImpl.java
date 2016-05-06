@@ -70,8 +70,13 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
         }
         
-        //fpath中设置存储全路径
-        String path = info.getFpath() + "/" + info.getFname();
+        String path = "";
+        if(fromFlag == 1){//自建资源
+        	path = info.getFpath();
+        }
+        else {//fpath中设置存储全路径
+        	path = info.getFpath() + "/" + info.getFname();
+		}
         info.setFpath(path);
        
         return info;
