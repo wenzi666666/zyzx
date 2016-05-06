@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper" >
 
+  <!-- 开启二级缓存 -->
+  <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true" />
+        
   <!-- 根据检索的关键词，搜索满足条件的系统资源 -->
   <select id="getAllSysResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity" >
     select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
@@ -10,7 +17,7 @@
 	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a 
 	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
-	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode
+	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	where a.flag = 0  
 	
@@ -70,7 +77,10 @@
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	where a.flag = 0 
 	
-	and a.fromflag in (0,1,2)
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
 	<if test="format != '全部'">
          and jf.FileFormat = #{format}
     </if>
@@ -219,13 +229,17 @@ union
  
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt from (select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_resource a 
-	where a.flag = 0  and a.fromflag in (0,1,2)
+	where a.flag = 0 and a.fromflag in 
+	                 <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
 
 	<if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
-  union ALL
+  union 
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
@@ -235,7 +249,7 @@ union
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
-  union ALL
+  union 
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
