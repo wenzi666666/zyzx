@@ -45,6 +45,14 @@ public interface JPrepareContentMapper extends CoreMapper<JPrepareContent> {
     
     
     
+    /**
+     * 复制备课夹内容  将prepareId的内容复制到 targetPrepareId
+     * @param prepareId
+     * @param targetPrepareId
+     */
+    public void copyPrepareContent(@Param("prepareId")String prepareId,@Param("targetPrepareId")String targetPrepareId);
+    
+    
     
     
 }

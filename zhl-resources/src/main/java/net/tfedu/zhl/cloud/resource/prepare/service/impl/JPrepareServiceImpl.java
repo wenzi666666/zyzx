@@ -577,22 +577,13 @@ public class JPrepareServiceImpl implements JPrepareService {
 		Date time = Calendar.getInstance().getTime();
 		
 		JPrepare obj =  mapper.selectByPrimaryKey(prepareId);
-
-		JPrepareContent record = new JPrepareContent();
-		record.setPreid(prepareId);
-		List<JPrepareContent> list = contMapper.select(record);				
-		for (JPrepareContent jPrepareContent : list) {
-			jPrepareContent.setId(null);
-			jPrepareContent.setCreatetime(time);
-		}
-		
 		obj.setId(null);
 		obj.setUpdatetime(time);
 		obj.setTfcode(tfcode);
 		mapper.insert(obj);
-		if(list!=null&& list.size()>0){
-			contMapper.insertList(list);
-		}
+
+		contMapper.copyPrepareContent(prepareId.toString(), obj.getId().toString());
+		
 		return ResultJSON.getSuccess("");
 	
 	}
@@ -600,10 +591,7 @@ public class JPrepareServiceImpl implements JPrepareService {
 	@Override
 	public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception {
 		
-		
-		
 		JPrepare obj = new JPrepare();
-		
 		obj.setId(prepareId);
 		obj.setTfcode(tfcode);
 		editPrepare(obj);

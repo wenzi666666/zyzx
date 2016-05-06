@@ -105,5 +105,13 @@
   
   
   
+  
+  <insert id="copyPrepareContent">
+  	insert into j_prepare_content(createtime,preid,contid,conttype,orderidx)
+	select now(),#{targetPrepareId},contid,conttype,orderidx from j_prepare_content where preid = #{prepareId} and flag = false
+  </insert>
+  
+  
+  
 
 </mapper>

@@ -236,7 +236,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     public void copyPrepare() throws Exception {
 		
     	long prepareId = 828l;
-    	String tfcode = "CCXX01010901";
+    	String tfcode = "CCXX0101090104";
     	
     	result = controller.copyPrepare(prepareId, tfcode);
 
@@ -248,7 +248,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 	public void movePrepare() throws Exception {
 
     	long prepareId = 828l;
-    	String tfcode = "CCXX010109";
+    	String tfcode = "CCXX0101090103";
 		result =  controller.movePrepare(prepareId, tfcode);
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
