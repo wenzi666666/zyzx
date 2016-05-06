@@ -85,8 +85,8 @@
   	SELECT
 	id,
 	title,
-	(CASE WHEN createtime > DATE_SUB(CURDATE(), INTERVAL 1 WEEK) then 'withinweek'
-	   WHEN  createtime > DATE_SUB(CURDATE(), INTERVAL 1 MONTH) then 'withinmonth'
+	(CASE WHEN updatetime > DATE_SUB(CURDATE(), INTERVAL 1 WEEK) then 'withinweek'
+	   WHEN  updatetime > DATE_SUB(CURDATE(), INTERVAL 1 MONTH) then 'withinmonth'
 	   ELSE  'moreearly' END) as timeLabel
 	FROM
 		j_lession_prepare
@@ -96,7 +96,7 @@
 	<if test="title!=''">
 		AND title like #{title}	
 	</if>
-	ORDER BY ordernum desc
+	ORDER BY updatetime desc
   </select>
   
   
