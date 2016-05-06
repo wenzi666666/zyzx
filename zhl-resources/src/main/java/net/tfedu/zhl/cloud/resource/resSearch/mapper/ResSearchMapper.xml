@@ -3,11 +3,7 @@
 <mapper namespace="net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper" >
 
   <!-- 开启二级缓存 -->
-  <cache
-        eviction="FIFO"
-        flushInterval="60000"
-        size="512"
-        readOnly="true" />
+  <cache />
         
   <!-- 根据检索的关键词，搜索满足条件的系统资源 -->
   <select id="getAllSysResources" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity" >

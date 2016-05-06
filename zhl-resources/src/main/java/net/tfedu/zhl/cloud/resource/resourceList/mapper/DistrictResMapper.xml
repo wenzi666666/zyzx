@@ -3,11 +3,7 @@
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
   
   <!-- 开启二级缓存 -->
-  <cache
-        eviction="FIFO"
-        flushInterval="60000"
-        size="512"
-        readOnly="true" />
+  <cache />
  
   
   <!-- 根据用户id获得区、校信息 -->

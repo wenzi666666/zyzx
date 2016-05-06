@@ -3,11 +3,7 @@
 <mapper namespace="net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper" >
   
   <!-- 开启二级缓存 -->
-  <cache
-        eviction="FIFO"
-        flushInterval="60000"
-        size="512"
-        readOnly="true" />
+  <cache />
   
   <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType" >
     <!--
