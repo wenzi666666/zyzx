@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
+  
+  <!-- 开启二级缓存 -->
+  <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true" />
  
+  
   <!-- 根据用户id获得区、校信息 -->
   <resultMap id = "DisAndSchoolMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity">
        <result column="schoolid" property="schoolId" />
@@ -96,7 +104,7 @@
 	left join j_syscourse d on c.StructCode=d.tfcode 
     where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId}   
 
-    union all 
+    union all
     
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt,UpdateDT,DloadTimes,avgScore from (select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,
     REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
@@ -211,8 +219,6 @@ where a.id =#{resId} and b.flag=0 and c.flag=0 and a.fromflag = #{fromFlag} and 
 	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false
 	ORDER BY LOCATE(#{curTfcode},StructCode) desc
  </select>
- 
- 
  
  <!-- 更新点击次数（+1） -->
  <update id="updateClickTime" parameterType="String">

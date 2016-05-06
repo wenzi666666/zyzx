@@ -40,7 +40,7 @@
 		<result column="tfcode" property="tfcode" />
   </resultMap>
   <select id="getAllEditions" parameterType="HashMap" resultMap="EditionResultMap">
-  select id,name,tfcode from(
+    select id,name,tfcode from(
   	select s.id,replace(s.Name,CONCAT(j.name,sub.name),'') as name,tfcode from j_syscourse s
 	LEFT JOIN j_term j on s.termId = j.id
 	LEFT JOIN j_subject sub on s.subjectId = sub.id
@@ -82,4 +82,10 @@
 	where s.id =#{id} and s.flag = false and proCode =#{proCode} and s.visible = 1 and s.typeFlag in (0,1) 
   </select>
  
+  <!-- 开启二级缓存 -->
+  <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true" />
 </mapper>

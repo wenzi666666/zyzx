@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper" >
-  
+
+ <!-- 开启二级缓存 -->
+  <cache
+        eviction="FIFO"
+        flushInterval="60000"
+        size="512"
+        readOnly="true" />
+        
  <!-- 分页查询系统资源信息的每一条记录信息 -->
  <resultMap id="SysResourceMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity" >
        <result column="Id" property="Id" />
