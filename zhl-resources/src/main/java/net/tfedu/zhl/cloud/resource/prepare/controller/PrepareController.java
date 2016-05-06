@@ -810,7 +810,7 @@ public class PrepareController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/v1.0/prepareCopy", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1.0/prepareCopy", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON copyPrepare(Long prepareId,String tfcode) throws Exception {
 		
@@ -827,7 +827,7 @@ public class PrepareController {
 	 * @param response
 	 * @return
 	 */
-	@RequestMapping(value = "/v1.0/prepareMove", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1.0/prepareMove", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception {
 
