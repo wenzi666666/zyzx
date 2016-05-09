@@ -145,7 +145,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         request.setContextPath("/zhl-resources");
         request.setScheme("http");
         request.setAttribute("currentUserId", 390320126l);
-        request.setParameter("unifyTypeId", "1");
+        request.setParameter("reviewType", "3");
         ResultJSON result = controller.getMyReview(request, response);
         System.out.println(result.toString());
 
@@ -206,5 +206,21 @@ public class PersonalControllerTest extends BaseControllerTestCase {
 
     }
     
-    
+    @Test
+    public void testgetMyReviewComment() throws Exception{
+    	
+        request.setServerName("192.168.111.160");
+        request.setServerPort(8080);
+        request.setContextPath("/zhl-resources");
+        request.setScheme("http");
+        request.setAttribute("currentUserId", 390320126l);
+        request.setParameter("reviewType", "1");
+        ResultJSON result = controller.getMyReviewComment(request, response);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+        
+        request.setParameter("reviewType", "3");
+        result = controller.getMyReviewComment(request, response);
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+    	
+    }
 }
