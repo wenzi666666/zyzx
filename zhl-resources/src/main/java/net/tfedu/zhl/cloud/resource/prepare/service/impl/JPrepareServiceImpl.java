@@ -489,7 +489,8 @@ public class JPrepareServiceImpl implements JPrepareService {
 			Long subjectId, String title, Long userId,String timeLabel) {
 		
 		//withinweek、withinmonth、moreearly
-		timeLabel = timeLabel==null?"withinweek":timeLabel.trim();
+		//timeLabel = timeLabel==null?"withinweek":timeLabel.trim();
+		timeLabel = timeLabel==null?"":timeLabel.trim();
 
 		return mapper.queryPrepareByTermAndSubject(termId, subjectId, StringUtils.isEmpty(title)?"":("%"+title+"%"), userId,timeLabel);
 	

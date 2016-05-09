@@ -220,6 +220,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 				if(null == obj){
 					isfinished = 1 ;	
 				}else{
+					//格式转换完成
 					isfinished = 0 ;
 				}				
 			}else{
@@ -244,8 +245,18 @@ public class ZAssetServiceImpl implements ZAssetService {
 				String _path = AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
 				String _fullpath = _path+_name;
 				
-				//复制到目标目录
+				//复制（源文件）到目标目录
 				ZhlResourceCenterWrap.copyFile(resServiceLocal, assetPath, _fullpath);
+				if(isfinished == 0){
+					
+					//格式转换完成，拷贝缩略图和转换后的文件
+					ZhlResourceCenterWrap.copyFile(resServiceLocal, 
+							assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE
+							,_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+
+					
+					
+				}
 				
 				String rescode = AssetTypeConvertConstant.getResCodeForDistrictRes(scope, tfcode);
 				//复制到区本校本资源
@@ -659,6 +670,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 		PageHelper.startPage(page, perPage);
 		List<JPrepareContentView>  list = assetMapper.getCourseAssetPage(unifyTypeId,userId, tfcode+"%", "%"+title+"%");
 		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
+	}
+	
+	
+	public static void main(String[] args) {
+		String s = "123456.jpg";
+		System.out.println(s.substring(0, s.lastIndexOf("."))+"_icon.jpg");
+		
+		
 	}
 }
 
