@@ -403,6 +403,12 @@
  
  
  
+ <!--  -->
+ <select id="selectOneByPath" resultMap="BaseResultMap">
+ 	select * from z_asset where userid = #{userId}  and AssetPath = #{path}
+ </select>
+ 
+ 
 </mapper>
 
 

@@ -166,6 +166,16 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	
 	
 	
+	/**
+	 * 根据userid 、path 查询 自建资源
+	 * @param userId
+	 * @param path
+	 * @return
+	 */
+	public ZAsset selectOneByPath(@Param("userId")String userId,@Param("path")String path);
+	
+	
+	
 }
 
 

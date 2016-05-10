@@ -17,4 +17,13 @@
   <select id="getFirstCourseByResId" resultType="String">
      select tfcode from z_asset_syscourse where assetid = #{resId} and flag = 0 limit 1
   </select>
+  
+  
+  <!-- 获取自建的共享范围 -->
+  <select id="getAssetShareScope" resultType="Integer">
+  	SELECT s.sharescope from z_asset a
+	LEFT JOIN z_asset_syscourse s on s.assetid = a.id 
+	WHERE a.userid = #{userId} and a.AssetPath = #{assetPath}
+	ORDER BY s.id limit 1 
+  </select>
 </mapper>

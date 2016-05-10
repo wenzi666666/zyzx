@@ -12,4 +12,16 @@ public interface ZAssetSyscourseMapper extends CoreMapper<ZAssetSyscourse> {
 	 * @return
 	 */
 	public String getFirstCourseByResId(@Param("resId")long resId);
+	
+	
+	
+	/**
+	 * 获取自建的共享范围
+	 * @param userId
+	 * @param assetPath
+	 * @return 1 校本   2  区本
+	 */
+	public Integer getAssetShareScope(@Param("userId")String userId,@Param("assetPath")String assetPath);
+	
+	
 }

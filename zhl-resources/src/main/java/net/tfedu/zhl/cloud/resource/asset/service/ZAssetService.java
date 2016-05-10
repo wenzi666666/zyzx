@@ -79,7 +79,7 @@ public interface ZAssetService {
 	 * @param userId
 	 * @param resPath  上传文件原始路径
 	 */
-	public void setTypeConvertSucceed(Long userId,String resPath);
+	public void setTypeConvertSucceed(String resServiceLocal,Long userId,String resPath);
 	
 	
 	

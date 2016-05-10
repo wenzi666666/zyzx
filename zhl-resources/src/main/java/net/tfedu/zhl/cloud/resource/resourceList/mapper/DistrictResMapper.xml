@@ -225,4 +225,9 @@ where a.id =#{resId} and b.flag=0 and c.flag=0 and a.fromflag = #{fromFlag} and 
  <update id="updateDownloadTime" parameterType="String">
  	update z_districts_resource  set DLoadTimes = DLoadTimes+1  where rescode =#{rescode}
  </update>
+ 
+ 
+ <select id="selectOneByTime" resultMap="DisResMap">
+ 	select  * from z_districts_resource where  AuthorId = #{userId} and CreateDT = #{time}
+ </select>
 </mapper>

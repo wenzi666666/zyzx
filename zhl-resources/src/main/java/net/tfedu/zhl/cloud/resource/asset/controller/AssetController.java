@@ -118,8 +118,18 @@ public class AssetController {
 					.parseLong(ext.substring(index + 1, ext.length()));
 			// 获得文件服务器返回的file参数
 			String resPath = request.getParameter("file");
+			// 获取文件服务器的访问url
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+			
+			
+			
 
-			assetService.setTypeConvertSucceed(userId, resPath);
+			
+			assetService.setTypeConvertSucceed(resServiceLocal,userId, resPath);
+			
+			
+			
+			
 
 			logger.debug("文件服务格式转换后的回调,userId=" + userId + ",resPath="
 					+ resPath);

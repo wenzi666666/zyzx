@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.resourceList.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
@@ -99,5 +100,15 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
      * @param rescode
      */
     public void updateDownloadTime(String rescode);
+    
+    
+    
+    /**
+     * 
+     * @param userId
+     * @param time
+     * @return
+     */
+    public DisResourceEntity selectOneByTime(@Param("userId")String userId,@Param("time")Date time);
     
 }

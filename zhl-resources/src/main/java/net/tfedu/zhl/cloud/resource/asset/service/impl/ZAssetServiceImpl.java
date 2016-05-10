@@ -27,10 +27,15 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictsResNavMapper;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictsResNav;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.resource.share.dao.XPlatFormShareMapper;
+import net.tfedu.zhl.cloud.resource.share.dao.XShareResNavMapper;
+import net.tfedu.zhl.cloud.resource.share.entity.XPlatFormShare;
+import net.tfedu.zhl.cloud.resource.share.entity.XShareResNav;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -64,6 +69,9 @@ public class ZAssetServiceImpl implements ZAssetService {
 	@Autowired
 	ZAssetValuateMapper reviewMapper;
 	
+	@Autowired
+	ZAssetSyscourseMapper syscourseMapper;
+	
 	
 	@Autowired
 	ZAssetMapper assetMapper;
@@ -88,6 +96,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 	
 	@Autowired
 	ExtRelativeTeachingTypeMapper relateTypeMapper;
+	
+	
+	@Autowired
+	XShareResNavMapper shareResnavMapper;
+	
+	@Autowired
+	XPlatFormShareMapper shareMapper;
+	
 	
 	@Override
 	public List<FirstLevelResType> getAllFirstLevelResType() {
@@ -165,7 +181,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 
 
 	@Override
-	public void setTypeConvertSucceed(Long userId, String resPath) {
+	public void setTypeConvertSucceed(String resServiceLocal,Long userId, String resPath) {
 		ZTypeConvert obj = new ZTypeConvert();
 		obj.setUserid(userId);
 		obj.setRespath(resPath);
@@ -173,6 +189,43 @@ public class ZAssetServiceImpl implements ZAssetService {
 		
 		assetMapper.updateAssetFinished(userId, resPath);
 		
+		Integer scope = syscourseMapper.getAssetShareScope(String.valueOf(userId), resPath);
+		//共享范围   0 个人可见 1 校本共享 2 区本共享
+		if(scope!=null && scope>0){
+			long schoolid = 0 ;
+			long districtid=  0;
+			HashMap<String,Object> map =  userMapper.getUserAreaInfo(userId);
+			if(map!=null){
+				districtid =  (map.get("districtid") instanceof java.lang.String )
+								?Long.parseLong(map.get("districtid").toString())
+								:Long.parseLong(String.valueOf(map.get("districtid")));
+				schoolid = (map.get("schoolid") instanceof java.lang.String )
+						?Long.parseLong(map.get("schoolid").toString())
+						:Long.parseLong(String.valueOf(map.get("schoolid")));
+			}	
+			
+			//查询记录
+			ZAsset record = assetMapper.selectOneByPath(String.valueOf(userId), resPath);
+			
+			//获取同一时间 user 创建的区校本资源 
+			DisResourceEntity res = districtMapper.selectOneByTime(String.valueOf(userId), record.getCreatetime());
+		
+
+			//拷贝缩略图和转换后的文件
+			String _fullpath = res.getFullpath();
+			//格式转换完成，拷贝缩略图
+			ZhlResourceCenterWrap.copyFile(resServiceLocal, 
+					resPath.substring(0, resPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE
+					,_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+			if( AssetTypeConvertConstant.isNeedConvert(resPath)){
+				//格式转换完成，拷贝转换后的文件
+				ZhlResourceCenterWrap.copyFile(resServiceLocal
+						, AssetTypeConvertConstant.convertType(resPath)
+						, AssetTypeConvertConstant.convertType(_fullpath));
+			}
+		
+		
+		}
 	}
 
 
@@ -188,6 +241,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 		
 		List<DistrictRes> dResList = new ArrayList();
 		List<DistrictsResNav> dResNavList = new ArrayList();
+		
+
+		
+		List<XShareResNav> shareResnavList = new ArrayList();
+		List<XPlatFormShare> shareList = new ArrayList();
+		
+		
+		
 		
 		//如果需要共享到区校
 		if(scope_list.contains(1)||scope_list.contains(2)){
@@ -247,15 +308,18 @@ public class ZAssetServiceImpl implements ZAssetService {
 				
 				//复制（源文件）到目标目录
 				ZhlResourceCenterWrap.copyFile(resServiceLocal, assetPath, _fullpath);
-				if(isfinished == 0){
+				if(isfinished == 0 ){
 					
-					//格式转换完成，拷贝缩略图和转换后的文件
+					//格式转换完成，拷贝缩略图
 					ZhlResourceCenterWrap.copyFile(resServiceLocal, 
 							assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE
 							,_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
-
-					
-					
+					if( AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
+						//格式转换完成，拷贝转换后的文件
+						ZhlResourceCenterWrap.copyFile(resServiceLocal
+								, AssetTypeConvertConstant.convertType(assetPath)
+								, AssetTypeConvertConstant.convertType(_fullpath));
+					}
 				}
 				
 				String rescode = AssetTypeConvertConstant.getResCodeForDistrictRes(scope, tfcode);
@@ -323,6 +387,8 @@ public class ZAssetServiceImpl implements ZAssetService {
 				
 				
 				
+				
+				
 			}
 		}
 		
@@ -350,10 +416,50 @@ public class ZAssetServiceImpl implements ZAssetService {
 			if(dResList.size()>0){
 				dResList.get(i).setAssetid(resid);
 			}
+			
+			
+			
+			
+			//共享范围   0 个人可见 1 校本共享 2 区本共享  增加共享
+			if(scope>0){
+				
+				XShareResNav shareResNav = new XShareResNav();
+				shareResNav.setCodetype(0);
+				shareResNav.setFlag(false);
+				shareResNav.setResid(resid);
+				shareResNav.setStructcode(tfcode);
+				shareResnavList.add(shareResNav);
+
+				XPlatFormShare fShare = new XPlatFormShare(); 
+				fShare.setClicks(0);
+				fShare.setCreatetime(time);
+				fShare.setDownloads(0);
+				fShare.setFlag(false);
+				fShare.setQuotes(0);
+				fShare.setScope(1==scope?"D":"C");
+				fShare.setScopeid(1==scope?schoolid:districtid);
+				fShare.setSharedtype(1);
+				fShare.setShareid(resid);
+				fShare.setStudycourseid("");
+				fShare.setSysresourcetype(new Long(asset.getUnifytypeid()));
+				fShare.setUserid(asset.getUserid());				
+				shareList.add(fShare);
+			}
+
+			
+			
+			
+			
 		}
 		if(asList.size()>0){
 			logger.debug("add asset_syscourse to database batch .....");
 			asMapper.insertList(asList);
+		}
+		if(shareResnavList.size()>0){
+			shareResnavMapper.insertList(shareResnavList);
+		}
+		if(shareList.size()>0){
+			shareMapper.insertList(shareList);
 		}
 		
 		//如果需要共享到dResList

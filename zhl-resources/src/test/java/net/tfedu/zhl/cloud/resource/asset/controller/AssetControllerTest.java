@@ -13,7 +13,6 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 public class AssetControllerTest extends BaseControllerTestCase {
 
 	
@@ -61,7 +60,28 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	}
 	
 	@Test
-	public void testadd(){
+	public void testadd() throws Exception{
+		
+		
+//		、deleteAsset
+		
+    	request.setAttribute("currentUserId", 390320126l);
+	
+		
+		request.setParameter("names", "java面试题大全");
+		request.setParameter("unifTypeIds", "2");
+		request.setParameter("tfcodes", "CZYW010101");
+		request.setParameter("scopes", "1");
+		request.setParameter("keywords", "java");
+		request.setParameter("descs", "123");
+		request.setParameter("paths", "upFile\\2016\\390410126\\10105\\2016051009332331133-46.doc");
+		request.setParameter("sizes", "1111111");
+		request.setParameter("iscoursewares", "0");
+		request.setParameter("islocals", "0");
+		result = assetController.deleteAsset(request, response);
+		
+		
+		
 		
 		
 		
@@ -125,7 +145,19 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	}
 	
 	
-	
+	@Test
+	public void testUploadConvertCallBack() throws ParamsException, Exception{
+    	request.setAttribute("currentUserId", 390320126l);
+		request.setParameter("file", "upFile\\2016\\390410126\\10105\\2016051009332331133-46.doc");
+		request.setParameter("ext", "rename&userId=390320126");
+		
+		String _result = assetController.uploadConvertCallBack(request, response);
+		
+		Assert.isTrue("SUCCESS".equals(_result)) ;
+		
+		
+		
+	}
 	
 	
 
