@@ -190,6 +190,9 @@ public class ZAssetServiceImpl implements ZAssetService {
 		assetMapper.updateAssetFinished(userId, resPath);
 		
 		Integer scope = syscourseMapper.getAssetShareScope(String.valueOf(userId), resPath);
+		
+		logger.debug("自建资源“"+resPath+"”更新状态，scope = "+scope);
+		
 		//共享范围   0 个人可见 1 校本共享 2 区本共享
 		if(scope!=null && scope>0){
 			long schoolid = 0 ;
@@ -211,17 +214,26 @@ public class ZAssetServiceImpl implements ZAssetService {
 			DisResourceEntity res = districtMapper.selectOneByTime(String.valueOf(userId), record.getCreatetime());
 		
 
+			logger.debug("对应的区本、校本资源："+res.getFullpath());
+
 			//拷贝缩略图和转换后的文件
 			String _fullpath = res.getFullpath();
 			//格式转换完成，拷贝缩略图
 			ZhlResourceCenterWrap.copyFile(resServiceLocal, 
 					resPath.substring(0, resPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE
 					,_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+			
+			logger.debug("THUMBNAILS_IMG_TYPE1："+resPath.substring(0, resPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+			logger.debug("THUMBNAILS_IMG_TYPE2："+_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+
 			if( AssetTypeConvertConstant.isNeedConvert(resPath)){
 				//格式转换完成，拷贝转换后的文件
 				ZhlResourceCenterWrap.copyFile(resServiceLocal
 						, AssetTypeConvertConstant.convertType(resPath)
 						, AssetTypeConvertConstant.convertType(_fullpath));
+				logger.debug("convertType："+AssetTypeConvertConstant.convertType(resPath));
+				logger.debug("convertType2："+AssetTypeConvertConstant.convertType(_fullpath));
+				
 			}
 		
 		
@@ -314,11 +326,18 @@ public class ZAssetServiceImpl implements ZAssetService {
 					ZhlResourceCenterWrap.copyFile(resServiceLocal, 
 							assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE
 							,_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+					logger.debug("add--------");
+					logger.debug("convertType："+assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+					logger.debug("convertType2："+_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+
 					if( AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
 						//格式转换完成，拷贝转换后的文件
 						ZhlResourceCenterWrap.copyFile(resServiceLocal
 								, AssetTypeConvertConstant.convertType(assetPath)
 								, AssetTypeConvertConstant.convertType(_fullpath));
+						logger.debug("convertType："+AssetTypeConvertConstant.convertType(assetPath));
+						logger.debug("convertType2："+AssetTypeConvertConstant.convertType(_fullpath));
+
 					}
 				}
 				
@@ -362,7 +381,6 @@ public class ZAssetServiceImpl implements ZAssetService {
 				res.setFileext(fileext);
 				res.setFlag(false);
 				res.setFsize(asset.getAssetsize());
-				res.setFullpath(assetPath);
 				res.setIsdwj(asset.getIswjb());
 				res.setIsfinished(isfinished);
 				res.setIslocal(0);

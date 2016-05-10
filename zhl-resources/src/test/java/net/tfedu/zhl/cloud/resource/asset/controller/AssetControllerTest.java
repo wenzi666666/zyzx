@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+@Transactional
 public class AssetControllerTest extends BaseControllerTestCase {
 
 	
@@ -68,13 +69,13 @@ public class AssetControllerTest extends BaseControllerTestCase {
     	request.setAttribute("currentUserId", 390320126l);
 	
 		
-		request.setParameter("names", "java面试题大全");
+		request.setParameter("names", "证照登记");
 		request.setParameter("unifTypeIds", "2");
 		request.setParameter("tfcodes", "CZYW010101");
 		request.setParameter("scopes", "1");
 		request.setParameter("keywords", "java");
 		request.setParameter("descs", "123");
-		request.setParameter("paths", "upFile\\2016\\390410126\\10105\\2016051009332331133-46.doc");
+		request.setParameter("paths", "upFile\\2016\\390410126\\10105\\2016051015350940900-81.xlsx");
 		request.setParameter("sizes", "1111111");
 		request.setParameter("iscoursewares", "0");
 		request.setParameter("islocals", "0");
@@ -147,9 +148,9 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	
 	@Test
 	public void testUploadConvertCallBack() throws ParamsException, Exception{
-    	request.setAttribute("currentUserId", 390320126l);
-		request.setParameter("file", "upFile\\2016\\390410126\\10105\\2016051009332331133-46.doc");
-		request.setParameter("ext", "rename&userId=390320126");
+    	request.setAttribute("currentUserId", 390410126l);
+		request.setParameter("file", "upFile\\2016\\390410126\\10105\\2016051015414738198-88.docx");
+		request.setParameter("ext", "rename&userId=390410126");
 		
 		String _result = assetController.uploadConvertCallBack(request, response);
 		
