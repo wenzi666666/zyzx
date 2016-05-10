@@ -136,18 +136,18 @@
   left join x_resourcetype b on a.MType = b.id
   left join x_resourcetype pb on pb.Id=b.pid 
   where a.flag = 0 and c.Flag = 0 and d.Flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.fromFlag in 
-  <foreach item="from" index="index" collection="sys_from" 
+  <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
-                         #{from}
+                         #{item}
                 </foreach>
-   and (b.id in <foreach item="mtypeId" index="index" collection="typeIds" 
+   and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
-                         #{mtypeId}
+                         #{item}
                 </foreach>
   
-   or pb.id in <foreach item="pmtypeId" index="index" collection="typeIds" 
+   or pb.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
-                         #{pmtypeId}
+                         #{item}
                 </foreach>
    )
   </select>
@@ -202,11 +202,7 @@
   and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                </foreach>
-  or pb.id in <foreach item="item" index="index" collection="typeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>) 
+                </foreach> ) 
   </select>
   
   <!-- e备课， 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
