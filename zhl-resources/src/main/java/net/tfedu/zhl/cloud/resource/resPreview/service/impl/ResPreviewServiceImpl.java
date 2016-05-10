@@ -84,10 +84,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     
     /**
      *  e备课   根据resId和fromFlag，查询资源具体信息
-     * @param resId
-     * @param userId
-     * @param fromFlag
-     * @return
      */
     @Override
 	public ResPreviewInfo getResPreviewInfo_ePrepare(long resId, long userId,int fromFlag){
@@ -161,13 +157,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
     /**
      * 系统资源推荐列表
-     * @param tfcode
-     * @param typeId
-     * @param page
-     * @param perPage
-     * @param resId
-     * @param poolId
-     * @return
      */
     @Override
 	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
@@ -190,14 +179,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
     /**
      * 区本、校本资源推荐列表
-     * @param tfcode
-     * @param typeId
-     * @param fromFlag
-     * @param resId
-     * @param userId
-     * @param page
-     * @param perPage
-     * @return
      */
     @Override
 	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy){
@@ -228,13 +209,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     
     /**
      * 资源检索结果的推荐列表
-     * @param tfcode
-     * @param fromFlag
-     * @param resId
-     * @param searchWord
-     * @param page
-     * @param perPage
-     * @return
      */
     @Override
 	public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage){
@@ -282,11 +256,6 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     
     /**
      * 个人中心 - 我的上传  资源推荐（推荐 相同课程结点下的系统、区本、校本资源）
-     * @param resId
-     * @param sys_from
-     * @param page
-     * @param perPage
-     * @return
      */
     @Override
 	public Pagination<ResRecommendationEntity> myResByUploadRecommendation(long userId,long resId,List<Integer> sys_from,int page,int perPage){

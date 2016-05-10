@@ -27,7 +27,7 @@ import com.github.pagehelper.PageHelper;
 @Service("disResService")
 public class DisResServiceImpl implements DisResService {
 
-    @Resource
+	@Resource
     DistrictResMapper districtResMapper;
     @Resource
     ResTypeMapper resTypeMapper;

@@ -26,7 +26,7 @@ import com.github.pagehelper.PageHelper;
 @Service("sysResourceService")
 public class SysResourceServiceImpl implements SysResourceService {
 
-    @Resource
+	@Resource
     SysResourceMapper sysResourceMapper;
 
     @Resource
@@ -47,7 +47,7 @@ public class SysResourceServiceImpl implements SysResourceService {
         PageHelper.startPage(page, perPage);
         
         // 查询系统资源
-        List<SysResourceEntity> list = sysResourceMapper.SelectSysResources(sys_from, fileFormat,tfcode, orderBy,typeIds);
+        List<SysResourceEntity> list = sysResourceMapper.getAllSysRes(sys_from, fileFormat,tfcode, orderBy,typeIds);
                
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
@@ -71,7 +71,7 @@ public class SysResourceServiceImpl implements SysResourceService {
     
     
     /**
-     * 查询系统资源（限制资源类型，资源title模糊查询），e备课
+     * e备课，查询系统资源（限制资源类型，资源title模糊查询）
      */
     @Override
 	public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,

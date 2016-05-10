@@ -29,7 +29,7 @@ import com.github.pagehelper.PageHelper;
 @Service("resSearchService")
 public class ResSearchServiceImpl implements ResSearchService {
 
-    @Resource
+	@Resource
     ResSearchMapper resSearchMapper;
     @Resource
     FileFormatMapper fileFormatMapper;
@@ -96,10 +96,6 @@ public class ResSearchServiceImpl implements ResSearchService {
     
     /**
      * 查询资源格式
-     * @param searchKeyword
-     * @param fromFlag
-     * @param sys_from
-     * @return
      */
     @Override
 	public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from,long userId){

@@ -15,7 +15,7 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface FileFormatMapper extends CoreMapper<FileFormat> {
 
-    /**
+	/**
      * 系统资源，根据资源ids和typeIds，查询得到资源格式
      * @param resourceIds
      * @param typeIds

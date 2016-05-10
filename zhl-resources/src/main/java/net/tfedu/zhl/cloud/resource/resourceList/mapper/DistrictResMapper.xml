@@ -57,7 +57,7 @@
 	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and c.flag=0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
@@ -98,7 +98,7 @@
 	left join x_resourcetype b on a.MType = b.id 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.tfcode 
-    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId}   
+    where a.flag = 0 and c.flag=0 and d.flag=0 and a.id = #{resId}   
 
     union all
     
@@ -155,7 +155,7 @@
 	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and d.flag=0 and b.flag = 0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and d.flag=0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
     
     <if test="searchWord != null and searchWord != ''">
          and a.Title like CONCAT('%',#{searchWord},'%')

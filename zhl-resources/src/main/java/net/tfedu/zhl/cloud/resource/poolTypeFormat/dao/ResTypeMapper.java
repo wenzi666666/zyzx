@@ -17,58 +17,67 @@ import org.apache.ibatis.annotations.Param;
 public interface ResTypeMapper extends CoreMapper<ResType> {
 
 	/**
-     * 系统资源：根据资源库id、父类型id，得到父类型的所有子类型及其自身
-     * 
-     * @param poolId
-     * @param MType
-     * @return
+     * 系统资源：根据资源库id、父类型id，查询父类型及其子类型
      */
     public List<Integer> getTypesByPMTypeAndPool(@Param("poolId") long poolId, @Param("MType") int MType);
-
     
+    /**
+     * e备课， 系统资源：根据资源库id、父类型id，查询父类型及其子类型
+     */
+    public List<Integer> getTypesByPMTypeAndPool_EPrepare(@Param("poolId") long poolId, @Param("MType") int MType,
+    		@Param("removeTypeIds")List<Integer> removeTypeIds);
+
+    /**
+     * 系统资源：根据资源库id，查询该资源库下的所有一级、二级类型
+     */
+    public List<Integer> getTypesByPool(@Param("poolId") long poolId);
+    
+    /**
+     * e备课， 系统资源：根据资源库id，查询该资源库下的所有一级、二级类型
+     */
+    public List<Integer> getTypesByPool_EPrepare(@Param("removeTypeIds") List<Integer> removeTypes,@Param("poolId") long poolId);
 	
    /**
     * 系统资源，当资源库id为0或4时，查询所有一级类型
-    * @param poolId
-    * @param pTfcode
-    * @param sys_from
-    * @return
     */
-    public List<ResType> getSysFirstLevelType(@Param("poolId") long poolId,
-            @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
+    public List<ResType> getSysFirstLevelType(@Param("typeIds") List<Integer> typeIds,
+            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
     
     /**
      * e备课，当资源库id为0或4时，查询所有一级类型
-     * @param poolId
-     * @param pTfcode
-     * @param sys_from
-     * @param removeTypes
-     * @return
      */
-    public List<ResType> getSysFirstLevelType_ePrepare(@Param("poolId") long poolId,
-            @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
+    public List<ResType> getSysFirstLevelType_ePrepare(@Param("typeIds") List<Integer> typeIds,
+            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypeIds") List<Integer> removeTypes);
 
     /**
      * 系统资源：当资源库选择 “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
      * 
-     * @param resourceIds
-     * @param typeIds
-     * @return
      */
-    public List<ResType> getSysSecondLevelType(@Param("poolId") long poolId,
-            @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
+    public List<ResType> getSysSecondLevelType(@Param("typeIds") List<Integer> typeIds,
+            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
     
     /**
-     * e备课
-     * @param poolId
-     * @param pTfcode
-     * @param sys_from
-     * @param removeTypes
+     * e备课，当资源库选择 “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
+     */
+    public List<ResType> getSysSecondLevelType_ePrepare(@Param("typeIds") List<Integer> typeIds,
+            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypeIds") List<Integer> removeTypes);
+
+    
+    /**
+     * 区本校本资源：查询资源类型
+     * 
      * @return
      */
-    public List<ResType> getSysSecondLevelType_ePrepare(@Param("poolId") long poolId,
-            @Param("pTfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypes") List<Integer> removeTypes);
-
+    public List<ResType> getDisResType(@Param("fromFlag") int fromFlag, @Param("tfcode") String tfcode,@Param("schoolId") long schoolId, 
+    		@Param("districtId") long districtId);
+    
+    /**
+     * 区本校本资源：查询资源类型，e备课
+     * 
+     * @return
+     */
+    public List<ResType> getDisResType_EPrepare(@Param("fromFlag") int fromFlag, @Param("tfcode") String tfcode,@Param("schoolId") long schoolId, 
+    		@Param("districtId") long districtId,@Param("removeTypeIds")List<Integer> removeTypes);
     
     /**
      * 
@@ -78,18 +87,10 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
     
     
     /**
-     * 区本校本资源：查询资源类型
      * 
-     * @return
+     * 区本校本资源：查询父类型及其所有子类型，e备课
      */
-    public List<ResType> getDisResType(@Param("fromFlag") int fromFlag, @Param("pTfcode") String pTfcode,@Param("schoolId") long schoolId, @Param("districtId") long districtId);
-    
-    /**
-     * 区本校本资源：查询资源类型，e备课
-     * 
-     * @return
-     */
-    public List<ResType> getDisResType_EPrepare(@Param("fromFlag") int fromFlag, @Param("pTfcode") String pTfcode,@Param("schoolId") long schoolId, @Param("districtId") long districtId,@Param("removeTypes")List<Integer> removeTypes);
+    public List<Integer> getDisResTypesByPMType_EPrepare(@Param("MType") int MType,@Param("removeTypeIds")List<Integer> removeTypeIds);
     
     
     
@@ -102,20 +103,4 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * 自建资源 ： 查询全部类型
      */
     public List<FirstLevelResType> getAllResType();
-    
-    
-    /**
-     * 系统资源：根据资源库id，得到父类型的所有子类型及其自身，e备课
-     * 
-     * @param poolId
-     * @param MType
-     * @return
-     */
-    public List<Integer> getTypesByPMTypeAndPool_EPrepare(@Param("poolId") long poolId, @Param("MType") int MType,@Param("removeTypeIds")List<Integer> removeTypeIds);
-    
-    /**
-     * 
-     * 区本校本资源：查询父类型及其所有子类型，e备课
-     */
-    public List<Integer> getDisResTypesByPMType_EPrepare(@Param("MType") int MType,@Param("removeTypeIds")List<Integer> removeTypeIds);
 }

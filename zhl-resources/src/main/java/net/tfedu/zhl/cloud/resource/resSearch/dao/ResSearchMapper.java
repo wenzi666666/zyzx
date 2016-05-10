@@ -10,95 +10,55 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
 
-    /**
+	/**
      * 当资源来源为全部时，查询所有满足条件的资源
-     * 
-     * @param searchKeyword
-     * @param format
-     * @param sys_from
-     * @return
      */
     public List<ResSearchResultEntity> getAllResources(@Param("searchKeyword") String searchKeyword,
             @Param("format") String format, @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
 
     /**
      * 根据检索关键字查询所有符合条件的系统资源
-     * 
-     * @param searchKeyword
-     * @param format
-     * @param sys_from
-     * @return
      */
     public List<ResSearchResultEntity> getAllSysResources(@Param("searchKeyword") String searchKeyword,
             @Param("format") String format, @Param("sys_from") List<Integer> sys_from);
 
     /**
      * 根据检索关键字查询所有符合条件的区本、校本资源
-     * 
-     * @param searchKeyword
-     * @param fromFlag
-     * @param format
-     * @return
      */
     public List<ResSearchResultEntity> getAllDisResources(@Param("searchKeyword") String searchKeyword,
             @Param("fromFlag") int fromFlag, @Param("format") String format,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
     
     /**
      * 根据关键字，查询所有资源查询结果的格式
-     * @param searchKeyword
-     * @param sys_from
-     * @return
      */
     public List<String> getAllFileFormats(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
     
     /**
      * 根据关键字，fromFlag，查询区本、校本资源的格式
-     * @param searchKeyword
-     * @param fromFlag
-     * @return
      */
     public List<String> getDisFileFormats(@Param("searchKeyword") String searchKeyword,@Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId);
     
     /**
      * 根据关键字，查询系统资源的格式
-     * @param searchKeyword
-     * @param sys_from
-     * @return
      */
     public List<String> getSysFileFormats(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from);
     
    
     /**
      * 检索范围为全部时，查询推荐列表
-     * 
-     * @param searchKeyword
-     * @param format
-     * @param sys_from
-     * @return
      */
     public List<ResRecommendationEntity> getAllResources_preview(@Param("searchKeyword") String searchKeyword,
              @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
 
     /**
      * 检索范围为系统资源时时，查询推荐列表
-     * 
-     * @param searchKeyword
-     * @param format
-     * @param sys_from
-     * @return
      */
     public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from,@Param("resId")long resId);
             
 
     /**
      * 检索范围为区本、校本资源时，查询推荐列表
-     * 
-     * @param searchKeyword
-     * @param fromFlag
-     * @param format
-     * @return
      */
     public List<ResRecommendationEntity> getAllDisResources_preview(@Param("searchKeyword") String searchKeyword,
             @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
-
 }
