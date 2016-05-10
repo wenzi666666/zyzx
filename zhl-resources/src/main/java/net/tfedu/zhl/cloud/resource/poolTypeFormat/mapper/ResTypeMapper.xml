@@ -140,16 +140,20 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-   and (b.id in <foreach item="item" index="index" collection="typeIds" 
+   <if test="typeIds.size() == 0">
+      and (b.id in ('') or pb.id in (''))
+   </if>
+   <if test="typeIds.size() > 0">
+      and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
   
-   or pb.id in <foreach item="item" index="index" collection="typeIds" 
+      or pb.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                </foreach>
-   )
+                </foreach>)
+   </if>
   </select>
   
   <!-- e备课， 系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型   -->
@@ -165,16 +169,21 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-   and (b.id in <foreach item="item" index="index" collection="typeIds" 
+                
+   <if test="typeIds.size() == 0">
+      and (b.id in ('') or pb.id in (''))
+   </if>
+   <if test="typeIds.size() > 0">
+      and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
   
-   or pb.id in <foreach item="item" index="index" collection="typeIds" 
+      or pb.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                </foreach>
-   )
+                </foreach>)
+   </if>
    <if test="removeTypeIds.size() > 0">   <!-- e备课，去除一些特定类型 -->
           and b.id not in <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
@@ -199,10 +208,16 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-  and (b.id in <foreach item="item" index="index" collection="typeIds" 
+   <if test="typeIds.size() == 0">
+      and b.id in ('')
+   </if>
+   <if test="typeIds.size() > 0">
+      and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach> ) 
+   </if>
+  
   </select>
   
   <!-- e备课， 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
@@ -217,10 +232,15 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
-  and b.id in <foreach item="item" index="index" collection="typeIds" 
+   <if test="typeIds.size() == 0">
+      and b.id in ('')
+   </if>
+   <if test="typeIds.size() > 0">
+      and (b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
-                </foreach>
+                </foreach> ) 
+   </if>
   and b.id not in <foreach item="item" index="index" collection="removeTypeIds" 
                          open="(" separator="," close=")">
                          #{item}

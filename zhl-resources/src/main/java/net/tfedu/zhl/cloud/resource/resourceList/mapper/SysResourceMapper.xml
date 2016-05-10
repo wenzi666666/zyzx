@@ -63,6 +63,9 @@
                          #{item}
                 </foreach>
      </if>
+     <if test="typeIds.size() == 0">
+         and a.mtype in ('')
+     </if>
 	 <if test="orderBy == 0">
         order by avgScore desc,id
      </if>
@@ -103,10 +106,13 @@
          and a.Title like CONCAT('%',#{searchWord},'%')    
      </if>
      <if test="typeIds.size() > 0">
-      and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+         and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
+     </if>
+     <if test="typeIds.size() == 0">
+         and a.mtype in ('')
      </if>
       
 	 <if test="orderBy == 0">
@@ -150,10 +156,16 @@
 	
 	 and d.typeFlag in (0,1) and d.tfcode like CONCAT(#{tfcode},'%')
 
-     and a.mtype in <foreach item="item" index="index" collection="typeIds" 
+     <if test="typeIds.size() == 0">
+         and a.mtype in ('')
+     </if>
+     <if test="typeIds.size() > 0">
+         and a.mtype in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
+     </if>
+     
 	 <if test="orderBy == 0">
         order by avgScore desc,id
      </if>
