@@ -1,9 +1,10 @@
 package net.tfedu.zhl.cloud.resource.asset.controller;
 
+import static org.junit.Assert.fail;
+
 import java.io.IOException;
 
 import javax.annotation.Resource;
-
 
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -14,33 +15,83 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 @Transactional
-public class AssetControllerTest extends BaseControllerTestCase {
+public class AssetControllerTest  extends BaseControllerTestCase{
 
 	
-	@Resource
+    @Resource
 	AssetController assetController;
 	
-	
-	ResultJSON result = null;
-	
-	@Test
-	public  void testquery(){
-		
-	
-		
-	}
+    private ResultJSON result = new ResultJSON();
 	
 	
 	@Test
-	public void testDel(){
+	public void testGetUploadUrl() {
 		
-		
-		
-	}
-	
-	@Test
-	public void testupdate() throws Exception{
     	request.setAttribute("currentUserId", 390320126l);
+		result = assetController.getUploadUrl(request, response);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+		
+		
+	}
+
+	@Test
+	public void testUploadConvertCallBack() {
+		request.setAttribute("currentUserId", 390410126l);
+		request.setParameter("file", "upFile\\2016\\390410126\\10105\\2016051015414738198-88.docx");
+		request.setParameter("ext", "rename&userId=390410126");
+		
+		String _result = assetController.uploadConvertCallBack(request, response);
+		
+		Assert.isTrue("SUCCESS".equals(_result)) ;
+		
+	}
+
+	@Test
+	public void testDeleteAsset() throws Exception {
+    	request.setAttribute("currentUserId", 390320126l);
+	
+		
+		request.setParameter("names", "证照登记");
+		request.setParameter("unifTypeIds", "2");
+		request.setParameter("tfcodes", "CZYW010101");
+		request.setParameter("scopes", "1");
+		request.setParameter("keywords", "java");
+		request.setParameter("descs", "123");
+		request.setParameter("paths", "upFile\\2016\\390410126\\10105\\2016051015350940900-81.xlsx");
+		request.setParameter("sizes", "1111111");
+		request.setParameter("iscoursewares", "0");
+		request.setParameter("islocals", "0");
+		result = assetController.deleteAsset(request, response);
+
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	
+		
+		
+	}
+
+	@Test
+	public void testQueryAsset() {
+		
+		request.setAttribute("currentUserId", 390320126l);
+
+		result = assetController.queryAsset(request, response);
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+		
+	}
+
+	@Test
+	public void testGetAssetOne() throws Exception {
+		result =  assetController.getAssetOne(164883600l, request, response);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	}
+
+	@Test
+	public void testUpdateAsset() throws Exception {
+		
+		
+		request.setAttribute("currentUserId", 390320126l);
 
     	
     	
@@ -57,89 +108,32 @@ public class AssetControllerTest extends BaseControllerTestCase {
 		
 		result = 	assetController.updateAsset(id, request, response);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
-	
-		
-		
-		
-		
 		
 	}
-	
-	@Test
-	public void testadd() throws Exception{
-		
-		
-//		、deleteAsset
-		
-    	request.setAttribute("currentUserId", 390320126l);
-	
-		
-		request.setParameter("names", "证照登记");
-		request.setParameter("unifTypeIds", "2");
-		request.setParameter("tfcodes", "CZYW010101");
-		request.setParameter("scopes", "1");
-		request.setParameter("keywords", "java");
-		request.setParameter("descs", "123");
-		request.setParameter("paths", "upFile\\2016\\390410126\\10105\\2016051015350940900-81.xlsx");
-		request.setParameter("sizes", "1111111");
-		request.setParameter("iscoursewares", "0");
-		request.setParameter("islocals", "0");
-		result = assetController.deleteAsset(request, response);
-		
-		
-		
-		
-		
-		
-	}
-	
-
-	
-	
-	
-	@Test
-	public  void testgetAssetOne() throws Exception{
-		
-		result =  assetController.getAssetOne(164882909l, request, response);
-		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
-		
-	}
-	
-	
-	
-	
-	@Test
-	public void testQueryMyAssets(){
-		
-    	request.setAttribute("currentUserId", 390320126l);
-
-		result = assetController.queryAsset(request, response);
-		
-		Assert.isTrue("ok".equals(result.getCode()));
-		
-	}
-	
-	
-	
-	
 
 	@Test
-	public  void testgetCourseAssetType() throws Exception{
+	public void testPatchCopyAsset() {
+		//fail("Not yet implemented");
+	}
+
+	@Test
+	public void testPatchDelAsset() {
+		//fail("Not yet implemented");
+	}
+
+	@Test
+	public void testGetCourseAssetType() throws ParamsException, IOException {
 		
-    	request.setAttribute("currentUserId", 390330126l);
+		request.setAttribute("currentUserId", 390330126l);
     	request.setParameter("tfcode", "CZYW010101");
     	request.setParameter("title", "2");
 		result =  assetController.getCourseAssetType(request, response);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		
 	}
-	
-	
-	
-	
+
 	@Test
-	public void testgetCourseAsset() throws ParamsException, IOException{
-		
+	public void testGetCourseAsset() throws ParamsException, IOException {
     	request.setAttribute("currentUserId", 390320126l);
     	request.setParameter("tfcode", "CZYW010101");
     	request.setParameter("title", "");
@@ -149,22 +143,5 @@ public class AssetControllerTest extends BaseControllerTestCase {
 		Assert.isTrue("OK".equals(result.getCode()));
 		
 	}
-	
-	
-	@Test
-	public void testUploadConvertCallBack() throws ParamsException, Exception{
-    	request.setAttribute("currentUserId", 390410126l);
-		request.setParameter("file", "upFile\\2016\\390410126\\10105\\2016051015414738198-88.docx");
-		request.setParameter("ext", "rename&userId=390410126");
-		
-		String _result = assetController.uploadConvertCallBack(request, response);
-		
-		Assert.isTrue("SUCCESS".equals(_result)) ;
-		
-		
-		
-	}
-	
-	
 
 }

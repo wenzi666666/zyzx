@@ -354,7 +354,7 @@
 	from z_asset a
 	LEFT JOIN z_asset_syscourse sys on sys.assetid = a.id 
 	LEFT JOIN x_resourcetype p on p.id = a.unifyTypeId 
-  LEFT JOIN j_syscourse s  on s.id = sys.id
+  LEFT JOIN j_syscourse s  on s.TFcode = sys.tfcode
 	where a.id = #{id}   and  s.flag = false 
   ORDER BY sys.id limit  1 
  </select>
