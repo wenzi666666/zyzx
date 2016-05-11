@@ -520,9 +520,30 @@ public class ZAssetServiceImpl implements ZAssetService {
 	public void updateAsset(ZAsset asset,String tfcode,Integer scope, String resServiceLocal, String currentResPath, String hostLocal) throws Exception {
 		//获取资源、判断是否路径出现变化
 
-		
+		//0：转码完成，1：未完成
+		int isfinished = 1 ;		
 		ZAsset temp = assetMapper.selectByPrimaryKey(asset.getId());
 		if(!temp.getAssetpath().equals(asset.getAssetpath())){
+			
+			//如果更新了文件且需要格式转换
+			if(AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
+				//检测是否已经完成格式转换
+				ZTypeConvert obj =  convertMapper.getConvertRecord(asset.getUserid(), asset.getAssetpath());				
+				if(null == obj){
+					isfinished = 1 ;	
+				}else{
+					isfinished = 0 ;
+				}				
+			}else{
+				isfinished = 0 ;
+			}
+			asset.setIsfinished(isfinished);
+		}else{
+			isfinished = 0 ;
+		}
+
+		
+		if(scope>0){
 			List<String> source_4_copy = new ArrayList<String>();
 			List<String> target_4_copy = new ArrayList<String>();
 			long schoolid = 0 ;
@@ -537,148 +558,125 @@ public class ZAssetServiceImpl implements ZAssetService {
 						:Long.parseLong(String.valueOf(map.get("schoolid")));
 			}	
 			
-			//0：转码完成，1：未完成
-			int isfinished = 1 ;
-			//如果更新了文件且需要格式转换
-			if(AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
-				//检测是否已经完成格式转换
-				ZTypeConvert obj =  convertMapper.getConvertRecord(asset.getUserid(), asset.getAssetpath());				
-				if(null == obj){
-					isfinished = 1 ;	
-				}else{
-					isfinished = 0 ;
-				}				
-			}else{
-				isfinished = 0 ;
-			}
-			asset.setIsfinished(isfinished);
-			if(scope>0){
+			//区本资源表中的  资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
+			int _scope = scope==1?5:4;
+			long _scopeId = _scope==5?schoolid:districtid;
+			Date time = Calendar.getInstance().getTime();
+			
+			String assetPath =asset.getAssetpath();
+			//组装区本、校本路径
+			assetPath =  assetPath.replaceAll("\\\\", "/");
+			String _name = assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
+			String _path = AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
+			String _fullpath = _path+_name;
+			
+			
+			
+			String rescode = AssetTypeConvertConstant.getResCodeForDistrictRes(scope, tfcode);
+			//复制到区本校本资源
+			DistrictRes res = new DistrictRes();
+			
+			res.setAssetid(asset.getId());
+			res.setScope(_scope);
+			res.setScopeid(_scopeId);
+			res.setFromflag(scope==1?3:4);
+			res.setRescode(rescode);
+			res.setCreatedt(time);
+			//作者
+			res.setAuthorid(asset.getUserid());
+			res.setFname(_name);
+			res.setFpath(_path);
+			res.setFullpath(_fullpath);
+			
+			//创建者（后台管理员）
+			res.setCreatorid(0l);
+			res.setDes(asset.getAssetdesc());
+			res.setMtype(asset.getUnifytypeid());
+			res.setTitle(asset.getName());
+			res.setKeyword(asset.getKeyword());	
+			res.setRdes("");
+			
+			res.setTypelean("");
+			res.setAuditopinion("");
+			res.setAuthorfromflag(1);
+			res.setAuthorunit("");
+			res.setClicktimes(0);
+			res.setCopyright("");
+			res.setDisplayindex(0);
+			res.setDisplaylevel(0);
+			res.setDloadscore(0);
+			res.setDloadtimes(0);
+			res.setEditorid(0l);
+			res.setEduplace("");
+			//后缀
+			String  fileext =assetPath.substring(assetPath.lastIndexOf(".") + 1, assetPath.length());
+			res.setFileext(fileext);
+			res.setFlag(false);
+			res.setFsize(asset.getAssetsize());
+			res.setIsdwj(asset.getIswjb());
+			res.setIsfinished(isfinished);
+			res.setIslocal(0);
+			res.setSuitterm("");
+			res.setSctimes(0);
+			//待审核
+			res.setState(4);
+			res.setCopyright("");
+			res.setAuthorfromflag(1);
+			
+			res.setUploadscore(0);
+			res.setUpdatedt(time);
+			
+			
+			
+			DistrictsResNav resNav = new DistrictsResNav();
+			resNav.setFlag(false);
+			resNav.setRescode(rescode);
+			resNav.setStructcode(tfcode);				
+			
+			
+			
+			if(isfinished == 0 ){
 				
-				//区本资源表中的  资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
-				int _scope = scope==1?5:4;
-				long _scopeId = _scope==5?schoolid:districtid;
-				Date time = Calendar.getInstance().getTime();
-				
-				String assetPath =asset.getAssetpath();
-				//组装区本、校本路径
-				assetPath =  assetPath.replaceAll("\\\\", "/");
-				String _name = assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
-				String _path = AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
-				String _fullpath = _path+_name;
-				
-				
-				
-				String rescode = AssetTypeConvertConstant.getResCodeForDistrictRes(scope, tfcode);
-				//复制到区本校本资源
-				DistrictRes res = new DistrictRes();
-				
-				res.setAssetid(asset.getId());
-				res.setScope(_scope);
-				res.setScopeid(_scopeId);
-				res.setFromflag(scope==1?3:4);
-				res.setRescode(rescode);
-				res.setCreatedt(time);
-				//作者
-				res.setAuthorid(asset.getUserid());
-				res.setFname(_name);
-				res.setFpath(_path);
-				res.setFullpath(_fullpath);
-				
-				//创建者（后台管理员）
-				res.setCreatorid(0l);
-				res.setDes(asset.getAssetdesc());
-				res.setMtype(asset.getUnifytypeid());
-				res.setTitle(asset.getName());
-				res.setKeyword(asset.getKeyword());	
-				res.setRdes("");
-				
-				res.setTypelean("");
-				res.setAuditopinion("");
-				res.setAuthorfromflag(1);
-				res.setAuthorunit("");
-				res.setClicktimes(0);
-				res.setCopyright("");
-				res.setDisplayindex(0);
-				res.setDisplaylevel(0);
-				res.setDloadscore(0);
-				res.setDloadtimes(0);
-				res.setEditorid(0l);
-				res.setEduplace("");
-				//后缀
-				String  fileext =assetPath.substring(assetPath.lastIndexOf(".") + 1, assetPath.length());
-				res.setFileext(fileext);
-				res.setFlag(false);
-				res.setFsize(asset.getAssetsize());
-				res.setIsdwj(asset.getIswjb());
-				res.setIsfinished(isfinished);
-				res.setIslocal(0);
-				res.setSuitterm("");
-				res.setSctimes(0);
-				//待审核
-				res.setState(4);
-				res.setCopyright("");
-				res.setAuthorfromflag(1);
-				
-				res.setUploadscore(0);
-				res.setUpdatedt(time);
-				
-				
-				
-				DistrictsResNav resNav = new DistrictsResNav();
-				resNav.setFlag(false);
-				resNav.setRescode(rescode);
-				resNav.setStructcode(tfcode);				
-				
-				
-				
-				if(isfinished == 0 ){
-					
-					//格式转换完成，拷贝缩略图
-					source_4_copy.add(assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
-					target_4_copy.add(_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
-					if( AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
-						//格式转换完成，拷贝转换后的文件
-						source_4_copy.add(AssetTypeConvertConstant.convertType(assetPath));
-						target_4_copy.add(AssetTypeConvertConstant.convertType(_fullpath));
-					}
+				//格式转换完成，拷贝缩略图
+				source_4_copy.add(assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+				target_4_copy.add(_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
+				if( AssetTypeConvertConstant.isNeedConvert(asset.getAssetpath())){
+					//格式转换完成，拷贝转换后的文件
+					source_4_copy.add(AssetTypeConvertConstant.convertType(assetPath));
+					target_4_copy.add(AssetTypeConvertConstant.convertType(_fullpath));
 				}
-				
-				
-				XShareResNav shareResNav = new XShareResNav();
-				shareResNav.setCodetype(0);
-				shareResNav.setFlag(false);
-				shareResNav.setResid(asset.getId());
-				shareResNav.setStructcode(tfcode);
-
-				XPlatFormShare fShare = new XPlatFormShare(); 
-				fShare.setClicks(0);
-				fShare.setCreatetime(time);
-				fShare.setDownloads(0);
-				fShare.setFlag(false);
-				fShare.setQuotes(0);
-				fShare.setScope(1==scope?"D":"C");
-				fShare.setScopeid(1==scope?schoolid:districtid);
-				fShare.setSharedtype(1);
-				fShare.setShareid(asset.getId());
-				fShare.setStudycourseid("");
-				fShare.setSysresourcetype(new Long(asset.getUnifytypeid()));
-				fShare.setUserid(asset.getUserid());				
-				
-				shareResnavMapper.insert(shareResNav);
-				shareMapper.insert(fShare);	
-				districtMapper.insert(res);
-				districtResNavMapper.insert(resNav);
-				
-				//复制（源文件）到目标目录
-				source_4_copy.add(assetPath);
-				target_4_copy.add(_fullpath);
-				ZhlResourceCenterWrap.copyFile(resServiceLocal, source_4_copy, target_4_copy);
 			}
 			
 			
+			XShareResNav shareResNav = new XShareResNav();
+			shareResNav.setCodetype(0);
+			shareResNav.setFlag(false);
+			shareResNav.setResid(asset.getId());
+			shareResNav.setStructcode(tfcode);
+
+			XPlatFormShare fShare = new XPlatFormShare(); 
+			fShare.setClicks(0);
+			fShare.setCreatetime(time);
+			fShare.setDownloads(0);
+			fShare.setFlag(false);
+			fShare.setQuotes(0);
+			fShare.setScope(1==scope?"D":"C");
+			fShare.setScopeid(1==scope?schoolid:districtid);
+			fShare.setSharedtype(1);
+			fShare.setShareid(asset.getId());
+			fShare.setStudycourseid("");
+			fShare.setSysresourcetype(new Long(asset.getUnifytypeid()));
+			fShare.setUserid(asset.getUserid());				
 			
+			shareResnavMapper.insert(shareResNav);
+			shareMapper.insert(fShare);	
+			districtMapper.insert(res);
+			districtResNavMapper.insert(resNav);
 			
-			
+			//复制（源文件）到目标目录
+			source_4_copy.add(assetPath);
+			target_4_copy.add(_fullpath);
+			ZhlResourceCenterWrap.copyFile(resServiceLocal, source_4_copy, target_4_copy);
 		}
 		assetMapper.updateByPrimaryKeySelective(asset);
 		//修改自建资源的关联目录节点
