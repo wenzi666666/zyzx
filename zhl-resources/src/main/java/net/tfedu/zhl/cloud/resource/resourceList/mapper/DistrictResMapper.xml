@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
-  
-  <!-- 开启二级缓存 -->
-  <cache />
- 
-  
+
   <!-- 根据用户id获得区、校信息 -->
   <resultMap id = "DisAndSchoolMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity">
        <result column="schoolid" property="schoolId" />
