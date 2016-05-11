@@ -43,11 +43,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
     public List<ResType> getSysFirstLevelType(@Param("typeIds") List<Integer> typeIds,
             @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
     
-    /**
-     * e备课，当资源库id为0或4时，查询所有一级类型
-     */
-    public List<ResType> getSysFirstLevelType_ePrepare(@Param("typeIds") List<Integer> typeIds,
-            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypeIds") List<Integer> removeTypes);
 
     /**
      * 系统资源：当资源库选择 “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
@@ -55,12 +50,6 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      */
     public List<ResType> getSysSecondLevelType(@Param("typeIds") List<Integer> typeIds,
             @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from);
-    
-    /**
-     * e备课，当资源库选择 “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。当资源库为“理化生实验”时，只显示“全部”
-     */
-    public List<ResType> getSysSecondLevelType_ePrepare(@Param("typeIds") List<Integer> typeIds,
-            @Param("tfcode") String pTfcode,@Param("sys_from")List<Integer> sys_from,@Param("removeTypeIds") List<Integer> removeTypes);
 
     
     /**

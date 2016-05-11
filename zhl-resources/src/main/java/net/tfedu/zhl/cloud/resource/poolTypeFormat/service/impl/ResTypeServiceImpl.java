@@ -47,18 +47,20 @@ public class ResTypeServiceImpl implements ResTypeService {
     	//根据资源库，查询所有的一级、二级类型
         List<Integer> typeIds = resTypeMapper.getTypesByPool(poolId);
 
-        /**
-         * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
-         */
-        if (poolId == 0 || poolId == 4 || poolId == 5) {
-        	
-            types = resTypeMapper.getSysFirstLevelType(typeIds, pTfcode,sys_from);
+        if(typeIds != null && typeIds.size() > 0){
+        	/**
+             * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
+             */
+            if (poolId == 0 || poolId == 4 || poolId == 5) {
+            	
+                types = resTypeMapper.getSysFirstLevelType(typeIds, pTfcode,sys_from);
 
-        } else { // 当资源库选择 “动画教具”、“名师微课”、“教学案例”
-                 // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
-            types = resTypeMapper.getSysSecondLevelType(typeIds, pTfcode, sys_from);
+            } else { // 当资源库选择 “动画教具”、“名师微课”、“教学案例”
+                     // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
+                types = resTypeMapper.getSysSecondLevelType(typeIds, pTfcode, sys_from);
+            }
         }
-
+        
         // 资源类型中增加一个“全部”
         ResType all = new ResType();
         all.setId(0);
@@ -78,18 +80,27 @@ public class ResTypeServiceImpl implements ResTypeService {
     	
     	//根据资源库id，查询所有的一级、二级类型
     	List<Integer> typeIds = resTypeMapper.getTypesByPool_EPrepare(removeTypeIds,poolId);
-        
-        /**
-         * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
-         */
-        if (poolId == 0 || poolId == 4 || poolId == 5) {
-          
-        	types = resTypeMapper.getSysFirstLevelType_ePrepare(typeIds, pTfcode,sys_from,removeTypeIds);
+    	
+    	//除去需要排除的类型
+    	for(int i = 0; i < removeTypeIds.size(); i++){
+    		int tmp = removeTypeIds.get(i);
+    		if(typeIds.contains(tmp))
+    			typeIds.remove(tmp);
+    	}
+    	
+    	if(typeIds != null && typeIds.size() > 0){
+    		/**
+             * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
+             */
+            if (poolId == 0 || poolId == 4 || poolId == 5) {
+              
+            	types = resTypeMapper.getSysFirstLevelType(typeIds, pTfcode,sys_from);
 
-        } else { // 当资源库选择 “动画教具”、“名师微课”、“教学案例”
-                 // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
-            types = resTypeMapper.getSysSecondLevelType_ePrepare(typeIds, pTfcode, sys_from,removeTypeIds);
-        }
+            } else { // 当资源库选择 “动画教具”、“名师微课”、“教学案例”
+                     // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
+                types = resTypeMapper.getSysSecondLevelType(typeIds, pTfcode, sys_from);
+            }
+    	}
 
         // 资源类型中增加一个“全部”
         ResType all = new ResType();
