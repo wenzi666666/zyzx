@@ -63,7 +63,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             throw new NoTokenException();
         }
         else {
-        	ValueWrapper o = cacheManager.getCache("UserSimpleCache").get(token);
+        	ValueWrapper o = UserTokenCacheUtil.getValueWrapper(cacheManager, token);
             if(o!=null){
             	UserSimple us  = (UserSimple)(o.get());
             	if(us!=null){

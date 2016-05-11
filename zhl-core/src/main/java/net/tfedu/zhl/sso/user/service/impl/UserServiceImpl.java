@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.role.entity.JRole;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
@@ -49,6 +51,10 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     CacheManager cacheManager;
+    
+    
+    @Autowired
+    CommonWebConfig webConfig;
 
     @Override
     public JUser getUserById(long id) {
@@ -83,14 +89,14 @@ public class UserServiceImpl implements UserService {
         us.setToken(token);
 
         //放入缓存
-        cacheManager.getCache("UserSimpleCache").put(token, us);
+        UserTokenCacheUtil.addUserInfoCache(cacheManager, token, us, webConfig.getIsRepeatLogin());
         
         return us;
     }
     
     @Override
     public void logout(String token){
-        cacheManager.getCache("UserSimpleCache").evict(token);
+    	UserTokenCacheUtil.clearUserInfoCache(cacheManager, token);
     }
 
     @Override

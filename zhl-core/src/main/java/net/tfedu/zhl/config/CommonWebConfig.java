@@ -42,6 +42,15 @@ public class CommonWebConfig {
 	public String fdHostLocal ;
 
 
+	
+	/**
+	 * 是否允许一个账号使用不同的客户端同时登录
+	 */
+	@Value("#{configProperties['isRepeatLogin']}")
+	public Boolean isRepeatLogin;
+	
+	
+	
 
 	/**
 	 *获取配置的host
@@ -194,4 +203,16 @@ public class CommonWebConfig {
 		return hostLocal;
 
 	}
+
+
+	public Boolean getIsRepeatLogin() {
+		return isRepeatLogin;
+	}
+
+
+	public void setIsRepeatLogin(Boolean isRepeatLogin) {
+		this.isRepeatLogin = isRepeatLogin;
+	}
+	
+	
 }
