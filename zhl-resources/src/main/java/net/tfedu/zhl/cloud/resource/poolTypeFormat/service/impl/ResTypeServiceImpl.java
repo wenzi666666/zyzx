@@ -50,7 +50,7 @@ public class ResTypeServiceImpl implements ResTypeService {
         /**
          * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
          */
-        if (poolId == 0 || poolId == 4) {
+        if (poolId == 0 || poolId == 4 || poolId == 5) {
         	
             types = resTypeMapper.getSysFirstLevelType(typeIds, pTfcode,sys_from);
 
@@ -82,7 +82,7 @@ public class ResTypeServiceImpl implements ResTypeService {
         /**
          * 当资源库选择 “全部” 或 “教学素材” 时 显示所有一级类型
          */
-        if (poolId == 0 || poolId == 4) {
+        if (poolId == 0 || poolId == 4 || poolId == 5) {
           
         	types = resTypeMapper.getSysFirstLevelType_ePrepare(typeIds, pTfcode,sys_from,removeTypeIds);
 

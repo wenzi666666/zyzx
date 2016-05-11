@@ -196,7 +196,7 @@
    </if>
   </select>
     
-  <!-- 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
+  <!-- 系统资源：当资源库选择  “动画教具库”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
   <select id="getSysSecondLevelType"  resultMap="FirstTypeResultMap" >
   select DISTINCT b.mtype,b.id 
   from z_resource a 
@@ -220,7 +220,7 @@
   
   </select>
   
-  <!-- e备课， 系统资源：当资源库选择  “动画焦教具”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
+  <!-- e备课， 系统资源：当资源库选择  “动画教具库”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。 -->
   <select id="getSysSecondLevelType_ePrepare"  resultMap="FirstTypeResultMap" >
   select DISTINCT b.mtype,b.id 
   from z_resource a 
