@@ -97,7 +97,7 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 		ZAsset a  = new ZAsset();
 		a.setId(2705966l);
 		a.setAssetdesc("setAssetdesc");
-		zAssetService.updateAsset(a,"","","");
+//		zAssetService.updateAsset(a,"","","");
 	}
 	
 	@Test
