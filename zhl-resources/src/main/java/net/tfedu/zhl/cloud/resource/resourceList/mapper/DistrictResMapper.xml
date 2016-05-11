@@ -85,7 +85,7 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-     ,a.DisplayIndex asc,orderNum asc
+     ,b.DisplayIndex asc,jf.orderNum asc,id
   </select>
   
   <!-- 区本校本资源：预览页面的推荐列表 -->
@@ -108,9 +108,10 @@
     from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore
 	from z_districts_resource a 
 	left join x_resourcetype b on a.MType = b.id 
+	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.tfcode 
-    where a.flag = 0 and b.flag = 0 and c.flag=0 and d.flag=0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and c.flag=0 and d.flag=0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
     
      <if test="typeIds.size() > 0">
          and (b.id in <foreach item="item" index="index" collection="typeIds" 
@@ -131,13 +132,13 @@
     </if>
     
     <if test="orderBy == 0"><!-- 综合排序 -->
-        order by avgScore desc
+        order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,id
      </if>
      <if test="orderBy == 1"><!-- 最多下载 -->
-        order by DloadTimes desc
+        order by DloadTimes desc,b.DisplayIndex asc,jf.orderNum asc,id
      </if>
      <if test="orderBy == 2"><!-- 最新发布 -->
-        order by UpdateDT desc
+        order by UpdateDT desc,b.DisplayIndex asc,jf.orderNum asc,id
      </if>
     )tmp
    
@@ -194,7 +195,7 @@
      <if test="orderBy == 2"><!-- 最新发布 -->
         order by UpdateDT desc
      </if>
-     ,a.DisplayIndex asc,orderNum asc
+     ,b.DisplayIndex asc,jf.orderNum asc,id
      
   </select>
   
