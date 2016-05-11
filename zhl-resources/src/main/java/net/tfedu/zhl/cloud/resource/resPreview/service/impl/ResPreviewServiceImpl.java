@@ -164,11 +164,17 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     	//根据资源库id、父类型id，查询资源父类型及其子类型
     	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
     	
-    	// Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
+    	List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
+    	
+    	if(typeIds != null && typeIds.size() > 0 ){
+    		
+    		// Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
 
-        // 查询系统资源
-        List<ResRecommendationEntity> list = sysResourceMapper.getAllSysRes_Preview(sys_from,tfcode,resId,orderBy,typeIds);
+            // 查询系统资源
+            list = sysResourceMapper.getAllSysRes_Preview(sys_from,tfcode,resId,orderBy,typeIds);
+    	}
+    	
   
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
@@ -195,12 +201,16 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             districtId = disAndSchoolIds.getDistrictId();
         }
         
-        // Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
+        List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
+        
+        if(typeIds != null && typeIds.size() > 0){
+        	// Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
 
-        // 查询资源
-        List<ResRecommendationEntity> list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId,orderBy);
-
+            // 查询资源
+            list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId,orderBy);
+        }
+        
         // 封装结果集
         PageInfoToPagination<ResRecommendationEntity> transfer = new PageInfoToPagination<ResRecommendationEntity>();
 

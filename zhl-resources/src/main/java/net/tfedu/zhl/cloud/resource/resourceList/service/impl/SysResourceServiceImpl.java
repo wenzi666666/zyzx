@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.resourceList.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,11 +44,15 @@ public class SysResourceServiceImpl implements SysResourceService {
     	//根据资源库id、父类型id，获取父类型及其子类型
     	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, mTypeId);
     	
-        // Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
-        
-        // 查询系统资源
-        List<SysResourceEntity> list = sysResourceMapper.getAllSysRes(sys_from, fileFormat,tfcode, orderBy,typeIds);
+        List<SysResourceEntity> list = new ArrayList<SysResourceEntity>();
+    	
+    	if(typeIds != null && typeIds.size() > 0){
+    		// Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
+
+            // 查询系统资源
+            list = sysResourceMapper.getAllSysRes(sys_from, fileFormat,tfcode, orderBy,typeIds);
+    	}
                
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
@@ -79,11 +84,15 @@ public class SysResourceServiceImpl implements SysResourceService {
     
     	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool_EPrepare(poolId, mTypeId, removeTypeIds);
     	
-    	// Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
+    	List<SysResourceEntity> list = new ArrayList<SysResourceEntity>();
+    	
+    	if(typeIds != null && typeIds.size() > 0){
+    		// Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
 
-        // 查询系统资源
-        List<SysResourceEntity> list = sysResourceMapper.getAllSysRes_EPrepare(sys_from, fileFormat,tfcode, orderBy, searchWord,typeIds);
+            // 查询系统资源
+            list = sysResourceMapper.getAllSysRes_EPrepare(sys_from, fileFormat,tfcode, orderBy, searchWord,typeIds);
+    	}
                
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {

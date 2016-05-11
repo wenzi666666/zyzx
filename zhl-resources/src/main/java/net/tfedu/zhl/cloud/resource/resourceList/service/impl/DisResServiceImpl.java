@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.resourceList.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -101,11 +102,17 @@ public class DisResServiceImpl implements DisResService {
             districtId = disAndSchoolIds.getDistrictId();
         }
         
-        // Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
+        List<DisResourceEntity> list = new ArrayList<DisResourceEntity>();
+        
+        if(typeIds != null && typeIds.size() > 0){
+        	// Page插件必须放在查询语句之前紧挨的第一个位置
+            PageHelper.startPage(page, perPage);
 
-        // 查询资源
-        List<DisResourceEntity> list = districtResMapper.selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, searchWord);
+            // 查询资源
+            list = districtResMapper.selectDisRes_EPrepare(fromFlag, fileFormat, typeIds, tfcode, orderBy, schoolId, districtId, searchWord);
+        }
+        
+        
         // 判断资源是否为最新
         for (int i = 0; i < list.size(); i++) {
         	DisResourceEntity entity = list.get(i);
