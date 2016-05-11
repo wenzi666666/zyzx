@@ -93,7 +93,7 @@ public interface ZAssetService {
 	 * @param currentResPath 
 	 * @param resServiceLocal 
 	 */
-	public void addAssetBatch(List<ZAsset> list,List<String> codes,ArrayList<Integer> scope_list,String resServiceLocal, String currentResPath, String hostLocal) ;
+	public void addAssetBatch(List<ZAsset> list,List<String> codes,ArrayList<Integer> scope_list,String resServiceLocal, String currentResPath, String hostLocal) throws Exception ;
 	
 	
 	
@@ -110,7 +110,7 @@ public interface ZAssetService {
 	 * 修改自建资源
 	 * @param asset
 	 */
-	public void updateAsset(ZAsset asset, String resServiceLocal, String currentResPath, String hostLocal);
+	public void updateAsset(ZAsset asset,String tfcode,Integer scope, String resServiceLocal, String currentResPath, String hostLocal)throws Exception;
 	
 	
 	

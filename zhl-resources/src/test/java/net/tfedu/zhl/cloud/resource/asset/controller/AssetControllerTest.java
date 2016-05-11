@@ -39,15 +39,20 @@ public class AssetControllerTest extends BaseControllerTestCase {
 	}
 	
 	@Test
-	public void testupdate(){
-		long id  = 164882966;
+	public void testupdate() throws Exception{
+    	request.setAttribute("currentUserId", 390320126l);
+
+    	
+    	
+    	long id  = 164882966;
 		request.setParameter("_method", "PUT");
-		request.setParameter("name", "微型学习视频的设计研究_edit");
+		request.setParameter("name", "QQ截图20160422103031");
 		request.setParameter("unifTypeId", "1");
-		request.setParameter("scope", "0");
-		request.setParameter("keyword", "视频");
-		request.setParameter("desc", "学习视频的设计研");
-		request.setParameter("path", "upFile\\2016\\390440126\\10105\\2016042715352584924-46.pdf");
+		request.setParameter("scope", "1");
+		request.setParameter("tfcode", "CXCZ01010101");
+		request.setParameter("keyword", "QQ截图20160422103031");
+		request.setParameter("desc", "QQ截图20160422103031");
+		request.setParameter("path", "upFile\\2016\\390440126\\10105\\2016042715433678613-48.png");
 		request.setParameter("size", "683695");
 		
 		result = 	assetController.updateAsset(id, request, response);

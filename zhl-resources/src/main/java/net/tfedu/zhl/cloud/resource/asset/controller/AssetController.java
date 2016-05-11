@@ -379,13 +379,16 @@ public class AssetController {
 	 * @param request
 	 * @param response
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/v1.0/resource/asset/{id}", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON updateAsset(@PathVariable Long id,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 返回
 		Object data = null;
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
 
 		String _method = request.getParameter("_method");
 		if (StringUtils.isNotEmpty(_method)
@@ -397,7 +400,8 @@ public class AssetController {
 
 			String name = request.getParameter("name");
 			String unifTypeId = request.getParameter("unifTypeId");
-			String scope = request.getParameter("scope");
+			Integer scope = ControllerHelper.getIntParameter(request, "scope");
+			String tfcode = ControllerHelper.getParameter(request, "tfcode");
 			String keyword = request.getParameter("keyword");
 			String desc = request.getParameter("desc");
 			String path = request.getParameter("path");
@@ -405,7 +409,7 @@ public class AssetController {
 
 			ZAsset a = new ZAsset();
 			a.setId(id);
-		
+			a.setUserid(currentUserId);
 
 			if (!StringUtils.isEmpty(path)) {
 				a.setAssetpath(path);
@@ -436,7 +440,7 @@ public class AssetController {
 
 			}
 			// 新版资源类型
-			assetService.updateAsset(a, resServiceLocal, currentResPath,
+			assetService.updateAsset(a,tfcode,scope, resServiceLocal, currentResPath,
 					hostLocal);
 
 			logger.debug("编辑资源," + a.toString());

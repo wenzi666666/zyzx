@@ -2,8 +2,13 @@ package net.tfedu.zhl.fileservice;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 /**
  * 访问IIS文件服务器的工具类
  * 
@@ -385,7 +390,7 @@ public class ZhlResourceCenterWrap {
 	public static String getUploadUrlConvert(String uploadPath,String resServiceLocal
 										,String currentResService,String hostLocal,long userId) {
 		//回调函数action
-		String returnUrl = hostLocal + "/v1.0/resource/uploadConvertCallBack";
+		String returnUrl = hostLocal + "/resRestAPI/v1.0/resource/uploadConvertCallBack";
 
 		String url =  new zhldowncenter(CustomerID, CustomerKey, resServiceLocal)
 				.GetUploadURLString(uploadPath, "rename&userId=" + userId,returnUrl);  //returnUrl中配置回调函数的action 	
@@ -399,7 +404,7 @@ public class ZhlResourceCenterWrap {
 	public static void sendFileToConvert(String fileName,long userId,String hostLocal,String resServiceLocal){
 		
 		//回调函数action
-		String returnUrl = hostLocal + "/v1.0/resource/uploadConvertCallBack";
+		String returnUrl = hostLocal + "/resRestAPI/v1.0/resource/uploadConvertCallBack";
 		
 		String resSerPath = resServiceLocal;
 		
@@ -441,6 +446,28 @@ public class ZhlResourceCenterWrap {
 
 		String[] dst = new String[1];
 		dst[0] = targetPath;
+		operate.setDestFile(dst);
+
+	    return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileOperateTask(operate);
+	}
+	
+	public static Boolean copyFile(String resSerPath,List<String> source_4_copy ,List<String> target_4_copy) throws CustomException{
+		
+		if(source_4_copy==null || target_4_copy==null ||source_4_copy.size()!=target_4_copy.size()){
+			throw new CustomException("复制文件时目标文件、源文件集合信息错误");
+		}
+		FileOperate operate = new FileOperate();
+		operate.setOperateType("copy");
+		String[] src = new String[source_4_copy.size()];
+		for (int i = 0; i < source_4_copy.size(); i++) {
+			src[i] = source_4_copy.get(i);
+		}
+		operate.setSourceFile(src);
+
+		String[] dst = new String[target_4_copy.size()];
+		for (int i = 0; i < target_4_copy.size(); i++) {
+			dst[i] = target_4_copy.get(i);
+		}
 		operate.setDestFile(dst);
 
 	    return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileOperateTask(operate);

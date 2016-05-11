@@ -24,4 +24,17 @@ public interface ZAssetSyscourseMapper extends CoreMapper<ZAssetSyscourse> {
 	public Integer getAssetShareScope(@Param("userId")String userId,@Param("assetPath")String assetPath);
 	
 	
+	
+	
+	
+	/**
+	 * 修改资源的目录节点
+	 * @param resId
+	 * @param tfcode
+	 * @param scope
+	 */
+	public void updateAssetSyscourse(@Param("resId")String resId,@Param("tfcode")String tfcode,@Param("scope")String scope);
+	
+	
+	
 }

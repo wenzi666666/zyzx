@@ -26,4 +26,11 @@
 	WHERE a.userid = #{userId} and a.AssetPath = #{assetPath}
 	ORDER BY s.id limit 1 
   </select>
+  
+  
+  <!--  更新资源的 节点  -->
+  <update id="updateAssetSyscourse">
+  	update  z_asset_syscourse set  tfcode=#{tfcode},sharescope=#{scope}
+	where id = ( select id from ( SELECT MIN(id) from z_asset_syscourse where assetid =#{resId} and flag =false )temp   )
+  </update>
 </mapper>
