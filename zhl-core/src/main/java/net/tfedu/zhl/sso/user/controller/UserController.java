@@ -18,6 +18,7 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
@@ -102,15 +103,12 @@ public class UserController {
 				// 缺少token
 				throw new NoTokenException();
 			} else {
-				ValueWrapper o = cacheManager.getCache("UserSimpleCache").get(
-						token);
-				if (o != null) {
-					UserSimple us = (UserSimple) (o.get());
-
-					if (us == null || StringUtils.isEmpty(us.getToken())) {
-						// token 无效
-						throw new InvalidAccessTokenException();
-					}
+				
+				UserSimple us = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager
+						, token, commonWebConfig.getIsRepeatLogin());
+				if (us == null || StringUtils.isEmpty(us.getToken())) {
+					// token 无效
+					throw new InvalidAccessTokenException();
 				}
 			}
 		} else {
@@ -122,7 +120,7 @@ public class UserController {
 			// 用户登录
 			SRegister reg = registerService.login(userName, userPwd);
 			// 获取用户信息
-			user = userService.getUserSimpleById(reg.getId(), model);
+			user = userService.getUserSimpleById(reg.getId(), model,commonWebConfig.getIsRepeatLogin());
 
 			// 如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
 			if (user.getUserImage() != null

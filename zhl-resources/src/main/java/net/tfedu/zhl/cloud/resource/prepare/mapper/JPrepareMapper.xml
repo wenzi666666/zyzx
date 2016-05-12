@@ -6,7 +6,7 @@
     <!--
       WARNING - @mbggenerated
     -->
-    <constructor >
+    <constructor>
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="userId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />

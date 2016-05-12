@@ -1,21 +1,14 @@
 package net.tfedu.zhl.sso.user.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
-import net.tfedu.zhl.sso.role.entity.JRole;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
@@ -23,7 +16,10 @@ import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
-import net.tfedu.zhl.sso.users.entity.FuncList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Service;
 
 /**
  * 用户业务接口
@@ -51,11 +47,8 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
     CacheManager cacheManager;
-    
-    
-    @Autowired
-    CommonWebConfig webConfig;
 
+    
     @Override
     public JUser getUserById(long id) {
         return mapper.getUserById(id);
@@ -67,7 +60,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserSimple getUserSimpleById(long id, String model) {
+    public UserSimple getUserSimpleById(long id, String model,boolean isRepeatLogin) {
 
         // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
@@ -89,14 +82,33 @@ public class UserServiceImpl implements UserService {
         us.setToken(token);
 
         //放入缓存
-        UserTokenCacheUtil.addUserInfoCache(cacheManager, token, us, webConfig.getIsRepeatLogin());
+        UserTokenCacheUtil.addUserInfoCache(cacheManager, token, us, isRepeatLogin);
         
         return us;
     }
     
     @Override
-    public void logout(String token){
-    	UserTokenCacheUtil.clearUserInfoCache(cacheManager, token);
+    public UserSimple getUserSimpleById(long id, String model) {
+
+        // 1 获取UserSimple
+        UserSimple us = mapper.getUserSimpleById(id);
+
+        // 2 获取角色
+        Set<Long> roleIds = roleMapper.getUserRoleByUserId(us.getUserId(), model);
+        us.setRoleIds(roleIds);        
+        
+        // 本身缺省的角色
+        roleIds.add(us.getRoleId());
+
+        // 3 获取权限
+        Set<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        us.setFuncPaths(funcs);
+        
+        return us;
+    }
+    @Override
+    public void logout(String token,boolean isRepeatLogin){
+    	UserTokenCacheUtil.clearUserInfoCache(cacheManager, token,isRepeatLogin);
     }
 
     @Override

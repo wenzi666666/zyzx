@@ -35,6 +35,13 @@ public interface UserService {
      * @param id
      * @return
      */
+    public UserSimple getUserSimpleById(long id, String model,boolean isRepeatLogin);
+    /**
+     * 根据id获取用户
+     * 
+     * @param id
+     * @return
+     */
     public UserSimple getUserSimpleById(long id, String model);
 
     /**
@@ -68,7 +75,7 @@ public interface UserService {
      * 登出
      * @param token
      */
-    void logout(String token);
+    void logout(String token,boolean isRepeatLogin);
     
     
 

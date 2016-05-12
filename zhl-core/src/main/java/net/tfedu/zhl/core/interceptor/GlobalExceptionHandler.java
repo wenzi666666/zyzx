@@ -6,15 +6,10 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import net.tfedu.zhl.core.exception.DataAccessException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.InvalidPasswordException;
+import net.tfedu.zhl.core.exception.KickOutTokenException;
 import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.NoLoginException;
 import net.tfedu.zhl.core.exception.NoTokenException;
@@ -27,6 +22,12 @@ import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 全局错误处理
@@ -174,5 +175,13 @@ public class GlobalExceptionHandler {
         return result;
     }
     
+    @ResponseStatus(value = HttpStatus.OK)
+    @ExceptionHandler(KickOutTokenException.class)
+    @ResponseBody
+    public ResultJSON handleKickOutTokenException(HttpServletRequest request, HttpServletResponse response,
+    		KickOutTokenException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
 
 }
