@@ -7,11 +7,7 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -209,7 +205,15 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
     }
 
-    
+    @Test
+    public void testGetLimitedPrepareContentPage() throws Exception {
+        long prepareId = 140249;
+        result = controller.querylimitedPrepareContentPage(prepareId, 1, 10, request);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
+
     
     
     @Test

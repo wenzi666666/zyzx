@@ -228,6 +228,53 @@
   
   
   
+   <!-- 获取 受限的，排除e备课不能使用的部分(类型)的备课夹内容列表(其中缩略图、文件后缀需要工具类继续处理) --> 
+  <select id="queryLimitedPrepareContentList" resultMap="viewPrepareContMap" > 
+  	select  id,title,resId,fromFlag,unifytype,size,timeline,time,imgpath,filesuffix from  (	
+		select  t.id ,a.id as resId,a.name as title,a.createTime as time,1 as fromFlag,p.id as unifyTypeId
+		,p.MType as  unifyType,a.AssetSize as size,'' as timeline,a.AssetPath as imgPath ,'' as fileSuffix,t.orderIdx
+		from  j_prepare_content  t  
+		LEFT JOIN z_asset a on a.id = t.contId 
+		LEFT JOIN x_resourcetype p  on p.id = a.unifyTypeId
+		where t.preid = #{prepareId}  and t.flag = false  and t.contType in (1,9)
+		and a.flag =false and a.FileType = 'A'
+		
+		UNION ALL
+		
+		select t.id,z.Id as resId,z.title,z.CreateDT  as  time,0 as fromFlag,p.id as unifyTypeId
+		,p.MType as  unifyType,z.FSize as size,IFNULL(m.res_time,'') as  timeline ,CONCAT(z.FPath,'/',z.Fname) as imgPath ,'' as fileSuffix,t.orderIdx		
+		from  j_prepare_content  t  
+		LEFT JOIN z_resource  z on t.contId = z.Id
+		LEFT JOIN x_resourcetype p  on p.id = z.MType
+		LEFT JOIN z_res_medium m on m.res_code = z.ResCode
+		where t.preid =   #{prepareId}  and t.flag = false  and t.contType in (2,10)
+		and z.flag = false 
+		
+		UNION ALL 
+		
+		select t.id,r.id as resId,r.title,r.CreateDT as time ,fromFlag as fromFlag,p.id as unifyTypeId
+		,p.MType as unifyType,r.FSize as size,'' as timeline,r.fullpath as imgPath ,'' as fileSuffix,t.orderIdx
+		from  j_prepare_content  t  
+		LEFT JOIN z_districts_resource r on r.id = t.contId
+		LEFT JOIN x_resourcetype p on p.id = r.mtype
+		where t.preid =  #{prepareId}  and t.flag = false  and t.contType in (11,12)
+		and r.flag = false 		
+	)temp_result 	
+	where temp_result.unifyTypeId NOT IN (
+		select id from x_resourcetype where  (		
+		id in 
+		<foreach collection="removeTypeIds" item="item" index="index" open="("
+			separator="," close=")">#{item}
+		</foreach>		
+		OR pid in 
+		<foreach collection="removeTypeIds" item="item" index="index" open="("
+			separator="," close=")">#{item}
+		</foreach>				
+		)
+	)	
+	ORDER BY orderIdx desc 
+  </select>
+  
   
   
     

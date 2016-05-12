@@ -600,4 +600,14 @@ public class JPrepareServiceImpl implements JPrepareService {
 		return ResultJSON.getSuccess("");
 	}
 
+	@Override
+	public Pagination<JPrepareContentView> queryLimitedPrepareContentPage(
+			Long prepareId, Integer page, Integer perPage,
+			String[] removeTypeIds) {
+		PageHelper.startPage(page, perPage);
+		List<JPrepareContentView> list =  mapper.queryLimitedPrepareContentList(prepareId, removeTypeIds);
+//		List<JPrepareContentView> list =  mapper.queryPrepareContentList(prepareId);
+		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
+	}
+
 }

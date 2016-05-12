@@ -12,6 +12,7 @@ import net.tfedu.zhl.sso.user.entity.UserSimple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,10 +64,20 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             throw new NoTokenException();
         }
         else {
-        	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
+        	
+        	/*UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
         	if(us!=null){
                 currentUserId = us.getUserId();
+        	}*/
+        	ValueWrapper value =  cacheManager.getCache("UserSimpleCache").get(token);
+        	if(value!=null){
+        		UserSimple us  = (UserSimple)value.get();
+            	if(us!=null){
+                    currentUserId = us.getUserId();
+            	}
         	}
+        	
+        	
         }
 
         if(currentUserId==null || currentUserId==0){

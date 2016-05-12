@@ -43,7 +43,7 @@ public abstract class BaseControllerTestCase {
      */
     @Before
     public void onSetUp() {
-        UserSimple us = userService.getUserSimpleById(1l," ");
+        UserSimple us = userService.getUserSimpleById(1l," ",false);
         request.addHeader("Authorization", us.getToken());
         request.setAttribute("currentUserId", 1l); 
 //        request.setAttribute("request_key_CustomException", CustomException.SUCCESS);

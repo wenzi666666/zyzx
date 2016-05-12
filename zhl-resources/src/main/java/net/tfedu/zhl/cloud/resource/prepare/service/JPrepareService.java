@@ -152,9 +152,21 @@ public interface JPrepareService {
      */
     public Pagination<JPrepareContentView> queryPrepareContentPage(Long prepareId,Integer page,Integer perPage);
 
+    
+    /**
+     * 分页获取备课夹内容列表(受限的，排除e备课不能使用的部分(类型)资源)
+     * @param prepareId
+     * @param page
+     * @param perPage
+     * @param removeTypeIds 受限的，排除e备课不能使用的部分(类型)资源
+     * @return
+     */
+    public Pagination<JPrepareContentView> queryLimitedPrepareContentPage(Long prepareId,Integer page,Integer perPage,String[]removeTypeIds);
+
+    
+    
     /**
      * 删除备课夹中指定的类型的资源
-     * 
      * @param prepareId
      * @param contType
      * @param contId

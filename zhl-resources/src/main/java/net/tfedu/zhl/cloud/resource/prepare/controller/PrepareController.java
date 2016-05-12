@@ -12,14 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
@@ -37,6 +30,14 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
 import net.tfedu.zhl.helper.ResultJSON;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 备课夹相关接口
@@ -57,6 +58,12 @@ public class PrepareController {
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
+	
+	
+	@Resource
+	ResourceWebConfig resourceConfig;
+	
+	
 
 	Logger logger = LoggerFactory.getLogger(PrepareController.class);
 
@@ -338,6 +345,51 @@ public class PrepareController {
 			// 获取备课夹内容
 			Pagination<JPrepareContentView> _page = jPrepareService
 					.queryPrepareContentPage(prepareId, page, perPage);
+			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
+					currentResPath);
+			data = _page;
+
+		} else {
+			throw new ParamsException();
+		}
+
+		return ResultJSON.getSuccess(data);
+	}
+	
+	/**
+	 * 分页获取备课夹内容列表(受限的----e备课排除部分类型的资源)
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/limitedPrepareContentPage/{prepareId}", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON querylimitedPrepareContentPage(@PathVariable Long prepareId,
+			Integer perPage, Integer page, HttpServletRequest request)
+			throws Exception {
+		// 返回
+		Object data = null;
+		
+		if(page ==null){
+			page = 1;
+		}
+
+		if(perPage == null){
+			perPage = 10 ;
+		}
+
+		// 获取文件服务器的访问url
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+		//获取受限的（e备课排除的）资源类型
+		String removeTypeIds = resourceConfig.getRemoveTypeIds();
+		
+
+		if (prepareId > 0) {
+			// 获取备课夹内容
+			Pagination<JPrepareContentView> _page = jPrepareService
+					.queryLimitedPrepareContentPage(prepareId, page, perPage,removeTypeIds.split(","));
 			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
 					currentResPath);
 			data = _page;

@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.asset.controller;
 
-import static org.junit.Assert.fail;
-
 import java.io.IOException;
 
 import javax.annotation.Resource;
