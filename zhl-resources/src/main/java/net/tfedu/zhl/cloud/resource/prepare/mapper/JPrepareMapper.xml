@@ -67,7 +67,7 @@
   
   
   
-    <!-- 获取备课夹 -->
+  <!--获取当前节点及其以下节点的备课夹 -->
   <select id="queryPrepareList" resultMap="viewResultMap">
   	SELECT
 	id,
@@ -80,6 +80,22 @@
 	AND userid = #{1} AND flag = false 
 	ORDER BY updatetime desc
   </select>
+  
+  <!-- 仅获取当前节点下的备课夹 -->
+  <select id="querySelfPrepareList" resultMap="viewResultMap">
+  	SELECT
+	id,
+	title,
+	'' as timeLabel
+	FROM
+		j_lession_prepare
+	WHERE
+		tfcode = #{0}
+	AND userid = #{1} AND flag = false 
+	ORDER BY updatetime desc
+  </select>
+  
+  
     <!-- 获取备课夹及其时间范围 -->
   <select id="queryPrepareAndTimeScopeList" resultMap="viewResultMap">
   	SELECT

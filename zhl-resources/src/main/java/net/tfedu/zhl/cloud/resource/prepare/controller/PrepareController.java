@@ -129,7 +129,7 @@ public class PrepareController {
 	}
 
 	/**
-	 * 获取节点下的备课夹
+	 * 获取当前节点及其以下节点的备课夹
 	 * 
 	 * @param request
 	 * @param response
@@ -161,6 +161,42 @@ public class PrepareController {
 		return ResultJSON.getSuccess(data);
 	}
 
+	
+	/**
+	 * 仅获取当前节点下的备课夹
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/selfPrepare", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getSelfPrepare(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// 返回json的结果对象
+		ResultJSON result = new ResultJSON();
+		// 异常
+		CustomException exception = (CustomException) request
+				.getAttribute(CustomException.request_key);
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		// 返回
+		Object data = null;
+
+		long userId = currentUserId;
+		String tfcode = request.getParameter("tfcode");
+		if (StringUtils.isNotEmpty(tfcode)) {
+			data = jPrepareService.querySelfPrepareList(tfcode, userId);
+			logger.debug("获取节点" + tfcode + "下的所有当前用户（" + userId + "）的备课夹");
+		} else {
+			throw new ParamsException();
+		}
+
+		return ResultJSON.getSuccess(data);
+	}
+	
+	
+	
 	/**
 	 * 分页获取节点下的备课夹
 	 * 

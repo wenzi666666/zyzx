@@ -181,6 +181,12 @@ public class JPrepareServiceImpl implements JPrepareService {
     }
 
     @Override
+    public List<JPrepareView> querySelfPrepareList(String tfcode, Long userId){
+    	return mapper.querySelfPrepareList(tfcode, userId);
+    }
+    
+    
+    @Override
     public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode,String title, Long userId) {
         // TODO Auto-generated method stub
         return mapper.queryPrepareAndTimeScopeList(tfcode + "%",StringUtils.isEmpty(title)?"":("%"+title+"%"), userId);

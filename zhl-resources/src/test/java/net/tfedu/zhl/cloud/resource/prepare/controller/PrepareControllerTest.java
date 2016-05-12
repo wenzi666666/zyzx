@@ -163,7 +163,17 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }
-    
+    @Test
+    public void testGetSelefPrepareList() throws Exception {
+
+        request.addParameter("tfcode", "RJGZ04020101");
+    	request.setAttribute("currentUserId", 390400126l);
+
+        result = controller.getSelfPrepare(request, response);
+
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+
+    }
     
     @Test
     public void testGetPreparePage() throws Exception {

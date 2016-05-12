@@ -82,14 +82,20 @@ public interface JPrepareService {
     public void clearPrepareContentByPrepareId(Long prepareId);
 
     /**
-     * 获取备课夹
+     * 获取当前节点及其以下节点的备课夹
      * 
      * @param tfcode
      * @return
      */
     public List<JPrepareView> queryPrepareList(String tfcode, Long userId);
     
-
+    /**
+     * 仅获取当前节点下备课夹
+     * 
+     * @param tfcode
+     * @return
+     */
+    public List<JPrepareView> querySelfPrepareList(String tfcode, Long userId);
     /**
      * 分页获取备课夹
      * @param tfcode

@@ -61,12 +61,20 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
     public void update_default_prepare_content_order();
 
     /**
-     * 获取备课夹
+     * 获取当前节点及其以下节点的备课夹
      * 
      * @param tfcode
      * @return
      */
     public List<JPrepareView> queryPrepareList(String tfcode, Long userId);
+    
+    /**
+     * 仅获取当前节点下的备课夹
+     * 
+     * @param tfcode
+     * @return
+     */
+    public List<JPrepareView> querySelfPrepareList(String tfcode, Long userId);
 
     /**
      * 获取备课夹及其时间范围
