@@ -65,17 +65,17 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         }
         else {
         	
-        	/*UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
+        	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
         	if(us!=null){
                 currentUserId = us.getUserId();
-        	}*/
-        	ValueWrapper value =  cacheManager.getCache("UserSimpleCache").get(token);
+        	}
+        	/*ValueWrapper value =  cacheManager.getCache("UserSimpleCache").get(token);
         	if(value!=null){
         		UserSimple us  = (UserSimple)value.get();
             	if(us!=null){
                     currentUserId = us.getUserId();
             	}
-        	}
+        	}*/
         	
         	
         }
