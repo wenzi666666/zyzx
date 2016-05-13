@@ -33,10 +33,12 @@ public class UserSimple implements Serializable {
     String token;
     Date logintime;
     
+    
+    
     /**
-     * 1 web 2 android 3 winpad
+     * 登录产品
      */
-    Integer clienttype;
+    String  model;
     
     /**
      * 获取用户学科ids
@@ -163,15 +165,21 @@ public class UserSimple implements Serializable {
         this.logintime = logintime;
     }
 
-    public Integer getClienttype() {
-        return clienttype;
-    }
 
-    public void setClienttype(Integer clienttype) {
-        this.clienttype = clienttype;
-    }
 
-    public Set<Long> getRoleIds() {
+    public String getModel() {
+		return model;
+	}
+
+	public void setModel(String model) {
+		this.model = model;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Set<Long> getRoleIds() {
         return roleIds;
     }
 
@@ -192,8 +200,8 @@ public class UserSimple implements Serializable {
     public String toString() {
         return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
-                + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", clienttype="
-                + clienttype + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
+                + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
+                + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
                 + ", funcPaths=" + funcPaths + "]";
     }
 

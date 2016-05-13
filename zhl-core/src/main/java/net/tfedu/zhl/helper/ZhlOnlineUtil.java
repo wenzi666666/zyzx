@@ -10,7 +10,7 @@ import net.tfedu.zhl.fileservice.MD5;
 
 /**
  * 在线用户工具
- * 
+ * 记录在 j_online_users 表中
  * 
  * @author wangwr
  *

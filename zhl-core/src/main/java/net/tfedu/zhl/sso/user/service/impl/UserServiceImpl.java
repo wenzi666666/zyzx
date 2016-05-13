@@ -64,7 +64,10 @@ public class UserServiceImpl implements UserService {
 
         // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
-
+        
+        //设置从什么产品登录
+        us.setModel(model);
+        
         // 2 获取角色
         Set<Long> roleIds = roleMapper.getUserRoleByUserId(us.getUserId(), model);
         us.setRoleIds(roleIds);        
@@ -82,7 +85,7 @@ public class UserServiceImpl implements UserService {
         us.setToken(token);
 
         //放入缓存
-        UserTokenCacheUtil.addUserInfoCache(cacheManager, token, us, isRepeatLogin);
+        UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, us, isRepeatLogin);
         
         return us;
     }
@@ -92,6 +95,9 @@ public class UserServiceImpl implements UserService {
 
         // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
+        
+        //设置从什么产品登录
+        //us.setModel(model);
 
         // 2 获取角色
         Set<Long> roleIds = roleMapper.getUserRoleByUserId(us.getUserId(), model);

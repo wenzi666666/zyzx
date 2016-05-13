@@ -17,6 +17,7 @@ import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.user.entity.JUser;
@@ -87,7 +88,9 @@ public class UserController {
 			HttpServletResponse response) throws Exception {
 
 		Object data = null;
-
+		boolean isRepeatLogin = commonWebConfig.getIsRepeatLogin();
+		
+		
 		String _method = request.getParameter("_method");
 
 		// 不同的子系统，使用不同的model参数
@@ -105,11 +108,13 @@ public class UserController {
 			} else {
 				
 				UserSimple us = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager
-						, token, commonWebConfig.getIsRepeatLogin());
+						, token, isRepeatLogin);
 				if (us == null || StringUtils.isEmpty(us.getToken())) {
 					// token 无效
 					throw new InvalidAccessTokenException();
 				}
+				
+				userService.logout(token, isRepeatLogin);
 			}
 		} else {
 			String userName = request.getParameter("user_name");
@@ -120,7 +125,7 @@ public class UserController {
 			// 用户登录
 			SRegister reg = registerService.login(userName, userPwd);
 			// 获取用户信息
-			user = userService.getUserSimpleById(reg.getId(), model,commonWebConfig.getIsRepeatLogin());
+			user = userService.getUserSimpleById(reg.getId(), model,isRepeatLogin);
 
 			// 如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
 			if (user.getUserImage() != null
@@ -326,6 +331,35 @@ public class UserController {
 		data = map;
 
 		return ResultJSON.getSuccess(data);
+	}
+	
+	
+	
+	
+	
+	
+	/**
+	 * 获取用户的缓存
+	 * 
+	 * 
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParamsException 
+	 */
+	@RequestMapping(value = "/v1.0/users/userCache", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getUserCache(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// 当前登录用户id
+		String userId = ControllerHelper.getParameter(request, "userId");
+		String model = request.getParameter("model"); 
+		
+		String key_token = UserTokenCacheUtil.getUserTokenCacheKey(model, userId);
+		String token = cacheManager.getCache("TokenCache").get(key_token,String.class);
+		UserSimple us = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, false);
+		return ResultJSON.getSuccess(us);
 	}
 	
 	
