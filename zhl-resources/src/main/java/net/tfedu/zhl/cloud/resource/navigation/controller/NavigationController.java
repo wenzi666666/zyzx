@@ -16,6 +16,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
@@ -110,9 +111,8 @@ public class NavigationController {
     	return ResultJSON.getSuccess(editions);
     }
 
-
-	  /**
-     * 根据版本，获得所有教材
+	 /**
+     * 根据版本、产品编码，获得所有教材
      * 
      * @param request
      * @param response
@@ -128,6 +128,33 @@ public class NavigationController {
 
     	//产品码
     	String proCode = resourceWebConfig.getProCode();
+    	
+    	//父结点id
+    	long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
+    
+    	// 根据所属版本和产品编码，查询所有的教材
+        books = bookService.getAllBooks(pnodeId, proCode);
+        return ResultJSON.getSuccess(books);
+    }
+    
+    /**
+     * 根据版本、产品编码，查询所有教材（通用接口，产品编码默认为tk）
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/v1.0/product/books", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getAllBooksByEdition_product(HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+    	
+    	List<JSyscourse> books = null;
+    	
+    	String proCode = "tk";
+    	
+    	if(StringUtils.isNotEmpty(request.getParameter("proCode")))
+    		proCode = ControllerHelper.getParameter(request, "proCode");
     	
     	//父结点id
     	long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
