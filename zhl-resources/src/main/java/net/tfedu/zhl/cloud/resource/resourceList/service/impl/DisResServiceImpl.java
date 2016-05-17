@@ -89,8 +89,11 @@ public class DisResServiceImpl implements DisResService {
 	public Pagination<DisResourceEntity> selectAllDisRes_EPrepare(long userId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage, int fromFlag,String searchWord,List<Integer> removeTypeIds,int expire){
     	
+    	//查询受限类型及其子类型
+    	List<Integer> removeTypes = resTypeMapper.getLimitedResTypes(removeTypeIds);
+    	
     	// 根据父类型，查询所有的子类型
-        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypeIds);
+        List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType_EPrepare(mTypeId, removeTypes);
 
         long schoolId = 0;
         long districtId = 0;

@@ -78,8 +78,11 @@ public class ResTypeServiceImpl implements ResTypeService {
         
     	List<ResType> types = new ArrayList<ResType>();
     	
+    	//查询受限类型及其子类型
+    	List<Integer> removeTypes = resTypeMapper.getLimitedResTypes(removeTypeIds);
+    	
     	//根据资源库id，查询所有的一级、二级类型
-    	List<Integer> typeIds = resTypeMapper.getTypesByPool_EPrepare(removeTypeIds,poolId);
+    	List<Integer> typeIds = resTypeMapper.getTypesByPool_EPrepare(removeTypes,poolId);
     	
     	//除去需要排除的类型
     	for(int i = 0; i < removeTypeIds.size(); i++){
@@ -169,8 +172,11 @@ public class ResTypeServiceImpl implements ResTypeService {
         logger.debug("schoolId: " + schoolId);
         logger.debug("districtId: " + districtId);
         
+        //查询受限类型及其子类型
+    	List<Integer> removeTypes = resTypeMapper.getLimitedResTypes(removeTypeIds);
+        
         // 查询资源类型
-        types = resTypeMapper.getDisResType_EPrepare(fromFlag,tfcode, schoolId,districtId,removeTypeIds);
+        types = resTypeMapper.getDisResType_EPrepare(fromFlag,tfcode, schoolId,districtId,removeTypes);
 
         // 资源类型中增加一个“全部”
         ResType all = new ResType();

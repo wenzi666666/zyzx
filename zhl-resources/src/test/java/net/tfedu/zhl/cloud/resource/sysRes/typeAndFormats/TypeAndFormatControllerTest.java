@@ -19,7 +19,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 * @throws Exception
 	 */
 	@Test
-    public void testGetAllTerms() throws Exception {
+    public void testGetAllPools() throws Exception {
       
         ResultJSON json = typesAndFormatsController.getAllPools(request, response);
 
@@ -34,8 +34,8 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetSysTypes()throws Exception{
 		
-		request.setParameter("pTfcode", "CZYW010101"); //设置课程结点tfcode
-		request.setParameter("poolId", "5");
+		request.setParameter("pTfcode", "CZYW0101"); //设置课程结点tfcode
+		request.setParameter("poolId", "0");
 		
 		ResultJSON json = typesAndFormatsController.getSysResTypesByPool(request, response);
 		JsonUtil.toJsonString(json);
@@ -48,8 +48,8 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetSysTypes_ePrepare()throws Exception{
 		
-		request.setParameter("pTfcode", "CZYW010101"); //设置课程结点tfcode
-		request.setParameter("poolId", "5");
+		request.setParameter("pTfcode", "CZYW0101"); //设置课程结点tfcode
+		request.setParameter("poolId", "0");
 		request.setParameter("isEPrepare", "1");
 		
 		ResultJSON json = typesAndFormatsController.getSysResTypesByPool(request, response);
@@ -63,7 +63,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetSysFormats()throws Exception{
-		request.setParameter("pTfcode", "CZYW010101");
+		request.setParameter("pTfcode", "CZYW0101");
 		request.setParameter("typeId", "0");
 		request.setParameter("poolId", "5");
 		
@@ -78,7 +78,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes()throws Exception{
-		request.setParameter("tfcode", "RJCZ0101");
+		request.setParameter("tfcode", "CZYW0101");
 		request.setParameter("fromFlag", "3");
 		
 		ResultJSON json = typesAndFormatsController.getDisResTypesByPool(request, response);
@@ -92,7 +92,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisTypes_ePrepare()throws Exception{
-		request.setParameter("tfcode", "RJCZ0101");
+		request.setParameter("tfcode", "CZYW0101");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("isEPrepare", "1");
 		
@@ -107,7 +107,7 @@ public class TypeAndFormatControllerTest extends BaseControllerTestCase{
 	 */
 	@Test
 	public void testGetDisFormats()throws Exception{
-		request.setParameter("tfcode", "RJCZ0101");
+		request.setParameter("tfcode", "CZYW0101");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("typeId", "0");
 		

@@ -15,6 +15,11 @@ import org.apache.ibatis.annotations.Param;
  *
  */
 public interface ResTypeMapper extends CoreMapper<ResType> {
+	
+	/**
+	 * 根据需要排除的资源类型，查询相应地所有的一级、二级类型
+	 */
+	public List<Integer> getLimitedResTypes(@Param("removeTypeIds")List<Integer> removeTypeIds);
 
 	/**
      * 系统资源：根据资源库id、父类型id，查询父类型及其子类型

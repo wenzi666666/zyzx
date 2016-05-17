@@ -81,8 +81,11 @@ public class SysResourceServiceImpl implements SysResourceService {
     @Override
 	public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds,List<Integer> sys_from,int expire){
+    	
+    	//查询受限类型及其子类型
+    	List<Integer> removeTypes = resTypeMapper.getLimitedResTypes(removeTypeIds);
     
-    	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool_EPrepare(poolId, mTypeId, removeTypeIds);
+    	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool_EPrepare(poolId, mTypeId, removeTypes);
     	
     	List<SysResourceEntity> list = new ArrayList<SysResourceEntity>();
     	
