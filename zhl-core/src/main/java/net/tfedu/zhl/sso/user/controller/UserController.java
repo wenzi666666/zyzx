@@ -240,6 +240,24 @@ public class UserController {
 			long userId = currentUserId;
 			String userImage = request.getParameter("userImage");
 			userService.updateUserImage(userId, userImage);
+			// 如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
+			if (userImage != null
+								&& userImage
+										.trim()
+										.contains(
+												ZhlResourceCenterWrap.userimage_upload_prefix)) {
+
+							// 获取文件服务器的访问url
+							String resServiceLocal = commonWebConfig.getResServiceLocal();
+							String currentResPath = commonWebConfig
+									.getCurrentResPath(request);
+
+							String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal,
+									userImage);
+							temp = temp.replace(resServiceLocal, currentResPath);
+							data = temp;
+			}
+			
 		}
 
 		return ResultJSON.getSuccess(data);
