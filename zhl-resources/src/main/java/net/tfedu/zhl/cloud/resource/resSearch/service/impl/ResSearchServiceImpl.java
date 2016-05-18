@@ -126,7 +126,7 @@ public class ResSearchServiceImpl implements ResSearchService {
             resultList = resSearchMapper.getDisFileFormats(searchKeyword, fromFlag,schoolId,districtId);
         }
         
-        resultList.add(0,"全部"); //增加一个全部的链接
+        resultList.add(0,"全部"); // 增加一个全部的链接
         
         return resultList;
     }

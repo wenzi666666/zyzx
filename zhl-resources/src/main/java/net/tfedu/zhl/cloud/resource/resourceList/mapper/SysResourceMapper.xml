@@ -63,10 +63,10 @@
         order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1">
-        order by DloadTimes desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2">
-        order by UpdateDT desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>                               
  </select>
  
@@ -106,10 +106,10 @@
         order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1">
-        order by DloadTimes desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2">
-        order by UpdateDT desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>                               
  </select>
  
@@ -154,10 +154,10 @@
         order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1">
-        order by DloadTimes desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2">
-        order by UpdateDT desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>)tmp                                     
  </select>
  

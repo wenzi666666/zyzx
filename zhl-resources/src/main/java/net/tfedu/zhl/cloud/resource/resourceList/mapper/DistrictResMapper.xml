@@ -73,15 +73,15 @@
          and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
     <if test="orderBy == 0"><!-- 综合排序 -->
-        order by avgScore desc
+        order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1"><!-- 最多下载 -->
-        order by DloadTimes desc
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2"><!-- 最新发布 -->
-        order by UpdateDT desc
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
-     ,b.DisplayIndex asc,jf.orderNum asc,a.id
+     
   </select>
   
   <!-- 区本校本资源：预览页面的推荐列表 -->
@@ -125,10 +125,10 @@
         order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1"><!-- 最多下载 -->
-        order by DloadTimes desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2"><!-- 最新发布 -->
-        order by UpdateDT desc,b.DisplayIndex asc,jf.orderNum asc,a.id
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
     )tmp
    
@@ -171,16 +171,14 @@
          and a.scopeId = #{districtId} and a.scope = 4 and a.fromFlag = #{fromFlag}
     </if>
     <if test="orderBy == 0"><!-- 综合排序 -->
-        order by avgScore desc
+        order by avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 1"><!-- 最多下载 -->
-        order by DloadTimes desc
+        order by DloadTimes desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
      <if test="orderBy == 2"><!-- 最新发布 -->
-        order by UpdateDT desc
+        order by UpdateDT desc,avgScore desc,b.DisplayIndex asc,jf.orderNum asc,a.id
      </if>
-     ,b.DisplayIndex asc,jf.orderNum asc,a.id
-     
   </select>
   
    <!-- 资源预览  获取一条区本/校本资源的详细信息 -->
