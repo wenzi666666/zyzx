@@ -165,9 +165,25 @@ public class UserController {
 		String model = request.getParameter("model") == null ? " " : request
 				.getParameter("model");
 		// 返回
-		Object data = userService.getUserSimpleById(id, model);
+		UserSimple user = userService.getUserSimpleById(id, model);
+		if (user.getUserImage() != null
+				&& user.getUserImage()
+						.trim()
+						.contains(
+								ZhlResourceCenterWrap.userimage_upload_prefix)) {
 
-		return ResultJSON.getSuccess(data);
+			// 获取文件服务器的访问url
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+			String currentResPath = commonWebConfig
+					.getCurrentResPath(request);
+
+			String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal,
+					user.getUserImage());
+			temp = temp.replace(resServiceLocal, currentResPath);
+			user.setUserImage(temp);
+		}
+
+		return ResultJSON.getSuccess(user);
 	}
 
 	/**
