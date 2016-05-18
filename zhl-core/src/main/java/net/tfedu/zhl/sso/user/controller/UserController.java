@@ -256,6 +256,8 @@ public class UserController {
 									userImage);
 							temp = temp.replace(resServiceLocal, currentResPath);
 							data = temp;
+			}else{
+				data = userImage;
 			}
 			
 		}
