@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -53,6 +54,15 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object controller) throws Exception {
+    	
+    	
+    	
+    	String method =  request.getMethod();
+
+    	if(RequestMethod.OPTIONS.toString().equals(method)){
+    		return false ;
+    	}
+    	
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
         Long currentUserId = null;
