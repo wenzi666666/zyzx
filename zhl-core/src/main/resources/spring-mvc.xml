@@ -55,7 +55,7 @@
  -->       
         <mvc:interceptor>
         	<mvc:mapping path="/resRestAPI/**/**"/>
-        	<mvc:exclude-mapping path="/resRestAPI/v1.0/users/login"/>
+        	<mvc:exclude-mapping path="/resRestAPI/v1.0/users/login" />
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/users/userCache"/>
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/resource/uploadConvertCallBack"/>
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/verificationcode"/>
