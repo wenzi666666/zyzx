@@ -50,6 +50,16 @@ public class CommonWebConfig {
 	public Boolean isRepeatLogin;
 	
 	
+	/**
+	 * 是否为云模式,默认为false
+	 * 
+	 * false: 根据浏览器url 和 host、hostlocal的配置,判断currentResPath使用文件服务的内外网地址
+	 * 
+	 * true: 云模式，直接返回文件服务的外网地址(currentResPath)
+	 * 
+	 */
+	@Value("#{configProperties['isCloudModel']}")
+	public Boolean isCloudModel;
 	
 
 	/**
@@ -158,6 +168,13 @@ public class CommonWebConfig {
         String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
         // 当前文件 资源服务器地址
         String currentResPath = "";
+        
+        //云模式，直接返回文件服务的外网地址
+        if(isCloudModel){
+        	currentResPath = resService;
+        	return currentResPath;
+        }
+        
 		
         if (host.contains(URI)) {
             currentResPath = resService;
@@ -179,6 +196,14 @@ public class CommonWebConfig {
         String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
         // 当前  自主学习平台服务器地址
         String currentFdHost = "";
+        
+        
+      //云模式，直接返回自主学习平台服务器地址的外网地址
+        if(isCloudModel){
+        	currentFdHost = fdHost;
+        	return currentFdHost;
+        }
+        
 		
         if (host.contains(URI)) {
         	currentFdHost = fdHost;
@@ -213,6 +238,14 @@ public class CommonWebConfig {
 	public void setIsRepeatLogin(Boolean isRepeatLogin) {
 		this.isRepeatLogin = isRepeatLogin;
 	}
-	
+
+
+	public Boolean getIsCloudModel() {
+		return isCloudModel;
+	}
+
+	public void setIsCloudModel(Boolean isCloudModel) {
+		this.isCloudModel = isCloudModel;
+	}
 	
 }
