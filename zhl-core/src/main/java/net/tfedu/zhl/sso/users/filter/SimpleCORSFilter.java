@@ -38,11 +38,13 @@ public class SimpleCORSFilter implements Filter {
         httpResponse.setHeader("Access-Control-Allow-Origin", "*");
         httpResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
         httpResponse.setHeader("Access-Control-Max-Age", "3600");
+        httpResponse.setStatus(204);
 
         // 启用cookie
         // httpResponse.setHeader("Access-Control-Allow-Credentials", "true");
 
-        httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Range, Origin");
+//        httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Accept, Range, Origin");
+        httpResponse.setHeader("Access-Control-Allow-Headers", "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With");  
         chain.doFilter(request, response);
 
     }
