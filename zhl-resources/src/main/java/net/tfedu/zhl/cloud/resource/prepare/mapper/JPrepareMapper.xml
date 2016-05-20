@@ -161,13 +161,13 @@
 	</if>
 
 	<if test="'withinweek'==timeLabel">
-		AND p.updatetime >= DATE_SUB(CURDATE(), INTERVAL 1 WEEK)
+		AND p.updatetime >= DATE_SUB(NOW(), INTERVAL 1 WEEK)
 	</if>
 	<if test="'withinmonth'==timeLabel ">
-		AND p.updatetime >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+		AND p.updatetime >= DATE_SUB(NOW(), INTERVAL 1 MONTH) AND DATE_SUB(NOW(), INTERVAL 1 WEEK)- p.updatetime > 0  
 	</if>
 	<if test="'moreearly'==timeLabel ">
-		AND DATE_SUB(CURDATE(), INTERVAL 1 MONTH)- p.updatetime > 0 
+		AND DATE_SUB(NOW(), INTERVAL 1 MONTH)- p.updatetime > 0 
 	</if>	
 		ORDER BY p.updatetime desc
 

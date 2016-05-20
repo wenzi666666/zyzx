@@ -568,7 +568,7 @@ public class AssetController {
 
 	
 	/**
-	 * 获取当前查询条件下的资源类型
+	 * 获取分页当前查询条件下的资源
 	 * 
 	 * @param request
 	 * @param response
