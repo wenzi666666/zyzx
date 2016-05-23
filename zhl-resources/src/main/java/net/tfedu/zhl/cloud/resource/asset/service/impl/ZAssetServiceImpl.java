@@ -316,8 +316,9 @@ public class ZAssetServiceImpl implements ZAssetService {
 				String tfcode = codes.get(i);
 				//组装区本、校本路径
 				assetPath =  assetPath.replaceAll("\\\\", "/");
-				String _name = assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
-				String _path = AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
+				String _name = asset.getIslocal() ==1 ?"":assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
+				
+				String _path = asset.getIslocal() ==1 ?assetPath:AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
 				String _fullpath = _path+_name;
 				
 				
@@ -359,7 +360,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 				res.setEduplace("");
 				//后缀
 				String  fileext =assetPath.substring(assetPath.lastIndexOf(".") + 1, assetPath.length());
-				res.setFileext(fileext);
+				res.setFileext(asset.getIslocal()==0?fileext:"html");
 				res.setFlag(false);
 				res.setFsize(asset.getAssetsize());
 				res.setIsdwj(asset.getIswjb());
@@ -386,7 +387,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 				
 				
 				
-				if(isfinished == 0 ){
+				if(isfinished == 0 && asset.getIslocal() == 0 ){
 					
 					//格式转换完成，拷贝缩略图
 					source_4_copy.add(assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
@@ -397,11 +398,13 @@ public class ZAssetServiceImpl implements ZAssetService {
 						target_4_copy.add(AssetTypeConvertConstant.convertType(_fullpath));
 					}
 				}
-				
-				
-				//复制（源文件）到目标目录
-				source_4_copy.add(assetPath);
-				target_4_copy.add(_fullpath);
+
+				//非网络资源复制
+				if(asset.getIslocal() == 0 ){
+					//复制（源文件）到目标目录
+					source_4_copy.add(assetPath);
+					target_4_copy.add(_fullpath);
+				}
 			}
 			
 		}
@@ -566,8 +569,11 @@ public class ZAssetServiceImpl implements ZAssetService {
 			String assetPath =asset.getAssetpath();
 			//组装区本、校本路径
 			assetPath =  assetPath.replaceAll("\\\\", "/");
-			String _name = assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
-			String _path = AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
+			//注意网络资源的处理
+			String _name = asset.getIslocal() ==1 ?"":assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
+			//注意网络资源的处理
+			String _path = asset.getIslocal() ==1 ?assetPath:AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
+
 			String _fullpath = _path+_name;
 			
 			
@@ -610,7 +616,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 			res.setEduplace("");
 			//后缀
 			String  fileext =assetPath.substring(assetPath.lastIndexOf(".") + 1, assetPath.length());
-			res.setFileext(fileext);
+			res.setFileext(asset.getIslocal()==0?fileext:"html");
 			res.setFlag(false);
 			res.setFsize(asset.getAssetsize());
 			res.setIsdwj(asset.getIswjb());
@@ -635,7 +641,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 			
 			
 			
-			if(isfinished == 0 ){
+			if(isfinished == 0 && asset.getIslocal() ==0 ){
 				
 				//格式转换完成，拷贝缩略图
 				source_4_copy.add(assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);

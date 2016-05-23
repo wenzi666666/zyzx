@@ -12,7 +12,6 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 public class AssetControllerTest  extends BaseControllerTestCase{
 
 	
@@ -45,6 +44,29 @@ public class AssetControllerTest  extends BaseControllerTestCase{
 		
 	}
 
+	@Test
+	public void testAddAsset() throws Exception {
+    	request.setAttribute("currentUserId", 390320126l);
+    	//网络资源
+		
+		request.setParameter("names", "证照登记");
+		request.setParameter("unifTypeIds", "2");
+		request.setParameter("tfcodes", "CZYW010101");
+		request.setParameter("scopes", "1");
+		request.setParameter("keywords", "java");
+		request.setParameter("descs", "123");
+		request.setParameter("paths", "http://bug.tfedu.net/mantis/images/mantis_logo.png");
+		request.setParameter("sizes", "1111111");
+		request.setParameter("iscoursewares", "0");
+		request.setParameter("islocals", "1");
+		result = assetController.deleteAsset(request, response);
+
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+	
+		
+		
+	}
+	
 	@Test
 	public void testDeleteAsset() throws Exception {
     	request.setAttribute("currentUserId", 390320126l);
