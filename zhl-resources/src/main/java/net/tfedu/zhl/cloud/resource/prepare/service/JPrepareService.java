@@ -283,6 +283,13 @@ public interface JPrepareService {
      * @throws Exception
      */
     public ResultJSON movePrepare(Long prepareId,String tfcode) throws Exception;
+
+    /**
+     * 备课夹导航节点的信息（包括分页页码信息）
+     * @param prepareId
+     * @return
+     */
+	public ResultJSON getPrepareNodeInfo(Long prepareId,int perPage);
     
 }
 

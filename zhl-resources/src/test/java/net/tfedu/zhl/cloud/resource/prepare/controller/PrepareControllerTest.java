@@ -9,6 +9,8 @@ import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.util.Assert;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 
 public class PrepareControllerTest extends BaseControllerTestCase {
@@ -268,8 +270,17 @@ public class PrepareControllerTest extends BaseControllerTestCase {
 
 	}
     
-    
-    
+    @Test
+    public void testgetPrepareNodeInfo()throws Exception {
+    	long prepareId = 828l;
+
+    	result =  controller.getPrepareNodeInfo(prepareId, 10);
+    	
+        Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+        
+        System.out.println(JSONObject.toJSONString(result));
+
+    }
     
     
 }

@@ -404,4 +404,26 @@
  <select id="getAllRepeatTimes" resultType="Integer">
  	select  count(1) as num from j_lession_prepare where userid =#{userId} and flag = false and title =#{title}
  </select>
+ 
+ 
+ <!--  获取备课夹在其所在节点下的下标信息 -->
+ <select id="getPrepareIndxInfo" resultType="Integer">
+ 	
+	select  rowno from (
+	select   (@rowNO := @rowNo+1) AS rowno,a.tfcode,a.id from (
+	select tfcode,id  from  j_lession_prepare where tfcode =#{tfcode}  ORDER BY  updatetime desc 
+	) a,(select @rowNO :=0) b 
+	)temp
+	 where temp.id =#{prepareId} 
+ </select>
+ 
+ 
+ <select id="getNodeInfo" parameterType="String" resultType="HashMap">
+	select 
+	(select edi.id from j_syscourse edi where edi.termid = s.TermId and edi.subjectid = s.SubjectId and edi.flag = false and edi.pnodeid = 0 and LOCATE(edi.tfcode,s.tfcode) > 0 )editionId
+	,(select book.id from j_syscourse book where book.pnodeid = editionId and s.flag = false and LOCATE(book.tfcode,s.tfcode) > 0 )bookid 
+	from j_syscourse s WHERE s.tfcode = 'GZWL0401010101';
+ </select>
+ 
+ 
 </mapper>

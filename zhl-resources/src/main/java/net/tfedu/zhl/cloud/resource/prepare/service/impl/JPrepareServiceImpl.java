@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.prepare.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -614,6 +615,39 @@ public class JPrepareServiceImpl implements JPrepareService {
 		List<JPrepareContentView> list =  mapper.queryLimitedPrepareContentList(prepareId, removeTypeIds);
 //		List<JPrepareContentView> list =  mapper.queryPrepareContentList(prepareId);
 		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
+	}
+
+	@Override
+	public ResultJSON getPrepareNodeInfo(Long prepareId,int perPage) {
+		//默认分页10条
+		perPage = perPage==0?10:perPage;
+
+		String tfcode = "";
+		
+		int page = 1 ;
+		
+		//获取节点信息 
+		JPrepare obj = mapper.selectByPrimaryKey(prepareId);
+		
+		tfcode = obj.getTfcode();
+		//获取分页页面信息
+		Integer rowno = mapper.getPrepareIndxInfo(tfcode, prepareId);
+		if(rowno!=null && rowno>0){
+			page = rowno/perPage + (rowno%perPage==0?0:1);
+		}
+		
+		HashMap nodeInfo = mapper.getNodeInfo(tfcode);
+		
+		nodeInfo.put("page", page);
+		
+		return ResultJSON.getSuccess(nodeInfo);
+	}
+	
+	public static void main(String[] args) {
+		int page = 1 ;
+		int rowno = 11 ;
+		int perPage = 10 ;
+		System.out.println(page = rowno/perPage + (rowno%perPage==0?0:1));
 	}
 
 }

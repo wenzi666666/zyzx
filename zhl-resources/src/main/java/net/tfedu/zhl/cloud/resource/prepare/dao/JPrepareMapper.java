@@ -1,8 +1,7 @@
 package net.tfedu.zhl.cloud.resource.prepare.dao;
 
+import java.util.HashMap;
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.resource.prepare.entity.FirstNavigationInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
@@ -11,6 +10,8 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareView;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.helper.CoreMapper;
+
+import org.apache.ibatis.annotations.Param;
 
 public interface JPrepareMapper extends CoreMapper<JPrepare> {
 	
@@ -169,4 +170,19 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      */
     public List<JPrepareView>  getLatestPrepare(Long userId);
     
+    
+    /**
+     * 获取备课夹在其所在节点下的下标信息
+     * @param tfcode
+     * @param prepareId
+     * @return
+     */
+    public Integer getPrepareIndxInfo(@Param("tfcode") String tfcode,@Param("prepareId") Long prepareId);
+    
+   /**
+    * 获取节点的版本、教材信息
+    * @param tfcode
+    * @return
+    */
+    public HashMap<String,String> getNodeInfo(@Param("tfcode") String tfcode);
 }

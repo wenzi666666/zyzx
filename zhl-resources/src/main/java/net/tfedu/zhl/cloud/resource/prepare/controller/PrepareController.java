@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
+import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
@@ -57,8 +58,10 @@ public class PrepareController {
 	ResZipDownloadService resZipDownloadService;
 
 	@Resource
-	private CommonWebConfig commonWebConfig;
+	CommonWebConfig commonWebConfig;
 	
+	@Resource
+	TreeService treeService;
 	
 	@Resource
 	ResourceWebConfig resourceConfig;
@@ -922,6 +925,25 @@ public class PrepareController {
 		return jPrepareService.movePrepare(prepareId, tfcode);
 
 	}
+	
+	
+
+	/**
+	 * 备课夹导航节点的信息（包括分页页码信息）
+	 * @param prepareId
+	 * @param perPage  每页有多少条
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/prepareNodeInfo", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getPrepareNodeInfo(Long prepareId,int perPage) throws Exception {
+		return jPrepareService.getPrepareNodeInfo(prepareId,perPage);
+
+	}
+	
+	
+	
 	
 	
 	
