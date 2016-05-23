@@ -420,9 +420,9 @@
  
  <select id="getNodeInfo" parameterType="String" resultType="HashMap">
 	select 
-	(select edi.id from j_syscourse edi where edi.termid = s.TermId and edi.subjectid = s.SubjectId and edi.flag = false and edi.pnodeid = 0 and LOCATE(edi.tfcode,s.tfcode) > 0 )editionId
+	(select edi.id from j_syscourse edi where edi.termid = s.TermId and edi.subjectid = s.SubjectId and edi.flag = false and edi.pnodeid = 0 and LOCATE(edi.tfcode,s.tfcode) > 0 )editionid
 	,(select book.id from j_syscourse book where book.pnodeid = editionId and s.flag = false and LOCATE(book.tfcode,s.tfcode) > 0 )bookid 
-	from j_syscourse s WHERE s.tfcode = 'GZWL0401010101';
+	from j_syscourse s WHERE s.tfcode =#{tfcode};
  </select>
  
  
