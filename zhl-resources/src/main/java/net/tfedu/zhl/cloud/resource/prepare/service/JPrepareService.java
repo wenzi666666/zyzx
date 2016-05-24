@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.prepare.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -290,6 +291,14 @@ public interface JPrepareService {
      * @return
      */
 	public ResultJSON getPrepareNodeInfo(Long prepareId,int perPage);
+	
+	
+	/**
+	 * 获取节点的信息(版本、教材)
+	 * @param tfcode
+	 * @return
+	 */
+	public HashMap getNodeInfo(String tfcode);
     
 }
 

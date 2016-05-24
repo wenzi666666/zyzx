@@ -16,6 +16,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
+import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
@@ -50,6 +51,13 @@ public class AssetController {
 	 */
 	@Resource
 	ZAssetService assetService;
+	
+	
+	@Resource
+	JPrepareService prepareService;
+	
+	
+	
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
@@ -274,6 +282,7 @@ public class AssetController {
 					}
 					assetService.addAssetBatch(list, tfcode_list, scope_list,
 							resServiceLocal, currentResPath, hostLocal);
+					
 					data = list;
 				}
 			} else {
@@ -444,6 +453,8 @@ public class AssetController {
 					hostLocal);
 
 			logger.debug("编辑资源," + a.toString());
+			
+			data = prepareService.getNodeInfo(tfcode);
 
 		}
 		return ResultJSON.getSuccess(data);

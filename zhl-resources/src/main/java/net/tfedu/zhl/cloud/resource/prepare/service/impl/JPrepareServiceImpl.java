@@ -644,6 +644,14 @@ public class JPrepareServiceImpl implements JPrepareService {
 		return ResultJSON.getSuccess(nodeInfo);
 	}
 	
+	
+	public HashMap getNodeInfo(String tfcode){
+		HashMap map = mapper.getNodeInfo(tfcode);
+		map.put("tfcode", tfcode);
+		return  map;
+
+	}
+	
 	public static void main(String[] args) {
 		int page = 1 ;
 		int rowno = 11 ;
