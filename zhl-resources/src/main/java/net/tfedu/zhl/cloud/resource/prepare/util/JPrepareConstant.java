@@ -215,12 +215,13 @@ public class JPrepareConstant {
      * 
      * 自建资源、区本、校本 播放原文件或转码后的文件
      * 
-     * 
+     * 资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
      * @param info
      */
     public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
 
         String rescode = info.getRescode();
+        //资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
         Integer fromflag = info.getFromflag();
         Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();

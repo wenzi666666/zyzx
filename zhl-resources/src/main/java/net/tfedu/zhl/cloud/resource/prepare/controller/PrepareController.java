@@ -120,6 +120,7 @@ public class PrepareController {
 			JPrepare prepare = new JPrepare();
 			prepare.setUserid(userId);
 			prepare.setCreatetime(currentDate);
+			prepare.setUpdatetime(currentDate);
 			prepare.setTfcode(tfcode);
 			prepare.setTitle(title.trim());
 

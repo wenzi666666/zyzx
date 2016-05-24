@@ -322,7 +322,7 @@
   </select>
   <!-- 获取区校本资源的信息 -->
   <select id="getDistrictORSchoolResInfo" resultMap="simpleResInfo">
-  	select id as resid,title, rescode,fromflag,islocal as  isnet,isdwj as isdwj,fullpath as path,0 as isebook 
+  	select id as resid,title, rescode,fromflag,!islocal as  isnet,isdwj as isdwj,fullpath as path,0 as isebook 
   	from z_districts_resource  where flag = false and id = #{0}  
   </select>
   
