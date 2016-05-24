@@ -521,8 +521,10 @@ public class ZAssetServiceImpl implements ZAssetService {
 
 	@Override
 	public void updateAsset(ZAsset asset,String tfcode,Integer scope, String resServiceLocal, String currentResPath, String hostLocal) throws Exception {
+		ZAsset _history = assetMapper.selectByPrimaryKey(asset.getId());
+		
+		asset.setIslocal(_history.getIslocal());
 		//获取资源、判断是否路径出现变化
-
 		//0：转码完成，1：未完成
 		int isfinished = 1 ;		
 		ZAsset temp = assetMapper.selectByPrimaryKey(asset.getId());

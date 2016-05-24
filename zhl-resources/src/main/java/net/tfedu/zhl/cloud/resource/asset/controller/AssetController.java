@@ -448,6 +448,9 @@ public class AssetController {
 				a.setKeyword(keyword);
 
 			}
+			
+			
+			
 			// 新版资源类型
 			assetService.updateAsset(a,tfcode,scope, resServiceLocal, currentResPath,
 					hostLocal);

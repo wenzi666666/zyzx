@@ -100,6 +100,7 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>generator*.*</exclude>
+	                <exclude>res_ali79/*</exclude>
 				</excludes>
 			</resource>
 		</resources>
@@ -121,13 +122,6 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-		</profile>
-		<profile>
-			<id>statistics</id>
-			<properties>
-				<buss.name>zhl-statistics</buss.name>
-				<web.name>statistics</web.name>
-			</properties>
 		</profile>
 	</profiles>
 
