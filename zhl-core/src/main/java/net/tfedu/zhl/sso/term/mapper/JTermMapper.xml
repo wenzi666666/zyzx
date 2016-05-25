@@ -18,18 +18,20 @@
   <resultMap id="AllTermsMap" type="net.tfedu.zhl.sso.term.entity.JTerm" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
+		<result column="code" property="code" />
   </resultMap>
   <select id="getAllTerms" resultMap="AllTermsMap">
-		select id,name from j_term where name not like '其他%' and flag = false 
+		select id,name,code from j_term where name not like '其他%' and flag = false 
   </select>
   
   <!-- 选择特定学段下的学科  -->
   <resultMap id="SubjectResultMap" type="net.tfedu.zhl.sso.subject.entity.JSubject" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
+		<result column="code" property="code" />
   </resultMap>
   <select id="getSubjectsByTerm" parameterType="Long" resultMap="SubjectResultMap">
-		select s.id,s.name
+		select s.id,s.name,s.code
 		from j_term_subject ts 
 		left join j_subject s on s.id = ts.subjectId
 		where ts.flag = false and s.flag = false and ts.termId=#{termId} order by s.id
