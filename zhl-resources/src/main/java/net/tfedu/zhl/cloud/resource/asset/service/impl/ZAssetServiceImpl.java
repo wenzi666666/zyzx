@@ -316,6 +316,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 				String tfcode = codes.get(i);
 				//组装区本、校本路径
 				assetPath =  assetPath.replaceAll("\\\\", "/");
+				//是否为本地资源：0为本地资源1为网络资源
 				String _name = asset.getIslocal() ==1 ?"":assetPath.substring(assetPath.lastIndexOf("/")+1,assetPath.length());
 				
 				String _path = asset.getIslocal() ==1 ?assetPath:AssetTypeConvertConstant.getAreaPathPrefix(scope, schoolid, districtid, tfcode);
@@ -366,7 +367,7 @@ public class ZAssetServiceImpl implements ZAssetService {
 				res.setIsdwj(asset.getIswjb());
 				res.setIsfinished(isfinished);
 				//区本资源中的网络资源islocal为0，上传资源为1
-				res.setIslocal(1);
+				res.setIslocal(1-asset.getIslocal());
 				res.setSuitterm("");
 				res.setSctimes(0);
 				//待审核
@@ -624,7 +625,8 @@ public class ZAssetServiceImpl implements ZAssetService {
 			res.setFsize(asset.getAssetsize());
 			res.setIsdwj(asset.getIswjb());
 			res.setIsfinished(isfinished);
-			res.setIslocal(0);
+			//区本资源中的网络资源islocal为0，上传资源为1
+			res.setIslocal(1-asset.getIslocal());
 			res.setSuitterm("");
 			res.setSctimes(0);
 			//待审核

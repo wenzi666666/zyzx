@@ -49,7 +49,7 @@ public class AssetControllerTest  extends BaseControllerTestCase{
     	request.setAttribute("currentUserId", 390320126l);
     	//网络资源
 		
-		request.setParameter("names", "证照登记");
+		request.setParameter("names", "网络资源测试");
 		request.setParameter("unifTypeIds", "2");
 		request.setParameter("tfcodes", "CZYW010101");
 		request.setParameter("scopes", "1");
