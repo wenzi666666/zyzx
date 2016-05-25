@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class PersonalControllerTest extends BaseControllerTestCase {
 
 	
@@ -128,10 +130,10 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         request.setServerPort(8080);
         request.setContextPath("/zhl-resources");
         request.setScheme("http");
-        request.setAttribute("currentUserId", 390320126l);
+        request.setAttribute("currentUserId", 390410126l);
         request.setParameter("unifyTypeId", "1");
         ResultJSON result = controller.getMyDownload(request, response);
-        System.out.println(result.toString());
+        System.out.println(JSONObject.toJSONString(result.getData()));
 
     	
     }

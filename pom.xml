@@ -2,6 +2,37 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+
+	<profiles>
+		<profile>
+			<id>resources</id>
+			<properties>
+<!-- 				<package.environment>local</package.environment>					
+ -->				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+<!-- 		<profile>
+			<id>ali79</id>
+			<properties>
+                <package.environment>ali79</package.environment>
+                <buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+            </properties>
+		</profile>
+		<profile>
+			<id>ali248</id>
+			<properties>
+                <package.environment>ali248</package.environment>
+                <buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+            </properties>
+		</profile>	 -->		
+	</profiles>
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.tfedu</groupId>
 	<artifactId>zhl-cloud</artifactId>
@@ -84,6 +115,45 @@
 					<server>tomcat7</server>
 				</configuration>
 			</plugin>
+			
+			
+			 <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.1.1</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                    </archive>
+                    <warName>resources</warName>
+                   <!--  <warName>resources_${package.environment}</warName> -->
+                    <webResources>
+                    	<resource>
+                            <directory>src/main/resources</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <!-- <filtering>true</filtering> -->
+                        </resource>
+                        <resource>
+                            <directory>src/main/resources</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <filtering>true</filtering>
+                        </resource>
+                        <!-- <resource>
+                            <directory>src/main/resources/${package.environment}</directory>
+                            <targetPath>WEB-INF/classes</targetPath>
+                            <filtering>true</filtering>
+                        </resource> -->
+                        
+                        <!--<resource>-->
+                            <!--<directory>${project.build.directory}/classes</directory>-->
+                            <!--<includes>-->
+                                <!--<include>**/*.properties</include>-->
+                                <!--<include>**/*.xml</include>-->
+                            <!--</includes>-->
+                        <!--</resource>-->
+                    </webResources>
+                </configuration>
+            </plugin>
 		</plugins>
 
 		<resources>
@@ -100,7 +170,8 @@
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>generator*.*</exclude>
-	                <exclude>res_ali79/*</exclude>
+			        <exclude>local/*</exclude>
+			        <exclude>ali79/*</exclude>
 				</excludes>
 			</resource>
 		</resources>
@@ -110,20 +181,13 @@
 				<filtering>true</filtering>
 			</testResource>
 		</testResources>
+		
+		
+		
+		
 	</build>
 
-	<profiles>
-		<profile>
-			<id>resources</id>
-			<properties>
-				<buss.name>zhl-resources</buss.name>
-				<web.name>resources</web.name>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
-	</profiles>
+
 
 	<properties>
 		<!-- base setting -->
