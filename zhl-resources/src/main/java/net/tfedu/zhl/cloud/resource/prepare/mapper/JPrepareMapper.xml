@@ -78,7 +78,7 @@
 	WHERE
 		tfcode LIKE #{0}
 	AND userid = #{1} AND flag = false 
-	ORDER BY updatetime desc
+	ORDER BY updatetime desc,createtime desc 
   </select>
   
   <!-- 仅获取当前节点下的备课夹 -->
@@ -92,7 +92,7 @@
 	WHERE
 		tfcode = #{0}
 	AND userid = #{1} AND flag = false 
-	ORDER BY updatetime desc
+	ORDER BY updatetime desc,createtime desc 
   </select>
   
   
@@ -112,7 +112,7 @@
 	<if test="title!=''">
 		AND title like #{title}	
 	</if>
-	ORDER BY updatetime desc
+	ORDER BY updatetime desc,createtime desc 
   </select>
   
   
@@ -169,7 +169,7 @@
 	<if test="'moreearly'==timeLabel ">
 		AND DATE_SUB(NOW(), INTERVAL 1 MONTH)- p.updatetime > 0 
 	</if>	
-		ORDER BY p.updatetime desc
+		ORDER BY p.updatetime desc,p.createtime desc 
 
   </select>
   
