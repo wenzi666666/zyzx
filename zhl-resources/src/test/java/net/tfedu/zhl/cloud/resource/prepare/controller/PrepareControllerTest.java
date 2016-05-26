@@ -220,6 +220,8 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     @Test
     public void testGetLimitedPrepareContentPage() throws Exception {
         long prepareId = 140249;
+        
+        request.setParameter("isEPrepare", "1");
         result = controller.querylimitedPrepareContentPage(prepareId, 1, 10, request);
 
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));

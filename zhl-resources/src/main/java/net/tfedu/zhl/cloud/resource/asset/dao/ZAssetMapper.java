@@ -147,22 +147,24 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	
 	/**
 	 * 获取当前查询条件下的资源类型
+	 * @param ifGetNet 
 	 * @param userId
 	 * @param tfcode
 	 * @param title
 	 * @return
 	 */
-	public  List<FirstLevelResType> getCourseAssetUnifyType(@Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
+	public  List<FirstLevelResType> getCourseAssetUnifyType(@Param("ifGetNet")boolean ifGetNet, @Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
 	
 	
 	/**
 	 * 获取当前查询条件下的资源
+	 * @param ifGetNet 
 	 * @param userId
 	 * @param tfcode
 	 * @param title
 	 * @return
 	 */
-	public  List<JPrepareContentView> getCourseAssetPage(@Param("unifyTypeId")Integer unifyTypeId,@Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
+	public  List<JPrepareContentView> getCourseAssetPage(@Param("ifGetNet")boolean ifGetNet, @Param("unifyTypeId")Integer unifyTypeId,@Param("userId")Long userId,@Param("tfcode")String tfcode,@Param("title")String title);
 	
 	
 	

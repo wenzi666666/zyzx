@@ -115,6 +115,18 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
      */
     public List<JPrepareContentView> queryLimitedPrepareContentList(@Param("prepareId")Long prepareId,@Param("removeTypeIds")String[] removeTypeIds);
     
+    
+
+    /**
+     * 获取备课夹内容列表(其中缩略图、文件后缀需要工具类继续处理)
+     * 受限的，排除e备课不能使用的部分(类型)资源
+     * @param prepareId
+     * @param removeTypeIds 排除的类型
+     * @param ifGetNet     是否获取网络资源
+     * @return
+     */
+    public List<JPrepareContentView> queryLimitedPrepareContentListWithoutNet(@Param("prepareId")Long prepareId,
+    		@Param("removeTypeIds")String[] removeTypeIds);
     /**
      * 获取系统资源的第一个关联节点的信息
      * 
@@ -185,4 +197,5 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
     * @return
     */
     public HashMap<String,String> getNodeInfo(@Param("tfcode") String tfcode);
+
 }

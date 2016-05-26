@@ -373,7 +373,11 @@
 				
 			<if test="title!=''">
 			and a.name like  #{title}
-			</if>				
+			</if>	
+			<if test="ifGetNet = true">
+				and a.islocal = 0 
+			</if>
+						
 	)ORDER BY code 
  </select>
  
@@ -396,6 +400,10 @@
 			</if>	
 			<if test=" unifyTypeId>0 ">
       		and a.unifytypeid =#{unifyTypeId}		
+			</if>
+			
+			<if test="ifGetNet = true">
+				and a.islocal = 0 
 			</if>	
  	)temp_result 
  </select>

@@ -143,7 +143,8 @@ public class AssetControllerTest  extends BaseControllerTestCase{
 
 	@Test
 	public void testGetCourseAssetType() throws ParamsException, IOException {
-		
+
+        request.setParameter("isEPrepare", "1");
 		request.setAttribute("currentUserId", 390330126l);
     	request.setParameter("tfcode", "CZYW010101");
     	request.setParameter("title", "2");
@@ -154,6 +155,8 @@ public class AssetControllerTest  extends BaseControllerTestCase{
 
 	@Test
 	public void testGetCourseAsset() throws ParamsException, IOException {
+        request.setParameter("isEPrepare", "1");
+
     	request.setAttribute("currentUserId", 390320126l);
     	request.setParameter("tfcode", "CZYW010101");
     	request.setParameter("title", "");

@@ -571,12 +571,19 @@ public class AssetController {
 	public ResultJSON getCourseAssetType(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ParamsException {
 	
+		//是否是e备课的请求
+		int  isEPrepare = ControllerHelper.getIntWithDefault(request, "isEPrepare");
+		//是否获取网络资源
+		boolean ifGetNet = true ;		
+		if(isEPrepare==1){
+			ifGetNet = false ;
+		}
 		
 		String tfcode = ControllerHelper.getParameter(request, "tfcode");
 		String title = request.getParameter("title");
 		// 当前登录用户id
 		Long userId = (Long) request.getAttribute("currentUserId");		
-		return assetService.getCourseAssetUnifyType(userId, tfcode, title==null?"":title.trim());
+		return assetService.getCourseAssetUnifyType(ifGetNet,userId, tfcode, title==null?"":title.trim());
 
 	}
 
@@ -593,6 +600,15 @@ public class AssetController {
 	@ResponseBody
 	public ResultJSON getCourseAsset(HttpServletRequest request,
 			HttpServletResponse response) throws IOException, ParamsException {
+		//是否是e备课的请求
+				int  isEPrepare = ControllerHelper.getIntWithDefault(request, "isEPrepare");
+				//是否获取网络资源
+				boolean ifGetNet = true ;		
+				if(isEPrepare==1){
+					ifGetNet = false ;
+				}
+				
+		
 		
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
@@ -608,7 +624,7 @@ public class AssetController {
 		// 当前登录用户id
 		Long userId = (Long) request.getAttribute("currentUserId");	
 		
-		Pagination _page = assetService.getCourseAssetPage(unifyTypeId,userId, tfcode, title, page, perPage);
+		Pagination _page = assetService.getCourseAssetPage(ifGetNet,unifyTypeId,userId, tfcode, title, page, perPage);
 		if(_page!=null && _page.getList()!=null){
 			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
 					currentResPath);

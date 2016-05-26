@@ -31,6 +31,6 @@
   <!--  更新资源的 节点  -->
   <update id="updateAssetSyscourse">
   	update  z_asset_syscourse set  tfcode=#{tfcode},sharescope=#{scope}
-	where id = ( select id from ( SELECT MIN(id) from z_asset_syscourse where assetid =#{resId} and flag =false )temp   )
+	where id = (SELECT id from ( SELECT MIN(id) as id  from z_asset_syscourse where assetid =#{resId} and flag =false )ttttt)
   </update>
 </mapper>

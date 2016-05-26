@@ -170,6 +170,18 @@ public interface JPrepareService {
      */
     public Pagination<JPrepareContentView> queryLimitedPrepareContentPage(Long prepareId,Integer page,Integer perPage,String[]removeTypeIds);
 
+    /**
+     * 分页获取备课夹内容列表(受限的，排除e备课不能使用的部分(类型)资源)
+     * @param prepareId
+     * @param page
+     * @param perPage
+     * @param removeTypeIds 受限的，排除e备课不能使用的部分(类型)资源
+     * @param ifGetNet 是否获取网络资源
+     * @return
+     */
+    public Pagination<JPrepareContentView> queryLimitedPrepareContentPage(Long prepareId,Integer page,Integer perPage,String[]removeTypeIds,boolean ifGetNet);
+  
+    
     
     
     /**

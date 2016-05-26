@@ -190,17 +190,19 @@ public interface ZAssetService {
 	
 	/**
 	 * 获取当前查询条件下的资源类型
+	 * @param ifGetNet 
 	 * @param userId
 	 * @param tfcode
 	 * @param title
 	 * @return
 	 */
-	public ResultJSON  getCourseAssetUnifyType(Long userId,String tfcode,String title);
+	public ResultJSON  getCourseAssetUnifyType(boolean ifGetNet, Long userId,String tfcode,String title);
 	
 	
 	
 	/**
 	 * 获取当前查询条件下的自建资源
+	 * @param ifGetNet 
 	 * @param userId
 	 * @param tfcode
 	 * @param title
@@ -208,7 +210,7 @@ public interface ZAssetService {
 	 * @param perPage
 	 * @return
 	 */
-	public Pagination<JPrepareContentView>  getCourseAssetPage(Integer unifyTypeId,Long userId,String tfcode,String title,Integer page,Integer perPage);
+	public Pagination<JPrepareContentView>  getCourseAssetPage(boolean ifGetNet, Integer unifyTypeId,Long userId,String tfcode,String title,Integer page,Integer perPage);
 	
 	
 	

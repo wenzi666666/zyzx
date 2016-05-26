@@ -616,6 +616,30 @@ public class JPrepareServiceImpl implements JPrepareService {
 //		List<JPrepareContentView> list =  mapper.queryPrepareContentList(prepareId);
 		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
 	}
+	
+
+	public Pagination<JPrepareContentView> queryLimitedPrepareContentListWithoutNet(
+			Long prepareId, Integer page, Integer perPage,
+			String[] removeTypeIds) {
+		PageHelper.startPage(page, perPage);
+		List<JPrepareContentView> list =  mapper.queryLimitedPrepareContentListWithoutNet(prepareId, removeTypeIds);
+		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
+	}
+	
+	@Override
+	public Pagination<JPrepareContentView> queryLimitedPrepareContentPage(
+			Long prepareId, Integer page, Integer perPage,
+			String[] removeTypeIds, boolean ifGetNet) {
+		if(ifGetNet){
+			return queryLimitedPrepareContentPage(prepareId, page, perPage, removeTypeIds);
+		}else{
+			return queryLimitedPrepareContentListWithoutNet(prepareId, page, perPage, removeTypeIds);
+		}
+	}
+	
+	
+	
+	
 
 	@Override
 	public ResultJSON getPrepareNodeInfo(Long prepareId,int perPage) {
@@ -658,5 +682,7 @@ public class JPrepareServiceImpl implements JPrepareService {
 		int perPage = 10 ;
 		System.out.println(page = rowno/perPage + (rowno%perPage==0?0:1));
 	}
+
+	
 
 }

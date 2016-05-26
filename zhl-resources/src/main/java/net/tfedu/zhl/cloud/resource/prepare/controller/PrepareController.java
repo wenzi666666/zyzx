@@ -30,6 +30,7 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.slf4j.Logger;
@@ -408,6 +409,15 @@ public class PrepareController {
 	public ResultJSON querylimitedPrepareContentPage(@PathVariable Long prepareId,
 			Integer perPage, Integer page, HttpServletRequest request)
 			throws Exception {
+		//是否是e备课的请求
+		int  isEPrepare = ControllerHelper.getIntWithDefault(request, "isEPrepare");
+		//是否获取网络资源
+		boolean ifGetNet = true ;
+		
+		if(isEPrepare==1){
+			ifGetNet = false ;
+		}
+		
 		// 返回
 		Object data = null;
 		
@@ -429,7 +439,8 @@ public class PrepareController {
 		if (prepareId > 0) {
 			// 获取备课夹内容
 			Pagination<JPrepareContentView> _page = jPrepareService
-					.queryLimitedPrepareContentPage(prepareId, page, perPage,removeTypeIds.split(","));
+					.queryLimitedPrepareContentPage(prepareId, page, perPage,removeTypeIds.split(",")							
+					,ifGetNet);
 			JPrepareContentViewUtil.convertToPurpose(_page.getList(), resServiceLocal,
 					currentResPath);
 			data = _page;

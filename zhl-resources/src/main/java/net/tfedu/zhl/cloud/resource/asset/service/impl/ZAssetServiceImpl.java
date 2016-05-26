@@ -523,9 +523,11 @@ public class ZAssetServiceImpl implements ZAssetService {
 
 	@Override
 	public void updateAsset(ZAsset asset,String tfcode,Integer scope, String resServiceLocal, String currentResPath, String hostLocal) throws Exception {
+		Date time = Calendar.getInstance().getTime();
 		ZAsset _history = assetMapper.selectByPrimaryKey(asset.getId());
 		
 		asset.setIslocal(_history.getIslocal());
+		asset.setUpdatetime(time);
 		//获取资源、判断是否路径出现变化
 		//0：转码完成，1：未完成
 		int isfinished = 1 ;		
@@ -568,7 +570,6 @@ public class ZAssetServiceImpl implements ZAssetService {
 			//区本资源表中的  资源范围 1全国资源 2省资源 3市资源 4区资源 5校资源
 			int _scope = scope==1?5:4;
 			long _scopeId = _scope==5?schoolid:districtid;
-			Date time = Calendar.getInstance().getTime();
 			
 			String assetPath =asset.getAssetpath();
 			//组装区本、校本路径
@@ -935,20 +936,20 @@ public class ZAssetServiceImpl implements ZAssetService {
 
 
 	@Override
-	public ResultJSON getCourseAssetUnifyType(Long userId, String tfcode,
+	public ResultJSON getCourseAssetUnifyType(boolean ifGetNet, Long userId, String tfcode,
 			String title) {
 		
-		return ResultJSON.getSuccess(assetMapper.getCourseAssetUnifyType(userId, tfcode+"%", "%"+title+"%"));
+		return ResultJSON.getSuccess(assetMapper.getCourseAssetUnifyType(ifGetNet, userId, tfcode+"%", "%"+title+"%"));
 	}
 
 
 
 
 	@Override
-	public Pagination<JPrepareContentView> getCourseAssetPage(Integer unifyTypeId,Long userId, String tfcode,
+	public Pagination<JPrepareContentView> getCourseAssetPage(boolean ifGetNet, Integer unifyTypeId,Long userId, String tfcode,
 			String title, Integer page, Integer perPage) {
 		PageHelper.startPage(page, perPage);
-		List<JPrepareContentView>  list = assetMapper.getCourseAssetPage(unifyTypeId,userId, tfcode+"%", "%"+title+"%");
+		List<JPrepareContentView>  list = assetMapper.getCourseAssetPage(ifGetNet, unifyTypeId,userId, tfcode+"%", "%"+title+"%");
 		return new PageInfoToPagination<JPrepareContentView>().transfer(list);
 	}
 	
