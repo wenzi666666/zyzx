@@ -168,6 +168,50 @@
   
   </select>
   
+  <!-- e备课，系统资源：当资源库选择  “全部” 或  “教学素材” 时，显示所有一级类型。过滤掉网络资源  -->
+  <select id="getSysFirstLevelType_EPrepare"  resultMap="FirstTypeResultMap" >  
+  select DISTINCT case when b.PId=0 then b.MType ELSE pb.MType END mtype,case when b.PId=0 then b.id ELSE pb.id END id,case when b.pid = 0 then b.DisplayIndex else pb.DisplayIndex end DisplayIndex  
+  from z_resource a 
+  left join z_resnav c on a.ResCode=c.ResCode 
+  left join j_syscourse d on c.StructCode=d.tfcode 
+  left join x_resourcetype b on a.MType = b.id
+  left join x_resourcetype pb on pb.Id=b.pid 
+  where a.flag = 0 and c.Flag = 0 and d.Flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.isLocal = 1 and a.fromFlag in 
+                <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+  and (b.id in <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+  
+  or pb.id in <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>) order by DisplayIndex
+  </select>
+    
+  <!-- e备课，系统资源：当资源库选择  “动画教具库”、“名师微课”、“教学案例” 时，显示所有二级类型。 当资源库为“理化生实验”时，只显示“全部”。过滤掉网络资源 -->
+  <select id="getSysSecondLevelType_EPrepare"  resultMap="FirstTypeResultMap" >
+  select DISTINCT b.mtype,b.id 
+  from z_resource a 
+  left join x_resourcetype b on a.MType = b.id 
+  left join z_resnav c on a.ResCode=c.ResCode 
+  left join j_syscourse d on c.StructCode=d.tfcode 
+  where a.flag = 0 and b.level = 2 and c.Flag = 0 and d.Flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.isLocal = 1 and a.fromFlag in 
+                <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach>
+  and b.id in <foreach item="item" index="index" collection="typeIds" 
+                         open="(" separator="," close=")">
+                         #{item}
+                </foreach> 
+  order by b.DisplayIndex
+  
+  </select>
+  
  <!-- **************************  区本、校本资源    类型相关   **************************  -->
  
  <!-- 区本校本资源： 资源类型查询 ，fromFlag用以区分校本、区本 -->
@@ -196,7 +240,7 @@
      left join j_syscourse d on c.StructCode=d.tfcode 
      left join x_resourcetype b on a.MType = b.id 
      left join x_resourcetype pb on pb.Id = b.pid 
-     where a.flag = 0 and c.flag=0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') 
+     where a.flag = 0 and c.flag=0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and a.isLocal = 1 
      <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}
      </if>

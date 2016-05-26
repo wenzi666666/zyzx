@@ -97,11 +97,11 @@ public class ResTypeServiceImpl implements ResTypeService {
              */
             if (poolId == 0 || poolId == 4 || poolId == 5) {
               
-            	types = resTypeMapper.getSysFirstLevelType(typeIds, pTfcode,sys_from);
+            	types = resTypeMapper.getSysFirstLevelType_EPrepare(typeIds, pTfcode,sys_from);
 
             } else { // 当资源库选择 “动画教具”、“名师微课”、“教学案例”
                      // 时，显示所有二级类型；当资源库为“理化生实验”时，只显示“全部”。
-                types = resTypeMapper.getSysSecondLevelType(typeIds, pTfcode, sys_from);
+                types = resTypeMapper.getSysSecondLevelType_EPrepare(typeIds, pTfcode, sys_from);
             }
     	}
 

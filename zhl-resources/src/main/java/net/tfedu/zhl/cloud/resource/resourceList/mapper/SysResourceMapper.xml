@@ -83,7 +83,7 @@
 	left join j_syscourse d on  c.StructCode=d.TFcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
 	LEFT JOIN z_res_disk k on k.rescode = a.rescode 
-	where a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in 
+	where a.flag = 0 and c.flag=0 and d.flag=0 and a.isLocal = 1 and a.fromflag in 
 	
 	            <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">

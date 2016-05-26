@@ -134,7 +134,7 @@
    
   </select>
   
-   <!-- 区本校本资源：e备课 -->
+   <!-- 区本校本资源：e备课，只查询本地资源，过滤网络资源 -->
     <select id="selectDisRes_EPrepare" resultMap="DisResMap">
 
     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
@@ -149,7 +149,7 @@
 	left join j_syscourse d on c.StructCode=d.tfcode 
 	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code  
     
-    where a.flag = 0 and d.flag=0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%')   
+    where a.flag = 0 and d.flag=0 and c.flag=0 and c.StructCode like CONCAT(#{tfcode},'%') and a.isLocal = 1 
     
     <if test="searchWord != null and searchWord != ''">
          and a.Title like CONCAT('%',#{searchWord},'%')
