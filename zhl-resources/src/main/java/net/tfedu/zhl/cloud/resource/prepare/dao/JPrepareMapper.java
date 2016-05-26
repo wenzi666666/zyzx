@@ -57,7 +57,10 @@ public interface JPrepareMapper extends CoreMapper<JPrepare> {
     public void removeResourceFromPrepare(Long prepareId, Integer contType, Long contId);
 
     /**
+     * （已经废弃，改用updatetime排序）
      * 更新内容的排序字段
+     * 
+     * 
      */
     public void update_default_prepare_content_order();
 

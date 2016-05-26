@@ -123,7 +123,7 @@ public class JPrepareServiceImpl implements JPrepareService {
         //增加内容
     	contMapper.insert(content);
     	//更新内容排序
-        mapper.update_default_prepare_content_order();
+        //mapper.update_default_prepare_content_order();
         
         //更新备课夹的更新时间
         Date currentDate = Calendar.getInstance().getTime();
@@ -228,26 +228,34 @@ public class JPrepareServiceImpl implements JPrepareService {
             // 如果有则 加入到备课夹
             // 没有则 新建备课夹 加入
             Date currentDate = Calendar.getInstance().getTime();
+            long prepareId = 0;
             if (list != null && list.size() > 0) {
-                JPrepareView prepare = list.get(0);
+            	JPrepareView _prepare = list.get(0);
+            	prepareId = _prepare.getId();
                 // 将资源加入备课夹
                 JPrepareContent cont = new JPrepareContent();
-                cont.setPreid(prepare.getId());
+                cont.setPreid(_prepare.getId());
                 cont.setContid(nav.getResId());
                 cont.setConttype(JPrepareConstant.CONTTYPE_SYSRES);
                 cont.setCreatetime(currentDate);
                 contMapper.insert(cont);
-                mapper.update_default_prepare_content_order();
+                
+              //更新备课夹的更新时间
+                JPrepare obj = new JPrepare();
+                obj.setId(prepareId);
+                obj.setUpdatetime(currentDate);
+                mapper.updateByPrimaryKeySelective(obj);
             } else {
                 String title = nav.getTitle();
                 // 新建备课夹
-                JPrepare prepare = new JPrepare();
+                JPrepare  prepare = new JPrepare();
                 prepare.setUserid(userId);
                 prepare.setCreatetime(currentDate);
                 prepare.setTfcode(tfcode);
                 prepare.setTitle(title);
                 mapper.insert(prepare);
-
+                prepareId = prepare.getId();
+                
                 // 将资源加入备课夹
                 JPrepareContent cont = new JPrepareContent();
                 cont.setPreid(prepare.getId());
@@ -255,16 +263,6 @@ public class JPrepareServiceImpl implements JPrepareService {
                 cont.setConttype(JPrepareConstant.CONTTYPE_SYSRES);
                 cont.setCreatetime(currentDate);
                 contMapper.insert(cont);
-                mapper.update_default_prepare_content_order();
-                
-                
-                
-                //更新备课夹的更新时间
-                 JPrepare obj = new JPrepare();
-                 obj.setId(prepare.getId());
-                 obj.setUpdatetime(currentDate);
-                 mapper.updateByPrimaryKeySelective(obj);
-
             }
         }
     }
@@ -592,7 +590,7 @@ public class JPrepareServiceImpl implements JPrepareService {
 
 		contMapper.copyPrepareContent(prepareId.toString(), obj.getId().toString());
 		
-		return ResultJSON.getSuccess("");
+		return ResultJSON.getSuccess(obj.getId());
 	
 	}
 

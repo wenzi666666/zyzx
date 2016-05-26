@@ -15,11 +15,18 @@ import org.springframework.stereotype.Component;
  */
 @Component("commonWebConfig")
 public class CommonWebConfig {
+	
+	
 
+	/**
+	 * 应用的访问地址，可以为多个，以逗号分隔
+	 */
 	@Value("#{configProperties['host']}")
 	public String host;
 	
-	
+	/**
+	 * 应用的内网访问地址，可以为多个，以逗号分隔，但是第一个必须是文件服务器可以调用的（localhost\127.0.0.1不可以）
+	 */
 	@Value("#{configProperties['hostLocal']}")
 	public String hostLocal ;
 	
@@ -62,6 +69,51 @@ public class CommonWebConfig {
 	public Boolean isCloudModel;
 	
 
+	
+	
+	
+	
+	
+	
+	/**
+	 * 题库的对接地址
+	 */
+	@Value("#{configProperties['tkHost']}")
+	public String tkHost;
+	/**
+	 * 题库的对接地址local
+	 */
+	@Value("#{configProperties['tkHostLocal']}")
+	public String tkHostLocal;
+	
+	/**
+	 * 情景英语的对接地址
+	 */
+	@Value("#{configProperties['sceneEnglish']}")
+	public String sceneEnglish;
+	/**
+	 * 情景英语的对接地址local
+	 */
+	@Value("#{configProperties['sceneEnglishLocal']}")
+	public String sceneEnglishLocal;
+	
+	
+	/**
+	 * 论坛3.0的对接地址
+	 */
+	@Value("#{configProperties['forum3Host']}")
+	public String forum3Host;
+	/**
+	 *  论坛3.0的对接地址local
+	 */
+	@Value("#{configProperties['forum3HostLocal']}")
+	public String forum3HostLocal;
+	
+	
+	
+	
+	
+	
 	/**
 	 *获取配置的host
 	 * @return
@@ -247,5 +299,151 @@ public class CommonWebConfig {
 	public void setIsCloudModel(Boolean isCloudModel) {
 		this.isCloudModel = isCloudModel;
 	}
+
+
+	public String getTkHost() {
+		return tkHost;
+	}
+
+
+	public void setTkHost(String tkHost) {
+		this.tkHost = tkHost;
+	}
+
+
+	public String getTkHostLocal() {
+		return tkHostLocal;
+	}
+
+
+	public void setTkHostLocal(String tkHostLocal) {
+		this.tkHostLocal = tkHostLocal;
+	}
+
+
+	public String getSceneEnglish() {
+		return sceneEnglish;
+	}
+
+
+	public void setSceneEnglish(String sceneEnglish) {
+		this.sceneEnglish = sceneEnglish;
+	}
+
+
+	public String getSceneEnglishLocal() {
+		return sceneEnglishLocal;
+	}
+
+
+	public void setSceneEnglishLocal(String sceneEnglishLocal) {
+		this.sceneEnglishLocal = sceneEnglishLocal;
+	}
+
+
+	public String getForum3Host() {
+		return forum3Host;
+	}
+
+
+	public void setForum3Host(String forum3Host) {
+		this.forum3Host = forum3Host;
+	}
+
+
+	public String getForum3HostLocal() {
+		return forum3HostLocal;
+	}
+
+
+	public void setForum3HostLocal(String forum3HostLocal) {
+		this.forum3HostLocal = forum3HostLocal;
+	}
+	
+	
+	/**
+	 * 获取当前浏览器下的题库的路径
+	 * @param request
+	 * @return
+	 */
+	public String getCurrentTkHost(HttpServletRequest request){
+        String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
+        // 当前 题库服务器地址
+        String currentTkHost = "";
+        
+        
+      //云模式，直接返回题库服务器地址的外网地址
+        if(isCloudModel){
+        	currentTkHost = tkHost;
+        	return currentTkHost;
+        }
+        
+		
+        if (host.contains(URI)) {
+        	currentTkHost = tkHost;
+        }
+        else if (hostLocal.contains(URI)) {
+        	currentTkHost = tkHostLocal;
+        }
+
+        return currentTkHost;
+	}
+	
+	/**
+	 * 获取当前浏览器下的情景英语的对接路径
+	 * @param request
+	 * @return
+	 */
+	public String getCurrentSceneEnglish(HttpServletRequest request){
+        String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
+        // 当前 情景英语服务器地址
+        String currentSceneEnglish = "";
+        
+        
+      //云模式，直接返回情景英语服务器地址的外网地址
+        if(isCloudModel){
+        	currentSceneEnglish = sceneEnglish;
+        	return currentSceneEnglish;
+        }
+        
+		
+        if (host.contains(URI)) {
+        	currentSceneEnglish = sceneEnglish;
+        }
+        else if (hostLocal.contains(URI)) {
+        	currentSceneEnglish = sceneEnglishLocal;
+        }
+
+        return currentSceneEnglish;
+	}
+	
+	/**
+	 * 获取当前浏览器下的论坛3.0的路径
+	 * @param request
+	 * @return
+	 */
+	public String getCurrentForum3(HttpServletRequest request){
+        String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
+        // 当前  论坛3.0台服务器地址
+        String currentForum3 = "";
+        
+        
+      //云模式，直接返回论坛3.0服务器地址的外网地址
+        if(isCloudModel){
+        	currentForum3 = forum3Host;
+        	return currentForum3;
+        }
+        
+		
+        if (host.contains(URI)) {
+        	currentForum3 = forum3Host;
+        }
+        else if (hostLocal.contains(URI)) {
+        	currentForum3 = forum3HostLocal;
+        }
+
+        return currentForum3;
+	}
+	
 	
 }
