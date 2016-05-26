@@ -65,7 +65,7 @@ public class AdditionalController {
 		String page =  "1".equals(register.getRoleid().toString()) ? "1": "0";
 		
 		String sign = MD5.MD5("user=" + userName + "&pass=" + pwd_str + "&page="
-				+ page + "&key=9k8i78jug6hd93kjf84h");
+				+ page + "&key="+additional_key);
 		String s = "user=" + userName + "&pass=" + pwd_str + "&page=" + page
 				+ "&sign=" + sign;
 		

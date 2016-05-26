@@ -88,8 +88,6 @@ public class JPrepareServiceImpl implements JPrepareService {
     	}
     	
         mapper.insert(obj);
-        // 更新排序字段
-        mapper.update_default_prepare_order();
         return obj;
     }
 
@@ -122,8 +120,6 @@ public class JPrepareServiceImpl implements JPrepareService {
 
         //增加内容
     	contMapper.insert(content);
-    	//更新内容排序
-        //mapper.update_default_prepare_content_order();
         
         //更新备课夹的更新时间
         Date currentDate = Calendar.getInstance().getTime();
@@ -542,8 +538,6 @@ public class JPrepareServiceImpl implements JPrepareService {
 		        if(list.size()>0){
 		        	//增加内容
 			    	contMapper.insertList(list);
-			    	//更新内容排序
-			        mapper.update_default_prepare_content_order();
 			        //更新备课夹的更新时间
 			        Date currentDate = Calendar.getInstance().getTime();
 			        for (Long id : preIds) {
