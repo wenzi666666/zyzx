@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.other;
 
 import java.net.URLEncoder;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -53,6 +55,7 @@ public class AdditionalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/sceneEnglish",method=RequestMethod.GET)
 	public ModelAndView sceneEnglish(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
 		// 当前登录用户id
@@ -75,9 +78,10 @@ public class AdditionalController {
 		
 		//情景英语
 		String url = config.getCurrentSceneEnglish(request)+"?s=" + s;
-		response.sendRedirect(url);
 		
-		return  null ;
+		ModelAndView view =new ModelAndView();
+		view.setViewName("redirect:"+url);
+		return  view ;
 	}
 	
 	
@@ -86,12 +90,30 @@ public class AdditionalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/questionLibrary",method=RequestMethod.GET)
 	public ModelAndView questionLibrary(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+		SRegister register = regSerivce.getRegister(currentUserId);
+		String userName = register.getName();
+		String password = PWDEncrypt.getPWD(register.getPwd());
+
 		
 		
+		String key=additional_key;
+		String params = "username="+userName+"&userpwd="+password;
+		String _sign = MD5.MD5(params + "&key="+key);
+		params+="&sign="+_sign;
+		byte[] b1=xxtea.encrypt(params.getBytes("utf-8"), key.getBytes("utf-8"));
+		String s1=Base64.encode(b1);
+		s1= URLEncoder.encode(s1, "utf-8");
 		
-		return  null ;
+		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter";
+		ModelAndView view =new ModelAndView();
+		view.setViewName("redirect:"+url);
+		return  view ;
 	}
 	
 	
@@ -101,12 +123,24 @@ public class AdditionalController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/forum3",method=RequestMethod.GET)
 	public ModelAndView forum3(HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
 		
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+		SRegister register = regSerivce.getRegister(currentUserId);
+		String userName = register.getName();
+		String password = PWDEncrypt.getPWD(register.getPwd());
 		
 		
-		return  null ;
+		String forum3=config.getCurrentForum3(request);
+		forum3+="?username="+userName+"&token="+UUID.randomUUID().toString();
+//   	response.sendRedirect(forum3);
+		ModelAndView view =new ModelAndView();
+		view.setViewName("redirect:"+forum3);
+		return  view ;
 	}
 	
 
