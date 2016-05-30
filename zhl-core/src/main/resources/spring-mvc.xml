@@ -60,6 +60,8 @@
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/resource/uploadConvertCallBack"/>
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/verificationcode"/>
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/zipDownload_status"/>
+        	<mvc:exclude-mapping path="/resRestAPI/v1.0/versionsByCode" />
+        	<mvc:exclude-mapping path="/resRestAPI/v1.0/versionsByName" />
         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
         </mvc:interceptor>
         
