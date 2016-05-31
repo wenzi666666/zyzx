@@ -71,7 +71,7 @@ public class UserControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testLogin() throws Exception {
-		request.setParameter("user_name", "csls10");
+		request.setParameter("user_name", "tfgaolican");
 		request.setParameter("user_pwd", "000000");
 		result = controller.Login(request, response);
 

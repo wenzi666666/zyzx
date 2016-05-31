@@ -101,7 +101,8 @@ public class AdditionalController {
 		String userName = register.getName();
 		String password = PWDEncrypt.getPWD(register.getPwd());
 
-		
+//		userName = "tfzuyalan";
+//		password = "000000";
 		
 		String key=additional_key;
 		String params = "username="+userName+"&userpwd="+password;

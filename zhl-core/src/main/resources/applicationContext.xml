@@ -21,9 +21,14 @@
 	<!-- 包自动扫描 -->
 	<context:component-scan base-package="net.tfedu.zhl.**.dao" />
 	<context:component-scan base-package="net.tfedu.zhl.**.service" />
+	<!-- <context:component-scan base-package="net.tfedu.zhl.**.aop" /> -->
 
 	<!-- enable autowire -->  
     <context:annotation-config /> 
+    
+    	<!-- 自动识别切面编程类  通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->	
+	<!-- <aop:aspectj-autoproxy  proxy-target-class="true" expose-proxy="true"/>	 -->
+    
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
