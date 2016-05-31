@@ -17,9 +17,16 @@
 	<mvc:default-servlet-handler/>
 		
 		
+		
  	<context:component-scan base-package="cn.outofmemory.hellospring.properties.annotation"/>
  		
  	<context:component-scan base-package="net.tfedu.zhl.**.config" />
+ 	
+ 	
+ 	<context:component-scan base-package="net.tfedu.zhl.**.aop" />
+    	<!-- 自动识别切面编程类  通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller -->	
+	<aop:aspectj-autoproxy  proxy-target-class="true" expose-proxy="true"/>
+ 	
  		
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">

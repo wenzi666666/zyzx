@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.resource.questionbank;
 
-import static org.junit.Assert.*;
-
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.questionbank.aop.ResultQuestion;
@@ -9,7 +7,6 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 
 public class QuestionBankControllerTest extends BaseControllerTestCase{
@@ -35,7 +32,7 @@ public class QuestionBankControllerTest extends BaseControllerTestCase{
 
 	@Test
 	public void testGetProvince() throws Exception {
-		result = controller.getProvince(1l);
+		result = controller.getProvince();
 		if(result instanceof ResultJSON){
 			ResultJSON  json = (ResultJSON)result;
 			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));

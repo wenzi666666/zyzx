@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.questionbank;
 
-import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -15,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 
  * （复写3.0接口，原有的规范不变）
  * @author wangwr
+ *  service 中返回ResultJSON 对象
+ *  通过切面编程 将 之转换成ResultQuestion 对象
  *
  */
 
@@ -37,7 +38,7 @@ public class QuestionBankController{
 	
 	@RequestMapping(value="questionbankajax_queryProvince.action",method=RequestMethod.GET)
 	@ResponseBody
-	public Object getProvince(Long pro_id)throws Exception {
+	public Object getProvince()throws Exception {
 		
 		
 	

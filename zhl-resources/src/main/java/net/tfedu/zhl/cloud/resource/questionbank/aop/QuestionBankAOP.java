@@ -32,6 +32,7 @@ public class QuestionBankAOP {
 	
 
 	@Around("questionPointcut()")
+	@ResponseBody
 	public Object doAround(ProceedingJoinPoint pjp){
 		ResultQuestion result = new ResultQuestion();
 		ResultJSON  json = null;
