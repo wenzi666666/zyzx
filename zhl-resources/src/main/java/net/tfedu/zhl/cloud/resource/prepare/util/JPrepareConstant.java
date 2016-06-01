@@ -287,7 +287,8 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
 		
 		
 		//如果是加密swf\mp4的文件
-		if(ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+		if(ZhlResourceCenterWrap.FileType_EXE.equals(flag) 
+        		|| ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
 			String  url = "";
 			if(isdwj){
 				String _path =  path.replaceAll("\\\\", "/");
@@ -428,4 +429,5 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         info.setPath(path);
 
     }
+    
 }
