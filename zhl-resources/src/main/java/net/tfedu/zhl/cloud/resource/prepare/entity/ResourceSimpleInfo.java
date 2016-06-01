@@ -52,6 +52,12 @@ public class ResourceSimpleInfo {
     
     
     
+    /**
+     * 文件的后缀  系统资源有效（区分exe）
+     */
+    private String fileext;
+    
+    
     
 
     public Boolean getIsebook() {
@@ -118,7 +124,17 @@ public class ResourceSimpleInfo {
         this.title = title;
     }
 
-    @Override
+    
+    
+    public String getFileext() {
+		return fileext;
+	}
+
+	public void setFileext(String fileext) {
+		this.fileext = fileext;
+	}
+
+	@Override
     public String toString() {
         return new StringBuffer().append("[\"ResourceSimpleInfo\":{").append("\"resid\":\"" + resid + "\";")
                 .append("\"rescode\":\"" + rescode + "\";").append("\"title\":\"" + title + "\";")

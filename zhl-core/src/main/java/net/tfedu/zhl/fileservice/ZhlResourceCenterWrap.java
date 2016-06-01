@@ -38,6 +38,12 @@ public class ZhlResourceCenterWrap {
 	 * 加密的文件格式
 	 */
 	public static final String FileType_encrypt = ".swf.mp4";
+	
+	/**
+	 * exe文件格式
+	 */
+	public static final String FileType_EXE = ".exe";
+	
 
 	/**
 	 * 缩略图图片格式后缀

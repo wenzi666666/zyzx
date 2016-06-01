@@ -328,13 +328,16 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
         String title = info.getTitle();
+        String fileext = info.getFileext();
 
         // 如果是系统资源
         if (fromflag == fromFlag_sysRes) {
             String flag = path.substring(path.lastIndexOf("."), path.length());
 
             // 如果是加密swf\mp4的文件
-            if (ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
+            if (ZhlResourceCenterWrap.FileType_EXE.equals(fileext) 
+            		||
+            		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
                 String url = "";
                 if (isdwj) {
                     String _path = path.replaceAll("\\\\", "/");

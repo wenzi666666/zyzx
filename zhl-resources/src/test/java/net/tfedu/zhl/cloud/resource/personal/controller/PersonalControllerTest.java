@@ -205,6 +205,7 @@ public class PersonalControllerTest extends BaseControllerTestCase {
         ResultJSON result = controller.prepareStatis(request, response);
 
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+        System.out.println(JSONObject.toJSONString(result));
 
     }
     
