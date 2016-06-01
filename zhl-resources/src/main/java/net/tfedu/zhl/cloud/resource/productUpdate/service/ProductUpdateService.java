@@ -14,12 +14,12 @@ public interface ProductUpdateService {
 	public ResultJSON selectVersionsByCode(String productCode,long versionCode,int productType);
 	
 	/**
-	 * 根据产品名称、版本编码，查询升级文件及升级说明
+	 * 根据产品编码、版本名称，查询升级文件及升级说明
 	 * @param productName
 	 * @param versionCode
 	 * @param productType
 	 * @return
 	 */
-	public ResultJSON selectVersionsByName(String productName,long versionCode,int productType);
+	public ResultJSON selectVersionsByName(String productName,String versionName,int productType);
 	
 }

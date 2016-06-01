@@ -1,35 +1,18 @@
 package net.tfedu.zhl.cloud.resource.productUpdate.entity;
 
-import java.util.Date;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class ProductVersion {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String versionid;
 
-    private String productcode;
+    private Long code;
 
-    private Long versioncode;
-
-    private String versionname;
-
-    /**
-     * 创建时间
-     */
-    private Date createtime;
+    private String name;
 
     private String description;
 
-    public ProductVersion(String versionid, String productcode, Long versioncode, String versionname, Date createtime, String description) {
-        this.versionid = versionid;
-        this.productcode = productcode;
-        this.versioncode = versioncode;
-        this.versionname = versionname;
-        this.createtime = createtime;
+    public ProductVersion(Long versioncode, String versionname, String description) {
+      
+        this.code = versioncode;
+        this.name = versionname;
         this.description = description;
     }
 
@@ -37,78 +20,33 @@ public class ProductVersion {
         super();
     }
 
-    /**
-     * @return versionid
-     */
-    public String getVersionid() {
-        return versionid;
-    }
 
     /**
-     * @param versionid
+     * @return code
      */
-    public void setVersionid(String versionid) {
-        this.versionid = versionid == null ? null : versionid.trim();
-    }
-
-    /**
-     * @return productcode
-     */
-    public String getProductcode() {
-        return productcode;
-    }
-
-    /**
-     * @param productcode
-     */
-    public void setProductcode(String productcode) {
-        this.productcode = productcode == null ? null : productcode.trim();
-    }
-
-    /**
-     * @return versioncode
-     */
-    public Long getVersioncode() {
-        return versioncode;
+    public Long getcode() {
+        return code;
     }
 
     /**
      * @param versioncode
      */
-    public void setVersioncode(Long versioncode) {
-        this.versioncode = versioncode;
+    public void setcode(Long code) {
+        this.code = code;
     }
 
     /**
-     * @return versionname
+     * @return name
      */
-    public String getVersionname() {
-        return versionname;
+    public String getname() {
+        return name;
     }
 
     /**
      * @param versionname
      */
-    public void setVersionname(String versionname) {
-        this.versionname = versionname == null ? null : versionname.trim();
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return createtime - 创建时间
-     */
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createtime 创建时间
-     */
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
+    public void setname(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     /**

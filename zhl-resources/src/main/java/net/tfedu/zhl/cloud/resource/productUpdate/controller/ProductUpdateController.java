@@ -39,7 +39,7 @@ public class ProductUpdateController {
 	}
 	
 	/**
-	 * 根据产品名称、版本编码，查询升级文件及升级说明
+	 * 根据产品编码、版本名称，查询升级文件及升级说明
 	 * @param request
 	 * @param response
 	 * @return
@@ -48,9 +48,9 @@ public class ProductUpdateController {
 	@RequestMapping(value = "/v1.0/versionsByName", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON selectVersionsByName(HttpServletRequest request,HttpServletResponse response) throws Exception{
-		String productName = ControllerHelper.getParameter(request, "productName");
-		long versionCode = Long.parseLong(ControllerHelper.getParameter(request, "versionCode"));
+		String productCode = ControllerHelper.getParameter(request, "productCode");
+		String versionName = ControllerHelper.getParameter(request, "versionName");
 		int productType = Integer.parseInt(ControllerHelper.getParameter(request, "productType"));
-		return productUpdateService.selectVersionsByName(productName, versionCode, productType);
+		return productUpdateService.selectVersionsByName(productCode, versionName, productType);
 	}
 }

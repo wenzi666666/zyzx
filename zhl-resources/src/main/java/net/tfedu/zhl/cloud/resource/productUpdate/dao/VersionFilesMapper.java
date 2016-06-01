@@ -19,12 +19,8 @@ public interface VersionFilesMapper extends CoreMapper<VersionFiles> {
 	public List<VersionFiles> allUpdatedFilesByCode(@Param("productCode")String productCode,@Param("versionCode")long versionCode,@Param("productType")int productType);
 	
 	/**
-	 * 根据产品name，版本code，产品类型，查询当前版本后的所有升级文件
-	 * @param productName
-	 * @param versionCode
-	 * @param productType
-	 * @return
+	 * 根据产品code，版本name，产品类型，查询当前版本后的所有升级文件
 	 */
-	public List<VersionFiles> allUpdatedFilesByName(@Param("productName")String productName,@Param("versionCode")long versionCode,@Param("productType")int productType);
+	public List<VersionFiles> allUpdatedFilesByName(@Param("productCode")String productCode,@Param("versionName")String versionName,@Param("productType")int productType);
 	
 }
