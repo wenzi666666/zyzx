@@ -21,13 +21,13 @@
      order by a.createtime desc
   </select>
   
-  <!-- 根据productName，productType，versioncode，查询当前版本之后的所有版本信息 -->
+  <!-- 根据productCode，productType，versionname，查询当前版本之后的所有版本信息 -->
   <select id="allUpdatedFilesByName" resultMap="BaseResultMap">
      select filename,address,location,filetype,filesize,isreg,deccompressfile 
      from versionfiles a 
      left join productversion b on a.versionid = b.versionid
      left join production c on c.productcode = b.productcode
-     where b.versioncode > #{versionCode} and c.productname = #{productName} and c.productType = #{productType}
+     where b.versionname > #{versionName} and b.productcode = #{productCode} and c.productType = #{productType}
      order by a.createtime desc
   </select>
 </mapper>

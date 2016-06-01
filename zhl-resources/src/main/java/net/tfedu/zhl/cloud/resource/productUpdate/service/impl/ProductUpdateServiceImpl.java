@@ -50,22 +50,30 @@ public class ProductUpdateServiceImpl implements ProductUpdateService{
 			}
 		}
 		
-		List<Object> result = new ArrayList<Object>();
-		result.add(version);
-		result.add(files);
+		HashMap<String, Object> filesMap = new HashMap<String, Object>();
 		
-		return ResultJSON.getSuccess(result);
+		List<Object> fileitems = new ArrayList<Object>();
+		for(int i = 0; i < files.size();i++)
+		    filesMap.put("item",files.get(i));
+		
+		fileitems.add(filesMap);
+		
+		HashMap<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("latestversion", version);
+		map1.put("updateitems",fileitems);
+		
+		return ResultJSON.getSuccess(map1);
 		
 	}
 
 	
 	/**
-	 * 根据产品名称、版本编码，查询升级文件及升级说明
+	 * 根据产品编码、版本名称，查询升级文件及升级说明
 	 */
 	@Override
-	public ResultJSON selectVersionsByName(String productName,long versionCode,int productType){
-		ProductVersion version = productVersionMapper.latestVersionInfoByName(productName, versionCode, productType);
-		List<VersionFiles> files = versionFilesMapper.allUpdatedFilesByName(productName, versionCode, productType);
+	public ResultJSON selectVersionsByName(String productCode,String versionName,int productType){
+		ProductVersion version = productVersionMapper.latestVersionInfoByName(productCode, versionName, productType);
+		List<VersionFiles> files = versionFilesMapper.allUpdatedFilesByName(productCode, versionName, productType);
 		
 		//存储path
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -81,10 +89,18 @@ public class ProductUpdateServiceImpl implements ProductUpdateService{
 			}
 		}
 		
-		List<Object> result = new ArrayList<Object>();
-		result.add(version);
-		result.add(files);
+        HashMap<String, Object> filesMap = new HashMap<String, Object>();
 		
-		return ResultJSON.getSuccess(result);
+		List<Object> fileitems = new ArrayList<Object>();
+		for(int i = 0; i < files.size();i++)
+		    filesMap.put("item",files.get(i));
+		
+		fileitems.add(filesMap);
+		
+		HashMap<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("latestversion", version);
+		map1.put("updateitems",fileitems);
+		
+		return ResultJSON.getSuccess(map1);
 	}
 }

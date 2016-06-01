@@ -17,11 +17,11 @@ public interface ProductVersionMapper extends CoreMapper<ProductVersion> {
 	public ProductVersion latestVersionInfoByCode(@Param("productCode")String productCode,@Param("versionCode")long versionCode,@Param("productType")int productType);
 	
 	/**
-	 * 根据产品名称，版本code，产品类型，查询最新版本信息
+	 * 根据产品编码，版本名称，产品类型，查询最新版本信息
 	 * @param productName  产品名称
 	 * @param versionCode  版本code
 	 * @param productType  产品类型
 	 * @return
 	 */
-	public ProductVersion latestVersionInfoByName(@Param("productName")String productName,@Param("versionCode")long versionCode,@Param("productType")int productType);
+	public ProductVersion latestVersionInfoByName(@Param("productCode")String productCode,@Param("versionName")String versionName,@Param("productType")int productType);
 }

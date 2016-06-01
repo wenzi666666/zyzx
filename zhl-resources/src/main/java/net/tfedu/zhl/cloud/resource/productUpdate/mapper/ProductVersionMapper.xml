@@ -3,8 +3,8 @@
 <mapper namespace="net.tfedu.zhl.cloud.resource.productUpdate.dao.ProductVersionMapper" >
   <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.productUpdate.entity.ProductVersion" >
     
-       <result column="versioncode" property="versioncode" />
-       <result column="versionname" property="versionname" />
+       <result column="versioncode" property="code" />
+       <result column="versionname" property="name" />
        <result column="description" property="description" />
     
   </resultMap>
@@ -20,9 +20,9 @@
   
   <!-- 查询最新版本的code，name，description。description是将当前版本以后的所有版本升级说明拼接起来 -->
   <select id="latestVersionInfoByName" resultMap="BaseResultMap">
-     select a.versioncode,a.versionname,(select GROUP_CONCAT(description) from ProductVersion where versioncode > #{versionCode}) as description 
+     select a.versioncode,a.versionname,(select GROUP_CONCAT(description) from ProductVersion where versionname > #{versionName}) as description 
      from productversion a left join production b 
      on a.productcode = b.productcode 
-     where a.versioncode = (select MAX(versioncode) from ProductVersion) and c.productname = #{productName} and b.producttype = #{productType}
+     where a.versionname = (select MAX(versionName) from ProductVersion) and b.productcode = #{productCode} and b.producttype = #{productType}
   </select>
 </mapper>

@@ -1,16 +1,8 @@
 package net.tfedu.zhl.cloud.resource.productUpdate.entity;
 
-import java.util.Date;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 public class VersionFiles {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String versionid;
-
+  
     /**
      * 升级文件名称
      */
@@ -46,13 +38,9 @@ public class VersionFiles {
      */
     private Integer deccompressfile;
 
-    /**
-     * 创建时间
-     */
-    private Date createtime;
 
-    public VersionFiles(String versionid, String filename, String address, String location, Integer filetype, Long filesize, Integer isreg, Integer deccompressfile, Date createtime) {
-        this.versionid = versionid;
+    public VersionFiles(String filename, String address, String location, Integer filetype, Long filesize, Integer isreg, Integer deccompressfile) {
+        
         this.filename = filename;
         this.address = address;
         this.location = location;
@@ -60,26 +48,13 @@ public class VersionFiles {
         this.filesize = filesize;
         this.isreg = isreg;
         this.deccompressfile = deccompressfile;
-        this.createtime = createtime;
+       
     }
 
     public VersionFiles() {
         super();
     }
 
-    /**
-     * @return versionid
-     */
-    public String getVersionid() {
-        return versionid;
-    }
-
-    /**
-     * @param versionid
-     */
-    public void setVersionid(String versionid) {
-        this.versionid = versionid == null ? null : versionid.trim();
-    }
 
     /**
      * 获取升级文件名称
@@ -205,23 +180,5 @@ public class VersionFiles {
      */
     public void setDeccompressfile(Integer deccompressfile) {
         this.deccompressfile = deccompressfile;
-    }
-
-    /**
-     * 获取创建时间
-     *
-     * @return createtime - 创建时间
-     */
-    public Date getCreatetime() {
-        return createtime;
-    }
-
-    /**
-     * 设置创建时间
-     *
-     * @param createtime 创建时间
-     */
-    public void setCreatetime(Date createtime) {
-        this.createtime = createtime;
     }
 }
