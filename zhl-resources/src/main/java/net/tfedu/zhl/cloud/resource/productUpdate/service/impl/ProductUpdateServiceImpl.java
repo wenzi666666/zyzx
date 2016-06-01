@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.resource.productUpdate.service.impl;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -50,17 +49,10 @@ public class ProductUpdateServiceImpl implements ProductUpdateService{
 			}
 		}
 		
-		HashMap<String, Object> filesMap = new HashMap<String, Object>();
-		
-		List<Object> fileitems = new ArrayList<Object>();
-		for(int i = 0; i < files.size();i++)
-		    filesMap.put("item",files.get(i));
-		
-		fileitems.add(filesMap);
 		
 		HashMap<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("latestversion", version);
-		map1.put("updateitems",fileitems);
+		map1.put("updateitems",files);
 		
 		return ResultJSON.getSuccess(map1);
 		
@@ -88,18 +80,9 @@ public class ProductUpdateServiceImpl implements ProductUpdateService{
 				map.put(path, 1);
 			}
 		}
-		
-        HashMap<String, Object> filesMap = new HashMap<String, Object>();
-		
-		List<Object> fileitems = new ArrayList<Object>();
-		for(int i = 0; i < files.size();i++)
-		    filesMap.put("item",files.get(i));
-		
-		fileitems.add(filesMap);
-		
 		HashMap<String, Object> map1 = new HashMap<String, Object>();
 		map1.put("latestversion", version);
-		map1.put("updateitems",fileitems);
+		map1.put("updateitems",files);
 		
 		return ResultJSON.getSuccess(map1);
 	}
