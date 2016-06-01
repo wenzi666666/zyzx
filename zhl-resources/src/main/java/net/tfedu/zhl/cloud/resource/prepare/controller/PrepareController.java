@@ -41,6 +41,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 备课夹相关接口
  * 
@@ -762,6 +764,25 @@ public class PrepareController {
 
 		ResZipDownRecord record = resZipDownloadService.getZipDownRecord(id);
 		String zippath = record.getZippath();
+		
+		if(!record.getStatus()){
+			//检查zippath是否存在
+			// 判断是否存在
+            String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, zippath);
+            if (StringUtils.isNotEmpty(s)) {
+                HashMap m = JSONObject.parseObject(s, HashMap.class);
+                if (m != null && ((Integer) m.get("FileSize") > 0)) {
+                	record.setStatus(true);
+                	resZipDownloadService.updateZipDownRecord(record);
+                }
+            } 			
+		}
+		
+		
+		
+		
+		
+		
 		// 如果打包成功
 		if (record.getStatus()) {
 			// 转换为最终的下载路径
