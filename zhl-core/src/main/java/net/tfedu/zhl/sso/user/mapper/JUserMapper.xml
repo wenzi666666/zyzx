@@ -53,9 +53,23 @@
     <result column="termName" property="termName" javaType="java.lang.String" jdbcType="CHAR" />
   
   </resultMap>
-
-
-
+  
+  <!-- 题库对接，根据user_name，查询对应的用户信息 -->
+  <resultMap id="usersMap" type="net.tfedu.zhl.sso.user.entity.UsersEntity" >
+       <result column="user_id" property="id" />
+       <result column="user_name" property="name" />
+       <result column="user_true_name" property="trueName" />
+       <result column="user_image" property="userImage" />
+       <result column="sch_id" property="schoolId" />
+       <result column="sch_name" property="schoolName" />
+       <result column="dist_id" property="districtId" />
+       <result column="dist_name" property="districtName" />
+       <result column="term_id" property="termId" />
+       <result column="term_name" property="termName" />
+       <result column="subj_id" property="subjectId" />
+       <result column="subj_name" property="subjectName" />
+  </resultMap>
+  
 	<select id="getUserByName" parameterType="String" resultMap="userMap">
 		select u.Id,u.name,u.RoleId,u.ChannelId,u.ChannelLimit,u.LoginTime,u.LogoutTime,u.SchoolId,u.TrueName,u.NickName,u.IsSee,u.Male,u.Flag,u.webLoginTime,u.webLogoutTime
 		,u.forumLastSeeTime,u.qaLastSeeTime,u.studyTermId,u.status,u.lastTipId,u.grade,u.isFirstLogin
@@ -161,6 +175,24 @@
 	LEFT JOIN j_teachersubject ts on ts.UserId = u.id 
 	LEFT JOIN j_subject s on s.id = ts.SubjectId 
 	where u.id = #{userId}  and um.flag = false and u.flag = false and ts.flag =false and s.flag = false 
+  </select>
+  
+  <!-- 题库对接，根据name查询用户信息  -->
+  <select id="queryUserBasicInfo" parameterType="String" resultMap="usersMap">
+  select user_id,user_name,user_true_name,user_image,sch_id,sch_name,dist_id,dist_name,term_id,term_name,subj_id,subj_name
+  from 
+  (select u.id as user_id,u.name as user_name,u.trueName as user_true_name,ui.userImage as user_image 
+  ,u.schoolId as sch_id,d.id as dist_id ,d.name as dist_name,s.name as sch_name,t.id as term_id,t.name as term_name 
+  ,st.id as subj_id,st.name as subj_name 
+  from j_user u left join j_userinfo ui on u.id=ui.userid
+  left join j_school s on u.schoolId=s.id 
+  left join q_district d on s.districtId=d.id 
+  left join j_userterm ut on u.id=ut.userId 
+  left join j_term t on ut.termId=t.id
+  left join j_term_subject ts on t.id=ts.termId
+  left join j_subject st on ts.subjectId=st.id
+  where u.flag=0 and u.name = #{userName}
+  ) a  
   </select>
   
 </mapper>

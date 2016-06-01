@@ -2,10 +2,12 @@ package net.tfedu.zhl.sso.user.dao;
 
 
 import java.util.HashMap;
+import java.util.List;
 
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.entity.UsersEntity;
 
 /**
  * 用户业务表
@@ -68,5 +70,12 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @return
 	 */
 	public HashMap<String,String> getUserTermAndSubject(Long userId);
+	
+	/**
+	 * 题库对接，根据name查询所有用户信息
+	 * @param userName
+	 * @return
+	 */
+	public List<UsersEntity> queryUserBasicInfo(String userName);
 
 }
