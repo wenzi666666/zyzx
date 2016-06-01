@@ -21,4 +21,8 @@
       <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  <!-- 查询区下的所有学校 -->
+  <select id="querySchoolByDistrictId" resultType="net.tfedu.zhl.sso.school.entity.JSchool">
+      select id ,name from j_school where districtId=#{districtId} and flag=0
+  </select>
 </mapper>

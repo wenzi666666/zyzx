@@ -5,10 +5,8 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class QuestionBankAOP {
 
 	
-	@Pointcut("within(net.tfedu.zhl.cloud.resource.questionbank.QuestionBankController)")
+	@Pointcut("within(net.tfedu.zhl.cloud.resource.questionbank.controller.QuestionBankController)")
 	public void  questionPointcut(){
 	}
 	

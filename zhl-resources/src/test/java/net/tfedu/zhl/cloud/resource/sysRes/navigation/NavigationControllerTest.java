@@ -80,22 +80,6 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 
     }
 	
-	/**
-	 * 根据版本id，查询教材，通用controller的单元测试
-	 * @throws Exception
-	 */
-	@Test
-    public void testBooksController_product() throws Exception {
-       
-        request.setParameter("pnodeId", "101140105");
-        
-
-        ResultJSON json = navigationController.getAllBooksByEdition_product(request, response);
-       
-        JsonUtil.toJsonString(json);
-        Assert.isTrue("OK".equals(json.getCode()));
-
-    }
 	
 	/**
 	 * 根据父结点id，目录树

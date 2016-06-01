@@ -14,7 +14,7 @@
     </constructor>
   </resultMap>
   
-  <!-- 获得所有学段 -->
+  <!-- 获得所有学段，除去其他 -->
   <resultMap id="AllTermsMap" type="net.tfedu.zhl.sso.term.entity.JTerm" >
 		<id column="id" property="id" />
 		<result column="name" property="name" />
@@ -35,5 +35,17 @@
 		from j_term_subject ts 
 		left join j_subject s on s.id = ts.subjectId
 		where ts.flag = false and s.flag = false and ts.termId=#{termId} order by s.id
+  </select>
+  
+  <!-- 题库对接，查询所有学段 -->
+  <select id="queryTerm" resultType="net.tfedu.zhl.sso.term.entity.JTerm">
+     select id,name from j_term where flag=0
+  </select>
+  
+  <!-- 题库对接，查询学段下的所有学科 -->
+  <select id="querySubjectByTermId" resultType="net.tfedu.zhl.sso.subject.entity.JSubject">
+     select s.id,s.name from j_subject_tiku s 
+     left join j_term_subject ts on s.id=ts.subjectId
+     where ts.termId=#{termId} and s.flag=0 
   </select>
 </mapper>
