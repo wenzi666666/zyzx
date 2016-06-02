@@ -1,16 +1,19 @@
-package net.tfedu.zhl.cloud.resource.questionbank;
+package net.tfedu.zhl.cloud.resource.questionbank.controller;
 
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.questionbank.aop.ResultQuestion;
-import net.tfedu.zhl.cloud.resource.questionbank.controller.QuestionBankController;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
 
+import com.alibaba.fastjson.JSONObject;
+
 public class QuestionBankControllerTest extends BaseControllerTestCase{
+
+	
 	
 	@Resource
 	QuestionBankController controller;
@@ -172,5 +175,101 @@ public class QuestionBankControllerTest extends BaseControllerTestCase{
 		}
 
     }
+	
+
+	@Test
+	public void testGetSchoolSubject() throws Exception {
+		
+		
+		result = controller.getSchoolSubject("278");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+		
+	}
+
+	@Test
+	public void testQueryCourseByTermIdSubjectId() throws Exception {
+		result = controller.queryCourseByTermIdSubjectId("1", "1");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+	}
+
+	@Test
+	public void testQueryCourseTree() throws Exception {
+		
+		result = controller.queryCourseTree("231630105");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+		
+	}
+
+	@Test
+	public void testQueryKnowlagePointTree() throws Exception {
+		result = controller.queryKnowlagePointTree("1", "1");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+	}
+
+	@Test
+	public void testUserLogin() throws Exception {
+		result = controller.userLogin("csls10", "111111");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+	}
+
+	@Test
+	public void testQuerySubjectByDistrictId() throws Exception {
+		result = controller.querySubjectByDistrictId("10");
+		System.out.println(JSONObject.toJSONString(result));
+		if(result instanceof ResultJSON){
+			ResultJSON  json = (ResultJSON)result;
+			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));
+		}else if(result instanceof ResultQuestion){
+			ResultQuestion json = (ResultQuestion)result;
+			Assert.isTrue("success".equals(json.getMessage()));
+		}else{
+			Assert.isTrue(false);
+		}
+	}
 
 }

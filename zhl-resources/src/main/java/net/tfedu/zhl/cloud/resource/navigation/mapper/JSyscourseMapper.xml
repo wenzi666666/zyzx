@@ -48,7 +48,15 @@
 	and tfcode in (select DISTINCT left(tfcode,8) as tfcode from j_producttfcodecontrast) ORDER BY s.orderNum asc,s.id DESC)tmp 
 	where name is not null and name != ''  
   </select>
-  
+   <select id="getAllEditions2" parameterType="HashMap" resultMap="EditionResultMap">
+    select id,name,tfcode from(
+  	select s.id,s.name,tfcode from j_syscourse s
+	LEFT JOIN j_term j on s.termId = j.id
+	LEFT JOIN j_subject sub on s.subjectId = sub.id
+	where s.termid =#{termId} and s.subjectid =#{subjectId} and s.flag = false and j.flag = false and sub.flag = false and s.pnodeid = 0 
+	and tfcode in (select DISTINCT left(tfcode,8) as tfcode from j_producttfcodecontrast) ORDER BY s.orderNum asc,s.id DESC)tmp 
+	where name is not null and name != ''  
+  </select>
   <!-- 根据所属版本和产品编码，查询所有的教材 -->
   <resultMap id="BooksResultMap"   type="net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse" >
 		<id column="id" property="id" />
@@ -81,6 +89,55 @@
 	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
 	where s.id =#{id} and s.flag = false and proCode =#{proCode} and s.visible = 1 and s.typeFlag in (0,1) 
   </select>
+  
+  
+  
+  
+  
+  <resultMap type="net.tfedu.zhl.cloud.resource.navigation.entity.CourseViewTk" id="courseTreeInfoTK">
+  	<id column="cour_id" property="cour_id"/>
+  	<result  column="cour_pid" property="cour_pid"/>
+  	<result  column="cour_tf_code" property="cour_tf_code"/>
+  	<result  column="cour_name" property="cour_name"/>
+  </resultMap>
+  
+  
+  
+   <!-- 根据教程结点tfcode，获取全部节点的详细信息   -->
+  <select id="getAllCourseTreeInfo" resultMap="courseTreeInfoTK">
+  	select  * from (
+			 select  id as cour_id,pnodeid as cour_pid,tfcode as cour_tf_code, if(bookname is null,name,bookname)  as cour_name from (
+			  select s.id , s.name, s.tfcode ,s.pnodeId
+			  ,(select ts.bookname from j_producttfcodecontrast ts where ts.tfcode = s.TFcode and flag = false  and proCode =#{proCode} )  bookname
+			  from j_syscourse s
+				where s.tfcode like #{tfcode} 
+			   and s.typeFlag in (0,1) and s.isKnowledge = 0
+			
+			)temp
+			)ttt2
+  </select>
+ 
+ 
+ 
+ 
+  <resultMap type="net.tfedu.zhl.cloud.resource.navigation.entity.KonwladgeViewTk" id="knowladgeInfoTK">
+  	<id column="know_id" property="know_id"/>
+  	<result  column="know_name" property="know_name"/>
+  	<result  column="know_code" property="know_code"/>
+  	<result  column="term_id" property="term_id"/>
+  	<result  column="subj_id" property="subj_id"/>
+  </resultMap>
+ 
+ 
+   <!-- 获取学段、学科下的知识点   -->
+  <select id="getKnowladgeTree" resultMap="knowladgeInfoTK">
+		select 
+		 s.id as know_id,s.name as know_name ,s.tfcode as know_code, s.TermId as term_id,s.SubjectId as subj_id
+		 from j_syscourse s where s.isKnowledge = 1  and termid = #{term_id} and SubjectId =  #{subj_id} and flag = false 
+		and  11 > LENGTH(TFcode);
+  </select>
+ 
+ 
  
   <!-- 开启二级缓存 -->
   <cache
