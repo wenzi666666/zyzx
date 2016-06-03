@@ -13,8 +13,13 @@
     </constructor>
   </resultMap>
   
+  <resultMap id="resultProvince" type="net.tfedu.zhl.sso.province.entity.ProvinceEntity">
+       <result column="pro_id" property="pro_id" />
+       <result column="pro_name" property="pro_name" />
+  </resultMap>
+  
   <!-- 查询所有省份 -->
-  <select id ="queryProvince" resultType="net.tfedu.zhl.sso.province.entity.Province">
-     select id,name from q_province where flag=0
+  <select id ="queryProvince" resultMap="resultProvince">
+     select pro_id,pro_name from ( select id as pro_id,name as pro_name from q_province where flag=0 )a
   </select>
 </mapper>

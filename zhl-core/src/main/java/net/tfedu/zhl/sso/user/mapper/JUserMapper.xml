@@ -56,18 +56,18 @@
   
   <!-- 题库对接，根据user_name，查询对应的用户信息 -->
   <resultMap id="usersMap" type="net.tfedu.zhl.sso.user.entity.UsersEntity" >
-       <result column="user_id" property="id" />
-       <result column="user_name" property="name" />
-       <result column="user_true_name" property="trueName" />
-       <result column="user_image" property="userImage" />
-       <result column="sch_id" property="schoolId" />
-       <result column="sch_name" property="schoolName" />
-       <result column="dist_id" property="districtId" />
-       <result column="dist_name" property="districtName" />
-       <result column="term_id" property="termId" />
-       <result column="term_name" property="termName" />
-       <result column="subj_id" property="subjectId" />
-       <result column="subj_name" property="subjectName" />
+       <result column="user_id" property="user_id" />
+       <result column="user_name" property="user_name" />
+       <result column="user_true_name" property="user_true_name" />
+       <result column="user_image" property="user_image" />
+       <result column="sch_id" property="sch_id" />
+       <result column="sch_name" property="sch_name" />
+       <result column="dist_id" property="dist_id" />
+       <result column="dist_name" property="dist_name" />
+       <result column="term_id" property="term_id" />
+       <result column="term_name" property="term_name" />
+       <result column="subj_id" property="subj_id" />
+       <result column="subj_name" property="subj_name" />
   </resultMap>
   
 	<select id="getUserByName" parameterType="String" resultMap="userMap">
@@ -178,7 +178,7 @@
   </select>
   
   <!-- 题库对接，根据name查询用户信息  -->
-  <select id="queryUserBasicInfo" parameterType="String" resultMap="usersMap">
+  <select id="queryUserBasicInfo" resultMap="usersMap">
   select user_id,user_name,user_true_name,user_image,sch_id,sch_name,dist_id,dist_name,term_id,term_name,subj_id,subj_name
   from 
   (select u.id as user_id,u.name as user_name,u.trueName as user_true_name,ui.userImage as user_image 

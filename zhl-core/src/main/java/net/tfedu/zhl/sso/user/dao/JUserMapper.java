@@ -4,6 +4,8 @@ package net.tfedu.zhl.sso.user.dao;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
@@ -76,6 +78,6 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @param userName
 	 * @return
 	 */
-	public List<UsersEntity> queryUserBasicInfo(String userName);
+	public List<UsersEntity> queryUserBasicInfo(@Param("userName")String userName);
 
 }
