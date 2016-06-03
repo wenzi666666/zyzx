@@ -50,5 +50,13 @@ public interface BaseService<T> {
      * 更新部分属性
      */
     ResultJSON update(T c);
+    
+    
+    /**
+     * 获取全部记录
+     * @param c
+     * @return
+     */
+    ResultJSON selectAll();
 
 }

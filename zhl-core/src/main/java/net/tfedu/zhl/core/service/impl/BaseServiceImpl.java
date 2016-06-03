@@ -132,6 +132,19 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     	return  (String)request.getAttribute("currentUuId");
     }
     
+    /**
+     * 获取全部记录
+     * @param c
+     * @return
+     */
+	@Override
+	public ResultJSON selectAll() {
+		// TODO Auto-generated method stub
+		List<T> data = mapper.selectAll();
+        result = defaultSuccess(data);
+        return result;
+	}
+    
     
     
     
