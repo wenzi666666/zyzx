@@ -2,35 +2,118 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+	<properties>
+		<!-- base setting -->
+		<sourceEncoding>UTF-8</sourceEncoding>
+		<build.locales>zh_CN</build.locales>
+		<jdk.version>1.6</jdk.version>
+
+		<!-- plugin versions -->
+		<plugin.maven-compiler>3.2</plugin.maven-compiler>
+		<plugin.maven-surefire>2.18.1</plugin.maven-surefire>
+		<plugin.maven-resources>2.5</plugin.maven-resources>
+		<skipTests>true</skipTests>
+
+		<!-- db 与 business -->
+		<spring.version>4.2.1.RELEASE</spring.version>
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis-spring.version>1.2.3</mybatis-spring.version>
+		<persistence.version>1.0.2</persistence.version>
+		<druid.version>1.0.15</druid.version>
+		<fastjson.version>1.2.7</fastjson.version>
+		<jackson.version>2.7.2</jackson.version>
+		<mysql-connection.version>5.1.27</mysql-connection.version>
+		<mybatis-generator.version>1.3.2</mybatis-generator.version>
+		<mapper.version>3.3.6</mapper.version>
+		<pagehelper.version>4.1.2</pagehelper.version>
+		<jsqlparser.version>0.9.4</jsqlparser.version>
+		<oauth2.version>1.0.1</oauth2.version>
+
+		<!-- tools -->
+		<junit.version>4.12</junit.version>
+		<slf4j.version>1.7.12</slf4j.version>
+		<logback.version>1.1.7</logback.version>
+		<servlet.version>3.0.1</servlet.version>
+		<aspectj.version>1.6.12</aspectj.version>
+		<jaxp.version>1.4.2</jaxp.version>
+		<ehcache.version>2.10.1</ehcache.version>
+		<ehcache-core.version>2.6.11</ehcache-core.version>
+		<commons.fileupload.version>1.3.1</commons.fileupload.version>
+		<commons.beanutils.version>1.8.3</commons.beanutils.version>
+		
+	
+	
+	
+	
+		<resService>http://192.168.111.22:8099/down/</resService>        
+		<resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
+		<fdHost>http://fd.zhihaole.net/</fdHost>        
+		<fdHostLocal>http://fd.zhihaole.net/</fdHostLocal>        
+		<isRepeatLogin>false</isRepeatLogin>  
+		<isCloudModel>false</isCloudModel>  
+		
+         <!-- 题库对接的配置  -->
+       <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
+       <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
+       <!-- 情景英语对接的配置  -->
+       <sceneEnglish>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglish>  
+       <sceneEnglishLocal>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglishLocal>  
+       <!-- forum3.0  -->
+       <forum3Host>http://chat.tfedu.net:7070/auth/process</forum3Host>  
+       <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
+
+		
+		
+	</properties>
+
 
 	<profiles>
 		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
 			<id>resources</id>
 			<properties>
-<!-- 				<package.environment>local</package.environment>					
- -->				<buss.name>zhl-resources</buss.name>
+ 				<package.environment>local</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu123</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu123</jdbc_bo_password>   
+                    
+                <host>http://192.168.111.204:8880/resources/</host>        
+                <hostLocal>http://192.168.111.204:8880/</hostLocal>        
+		         <!-- 题库对接的配置  -->
+		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
+		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
+                
 			</properties>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 		</profile>
-<!-- 		<profile>
-			<id>ali79</id>
+		<profile>
+			<id>test249</id>
 			<properties>
-                <package.environment>ali79</package.environment>
+                <package.environment>test249</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu123</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu123</jdbc_bo_password>   
+                    
+                <host>http://192.168.111.249:8080/resources/</host>        
+                <hostLocal>http://192.168.111.249:8080/</hostLocal>        
+                <resService>http://192.168.111.22:8099/down/</resService>        
+                <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
+                <isCloudModel>true</isCloudModel>  
             </properties>
 		</profile>
-		<profile>
-			<id>ali248</id>
-			<properties>
-                <package.environment>ali248</package.environment>
-                <buss.name>zhl-resources</buss.name>
-				<web.name>resources</web.name>
-            </properties>
-		</profile>	 -->		
+	
 	</profiles>
 
 	<modelVersion>4.0.0</modelVersion>
@@ -41,13 +124,16 @@
 
 	<name>zhl-cloud</name>
 	<url>http://yun.tfedu.net</url>
-
 	<modules>
 		<module>zhl-utils</module>
 		<module>zhl-core</module>
 		<module>${buss.name}</module>
 		<module>zhl-web</module>
 	</modules>
+
+
+
+
 
 	<build>
 		<plugins>
@@ -125,8 +211,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
-                    <warName>resources</warName>
-                   <!--  <warName>resources_${package.environment}</warName> -->
+                    <warName>${web.name}_${package.environment}</warName>
                     <webResources>
                     	<resource>
                             <directory>src/main/resources</directory>
@@ -138,19 +223,6 @@
                             <targetPath>WEB-INF/classes</targetPath>
                             <filtering>true</filtering>
                         </resource>
-                        <!-- <resource>
-                            <directory>src/main/resources/${package.environment}</directory>
-                            <targetPath>WEB-INF/classes</targetPath>
-                            <filtering>true</filtering>
-                        </resource> -->
-                        
-                        <!--<resource>-->
-                            <!--<directory>${project.build.directory}/classes</directory>-->
-                            <!--<includes>-->
-                                <!--<include>**/*.properties</include>-->
-                                <!--<include>**/*.xml</include>-->
-                            <!--</includes>-->
-                        <!--</resource>-->
                     </webResources>
                 </configuration>
             </plugin>
@@ -159,20 +231,11 @@
 		<resources>
 			<resource>
 				<directory>src/main/java</directory>
-				<includes>
-					<include>**/*.properties</include>
-					<include>**/*.xml</include>
-				</includes>
-				<filtering>false</filtering>
+				<filtering>true</filtering>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
-				<excludes>
-					<exclude>generator*.*</exclude>
-			        <exclude>local/*</exclude>
-			        <exclude>ali79/*</exclude>
-				</excludes>
 			</resource>
 		</resources>
 		<testResources>
@@ -188,46 +251,6 @@
 	</build>
 
 
-
-	<properties>
-		<!-- base setting -->
-		<sourceEncoding>UTF-8</sourceEncoding>
-		<build.locales>zh_CN</build.locales>
-		<jdk.version>1.6</jdk.version>
-
-		<!-- plugin versions -->
-		<plugin.maven-compiler>3.2</plugin.maven-compiler>
-		<plugin.maven-surefire>2.18.1</plugin.maven-surefire>
-		<plugin.maven-resources>2.5</plugin.maven-resources>
-		<skipTests>true</skipTests>
-
-		<!-- db 与 business -->
-		<spring.version>4.2.1.RELEASE</spring.version>
-		<mybatis.version>3.3.0</mybatis.version>
-		<mybatis-spring.version>1.2.3</mybatis-spring.version>
-		<persistence.version>1.0.2</persistence.version>
-		<druid.version>1.0.15</druid.version>
-		<fastjson.version>1.2.7</fastjson.version>
-		<jackson.version>2.7.2</jackson.version>
-		<mysql-connection.version>5.1.27</mysql-connection.version>
-		<mybatis-generator.version>1.3.2</mybatis-generator.version>
-		<mapper.version>3.3.6</mapper.version>
-		<pagehelper.version>4.1.2</pagehelper.version>
-		<jsqlparser.version>0.9.4</jsqlparser.version>
-		<oauth2.version>1.0.1</oauth2.version>
-
-		<!-- tools -->
-		<junit.version>4.12</junit.version>
-		<slf4j.version>1.7.12</slf4j.version>
-		<logback.version>1.1.7</logback.version>
-		<servlet.version>3.0.1</servlet.version>
-		<aspectj.version>1.6.12</aspectj.version>
-		<jaxp.version>1.4.2</jaxp.version>
-		<ehcache.version>2.10.1</ehcache.version>
-		<ehcache-core.version>2.6.11</ehcache-core.version>
-		<commons.fileupload.version>1.3.1</commons.fileupload.version>
-		<commons.beanutils.version>1.8.3</commons.beanutils.version>
-	</properties>
 
 	<dependencies>
 		<dependency>
