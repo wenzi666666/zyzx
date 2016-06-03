@@ -10,143 +10,144 @@ import java.io.Serializable;
 public class UsersEntity implements Serializable {
 	 private static final long serialVersionUID = -4154529847915546034L;
 	 
-	 private Long id;
+	 private Long user_id;
 
-	 private String name;
+	 private String user_name;
 	 
-	 private String trueName;
+	 private String user_true_name;
 	 
-	 private String userImage;
+	 private String user_image;
 	 
-	 private Long schoolId;
+	 private Long sch_id;
 	 
 	 /**
       * 用户学校
       */
-     private String schoolName;
+     private String sch_name;
      
-     private Long districtId;
+     private Long dist_id;
 	 
 	 /**
       * 用户学校
       */
-     private String districtName;
+     private String dist_name;
 	 
 	 /**
       * 用户学段
       */
-     private String termName;
+     private String term_name;
 
-     private Long termId;
+     private Long term_id;
 
     
      /**
       * 用户学科id
       */
-     private String subjectId;
+     private String subj_id;
 
      /**
       * 用户学科名
       */
-     private String subjectName;
+     private String subj_name;
 
-	public Long getId() {
-		return id;
+	public Long getUser_id() {
+		return user_id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setUser_id(Long user_id) {
+		this.user_id = user_id;
 	}
 
-	public String getName() {
-		return name;
+	public String getUser_name() {
+		return user_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 
-	public String getTrueName() {
-		return trueName;
+	public String getUser_true_name() {
+		return user_true_name;
 	}
 
-	public void setTrueName(String trueName) {
-		this.trueName = trueName;
+	public void setUser_true_name(String user_true_name) {
+		this.user_true_name = user_true_name;
 	}
 
-	public String getUserImage() {
-		return userImage;
+	public String getUser_image() {
+		return user_image;
 	}
 
-	public void setUserImage(String userImage) {
-		this.userImage = userImage;
+	public void setUser_image(String user_image) {
+		this.user_image = user_image;
 	}
 
-	public Long getSchoolId() {
-		return schoolId;
+	public Long getSch_id() {
+		return sch_id;
 	}
 
-	public void setSchoolId(Long schoolId) {
-		this.schoolId = schoolId;
+	public void setSch_id(Long sch_id) {
+		this.sch_id = sch_id;
 	}
 
-	public String getSchoolName() {
-		return schoolName;
+	public String getSch_name() {
+		return sch_name;
 	}
 
-	public void setSchoolName(String schoolName) {
-		this.schoolName = schoolName;
+	public void setSch_name(String sch_name) {
+		this.sch_name = sch_name;
 	}
 
-	public Long getDistrictId() {
-		return districtId;
+	public Long getDist_id() {
+		return dist_id;
 	}
 
-	public void setDistrictId(Long districtId) {
-		this.districtId = districtId;
+	public void setDist_id(Long dist_id) {
+		this.dist_id = dist_id;
 	}
 
-	public String getDistrictName() {
-		return districtName;
+	public String getDist_name() {
+		return dist_name;
 	}
 
-	public void setDistrictName(String districtName) {
-		this.districtName = districtName;
+	public void setDist_name(String dist_name) {
+		this.dist_name = dist_name;
 	}
 
-	public String getTermName() {
-		return termName;
+	public String getTerm_name() {
+		return term_name;
 	}
 
-	public void setTermName(String termName) {
-		this.termName = termName;
+	public void setTerm_name(String term_name) {
+		this.term_name = term_name;
 	}
 
-	public Long getTermId() {
-		return termId;
+	public Long getTerm_id() {
+		return term_id;
 	}
 
-	public void setTermId(Long termId) {
-		this.termId = termId;
+	public void setTerm_id(Long term_id) {
+		this.term_id = term_id;
 	}
 
-	public String getSubjectId() {
-		return subjectId;
+	public String getSubj_id() {
+		return subj_id;
 	}
 
-	public void setSubjectId(String subjectId) {
-		this.subjectId = subjectId;
+	public void setSubj_id(String subj_id) {
+		this.subj_id = subj_id;
 	}
 
-	public String getSubjectName() {
-		return subjectName;
+	public String getSubj_name() {
+		return subj_name;
 	}
 
-	public void setSubjectName(String subjectName) {
-		this.subjectName = subjectName;
+	public void setSubj_name(String subj_name) {
+		this.subj_name = subj_name;
 	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 }

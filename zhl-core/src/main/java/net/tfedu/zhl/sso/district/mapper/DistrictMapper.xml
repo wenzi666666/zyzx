@@ -14,8 +14,15 @@
     </constructor>
   </resultMap>
   
+  <resultMap id="resultDis" type="net.tfedu.zhl.sso.district.entity.DistrictEntity">
+       <result column="dist_id" property="dist_id" />
+       <result column="dist_name" property="dist_name" />
+  </resultMap>
+  
   <!-- 查询市下的区 -->
-  <select id ="queryDistirctByCityId" resultType="net.tfedu.zhl.sso.district.entity.District">
-    select id,name from q_district where cityId=#{cityId} and flag=0
+  <select id ="queryDistirctByCityId" resultMap="resultDis">
+    select dist_id,dist_name from 
+    (select id as dist_id ,name as dist_name from q_district where cityId=#{cityId} and flag=0 
+    )a 
   </select>
 </mapper>
