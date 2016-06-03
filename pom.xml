@@ -89,9 +89,7 @@
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
                 
 			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
+
 		</profile>
 		<profile>
 			<id>test249</id>
@@ -111,7 +109,33 @@
                 <resService>http://192.168.111.22:8099/down/</resService>        
                 <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
-            </properties>
+            </properties>            
+		</profile>
+		
+		
+		<profile>
+			<id>teaching</id>
+			<properties>
+                <package.environment>local</package.environment>
+                <buss.name>zhl-teachingresearch</buss.name>
+				<web.name>teachingresearch</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.10:3306/teach_app_service_tfedu?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu123&amp;*()</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.10:3306/teach_app_service_tfedu?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu123&amp;*()</jdbc_bo_password>   
+                    
+                <host>http://127.0.0.1:8080/teachingresearch/</host>        
+                <hostLocal>http://localhost:8080/</hostLocal>        
+                <resService>http://192.168.111.22:8099/down/</resService>        
+                <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
+                <isCloudModel>true</isCloudModel>  
+            </properties>  
+            
+            <activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>          
 		</profile>
 	
 	</profiles>
