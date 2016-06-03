@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 
 @Controller
-@RequestMapping("/additional")
+@RequestMapping("/resRestAPI/additional")
 public class AdditionalController {
 	
 	
