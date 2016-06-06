@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.userlog.dao;
+package net.tfedu.zhl.cloud.resource.userlog.dao;
 
 import java.util.List;
 

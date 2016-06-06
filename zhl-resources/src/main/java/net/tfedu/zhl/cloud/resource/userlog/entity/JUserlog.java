@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.userlog.entity;
+package net.tfedu.zhl.cloud.resource.userlog.entity;
 
 import java.util.Date;
 import javax.persistence.*;

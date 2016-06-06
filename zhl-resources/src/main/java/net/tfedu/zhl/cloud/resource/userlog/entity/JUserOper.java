@@ -1,9 +1,9 @@
-package net.tfedu.zhl.sso.userlog.entity;
+package net.tfedu.zhl.cloud.resource.userlog.entity;
 
 import javax.persistence.*;
 
-@Table(name = "j_userlog_type")
-public class JUserlogType {
+@Table(name = "j_useroper")
+public class JUserOper {
     /**
      * 主键
      */
@@ -12,28 +12,34 @@ public class JUserlogType {
     private Long id;
 
     /**
-     * 编码
+     * 操作类型编码
      */
     private String code;
 
     /**
-     * 名称
+     * 操作名称
      */
     private String name;
+
+    /**
+     * 0 前台 1 后台
+     */
+    private Integer isflag;
 
     /**
      * 除删标识
      */
     private Boolean flag;
 
-    public JUserlogType(Long id, String code, String name, Boolean flag) {
+    public JUserOper(Long id, String code, String name, Integer isflag, Boolean flag) {
         this.id = id;
         this.code = code;
         this.name = name;
+        this.isflag = isflag;
         this.flag = flag;
     }
 
-    public JUserlogType() {
+    public JUserOper() {
         super();
     }
 
@@ -57,41 +63,60 @@ public class JUserlogType {
     }
 
     /**
-     * 获取编码
+     * 获取操作类型编码
      *
-     * @return code - 编码
+     * @return code - 操作类型编码
      */
     public String getCode() {
         return code;
     }
 
     /**
-     * 设置编码
+     * 设置操作类型编码
      *
      * @param code
-     *            编码
+     *            操作类型编码
      */
     public void setCode(String code) {
         this.code = code == null ? null : code.trim();
     }
 
     /**
-     * 获取名称
+     * 获取操作名称
      *
-     * @return name - 名称
+     * @return name - 操作名称
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 设置名称
+     * 设置操作名称
      *
      * @param name
-     *            名称
+     *            操作名称
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
+    }
+
+    /**
+     * 获取0 前台 1 后台
+     *
+     * @return isflag - 0 前台 1 后台
+     */
+    public Integer getIsflag() {
+        return isflag;
+    }
+
+    /**
+     * 设置0 前台 1 后台
+     *
+     * @param isflag
+     *            0 前台 1 后台
+     */
+    public void setIsflag(Integer isflag) {
+        this.isflag = isflag;
     }
 
     /**

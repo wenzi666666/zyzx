@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.userlog.service.impl;
+package net.tfedu.zhl.cloud.resource.userlog.service.impl;
 
 import java.util.List;
 

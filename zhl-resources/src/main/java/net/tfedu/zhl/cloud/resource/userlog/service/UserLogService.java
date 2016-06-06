@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.userlog.service;
+package net.tfedu.zhl.cloud.resource.userlog.service;
 
 import com.github.pagehelper.PageInfo;
 
