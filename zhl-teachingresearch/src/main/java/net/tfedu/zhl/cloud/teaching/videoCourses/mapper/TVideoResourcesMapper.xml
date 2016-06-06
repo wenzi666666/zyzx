@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.teaching.videoCourses.dao.TVideoResourcesMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="playtime" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="speakerinfo" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="clicktimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="fromflag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="typeId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="subjectId" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="fname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="fpath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="thumbnailpath" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="creator" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="createDate" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="updateDate" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+</mapper>
