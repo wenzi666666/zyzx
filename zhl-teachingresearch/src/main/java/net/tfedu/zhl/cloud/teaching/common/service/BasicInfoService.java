@@ -17,6 +17,17 @@ public interface BasicInfoService extends BaseService<Term>{
 	public ResultJSON getAllTerm() throws  Exception;
 	
 	
+
+	/**
+	 * 获取学段下的学科
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON getTermSubject(int termId) throws  Exception;
+	
+	
+	
+	
 	
 	
 }

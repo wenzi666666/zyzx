@@ -10,4 +10,16 @@
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  
+    
+  <!--  获取学段下的学科 -->
+  <select id="getTermSubject" resultMap="BaseResultMap">
+  	SELECT
+	s.* 
+	FROM
+		t_term_subject t
+	LEFT JOIN t_subject s  on s.id = t.subjectId
+	where t.termId = #{termId}
+  </select>
 </mapper>

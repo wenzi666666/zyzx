@@ -11,4 +11,10 @@
       <arg column="subjectId" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+  
+  
+
+  
+  
+  
 </mapper>
