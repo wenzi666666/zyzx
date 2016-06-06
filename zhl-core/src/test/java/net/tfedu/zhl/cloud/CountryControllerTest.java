@@ -2,15 +2,15 @@ package net.tfedu.zhl.cloud;
 
 import javax.annotation.Resource;
 
-import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import net.tfedu.zhl.cloud.demo.controller.CountryController;
 import net.tfedu.zhl.cloud.demo.entity.Country;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+
+import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 /**
  * @Transactional 注释标签是表明此测试类的事务启用，这样所有的测试方案都会自动的 rollback，
