@@ -6,9 +6,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import net.tfedu.zhl.cloud.resource.downloadrescord.dao.ResDownRecordMapper;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResDownRecord;
 import net.tfedu.zhl.cloud.resource.prepare.dao.JPrepareContentMapper;
@@ -26,12 +23,12 @@ import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.resource.userlog.dao.JUserlogMapper;
+import net.tfedu.zhl.cloud.resource.userlog.entity.JUserlog;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.PrepareContentExistException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
-import net.tfedu.zhl.sso.userlog.entity.JUserlog;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

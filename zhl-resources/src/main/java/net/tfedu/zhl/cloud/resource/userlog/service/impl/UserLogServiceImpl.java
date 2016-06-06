@@ -2,15 +2,15 @@ package net.tfedu.zhl.cloud.resource.userlog.service.impl;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.userlog.dao.JUserlogMapper;
+import net.tfedu.zhl.cloud.resource.userlog.entity.ResourceViewLog;
+import net.tfedu.zhl.cloud.resource.userlog.service.UserLogService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
-import net.tfedu.zhl.sso.userlog.dao.JUserlogMapper;
-import net.tfedu.zhl.sso.userlog.entity.ResourceViewLog;
-import net.tfedu.zhl.sso.userlog.service.UserLogService;
 
 /**
  * 用户日志的记录log

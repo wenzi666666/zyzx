@@ -2,11 +2,11 @@ package net.tfedu.zhl.cloud.resource.userlog.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
+import net.tfedu.zhl.cloud.resource.userlog.entity.JUserlog;
+import net.tfedu.zhl.cloud.resource.userlog.entity.ResourceViewLog;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.sso.userlog.entity.JUserlog;
-import net.tfedu.zhl.sso.userlog.entity.ResourceViewLog;
+
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户日志

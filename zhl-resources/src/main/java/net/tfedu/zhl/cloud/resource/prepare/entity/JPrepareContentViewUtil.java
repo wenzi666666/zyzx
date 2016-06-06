@@ -6,10 +6,9 @@ import java.util.List;
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ResourceReview;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
-import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
+import net.tfedu.zhl.cloud.resource.userlog.entity.ResourceViewLog;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
-import net.tfedu.zhl.sso.userlog.entity.ResourceViewLog;
 
 import com.alibaba.fastjson.JSONObject;
 
