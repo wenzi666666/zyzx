@@ -10,4 +10,11 @@
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  <select id="getSubjectsByLevel" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject">
+     select c.id,c.name from t_videoLevel a
+     left join t_videoLevel_subject b on a.id = b.levelId
+     left join t_subject c on b.subjectId = c.id
+     where a.id = #{level}
+   </select>
 </mapper>
