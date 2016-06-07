@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -10,7 +11,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,8 @@ public class ResTypeServiceImpl implements ResTypeService {
     ResTypeMapper resTypeMapper;
     
     @Resource DistrictResMapper districtResMapper;
+    
+    @Resource JUserMapper jUserMapper;
     
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResTypeServiceImpl.class);
@@ -128,11 +131,15 @@ public class ResTypeServiceImpl implements ResTypeService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
         
         logger.debug("schoolId: " + schoolId);
         logger.debug("districtId: " + districtId);
@@ -163,11 +170,15 @@ public class ResTypeServiceImpl implements ResTypeService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
 
         logger.debug("schoolId: " + schoolId);
         logger.debug("districtId: " + districtId);

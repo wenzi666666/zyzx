@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.resPreview.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,9 +17,9 @@ import net.tfedu.zhl.cloud.resource.resPreview.service.ResPreviewService;
 import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -49,6 +50,8 @@ public class ResPreviewServiceImpl implements ResPreviewService {
     @Resource ResSearchMapper resSearchMapper;
     
     @Resource ZAssetSyscourseMapper zAssetSyscourseMapper;
+    
+    @Resource JUserMapper jUserMapper;
     
 
     /**
@@ -195,11 +198,15 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
         
         List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
         
@@ -235,11 +242,15 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
   
         // 查询满足条件的全部资源
         if (fromFlag == -1) {
@@ -283,11 +294,15 @@ public class ResPreviewServiceImpl implements ResPreviewService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
     	
         // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);

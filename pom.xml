@@ -87,10 +87,9 @@
 		         <!-- 题库对接的配置  -->
 		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
-                
 			</properties>
-
 		</profile>
+		
 		<profile>
 			<id>test249</id>
 			<properties>
@@ -132,16 +131,11 @@
                 <resService>http://101.200.190.27:8099/down/</resService>        
                 <resServiceLocal>http://101.200.190.27:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
-            </properties>            
-            
-             <activation>
+            </properties>   
+            <activation>
 				<activeByDefault>false</activeByDefault>
-			</activation>  
-			    
+			</activation>           
 		</profile>
-		
-		
-		
 		
 		<profile>
 			<id>teaching</id>

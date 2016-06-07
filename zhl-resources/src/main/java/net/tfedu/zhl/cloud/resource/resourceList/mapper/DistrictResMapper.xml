@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
 
-  <!-- 根据用户id获得区、校信息 -->
+  <!-- 
   <resultMap id = "DisAndSchoolMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity">
        <result column="schoolid" property="schoolId" />
        <result column="districtId" property="districtId" />
   </resultMap>
   <select id="getDisAndSchool" resultMap="DisAndSchoolMap">
       select u.schoolid ,s.districtId from  j_user u  LEFT JOIN j_school s ON s.id = u.SchoolId WHERE u.id = #{userId}
-  </select>
+  </select> -->
   
   <!-- 查询区本校本资源信息 -->
   <resultMap id="DisResMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity" >

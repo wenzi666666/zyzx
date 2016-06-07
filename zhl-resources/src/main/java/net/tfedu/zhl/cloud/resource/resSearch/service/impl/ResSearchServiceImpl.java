@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.resSearch.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,9 +13,9 @@ import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -34,6 +35,8 @@ public class ResSearchServiceImpl implements ResSearchService {
     @Resource
     FileFormatMapper fileFormatMapper;
     @Resource DistrictResMapper districtResMapper;
+    
+    @Resource JUserMapper jUserMapper;
 
     /**
      * 跨库检索资源
@@ -52,11 +55,15 @@ public class ResSearchServiceImpl implements ResSearchService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
   
         // 查询满足条件的全部资源
         if (fromFlag == -1) {
@@ -107,11 +114,15 @@ public class ResSearchServiceImpl implements ResSearchService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}
         
         // 查询全部资源的格式
         if (fromFlag == -1) {

@@ -3,17 +3,18 @@ package net.tfedu.zhl.cloud.resource.resourceList.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,8 @@ public class DisResServiceImpl implements DisResService {
     @Resource
     ResTypeMapper resTypeMapper;
     
+    @Resource JUserMapper jUserMapper;
+    
     /**
      *  查询区本、校本资源信息
      */
@@ -41,13 +44,17 @@ public class DisResServiceImpl implements DisResService {
             int orderBy, int page, int perPage, int fromFlag,int expire) {
         long schoolId = 0;
         long districtId = 0;
-
+        
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}	
 
         // Page插件必须放在查询语句之前紧挨的第一个位置
         PageHelper.startPage(page, perPage);
@@ -99,11 +106,15 @@ public class DisResServiceImpl implements DisResService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}	
         
         List<DisResourceEntity> list = new ArrayList<DisResourceEntity>();
         

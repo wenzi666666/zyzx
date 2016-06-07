@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,7 +10,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public class ResFormatServiceImpl implements ResFormatService {
     FileFormatMapper fileFormatMapper;
     
     @Resource DistrictResMapper districtResMapper;
+    
+    @Resource JUserMapper jUserMapper;
 
     /**
      *  查询区本校本资源格式
@@ -41,11 +44,15 @@ public class ResFormatServiceImpl implements ResFormatService {
         long districtId = 0;
 
         // 根据userId查询schoolId 和 districtId
-        DisAndSchoolEntity disAndSchoolIds = districtResMapper.getDisAndSchool(userId);
-        if (disAndSchoolIds != null) {
-            schoolId = disAndSchoolIds.getSchoolId();
-            districtId = disAndSchoolIds.getDistrictId();
-        }
+        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+		if(map!=null){
+			districtId = (map.get("districtid") instanceof java.lang.String)
+							? Long.parseLong(map.get("districtid").toString())
+							: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					?Long.parseLong(map.get("schoolid").toString())
+					:Long.parseLong(String.valueOf(map.get("schoolid")));
+		}	
         
         // 查询资源格式
         formats = fileFormatMapper.getDisResFormatsByMType(mtype,tfcode,fromFlag,schoolId,districtId);

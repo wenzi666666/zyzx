@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
-import net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.helper.CoreMapper;
@@ -21,8 +20,8 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
 	
 	/**
      *  获得区、校id
-     */
-    public DisAndSchoolEntity getDisAndSchool(long userId);
+     *//*
+    public DisAndSchoolEntity getDisAndSchool(long userId);*/
     
     /**
      * 查询区本、校本资源信息
