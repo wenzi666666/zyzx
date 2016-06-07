@@ -1,12 +1,6 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
-import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoLevel;
-import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -23,35 +17,80 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/teachingServiceRestAPI")
 public class VideoCoursesController {
-
-	@Resource VideoCoursesService videoCoursesService;
+	
+	
 	/**
-	 * 查询所有的视频课程等级
+	 * 查询所有的视频课程资源
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses/levels", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllLevels() throws Exception{
+	public ResultJSON getAllVideoCourses()throws Exception{
 		
-		List<TVideoLevel> list = videoCoursesService.getAllLevels();
-		
-		return ResultJSON.getSuccess(list);
+		return null;
 	}
 	
 	/**
-	 * 查询特定level下的学科
-	 * @param level
+	 * 查询一条视频课程资源的详细信息
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses/subjects", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1.0/videoCourses/previewInfo",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getSubjectsByLevel(int level) throws Exception{
+	public ResultJSON getOneVideoCourseInfo(long id)throws Exception{
 		
-		List<TSubject> list = videoCoursesService.getSubjectsByLevel(level);	
-		return ResultJSON.getSuccess(list);
+		return null;
 	}
+	
+	/**
+	 * 新增一条视频课程资源
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.POST)
+	@ResponseBody
+	public ResultJSON createOneVideoCourse(TVideoResources video)throws Exception{
+		
+		return null;
+	}
+	
+	/**
+	 * 编辑一条视频课程资源
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PUT)
+	@ResponseBody
+	public ResultJSON editOneVideoCourse(TVideoResources video)throws Exception{
+		
+		return null;
+	}
+	
+	/**
+	 * 批量删除视频资源
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PATCH)
+	@ResponseBody
+	public ResultJSON editOneVideoCourse(long[] ids)throws Exception{
+		
+		return null;
+	}
+	
+	/**
+	 * 视频课程检索
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses/search",method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON searchVideoCourses(String keyWord,int page,int perPage,int fromFlag)throws Exception{
+		
+		return null;
+	}
+	
 	
 	
 }

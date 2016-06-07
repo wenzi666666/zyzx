@@ -9,7 +9,6 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 public class AssetControllerTest  extends BaseControllerTestCase{
