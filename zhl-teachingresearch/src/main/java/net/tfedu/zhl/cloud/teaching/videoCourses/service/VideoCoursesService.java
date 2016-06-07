@@ -1,9 +1,10 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.service;
 
+import java.util.List;
+
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoLevel;
 
-import com.sun.tools.javac.util.List;
 
 /**
  * 视频课程的service

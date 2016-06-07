@@ -1,7 +1,11 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoLevel;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -9,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 
 /**
  * 视频课程相关的接口
@@ -29,7 +34,9 @@ public class VideoCoursesController {
 	@ResponseBody
 	public ResultJSON getAllLevels() throws Exception{
 		
-		return ResultJSON.getSuccess(videoCoursesService.getAllLevels());
+		List<TVideoLevel> list = videoCoursesService.getAllLevels();
+		
+		return ResultJSON.getSuccess(list);
 	}
 	
 	/**
@@ -42,6 +49,9 @@ public class VideoCoursesController {
 	@ResponseBody
 	public ResultJSON getSubjectsByLevel(int level) throws Exception{
 		
-		return ResultJSON.getSuccess(videoCoursesService.getSubjectsByLevel(level));
+		List<TSubject> list = videoCoursesService.getSubjectsByLevel(level);	
+		return ResultJSON.getSuccess(list);
 	}
+	
+	
 }

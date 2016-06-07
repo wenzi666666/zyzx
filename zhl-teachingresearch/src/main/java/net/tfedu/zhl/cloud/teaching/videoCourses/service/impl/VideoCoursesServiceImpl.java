@@ -6,10 +6,9 @@ import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
 import net.tfedu.zhl.cloud.teaching.videoCourses.dao.TVideoLevelMapper;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoLevel;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
-import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
-import com.sun.tools.javac.util.List;
+import java.util.List;
 
 /**
  * 视频课程的serviceImpl
@@ -17,7 +16,7 @@ import com.sun.tools.javac.util.List;
  *
  */
 @Service("videoCoursesService")
-public class VideoCoursesServiceImpl extends BaseServiceImpl<TVideoLevel> implements VideoCoursesService {
+public class VideoCoursesServiceImpl implements VideoCoursesService {
 
 	@Resource TVideoLevelMapper tVideoLevelMapper;
 	
@@ -26,7 +25,7 @@ public class VideoCoursesServiceImpl extends BaseServiceImpl<TVideoLevel> implem
 	 * @return
 	 */
 	public List<TVideoLevel> getAllLevels(){
-		return getAllLevels();
+		return tVideoLevelMapper.getAllLevels();
 	}
 	
 	/**

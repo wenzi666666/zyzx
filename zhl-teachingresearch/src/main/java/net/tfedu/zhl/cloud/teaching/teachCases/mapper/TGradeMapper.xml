@@ -10,4 +10,9 @@
       <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  <!-- 查询所有的年级 -->
+  <select id = "getAllGrades" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TGrade">
+     select id,name from t_grade;
+  </select>
 </mapper>
