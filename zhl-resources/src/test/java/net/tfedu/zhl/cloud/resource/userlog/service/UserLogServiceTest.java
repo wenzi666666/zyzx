@@ -1,12 +1,11 @@
-package net.tfedu.zhl.cloud.core.userlog.service;
+package net.tfedu.zhl.cloud.resource.userlog.service;
 
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.userlog.entity.ResourceViewLog;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.sso.userlog.entity.ResourceViewLog;
-import net.tfedu.zhl.sso.userlog.service.UserLogService;
 
 import org.junit.Test;
 
