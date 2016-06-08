@@ -1,16 +1,14 @@
 package net.tfedu.zhl.cloud.resource.resourceList.controller;
 
-import static org.junit.Assert.*;
-
 import javax.annotation.Resource;
-
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
+
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 public class ResourceListControllerTest  extends BaseControllerTestCase{
 	
