@@ -120,7 +120,7 @@ public class ResourceListController {
         /**
          * 修改用户的节点选择
          */
-        userDefaultService.updateUserHistoryDefault(userId, tfcode, 1);
+//        userDefaultService.updateUserHistoryDefault(userId, tfcode, 1);
         
         logger.debug("系统资源的课程id：" + tfcode);
         logger.debug("系统资源的资源格式：" + fileFormat);
