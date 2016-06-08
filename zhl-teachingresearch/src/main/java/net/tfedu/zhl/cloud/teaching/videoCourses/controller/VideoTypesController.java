@@ -5,8 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
-import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoLevel;
-import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoLevelsService;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoType;
+import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoTypesService;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -15,40 +15,40 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * 视频课程等级及相应等级下的学科
+ * 视频课程类型及相应类型下的学科
  * @author WeiCuicui
  *
  */
 @Controller
 @RequestMapping("/teachingServiceRestAPI")
-public class VideoLevelsController {
+public class VideoTypesController {
 
-	@Resource VideoLevelsService videoLevelsService;
+	@Resource VideoTypesService videoTypesService;
 	/**
-	 * 查询所有的视频课程等级
+	 * 查询所有的视频课程类型
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses/levels", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1.0/videoCourses/types", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllLevels() throws Exception{
+	public ResultJSON getAllTypes() throws Exception{
 		
-		List<TVideoLevel> list = videoLevelsService.getAllLevels();
+		List<TVideoType> list = videoTypesService.getAllTypes();
 		
 		return ResultJSON.getSuccess(list);
 	}
 	
 	/**
-	 * 查询特定level下的学科
-	 * @param level
+	 * 查询特定类型下的学科
+	 * @param typeId
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/subjects", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getSubjectsByLevel(int level) throws Exception{
+	public ResultJSON getSubjectsByType(int typeId) throws Exception{
 		
-		List<TSubject> list = videoLevelsService.getSubjectsByLevel(level);	
+		List<TSubject> list = videoTypesService.getSubjectsByType(typeId);	
 		return ResultJSON.getSuccess(list);
 	}
 }
