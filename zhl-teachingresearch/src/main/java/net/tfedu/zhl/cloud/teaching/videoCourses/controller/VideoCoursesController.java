@@ -1,6 +1,5 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.controller;
 
-import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -26,22 +25,11 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllVideoCourses()throws Exception{
+	public ResultJSON getAllVideoCourses(int fromFlag,int typeId,int subjectId,int orderBy,int page,int perPage)throws Exception{
 		
 		return null;
 	}
 	
-	/**
-	 * 查询一条视频课程资源的详细信息
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/v1.0/videoCourses/previewInfo",method = RequestMethod.GET)
-	@ResponseBody
-	public ResultJSON getOneVideoCourseInfo(long id)throws Exception{
-		
-		return null;
-	}
 	
 	/**
 	 * 新增一条视频课程资源
@@ -50,7 +38,7 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON createOneVideoCourse(TVideoResources video)throws Exception{
+	public ResultJSON createOneVideoCourse(String video)throws Exception{
 		
 		return null;
 	}
@@ -60,9 +48,9 @@ public class VideoCoursesController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PUT)
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PATCH)
 	@ResponseBody
-	public ResultJSON editOneVideoCourse(TVideoResources video)throws Exception{
+	public ResultJSON editOneVideoCourse(String video)throws Exception{
 		
 		return null;
 	}
@@ -72,9 +60,9 @@ public class VideoCoursesController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PATCH)
+	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.DELETE)
 	@ResponseBody
-	public ResultJSON editOneVideoCourse(long[] ids)throws Exception{
+	public ResultJSON deleteVideoCourses(String ids)throws Exception{
 		
 		return null;
 	}
@@ -91,6 +79,28 @@ public class VideoCoursesController {
 		return null;
 	}
 	
+	/**
+	 * 预览一条视频课程资源
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses/previewInfo",method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getOneVideoCourseInfo(long id)throws Exception{
+		
+		return null;
+	}
 	
+	/**
+	 * 用户浏览某个视频课程时，设置已看标记
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/videoCourses/visit", method = RequestMethod.POST)
+	@ResponseBody
+	public ResultJSON setViewState(long videoId,long userId)throws Exception{
+	
+		return null;
+	}
 	
 }

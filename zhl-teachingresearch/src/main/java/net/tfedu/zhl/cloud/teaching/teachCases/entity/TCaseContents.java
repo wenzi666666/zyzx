@@ -1,7 +1,12 @@
 package net.tfedu.zhl.cloud.teaching.teachCases.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_casecontents")
 public class TCaseContents {
@@ -26,10 +31,6 @@ public class TCaseContents {
      */
     private String fname;
 
-    /**
-     * 文件路径
-     */
-    private String fpath;
 
     /**
      * 创建者
@@ -46,12 +47,12 @@ public class TCaseContents {
      */
     private Boolean flag;
 
-    public TCaseContents(Long id, Long caseid, Integer contenttypeid, String fname, String fpath, Long creator, Date createdate, Boolean flag) {
+    public TCaseContents(Long id, Long caseid, Integer contenttypeid, String fname,Long creator, Date createdate, Boolean flag) {
         this.id = id;
         this.caseid = caseid;
         this.contenttypeid = contenttypeid;
         this.fname = fname;
-        this.fpath = fpath;
+       
         this.creator = creator;
         this.createdate = createdate;
         this.flag = flag;
@@ -129,23 +130,7 @@ public class TCaseContents {
         this.fname = fname == null ? null : fname.trim();
     }
 
-    /**
-     * 获取文件路径
-     *
-     * @return fpath - 文件路径
-     */
-    public String getFpath() {
-        return fpath;
-    }
-
-    /**
-     * 设置文件路径
-     *
-     * @param fpath 文件路径
-     */
-    public void setFpath(String fpath) {
-        this.fpath = fpath == null ? null : fpath.trim();
-    }
+   
 
     /**
      * 获取创建者

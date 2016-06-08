@@ -1,7 +1,12 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_videoresources")
 public class TVideoResources {
@@ -51,10 +56,6 @@ public class TVideoResources {
      */
     private String fname;
 
-    /**
-     * 文件路径
-     */
-    private String fpath;
 
     /**
      * 文件缩略图路径
@@ -87,8 +88,35 @@ public class TVideoResources {
      * 视频课程简介
      */
     private String description;
+    
+    /**
+     * 资源平均分
+     */
+    private Integer avgScore;
+    
+    /**
+     * 用户是否观看过
+     */
+    private boolean hasVisited;
+    
 
-    public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, Boolean fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description) {
+    public Integer getAvgScore() {
+		return avgScore;
+	}
+
+	public void setAvgScore(Integer avgScore) {
+		this.avgScore = avgScore;
+	}
+
+	public boolean isHasVisited() {
+		return hasVisited;
+	}
+
+	public void setHasVisited(boolean hasVisited) {
+		this.hasVisited = hasVisited;
+	}
+
+	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, Boolean fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited) {
         this.id = id;
         this.title = title;
         this.playtime = playtime;
@@ -98,13 +126,14 @@ public class TVideoResources {
         this.typeid = typeid;
         this.subjectid = subjectid;
         this.fname = fname;
-        this.fpath = fpath;
         this.thumbnailpath = thumbnailpath;
         this.creator = creator;
         this.createdate = createdate;
         this.updatedate = updatedate;
         this.flag = flag;
         this.description = description;
+        this.avgScore = avgScore;
+        this.hasVisited = hasVisited;
     }
 
     public TVideoResources() {
@@ -267,24 +296,6 @@ public class TVideoResources {
      */
     public void setFname(String fname) {
         this.fname = fname == null ? null : fname.trim();
-    }
-
-    /**
-     * 获取文件路径
-     *
-     * @return fpath - 文件路径
-     */
-    public String getFpath() {
-        return fpath;
-    }
-
-    /**
-     * 设置文件路径
-     *
-     * @param fpath 文件路径
-     */
-    public void setFpath(String fpath) {
-        this.fpath = fpath == null ? null : fpath.trim();
     }
 
     /**
