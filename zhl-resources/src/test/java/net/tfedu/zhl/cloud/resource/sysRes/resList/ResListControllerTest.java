@@ -72,7 +72,7 @@ public class ResListControllerTest extends BaseControllerTestCase{
 		
 		request.setParameter("perPage", "10");
 		
-		request.setParameter("isEPrepare", "1");
+		//request.setParameter("isEPrepare", "1");
 		
 		ResultJSON json = resourceListController.getDisResource(request, response);
 		
