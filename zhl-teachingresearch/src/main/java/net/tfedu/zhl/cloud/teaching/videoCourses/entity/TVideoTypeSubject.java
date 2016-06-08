@@ -1,18 +1,22 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Table(name = "t_videolevel_subject")
-public class TVideoLevelSubject {
+@Table(name = "t_videotype_subject")
+public class TVideoTypeSubject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 视频课程等级id
+     * 视频课程类型id
      */
-    @Column(name = "levelId")
-    private Integer levelid;
+    @Column(name = "typeId")
+    private Integer typeid;
 
     /**
      * 学科id
@@ -20,13 +24,13 @@ public class TVideoLevelSubject {
     @Column(name = "subjectId")
     private Integer subjectid;
 
-    public TVideoLevelSubject(Integer id, Integer levelid, Integer subjectid) {
+    public TVideoTypeSubject(Integer id, Integer typeid, Integer subjectid) {
         this.id = id;
-        this.levelid = levelid;
+        this.typeid = typeid;
         this.subjectid = subjectid;
     }
 
-    public TVideoLevelSubject() {
+    public TVideoTypeSubject() {
         super();
     }
 
@@ -45,21 +49,21 @@ public class TVideoLevelSubject {
     }
 
     /**
-     * 获取视频课程等级id
+     * 获取视频课程类型id
      *
-     * @return levelId - 视频课程等级id
+     * @return typeId - 视频课程类型id
      */
-    public Integer getLevelid() {
-        return levelid;
+    public Integer getTypeid() {
+        return typeid;
     }
 
     /**
-     * 设置视频课程等级id
+     * 设置视频课程类型id
      *
-     * @param levelid 视频课程等级id
+     * @param typeid 视频课程类型id
      */
-    public void setLevelid(Integer levelid) {
-        this.levelid = levelid;
+    public void setTypeid(Integer typeid) {
+        this.typeid = typeid;
     }
 
     /**

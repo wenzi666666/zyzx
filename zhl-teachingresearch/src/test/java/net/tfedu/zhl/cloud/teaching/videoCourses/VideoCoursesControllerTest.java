@@ -2,7 +2,7 @@ package net.tfedu.zhl.cloud.teaching.videoCourses;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.teaching.videoCourses.controller.VideoLevelsController;
+import net.tfedu.zhl.cloud.teaching.videoCourses.controller.VideoTypesController;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
@@ -19,23 +19,23 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	
-	@Resource VideoLevelsController videoLevelsController;
+	@Resource VideoTypesController videoTypesController;
 	
-	ResultJSON result ;
+	ResultJSON result;
 
-	//查询所有视频课程等级
+	//查询所有视频课程类型
 	@Test
-    public void testAllLevels()throws Exception{
-    	result = videoLevelsController.getAllLevels();
+    public void testAllTypes()throws Exception{
+    	result = videoTypesController.getAllTypes();
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
 	
-	//查询等级下的所属学科
+	//查询类型下的所属学科
 	@Test
-    public void testSubjectsByLevel()throws Exception{
-		int level = 3;
-    	result = videoLevelsController.getSubjectsByLevel(level);
+    public void testSubjectsByType()throws Exception{
+		int typeId = 3;
+    	result = videoTypesController.getSubjectsByType(typeId);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
@@ -48,6 +48,7 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	}
 }
 
+//自定义类型
 class User{
 	public String name;
 	public int age;

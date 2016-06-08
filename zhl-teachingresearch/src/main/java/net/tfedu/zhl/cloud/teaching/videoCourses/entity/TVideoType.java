@@ -1,24 +1,27 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
-import javax.persistence.*;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Table(name = "t_videolevel")
-public class TVideoLevel {
+@Table(name = "t_videotype")
+public class TVideoType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 视频课程等级名称
+     * 视频课程类型名称
      */
     private String name;
 
-    public TVideoLevel(Integer id, String name) {
+    public TVideoType(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public TVideoLevel() {
+    public TVideoType() {
         super();
     }
 
@@ -37,18 +40,18 @@ public class TVideoLevel {
     }
 
     /**
-     * 获取视频课程等级名称
+     * 获取视频课程类型名称
      *
-     * @return name - 视频课程等级名称
+     * @return name - 视频课程类型名称
      */
     public String getName() {
         return name;
     }
 
     /**
-     * 设置视频课程等级名称
+     * 设置视频课程类型名称
      *
-     * @param name 视频课程等级名称
+     * @param name 视频课程类型名称
      */
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
