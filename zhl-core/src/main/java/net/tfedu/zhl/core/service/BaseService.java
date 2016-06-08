@@ -17,7 +17,7 @@ public interface BaseService<T> {
      * @param id
      * @return
      */
-    ResultJSON get(int id);
+    ResultJSON get(long id);
 
     /**
      * 增加
@@ -27,7 +27,7 @@ public interface BaseService<T> {
     /**
      * 删除
      */
-    ResultJSON delete(int id);
+    ResultJSON delete(long id);
 
     /**
      * 批量插入
