@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
+import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -49,6 +50,10 @@ public class ResourceListController {
     @Resource
     private ResourceWebConfig resourceWebConfig;
     
+    
+	 @Resource
+	 UserDefaultService userDefaultService;
+    
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResourceListController.class);
 
@@ -65,7 +70,9 @@ public class ResourceListController {
 
         // 查询结果，封装为pagination
         Pagination<SysResourceEntity> pagination = null;
-        
+        // 当前登录用户id
+    	long userId = (Long) request.getAttribute("currentUserId");
+       
         //获取文件服务器的访问url 
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
@@ -109,6 +116,12 @@ public class ResourceListController {
             ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);   
 		}
        
+        
+        /**
+         * 修改用户的节点选择
+         */
+        userDefaultService.updateUserHistoryDefault(userId, tfcode, 1);
+        
         logger.debug("系统资源的课程id：" + tfcode);
         logger.debug("系统资源的资源格式：" + fileFormat);
         if(pagination != null){
@@ -170,6 +183,12 @@ public class ResourceListController {
              ResThumbnailPathUtil.convertToPurpos_dis(pagination.getList(), resServiceLocal, currentResPath);
 		}
 
+        /**
+         * 修改用户的节点选择
+         */
+        userDefaultService.updateUserHistoryDefault(userId, tfcode, 1);
+        
+        
         if(fromFlag == 3)
         	logger.debug(fromFlag + " : 校本资源");
         else if(fromFlag == 4)

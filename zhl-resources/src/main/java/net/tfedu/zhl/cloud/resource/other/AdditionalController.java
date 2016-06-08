@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
+import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.fileservice.Base64;
@@ -42,6 +44,11 @@ public class AdditionalController {
 	
 	@Resource
 	CommonWebConfig config ;
+	
+	
+	 @Resource
+	 UserDefaultService userDefaultService;
+
 	
 	/**
 	 * 约定的key
@@ -97,6 +104,10 @@ public class AdditionalController {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		
+       
+    	JUserDefault userDefault = userDefaultService.getUserHistoryDefault(currentUserId,1);
+		
+		
 		SRegister register = regSerivce.getRegister(currentUserId);
 		String userName = register.getName();
 		String password = PWDEncrypt.getPWD(register.getPwd());
@@ -112,7 +123,7 @@ public class AdditionalController {
 		String s1=Base64.encode(b1);
 		s1= URLEncoder.encode(s1, "utf-8");
 		
-		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter";
+		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter&tfcode="+userDefault.getTfcode();
 		return  ResultJSON.getSuccess(url) ;
 	}
 	
@@ -130,6 +141,7 @@ public class AdditionalController {
 		
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
 		
 		SRegister register = regSerivce.getRegister(currentUserId);
 		String userName = register.getName();
