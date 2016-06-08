@@ -9,6 +9,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.FromFlagForReview;
 import net.tfedu.zhl.cloud.resource.userComment.dao.UserCommentMapper;
 import net.tfedu.zhl.cloud.resource.userComment.entity.UserComment;
 import net.tfedu.zhl.cloud.resource.userComment.service.UserCommentService;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,8 @@ public class UserCommentServiceImpl implements UserCommentService {
 
     @Resource
     UserCommentMapper userCommentMapper;
+    
+    @Resource JUserMapper jUserMapper;
 
     /**
      * 增加一条用户评论/评分
@@ -81,8 +84,18 @@ public class UserCommentServiceImpl implements UserCommentService {
         map.put("fromFlag", fromFlag);
         map.put("resId", resId);
         map.put("userId", userId);
+        
+        //根据userId查询用户的truename
+        String trueName = jUserMapper.getTrueNameById(userId);
+        
+        //查询我的评论
+        List<UserComment> comments = userCommentMapper.getMyComments(map);
 
-        return userCommentMapper.getMyComments(map);
+        for(int i = 0; i  < comments.size();i++){ 
+        	comments.get(i).setUserName(trueName);
+        }
+        
+        return comments;
     }
 
     /**
@@ -98,8 +111,18 @@ public class UserCommentServiceImpl implements UserCommentService {
         map.put("fromFlag", fromFlag);
         map.put("resId", resId);
         map.put("userId", userId);
+        
+        //查询他人的评论
+        List<UserComment> comments = userCommentMapper.getOtherComments(map);
 
-        return userCommentMapper.getOtherComments(map);
+        for(int i = 0; i  < comments.size();i++){ 
+        	UserComment user = comments.get(i);
+        	long uId = user.getUserid();
+        	String trueName = jUserMapper.getTrueNameById(uId);
+        	user.setUserName(trueName);
+        }
+        
+        return comments;
     }
 
 }

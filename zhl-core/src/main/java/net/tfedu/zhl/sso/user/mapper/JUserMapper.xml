@@ -195,4 +195,9 @@
   ) a  
   </select>
   
+  <!-- 根据userId查询用户的truename -->
+  <select id="getTrueNameById" resultType="java.lang.String">
+     select truename from j_user where id = #{userId}
+  </select>
+  
 </mapper>
