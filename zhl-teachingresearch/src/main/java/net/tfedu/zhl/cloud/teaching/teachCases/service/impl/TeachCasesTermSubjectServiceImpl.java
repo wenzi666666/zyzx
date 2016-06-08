@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.teaching.videoCourses.service.impl;
+package net.tfedu.zhl.cloud.teaching.teachCases.service.impl;
 
 import java.util.List;
 
@@ -9,17 +9,18 @@ import net.tfedu.zhl.cloud.teaching.teachCases.dao.TermMapper;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TGrade;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.Term;
-import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCommentsService;
+import net.tfedu.zhl.cloud.teaching.teachCases.service.TeachCasesTermSubjectService;
 
 import org.springframework.stereotype.Service;
 
 /**
- * 视频课程评论的相关接口
+ * 教学案例中与学段、学科、年级相关的接口
  * @author WeiCuicui
  *
  */
-@Service("videoCommentsService")
-public class VideoCommentsServiceImpl implements VideoCommentsService{
+@Service("teachCasesTermSubjectService")
+public class TeachCasesTermSubjectServiceImpl implements TeachCasesTermSubjectService{
+
 	@Resource TermMapper termMapper;
 	@Resource TGradeMapper tGradeMapper;
 	

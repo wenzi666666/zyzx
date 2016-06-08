@@ -1,7 +1,8 @@
 package net.tfedu.zhl.cloud.teaching.teachCases;
 
 import javax.annotation.Resource;
-import net.tfedu.zhl.cloud.teaching.teachCases.controller.TeachCasesController;
+
+import net.tfedu.zhl.cloud.teaching.teachCases.controller.TeachCasesTermSubjectController;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
@@ -18,14 +19,14 @@ import com.alibaba.fastjson.JSONObject;
 public class TeachCasesControllerTest extends BaseControllerTestCase {
 
 	
-	@Resource TeachCasesController teachCasesController;
+	@Resource TeachCasesTermSubjectController teachCasesTermSubjectController;
 	ResultJSON result ;
 	
 	//获取所有年级
 	@Test
 	public void testAllGrades() throws Exception{
 	
-		result = teachCasesController.getAllGrades();
+		result = teachCasesTermSubjectController.getAllGrades();
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
@@ -34,7 +35,7 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 	@Test
     public void testSubjectsByTerm() throws Exception{
     	int termId = 1;
-    	result = teachCasesController.getSubjectsByTerm(termId);
+    	result = teachCasesTermSubjectController.getSubjectsByTerm(termId);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
@@ -42,7 +43,7 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 	//查询所有学段
 	@Test
     public void testAllTerms()throws Exception{
-    	result = teachCasesController.getTerms();
+    	result = teachCasesTermSubjectController.getTerms();
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

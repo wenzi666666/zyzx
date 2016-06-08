@@ -10,7 +10,6 @@
       <arg column="caseId" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="ContentTypeId" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="fname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="fpath" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="creator" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="createdate" jdbcType="DATE" javaType="java.util.Date" />
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
