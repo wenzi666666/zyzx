@@ -4,12 +4,12 @@ package net.tfedu.zhl.sso.user.dao;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.entity.UsersEntity;
+
+import org.apache.ibatis.annotations.Param;
 
 /**
  * 用户业务表
@@ -79,5 +79,12 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @return
 	 */
 	public List<UsersEntity> queryUserBasicInfo(@Param("userName")String userName);
+	
+	/**
+	 * 根据userId查询用户的truename
+	 * @param userId
+	 * @return
+	 */
+	public String getTrueNameById(@Param("userId")long userId);
 
 }

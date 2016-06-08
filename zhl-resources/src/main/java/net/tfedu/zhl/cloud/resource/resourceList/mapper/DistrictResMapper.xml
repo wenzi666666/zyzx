@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
-
-  <!-- 
-  <resultMap id = "DisAndSchoolMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisAndSchoolEntity">
-       <result column="schoolid" property="schoolId" />
-       <result column="districtId" property="districtId" />
-  </resultMap>
-  <select id="getDisAndSchool" resultMap="DisAndSchoolMap">
-      select u.schoolid ,s.districtId from  j_user u  LEFT JOIN j_school s ON s.id = u.SchoolId WHERE u.id = #{userId}
-  </select> -->
   
   <!-- 查询区本校本资源信息 -->
   <resultMap id="DisResMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity" >
@@ -37,16 +28,16 @@
        <result column="fromFlag" property="fromFlag" />
        <result column="thumbnailpath" property="thumbnailpath" />
        <result column="fullpath" property="fullpath" />
-       <result column="author" property="author" />   
+       <result column="authorfromflag" property="authorfromflag" />  
+       <result column="authorid" property="authorid"/> 
   </resultMap>
   <select id="selectDisRes" resultMap="DisResMap">
 
     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
     m.res_time,a.UpdateDT, REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(select case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore
-	,(select case when a.AuthorFromFlag = 0 then '后台管理员' else u.trueName end auhtor ) author 
+	,a.authorfromflag,a.authorid
 	from z_districts_resource a 
-    left join j_user u on u.id = a.authorid
 	left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
@@ -140,9 +131,8 @@
     select DISTINCT a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId,a.Fsize Fsize,a.ClickTimes,a.DLoadTimes,a.speaker, 
     m.res_time,a.UpdateDT, REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,a.isDWJ,jf.orderNum,a.isLocal,a.ScopeId,a.state,a.fromFlag,
 	(select case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = #{fromFlag}) avgScore
-	,(select case when a.AuthorFromFlag = 0 then '后台管理员' else u.trueName end auhtor ) author 
+	,a.authorfromflag,a.authorid  
 	from z_districts_resource a 
-    left join j_user u on u.id = a.authorid 
 	left join x_resourcetype b on a.MType = b.id 
 	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 

@@ -88,6 +88,9 @@
 		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
 			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>  
 		</profile>
 		
 		<profile>
@@ -158,7 +161,7 @@
             </properties>  
             
             <activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	

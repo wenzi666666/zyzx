@@ -131,12 +131,37 @@ public class DisResourceEntity implements Serializable {
     private String fullpath;
     
     /**
-     * 资源上传者
+     * 资源上传者的trueName
      */
     private String author;
+    
+    /**
+     * 0-管理员自己上传，1-共享资源 2-投稿资源
+     */
+    private Integer authorfromflag;
+    
+    /**
+     * 资源上传者的userId
+     */
+    private long authorid;
+    
+	public long getAuthorid() {
+		return authorid;
+	}
 
+	public void setAuthorid(long authorid) {
+		this.authorid = authorid;
+	}
 
-    public String getAuthor() {
+	public Integer getAuthorfromflag() {
+		return authorfromflag;
+	}
+
+	public void setAuthorfromflag(Integer authorfromflag) {
+		this.authorfromflag = authorfromflag;
+	}
+
+	public String getAuthor() {
 		return author;
 	}
 

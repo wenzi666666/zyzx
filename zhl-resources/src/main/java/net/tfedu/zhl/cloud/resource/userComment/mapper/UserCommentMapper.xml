@@ -5,20 +5,21 @@
   <!-- 查询评论返回的结果集 -->
   <resultMap id="comments" type="net.tfedu.zhl.cloud.resource.userComment.entity.UserComment">
         <id column="id" property="id" />
-		<result column="username" property="userName" />
+		<result column="userid" property="userid" />
 		<result column="acontent" property="acontent" />
 		<result column="atime" property="atime" />
   </resultMap>
+  
   <!-- 我的评论 -->
   <select id="getMyComments" parameterType="HashMap" resultMap="comments">
-      select p.id,u.name username, p.acontent,p.atime from z_assetevaluate p left join j_user u on p.userid = u.id 
-      where p.flag = 0 and p.IsScore = 1 and p.Atype = #{fromFlag} and u.flag = 0 and AssetId = #{resId} and userId = #{userId} 
+      select id,userid,acontent,atime from z_assetevaluate 
+      where flag = 0 and IsScore = 1 and Atype = #{fromFlag} and AssetId = #{resId} and userId = #{userId} 
   </select>
   
    <!-- 他人评论 -->
   <select id="getOtherComments" parameterType="HashMap" resultMap="comments">
-      select p.id,u.name username, p.acontent,p.atime from z_assetevaluate p left join j_user u on p.userid = u.id 
-      where p.flag = 0 and p.IsScore = 1 and p.Atype = #{fromFlag} and u.flag = 0 and AssetId = #{resId} and userId != #{userId}  
+      select id,userid,acontent,atime from z_assetevaluate 
+      where flag = 0 and IsScore = 1 and Atype = #{fromFlag} and AssetId = #{resId} and userId != #{userId}  
   </select>
   
   <!-- 修改评论 -->

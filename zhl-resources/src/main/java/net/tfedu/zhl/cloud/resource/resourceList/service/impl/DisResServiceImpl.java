@@ -46,7 +46,7 @@ public class DisResServiceImpl implements DisResService {
         long districtId = 0;
         
         // 根据userId查询schoolId 和 districtId
-        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
+        HashMap<String,Object> map = jUserMapper.getUserAreaInfo(userId);
 		if(map!=null){
 			districtId = (map.get("districtid") instanceof java.lang.String)
 							? Long.parseLong(map.get("districtid").toString())
@@ -71,15 +71,25 @@ public class DisResServiceImpl implements DisResService {
         		continue;
         	}
 	
+        	//查询上传者的truename
+        	int authorFromFlag = entity.getAuthorfromflag();
+        	if(authorFromFlag == 0)
+        		entity.setAuthor("后台管理员");
+        	else {
+        		long authorId = entity.getAuthorid();
+				String trueName = jUserMapper.getTrueNameById(authorId);
+				entity.setAuthor(trueName);
+			}
+        	
             // 最后更新日期
-            Date date = list.get(i).getUpdateDT();
+            Date date = entity.getUpdateDT();
             // 得到当前日期的前多少天
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -expire);
             Date expireDate = calendar.getTime();
             // 比较
             if (date.getTime() >= expireDate.getTime())
-                list.get(i).setNew(true);
+            	entity.setNew(true);
         }
 
         // 封装结果集
@@ -134,16 +144,25 @@ public class DisResServiceImpl implements DisResService {
         		continue;
         	}
         	
+        	//查询上传者的truename
+        	int authorFromFlag = entity.getAuthorfromflag();
+        	if(authorFromFlag == 0)
+        		entity.setAuthor("后台管理员");
+        	else {
+        		long authorId = entity.getAuthorid();
+				String trueName = jUserMapper.getTrueNameById(authorId);
+				entity.setAuthor(trueName);
+			}
         	
             // 最后更新日期
-            Date date = list.get(i).getUpdateDT();
+            Date date = entity.getUpdateDT();
             // 得到当前日期的前多少天
             Calendar calendar = Calendar.getInstance();
             calendar.add(Calendar.DATE, -expire);
             Date expireDate = calendar.getTime();
             // 比较
             if (date.getTime() >= expireDate.getTime())
-                list.get(i).setNew(true);
+            	entity.setNew(true);
         }
 
         // 封装结果集
