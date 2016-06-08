@@ -158,6 +158,12 @@
                 <resService>http://192.168.111.22:8099/down/</resService>        
                 <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
+                 
+                 <!--    论坛3.0（对接校验平台）的URI  -->
+                 <forum3Host>http://chat.tfedu.net:7070/index</forum3Host>  
+      			 <forum3HostLocal>http://chat.tfedu.net:7070/index</forum3HostLocal>  
+                
+                
             </properties>  
 
 			<activation>
