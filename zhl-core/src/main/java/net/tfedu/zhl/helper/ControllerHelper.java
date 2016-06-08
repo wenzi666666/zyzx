@@ -12,6 +12,20 @@ import net.tfedu.zhl.core.exception.ParamsException;
  *
  */
 public class ControllerHelper {
+	
+	 
+	/**
+	 * 检测空
+	 * @param str
+	 * @return
+	 * @throws Exception
+	 */
+    public static String checkEmpty(String str) throws Exception{
+    	if(StringUtils.isEmpty(str)){
+    		throw new  ParamsException();
+    	}
+    	return str.trim();
+    }
 
     /**
      * 获取单个参数值
