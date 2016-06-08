@@ -75,10 +75,10 @@
  				<package.environment>local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/zyzx_new?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
                 <jdbc_sso_username>root</jdbc_sso_username>
                 <jdbc_sso_password>tfedu123</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/zyzx_new?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
                 <jdbc_bo_username>root</jdbc_bo_username>
                 <jdbc_bo_password>tfedu123</jdbc_bo_password>   
                     
