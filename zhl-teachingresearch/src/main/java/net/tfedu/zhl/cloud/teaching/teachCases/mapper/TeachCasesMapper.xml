@@ -22,4 +22,27 @@
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  
+  <!-- 查询教学案例 -->
+  <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
+     select id,title,teacher,school,thumbnailpath from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId}
+  </select>
+  
+  <!-- 新建一个教学案例 -->
+  <insert id="addOneTeachCase">
+     insert into t_teachcases(title,teacher,school,thumbnailpath,gradeid,fromflag,termid,subjectId,creator,creatorDate,teachdate) 
+     values(#{teachCase.title},#{teachCase.teacher},#{teachCase.school},#{teachCase.thumbnailpath},#{teachCase.gradeid},#{teachCase.fromflag}
+     ,#{teachCase.termid},#{teachCase.subjectid},#{teachCase.creator},now(),#{teachCase.teachdate}) 
+  </insert>
+  
+  <!-- 编辑一个教学案例 -->
+  <update id="editOneTeachCase">
+     update t_teachcases set title = #{teachCase.title},teacher = #{teachCase.teacher},school = #{teachCase.school},thumbnailpath = #{teachCase.thumbnailpath},creator =#{teachCase.userId},
+     gradeid = #{teachCase.gradeid} ,teachDate = #{teachCase.teachdate} ,fromflag =#{teachCase.fromflag} ,termid =#{teachCase.termid}, subjectId = #{teachCase.subjectid} ,updateDate = now()
+     where id = #{teachCase.id}
+  </update>
+  <!-- 删除一个教学案例 -->
+  <update id="deleteOneTeachCase">
+    update t_teachcases set flag = 1 where id = #{id}
+  </update>
 </mapper>

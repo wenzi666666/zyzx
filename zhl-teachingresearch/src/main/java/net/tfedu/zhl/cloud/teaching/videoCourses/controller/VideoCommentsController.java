@@ -1,5 +1,11 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.controller;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoComments;
+import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCommentsService;
+import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
@@ -16,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/teachingServiceRestAPI")
 public class VideoCommentsController {
 	
+	@Resource VideoCommentsService videoCommentsService;
 	
 	/**
 	 * 新建一条评论
@@ -24,9 +31,12 @@ public class VideoCommentsController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/comments", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON createNewComment(long videoId,String comment,long userId)throws Exception{
+	public ResultJSON createNewComment(HttpServletRequest request,long videoId,String comment,int isScore)throws Exception{
 		
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        videoCommentsService.insertOneComment(videoId, comment, isScore, currentUserId);
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -38,7 +48,9 @@ public class VideoCommentsController {
 	@ResponseBody
 	public ResultJSON getAllComments(long videoId,int page,int perPage)throws Exception{
 		
-		return null;
+        PaginationHelper<TVideoComments> pagination = videoCommentsService.getAllComments(videoId, page, perPage);
+        
+		return ResultJSON.getSuccess(pagination);
 	}
 
 	
@@ -47,12 +59,12 @@ public class VideoCommentsController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses/comments", method = RequestMethod.PATCH)
+	@RequestMapping(value = "/v1.0/videoCourses/commentsEdit", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON editOneComment(int id,String comment)throws Exception{
+	public ResultJSON editOneComment(int id,String content)throws Exception{
 		
-		
-		return null;
+		videoCommentsService.editOneComment(content, id);
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -60,11 +72,11 @@ public class VideoCommentsController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses/comments", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/v1.0/videoCourses/commentsDelete", method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON deteleOneComment(int id)throws Exception{
 		
-		
-		return null;
+		videoCommentsService.deleteOneComment(id);
+		return ResultJSON.getSuccess(null);
 	}
 }

@@ -99,8 +99,21 @@ public class TVideoResources {
      */
     private boolean hasVisited;
     
+    /**
+     * 评论次数
+     */
+    private int commentTimes;
+    
 
-    public Integer getAvgScore() {
+    public int getCommentTimes() {
+		return commentTimes;
+	}
+
+	public void setCommentTimes(int commentTimes) {
+		this.commentTimes = commentTimes;
+	}
+
+	public Integer getAvgScore() {
 		return avgScore;
 	}
 
@@ -116,7 +129,7 @@ public class TVideoResources {
 		this.hasVisited = hasVisited;
 	}
 
-	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, Boolean fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited) {
+	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, Boolean fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited,int commentTimes) {
         this.id = id;
         this.title = title;
         this.playtime = playtime;
@@ -134,6 +147,7 @@ public class TVideoResources {
         this.description = description;
         this.avgScore = avgScore;
         this.hasVisited = hasVisited;
+        this.commentTimes = commentTimes;
     }
 
     public TVideoResources() {

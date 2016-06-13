@@ -27,8 +27,6 @@ public class PageInfoToPagination<T> implements Serializable {
 
         Pagination<T> pagination = new Pagination<T>();
 
-        pagination.setList(list);
-
         // 设置当前页
         pagination.setPage(pageInfo.getPageNum());
 

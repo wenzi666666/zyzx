@@ -17,4 +17,24 @@
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  
+  <!-- 新增一条评论 -->
+  <insert id="insertOneComment">
+     insert into t_videocomments(userid,videoid,content,isScore,createDate) values(#{userId},#{videoId},#{content},0,now()) 
+  </insert>
+  
+  <!-- 新增一条评分 -->
+  <insert id="insertOneCommentLevel">
+     insert into t_videocomments(userid,videoid,score,isScore,createDate) values(#{userId},#{videoId},#{score},1,now()) 
+  </insert>
+  
+  <!-- 查询一个视频课程的所有评论 -->
+  <select id="getAllComments" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoComments">
+    select id,content,userid,createDate from t_videocomments where videoid = #{videoId} and isscore = 0 
+  </select>
+  
+  <!-- 编辑一个评论 -->
+  <update id="editOneComment">
+    update t_videocomments set content = #{content} where id = #{id}
+  </update>
 </mapper>

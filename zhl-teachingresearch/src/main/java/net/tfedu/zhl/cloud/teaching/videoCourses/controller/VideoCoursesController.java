@@ -1,7 +1,17 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.controller;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.VideoPreviewEntity;
+import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
+import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,17 +27,26 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/teachingServiceRestAPI")
 public class VideoCoursesController {
 	
+	//日志
+    Logger logger = LoggerFactory.getLogger(VideoCoursesController.class);
+    
+    @Resource VideoCoursesService videoCoursesService;
 	
 	/**
-	 * 查询所有的视频课程资源
+	 * 分页查询视频课程资源
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllVideoCourses(int fromFlag,int typeId,int subjectId,int orderBy,int page,int perPage)throws Exception{
+	public ResultJSON getAllVideoCourses(HttpServletRequest request,HttpServletResponse response,int fromFlag,int typeId,int subjectId,int orderBy,int page,int perPage)throws Exception{
 		
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+		PaginationHelper<TVideoResources> pagination = videoCoursesService.getAllVideoCourses(fromFlag, typeId, subjectId, orderBy, page, perPage, currentUserId);
+	    
+		return ResultJSON.getSuccess(pagination);
 	}
 	
 	
@@ -38,9 +57,14 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON createOneVideoCourse(String video)throws Exception{
+	public ResultJSON createOneVideoCourse(HttpServletRequest request,String video)throws Exception{
 		
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+        videoCoursesService.insertOneVideoCourse(video, currentUserId);
+        
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -48,11 +72,16 @@ public class VideoCoursesController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.PATCH)
+	@RequestMapping(value = "/v1.0/videoCoursesEdit",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON editOneVideoCourse(String video)throws Exception{
+	public ResultJSON editOneVideoCourse(HttpServletRequest request,String video)throws Exception{
 		
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        
+        videoCoursesService.editOneVideoCourse(video, currentUserId);
+		
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -60,11 +89,15 @@ public class VideoCoursesController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.DELETE)
+	@RequestMapping(value = "/v1.0/videoCoursesDelete",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON deleteVideoCourses(String ids)throws Exception{
 		
-		return null;
+		
+		
+		videoCoursesService.delVideoCourses(ids);
+		
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -74,9 +107,11 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/search",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON searchVideoCourses(String keyWord,int page,int perPage,int fromFlag)throws Exception{
+	public ResultJSON searchVideoCourses(String keyWord,int page,int perPage,int fromFlag,int orderBy)throws Exception{
 		
-		return null;
+		PaginationHelper<TVideoResources> pagination = videoCoursesService.getVideoSearchResults(keyWord, fromFlag, orderBy, page, perPage);
+		
+		return ResultJSON.getSuccess(pagination);
 	}
 	
 	/**
@@ -86,9 +121,14 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/previewInfo",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getOneVideoCourseInfo(long id)throws Exception{
+	public ResultJSON getOneVideoCourseInfo(HttpServletRequest request,long id)throws Exception{
 		
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+		
+		VideoPreviewEntity videoResource = videoCoursesService.getOneVideoCourse(id, currentUserId);
+		
+		return ResultJSON.getSuccess(videoResource);
 	}
 	
 	/**
@@ -98,9 +138,14 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/visit", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON setViewState(long videoId,long userId)throws Exception{
+	public ResultJSON setViewState(HttpServletRequest request,long videoId)throws Exception{
 	
-		return null;
+		// 当前登录用户id
+        Long currentUserId = (Long) request.getAttribute("currentUserId");
+        
+        videoCoursesService.addOneVisitItem(currentUserId, videoId);
+        
+		return ResultJSON.getSuccess(null);
 	}
 	
 }
