@@ -1,7 +1,12 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_videocomments")
 public class TVideoComments {
@@ -36,8 +41,35 @@ public class TVideoComments {
      * 评论内容，默认为空
      */
     private String content;
-
+    
     /**
+     * 评论者的真实姓名
+     */
+    private String trueName;
+    
+    /**
+     * 评论者所在学校
+     */
+    private String userSchool;
+    
+
+    public String getTrueName() {
+		return trueName;
+	}
+
+	public void setTrueName(String trueName) {
+		this.trueName = trueName;
+	}
+
+	public String getUserSchool() {
+		return userSchool;
+	}
+
+	public void setUserSchool(String userSchool) {
+		this.userSchool = userSchool;
+	}
+
+	/**
      * 创建日期
      */
     @Column(name = "createDate")

@@ -4,14 +4,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.teaching.teachCases.dao.TGradeMapper;
-import net.tfedu.zhl.cloud.teaching.teachCases.dao.TermMapper;
-import net.tfedu.zhl.cloud.teaching.teachCases.entity.TGrade;
-import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
-import net.tfedu.zhl.cloud.teaching.teachCases.entity.Term;
+import net.tfedu.zhl.cloud.teaching.videoCourses.dao.TVideoCommentsMapper;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoComments;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCommentsService;
+import net.tfedu.zhl.helper.PaginationHelper;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.entity.JUser;
 
 import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 /**
  * 视频课程评论的相关接口
@@ -20,30 +22,66 @@ import org.springframework.stereotype.Service;
  */
 @Service("videoCommentsService")
 public class VideoCommentsServiceImpl implements VideoCommentsService{
-	@Resource TermMapper termMapper;
-	@Resource TGradeMapper tGradeMapper;
+	
+	@Resource TVideoCommentsMapper tVideoCommentsMapper;
+	
+	@Resource JUserMapper jUserMapper;
 	
 	/**
-	 * 查询所有学段
-	 * @return
+	 * 插入一条用户评论信息
+	 * @param videoId
+	 * @param comment
+	 * @param userId
 	 */
-	public List<Term> getAllTerms(){
-		return termMapper.getAllTerms();
+	public void insertOneComment(long videoId,String comment,int isScore,long userId){
+		
+		if(isScore == 0){ //评论
+			tVideoCommentsMapper.insertOneComment(comment, videoId, userId);
+		} else { //评分
+			int score = Integer.parseInt(comment.trim());
+			tVideoCommentsMapper.insertOneCommentLevel(score, videoId, userId);
+		}
 	}
 	
 	/**
-	 * 查询学段下的学科
-	 * @return
+	 * 查询一个视频课程的所有评论
+	 * @param videoId  课程id
+	 * @param page
+	 * @param perPage
 	 */
-	public List<TSubject> getSubjectsByTerm(int termId){
-		return termMapper.getSubjectsByTerm(termId);
+	public PaginationHelper<TVideoComments> getAllComments(long videoId,int page,int perPage){
+		
+		PageHelper.startPage(page,perPage);
+		
+		List<TVideoComments> list = tVideoCommentsMapper.getAllComments(videoId);
+		
+		for(int i = 0; i < list.size(); i++){
+			TVideoComments item = list.get(i);
+			long userId = item.getUserid();
+			
+			//根据用户id，查询其真是姓名、所在学校
+			JUser user = jUserMapper.getUserById(userId);
+			item.setTrueName(user.getTruename());
+			item.setUserSchool(user.getSchoolName());
+		}
+		
+		return PaginationHelper.transfer(list);
 	}
 	
 	/**
-	 * 查询所有年级
-	 * @return
+	 * 编辑一个评论
+	 * @param content
+	 * @param videoId
 	 */
-	public List<TGrade> getAllGrades(){
-		return tGradeMapper.getAllGrades();
+	public void editOneComment(String content,long commentId){
+		tVideoCommentsMapper.editOneComment(content, commentId);
+	}
+	
+	/**
+	 * 删除一条评论信息
+	 * @param commentId
+	 */
+	public void deleteOneComment(long commentId){
+		tVideoCommentsMapper.deleteOneComment(commentId);
 	}
 }

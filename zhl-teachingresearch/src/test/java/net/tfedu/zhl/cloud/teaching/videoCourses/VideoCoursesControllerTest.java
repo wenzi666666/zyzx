@@ -40,6 +40,15 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 		log.info(JSONObject.toJSONString(result));
 	}
 	
+	//查询所有的视频课程
+	@Test
+	public void testGetAllVideoCourses()throws Exception{
+		
+	}
+	
+	
+	
+	
 	//测试将json字符串转换为java对象
 	public static void main(String[] args){
 		User user = new User();
