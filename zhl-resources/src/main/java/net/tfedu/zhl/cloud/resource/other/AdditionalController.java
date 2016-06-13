@@ -123,7 +123,7 @@ public class AdditionalController {
 		String s1=Base64.encode(b1);
 		s1= URLEncoder.encode(s1, "utf-8");
 		
-		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter&tfcode="+userDefault.getTfcode();
+		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter&tfcode="+ (userDefault==null?"":userDefault.getTfcode());
 		return  ResultJSON.getSuccess(url) ;
 	}
 	
