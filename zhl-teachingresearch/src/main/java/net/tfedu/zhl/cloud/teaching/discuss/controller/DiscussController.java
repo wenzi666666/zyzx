@@ -14,6 +14,7 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,6 +35,8 @@ public class DiscussController {
 
 	
 	
+	
+	
 	@Resource
 	DiscussRecommendService discussService;
 	
@@ -51,9 +54,7 @@ public class DiscussController {
 	 */
 	@RequestMapping(value="v1.0/discuss/recommend",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getRecomended( HttpServletRequest request,HttpServletResponse response ) throws Exception{
-		int page = ControllerHelper.getPage(request);
-		int perPage = ControllerHelper.getPageSize(request);
+	public ResultJSON getRecomended( int page,int perPage ) throws Exception{
 		return discussService.getPage(page, perPage);
 	}
 	
@@ -68,10 +69,9 @@ public class DiscussController {
 	 */
 	@RequestMapping(value="v1.0/discuss/readed",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON addReadRecord( HttpServletRequest request,HttpServletResponse response ) throws Exception{
+	public ResultJSON addReadRecord(@ModelAttribute("currentUserId") Long currentUserId,String classId) throws Exception{
 		
-		Long currentUserId = (Long)request.getAttribute("currentUserId");	
-		String classId = ControllerHelper.getParameter(request, "classId");
+		classId = ControllerHelper.checkEmpty(classId);
 		
 		TDiscussLog c = new TDiscussLog();
 		c.setClassid(classId);
@@ -96,7 +96,7 @@ public class DiscussController {
 		
 		Long currentUserId = (Long)request.getAttribute("currentUserId");	
 		
-		return  null ;
+		return  discussLogService.getReadLog(currentUserId) ;
 	}
 	
 	
@@ -119,7 +119,7 @@ public class DiscussController {
 		String classImage	 = ControllerHelper.getParameter(request, "classImage");	//班级图片路径
 		String schoolName = ControllerHelper.getParameter(request, "schoolName");		//学校名称
 		String classId	 = ControllerHelper.getParameter(request, "classId");	//班级id
-		String note		 = ControllerHelper.getParameter(request, "note");//班级简介
+		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
 		
 		TDiscussRecommend record = new TDiscussRecommend();
 		record.setClassid(classId);
@@ -129,7 +129,7 @@ public class DiscussController {
 		record.setNote(note);
 		record.setCreator(currentUserId);
 		record.setCreatetime(Calendar.getInstance().getTime());
-		
+		record.setFlag(false);
 		return discussService.insert(record);
 	}
 	
@@ -169,7 +169,7 @@ public class DiscussController {
 		String classImage	 = ControllerHelper.getParameter(request, "classImage");	//班级图片路径
 		String schoolName = ControllerHelper.getParameter(request, "schoolName");		//学校名称
 		String classId	 = ControllerHelper.getParameter(request, "classId");	//班级id
-		String note		 = ControllerHelper.getParameter(request, "note");//班级简介
+		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
 		TDiscussRecommend record = new TDiscussRecommend();
 		record.setId(id);
 		record.setClassid(classId);

@@ -29,7 +29,7 @@ public class DiscussLogServiceImpl extends BaseServiceImpl<TDiscussLog> implemen
 	public ResultJSON getReadLog(Long userId) throws Exception{
 		
 		
-		return mapper.getReadLog(userId) ;
+		return  defaultSuccess(mapper.getReadLog(userId)) ;
 	}
 
 }

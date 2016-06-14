@@ -16,7 +16,7 @@
   
   
   
-  <select id="getReadLog" parameterType="Long" resultMap="BaseResultMap">
+  <select id="getReadLog" parameterType="Long" resultType="net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend">
 	  	SELECT r.* FROM t_discuss_log l
 	
 		LEFT JOIN t_discuss_recommend r on r.classid = l.classid
