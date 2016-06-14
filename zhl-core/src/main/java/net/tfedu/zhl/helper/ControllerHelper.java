@@ -45,6 +45,21 @@ public class ControllerHelper {
         return param;
     }
     
+    
+    /**
+     * 获取可选的参数
+     * @param request
+     * @param paramName
+     * @return
+     * @throws ParamsException
+     */
+    public static String getOptionalParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        String param = request.getParameter(paramName);
+        return param ==null?"":param.toString().trim();
+    }
+    
+    
+    
     /**
      * 获取单个参数值
      * 
