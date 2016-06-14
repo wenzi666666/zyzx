@@ -6,19 +6,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 
@@ -69,8 +68,10 @@ public class DiscussController {
 	 */
 	@RequestMapping(value="v1.0/discuss/readed",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON addReadRecord(@ModelAttribute("currentUserId") Long currentUserId,String classId) throws Exception{
+	public ResultJSON addReadRecord(HttpServletRequest request,String classId) throws Exception{
 		
+		Long currentUserId = (Long)request.getAttribute("currentUserId");	
+
 		classId = ControllerHelper.checkEmpty(classId);
 		
 		TDiscussLog c = new TDiscussLog();

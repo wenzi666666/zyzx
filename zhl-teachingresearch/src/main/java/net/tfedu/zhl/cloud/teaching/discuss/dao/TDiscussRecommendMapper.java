@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.helper.ResultJSON;
 
 public interface TDiscussRecommendMapper extends CoreMapper<TDiscussRecommend> {
 	

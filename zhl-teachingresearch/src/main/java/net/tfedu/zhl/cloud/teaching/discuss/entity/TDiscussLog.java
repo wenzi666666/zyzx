@@ -11,6 +11,11 @@ import javax.persistence.Table;
 @Table(name = "t_discuss_log")
 public class TDiscussLog  implements Serializable{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * 访问记录主键
      */
     @Id
