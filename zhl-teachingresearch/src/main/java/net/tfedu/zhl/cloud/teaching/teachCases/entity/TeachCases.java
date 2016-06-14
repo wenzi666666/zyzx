@@ -28,6 +28,12 @@ public class TeachCases {
      * 执教教师
      */
     private String teacher;
+    
+    /**
+     * 所属平台
+     */
+    private int fromflag;
+    
 
     /**
      * 学段id
@@ -89,7 +95,7 @@ public class TeachCases {
      */
     private Boolean flag;
 
-    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, Date teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag,String gradeName) {
+    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, Date teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag,String gradeName,int fromflag) {
         this.id = id;
         this.title = title;
         this.school = school;
@@ -105,6 +111,7 @@ public class TeachCases {
         this.updatedate = updatedate;
         this.flag = flag;
         this.gradeName = gradeName;
+        this.fromflag = fromflag;
     }
 
     public TeachCases() {
@@ -195,6 +202,22 @@ public class TeachCases {
         this.teacher = teacher == null ? null : teacher.trim();
     }
 
+    /**
+     * 设置fromflag
+     * @param fromflag
+     */
+    public void setFromflag(int fromflag){
+    	this.fromflag = fromflag;
+    }
+    
+    /**
+     * 获取fromFlag
+     * @param fromflag
+     */
+    public int getFromflag(){
+    	return fromflag;
+    }
+    
     /**
      * 获取学段id
      *
