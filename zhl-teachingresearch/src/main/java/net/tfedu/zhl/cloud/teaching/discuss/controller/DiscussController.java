@@ -10,7 +10,6 @@ import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -144,7 +143,7 @@ public class DiscussController {
 	 * @throws Exception
 	 */
 	
-	@RequestMapping(value="v1.0/discuss/recommend/{id}",method=RequestMethod.POST)
+	@RequestMapping(value="v1.0/discuss/recommend/{id}",method=RequestMethod.GET)
 	@ResponseBody		
 	public ResultJSON getOne(@PathVariable Long id) throws Exception{
 		
