@@ -61,7 +61,7 @@ public class VideoCommentsController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/commentsEdit", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON editOneComment(int id,String content)throws Exception{
+	public ResultJSON editOneComment(long id,String content)throws Exception{
 		
 		videoCommentsService.editOneComment(content, id);
 		return ResultJSON.getSuccess(null);
@@ -74,7 +74,7 @@ public class VideoCommentsController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/commentsDelete", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON deteleOneComment(int id)throws Exception{
+	public ResultJSON deteleOneComment(long id)throws Exception{
 		
 		videoCommentsService.deleteOneComment(id);
 		return ResultJSON.getSuccess(null);

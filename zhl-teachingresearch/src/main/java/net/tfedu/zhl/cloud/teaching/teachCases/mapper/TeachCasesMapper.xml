@@ -23,6 +23,17 @@
     </constructor>
   </resultMap>
   
+  <!-- 查询一个教学案例下的所有内容   -->
+  <resultMap id="AllContents" type="net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents" >
+       <id property="id" column="id"/>
+       <result property="fname" column="fname"/>
+       <result property="contenttypeid" column="contenttypeid"/>
+       <association property="contents" javaType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TContents">
+            <result property="contenttype" column="contenttype"/>  
+            <result property="thumbnailpath" column="thumbnailpath"/>        
+       </association>
+  </resultMap>
+  
   <!-- 查询教学案例 -->
   <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
      select id,title,teacher,school,thumbnailpath from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId}
@@ -44,5 +55,34 @@
   <!-- 删除一个教学案例 -->
   <update id="deleteOneTeachCase">
     update t_teachcases set flag = 1 where id = #{id}
+  </update>
+  
+  <!-- 查询一个教学案例的详细信息 -->
+  <select id="selectOneTeachCase" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases">
+    select id,title,teacher,school,thumbnailpath,(select name from t_grade where id = t_teachcases.gradeid ) as gradeName,
+    teachDate from t_teachcases where id = #{id}
+  </select>
+  
+  <!-- 查询一个教学案例下的所有内容 -->
+  <select id="getAllContentsOfTeachCase" resultMap="AllContents">
+    select a.id,a.fname,b.id as contenttypeid,b.contenttype,b.thumbnailpath from t_casecontents a
+	left join t_contents b
+	on a.contentTypeId = b.id
+	where a.id = #{id}
+  </select>
+  
+  <!-- 查询一个教学案例下是否已经存在特定的内容   -->
+  <select id="selectOneContent" resultType="Integer">
+     select count(id) from t_casecontents where contenttypeid = #{typeId} and caseId = #{caseId};
+  </select>
+  
+  <!-- 在教学案例下新增一个内容 -->
+  <insert id="addOneContent">
+     insert into t_casecontents (caseId,contenttypeid,fname,creator,createDate) values(#{caseId},#{typeId},#{fname},#{userId},now())
+  </insert>
+  
+  <!-- 删除一个教学案例下的内容 -->
+  <update id="deleteOneContent">
+    update t_casecontents set flag = 1 where id = #{id}
   </update>
 </mapper>

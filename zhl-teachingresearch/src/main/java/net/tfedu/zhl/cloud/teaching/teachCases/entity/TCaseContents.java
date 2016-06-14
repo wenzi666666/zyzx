@@ -46,8 +46,21 @@ public class TCaseContents {
      * 删除标记：0 未删除 1 删除
      */
     private Boolean flag;
+    
+    /**
+     * 内容类型的详细信息
+     */
+    private TContents contents;
 
-    public TCaseContents(Long id, Long caseid, Integer contenttypeid, String fname,Long creator, Date createdate, Boolean flag) {
+    public TContents getContents() {
+		return contents;
+	}
+
+	public void setContents(TContents contents) {
+		this.contents = contents;
+	}
+
+	public TCaseContents(Long id, Long caseid, Integer contenttypeid, String fname,Long creator, Date createdate, Boolean flag) {
         this.id = id;
         this.caseid = caseid;
         this.contenttypeid = contenttypeid;

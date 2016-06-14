@@ -1,7 +1,12 @@
 package net.tfedu.zhl.cloud.teaching.teachCases.entity;
 
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "t_teachcases")
 public class TeachCases {
@@ -34,6 +39,11 @@ public class TeachCases {
      * 年级id
      */
     private Integer gradeid;
+    
+    /**
+     * 年级名称
+     */
+    private String gradeName;
 
     /**
      * 学科id
@@ -79,7 +89,7 @@ public class TeachCases {
      */
     private Boolean flag;
 
-    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, Date teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag) {
+    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, Date teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag,String gradeName) {
         this.id = id;
         this.title = title;
         this.school = school;
@@ -94,6 +104,7 @@ public class TeachCases {
         this.createdate = createdate;
         this.updatedate = updatedate;
         this.flag = flag;
+        this.gradeName = gradeName;
     }
 
     public TeachCases() {
@@ -130,6 +141,22 @@ public class TeachCases {
      */
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+    
+    /**
+     * 获取年级名称
+     * @return
+     */
+    public String getGradeName(){
+    	return gradeName;
+    }
+    
+    /**
+     * 设置年级名称
+     * @param gradeName
+     */
+    public void setGradeName(String gradeName){
+    	this.gradeName = gradeName;
     }
 
     /**
