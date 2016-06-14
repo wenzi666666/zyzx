@@ -59,7 +59,7 @@ public class VideoCommentsServiceImpl implements VideoCommentsService{
 			TVideoComments item = list.get(i);
 			long userId = item.getUserid();
 			
-			//根据用户id，查询其真是姓名、所在学校
+			//根据用户id，查询其真实姓名、所在学校
 			JUser user = jUserMapper.getUserById(userId);
 			item.setTrueName(user.getTruename());
 			item.setUserSchool(user.getSchoolName());

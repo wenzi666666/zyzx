@@ -50,6 +50,7 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 		TeachCases item = new TeachCases();
 		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
 		item.setCreator(userId);
+		
 		teachCasesMapper.addOneTeachCase(item);
 	}
 	

@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.teaching.videoCourses;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.cloud.teaching.videoCourses.controller.VideoCommentsController;
 import net.tfedu.zhl.cloud.teaching.videoCourses.controller.VideoCoursesController;
 import net.tfedu.zhl.cloud.teaching.videoCourses.controller.VideoTypesController;
@@ -114,6 +115,12 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 		User user = new User();
 		user = JsonUtil.getInstance().fromJson("{name:'roma',age:10}",User.class);
 		System.out.println(user.name + "; " + user.age);
+		
+		String teachCase = "{teacher:'roma',title:'haha',school:'beijingyoudiandaxue',thumbnailpath:'a/b'," +
+		"gradeid:1,fromflag:1,termid:1,subjectid:1,teachdate:'20150607'}";
+		TeachCases item = new TeachCases();
+		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
+		System.out.println(item.getTitle() + "; " + item.getTeacher() + " " + item.getSchool() + " " + item.getThumbnailpath());
 	}
 }
 

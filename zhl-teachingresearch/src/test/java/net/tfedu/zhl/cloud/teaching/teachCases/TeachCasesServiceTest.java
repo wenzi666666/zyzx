@@ -52,8 +52,8 @@ public class TeachCasesServiceTest extends BaseServiceTestCase{
 	//新增一个视频课程
 	@Test
 	public void addOneVideoCourse()throws Exception{
-		String video = "title:'uuuu',speakerinfo:'张三   北京大学',description:'88799',typeid:1,subjectid:2," +
-				"fromflag:1,thumbnailpath:'7/9',fname:'98ij',playtime:10";
+		String video = "{title:'uuuu',speakerinfo:'张三   北京大学',description:'88799',typeid:1,subjectid:2," +
+				"fromflag:1,thumbnailpath:'7/9',fname:'98ij',playtime:10}";
 		long userId = 7890;
 		videoCoursesService.insertOneVideoCourse(video, userId);
 	}
@@ -61,8 +61,8 @@ public class TeachCasesServiceTest extends BaseServiceTestCase{
 	//编辑一个视频课程
 	@Test
 	public void editOneVideoCourse()throws Exception{
-		String video = "title:'0890',speakerinfo:'李四   清华大学',description:'88799',typeid:1,subjectid:2," +
-				"fromflag:1,thumbnailpath:'7/9',fname:'98ij',playtime:10";
+		String video = "{title:'0890',speakerinfo:'李四   清华大学',description:'88799',typeid:1,subjectid:2," +
+				"fromflag:1,thumbnailpath:'7/9',fname:'98ij',playtime:10}";
 		long userId = 7867889;
 		videoCoursesService.editOneVideoCourse(video, userId);
 	}
