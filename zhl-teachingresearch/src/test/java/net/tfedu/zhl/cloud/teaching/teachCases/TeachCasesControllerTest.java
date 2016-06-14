@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.teaching.teachCases;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.teaching.teachCases.controller.TeachCasesController;
 import net.tfedu.zhl.cloud.teaching.teachCases.controller.TeachCasesTermSubjectController;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
@@ -20,6 +21,7 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 
 	
 	@Resource TeachCasesTermSubjectController teachCasesTermSubjectController;
+	@Resource TeachCasesController teachCasesController;
 	ResultJSON result ;
 	
 	//获取所有年级
@@ -44,6 +46,55 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 	@Test
     public void testAllTerms()throws Exception{
     	result = teachCasesTermSubjectController.getTerms();
+		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	//查询所有的教学案例
+	@Test
+	public void getAllTeachCases()throws Exception{
+		int fromFlag = 1;
+		int termId = 1;
+		int subjectId = 1;
+		int page = 1;
+		int perPage = 10;
+		result = teachCasesController.getAllTeachCases(fromFlag, termId, subjectId, page, perPage);
+		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	//预览一个教学案例的信息
+	@Test
+	public void getOneTeachCaseInfo()throws Exception{
+		long id = 1;
+		result = teachCasesController.getOneTeachCasePreview(id);
+		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	//删除一个教学案例
+	@Test
+	public void deleteOneTeachCase()throws Exception{
+		long id = 1;
+		result = teachCasesController.deleteOneTeachCase(id);
+		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	//查询一个教学案例下的所有内容
+	@Test
+	public void getAllContents()throws Exception{
+		long id = 1;
+		result = teachCasesController.getContentsInOneTeachCase(id);
+		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	//删除一个内容
+	@Test
+	public void deleteOneContent()throws Exception{
+		long id = 1;
+		result = teachCasesController.deleteOneContent(id);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

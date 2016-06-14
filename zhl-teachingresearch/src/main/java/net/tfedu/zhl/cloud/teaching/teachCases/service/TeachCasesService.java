@@ -1,5 +1,8 @@
 package net.tfedu.zhl.cloud.teaching.teachCases.service;
 
+import java.util.List;
+
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.helper.PaginationHelper;
 
@@ -35,4 +38,33 @@ public interface TeachCasesService {
 	 * @param caseId
 	 */
 	public void deleteOneTeachCase(long caseId);
+	
+	/**
+	 * 查询一个教学案例的详细信息
+	 * @param id  教学案例的id
+	 * @return
+	 */
+	public TeachCases selectOneTeachCase(long id);
+	
+	/**
+	 * 查询一个教学案例下的所有内容
+	 * @param id  教学案例的id
+	 * @return
+	 */
+	public List<TCaseContents> getAllContents(long id);
+	
+	/**
+	 * 增加一个内容
+	 * @param caseId
+	 * @param contentTypeId
+	 * @param fname
+	 */
+	public String addOneContent(long caseId,int contentTypeId,String fname,long userId);
+	
+	/**
+	 * 删除教学案例下的一个内容
+	 * @param caseId
+	 * @param contentTypeId
+	 */
+	public void deleteOneContent(long id);
 }

@@ -1,8 +1,11 @@
 package net.tfedu.zhl.cloud.teaching.teachCases.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.cloud.teaching.teachCases.service.TeachCasesService;
 import net.tfedu.zhl.helper.PaginationHelper;
@@ -83,10 +86,6 @@ public class TeachCasesController {
 	}
 	
 	
-	
-	
-	
-	
 	/**
 	 * 预览一条教学案例
 	 * @param id
@@ -96,8 +95,8 @@ public class TeachCasesController {
 	@RequestMapping(value = "/v1.0/teachCases/previewInfo",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getOneTeachCasePreview(long id)throws Exception{
-		
-		return null;
+		TeachCases item = teachCasesService.selectOneTeachCase(id);
+		return ResultJSON.getSuccess(item);
 	}
 	
 	/**
@@ -109,8 +108,8 @@ public class TeachCasesController {
 	@RequestMapping(value = "/v1.0/teachCases/contents", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON getContentsInOneTeachCase(long id)throws Exception{
-		
-		return null;
+		List<TCaseContents> list = teachCasesService.getAllContents(id);
+		return ResultJSON.getSuccess(list);		
 	}
 
 	
@@ -122,9 +121,11 @@ public class TeachCasesController {
 	 */
 	@RequestMapping(value = "/v1.0/teachCases/contents",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON createOneContent(long caseId,int typeId,String fname)throws Exception{
-		
-		return null;
+	public ResultJSON createOneContent(HttpServletRequest request,long caseId,int typeId,String fname)throws Exception{
+		//当前用户
+	    Long userId = (Long) request.getAttribute("currentUserId");
+		String result = teachCasesService.addOneContent(caseId, typeId, fname, userId);
+		return ResultJSON.getSuccess(result);
 	}
 	
 	/**
@@ -136,20 +137,7 @@ public class TeachCasesController {
 	@RequestMapping(value = "/v1.0/teachCases/contentsDelete",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON deleteOneContent(long id)throws Exception{
-		
-		return null;
-	}
-	
-	/**
-	 * 预览一个内容
-	 * @param id
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping(value = "/v1.0/teachCases/contents/previewInfo",method = RequestMethod.GET)
-	@ResponseBody
-	public ResultJSON getOneContentPreview(long id)throws Exception{
-		
+		teachCasesService.deleteOneContent(id);
 		return null;
 	}
 }
