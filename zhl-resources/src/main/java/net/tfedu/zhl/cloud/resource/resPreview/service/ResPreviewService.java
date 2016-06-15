@@ -53,7 +53,7 @@ public interface ResPreviewService {
      * @param poolId
      * @return
      */
-    public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy);
+    public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy,String format);
     
     /**
      * 区本、校本资源推荐列表
@@ -66,7 +66,7 @@ public interface ResPreviewService {
      * @param perPage
      * @return
      */
-    public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy);
+    public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy,String format);
     
     /**
      * 资源检索结果的推荐列表
@@ -78,7 +78,7 @@ public interface ResPreviewService {
      * @param perPage
      * @return
      */
-    public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage);
+    public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage,String format);
     
     /**
      * 个人中心 - 我的上传  资源推荐（推荐 相同课程结点下的系统、区本、校本资源）

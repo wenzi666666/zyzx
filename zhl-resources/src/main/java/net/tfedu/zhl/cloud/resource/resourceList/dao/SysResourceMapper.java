@@ -38,7 +38,7 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * 资源预览页面：系统资源推荐
      */
     public List<ResRecommendationEntity> getAllSysRes_Preview(@Param("sys_from") List<Integer> sys_from,
-    		@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy,@Param("typeIds")List<Integer> typeIds);
+    		@Param("tfcode") String tfcode,@Param("resId")long resId,@Param("orderBy")int orderBy,@Param("typeIds")List<Integer> typeIds,@Param("fileFormat") String fileFormat);
     
     
     /**

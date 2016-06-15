@@ -190,11 +190,15 @@ union
  
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt from (select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_resource a 
+	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode
 	where a.flag = 0 and a.fromflag in 
 	                 <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
+    <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+    </if>
 
 	<if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
@@ -204,8 +208,11 @@ union
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
+  left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode
   where a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} and a.scope = 5
- 
+  <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+  </if>
   <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
@@ -214,8 +221,12 @@ union
 
   select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
   from z_districts_resource a 
+  left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode
   where a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} and a.scope = 4
 
+    <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+    </if>
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>) resTmp order by case when id = #{resId} then 0 else 1 end asc 
@@ -224,15 +235,19 @@ union
   <!-- 检索范围为系统资源时，查询推荐列表 -->
   <select id="getAllSysResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
     select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
-	from z_resource a 
+	from z_resource a
+	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode 
 	where a.flag = 0
 	and a.fromFlag in <foreach item="item" index="index" collection="sys_from" 
                          open="(" separator="," close=")">
                          #{item}
                      </foreach>
+    <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+    </if>
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-     </if>
+    </if>
      order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
   
@@ -240,6 +255,7 @@ union
   <select id="getAllDisResources_preview" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity">
     select DISTINCT a.id,a.Title,a.fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_districts_resource a 
+	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode 
 	where a.flag = 0 and fromFlag = #{fromFlag} 
  
     <if test="fromFlag == 3">
@@ -247,6 +263,9 @@ union
     </if>
      <if test="fromFlag == 4">
          and a.scopeId = #{districtId} and a.scope = 4
+    </if>
+    <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
     </if>
     
     <if test="searchKeyword != null and searchKeyword != ''">
