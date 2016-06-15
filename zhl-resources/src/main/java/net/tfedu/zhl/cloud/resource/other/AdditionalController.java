@@ -87,7 +87,7 @@ public class AdditionalController {
 		
 		//情景英语
 		String url = config.getCurrentSceneEnglish(request)+"?s=" + s;
-		
+		System.out.println("------sceneEnglish----"+url);
 		return  ResultJSON.getSuccess(url) ;
 	}
 	
@@ -124,6 +124,7 @@ public class AdditionalController {
 		s1= URLEncoder.encode(s1, "utf-8");
 		
 		String url = config.getCurrentTkHost(request)+"?args="+s1+"&platform=resourcecenter&tfcode="+ (userDefault==null?"":userDefault.getTfcode());
+		System.out.println("------questionLibrary----"+url);
 		return  ResultJSON.getSuccess(url) ;
 	}
 	
@@ -148,6 +149,7 @@ public class AdditionalController {
 		String password = PWDEncrypt.getPWD(register.getPwd());
 		String forum3=config.getCurrentForum3(request);
 		forum3+="?username="+userName+"&token="+UUID.randomUUID().toString();
+		System.out.println("------forum3----"+forum3);
 		return  ResultJSON.getSuccess(forum3) ;
 	}
 
@@ -178,6 +180,7 @@ public class AdditionalController {
     	String userid = userName+"_forum3"+"_"+token;
     	String prams  = "username="+userid+"&password="+pwd+"&token="+token+"&redirect=true";
     	url += "?"+prams;
+		System.out.println("------forum3_old----"+url);
 		return  ResultJSON.getSuccess(url) ;
 	}
 

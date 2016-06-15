@@ -1,3 +1,4 @@
+
 package net.tfedu.zhl.cloud.resource.personal.controller;
 
 import java.net.URLEncoder;
@@ -95,8 +96,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/unifyType", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getUnifyType(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getUnifyType(HttpServletRequest request, HttpServletResponse response) {
 		// 返回
 		Object data = assetService.getAllResType();
 		return ResultJSON.getSuccess(data);
@@ -109,14 +109,12 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/unifyType4ext", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getUnifyType4ext(String ext) throws Exception{
+	public ResultJSON getUnifyType4ext(String ext) throws Exception {
 		// 返回
 		Object data = assetService.getTypeForExt(ext);
 		return ResultJSON.getSuccess(data);
 	}
 
-	
-	
 	/**
 	 * 获取文件格式
 	 * 
@@ -124,8 +122,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/fileFormat", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getFileFormat(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getFileFormat(HttpServletRequest request, HttpServletResponse response) {
 		// 返回
 		Object data = assetService.getAllFileFormat();
 		return ResultJSON.getSuccess(data);
@@ -140,8 +137,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/prepareResource", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getMyPrepareResource(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getMyPrepareResource(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		Object data = null;
@@ -167,11 +163,10 @@ public class PersonalController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			prePage = Integer.parseInt(_prePage);
 		}
-		Pagination page_result = prepareService.getPrepareContentListByUserId(
-				userId, unifyTypeId, fileFormat, page, prePage);
+		Pagination page_result = prepareService.getPrepareContentListByUserId(userId, unifyTypeId, fileFormat, page,
+				prePage);
 
-		JPrepareContentViewUtil.convertToPurpose(page_result.getList(),
-				resServiceLocal, currentResPath);
+		JPrepareContentViewUtil.convertToPurpose(page_result.getList(), resServiceLocal, currentResPath);
 		data = page_result;
 		return ResultJSON.getSuccess(data);
 	}
@@ -185,8 +180,8 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/prepareResource", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON removeMyPrepareResource(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ResultJSON removeMyPrepareResource(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
 		// 返回
 		Object data = null;
 		// 当前登录用户id
@@ -195,10 +190,8 @@ public class PersonalController {
 		String _method = request.getParameter("_method");
 		String resIds = request.getParameter("resIds");
 		String fromFlags = request.getParameter("fromFlags");
-		if (StringUtils.isNotEmpty(_method)
-				&& RequestMethod.DELETE.name().equalsIgnoreCase(_method)) {
-			prepareService.removeMyPrepareContentResource(currentUserId,
-					resIds, fromFlags);
+		if (StringUtils.isNotEmpty(_method) && RequestMethod.DELETE.name().equalsIgnoreCase(_method)) {
+			prepareService.removeMyPrepareContentResource(currentUserId, resIds, fromFlags);
 		} else {
 			throw new ParamsException();
 		}
@@ -214,8 +207,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/myDownload", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getMyDownload(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getMyDownload(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -242,10 +234,8 @@ public class PersonalController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			prePage = Integer.parseInt(_prePage);
 		}
-		Pagination page_result = downService.getMydownload(userId, unifyTypeId,
-				fileFormat, page, prePage);
-		JPrepareContentViewUtil.convertToPurpose(page_result.getList(),
-				resServiceLocal, currentResPath);
+		Pagination page_result = downService.getMydownload(userId, unifyTypeId, fileFormat, page, prePage);
+		JPrepareContentViewUtil.convertToPurpose(page_result.getList(), resServiceLocal, currentResPath);
 		data = page_result;
 		return ResultJSON.getSuccess(data);
 	}
@@ -259,8 +249,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/userReview", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getMyReview(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getMyReview(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -286,10 +275,8 @@ public class PersonalController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			prePage = Integer.parseInt(_prePage);
 		}
-		Pagination page_result = assetService.getMyReview(userId, reviewType,
-				page, prePage);
-		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(),
-				resServiceLocal, currentResPath);
+		Pagination page_result = assetService.getMyReview(userId, reviewType, page, prePage);
+		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
 		data = page_result;
 		return ResultJSON.getSuccess(data);
 	}
@@ -303,8 +290,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/unReview", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getUnReview(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getUnReview(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -326,11 +312,9 @@ public class PersonalController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			prePage = Integer.parseInt(_prePage);
 		}
-		Pagination page_result = assetService
-				.getUnReview(userId, page, prePage);
+		Pagination page_result = assetService.getUnReview(userId, page, prePage);
 
-		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(),
-				resServiceLocal, currentResPath);
+		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
 		data = page_result;
 
 		return ResultJSON.getSuccess(data);
@@ -345,8 +329,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/userReview", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON removeMyReview(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON removeMyReview(HttpServletRequest request, HttpServletResponse response) {
 		// 返回
 		Object data = null;
 		String ids = request.getParameter("ids");
@@ -363,15 +346,13 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/userReviewStatis", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON statisMyReview(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON statisMyReview(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
 
-		ReviewResultStatis _result = assetService
-				.getReviewStatis(currentUserId);
+		ReviewResultStatis _result = assetService.getReviewStatis(currentUserId);
 		data = _result;
 
 		return ResultJSON.getSuccess(data);
@@ -386,8 +367,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/userview", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getMyViewList(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getMyViewList(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -416,12 +396,10 @@ public class PersonalController {
 		}
 
 		// 获取结果
-		PageInfo info = userLogService.getMyViewLogFroResource(userId,
-				unifyTypeId, fileFormat, page, prePage);
+		PageInfo info = userLogService.getMyViewLogFroResource(userId, unifyTypeId, fileFormat, page, prePage);
 		Pagination _p = new PageInfoToPagination().transfer(info.getList());
 		// 获取缩略图的最终url
-		JPrepareContentViewUtil.convertToPurpose_view(_p.getList(),
-				resServiceLocal, currentResPath);
+		JPrepareContentViewUtil.convertToPurpose_view(_p.getList(), resServiceLocal, currentResPath);
 		data = _p;
 		return ResultJSON.getSuccess(data);
 	}
@@ -435,8 +413,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/resource/prepareStatis", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON prepareStatis(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON prepareStatis(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -458,8 +435,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/personalTab/resType", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getResTypeForPersonal(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getResTypeForPersonal(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -478,12 +454,11 @@ public class PersonalController {
 	 * @param request
 	 * @param response
 	 * @return
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/resource/userReviewComment", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getMyReviewComment(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ResultJSON getMyReviewComment(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -497,22 +472,20 @@ public class PersonalController {
 		int page = ControllerHelper.getPage(request);
 		int prePage = ControllerHelper.getPageSize(request);
 
-//		String _reviewType = request.getParameter("reviewType");
-//		String _page = ControllerHelper.getPage(request);
-//		String _prePage = request.getParameter("perPage");
-//		if (StringUtils.isNotEmpty(_reviewType)) {
-//			reviewType = Integer.parseInt(_reviewType);
-//		}
-//		if (StringUtils.isNotEmpty(_page)) {
-//			page = Integer.parseInt(_page);
-//		}
-//		if (StringUtils.isNotEmpty(_prePage)) {
-//			prePage = Integer.parseInt(_prePage);
-//		}
-		Pagination page_result = assetService.getMyReviewComment(userId,
-				reviewType, page, prePage);
-		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(),
-				resServiceLocal, currentResPath);
+		// String _reviewType = request.getParameter("reviewType");
+		// String _page = ControllerHelper.getPage(request);
+		// String _prePage = request.getParameter("perPage");
+		// if (StringUtils.isNotEmpty(_reviewType)) {
+		// reviewType = Integer.parseInt(_reviewType);
+		// }
+		// if (StringUtils.isNotEmpty(_page)) {
+		// page = Integer.parseInt(_page);
+		// }
+		// if (StringUtils.isNotEmpty(_prePage)) {
+		// prePage = Integer.parseInt(_prePage);
+		// }
+		Pagination page_result = assetService.getMyReviewComment(userId, reviewType, page, prePage);
+		JPrepareContentViewUtil.convertToPurpose_Review(page_result.getList(), resServiceLocal, currentResPath);
 		data = page_result;
 
 		return ResultJSON.getSuccess(data);
@@ -528,8 +501,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/autoLearning")
 	@ResponseBody
-	public ResultJSON autoLearning(HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ResultJSON autoLearning(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		/**
 		 * 默认使用这个
@@ -563,30 +535,21 @@ public class PersonalController {
 
 		}
 
-		String params = "user="
-				+ userName
-				+ "&pass="
-				+ userPwd
-				+ "&page=1"
-				+ "&grd="
-				+ term.toUpperCase()
-				+ "&sub="
-				+ sub
-				+ "&ST="
-				+ (1 == roleId ? "S" : 2 == roleId ? "T" : 5 == roleId ? "J"
-						: "S");
+		String params = "user=" + userName + "&pass=" + userPwd + "&page=1" + "&grd=" + term.toUpperCase() + "&sub="
+				+ sub + "&ST=" + (1 == roleId ? "S" : 2 == roleId ? "T" : 5 == roleId ? "J" : "S");
 		String sign = MD5.MD5(params + "&key=9k8i78jug6hd93kjf84h");
 		String s = params + "&sign=" + sign;
 		byte[] sbytes;
-		sbytes = xxtea.encrypt(s.getBytes("utf-8"),
-				"9k8i78jug6hd93kjf84h".getBytes());
+		sbytes = xxtea.encrypt(s.getBytes("utf-8"), "9k8i78jug6hd93kjf84h".getBytes());
 		s = Base64.encode(sbytes, 0, sbytes.length);
 		s = URLEncoder.encode(s, "utf-8");
 
-		String str = ((currentFDHost != null && !"".equals(currentFDHost) && currentFDHost
-				.length() > 0) ? currentFDHost : host) + "eblogin.do?s=";
+		String str = ((currentFDHost != null && !"".equals(currentFDHost) && currentFDHost.length() > 0) ? currentFDHost
+				: host) + "eblogin.do?s=";
 		String url = str + s;
 		data = url;
+
+		System.out.println("-----autoLearning---" + url);
 
 		return ResultJSON.getSuccess(data);
 	}
@@ -600,8 +563,7 @@ public class PersonalController {
 	 */
 	@RequestMapping(value = "/v1.0/customizeRes", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getCustomizeRes(HttpServletRequest request,
-			HttpServletResponse response) {
+	public ResultJSON getCustomizeRes(HttpServletRequest request, HttpServletResponse response) {
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -612,13 +574,10 @@ public class PersonalController {
 
 		long userId = currentUserId;
 
-		List<CustomizeResResult> resultList = customizeResService
-				.getCustomizeResResult();
+		List<CustomizeResResult> resultList = customizeResService.getCustomizeResResult();
 		for (CustomizeResResult customizeResResult : resultList) {
-			if (customizeResResult != null
-					&& customizeResResult.getList() != null) {
-				JPrepareContentViewUtil.convertToPurpose_Asset(
-						customizeResResult.getList(), resServiceLocal,
+			if (customizeResResult != null && customizeResResult.getList() != null) {
+				JPrepareContentViewUtil.convertToPurpose_Asset(customizeResResult.getList(), resServiceLocal,
 						currentResPath);
 			}
 		}
