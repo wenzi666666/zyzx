@@ -68,6 +68,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		request.setParameter("perPage", "20");
 		request.setParameter("isSearch", "1");
 		request.setParameter("searchKeyword", "p");
+		request.setParameter("format", "全部");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
@@ -92,6 +93,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		request.setParameter("tfcode", "RJCZ010109");
 		request.setParameter("typeId", "0");
 		request.setParameter("orderBy", "0");
+		request.setParameter("format", "全部");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
@@ -116,6 +118,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		request.setParameter("tfcode", "CZYW010101");
 		request.setParameter("typeId", "0");
 		request.setParameter("orderBy", "0");
+		request.setParameter("format", "全部");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
