@@ -88,9 +88,33 @@
 		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
 			</properties>		
-			
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>   
 
 
+		</profile>
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>suse_local</id>
+			<properties>
+ 				<package.environment>suse_local</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://localhost:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://localhost:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
+                    
+                <host>http://192.168.111.238:8080/resources/</host>        
+                <hostLocal>http://192.168.111.238:8080/</hostLocal>        
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
 		</profile>
 		
 		<profile>
@@ -167,7 +191,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	
