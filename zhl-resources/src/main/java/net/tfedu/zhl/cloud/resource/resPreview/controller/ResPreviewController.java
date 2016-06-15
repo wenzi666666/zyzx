@@ -149,12 +149,15 @@ public class ResPreviewController {
     	int page = ControllerHelper.getIntParameter(request, "page");
     	
     	//每页多少条记录
-    	int perPage = ControllerHelper.getIntParameter(request, "perPage");   
+    	int perPage = ControllerHelper.getIntParameter(request, "perPage");  
+    	
+    	//格式
+    	String fileFormat = ControllerHelper.getParameter(request, "format");
     	
     	if(StringUtils.isNotEmpty(request.getParameter("isSearch"))){ //从资源检索页面跳转到预览页面的
     		//检索关键字
         	String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword"); 
-    		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage);
+    		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage,fileFormat);
     		
     	} else { //从自建资源、系统资源、区本资源、校本资源跳转过来的
     		
@@ -175,9 +178,9 @@ public class ResPreviewController {
         		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
         			//资源库id，默认为全部
         	    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
-        			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy);
+        			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy,fileFormat);
         		} else { //区本、校本资源
-					pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage,orderBy);
+					pagination = resPreviewService.disRecommendation(tfcode, typeId, fromFlag, resId, currentUserId, page, perPage,orderBy,fileFormat);
 				}
 			}
 		}

@@ -48,17 +48,20 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
      * 检索范围为全部时，查询推荐列表
      */
     public List<ResRecommendationEntity> getAllResources_preview(@Param("searchKeyword") String searchKeyword,
-             @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
+             @Param("sys_from") List<Integer> sys_from,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId,
+             @Param("fileFormat") String format);
 
     /**
-     * 检索范围为系统资源时时，查询推荐列表
+     * 检索范围为系统资源时，查询推荐列表
      */
-    public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from,@Param("resId")long resId);
+    public List<ResRecommendationEntity> getAllSysResources_preview(@Param("searchKeyword") String searchKeyword,@Param("sys_from") List<Integer> sys_from,@Param("resId")long resId,
+            @Param("fileFormat") String format);
             
 
     /**
      * 检索范围为区本、校本资源时，查询推荐列表
      */
     public List<ResRecommendationEntity> getAllDisResources_preview(@Param("searchKeyword") String searchKeyword,
-            @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId);
+            @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId,
+            @Param("fileFormat") String format);
 }

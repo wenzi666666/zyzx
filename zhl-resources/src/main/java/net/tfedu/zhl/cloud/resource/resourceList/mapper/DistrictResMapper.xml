@@ -104,6 +104,10 @@
                          open="(" separator="," close=")">
                          #{item}
                 </foreach>
+                
+     <if test="fileFormat != '全部'">
+         and jf.FileFormat = #{fileFormat}
+     </if>
      
     <if test="fromFlag == 3">
          and a.scopeId = #{schoolId} and a.scope = 5 and a.fromFlag = #{fromFlag}

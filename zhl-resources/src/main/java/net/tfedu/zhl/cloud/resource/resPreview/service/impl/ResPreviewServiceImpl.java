@@ -162,7 +162,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * 系统资源推荐列表
      */
     @Override
-	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy){
+	public Pagination<ResRecommendationEntity> sysRecommendation(String tfcode,int typeId,long resId,long poolId,int page,int perPage,List<Integer> sys_from,int orderBy,String format){
     
     	//根据资源库id、父类型id，查询资源父类型及其子类型
     	List<Integer> typeIds = resTypeMapper.getTypesByPMTypeAndPool(poolId, typeId);
@@ -175,7 +175,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             PageHelper.startPage(page, perPage);
 
             // 查询系统资源
-            list = sysResourceMapper.getAllSysRes_Preview(sys_from,tfcode,resId,orderBy,typeIds);
+            list = sysResourceMapper.getAllSysRes_Preview(sys_from,tfcode,resId,orderBy,typeIds,format);
     	}
     	
   
@@ -190,7 +190,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * 区本、校本资源推荐列表
      */
     @Override
-	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy){
+	public Pagination<ResRecommendationEntity> disRecommendation(String tfcode,int typeId,int fromFlag,long resId,long userId,int page,int perPage,int orderBy,String format){
     	 // 根据父类型，查询所有的子类型
         List<Integer> typeIds = resTypeMapper.getDisResTypesByPMType(typeId);
 
@@ -215,7 +215,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
             PageHelper.startPage(page, perPage);
 
             // 查询资源
-            list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId,orderBy);
+            list = districtResMapper.selectDisRes_Preview(fromFlag, typeIds, tfcode, schoolId, districtId,resId,orderBy,format);
         }
         
         // 封装结果集
@@ -228,7 +228,7 @@ public class ResPreviewServiceImpl implements ResPreviewService {
      * 资源检索结果的推荐列表
      */
     @Override
-	public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage){
+	public Pagination<ResRecommendationEntity> searchRecommendation(int fromFlag,long resId,long userId,String searchKeyword,List<Integer> sys_from,int page,int perPage,String format){
     	// 存放查询结果
         List<ResRecommendationEntity> list = new ArrayList<ResRecommendationEntity>();
         // 封装结果集
@@ -257,18 +257,18 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllResources_preview(searchKeyword, sys_from, schoolId, districtId,resId);
+            list = resSearchMapper.getAllResources_preview(searchKeyword, sys_from, schoolId, districtId,resId,format);
         } else if (fromFlag == 0) { // 系统资源
 
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllSysResources_preview(searchKeyword, sys_from,resId);
+            list = resSearchMapper.getAllSysResources_preview(searchKeyword, sys_from,resId,format);
         } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源
 
         	
             // Page插件必须放在查询语句之前紧挨的第一个位置
             PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId,resId);
+            list = resSearchMapper.getAllDisResources_preview(searchKeyword, fromFlag, schoolId, districtId,resId,format);
         }
 
         //将pageIn封装为自定义的pagination
