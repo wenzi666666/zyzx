@@ -49,8 +49,8 @@
 	where name is not null and name != ''  
   </select>
    <select id="getAllEditions2" parameterType="HashMap" resultMap="EditionResultMap">
-    select id,name,tfcode from(
-  	select s.id,s.name,tfcode from j_syscourse s
+    select id,name,tfcode,ordernum from(
+  	select s.id,s.name,tfcode,s.ordernum from j_syscourse s
 	LEFT JOIN j_term j on s.termId = j.id
 	LEFT JOIN j_subject sub on s.subjectId = sub.id
 	where s.termid =#{termId} and s.subjectid =#{subjectId} and s.flag = false and j.flag = false and sub.flag = false and s.pnodeid = 0 

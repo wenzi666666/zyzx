@@ -13,6 +13,17 @@ public class EditionViewTK {
 	String cour_name;
 	
 	String cour_tf_code;
+	
+	//排序字段
+	long orderNum;
+
+	public long getOrderNum() {
+		return orderNum;
+	}
+
+	public void setOrderNum(long orderNum) {
+		this.orderNum = orderNum;
+	}
 
 	public String getCour_id() {
 		return cour_id;

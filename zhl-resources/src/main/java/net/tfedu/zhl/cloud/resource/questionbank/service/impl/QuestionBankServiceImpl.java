@@ -177,6 +177,7 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 			obj.setCour_id(view.getId().toString());
 			obj.setCour_name(view.getName());
 			obj.setCour_tf_code(view.getTfcode());
+			obj.setOrderNum(view.getOrdernum());
 			result.add(obj);
 		}
 		return ResultJSON.getSuccess(result);
