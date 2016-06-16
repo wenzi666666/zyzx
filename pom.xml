@@ -118,6 +118,31 @@
 		</profile>
 		
 		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>suse_product</id>
+			<properties>
+ 				<package.environment>suse_product</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://10.9.10.163:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://10.9.10.163:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
+                    
+                <host>http://10.9.10.162:8080/resources/</host>        
+                <hostLocal>http://10.9.10.162:8080/</hostLocal>    
+              	<resService>http://10.9.10.164:8099/down/</resService>        
+				<resServiceLocal>http://10.9.10.164:8099/down/</resServiceLocal>        
+				<isCloudModel>true</isCloudModel>  
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		
+		<profile>
 			<id>test249</id>
 			<properties>
                 <package.environment>test249</package.environment>
@@ -154,7 +179,7 @@
                 <jdbc_bo_password>bwxl33tfedu-net</jdbc_bo_password>   
                     
                 <host>http://101.201.54.27:8080/resources/,http://101.201.50.15:8080/resources/</host>        
-                <hostLocal>http://101.201.54.27:8080/,http://101.201.50.15:8080/</hostLocal>        
+                <hostLocal>http://60.205.12.110:8080/,http://101.201.54.27:8080/,http://101.201.50.15:8080/</hostLocal>        
                 <resService>http://101.200.190.27:8099/down/</resService>        
                 <resServiceLocal>http://101.200.190.27:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
