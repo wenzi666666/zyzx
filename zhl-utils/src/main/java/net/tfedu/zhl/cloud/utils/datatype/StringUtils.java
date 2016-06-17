@@ -9,7 +9,7 @@ public class StringUtils {
      * @return
      */
     public static boolean isEmpty(String str) {
-        return str == null || str.length() == 0 || str.equals("") || str.equals("null");
+        return str == null || str.trim().length() == 0 || str.trim().equals("") || str.trim().equals("null");
     }
 
     public static boolean isNotEmpty(String str) {
