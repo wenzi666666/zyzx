@@ -89,7 +89,7 @@
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 
 
@@ -186,6 +186,36 @@
             </properties>            
 		</profile>
 		
+		<profile>
+			<id>yanshi156</id>
+			<properties>
+                <package.environment>yanshi156</package.environment>
+                <buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.156:3306/yanshi_zyzx31?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>bwxl33@tfedu.net</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.156:3306/yanshi_zyzx31?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>bwxl33@tfedu.net</jdbc_bo_password>   
+                    
+                <host>http://192.168.111.156:8888/resources/</host>        
+                <hostLocal>http://192.168.111.156:8888/</hostLocal>        
+                <resService>http://192.168.111.156:8099/down/</resService>        
+                <resServiceLocal>http://192.168.111.156:8099/down/</resServiceLocal>  
+                
+                
+				<fdHost>http://192.168.111.156:8099/fudao/</fdHost>        
+				<fdHostLocal>http://192.168.111.156:8099/fudao/</fdHostLocal>        
+		       <!-- 题库对接的配置  -->
+		       <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
+		       <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
+		       <!-- 情景英语对接的配置  -->
+		       <sceneEnglish>http://192.168.111.156:8012/com/rmlogin.ashx/</sceneEnglish>  
+		       <sceneEnglishLocal>http://192.168.111.156:8012/com/rmlogin.ashx/</sceneEnglishLocal>  
+                <isCloudModel>true</isCloudModel>  
+            </properties>            
+		</profile>
 		
 		<profile>
 			<id>ali_z</id>
@@ -227,19 +257,11 @@
                     
                 <host>http://127.0.0.1:8080/teachingresearch/</host>        
                 <hostLocal>http://localhost:8080/</hostLocal>        
-                <resService>http://192.168.111.22:8099/down/</resService>        
-                <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
-                 
-                 <!--    论坛3.0（对接校验平台）的URI  -->
-                 <forum3Host>http://chat.tfedu.net:7070/index</forum3Host>  
-      			 <forum3HostLocal>http://chat.tfedu.net:7070/index</forum3HostLocal>  
-                
-                
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 	
