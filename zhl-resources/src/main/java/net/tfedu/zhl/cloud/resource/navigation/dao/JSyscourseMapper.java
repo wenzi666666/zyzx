@@ -67,6 +67,15 @@ public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
     
     
     /**
+     * 获取具体的版本下的教材
+     * @param tfcode
+     * @param proCode
+     * @return
+     */
+    public List<String> getProductTfcode(@Param("tfcode")String tfcode,@Param("proCode")String proCode);
+    
+    
+    /**
      * 获取学段、学科下的知识点(部分)
      * @param term_id
      * @param subj_id

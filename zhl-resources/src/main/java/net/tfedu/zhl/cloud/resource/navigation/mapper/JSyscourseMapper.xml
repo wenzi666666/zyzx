@@ -102,17 +102,21 @@
   </resultMap>
   
   
+  <!--获取具体的版本下的教材 -->
+  <select id="getProductTfcode" resultType="String">
+ 	 select tfcode  from j_producttfcodecontrast ts where  proCode =#{proCode} and  tfcode like #{tfcode}  ORDER BY orderno
+  </select>
   
    <!-- 根据教程结点tfcode，获取全部节点的详细信息   -->
   <select id="getAllCourseTreeInfo" resultMap="courseTreeInfoTK">
   	select  * from (
 			 select  id as cour_id,pnodeid as cour_pid,tfcode as cour_tf_code, if(bookname is null,name,bookname)  as cour_name from (
 			  select s.id , s.name, s.tfcode ,s.pnodeId
-			  ,(select ts.bookname from j_producttfcodecontrast ts where ts.tfcode = s.TFcode and flag = false  and proCode =#{proCode} )  bookname
+			  ,(select ts.bookname from j_producttfcodecontrast ts where ts.tfcode = s.TFcode and proCode =#{proCode} )  bookname
 			  from j_syscourse s
 				where s.tfcode like #{tfcode} 
-			   and s.typeFlag in (0,1) and s.isKnowledge = 0
-			
+			   and s.typeFlag in (0,1)
+				ORDER BY TFcode,orderNum
 			)temp
 			)ttt2
   </select>

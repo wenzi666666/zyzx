@@ -150,8 +150,8 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 
 		List<JSubjectTiku> list = subjectTkMapper.selectAll();
 		List<SubjectViewTK> result = new ArrayList<SubjectViewTK>();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			JSubjectTiku view = (JSubjectTiku) iterator.next();
+		for (Iterator<JSubjectTiku> iterator = list.iterator(); iterator.hasNext();) {
+			JSubjectTiku view = iterator.next();
 			SubjectViewTK obj = new SubjectViewTK();
 			obj.setSubj_id(view.getId().toString());
 			obj.setSubj_name(view.getName());
@@ -171,8 +171,8 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 		map.put("subjectId", subj_id);
 		List<JSyscourse> list = jSyscourseMapper.getAllEditions2(map);
 		List<EditionViewTK> result = new ArrayList<EditionViewTK>();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
-			JSyscourse view = (JSyscourse) iterator.next();
+		for (Iterator<JSyscourse> iterator = list.iterator(); iterator.hasNext();) {
+			JSyscourse view =  iterator.next();
 			EditionViewTK obj = new EditionViewTK();
 			obj.setCour_id(view.getId().toString());
 			obj.setCour_name(view.getName());
@@ -193,9 +193,15 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 				.parseLong(cour_id));
 		String proCode = "tk";
 		String tfcode = obj.getTfcode();
-		List<CourseViewTk> list = jSyscourseMapper.getAllCourseTreeInfo(tfcode+"%",
-				proCode);
-
+		String _tfcode = tfcode+"%";
+		List<String> tfcodeList = jSyscourseMapper.getProductTfcode(_tfcode, proCode);
+		
+		List<CourseViewTk> list = new ArrayList<CourseViewTk>();
+		for (Iterator<String> iterator = tfcodeList.iterator(); iterator.hasNext();) {
+			String temp_tfcode = iterator.next();
+			list.addAll(jSyscourseMapper.getAllCourseTreeInfo(temp_tfcode+"%",
+					proCode));
+		}
 		return ResultJSON.getSuccess(list);
 	}
 

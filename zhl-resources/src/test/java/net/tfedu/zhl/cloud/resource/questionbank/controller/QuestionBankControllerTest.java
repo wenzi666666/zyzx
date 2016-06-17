@@ -213,7 +213,7 @@ public class QuestionBankControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testQueryCourseTree() throws Exception {
 		
-		result = controller.queryCourseTree("231630105");
+		result = controller.queryCourseTree("16646");
 		System.out.println(JSONObject.toJSONString(result));
 		if(result instanceof ResultJSON){
 			ResultJSON  json = (ResultJSON)result;
