@@ -264,7 +264,27 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
-	
+	<profile>
+			<id>teachingTest</id>
+			<properties>
+                <package.environment>teachingTest</package.environment>
+                <buss.name>zhl-teachingresearch</buss.name>
+				<web.name>teachingresearch</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.251:3306/teachingresearch_sso?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.251:3306/teachingresearch_business?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
+                <host>http://192.168.111.249:8080/teachingresearch/</host>        
+                <hostLocal>http://192.168.111.249:8080/</hostLocal>        
+                <isCloudModel>true</isCloudModel>  
+            </properties>  
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>          
+		</profile>
 	</profiles>
 
 	<modelVersion>4.0.0</modelVersion>
