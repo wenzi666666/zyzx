@@ -94,7 +94,30 @@
 
 
 		</profile>
-		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>test42</id>
+			<properties>
+ 				<package.environment>test42</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<jdbc_sso_url>jdbc:mysql://192.168.111.42:3306/zyzx3_1?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
+                <jdbc_sso_username>root</jdbc_sso_username>
+                <jdbc_sso_password>BWXL33@TFEDU.NET</jdbc_sso_password>       
+				<jdbc_bo_url>jdbc:mysql://192.168.111.42:3306/zyzx3_1?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
+                <jdbc_bo_username>root</jdbc_bo_username>
+                <jdbc_bo_password>BWXL33@TFEDU.NET</jdbc_bo_password>   
+                    
+                <host>http://192.168.111.42:8080/resources/</host>        
+                <hostLocal>http://192.168.111.42:8080/</hostLocal>    
+                <resService>http://192.168.111.42:8099/down/</resService>        
+				<resServiceLocal>http://192.168.111.42:8099/down/</resServiceLocal>        
+                    
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
 		<profile>
 		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
 			<id>suse_local</id>
