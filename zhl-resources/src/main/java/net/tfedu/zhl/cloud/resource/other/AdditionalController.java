@@ -7,6 +7,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
@@ -17,11 +22,6 @@ import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 
 

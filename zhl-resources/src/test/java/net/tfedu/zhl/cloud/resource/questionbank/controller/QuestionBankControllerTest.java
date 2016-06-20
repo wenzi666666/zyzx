@@ -123,6 +123,7 @@ public class QuestionBankControllerTest extends BaseControllerTestCase{
 	public void testGetTerms() throws Exception {
 
 		result = controller.queryTerm(request, response);
+		System.out.println(JSONObject.toJSONString(result));
 		if(result instanceof ResultJSON){
 			ResultJSON  json = (ResultJSON)result;
 			Assert.isTrue("ok".equalsIgnoreCase(json.getCode()));

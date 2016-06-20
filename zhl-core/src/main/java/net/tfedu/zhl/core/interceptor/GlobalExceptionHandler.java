@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.core.exception.APIErrorException;
 import net.tfedu.zhl.core.exception.DataAccessException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.InvalidPasswordException;
@@ -183,5 +184,12 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
         return result;
     }
-
+    @ResponseStatus(value = HttpStatus.OK)
+    @ExceptionHandler(APIErrorException.class)
+    @ResponseBody
+    public ResultJSON handleAPIErrorException(HttpServletRequest request, HttpServletResponse response,
+    		APIErrorException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        return result;
+    }
 }

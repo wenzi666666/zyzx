@@ -128,7 +128,7 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 	 */
 	@Override
 	public ResultJSON queryTerm() {
-		List<JTerm> terms = jTermMapper.queryTerm();
+		List<JTerm> terms = jTermMapper.getAllTerms();
 		return ResultJSON.getSuccess(terms);
 	}
 

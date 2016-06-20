@@ -11,7 +11,7 @@ import net.tfedu.zhl.fileservice.xxtea;
 public class MD5BASE64Test {
 	
 	public static void main(String[] args) throws Exception {
-		String  s= "vGbFi51DopXPM5iIFmyHXCNhEtsu9F4Uq6WnA2naPyshHbtZtlI%2FqjsvV7hT2JAM9jsm6pX6ZTBxIJqC9tARhcIaALXpb3buVKy4oFPmjHuuDfW2J609HhUhe21JfPDb";
+		String  s= "lEIAwykXhZ%2BC7ajWL4oj%2FCTzzHssdaeV5bSgy6sJYRYN4yFtdc7CX1XHHvuVJYv6tDkXe3BqtWAqTsvqwnm4HMnT6ngNrO8KFSVUcyMyOcclA0XXQjZCE9koYcusiHNR";
 		
 		s = URLDecoder.decode(s, "utf-8");
 		
