@@ -17,7 +17,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,6 +29,7 @@ import com.alibaba.fastjson.JSONObject;
 import net.tfedu.zhl.core.exception.APIErrorException;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
+
 
 
 /**
@@ -168,13 +168,14 @@ public class HttpClientUtils {
 		
 		/**
 		 * 传递Token   Token=Default--31d04cf9638240cd968425fdcae80e93
+		 * Default--5f9af285316b4a9da47d600a4a4362e8
 		 */
-		String  Token = "Token=Default--31d04cf9638240cd968425fdcae80e93";
+		String  Token = "Default--5f9af285316b4a9da47d600a4a4362e8";
 		
 		
 		HashMap<String, String> params = new HashMap<String, String>();
 		params.put("SERVICE_CODE", "zteict.proxy.user.LoginStatus");
-		params.put("CONSUMER_ID", "Default--31d04cf9638240cd968425fdcae80e93");
+		params.put("CONSUMER_ID", Token);
 
 		//接口中传递json数据
 		String url = "http://edu.myjining.cn/serviceProxy/servlet/";
@@ -185,7 +186,7 @@ public class HttpClientUtils {
 		
 		ZXCheckResult _result = JSONObject.parseObject(result, ZXCheckResult.class);
 
-		System.out.println(_result);
+		System.out.println(JSONObject.toJSONString(_result));
 	
 		
 	}

@@ -199,8 +199,8 @@
                 <jdbc_bo_username>root</jdbc_bo_username>
                 <jdbc_bo_password>bwxl33@tfedu.net</jdbc_bo_password>   
                     
-                <host>http://192.168.111.156:8888/resources/</host>        
-                <hostLocal>http://192.168.111.156:8888/</hostLocal>        
+                <host>http://192.168.111.156:8080/resources/</host>        
+                <hostLocal>http://192.168.111.156:8080/</hostLocal>        
                 <resService>http://192.168.111.156:8099/down/</resService>        
                 <resServiceLocal>http://192.168.111.156:8099/down/</resServiceLocal>  
                 

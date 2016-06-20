@@ -8,15 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.http.client.ClientProtocolException;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 
-import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
+
 
 /**
  * 第三方对接的工具
@@ -46,7 +45,7 @@ public class ThirdPartyContoller {
 	@RequestMapping(value="/login/{platformcode}/{targetPage}")	
 	public Object login(HttpServletRequest request ,HttpServletResponse response
 			,@PathVariable String platformcode
-			,@PathVariable String targetPage) throws ClientProtocolException, IOException, CustomException, URISyntaxException{
+			,@PathVariable String targetPage) throws ClientProtocolException, IOException,Exception{
 		
 		
 		
@@ -64,8 +63,9 @@ public class ThirdPartyContoller {
 		String url = "http://edu.myjining.cn/serviceProxy/servlet/";
 		
 		url += "json="+JSONObject.toJSONString(params);
-		
 		String result = HttpClientUtils.doGet(url);
+		
+		
 		
 		
 		
