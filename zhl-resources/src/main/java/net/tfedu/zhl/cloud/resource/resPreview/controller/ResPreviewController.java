@@ -151,10 +151,13 @@ public class ResPreviewController {
     	//每页多少条记录
     	int perPage = ControllerHelper.getIntParameter(request, "perPage");  
     	
-    	//格式
-    	String fileFormat = ControllerHelper.getParameter(request, "format");
+    	
     	
     	if(StringUtils.isNotEmpty(request.getParameter("isSearch"))){ //从资源检索页面跳转到预览页面的
+    		
+    		//格式
+        	String fileFormat = ControllerHelper.getParameter(request, "format");
+    		
     		//检索关键字
         	String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword"); 
     		pagination = resPreviewService.searchRecommendation(fromFlag, resId, currentUserId, searchKeyword, sys_from, page, perPage,fileFormat);
@@ -165,6 +168,9 @@ public class ResPreviewController {
     			pagination = resPreviewService.myResByUploadRecommendation(currentUserId, resId, sys_from, page, perPage);
     			
     		} else { //系统、区本、校本
+    			
+    			//格式
+    	    	String fileFormat = ControllerHelper.getParameter(request, "format");
     			
     			//排序方式
     	    	int orderBy = ControllerHelper.getIntParameter(request, "orderBy");

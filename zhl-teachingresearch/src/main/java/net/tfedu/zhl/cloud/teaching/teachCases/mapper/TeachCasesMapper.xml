@@ -36,7 +36,7 @@
   
   <!-- 查询教学案例 -->
   <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
-     select id,title,teacher,school,thumbnailpath from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId}
+     select id,title,teacher,school,thumbnailpath from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId} and flag = 0
   </select>
   
   <!-- 新建一个教学案例 -->
@@ -68,12 +68,12 @@
     select a.id,a.fname,b.id as contenttypeid,b.contenttype,b.thumbnailpath from t_casecontents a
 	left join t_contents b
 	on a.contentTypeId = b.id
-	where a.id = #{id}
+	where a.id = #{id} and flag = 0
   </select>
   
   <!-- 查询一个教学案例下是否已经存在特定的内容   -->
   <select id="selectOneContent" resultType="Integer">
-     select count(id) from t_casecontents where contenttypeid = #{typeId} and caseId = #{caseId};
+     select count(id) from t_casecontents where contenttypeid = #{typeId} and caseId = #{caseId} and flag = 0;
   </select>
   
   <!-- 在教学案例下新增一个内容 -->
