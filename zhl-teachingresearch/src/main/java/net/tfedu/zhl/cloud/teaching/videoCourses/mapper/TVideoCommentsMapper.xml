@@ -37,4 +37,9 @@
   <update id="editOneComment">
     update t_videocomments set content = #{content} where id = #{id}
   </update>
+  
+  <!-- 删除一个评论 -->
+  <update id="deleteOneComment">
+     update t_videocomments set flag = 1 where id = #{id}
+  </update>
 </mapper>

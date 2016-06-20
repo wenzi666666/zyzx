@@ -63,6 +63,8 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
 		videoCourse = JsonUtil.getInstance().fromJson(video,TVideoResources.class);
 		
 		videoCourse.setCreator(userId);
+		if(videoCourse.getSubjectid() == null) //若没有学科，则表示是初级视频课程，学科id为0
+			videoCourse.setSubjectid(0);
 		
 		tVideoResourcesMapper.insertOneVideoCourse(videoCourse);
 	}
@@ -78,6 +80,8 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
 		videoCourse = JsonUtil.getInstance().fromJson(video,TVideoResources.class);
 		
 		videoCourse.setCreator(userId);
+		if(videoCourse.getSubjectid() == null) //若没有学科，则表示是初级视频课程，学科id为0
+			videoCourse.setSubjectid(0);
 		
 		tVideoResourcesMapper.editOneVideoCourse(videoCourse);
 	}

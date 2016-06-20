@@ -34,9 +34,17 @@ public class TeachCasesController {
 	 */
 	@RequestMapping(value = "/v1.0/teachCases", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllTeachCases(int fromFlag,int termId,int subjectId,int page,int perPage)throws Exception{
+	public ResultJSON getAllTeachCases(HttpServletRequest request,int fromFlag,int termId,int subjectId)throws Exception{
 		
-		PaginationHelper<TeachCases> pagination = teachCasesService.selectAllCases(fromFlag, termId, subjectId, page, perPage);
+		int curPage = 1;
+		int perPageNum = 10;
+		
+		if(request.getParameter("page") != null )//页码
+		    curPage = Integer.parseInt(request.getParameter("page").toString().trim());
+		if(request.getParameter("perPage") != null )//每页记录数目
+			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		
+		PaginationHelper<TeachCases> pagination = teachCasesService.selectAllCases(fromFlag, termId, subjectId, curPage,perPageNum);
 		
 		return ResultJSON.getSuccess(pagination);
 	}
@@ -54,7 +62,7 @@ public class TeachCasesController {
 		
 		teachCasesService.createOneTeachCase(teachCase, userId);
 		
-		return null;
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -69,7 +77,7 @@ public class TeachCasesController {
 		//当前用户
 	    Long userId = (Long) request.getAttribute("currentUserId");
 		teachCasesService.editOneTeachCase(teachCase, userId);	
-		return null;
+		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
@@ -82,7 +90,7 @@ public class TeachCasesController {
 	@ResponseBody
 	public ResultJSON deleteOneTeachCase(long id)throws Exception{
 		teachCasesService.deleteOneTeachCase(id);
-		return null;
+		return ResultJSON.getSuccess(null);
 	}
 	
 	
@@ -138,6 +146,6 @@ public class TeachCasesController {
 	@ResponseBody
 	public ResultJSON deleteOneContent(long id)throws Exception{
 		teachCasesService.deleteOneContent(id);
-		return null;
+		return ResultJSON.getSuccess(null);
 	}
 }

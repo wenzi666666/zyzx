@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.VideoPreviewEntity;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 
@@ -39,12 +40,29 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllVideoCourses(HttpServletRequest request,HttpServletResponse response,int fromFlag,int typeId,int subjectId,int orderBy,int page,int perPage)throws Exception{
+	public ResultJSON getAllVideoCourses(HttpServletRequest request,HttpServletResponse response,int fromFlag,int typeId)throws Exception{
 		
 		// 当前登录用户id
         Long currentUserId = (Long) request.getAttribute("currentUserId");
+        
+        
+        int curPage = 1; //当前第几页，默认为1
+        int perPageNum = 10; //每页记录数目，默认为10
+        int order = 0; //排序，默认按照时长顺序排列
+        int subject = 0; //学科id，默认为0
+        
+        
+        if(request.getParameter("page") != null )//页码
+			curPage = Integer.parseInt(request.getParameter("page").toString().trim());
+		if(request.getParameter("perPage") != null )//每页记录数
+			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		if(request.getParameter("orderBy") != null )//排序方式
+			order = Integer.parseInt(request.getParameter("orderBy").toString().trim());
+		if(request.getParameter("subjectId") != null )//学科id
+			subject = Integer.parseInt(request.getParameter("subjectId").toString().trim());
+        
 		
-		PaginationHelper<TVideoResources> pagination = videoCoursesService.getAllVideoCourses(fromFlag, typeId, subjectId, orderBy, page, perPage, currentUserId);
+		PaginationHelper<TVideoResources> pagination = videoCoursesService.getAllVideoCourses(fromFlag, typeId, subject, order, curPage, perPageNum, currentUserId);
 	    
 		return ResultJSON.getSuccess(pagination);
 	}
@@ -107,9 +125,20 @@ public class VideoCoursesController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/search",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON searchVideoCourses(String keyWord,int page,int perPage,int fromFlag,int orderBy)throws Exception{
+	public ResultJSON searchVideoCourses(HttpServletRequest request,String keyWord,int fromFlag)throws Exception{
 		
-		PaginationHelper<TVideoResources> pagination = videoCoursesService.getVideoSearchResults(keyWord, fromFlag, orderBy, page, perPage);
+		int order = 0; //排序方式，默认为0，按上传时间顺序
+		int curPage = 1; //要查询的页码
+		int perPageNum = 10; //每页记录数目
+		
+		if(request.getParameter("orderBy") != null )//排序方式
+			order = Integer.parseInt(request.getParameter("orderBy").toString().trim());
+		if(request.getParameter("page") != null )//页码
+			curPage = Integer.parseInt(request.getParameter("page").toString().trim());
+		if(request.getParameter("perPage") != null )//每页记录数
+			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		
+		PaginationHelper<TVideoResources> pagination = videoCoursesService.getVideoSearchResults(keyWord, fromFlag, order, curPage, perPageNum);
 		
 		return ResultJSON.getSuccess(pagination);
 	}

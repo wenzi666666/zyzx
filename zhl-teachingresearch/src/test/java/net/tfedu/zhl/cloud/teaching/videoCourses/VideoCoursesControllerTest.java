@@ -50,11 +50,8 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	public void testGetAllVideoCourses()throws Exception{
 		int fromFlag = 1;
 		int typeId = 1;
-		int subjectId = 1;
-		int orderBy = 1;
-		int page = 1;
-		int perPage = 10;
-		result = videoCoursesController.getAllVideoCourses(request, response, fromFlag, typeId, subjectId, orderBy, page, perPage);
+		
+		result = videoCoursesController.getAllVideoCourses(request, response, fromFlag, typeId);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
@@ -81,11 +78,10 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	@Test
 	public void searchVideoCourses()throws Exception{
 		int fromFlag = 1;
-		int page = 1;
-		int perPage = 10;
+		
 		String keyWord = "haha";
-		int orderBy = 1;
-		result = videoCoursesController.searchVideoCourses(keyWord, page, perPage, fromFlag, orderBy);
+		
+		result = videoCoursesController.searchVideoCourses(request,keyWord,fromFlag);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}
@@ -94,9 +90,9 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	@Test
 	public void getAllComments()throws Exception{
 		long videoId = 1;
-		int page = 1;
-		int perPage = 10;
-		result = videoCommentsController.getAllComments(videoId, page, perPage);
+		//String page = "1";
+		//String perPage = "10";
+		result = videoCommentsController.getAllComments(request,videoId);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

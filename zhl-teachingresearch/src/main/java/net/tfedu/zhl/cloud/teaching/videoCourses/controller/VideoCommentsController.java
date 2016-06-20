@@ -46,9 +46,19 @@ public class VideoCommentsController {
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/comments", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllComments(long videoId,int page,int perPage)throws Exception{
+	public ResultJSON getAllComments(HttpServletRequest request,long videoId)throws Exception{
 		
-        PaginationHelper<TVideoComments> pagination = videoCommentsService.getAllComments(videoId, page, perPage);
+		
+		
+		int curPage = 1; //当前页，默认为第一页
+		int perPageNum = 10; //默认每页展示10条记录
+		
+		if(request.getParameter("page") != null )//若前端显示传递了页码
+			curPage = Integer.parseInt(request.getParameter("page").toString().trim());
+		if(request.getParameter("perPage") != null )//若前端显示传递了页码
+			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		
+        PaginationHelper<TVideoComments> pagination = videoCommentsService.getAllComments(videoId, curPage, perPageNum);
         
 		return ResultJSON.getSuccess(pagination);
 	}
