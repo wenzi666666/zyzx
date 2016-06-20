@@ -62,7 +62,7 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 		log.info(JSONObject.toJSONString(result));
 	}
 	
-	//预览一个教学案例的信息
+	/*//预览一个教学案例的信息
 	@Test
 	public void getOneTeachCaseInfo()throws Exception{
 		long id = 1;
@@ -96,6 +96,6 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 		result = teachCasesController.deleteOneContent(id);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
-	}
+	}*/
 	
 }
