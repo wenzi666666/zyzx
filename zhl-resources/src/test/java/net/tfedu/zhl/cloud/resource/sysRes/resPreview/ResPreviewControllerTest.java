@@ -63,12 +63,12 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	public void testGetResRecommendation_search()throws Exception{
 		
 		request.setParameter("resId", "1");
-		request.setParameter("fromFlag", "1");
+		request.setParameter("fromFlag", "3");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
-		//request.setParameter("isSearch", "1");
-		//request.setParameter("searchKeyword", "p");
-		//request.setParameter("format", "全部");
+		request.setParameter("isSearch", "1");
+		request.setParameter("searchKeyword", "p");
+		request.setParameter("format", "全部");
 
 		ResultJSON json =  controller.getResRecommendation(request, response);
 		
@@ -135,7 +135,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	public void testGetResRecommendation_upload()throws Exception{
 		
 		request.setParameter("currentUserId", "390440126");
-		request.setParameter("resId", "164882577");
+		request.setParameter("resId", "1");
 		request.setParameter("fromFlag", "1");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
