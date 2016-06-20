@@ -62,7 +62,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testGetResRecommendation_search()throws Exception{
 		
-		request.setParameter("resId", "870580");
+		request.setParameter("resId", "1");
 		request.setParameter("fromFlag", "3");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");
@@ -135,7 +135,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	public void testGetResRecommendation_upload()throws Exception{
 		
 		request.setParameter("currentUserId", "390440126");
-		request.setParameter("resId", "164882577");
+		request.setParameter("resId", "1");
 		request.setParameter("fromFlag", "1");
 		request.setParameter("page", "1");
 		request.setParameter("perPage", "20");

@@ -89,7 +89,7 @@
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 
 
@@ -183,7 +183,8 @@
                 <resService>http://192.168.111.22:8099/down/</resService>        
                 <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
                 <isCloudModel>true</isCloudModel>  
-            </properties>            
+            </properties>  
+                      
 		</profile>
 		
 		<profile>
@@ -261,7 +262,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	<profile>
@@ -282,7 +283,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	</profiles>

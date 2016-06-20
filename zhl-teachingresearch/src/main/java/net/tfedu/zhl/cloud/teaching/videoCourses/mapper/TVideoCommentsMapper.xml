@@ -30,7 +30,7 @@
   
   <!-- 查询一个视频课程的所有评论 -->
   <select id="getAllComments" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoComments">
-    select id,content,userid,createDate from t_videocomments where videoid = #{videoId} and isscore = 0 
+    select id,content,userid,createDate from t_videocomments where videoid = #{videoId} and isscore = 0 and flag = 0
   </select>
   
   <!-- 编辑一个评论 -->
