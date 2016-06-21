@@ -48,6 +48,7 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	 */
 	public void createOneTeachCase(String teachCase,long userId){
 		TeachCases item = new TeachCases();
+		teachCase = teachCase.replace('"', '\'');
 		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
 		item.setCreator(userId);
 		

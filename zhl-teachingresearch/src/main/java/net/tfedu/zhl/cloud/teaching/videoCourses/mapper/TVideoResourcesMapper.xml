@@ -73,7 +73,7 @@
   <!-- 编辑一条视频课程  -->
   <update id="editOneVideoCourse">
      update t_videoresources set title = #{videoCourse.title},speakerinfo = #{videoCourse.speakerinfo},description = #{videoCourse.description},typeid = #{videoCourse.typeid},
-     subjectid = #{videoCourse.subjectid},fromflag = #{videoCourse.fromflag},thumbnailpath = #{videoCourse.thumbnailpath},fname = #{videoCourse.fname},playtime = #{videoCourse.playtime},creator = #{videoCourse.creator},updateDate = now()
+     subjectid = #{videoCourse.subjectid},fromflag = #{videoCourse.fromflag},thumbnailpath = #{videoCourse.thumbnailpath},creator = #{videoCourse.creator},updateDate = now()
   </update>
   
   
