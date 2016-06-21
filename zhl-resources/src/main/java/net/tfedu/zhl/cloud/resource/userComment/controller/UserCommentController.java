@@ -60,12 +60,15 @@ public class UserCommentController {
         } else { // 新建用户评论
             long userId = currentUserId;
             long resId = ControllerHelper.getLongParameter(request, "resId");
+            int isScore = ControllerHelper.getIntParameter(request, "isScore"); //0：评分，1：评论
             String displayContent = "";
-            if(request.getParameter("displayContent") != null && request.getParameter("displayContent") != "")
-                 displayContent = ControllerHelper.getParameter(request, "displayContent");
+            
+            if(isScore == 1){ //若新建的是评论内容
+            	displayContent = ControllerHelper.getParameter(request, "displayContent");
+            }
             int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
             int ascore = ControllerHelper.getIntParameter(request, "ascore"); //默认评分为0
-            int isScore = ControllerHelper.getIntParameter(request, "isScore"); //0：评分，1：评论
+            
             userCommentService.insertUserComment(resId, userId, displayContent, ascore, fromFlag, isScore);
         }
         
