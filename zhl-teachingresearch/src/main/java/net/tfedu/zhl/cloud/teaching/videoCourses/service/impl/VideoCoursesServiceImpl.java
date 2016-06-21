@@ -60,6 +60,10 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
 		
 		//将json字符串转换为实例对象
 		TVideoResources videoCourse = new TVideoResources();
+		
+		//将json字符串中的" 替换为 '
+		video = video.replace('"', '\'');
+		
 		videoCourse = JsonUtil.getInstance().fromJson(video,TVideoResources.class);
 		
 		videoCourse.setCreator(userId);
@@ -77,6 +81,9 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
 	public void editOneVideoCourse(String video,long userId){
 		//将json字符串转换为实例对象
 		TVideoResources videoCourse = new TVideoResources();
+		
+		//将json字符串中的" 替换为 '
+		video = video.replace('"', '\'');
 		videoCourse = JsonUtil.getInstance().fromJson(video,TVideoResources.class);
 		
 		videoCourse.setCreator(userId);
