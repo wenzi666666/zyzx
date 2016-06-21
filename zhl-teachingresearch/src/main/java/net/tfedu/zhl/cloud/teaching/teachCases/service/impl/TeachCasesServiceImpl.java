@@ -100,13 +100,13 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	 * @param contentTypeId
 	 * @param fname
 	 */
-	public String addOneContent(long caseId,int contentTypeId,String fname,long userId){
+	public String addOneContent(long caseId,int contentTypeId,String fname,String title,long userId){
 		String result = "";
 		if(teachCasesMapper.selectOneContent(contentTypeId,caseId) > 0){//已经存在了，不再插入
 			//提示 该类型的内容已经存在，请上传其它类型的内容
 			result = "已存在该类型的内容，请上传其它类型的内容";
 		} else {
-			teachCasesMapper.addOneContent(caseId, contentTypeId, fname,userId);
+			teachCasesMapper.addOneContent(caseId, contentTypeId, fname,title,userId);
 			result = "success";
 		}
 		

@@ -23,6 +23,17 @@ public class VideoPreviewEntity {
 	 */
 	private String fname;
 	
+	/**
+	 * 视频课程缩略图路径
+	 */
+	private String thumbnailpath;
+	
+	public String getThumbnailpath() {
+		return thumbnailpath;
+	}
+	public void setThumbnailpath(String thumbnailpath) {
+		this.thumbnailpath = thumbnailpath;
+	}
 	public long getId() {
 		return id;
 	}

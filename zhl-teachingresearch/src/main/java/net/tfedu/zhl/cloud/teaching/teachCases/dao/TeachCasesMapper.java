@@ -62,7 +62,8 @@ public interface TeachCasesMapper extends CoreMapper<TeachCases> {
      * @param typeId
      * @param fname
      */
-    public void addOneContent(@Param("caseId")long caseId,@Param("typeId")int typeId,@Param("fname")String fname,@Param("userId")long userId);
+    public void addOneContent(@Param("caseId")long caseId,@Param("typeId")int typeId,@Param("fname")String fname,@Param("title")String
+    		 title,@Param("userId")long userId);
     
     /**
      * 删除教学案例下的一个内容

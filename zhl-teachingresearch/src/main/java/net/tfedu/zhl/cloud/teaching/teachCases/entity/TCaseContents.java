@@ -30,9 +30,22 @@ public class TCaseContents {
      * 文件名
      */
     private String fname;
-
-
+    
     /**
+     * 内容名称
+     */
+    private String title;
+    
+
+    public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	/**
      * 创建者
      */
     private Long creator;

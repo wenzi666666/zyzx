@@ -60,7 +60,7 @@
   
   <!-- 预览一条视频课程 -->
   <select id="getOneVideoCourse" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.VideoPreviewEntity">
-     select id,title,(select score as score from t_videocomments where userId = #{userId} and videoId = #{videoId}) as score,fname
+     select id,title,(select score as score from t_videocomments where userId = #{userId} and videoId = #{videoId}) as score,fname,thumbnailpath
      from t_videoresources where id = #{videoId}
   </select>
   

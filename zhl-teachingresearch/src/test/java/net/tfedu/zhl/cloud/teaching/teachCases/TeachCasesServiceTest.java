@@ -45,8 +45,9 @@ public class TeachCasesServiceTest extends BaseServiceTestCase{
 		long caseId = 1;
 		int typeId = 1;
 		String fname = "djdj";
+		String title = "内容1";
 		long userId = 980;
-		teachCasesService.addOneContent(caseId, typeId, fname, userId);
+		teachCasesService.addOneContent(caseId, typeId, fname, title, userId);
 	}
 	
 	//新增一个视频课程
