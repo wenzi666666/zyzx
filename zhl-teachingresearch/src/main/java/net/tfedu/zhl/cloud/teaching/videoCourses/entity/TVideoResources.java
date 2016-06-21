@@ -34,11 +34,7 @@ public class TVideoResources {
      */
     private Integer clicktimes;
 
-    /**
-     * 所属平台：0 双课堂 1 新资源中心
-     */
-    private Boolean fromflag;
-
+   
     /**
      * 分类id
      */
@@ -104,7 +100,12 @@ public class TVideoResources {
      */
     private int commentTimes;
     
+    /**
+     * 所属平台：0 双课堂 1 新资源中心
+     */
+    private int fromflag;
 
+    
     public int getCommentTimes() {
 		return commentTimes;
 	}
@@ -129,7 +130,7 @@ public class TVideoResources {
 		this.hasVisited = hasVisited;
 	}
 
-	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, Boolean fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited,int commentTimes) {
+	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, int fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited,int commentTimes) {
         this.id = id;
         this.title = title;
         this.playtime = playtime;
@@ -245,7 +246,7 @@ public class TVideoResources {
      *
      * @return fromflag - 所属平台：0 双课堂 1 新资源中心
      */
-    public Boolean getFromflag() {
+    public int getFromflag() {
         return fromflag;
     }
 
@@ -254,7 +255,7 @@ public class TVideoResources {
      *
      * @param fromflag 所属平台：0 双课堂 1 新资源中心
      */
-    public void setFromflag(Boolean fromflag) {
+    public void setFromflag(int fromflag) {
         this.fromflag = fromflag;
     }
 

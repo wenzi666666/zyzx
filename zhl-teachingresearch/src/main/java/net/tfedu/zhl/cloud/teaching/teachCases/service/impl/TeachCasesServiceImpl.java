@@ -48,6 +48,8 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	 */
 	public void createOneTeachCase(String teachCase,long userId){
 		TeachCases item = new TeachCases();
+		
+		//将json字符串中的 " 替换为 '
 		teachCase = teachCase.replace('"', '\'');
 		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
 		item.setCreator(userId);
@@ -62,6 +64,8 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	 */
 	public void editOneTeachCase(String teachCase,long userId){
 		TeachCases item = new TeachCases();
+		//将json字符串中的 " 替换为 '
+	    teachCase = teachCase.replace('"', '\'');
 		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
 		item.setCreator(userId);
 		
