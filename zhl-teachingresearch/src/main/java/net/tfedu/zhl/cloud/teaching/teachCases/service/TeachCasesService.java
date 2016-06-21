@@ -59,7 +59,7 @@ public interface TeachCasesService {
 	 * @param contentTypeId
 	 * @param fname
 	 */
-	public String addOneContent(long caseId,int contentTypeId,String fname,long userId);
+	public String addOneContent(long caseId,int contentTypeId,String fname,String title,long userId);
 	
 	/**
 	 * 删除教学案例下的一个内容

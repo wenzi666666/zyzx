@@ -27,6 +27,7 @@
   <resultMap id="AllContents" type="net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents" >
        <id property="id" column="id"/>
        <result property="fname" column="fname"/>
+       <result property="title" column="title"/>
        <result property="contenttypeid" column="contenttypeid"/>
        <association property="contents" javaType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TContents">
             <result property="contenttype" column="contenttype"/>  
@@ -65,10 +66,11 @@
   
   <!-- 查询一个教学案例下的所有内容 -->
   <select id="getAllContentsOfTeachCase" resultMap="AllContents">
-    select a.id,a.fname,b.id as contenttypeid,b.contenttype,b.thumbnailpath from t_casecontents a
+    select a.id,a.fname,a.title,b.id as contenttypeid,b.contenttype,b.thumbnailpath 
+    from t_casecontents a
 	left join t_contents b
 	on a.contentTypeId = b.id
-	where a.id = #{id} and flag = 0
+	where a.caseid = #{id} and flag = 0
   </select>
   
   <!-- 查询一个教学案例下是否已经存在特定的内容   -->
@@ -78,7 +80,7 @@
   
   <!-- 在教学案例下新增一个内容 -->
   <insert id="addOneContent">
-     insert into t_casecontents (caseId,contenttypeid,fname,creator,createDate) values(#{caseId},#{typeId},#{fname},#{userId},now())
+     insert into t_casecontents (caseId,contenttypeid,fname,title,creator,createDate) values(#{caseId},#{typeId},#{fname},#{title},#{userId},now())
   </insert>
   
   <!-- 删除一个教学案例下的内容 -->

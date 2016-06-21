@@ -60,7 +60,9 @@ public class UserCommentController {
         } else { // 新建用户评论
             long userId = currentUserId;
             long resId = ControllerHelper.getLongParameter(request, "resId");
-            String displayContent = ControllerHelper.getParameter(request, "displayContent");
+            String displayContent = "";
+            if(request.getParameter("displayContent") != null && request.getParameter("displayContent") != "")
+                 displayContent = ControllerHelper.getParameter(request, "displayContent");
             int fromFlag = ControllerHelper.getIntParameter(request, "fromFlag");
             int ascore = ControllerHelper.getIntParameter(request, "ascore"); //默认评分为0
             int isScore = ControllerHelper.getIntParameter(request, "isScore"); //0：评分，1：评论

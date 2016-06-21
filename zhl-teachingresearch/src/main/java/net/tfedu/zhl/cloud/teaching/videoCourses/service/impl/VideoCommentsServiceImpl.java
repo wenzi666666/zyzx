@@ -10,6 +10,7 @@ import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCommentsService;
 import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
 
 import org.springframework.stereotype.Service;
 
@@ -59,10 +60,12 @@ public class VideoCommentsServiceImpl implements VideoCommentsService{
 			TVideoComments item = list.get(i);
 			long userId = item.getUserid();
 			
-			//根据用户id，查询其真实姓名、所在学校
-			JUser user = jUserMapper.getUserById(userId);
-			item.setTrueName(user.getTruename());
+			//根据用户id，查询其真实姓名、所在学校，用户头像路径
+			UserSimple user = jUserMapper.getUserSimpleById(userId);
+			item.setTrueName(user.getTrueName());
 			item.setUserSchool(user.getSchoolName());
+			item.setUserImage(user.getUserImage());
+			
 		}
 		
 		return PaginationHelper.transfer(list);

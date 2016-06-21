@@ -52,8 +52,21 @@ public class TVideoComments {
      */
     private String userSchool;
     
+    /**
+     * 用户缩略图路径
+     */
+    private String userImage;
+    
 
-    public String getTrueName() {
+    public String getUserImage() {
+		return userImage;
+	}
+
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
+
+	public String getTrueName() {
 		return trueName;
 	}
 

@@ -129,10 +129,10 @@ public class TeachCasesController {
 	 */
 	@RequestMapping(value = "/v1.0/teachCases/contents",method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON createOneContent(HttpServletRequest request,long caseId,int typeId,String fname)throws Exception{
+	public ResultJSON createOneContent(HttpServletRequest request,long caseId,int typeId,String fname,String title)throws Exception{
 		//当前用户
 	    Long userId = (Long) request.getAttribute("currentUserId");
-		String result = teachCasesService.addOneContent(caseId, typeId, fname, userId);
+		String result = teachCasesService.addOneContent(caseId, typeId, fname, title,userId);
 		return ResultJSON.getSuccess(result);
 	}
 	
