@@ -112,11 +112,14 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 		user = JsonUtil.getInstance().fromJson("{name:'roma',age:10}",User.class);
 		System.out.println(user.name + "; " + user.age);
 		
-		String teachCase = "{teacher:'roma',title:'haha',school:'beijingyoudiandaxue',thumbnailpath:'a/b'," +
-		"gradeid:1,fromflag:1,termid:1,subjectid:1,teachdate:'20150607'}";
+		/*String teachCase = "{teacher:'roma',title:'haha',school:'beijingyoudiandaxue',thumbnailpath:'a/b'," +
+		"gradeid:1,fromflag:1,termid:1,subjectid:1,teachdate:'20150607'}";*/
+		String teachCase = "{'thumbnailpath':'http://ac-LPYK8MCl.clouddn.com/770b60e8347042c9b6cb.png','title':'qqq','school':'1','teacher':'1','termid':'1','subjectid':'1','gradeid':'1','teachdate':'1','bookversion':'1','fromflag':1}";
+		
 		TeachCases item = new TeachCases();
 		item = JsonUtil.getInstance().fromJson(teachCase, TeachCases.class);
-		System.out.println(item.getTitle() + "; " + item.getTeacher() + " " + item.getSchool() + " " + item.getThumbnailpath());
+		System.out.println(item.getTitle() + "; " + item.getTeacher() + " " + item.getSchool() + " " + item.getThumbnailpath() + " "
+				+ item.getTermid() + " " + item.getSubjectid());
 	}
 }
 

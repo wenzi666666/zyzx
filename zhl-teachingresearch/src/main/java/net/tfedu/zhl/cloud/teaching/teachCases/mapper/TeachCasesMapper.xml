@@ -37,20 +37,23 @@
   
   <!-- 查询教学案例 -->
   <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
-     select id,title,teacher,school,thumbnailpath from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId} and flag = 0
+
+     select id,title,teacher,school,thumbnailpath
+      from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId} and flag = 0
+  
   </select>
   
   <!-- 新建一个教学案例 -->
   <insert id="addOneTeachCase">
-     insert into t_teachcases(title,teacher,school,thumbnailpath,gradeid,fromflag,termid,subjectId,creator,createdate,teachdate) 
+     insert into t_teachcases(title,teacher,school,thumbnailpath,gradeid,fromflag,termid,subjectId,bookversion,creator,createdate,teachdate) 
      values(#{teachCase.title},#{teachCase.teacher},#{teachCase.school},#{teachCase.thumbnailpath},#{teachCase.gradeid},#{teachCase.fromflag}
-     ,#{teachCase.termid},#{teachCase.subjectid},#{teachCase.creator},now(),#{teachCase.teachdate}) 
+     ,#{teachCase.termid},#{teachCase.subjectid},#{teachCase.bookversion},#{teachCase.creator},now(),#{teachCase.teachdate}) 
   </insert>
   
   <!-- 编辑一个教学案例 -->
   <update id="editOneTeachCase">
      update t_teachcases set title = #{teachCase.title},teacher = #{teachCase.teacher},school = #{teachCase.school},thumbnailpath = #{teachCase.thumbnailpath},creator =#{teachCase.creator},
-     gradeid = #{teachCase.gradeid} ,teachDate = #{teachCase.teachdate} ,fromflag =#{teachCase.fromflag} ,termid =#{teachCase.termid}, subjectId = #{teachCase.subjectid} ,updateDate = now()
+     gradeid = #{teachCase.gradeid},bookversion = #{teachCase.bookversion},teachDate = #{teachCase.teachdate} ,fromflag =#{teachCase.fromflag} ,termid =#{teachCase.termid}, subjectId = #{teachCase.subjectid} ,updateDate = now()
      where id = #{teachCase.id}
   </update>
   <!-- 删除一个教学案例 -->
@@ -61,7 +64,7 @@
   <!-- 查询一个教学案例的详细信息 -->
   <select id="selectOneTeachCase" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases">
     select id,title,teacher,school,thumbnailpath,(select name from t_grade where id = t_teachcases.gradeid ) as gradeName,
-    teachDate from t_teachcases where id = #{id}
+    teachDate,bookversion from t_teachcases where id = #{id}
   </select>
   
   <!-- 查询一个教学案例下的所有内容 -->
