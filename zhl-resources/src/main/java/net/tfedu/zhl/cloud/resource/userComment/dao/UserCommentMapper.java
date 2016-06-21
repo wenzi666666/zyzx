@@ -9,10 +9,16 @@ import net.tfedu.zhl.helper.CoreMapper;
 public interface UserCommentMapper extends CoreMapper<UserComment> {
 
     /**
-     *  插入一条评论 / 评分
+     *  插入一条评论
      * @param map
      */
     public void insertMyComment(HashMap<String, Object> map);
+    
+    /**
+     * 插入一个评分
+     * @param map
+     */
+    public void insertMyScore(HashMap<String, Object> map);
 
     /**
      * 修改我的评论

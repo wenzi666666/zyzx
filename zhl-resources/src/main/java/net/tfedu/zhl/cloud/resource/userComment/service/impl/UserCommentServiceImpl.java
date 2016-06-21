@@ -11,6 +11,7 @@ import net.tfedu.zhl.cloud.resource.userComment.entity.UserComment;
 import net.tfedu.zhl.cloud.resource.userComment.service.UserCommentService;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
+import org.hamcrest.core.IsCollectionContaining;
 import org.springframework.stereotype.Service;
 
 /**
@@ -38,12 +39,19 @@ public class UserCommentServiceImpl implements UserCommentService {
         HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("resId", resId);
         map.put("userId", userId);
-        map.put("displayContent", displayContent);
+        
         map.put("ascore", ascore);
         map.put("fromFlag", fromFlag);
         map.put("isScore", isScore);
 
-        userCommentMapper.insertMyComment(map);
+        if(isScore == 1){//若是评论
+        	map.put("displayContent", displayContent);
+        	userCommentMapper.insertMyComment(map);
+        } 
+        
+        if(isScore == 0){//若是评分，则不插入评论信息
+        	userCommentMapper.insertMyScore(map);
+        }
     }
 
     /**
