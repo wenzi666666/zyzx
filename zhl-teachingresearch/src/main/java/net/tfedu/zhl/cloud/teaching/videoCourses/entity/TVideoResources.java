@@ -22,7 +22,7 @@ public class TVideoResources {
     /**
      * 视频时长
      */
-    private Integer playtime;
+    private Double playtime;
 
     /**
      * 主讲人单位 + 姓名
@@ -130,7 +130,7 @@ public class TVideoResources {
 		this.hasVisited = hasVisited;
 	}
 
-	public TVideoResources(Long id, String title, Integer playtime, String speakerinfo, Integer clicktimes, int fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited,int commentTimes) {
+	public TVideoResources(Long id, String title, Double playtime, String speakerinfo, Integer clicktimes, int fromflag, Integer typeid, Integer subjectid, String fname, String fpath, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag, String description,int avgScore,boolean hasVisited,int commentTimes) {
         this.id = id;
         this.title = title;
         this.playtime = playtime;
@@ -192,7 +192,7 @@ public class TVideoResources {
      *
      * @return playtime - 视频时长
      */
-    public Integer getPlaytime() {
+    public Double getPlaytime() {
         return playtime;
     }
 
@@ -201,7 +201,7 @@ public class TVideoResources {
      *
      * @param playtime 视频时长
      */
-    public void setPlaytime(Integer playtime) {
+    public void setPlaytime(Double playtime) {
         this.playtime = playtime;
     }
 
