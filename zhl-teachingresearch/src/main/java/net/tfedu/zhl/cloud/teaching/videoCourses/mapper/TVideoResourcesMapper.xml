@@ -8,7 +8,7 @@
     <constructor>
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="playtime" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="playtime" jdbcType="INTEGER" javaType="java.lang.Double" />
       <arg column="speakerinfo" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="clicktimes" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="fromflag" jdbcType="BIT" javaType="java.lang.Boolean" />
