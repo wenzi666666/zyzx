@@ -13,5 +13,5 @@ public interface JSchoolMapper extends CoreMapper<JSchool> {
 	 * @param districtId
 	 * @return
 	 */
-	public List<JSchool> querySchoolByDistrictId(@Param("districtId")int districtId);
+	public List<JSchool> querySchoolByDistrictId(@Param("districtId")long districtId);
 }

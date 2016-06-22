@@ -32,7 +32,7 @@ public interface QuestionBankService {
 	 * 
 	 * @return
 	 */
-	public ResultJSON queryDistirctByCityId(int cityId);
+	public ResultJSON queryDistirctByCityId(long cityId);
 
 	/**
 	 * 根据所在区，查询所有学校
@@ -40,7 +40,7 @@ public interface QuestionBankService {
 	 * @param districtIds
 	 * @return
 	 */
-	public ResultJSON querySchoolByDistrictId(int districtId);
+	public ResultJSON querySchoolByDistrictId(long districtId);
 
 	/**
 	 * 查询所有学段信息

@@ -103,7 +103,7 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 	 * @return
 	 */
 	@Override
-	public ResultJSON queryDistirctByCityId(int cityId) {
+	public ResultJSON queryDistirctByCityId(long cityId) {
 		List<District> districts = districtMapper.queryDistirctByCityId(cityId);
 		return ResultJSON.getSuccess(districts);
 	}
@@ -115,7 +115,7 @@ public class QuestionBankServiceImpl implements QuestionBankService {
 	 * @return
 	 */
 	@Override
-	public ResultJSON querySchoolByDistrictId(int districtId) {
+	public ResultJSON querySchoolByDistrictId(long districtId) {
 		List<JSchool> schools = jSchoolMapper
 				.querySchoolByDistrictId(districtId);
 		return ResultJSON.getSuccess(schools);

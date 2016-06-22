@@ -14,5 +14,5 @@ public interface DistrictMapper extends CoreMapper<District> {
 	 * @param cityId
 	 * @return
 	 */
-	public List<District> queryDistirctByCityId(@Param("cityId")int cityId);
+	public List<District> queryDistirctByCityId(@Param("cityId")long cityId);
 }
