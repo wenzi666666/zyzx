@@ -1,21 +1,11 @@
 package net.tfedu.zhl.cloud.teaching.discuss.entity;
 
-import java.io.Serializable;
 import java.util.Date;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Table(name = "t_discuss_recommend")
-public class TDiscussRecommend   implements Serializable{
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	@Id
+public class TDiscussRecommend {
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -54,9 +44,14 @@ public class TDiscussRecommend   implements Serializable{
      */
     private Boolean flag;
 
+    /**
+     * 访问链接默认为空
+     */
+    private String classurl;
+
     private String note;
 
-    public TDiscussRecommend(Long id, String classname, String classid, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String note) {
+    public TDiscussRecommend(Long id, String classname, String classid, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String classurl, String note) {
         this.id = id;
         this.classname = classname;
         this.classid = classid;
@@ -65,6 +60,7 @@ public class TDiscussRecommend   implements Serializable{
         this.createtime = createtime;
         this.creator = creator;
         this.flag = flag;
+        this.classurl = classurl;
         this.note = note;
     }
 
@@ -210,6 +206,24 @@ public class TDiscussRecommend   implements Serializable{
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
+    }
+
+    /**
+     * 获取访问链接默认为空
+     *
+     * @return classurl - 访问链接默认为空
+     */
+    public String getClassurl() {
+        return classurl;
+    }
+
+    /**
+     * 设置访问链接默认为空
+     *
+     * @param classurl 访问链接默认为空
+     */
+    public void setClassurl(String classurl) {
+        this.classurl = classurl == null ? null : classurl.trim();
     }
 
     /**

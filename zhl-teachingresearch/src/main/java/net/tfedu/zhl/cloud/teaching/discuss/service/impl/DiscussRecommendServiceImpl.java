@@ -25,7 +25,7 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 	 * @throws Exception
 	 */
 	public ResultJSON removeRecommendRecords(String ids) throws Exception{
-		mapper.removeRecommendRecords(ids.split(",")) ;
+//		mapper.removeRecommendRecords(ids.split(",")) ;
 		return ResultJSON.getSuccess("");
 	}
 	

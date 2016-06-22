@@ -239,7 +239,7 @@
                 <isCloudModel>true</isCloudModel>  
             </properties>   
             <activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>           
 		</profile>
 		
@@ -259,10 +259,13 @@
                 <host>http://127.0.0.1:8080/teachingresearch/</host>        
                 <hostLocal>http://localhost:8080/</hostLocal>        
                 <isCloudModel>true</isCloudModel>  
+		                       <!-- forum3.0  -->
+		       <forum3Host>http://chat.tfedu.net:7070/</forum3Host>  
+		       <forum3HostLocal>http://chat.tfedu.net:7070/</forum3HostLocal>  
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 	<profile>
@@ -280,6 +283,9 @@
                 <host>http://192.168.111.249:8080/teachingresearch/</host>        
                 <hostLocal>http://192.168.111.249:8080/</hostLocal>        
                 <isCloudModel>true</isCloudModel>  
+                		                       <!-- forum3.0  -->
+		       <forum3Host>http://chat.tfedu.net:7070/</forum3Host>  
+		       <forum3HostLocal>http://chat.tfedu.net:7070/</forum3HostLocal>  
             </properties>  
 
 			<activation>

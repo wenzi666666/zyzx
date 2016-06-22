@@ -1,6 +1,8 @@
 package net.tfedu.zhl.cloud.teaching.discuss.controller;
 
 import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.github.pagehelper.PageInfo;
+
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
+import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 
 
@@ -33,7 +40,8 @@ import net.tfedu.zhl.helper.ResultJSON;
 public class DiscussController {
 
 	
-	
+	@Resource
+	RegisterService regSerivce;
 	
 	
 	@Resource
@@ -42,6 +50,10 @@ public class DiscussController {
 
 	@Resource
 	DiscussLogService  discussLogService;
+	
+	
+	@Resource
+	CommonWebConfig config;
 	
 	
 	/**
@@ -53,8 +65,31 @@ public class DiscussController {
 	 */
 	@RequestMapping(value="v1.0/discuss/recommend",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getRecomended( int page,int perPage ) throws Exception{
-		return discussService.getPage(page, perPage);
+	public ResultJSON getRecomended(HttpServletRequest request, int page,int perPage ) throws Exception{
+		//http://chat.tfedu.net:7070/circle/ff808181520fcf4401521f1118c50130
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+
+		//返回推荐班级列表
+		ResultJSON result = discussService.getPage(page, perPage);
+
+		
+		//准备重置url
+		SRegister register = regSerivce.getRegister(currentUserId);
+		String userName = register.getName();
+		String  forum3 =  config.getCurrentForum3(request);		
+
+		
+		PageInfo<TDiscussRecommend> _page = ((PageInfo<TDiscussRecommend>)result.getData());
+		List<TDiscussRecommend> list =  _page.getList();
+		if(list!=null && list.size()>0){
+			for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
+				TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
+				String _url = forum3 +"/circle/"+tDiscussRecommend.getClassid()+"?username="+userName;
+				tDiscussRecommend.setClassurl(_url);
+			}
+		}
+		return result;
 	}
 	
 	
@@ -69,10 +104,11 @@ public class DiscussController {
 	@RequestMapping(value="v1.0/discuss/readed",method=RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON addReadRecord(HttpServletRequest request,String classId) throws Exception{
-		
-		Long currentUserId = (Long)request.getAttribute("currentUserId");	
-
 		classId = ControllerHelper.checkEmpty(classId);
+	
+		Long currentUserId = (Long)request.getAttribute("currentUserId");
+
+
 		
 		TDiscussLog c = new TDiscussLog();
 		c.setClassid(classId);
@@ -97,7 +133,23 @@ public class DiscussController {
 		
 		Long currentUserId = (Long)request.getAttribute("currentUserId");	
 		
-		return  discussLogService.getReadLog(currentUserId) ;
+		//返回最近访问列表
+		ResultJSON result = discussLogService.getReadLog(currentUserId);
+
+		//准备重置url
+		SRegister register = regSerivce.getRegister(currentUserId);
+		String userName = register.getName();
+		String  forum3 =  config.getCurrentForum3(request);		
+		
+		
+		List<TDiscussRecommend> data = (List<TDiscussRecommend>)result.getData();
+		for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+			TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
+			String _url = forum3 +"/circle/"+tDiscussRecommend.getClassid()+"?username="+userName;
+			tDiscussRecommend.setClassurl(_url);
+		}
+		
+		return  result;
 	}
 	
 	
@@ -137,7 +189,7 @@ public class DiscussController {
 	
 
 	/**
-	 * 获取指定
+	 * 获取指定班级
 	 * @param request
 	 * @param response
 	 * @return
@@ -192,7 +244,9 @@ public class DiscussController {
 	 * @return
 	 * @throws Exception
 	 */
-	public ResultJSON delRecomended( String ids ) throws Exception{
+	@RequestMapping(value="v1.0/discuss/remove",method=RequestMethod.POST)
+	@ResponseBody		
+	public ResultJSON delRecomended(String ids ) throws Exception{
 		
 		ControllerHelper.checkEmpty(ids);
 		

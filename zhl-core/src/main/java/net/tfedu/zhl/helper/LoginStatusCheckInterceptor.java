@@ -87,6 +87,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         	//token 无效
         	throw  new InvalidAccessTokenException();
         }else{
+        	System.out.println("currentUserId--"+currentUserId+"-currentUserName-"+currentUserName+"-");
             request.setAttribute("currentUserId", currentUserId);
             request.setAttribute("currentUserName", currentUserName);
             flag = true ;

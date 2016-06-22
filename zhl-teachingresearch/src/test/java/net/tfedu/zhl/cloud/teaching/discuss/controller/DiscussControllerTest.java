@@ -21,7 +21,7 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testGetRecomended() throws Exception {
-		result = controller.getRecomended(1, 10);
+		result = controller.getRecomended(request,1, 10);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 
@@ -70,8 +70,7 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 		request.setParameter( "classImage","2.png");	//班级图片路径
 		request.setParameter( "schoolName","测试学校");		//学校名称
 		request.setParameter( "classId","20105");	//班级id
-		request.setParameter( "note","note");//班级简介
-		
+		request.setParameter( "note","note");//班级简介		
 		result = controller.updateRecomended(request, 1l);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
