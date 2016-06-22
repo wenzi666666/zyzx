@@ -3,20 +3,19 @@ package net.tfedu.zhl.helper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
+
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache.ValueWrapper;
-import org.springframework.cache.CacheManager;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 登录状态拦截器
@@ -66,6 +65,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
         Long currentUserId = null;
+        String currentUserName = null ;
         //默认继续往下走
         boolean flag = false ;
         
@@ -78,15 +78,8 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
         	if(us!=null){
                 currentUserId = us.getUserId();
+                currentUserName = us.getUserName();
         	}
-        	/*ValueWrapper value =  cacheManager.getCache("UserSimpleCache").get(token);
-        	if(value!=null){
-        		UserSimple us  = (UserSimple)value.get();
-            	if(us!=null){
-                    currentUserId = us.getUserId();
-            	}
-        	}*/
-        	
         	
         }
 
@@ -95,6 +88,7 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         	throw  new InvalidAccessTokenException();
         }else{
             request.setAttribute("currentUserId", currentUserId);
+            request.setAttribute("currentUserName", currentUserName);
             flag = true ;
         }
         return flag;
