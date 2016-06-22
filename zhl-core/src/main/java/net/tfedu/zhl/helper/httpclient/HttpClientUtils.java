@@ -2,6 +2,7 @@ package net.tfedu.zhl.helper.httpclient;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -10,8 +11,10 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -28,7 +31,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.core.exception.APIErrorException;
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
 
 
 
@@ -40,17 +42,37 @@ import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
 public class HttpClientUtils {
 	
 	
-	public static String doGet(String url)
-			throws ClientProtocolException, IOException, CustomException, URISyntaxException {
+	public static void main(String[] args) throws Exception {
+		String json = "{\"CONSUMER_ID\":\"Default-69dee715b1d14f64adad1a4dd18a9564\",\"SERVICE_CODE\":\"zteict.proxy.user.LoginStatus\"}";
+		String url = "http://edu.myjining.cn/serviceProxy/servlet/?json="+URLEncoder.encode(json, "utf-8");
 		
-		APIForm form = new APIForm();
-		form.setUrl(url);
-		form.setHttp_method(RequestMethod.GET.name());
+		String result = doGET(url);
+
+		System.out.println(result);
 		
-		return  doGet(form);
+		
 	}
 	
 	
+	public static String doGET(String url) throws Exception{
+		String result = null ;
+		HttpClient client = HttpClients.createDefault();
+		HttpGet get = new HttpGet(url);
+	
+		HttpResponse response=client.execute(get);
+
+			String statusLine = response.getStatusLine().toString();
+			if(statusLine.contains("200")){
+				HttpEntity entity = response.getEntity();
+				result = (EntityUtils.toString(entity, "utf-8"));	
+			}else{
+				throw new APIErrorException(statusLine);
+			}
+			return result ;
+	}
+	
+	
+
 	
 	
 	
@@ -163,32 +185,5 @@ public class HttpClientUtils {
 	
 	
 	
-	public static void main(String[] args) throws ClientProtocolException, IOException, CustomException, URISyntaxException {
-		
-		
-		/**
-		 * 传递Token   Token=Default--31d04cf9638240cd968425fdcae80e93
-		 * Default--5f9af285316b4a9da47d600a4a4362e8
-		 */
-		String  Token = "Default--5f9af285316b4a9da47d600a4a4362e8";
-		
-		
-		HashMap<String, String> params = new HashMap<String, String>();
-		params.put("SERVICE_CODE", "zteict.proxy.user.LoginStatus");
-		params.put("CONSUMER_ID", Token);
-
-		//接口中传递json数据
-		String url = "http://edu.myjining.cn/serviceProxy/servlet/";
-
-		url += "?json="+JSONObject.toJSONString(params);
-		
-		String result = HttpClientUtils.doGet(url);
-		
-		ZXCheckResult _result = JSONObject.parseObject(result, ZXCheckResult.class);
-
-		System.out.println(JSONObject.toJSONString(_result));
-	
-		
-	}
 
 }

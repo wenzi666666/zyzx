@@ -1,5 +1,6 @@
 package net.tfedu.zhl.sso.role.dao;
 
+import java.util.List;
 import java.util.Set;
 
 import org.apache.ibatis.annotations.Param;
@@ -15,4 +16,17 @@ public interface JRoleMapper extends CoreMapper<JRole> {
      * @return
      */
     Set<Long> getUserRoleByUserId(@Param("userId")Long userId, @Param("model")String model);
+    
+    
+    
+    
+    /**
+     * 为教研平台返回角色信息
+     * 教师、大区讲师、总部讲师
+     * @return
+     */
+    List<JRole> queryRoleForTeachingResearch();
+    
+    
+    
 }

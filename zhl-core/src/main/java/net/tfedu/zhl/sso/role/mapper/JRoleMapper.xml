@@ -33,4 +33,10 @@
 	WHERE u.id=#{userId} and r.Id is not NULL  and (r.model=' ' or r.model=#{model}) 
   </select>
   
+  
+  <select id="queryRoleForTeachingResearch" resultMap="BaseResultMap">
+  	select  * from j_role where name in ('教师','老师','大区讲师','总部讲师')
+  </select>
+  
+  
 </mapper>

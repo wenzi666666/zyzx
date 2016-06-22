@@ -89,7 +89,7 @@
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 
 
@@ -239,7 +239,7 @@
                 <isCloudModel>true</isCloudModel>  
             </properties>   
             <activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>           
 		</profile>
 		
