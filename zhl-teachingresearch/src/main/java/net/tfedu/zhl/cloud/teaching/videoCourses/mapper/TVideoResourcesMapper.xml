@@ -66,8 +66,8 @@
   
   <!-- 新增一条视频课程  -->
   <insert id="insertOneVideoCourse">
-    insert into t_videoresources(title,speakerinfo,description,typeid,subjectid,fromflag,thumbnailpath,fname,playtime,creator,createDate) values(#{videoCourse.title},#{videoCourse.speakerinfo},#{videoCourse.description},#{videoCourse.typeid},
-    #{videoCourse.subjectid},#{videoCourse.fromflag},#{videoCourse.thumbnailpath},#{videoCourse.fname},#{videoCourse.playtime},#{videoCourse.creator},now())
+    insert into t_videoresources(title,speakerinfo,description,typeid,subjectid,fromflag,thumbnailpath,fname,playtime,creator,createDate,updateDate) values(#{videoCourse.title},#{videoCourse.speakerinfo},#{videoCourse.description},#{videoCourse.typeid},
+    #{videoCourse.subjectid},#{videoCourse.fromflag},#{videoCourse.thumbnailpath},#{videoCourse.fname},#{videoCourse.playtime},#{videoCourse.creator},now(),now())
   </insert>
   
   <!-- 编辑一条视频课程  -->
@@ -94,9 +94,14 @@
   <!-- 视频课程的检索  -->
   <select id="getVideoSearchResults" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources">
    select id,title,updatedate,clicktimes,thumbnailpath,
-   (select count(id) from t_videocomments where videoid = t_videoresources.id) as commentTimes
-   from t_videoresources 
-   where fromflag = #{fromFlag} and (title like CONCAT('%',#{keyWord},'%') or description like CONCAT('%',#{keyWord},'%')) and flag = 0
+   (select count(id) from t_videocomments where videoid = a.id) as commentTimes
+   from t_videoresources a
+   where fromflag = #{fromFlag} and flag = 0
+   
+   <if test="keyWord != null and keyWord != '' ">
+       and (title like CONCAT('%',#{keyWord},'%') or description like CONCAT('%',#{keyWord},'%'))
+   </if>
+   
    <if test="orderBy == 0">
      order by a.playtime
   </if>

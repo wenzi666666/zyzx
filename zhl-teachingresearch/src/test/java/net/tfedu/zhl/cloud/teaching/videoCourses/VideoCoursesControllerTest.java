@@ -77,11 +77,15 @@ public class VideoCoursesControllerTest extends BaseControllerTestCase{
 	//视频课程检索
 	@Test
 	public void searchVideoCourses()throws Exception{
+		
+		//平台来源：0 双课堂 1 资源中心
 		int fromFlag = 1;
 		
+		//检索关键字
 		String keyWord = "haha";
 		
-		result = videoCoursesController.searchVideoCourses(request,keyWord,fromFlag);
+		request.setParameter("keyWord", keyWord);
+		result = videoCoursesController.searchVideoCourses(request,fromFlag);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

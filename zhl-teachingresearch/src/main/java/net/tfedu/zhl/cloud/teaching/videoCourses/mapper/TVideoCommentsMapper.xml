@@ -20,12 +20,12 @@
   
   <!-- 新增一条评论 -->
   <insert id="insertOneComment">
-     insert into t_videocomments(userid,videoid,content,isScore,createDate) values(#{userId},#{videoId},#{content},0,now()) 
+     insert into t_videocomments(userid,videoid,content,isScore,createDate,updateDate) values(#{userId},#{videoId},#{content},0,now(),now()) 
   </insert>
   
   <!-- 新增一条评分 -->
   <insert id="insertOneCommentLevel">
-     insert into t_videocomments(userid,videoid,score,isScore,createDate) values(#{userId},#{videoId},#{score},1,now()) 
+     insert into t_videocomments(userid,videoid,score,isScore,createDate,updateDate) values(#{userId},#{videoId},#{score},1,now(),now()) 
   </insert>
   
   <!-- 查询一个视频课程的所有评论 -->
@@ -35,7 +35,7 @@
   
   <!-- 编辑一个评论 -->
   <update id="editOneComment">
-    update t_videocomments set content = #{content} where id = #{id}
+    update t_videocomments set content = #{content},updateDate = now() where id = #{id}
   </update>
   
   <!-- 删除一个评论 -->
