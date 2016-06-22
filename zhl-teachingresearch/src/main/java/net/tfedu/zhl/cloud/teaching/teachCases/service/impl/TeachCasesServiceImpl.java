@@ -101,9 +101,7 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	
 	/**
 	 * 增加一个内容
-	 * @param caseId
-	 * @param contentTypeId
-	 * @param fname
+	 * @return result 两种状态：上传成功 或 相同类型的内容已经存在
 	 */
 	public String addOneContent(long caseId,int contentTypeId,String fname,String title,long userId){
 		String result = "";

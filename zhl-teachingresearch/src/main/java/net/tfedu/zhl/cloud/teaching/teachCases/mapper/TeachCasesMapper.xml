@@ -45,9 +45,9 @@
   
   <!-- 新建一个教学案例 -->
   <insert id="addOneTeachCase">
-     insert into t_teachcases(title,teacher,school,thumbnailpath,gradeid,fromflag,termid,subjectId,bookversion,creator,createdate,teachdate) 
+     insert into t_teachcases(title,teacher,school,thumbnailpath,gradeid,fromflag,termid,subjectId,bookversion,creator,createdate,updatedate,teachdate) 
      values(#{teachCase.title},#{teachCase.teacher},#{teachCase.school},#{teachCase.thumbnailpath},#{teachCase.gradeid},#{teachCase.fromflag}
-     ,#{teachCase.termid},#{teachCase.subjectid},#{teachCase.bookversion},#{teachCase.creator},now(),#{teachCase.teachdate}) 
+     ,#{teachCase.termid},#{teachCase.subjectid},#{teachCase.bookversion},#{teachCase.creator},now(),now(),#{teachCase.teachdate}) 
   </insert>
   
   <!-- 编辑一个教学案例 -->

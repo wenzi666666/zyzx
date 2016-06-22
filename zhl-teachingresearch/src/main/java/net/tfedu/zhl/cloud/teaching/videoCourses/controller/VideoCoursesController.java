@@ -35,6 +35,10 @@ public class VideoCoursesController {
 	
 	/**
 	 * 分页查询视频课程资源
+	 * @param request
+	 * @param response
+	 * @param fromFlag 所属平台 0 双课堂 1 资源中心
+	 * @param typeId 视频类型id：初级、进阶、高级
 	 * @return
 	 * @throws Exception
 	 */
@@ -52,13 +56,13 @@ public class VideoCoursesController {
         int subject = 0; //学科id，默认为0
         
         
-        if(request.getParameter("page") != null )//页码
+        if(request.getParameter("page") != null )//若有传递页码
 			curPage = Integer.parseInt(request.getParameter("page").toString().trim());
-		if(request.getParameter("perPage") != null )//每页记录数
+		if(request.getParameter("perPage") != null )//若有传递每页记录数
 			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
-		if(request.getParameter("orderBy") != null )//排序方式
+		if(request.getParameter("orderBy") != null )//若有传递排序方式
 			order = Integer.parseInt(request.getParameter("orderBy").toString().trim());
-		if(request.getParameter("subjectId") != null )//学科id
+		if(request.getParameter("subjectId") != null )//若有传递学科id
 			subject = Integer.parseInt(request.getParameter("subjectId").toString().trim());
         
 		
@@ -70,6 +74,8 @@ public class VideoCoursesController {
 	
 	/**
 	 * 新增一条视频课程资源
+	 * @param request
+	 * @param video 上传一条视频资源的 json字符串
 	 * @return
 	 * @throws Exception
 	 */
@@ -87,6 +93,8 @@ public class VideoCoursesController {
 	
 	/**
 	 * 编辑一条视频课程资源
+	 * @param request
+	 * @param video  编辑的一条视频资源的json字符串
 	 * @return
 	 * @throws Exception
 	 */
@@ -104,6 +112,7 @@ public class VideoCoursesController {
 	
 	/**
 	 * 批量删除视频资源
+	 * @param ids  批量删除的视频课程id集合
 	 * @return
 	 * @throws Exception
 	 */
@@ -111,32 +120,35 @@ public class VideoCoursesController {
 	@ResponseBody
 	public ResultJSON deleteVideoCourses(String ids)throws Exception{
 		
-		
-		
 		videoCoursesService.delVideoCourses(ids);
 		
 		return ResultJSON.getSuccess(null);
 	}
 	
 	/**
-	 * 视频课程检索
+	 * 检索视频课程
+	 * @param request
+	 * @param fromFlag  所属平台 0 双课堂 1 资源中心
 	 * @return
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/v1.0/videoCourses/search",method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON searchVideoCourses(HttpServletRequest request,String keyWord,int fromFlag)throws Exception{
+	public ResultJSON searchVideoCourses(HttpServletRequest request,int fromFlag)throws Exception{
 		
 		int order = 0; //排序方式，默认为0，按上传时间顺序
 		int curPage = 1; //要查询的页码
 		int perPageNum = 10; //每页记录数目
+		String keyWord = null;//检索关键字，默认为null，不进行关键字匹配
 		
-		if(request.getParameter("orderBy") != null )//排序方式
+		if(request.getParameter("orderBy") != null )//若有传递排序方式
 			order = Integer.parseInt(request.getParameter("orderBy").toString().trim());
-		if(request.getParameter("page") != null )//页码
+		if(request.getParameter("page") != null )//若有传递页码
 			curPage = Integer.parseInt(request.getParameter("page").toString().trim());
-		if(request.getParameter("perPage") != null )//每页记录数
+		if(request.getParameter("perPage") != null )//若有传递每页记录数
 			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		if(request.getParameter("keyWord") != null )//若有传递检索关键字
+			keyWord = ControllerHelper.getParameter(request, "keyWord");
 		
 		PaginationHelper<TVideoResources> pagination = videoCoursesService.getVideoSearchResults(keyWord, fromFlag, order, curPage, perPageNum);
 		
@@ -161,7 +173,7 @@ public class VideoCoursesController {
 	}
 	
 	/**
-	 * 用户浏览某个视频课程时，设置已看标记
+	 * 用户浏览某个视频课程时，设置已看标记，向数据库的用户已看视频中插入记录
 	 * @return
 	 * @throws Exception
 	 */
