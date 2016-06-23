@@ -85,7 +85,8 @@ public class DiscussController {
 		if(list!=null && list.size()>0){
 			for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
 				TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-				String _url = forum3 +"/circle/"+tDiscussRecommend.getClassid()+"?username="+userName;
+				String _url = forum3+"/auth/process?username="+userName+"&target="+
+						forum3 +"/circle/"+tDiscussRecommend.getClassid();
 				tDiscussRecommend.setClassurl(_url);
 			}
 		}
@@ -145,7 +146,9 @@ public class DiscussController {
 		List<TDiscussRecommend> data = (List<TDiscussRecommend>)result.getData();
 		for (Iterator iterator = data.iterator(); iterator.hasNext();) {
 			TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-			String _url = forum3 +"/circle/"+tDiscussRecommend.getClassid()+"?username="+userName;
+			String _url = forum3+"/auth/process?username="+userName+"&target="+
+							forum3 +"/circle/"+tDiscussRecommend.getClassid();
+					
 			tDiscussRecommend.setClassurl(_url);
 		}
 		
