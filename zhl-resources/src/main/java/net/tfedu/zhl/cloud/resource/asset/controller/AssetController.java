@@ -193,7 +193,7 @@ public class AssetController {
 			String _tfcodes = request.getParameter("tfcodes");
 			String _scopes = request.getParameter("scopes");
 			String _keywords = request.getParameter("keywords");
-			String _descs = request.getParameter("descs");
+			String _descs =  ControllerHelper.getOptionalParameter(request,"descs");
 			String _paths = request.getParameter("paths");
 			String _sizes = request.getParameter("sizes");
 			String _iscoursewares = request.getParameter("iscoursewares");
@@ -204,7 +204,6 @@ public class AssetController {
 					&& StringUtils.isNotEmpty(_tfcodes)
 					&& StringUtils.isNotEmpty(_scopes)
 					&& StringUtils.isNotEmpty(_keywords)
-					&& StringUtils.isNotEmpty(_descs)
 					&& StringUtils.isNotEmpty(_paths)
 					&& StringUtils.isNotEmpty(_sizes)
 					&& StringUtils.isNotEmpty(_iscoursewares)

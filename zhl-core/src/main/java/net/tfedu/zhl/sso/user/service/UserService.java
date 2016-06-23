@@ -2,6 +2,7 @@ package net.tfedu.zhl.sso.user.service;
 
 import java.util.HashMap;
 
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 
@@ -84,5 +85,20 @@ public interface UserService {
 	 * @return
 	 */
 	public HashMap<String,String> getUserTermAndSubject(Long userId);
+	
+	
+	/**
+	 * 根据角色、姓名分页获取用户列表(教研平台使用)
+	 * @param roleId
+	 * @param name
+	 * @param model
+	 * @param page
+	 * @param perPage
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON queryUserWithRoleAndName(long roleId,String name,String model,int page,int perPage) throws Exception;
+	
+	
 
 }

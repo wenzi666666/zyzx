@@ -2,24 +2,29 @@ package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Service;
 
 /**
  * 用户业务接口
@@ -156,5 +161,17 @@ public class UserServiceImpl implements UserService {
 	public HashMap<String, String> getUserTermAndSubject(Long userId) {
 		// TODO Auto-generated method stub
 		return mapper.getUserTermAndSubject(userId);
+	}
+
+	@Override
+	public ResultJSON queryUserWithRoleAndName(long roleId, String name, String model, int page, int perPage)
+			throws Exception {
+		PageHelper.startPage(page, perPage);
+		
+		List<JUserTeachingQueryEntity> list  = mapper.queryUserWithRoleAndName(roleId
+										,(StringUtils.isEmpty(name)?null:("%"+name.trim()+"%")), model);
+        PageInfo<JUserTeachingQueryEntity> data = new PageInfo<JUserTeachingQueryEntity>(list);
+		
+        return ResultJSON.getSuccess(data);
 	}
 }

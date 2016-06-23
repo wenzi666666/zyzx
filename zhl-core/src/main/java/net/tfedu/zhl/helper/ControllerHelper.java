@@ -55,10 +55,30 @@ public class ControllerHelper {
      */
     public static String getOptionalParameter(HttpServletRequest request, String paramName) throws ParamsException {
         String param = request.getParameter(paramName);
-        return param ==null?"":param.toString().trim();
+        return StringUtils.isNotEmpty(param)?param.toString().trim():"";
     }
-    
-    
+    /**
+     * 获取可选的int参数
+     * @param request
+     * @param paramName
+     * @return
+     * @throws ParamsException
+     */
+    public static int getOptionalIntegerParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        String param = request.getParameter(paramName);
+        return StringUtils.isNotEmpty(param)?Integer.parseInt(param.toString().trim()):0;
+    }
+    /**
+     * 获取可选的long参数
+     * @param request
+     * @param paramName
+     * @return
+     * @throws ParamsException
+     */
+    public static long getOptionalLongParameter(HttpServletRequest request, String paramName) throws ParamsException {
+        String param = request.getParameter(paramName);
+        return StringUtils.isNotEmpty(param)?Long.parseLong(param.toString().trim()):0;
+    }
     
     /**
      * 获取单个参数值
@@ -155,4 +175,17 @@ public class ControllerHelper {
         String strPageSize = request.getParameter("perPage");
         return StringUtils.isNotEmpty(strPageSize) ? Integer.parseInt(strPageSize) : 10;
     }
+    
+    
+    /**
+     * 不同的子系统，使用不同的model参数
+     * @param request
+     * @return
+     */
+    public static String getModel(HttpServletRequest request){
+    	 return request.getParameter("model") == null ? " " : request
+				.getParameter("model");
+    }
+    
+    
 }

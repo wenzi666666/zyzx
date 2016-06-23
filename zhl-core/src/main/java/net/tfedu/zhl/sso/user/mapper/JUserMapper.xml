@@ -200,4 +200,72 @@
      select truename from j_user where id = #{userId}
   </select>
   
+  
+  
+  <resultMap type="net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity" 
+  														id="teachingQueryResultEntity">
+  	<id column="id" property="id"/>
+  	<result column="name" property="name"/>
+  	<result column="truename" property="trueName"/>
+  	<result column="schoolname" property="schoolName"/>
+  	<result column="districtname" property="districtName"/>
+  	<result column="cityname" property="cityName"/>
+  	<result column="provincename" property="provinceName"/>
+  	<result column="male" property="male"/>
+  	<result column="rolename" property="roleName"/>
+  </resultMap>
+  
+  <!-- JUserTeachingQueryEntity 根据角色、姓名分页获取用户列表 -->
+  <select id="queryUserWithRoleAndName" resultMap="teachingQueryResultEntity">
+	select
+	id,name,truename,schoolname,districtname,cityname,provincename,male
+	,if(LENGTH(GROUP_CONCAT(addrolenams1,addrolenams2))>0,GROUP_CONCAT(addrolenams1,addrolenams2),rolename)
+	as rolename
+	from (
+	SELECT u.id,u.name,u.truename,s.name as schoolname,qt.Name as
+	districtname,qc.name as cityname
+	,qp.Name as provincename,u.male,r.name as rolename
+	,(select IFNULL(GROUP_CONCAT(r.name),'') from j_userrole ur LEFT JOIN j_role r
+	on r.id = ur.RoleId where ur.userid = u.id and (r.model=' ' or
+	r.model=#{model}) )as addrolenams1
+	,(select IFNULL(GROUP_CONCAT(r.name),'') from r_groupuser ug LEFT JOIN
+	j_rolegroup rg on rg.group_id = ug.GroupId LEFT JOIN j_role r on r.id =
+	rg.role_id where u.id=ug.userId and (r.model=' ' or r.model=#{model})
+	)as addrolenams2
+	FROM
+	j_user u
+	LEFT JOIN j_school s on s.id =u.SchoolId
+	LEFT JOIN q_district qt ON qt.Id = s.districtid
+	LEFT JOIN q_city qc on qc.id = qt.CityId
+	LEFT JOIN q_province qp on qp.id =qc.ProvinceId
+	LEFT JOIN j_role r on r.id = u.roleid
+	WHERE
+	u.flag = FALSE and (r.model=' ' or r.model= #{model})
+	<if test=" name!=null and name!='' and name!='null'  and name!='%%' ">
+		AND (
+		u.TrueName LIKE #{name}
+		OR u. NAME LIKE #{name}
+		)
+	</if>
+	and u.RoleId = 2
+	<if test=" roleId >0 ">
+		and EXISTS
+		(
+		select r.id from j_role r where r.id = u.roleid and (r.model=' ' or
+		r.model=#{model}) and r.id =#{roleId}
+		union all
+		select ur.id from j_userrole ur
+		LEFT JOIN j_role r on r.id = ur.RoleId
+		where ur.userid= u.id and (r.model=' ' or r.model=#{model}) and r.id =
+		#{roleId}
+		union all
+		select ug.id from r_groupuser ug
+		LEFT JOIN j_rolegroup rg on rg.group_id = ug.GroupId
+		LEFT JOIN j_role r on rg.role_id=r.id
+		where ug.userid = u.id and (r.model=' ' or r.model=#{model}) and r.id
+		=#{roleId}
+		)
+	</if>
+	)final_table group by name ORDER BY name,truename
+  </select>
 </mapper>

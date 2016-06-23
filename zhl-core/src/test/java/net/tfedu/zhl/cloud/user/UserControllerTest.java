@@ -16,6 +16,8 @@ import org.springframework.cache.CacheManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.alibaba.fastjson.JSONObject;
+
 
 @Transactional
 public class UserControllerTest extends BaseControllerTestCase {
@@ -161,6 +163,18 @@ public class UserControllerTest extends BaseControllerTestCase {
 		logger.info("e备课登录时缓存对象的model:"+us2.getModel());
 		
 		
+		
+	}
+	
+	
+	@Test
+	public void testQueryUserWithRoleAndName() throws Exception {
+		request.setParameter("name", "刘珍珍");
+		
+		result = controller.queryUserWithRoleAndName(request, response);
+		
+		logger.info(JSONObject.toJSONString(result));
+		Assert.isTrue(result!=null && "ok".equalsIgnoreCase(result.getCode()));
 		
 	}
 }

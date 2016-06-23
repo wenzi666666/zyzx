@@ -66,7 +66,7 @@ public class UserController {
 			HttpServletResponse response) {
 
 		// 当前登录用户id
-		Long currentUserId = (Long) request.getAttribute("currentUserId");
+//		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = VerificationCodeGenerator.getCode();
 
@@ -93,8 +93,7 @@ public class UserController {
 		String _method = request.getParameter("_method");
 
 		// 不同的子系统，使用不同的model参数
-		String model = request.getParameter("model") == null ? " " : request
-				.getParameter("model");
+		String model = ControllerHelper.getModel(request);
 
 		// 注销
 		if (StringUtils.isNotEmpty(_method)
@@ -307,7 +306,6 @@ public class UserController {
 			} else {
 				SRegister register = registerService.getRegister(userId);
 				if (register != null) {
-					byte[] pwd = register.getPwd();
 					// 旧密码是否匹配
 					if (register != null
 							&& !Arrays.equals(register.getPwd(), temp)) {
@@ -396,6 +394,38 @@ public class UserController {
 		UserSimple us = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, false);
 		return ResultJSON.getSuccess(us);
 	}
+	
+	
+	
+	/**
+	 * 
+	 * 根据角色、姓名分页获取用户列表
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws ParamsException 
+	 */
+	@RequestMapping(value = "/v1.0/users/teaching_search", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON queryUserWithRoleAndName(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		// 不同的子系统，使用不同的model参数
+		String model = ControllerHelper.getModel(request);
+		long roleId = ControllerHelper.getOptionalLongParameter(request, "roleId");
+		String name = ControllerHelper.getOptionalParameter(request, "name");
+		
+		int page = ControllerHelper.getPage(request);
+		int perPage= ControllerHelper.getPageSize(request);
+		
+		
+		return userService.queryUserWithRoleAndName(roleId, name, model, page, perPage);
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	
