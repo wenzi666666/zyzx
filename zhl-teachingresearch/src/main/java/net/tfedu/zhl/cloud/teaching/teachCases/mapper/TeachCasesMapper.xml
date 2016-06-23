@@ -38,7 +38,7 @@
   <!-- 查询教学案例 -->
   <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
 
-     select id,title,teacher,school,thumbnailpath
+     select id,title,teacher,school,thumbnailpath,termid,subjectid,teachdate,bookversion,gradeid
       from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId} and flag = 0
   
   </select>

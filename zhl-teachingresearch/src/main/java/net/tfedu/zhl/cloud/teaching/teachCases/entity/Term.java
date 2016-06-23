@@ -1,9 +1,17 @@
 package net.tfedu.zhl.cloud.teaching.teachCases.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.*;
 
 @Table(name = "t_term")
-public class Term {
+public class Term implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
