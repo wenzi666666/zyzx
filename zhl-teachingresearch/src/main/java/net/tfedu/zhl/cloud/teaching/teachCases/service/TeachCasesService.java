@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.teaching.teachCases.service;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents;
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TContents;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.helper.PaginationHelper;
 
@@ -67,4 +68,10 @@ public interface TeachCasesService {
 	 * @param contentTypeId
 	 */
 	public void deleteOneContent(long id);
+	
+	/**
+	 * 查询所有的内容类型
+	 * @return
+	 */
+	public List<TContents> getAllContentTypes();
 }
