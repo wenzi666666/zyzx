@@ -4,8 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.teaching.teachCases.dao.TContentsMapper;
 import net.tfedu.zhl.cloud.teaching.teachCases.dao.TeachCasesMapper;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents;
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TContents;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.cloud.teaching.teachCases.service.TeachCasesService;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
@@ -24,6 +26,7 @@ import com.github.pagehelper.PageHelper;
 public class TeachCasesServiceImpl implements TeachCasesService{
 
 	@Resource TeachCasesMapper teachCasesMapper;
+	@Resource TContentsMapper tContentsMapper;
 	/**
 	 * 根据所属平台、学段、学科，查询所有的教学案例
 	 * @param fromFlag  0 双课堂； 1 资源中心
@@ -123,6 +126,14 @@ public class TeachCasesServiceImpl implements TeachCasesService{
 	 */
 	public void deleteOneContent(long id){
 		teachCasesMapper.deleteOneContent(id);
+	}
+	
+	/**
+	 * 查询所有的内容类型
+	 * @return
+	 */
+	public List<TContents> getAllContentTypes(){
+		return tContentsMapper.getAllContentTypes();
 	}
 	
 }

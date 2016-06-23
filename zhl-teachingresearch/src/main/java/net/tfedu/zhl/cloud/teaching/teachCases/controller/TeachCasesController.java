@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TCaseContents;
+import net.tfedu.zhl.cloud.teaching.teachCases.entity.TContents;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases;
 import net.tfedu.zhl.cloud.teaching.teachCases.service.TeachCasesService;
 import net.tfedu.zhl.helper.PaginationHelper;
@@ -159,5 +160,17 @@ public class TeachCasesController {
 	public ResultJSON deleteOneContent(long id)throws Exception{
 		teachCasesService.deleteOneContent(id);
 		return ResultJSON.getSuccess(null);
+	}
+	
+	/**
+	 * 查询所有内容类型
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/v1.0/teachCases/contentTypes",method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getAllTypes(HttpServletRequest request)throws Exception{
+		List<TContents> list = teachCasesService.getAllContentTypes();
+		return ResultJSON.getSuccess(list);
 	}
 }

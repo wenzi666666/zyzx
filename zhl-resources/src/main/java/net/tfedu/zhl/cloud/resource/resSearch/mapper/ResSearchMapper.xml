@@ -24,7 +24,7 @@
     </if>
 
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
     order by id
      
@@ -53,7 +53,7 @@
     </if>
     
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
     order by id
     
@@ -78,7 +78,7 @@
          and jf.FileFormat = #{format}
     </if>
 	<if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
 union 
@@ -95,7 +95,7 @@ union
          and jf.FileFormat = #{format}
   </if>
   <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
 union 
@@ -112,7 +112,7 @@ union
          and jf.FileFormat = #{format}
   </if>
   <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
   order by id
 
@@ -129,7 +129,7 @@ union
                          #{item}
                      </foreach>
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
     and FileFormat is not null
   </select>
@@ -148,7 +148,7 @@ union
     </if>
 	
     <if test="searchKeyword != null and searchKeyword != ''">
-        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+        and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
     and FileFormat is not null
   </select>
@@ -163,7 +163,7 @@ union
                          #{item}
                      </foreach>
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))  
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))  
     </if>
      
      union 
@@ -172,7 +172,7 @@ union
 	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
 	WHERE 1=1 and a.flag = 0 and fromFlag = 3 and a.scopeId = #{schoolId} and a.scope = 5 and FileFormat is not null
     <if test="searchKeyword != null and searchKeyword != ''">
-        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+        and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
      
      union 
@@ -181,7 +181,7 @@ union
 	left join j_filetypedetail b on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))) = b.FormatCode and b.flag = 0  
 	WHERE 1=1 and a.flag = 0 and fromFlag = 4 and a.scopeId = #{districtId} and a.scope = 4 and FileFormat is not null
     <if test="searchKeyword != null and searchKeyword != ''">
-        and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+        and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
   </select>
   
@@ -201,7 +201,7 @@ union
     </if>
 
 	<if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
  
   union 
@@ -214,7 +214,7 @@ union
          and jf.FileFormat = #{fileFormat}
   </if>
   <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
   </if>
 
   union 
@@ -228,7 +228,7 @@ union
          and jf.FileFormat = #{fileFormat}
     </if>
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>) resTmp order by case when id = #{resId} then 0 else 1 end asc 
   </select>
   
@@ -246,7 +246,7 @@ union
          and jf.FileFormat = #{fileFormat}
     </if>
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
      order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
@@ -269,7 +269,7 @@ union
     </if>
     
     <if test="searchKeyword != null and searchKeyword != ''">
-         and (a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
       order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
