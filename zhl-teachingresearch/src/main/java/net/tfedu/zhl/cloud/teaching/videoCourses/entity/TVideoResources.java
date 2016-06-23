@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,7 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Table(name = "t_videoresources")
-public class TVideoResources {
+public class TVideoResources implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
