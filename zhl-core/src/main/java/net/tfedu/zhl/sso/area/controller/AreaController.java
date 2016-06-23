@@ -17,7 +17,7 @@ import net.tfedu.zhl.sso.area.service.impl.AreaServiceImpl;
  *
  */
 @Controller
-@RequestMapping("/.*RestAPI")
+@RequestMapping("/*RestAPI")
 public class AreaController {
 	
 	
@@ -37,7 +37,7 @@ public class AreaController {
 	}
 	
 	/**
-	 * 获取全部的省份下的所有市
+	 * 获取省份下的所有市
 	 * @return
 	 * @throws Exception
 	 */
@@ -79,8 +79,8 @@ public class AreaController {
 	 */
 	@RequestMapping(value="/v1.0/classList" ,method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getClassList(long districtId) throws Exception {		
-		return  areaServiceImpl.querySchoolByDistrictId(districtId);
+	public ResultJSON getClassList(long schoolId) throws Exception {		
+		return  areaServiceImpl.queryClassBySchoolId(schoolId);
 	}
 	
 
