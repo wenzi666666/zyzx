@@ -94,7 +94,7 @@
   <!-- 视频课程的检索  -->
   <select id="getVideoSearchResults" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources">
    select id,title,updatedate,clicktimes,thumbnailpath,
-   (select count(id) from t_videocomments where videoid = a.id) as commentTimes
+   (select count(id) from t_videocomments where videoid = a.id) as commentTimes,speakerinfo,description,playtime,typeid,subjectid,fromflag
    from t_videoresources a
    where fromflag = #{fromFlag} and flag = 0
    
