@@ -1,11 +1,18 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
+import java.io.Serializable;
+
 /**
  * 一条视频课程的预览信息
  * @author WeiCuicui
  *
  */
-public class VideoPreviewEntity {
+public class VideoPreviewEntity implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private long id;
 	/**

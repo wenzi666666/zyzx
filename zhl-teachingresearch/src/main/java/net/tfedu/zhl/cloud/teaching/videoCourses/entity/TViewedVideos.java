@@ -1,10 +1,17 @@
 package net.tfedu.zhl.cloud.teaching.videoCourses.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
 @Table(name = "t_viewedvideos")
-public class TViewedVideos {
+public class TViewedVideos implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
