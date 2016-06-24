@@ -105,10 +105,10 @@
    </if>
    
    <if test="orderBy == 0">
-     order by a.playtime
+     order by a.createDate
   </if>
   <if test="orderBy == 1">
-     order by a.playtime desc
+     order by a.createDate desc
   </if>
   <if test="orderBy == 2">
      order by a.clicktimes desc
