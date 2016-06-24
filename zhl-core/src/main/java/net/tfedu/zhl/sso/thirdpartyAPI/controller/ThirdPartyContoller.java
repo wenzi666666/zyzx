@@ -98,6 +98,12 @@ public class ThirdPartyContoller {
 			
 			
 			
+			
+			
+			
+			
+			
+			
 		}else{
 			log.error("校验第三方登录用户失败,平台编码("+platformcode+"),目标页面("+targetPage+"),thirdPartyToken("+thirdPartyToken+")");
 			//校验失败

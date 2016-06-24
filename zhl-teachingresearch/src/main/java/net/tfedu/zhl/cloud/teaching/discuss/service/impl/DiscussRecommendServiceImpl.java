@@ -55,6 +55,11 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 		}
         // 这里不能放其它语句
         List<TDiscussRecommend> list = mapper.selectAll();
+        PageInfo<TDiscussRecommend> temp_page = new PageInfo<TDiscussRecommend>(list);
+        PageInfo<TDiscussRecommendQueryBack> _page = new PageInfo<TDiscussRecommendQueryBack>();
+        //复制分页信息
+        BeanUtils.copyProperties(temp_page, _page);
+        //补充地区信息
         List<TDiscussRecommendQueryBack> _list = new ArrayList<TDiscussRecommendQueryBack>();
         for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
 			TDiscussRecommend t = (TDiscussRecommend) iterator.next();
@@ -66,7 +71,7 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 			}
 			_list.add(obj);
         }
-        PageInfo<TDiscussRecommendQueryBack> _page = new PageInfo<TDiscussRecommendQueryBack>(_list);
+        _page.setList(_list);
 		return defaultSuccess(_page);
 	}
 	
