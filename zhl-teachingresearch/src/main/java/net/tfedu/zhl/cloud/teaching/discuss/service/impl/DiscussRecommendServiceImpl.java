@@ -61,7 +61,9 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 			GradeAreaInfo info =  gradeMapper.getGradeAreaInfo(t.getClassid());
 			TDiscussRecommendQueryBack obj = new TDiscussRecommendQueryBack();
 			BeanUtils.copyProperties(t, obj);
-			BeanUtils.copyProperties(info,obj);
+			if(null!=info){
+				BeanUtils.copyProperties(info,obj);
+			}
 			_list.add(obj);
         }
         PageInfo<TDiscussRecommendQueryBack> _page = new PageInfo<TDiscussRecommendQueryBack>(_list);
