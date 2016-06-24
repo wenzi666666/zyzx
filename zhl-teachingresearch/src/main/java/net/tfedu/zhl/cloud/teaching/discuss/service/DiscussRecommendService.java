@@ -15,4 +15,18 @@ public interface DiscussRecommendService  extends BaseService<TDiscussRecommend>
 	 */
 	public ResultJSON removeRecommendRecords(String ids) throws Exception;
 	
+	
+	/**
+	 * 分页查询推荐班级列表（后台使用）
+	 * @param page
+	 * @param perPage
+	 * @param orderBy
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON queryRecommendRecordsPageForBack(int page,int perPage,String orderBy)throws Exception;
+	
+	
+	
+	
 }

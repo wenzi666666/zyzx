@@ -43,4 +43,23 @@
   	 SELECT * FROM j_grade where schoolid = #{schoolId} and flag= FALSE and IsChank = 1 
   </select>
   
+  
+  
+  <resultMap type="net.tfedu.zhl.sso.grade.entity.GradeAreaInfo" id="gradeAreaInfoMap">
+  	<result property="districtname"  column="districtname"/>
+  	<result property="cityname"  column="cityname"/>
+  	<result property="provincename"  column="provincename"/>
+  	<result property="schoolname"  column="schoolname"/>
+  </resultMap>
+  
+  
+  <select id="getGradeAreaInfo" resultMap="gradeAreaInfoMap">
+		select  s.name as schoolname,q.name as districtname,c.name as cityname,p.name as provincename from  j_grade g 
+		LEFT JOIN j_school s on s.id = g.schoolid
+		LEFT JOIN q_district  q  on  q.id = s.districtId
+		LEFT JOIN q_city  c on c.id = q.CityId
+		LEFT JOIN q_province p on p.id = c.ProvinceId
+		where g.id  = #{classId}
+  </select>
+  
 </mapper>

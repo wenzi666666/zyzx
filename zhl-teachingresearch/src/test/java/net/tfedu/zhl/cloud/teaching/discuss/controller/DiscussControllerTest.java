@@ -26,7 +26,13 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 		log.info(JSONObject.toJSONString(result));
 
 	}
+	@Test
+	public void testGetRecomendedBack() throws Exception {
+		result = controller.getRecomendedBack(request,1, 10,null);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
 
+	}
 	@Test
 	public void testAddReadRecord() throws Exception {
 		String classId = "20105";
