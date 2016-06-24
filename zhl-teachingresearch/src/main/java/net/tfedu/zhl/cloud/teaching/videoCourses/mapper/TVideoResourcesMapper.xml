@@ -26,9 +26,10 @@
   
   <!-- 分页查询视频课程  -->
   <select id="getAllVideoCourses" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources">
-  select id,title,speakerinfo,description,playtime,
+  select id,title,speakerinfo,description,playtime,clicktimes,fname,typeid,subjectid,fromflag,
   (select AVG(score) as avgScore from t_videocomments where userId = #{userId} and videoId = a.id) as avgScore,
-  clicktimes,(select count(id) as count from t_viewedvideos where videoId = a.id and userId = #{userId}) as hasVisited,thumbnailpath
+  (select count(id) as count from t_viewedvideos where videoId = a.id and userId = #{userId}) as hasVisited,thumbnailpath
+  
   from t_videoresources a 
   where fromflag = #{fromFlag} and typeId = #{typeId} and subjectId = #{subjectId} and flag = 0
   <if test="orderBy == 0">
@@ -94,7 +95,7 @@
   
   <!-- 视频课程的检索  -->
   <select id="getVideoSearchResults" resultType="net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources">
-   select id,title,updatedate,clicktimes,thumbnailpath,
+   select id,title,updatedate,clicktimes,thumbnailpath,fname,
    (select count(id) from t_videocomments where videoid = a.id) as commentTimes,speakerinfo,description,playtime,typeid,subjectid,fromflag
    from t_videoresources a
    where fromflag = #{fromFlag} and flag = 0

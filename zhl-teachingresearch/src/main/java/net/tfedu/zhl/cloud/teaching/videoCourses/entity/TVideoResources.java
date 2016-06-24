@@ -95,7 +95,7 @@ public class TVideoResources implements Serializable {
     /**
      * 资源平均分
      */
-    private Integer avgScore;
+    private int avgScore;
     
     /**
      * 用户是否观看过
@@ -121,11 +121,11 @@ public class TVideoResources implements Serializable {
 		this.commentTimes = commentTimes;
 	}
 
-	public Integer getAvgScore() {
+	public int getAvgScore() {
 		return avgScore;
 	}
 
-	public void setAvgScore(Integer avgScore) {
+	public void setAvgScore(int avgScore) {
 		this.avgScore = avgScore;
 	}
 
