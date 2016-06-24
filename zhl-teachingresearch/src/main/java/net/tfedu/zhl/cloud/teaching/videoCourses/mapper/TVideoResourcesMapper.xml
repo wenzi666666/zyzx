@@ -74,6 +74,7 @@
   <update id="editOneVideoCourse">
      update t_videoresources set title = #{videoCourse.title},speakerinfo = #{videoCourse.speakerinfo},description = #{videoCourse.description},typeid = #{videoCourse.typeid},
      subjectid = #{videoCourse.subjectid},fromflag = #{videoCourse.fromflag},thumbnailpath = #{videoCourse.thumbnailpath},creator = #{videoCourse.creator},updateDate = now()
+     where id = #{videoCourse.id}
   </update>
   
   
