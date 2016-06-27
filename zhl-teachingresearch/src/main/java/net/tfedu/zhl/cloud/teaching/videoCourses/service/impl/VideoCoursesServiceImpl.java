@@ -48,7 +48,7 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
 	 */
 	public VideoPreviewEntity getOneVideoCourse(long videoId,long userId){
 		
-		return tVideoResourcesMapper.getOneVideoCourse(userId, videoId);
+		return tVideoResourcesMapper.getOneVideoCourse(videoId, userId);
 	}
 	
 	/**
