@@ -55,9 +55,8 @@ public class TeachCasesControllerTest extends BaseControllerTestCase {
 	public void getAllTeachCases()throws Exception{
 		int fromFlag = 1;
 		int termId = 1;
-		int subjectId = 1;
 		
-		result = teachCasesController.getAllTeachCases(request,fromFlag, termId, subjectId);
+		result = teachCasesController.getAllTeachCases(request,fromFlag, termId);
 		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

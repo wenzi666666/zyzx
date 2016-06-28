@@ -27,6 +27,7 @@ public class VideoTypesServiceImpl implements VideoTypesService{
 	 */
     @Override
 	public List<TVideoType> getAllTypes(){
+  
 		return tVideoTypeMapper.getAllTypes();
 	}
 	
@@ -35,7 +36,14 @@ public class VideoTypesServiceImpl implements VideoTypesService{
 	 */
     @Override
 	public List<TSubject> getSubjectsByType(int typeId){
-		
-		return tVideoTypeMapper.getSubjectsByType(typeId);
+    	
+    	List<TSubject> list = tVideoTypeMapper.getSubjectsByType(typeId);
+    	
+    	TSubject item = new TSubject();
+    	item.setId(0);
+    	item.setName("全部");
+    	list.add(0, item);
+    	
+		return list;
 	}
 }
