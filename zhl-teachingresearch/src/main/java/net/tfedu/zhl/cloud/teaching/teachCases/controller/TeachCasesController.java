@@ -39,17 +39,20 @@ public class TeachCasesController {
 	 */
 	@RequestMapping(value = "/v1.0/teachCases", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON getAllTeachCases(HttpServletRequest request,int fromFlag,int termId,int subjectId)throws Exception{
+	public ResultJSON getAllTeachCases(HttpServletRequest request,int fromFlag,int termId)throws Exception{
 		
 		int curPage = 1; //当前页，默认为第1页
 		int perPageNum = 10; //每页记录数目，默认为10
+		int subject = 0; //学科id，默认0，表示全部
 		
 		if(request.getParameter("page") != null )//若有传递页码
 		    curPage = Integer.parseInt(request.getParameter("page").toString().trim());
 		if(request.getParameter("perPage") != null )//若有传递每页记录数目
 			perPageNum = Integer.parseInt(request.getParameter("perPage").toString().trim());
+		if(request.getParameter("subjectId") != null )//若有传递页码
+			subject = Integer.parseInt(request.getParameter("subjectId").toString().trim());
 		
-		PaginationHelper<TeachCases> pagination = teachCasesService.selectAllCases(fromFlag, termId, subjectId, curPage,perPageNum);
+		PaginationHelper<TeachCases> pagination = teachCasesService.selectAllCases(fromFlag, termId, subject, curPage,perPageNum);
 		
 		return ResultJSON.getSuccess(pagination);
 	}

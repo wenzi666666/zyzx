@@ -35,11 +35,15 @@
        </association>
   </resultMap>
   
-  <!-- 查询教学案例 -->
+  <!-- 查询教学案例，根据学科查询 或者查询全部的   -->
   <select id="selectAllCases" resultType="net.tfedu.zhl.cloud.teaching.teachCases.entity.TeachCases"> 
 
-     select id,title,teacher,school,thumbnailpath,termid,subjectid,teachdate,bookversion,gradeid
-      from t_teachcases where fromflag = #{fromFlag} and termId = #{termId} and subjectid = #{subjectId} and flag = 0
+      select id,title,teacher,school,thumbnailpath,termid,subjectid,teachdate,bookversion,gradeid
+      from t_teachcases where fromflag = #{fromFlag} and termId = #{termId}
+      <if test="subjectId > 0">
+         and subjectid = #{subjectId}
+      </if>
+        and flag = 0
   
   </select>
   
