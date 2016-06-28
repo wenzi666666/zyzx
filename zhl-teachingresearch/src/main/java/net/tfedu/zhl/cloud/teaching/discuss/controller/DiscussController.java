@@ -14,7 +14,8 @@
 	import org.springframework.web.bind.annotation.RequestMethod;
 	import org.springframework.web.bind.annotation.ResponseBody;
 
-	import com.github.pagehelper.PageInfo;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 
 	import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
 	import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
@@ -72,7 +73,7 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 			Long currentUserId = (Long) request.getAttribute("currentUserId");
 
 			//返回推荐班级列表
-			ResultJSON result = discussService.getPage(page, perPage);
+			ResultJSON result = null;
 
 			
 			//准备重置url
@@ -81,7 +82,7 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 			String  forum3 =  config.getCurrentForum3(request);		
 
 			
-			PageInfo<TDiscussRecommend> _page = ((PageInfo<TDiscussRecommend>)result.getData());
+			PageInfo<TDiscussRecommend> _page = discussService.queryRecommendRecordsPage(page, perPage);
 			List<TDiscussRecommend> list =  _page.getList();
 			if(list!=null && list.size()>0){
 				for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
@@ -91,7 +92,7 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 					tDiscussRecommend.setClassurl(_url);
 				}
 			}
-			return result;
+			return ResultJSON.getSuccess(_page);
 		}
 		
 		/**

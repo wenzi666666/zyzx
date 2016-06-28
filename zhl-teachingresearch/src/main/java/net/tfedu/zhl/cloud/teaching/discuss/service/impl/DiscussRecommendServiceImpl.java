@@ -59,7 +59,7 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 	        PageHelper.orderBy("id asc");
 		}
         // 这里不能放其它语句
-        List<TDiscussRecommend> list = mapper.selectAll();
+        List<TDiscussRecommend> list = mapper.selectAllRecords();
         PageInfo<TDiscussRecommend> temp_page = new PageInfo<TDiscussRecommend>(list);
         PageInfo<TDiscussRecommendQueryBack> _page = new PageInfo<TDiscussRecommendQueryBack>();
         //复制分页信息
@@ -78,6 +78,20 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
         }
         _page.setList(_list);
 		return defaultSuccess(_page);
+	}
+
+	@Override
+	public PageInfo<TDiscussRecommend> queryRecommendRecordsPage(int page, int perPage) throws Exception {
+		// TODO Auto-generated method stub
+
+		 PageHelper.startPage(page, perPage);
+         PageHelper.orderBy("id desc");
+	        // 这里不能放其它语句
+	        List<TDiscussRecommend> list = mapper.selectAllRecords();
+	        PageInfo<TDiscussRecommend> temp_page = new PageInfo<TDiscussRecommend>(list);
+			return temp_page;
+	
+	
 	}
 	
 	
