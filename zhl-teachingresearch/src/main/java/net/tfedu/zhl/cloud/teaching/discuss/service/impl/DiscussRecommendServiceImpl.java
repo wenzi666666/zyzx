@@ -16,6 +16,8 @@ import net.tfedu.zhl.cloud.teaching.discuss.dao.TDiscussRecommendMapper;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommendQueryBack;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.grade.dao.GradeMapper;
@@ -38,7 +40,10 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
 	 * @throws Exception
 	 */
 	public ResultJSON removeRecommendRecords(String ids) throws Exception{
-//		mapper.removeRecommendRecords(ids.split(",")) ;
+		if(StringUtils.isEmpty(ids)){
+			throw new ParamsException();
+		}
+		mapper.removeRecommendRecords(ids.split(",")) ;
 		return ResultJSON.getSuccess("");
 	}
 

@@ -18,4 +18,14 @@
       <arg column="note" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
+  
+  
+  
+  
+  <update id="removeRecommendRecords" >
+  		update t_discuss_recommend set flag =true where id in 
+  		<foreach collection="ids" item="item" separator="," open="(" close=")" index="index">
+  			#{item}
+  		</foreach>
+  </update>
 </mapper>

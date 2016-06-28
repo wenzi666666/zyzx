@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
-@Transactional
 public class DiscussControllerTest extends BaseControllerTestCase {
 
 	@Resource
@@ -84,7 +83,7 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testDelRecomended() throws Exception {
-		result = controller.delRecomended("1");
+		result = controller.delRecomended("1,2,3");
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 		
