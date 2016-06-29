@@ -51,6 +51,8 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     @Rollback
     public void testAddPrepareContent() throws Exception {
         long prepareId = 525;
+//        request.addParameter("resIds", "4319500105");
+//        request.addParameter("fromFlags", "0");
         request.addParameter("resIds", "4319500105,212992,212991");
         request.addParameter("fromFlags", "0,0,0");
         result = controller.addPrepareContent(prepareId, request, response);

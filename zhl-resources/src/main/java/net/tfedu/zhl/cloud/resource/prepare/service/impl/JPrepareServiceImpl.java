@@ -106,14 +106,17 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public void addPrepareContent(JPrepareContent content) throws Exception{
-        // TODO Auto-generated method stub
-        
+       
         //排重
         Boolean isExist = contMapper.isPrepareContentExist(content.getPreid(), content.getContid(), content.getConttype());
         if(isExist!=null &&true==isExist){
         	throw new PrepareContentExistException();
         }
         
+        JPrepareContent record = new JPrepareContent();
+        record.setPreid(content.getPreid());
+        int count =  contMapper.selectCount(record);
+        content.setOrderidx(count+1);
 
         //增加内容
     	contMapper.insert(content);
@@ -515,19 +518,28 @@ public class JPrepareServiceImpl implements JPrepareService {
 			}else{
 				//批量sql排重
 				
+		        JPrepareContent record = new JPrepareContent();
+		        record.setPreid(list.get(0).getPreid());
+		        int count =  contMapper.selectCount(record);
+
+		        
 				List<Long> preIds = new ArrayList<Long>();
 				List<JPrepareContent> ls_remove = new ArrayList<JPrepareContent>();
-				for (JPrepareContent content : list) {
+		        for (JPrepareContent content : list) {
 					if(!preIds.contains(content.getPreid())){
-						preIds.add(content.getPreid());
+						preIds.add(content.getPreid());					
 					}
 					//排重
 			        Boolean isExist = contMapper.isPrepareContentExist(content.getPreid(), content.getContid(), content.getConttype());
 			        if(isExist!=null &&true==isExist){
 			        	ls_remove.add(content);
-			        }					
+			        }	else{
+			        	content.setOrderidx(++count);
+			        }
 				}
 				
+				
+
 				for (JPrepareContent jPrepareContent : ls_remove) {
 					list.remove(jPrepareContent);
 				}
