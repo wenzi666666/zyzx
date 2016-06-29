@@ -139,17 +139,18 @@ public class PrepareControllerTest extends BaseControllerTestCase {
  
     @Test
     public void testgetViewUrl() throws Exception {
-        request.addParameter("resIds", "870645");
-        request.addParameter("fromFlags", "4");
+        request.addParameter("resIds", "164135");
+        request.addParameter("fromFlags", "0");
+//        request.addParameter("clientType", "ePrepareClient");
 //        request.addParameter("resIds", "870142");
 //        request.addParameter("fromFlags", "4");
-        request.setServerName("192.168.111.160");
+        request.setServerName("192.168.111.204");
         request.setServerPort(8080);
         request.setContextPath("/zhl-resources");
         request.setScheme("http");
         
         result = controller.getResViewUrl(request, response);
-        
+        log.info(JSONObject.toJSONString(result));
         Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
     }

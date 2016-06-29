@@ -110,6 +110,125 @@ public class ZXUserInfoBody {
 	 * 老师所教的班级列表
 	 */
 	List<ZXClassEntity>  CLASS_ARRAY;
-	
+
+
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+
+
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
+
+
+	public String getSEX() {
+		return SEX;
+	}
+
+
+	public void setSEX(String sEX) {
+		SEX = sEX;
+	}
+
+
+	public String getUSER_NAME() {
+		return USER_NAME;
+	}
+
+
+	public void setUSER_NAME(String uSER_NAME) {
+		USER_NAME = uSER_NAME;
+	}
+
+
+	public String getUSER_TYPE() {
+		return USER_TYPE;
+	}
+
+
+	public void setUSER_TYPE(String uSER_TYPE) {
+		USER_TYPE = uSER_TYPE;
+	}
+
+
+	public String getNICKNAME() {
+		return NICKNAME;
+	}
+
+
+	public void setNICKNAME(String nICKNAME) {
+		NICKNAME = nICKNAME;
+	}
+
+
+	public String getMOTTO() {
+		return MOTTO;
+	}
+
+
+	public void setMOTTO(String mOTTO) {
+		MOTTO = mOTTO;
+	}
+
+
+	public String getBIRTH_DATE() {
+		return BIRTH_DATE;
+	}
+
+
+	public void setBIRTH_DATE(String bIRTH_DATE) {
+		BIRTH_DATE = bIRTH_DATE;
+	}
+
+
+	public String getPROVINCE_NAME() {
+		return PROVINCE_NAME;
+	}
+
+
+	public void setPROVINCE_NAME(String pROVINCE_NAME) {
+		PROVINCE_NAME = pROVINCE_NAME;
+	}
+
+
+	public String getCITY_NAME() {
+		return CITY_NAME;
+	}
+
+
+	public void setCITY_NAME(String cITY_NAME) {
+		CITY_NAME = cITY_NAME;
+	}
+
+
+	public String getAREAL_NAME() {
+		return AREAL_NAME;
+	}
+
+
+	public void setAREAL_NAME(String aREAL_NAME) {
+		AREAL_NAME = aREAL_NAME;
+	}
+
+
+	public String getSCHOOL_NAME() {
+		return SCHOOL_NAME;
+	}
+
+
+	public void setSCHOOL_NAME(String sCHOOL_NAME) {
+		SCHOOL_NAME = sCHOOL_NAME;
+	}
+
+
+	public List<ZXClassEntity> getCLASS_ARRAY() {
+		return CLASS_ARRAY;
+	}
+
+
+	public void setCLASS_ARRAY(List<ZXClassEntity> cLASS_ARRAY) {
+		CLASS_ARRAY = cLASS_ARRAY;
+	}
 	
 }
