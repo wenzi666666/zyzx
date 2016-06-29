@@ -39,11 +39,6 @@ public class VideoTypesServiceImpl implements VideoTypesService{
     	
     	List<TSubject> list = tVideoTypeMapper.getSubjectsByType(typeId);
     	
-    	TSubject item = new TSubject();
-    	item.setId(0);
-    	item.setName("全部");
-    	list.add(0, item);
-    	
 		return list;
 	}
 }
