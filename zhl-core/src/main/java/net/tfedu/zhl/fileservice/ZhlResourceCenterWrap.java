@@ -27,8 +27,23 @@ public class ZhlResourceCenterWrap {
 	public static final String file_pattern_pdf= ".kdh.caj.doc.docx.ppt.pptx.pptm.xls.xlsx.xlsm.pdf.teb.nh";
 
 
+	/**
+	 * 资源中心文件服务的注册信息
+	 */
 	private static final String CustomerID = "100798967857546";
 	private static final String CustomerKey = "JWJ83OPR0985LJL";
+	
+	/**
+	 * 	e备课的注册信息：
+	 *   文件服务增加来源检查之后，e备课的请求单独处理，其中：
+	 *    下载请求不检查请求来源，可以继续使用（资源中心文件服务）
+	 *    播放请求检查请求来源,使用新的e备课的注册信息;
+	 * 	appid:100798967887654  
+		appkey:K46JL5J6354KJ35 
+	 */
+	private static final String CustomerID_EPREPARE = "100798967887654";
+	private static final String CustomerKey_EPREPARE = "K46JL5J6354KJ35";
+
 
 	// 历史上IIS服务器的虚拟目录
 	public static final String MTDATA = "mtdata";
@@ -191,6 +206,9 @@ public class ZhlResourceCenterWrap {
 			) {
 		return GetEBookPlayerURL(EBookPath, serverURL, default_diskOrder);
 	}
+	
+	
+	
 	/**
 	 * 返回 资源的播放路径
 	 * 
@@ -477,6 +495,35 @@ public class ZhlResourceCenterWrap {
 		operate.setDestFile(dst);
 
 	    return  new zhldowncenter(CustomerID, CustomerKey, resSerPath).SendFileOperateTask(operate);
+	}
+	
+	
+	
+	/**
+	 * 获取电子教辅路径（e备课）
+	 * 
+	 * @param args
+	 * 
+	 */
+	public static String GetEBookPlayerURL_EPREPARE(String EBookPath, String serverURL
+			) {
+		
+		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, serverURL)
+		.GetResourcePlayURL(EBookPath, true, default_diskOrder)+"&mode=ebook";
+		
+	}
+	
+	/**
+	 * 返回 资源的播放路径
+	 * 
+	 * @param resSerUrl
+	 *            资源服务器的地址
+	 * @return
+	 */
+	public static String getWebPlayUrl_EPREPARE(String resSerUrl, String resPath,
+			Boolean IsMultiFile) {
+		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl)
+				.GetResourcePlayURL(resPath, IsMultiFile, default_diskOrder);
 	}
 	
 }
