@@ -26,6 +26,17 @@ public interface RoleService extends BaseService<JRole> {
 	public ResultJSON  addUserRole(long userId,long roleId)throws Exception;
 	
 	
+
+	/**
+	 * 为增加角色
+	 * @param userId
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON  addUserRole(long[] userIds,long roleId)throws Exception;
+	
+	
 	
 
 }

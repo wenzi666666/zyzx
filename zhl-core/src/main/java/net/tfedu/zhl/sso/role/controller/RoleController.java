@@ -47,11 +47,8 @@ public class RoleController {
 	
 	@RequestMapping(value="/v1.0/userRole",method=RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON  addUserRole(HttpServletRequest request,long roleId)throws Exception{
-		// 当前登录用户id
-		Long userId = (Long) request.getAttribute("currentUserId");
-		return roleService.addUserRole(userId, roleId);
-				
+	public ResultJSON  addUserRole(HttpServletRequest request,long roleId,long[] userIds)throws Exception{
+		return roleService.addUserRole(userIds, roleId);
 	}
 	
 	

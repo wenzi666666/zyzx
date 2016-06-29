@@ -29,7 +29,7 @@ public class RoleControllerTest  extends BaseControllerTestCase{
 	
 	@Test
 	public void testAddUserRole() throws Exception  {
-		result = controller.addUserRole(request, 17);
+		result = controller.addUserRole(request, 17,new long[]{1,23});
 		Assert.isTrue(null!=result && "ok".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 		

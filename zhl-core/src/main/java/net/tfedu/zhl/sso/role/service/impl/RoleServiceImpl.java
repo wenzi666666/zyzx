@@ -48,6 +48,22 @@ public class RoleServiceImpl extends BaseServiceImpl<JRole> implements RoleServi
 		}
 		return ResultJSON.getSuccess("");
 	}
+
+
+
+	@Override
+	public ResultJSON addUserRole(long[] userIds, long roleId) throws Exception {
+		if(roleId<=0 || userIds.length<1){
+			throw new ParamsException();
+		}
+		for (int i = 0; i < userIds.length; i++) {
+			addUserRole(userIds[i], roleId);
+		}
+		return ResultJSON.getSuccess("");
+	}
+	
+	
+	
 	
 
 }
