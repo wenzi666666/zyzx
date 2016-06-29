@@ -23,7 +23,7 @@ public class VideoPreviewEntity implements Serializable{
 	/**
 	 * 当前用户对该视频的评分
 	 */
-	private Integer score;
+	private int score;
 	
 	/**
 	 * 视频文件名称
@@ -53,10 +53,10 @@ public class VideoPreviewEntity implements Serializable{
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getScore() {
+	public int getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(int score) {
 		this.score = score;
 	}
 	public String getFname() {
