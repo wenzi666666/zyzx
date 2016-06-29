@@ -18,5 +18,11 @@ public interface SRegisterMapper extends CoreMapper<SRegister> {
      * @param id
      */
     public void modifyPassword(Long id, byte[] pwd);
+    
+    
+    
+    
+    
+    
 
 }

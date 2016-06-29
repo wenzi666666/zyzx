@@ -183,14 +183,14 @@ public class JPrepareConstant {
      * @param list
      */
     public static void resetResourceViewUrl(List<ResourceSimpleInfo> list, String resServiceLocal,
-            String currentResService) {
+            String currentResService,Boolean isEprepare) {
 
     	
     	for (ResourceSimpleInfo resourceSimpleInfo : list) {
     		if(null == resourceSimpleInfo){
     			continue;
     		}
-            resetResourceViewUrl(resourceSimpleInfo, resServiceLocal, currentResService);
+            resetResourceViewUrl(resourceSimpleInfo, resServiceLocal, currentResService,isEprepare);
 		}
     	
 
@@ -218,7 +218,7 @@ public class JPrepareConstant {
      * 资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
      * @param info
      */
-    public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
+    public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare) {
 
         String rescode = info.getRescode();
         //资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
@@ -254,9 +254,14 @@ public class JPrepareConstant {
             }
             
     		if(isebook){
-    	        path = ZhlResourceCenterWrap.GetEBookPlayerURL(path, resServiceLocal);
+    	        path = isEprepare
+    	        		?ZhlResourceCenterWrap.GetEBookPlayerURL_EPREPARE(path, resServiceLocal)
+    	        		:ZhlResourceCenterWrap.GetEBookPlayerURL(path, resServiceLocal);
     		}else{
-    	        path = ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
+    	        path = 
+    	        		isEprepare
+    	        		?ZhlResourceCenterWrap.getWebPlayUrl_EPREPARE(resServiceLocal, path, isdwj)
+    	        		:ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
     		}
             
 

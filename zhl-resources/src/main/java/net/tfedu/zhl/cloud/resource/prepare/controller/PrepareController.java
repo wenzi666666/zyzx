@@ -829,6 +829,7 @@ public class PrepareController {
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
+		String clientType = request.getParameter("clientType");// browser,ePrepareClient
 
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
@@ -852,7 +853,7 @@ public class PrepareController {
 				// 将原始的path重置为可用的web链接
 
 				JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
-						currentResPath);
+						currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
 				data = list;
 			}
 		}
