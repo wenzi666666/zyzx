@@ -144,8 +144,7 @@ public class ThirdPartyContoller {
 	        
 	    	SRegister register =  registerService.getRegister(_userName);
 	    	if(register ==null || register.getId()<1){//用户不存在
-	    		
-	    		
+	    		register = new SRegister();
 	    		
 	    	}
 			
