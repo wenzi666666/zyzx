@@ -27,7 +27,7 @@ public interface TVideoCommentsMapper extends CoreMapper<TVideoComments> {
 	 * @param videoId
 	 * @param userId
 	 */
-	public void insertOneCommentLevel(@Param("level")int level,@Param("videoId")long videoId,@Param("userId")long userId);
+	public void insertOneCommentLevel(@Param("score")int score,@Param("videoId")long videoId,@Param("userId")long userId);
 
 	/**
 	 * 查询一个视频课程的所有评论
