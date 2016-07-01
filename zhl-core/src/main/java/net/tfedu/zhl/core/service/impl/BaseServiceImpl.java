@@ -117,7 +117,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      * @return
      */
     protected ResultJSON defaultError(Exception e) {
-        result = new ResultJSON("unknown", e.getMessage(), "", "");
+        result = new ResultJSON("unknown", e.getMessage(), e.toString(), "");
         log.error("出错了：" + e.getMessage());
         e.printStackTrace();
         return result;
