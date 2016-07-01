@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -16,12 +17,18 @@ import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.sso.city.dao.CityMapper;
+import net.tfedu.zhl.sso.city.entity.City;
 import net.tfedu.zhl.sso.district.dao.DistrictMapper;
+import net.tfedu.zhl.sso.district.entity.District;
 import net.tfedu.zhl.sso.province.dao.ProvinceMapper;
 import net.tfedu.zhl.sso.province.entity.Province;
 import net.tfedu.zhl.sso.school.dao.JSchoolMapper;
+import net.tfedu.zhl.sso.school.entity.JSchool;
+import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
+import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
+import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.userinfo.dao.JUserInfoMapper;
@@ -79,6 +86,11 @@ public class RegisterServiceImpl implements RegisterService {
 	@Resource
 	JSchoolMapper schMapper;
 	
+	@Resource
+	JTermMapper termMapper;
+	
+	@Resource
+	JSubjectMapper subjectMapper;
 	
 	
 	/**
@@ -166,19 +178,68 @@ public class RegisterServiceImpl implements RegisterService {
 		String termName = form.getTermName();
 		String subjectName = form.getSubjectName();
 
+		long provinceId = 0 ;
+		long cityId = 0 ;
+		long districtId = 0;
 		long schoolId= 0 ;
+		Date date = Calendar.getInstance().getTime();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		
+		//机构信息处理
+		List<Province> proList =  proMapper.queryProvinceByName(provinceName);
+		if(proList==null || 0==proList.size()){
+			Province record = new Province();
+			record.setName(provinceName);
+			record.setFlag(false);
+			proMapper.insertSelective(record);
+			provinceId = record.getId();
+		}else{
+			provinceId = proList.get(0).getId();
+		}
+		
+		List<City> cityList =  cityMapper.queryCityByProvinceIdANDName(provinceId, cityName);
+		if(cityList==null || 0==cityList.size()){
+			City record = new City();
+			record.setName(provinceName);
+			record.setProvinceid( Integer.parseInt(provinceId+""));
+			record.setFlag(false);
+			cityMapper.insertSelective(record);
+			cityId = record.getId();
+		}else{
+			cityId = cityList.get(0).getId();
+		}
+		
+		
+		List<District> disList =  disMapper.queryDistirctByCityIdANDName(cityId, arealName);
+		if(disList==null || 0==disList.size()){
+			District record = new District();
+			record.setName(provinceName);
+			record.setCityid(String.valueOf(cityId));
+			record.setFlag(false);
+			disMapper.insertSelective(record);
+			districtId = record.getId();
+		}else{
+			districtId = disList.get(0).getId();
+		}
+		
+		
+		List<JSchool> schList =  schMapper.querySchoolByDistrictIdAndName(districtId, schoolName);
+		if(schList==null || 0==schList.size()){
+			JSchool record = new JSchool();
+			record.setName(schoolName);
+			record.setCreatedate(date);
+			record.setDistrictid(String.valueOf(districtId));
+		}else{
+			schoolId = schList.get(0).getId();
+		}
 		
 		
 		
-		
-		
-		
-		
+		//
 		SRegister register = new SRegister();
 		// 卡有效期
 		int expNum = 36;
-		Date date = Calendar.getInstance().getTime();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		SBatch ben = new SBatch();
 		String batchName = "PT"
@@ -265,6 +326,10 @@ public class RegisterServiceImpl implements RegisterService {
 		
 		
 		
+		//学段  学科
+		JTerm term = new JTerm();
+		term.setName(termName);
+		term = termMapper.selectOne(term);
 		
 		
 		
