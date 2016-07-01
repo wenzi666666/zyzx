@@ -1,5 +1,6 @@
 package net.tfedu.zhl.sso.users.service;
 
+import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 
 public interface RegisterService {
@@ -29,5 +30,16 @@ public interface RegisterService {
      * @return
      */
     public SRegister login(String userName, String password)    throws Exception;
+    
+    
+    
+    /**
+     * 增加用户注册
+     * @return
+     */
+    public long addRegister(RegisterAddForm form)throws Exception;;
+    
+    
+    
 
 }

@@ -21,4 +21,8 @@
   <select id="queryCityByProvinceId" resultMap="resultCity">
       select city_id,city_name from (select id as city_id ,name as city_name from q_city where provinceId=#{provinceId} and flag=0 )a 
   </select>
+  
+  <select id="queryCityByProvinceIdANDName" resultMap="BaseResultMap">
+  	select * from q_city where name =#{name} and ProvinceId =#{provinceId}  and flag =false ORDER BY id 
+  </select>
 </mapper>

@@ -22,4 +22,13 @@
   <select id ="queryProvince" resultMap="resultProvince">
      select pro_id,pro_name from ( select id as pro_id,name as pro_name from q_province where flag=0 )a
   </select>
+  
+  
+  <!-- 查询省  -->
+  
+  <select id="queryProvinceByName" resultMap="BaseResultMap">
+  		SELECT * FROM q_province where (name = #{name} or name like CONCAT('%',#{name},'%') ) and flag =false  ORDER BY id
+  </select>
+  
+  
 </mapper>

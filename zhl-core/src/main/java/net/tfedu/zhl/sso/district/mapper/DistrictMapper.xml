@@ -25,4 +25,9 @@
     (select id as dist_id ,name as dist_name from q_district where cityId=#{cityId} and flag=0 
     )a 
   </select>
+  
+  
+  <select id="queryDistirctByCityIdANDName" resultMap="BaseResultMap">
+  	select * from q_district where  CityId = #{cityId} and  name =#{name}  and flag =false  ORDER BY id 
+  </select>
 </mapper>

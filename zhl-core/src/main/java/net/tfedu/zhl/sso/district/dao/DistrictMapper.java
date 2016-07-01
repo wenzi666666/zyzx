@@ -15,4 +15,12 @@ public interface DistrictMapper extends CoreMapper<District> {
 	 * @return
 	 */
 	public List<District> queryDistirctByCityId(@Param("cityId")long cityId);
+	
+	/**
+	 * 查询市下的区
+	 * @param cityId
+	 * @param name
+	 * @return
+	 */
+	public List<District> queryDistirctByCityIdANDName(@Param("cityId")long cityId,@Param("name")String name);
 }

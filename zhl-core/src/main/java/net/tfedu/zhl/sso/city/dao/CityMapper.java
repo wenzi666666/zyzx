@@ -15,4 +15,14 @@ public interface CityMapper extends CoreMapper<City> {
 	 * @return
 	 */
 	public List<City> queryCityByProvinceId(@Param("provinceId")long provinceId);
+	
+	/**
+	 * 查询省份下的市
+	 * @param provinceId
+	 * @param name
+	 * @return
+	 */
+	public List<City> queryCityByProvinceIdANDName(@Param("provinceId")long provinceId,@Param("name")String name);
+	
+	
 }
