@@ -32,6 +32,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 全局错误处理
+ * 对不是过于严谨的系统，通常只使用前面三个方法，就能处理所有的异常。
+ * 对异常处理设计过头，会导致代码恶性膨胀，难以维护。
  * 
  * @author bruce
  *
@@ -45,7 +47,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { SQLException.class, DataAccessException.class })
     @ResponseBody
     public ResultJSON handleSQLException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        result = new ResultJSON("DataAccessError", e.getClass() + "," + e.getMessage(), "", "");
+        result = new ResultJSON("DataAccessError", e.getClass() + "," + e.getMessage(), e.toString(), "");
         e.printStackTrace();
         return result;
     }
@@ -54,7 +56,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { Exception.class, RuntimeException.class, UnCustomException.class })
     @ResponseBody
     public ResultJSON handleRuntimeException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        result = new ResultJSON("ServerError", e.getClass() + "," + e.getMessage(), "", "");
+        result = new ResultJSON("ServerError", e.getClass() + "," + e.getMessage(), e.toString(), "");
         e.printStackTrace();
         return result;
     }
@@ -63,7 +65,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = { IOException.class })
     @ResponseBody
     public ResultJSON handleRuntimeIOException(HttpServletRequest request, HttpServletResponse response, Exception e) {
-        result = new ResultJSON("IOError", e.getClass() + "," + e.getMessage(), "", "");
+        result = new ResultJSON("IOError", e.getClass() + "," + e.getMessage(), e.toString(), "");
         e.printStackTrace();
         return result;
     }
@@ -73,7 +75,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleNoLoginException(HttpServletRequest request, HttpServletResponse response,
             NoLoginException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -82,7 +84,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleWithoutUserException(HttpServletRequest request, HttpServletResponse response,
             WithoutUserException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -91,7 +93,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleNoAuthorizationException(HttpServletRequest request, HttpServletResponse response,
             NoAuthorizationException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -100,7 +102,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleWrongPassWordException(HttpServletRequest request, HttpServletResponse response,
             WrongPassWordException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -109,7 +111,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleOutOfDateException(HttpServletRequest request, HttpServletResponse response,
             OutOfDateException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -118,7 +120,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleUnusualErrorException(HttpServletRequest request, HttpServletResponse response,
             UnusualErrorException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -127,7 +129,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleParamsException(HttpServletRequest request, HttpServletResponse response,
             ParamsException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -136,7 +138,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleInvalidAccessTokenException(HttpServletRequest request, HttpServletResponse response,
             InvalidAccessTokenException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -145,7 +147,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleInvalidPasswordException(HttpServletRequest request, HttpServletResponse response,
             InvalidPasswordException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -154,7 +156,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleNoTokenException(HttpServletRequest request, HttpServletResponse response,
             NoTokenException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 
@@ -163,7 +165,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handlePrepareContentExistException(HttpServletRequest request, HttpServletResponse response,
             PrepareContentExistException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
     
@@ -172,7 +174,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleWithoutAuthorizationException(HttpServletRequest request, HttpServletResponse response,
             WithoutAuthorizationException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
     
@@ -181,7 +183,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleKickOutTokenException(HttpServletRequest request, HttpServletResponse response,
     		KickOutTokenException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
     @ResponseStatus(value = HttpStatus.OK)
@@ -189,7 +191,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleAPIErrorException(HttpServletRequest request, HttpServletResponse response,
     		APIErrorException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }
 }
