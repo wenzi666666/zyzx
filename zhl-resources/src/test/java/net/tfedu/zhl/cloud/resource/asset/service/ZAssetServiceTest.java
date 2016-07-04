@@ -122,6 +122,14 @@ public class ZAssetServiceTest  extends BaseControllerTestCase{
 	}
 
 
+	@Test
+	public void testQuery(){
+		String path = "upFile\\2016\\390410126\\10105\\2016070415531745742-31.mp4";
+		String newPath = "upFile\\2016\\390410126\\10105\\2016070415531745742-31-h264.mp4";
+
+		zAssetService.updateAssetPath(path, newPath);
+	}
+	
 	
 	
 

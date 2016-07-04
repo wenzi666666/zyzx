@@ -417,6 +417,12 @@
  </select>
  
  
+ 
+ <update id="updateAssetPath" >
+ 	update z_asset set AssetPath =  #{newPath} where  AssetPath = #{path} 
+ </update>
+ 
+ 
 </mapper>
 
 

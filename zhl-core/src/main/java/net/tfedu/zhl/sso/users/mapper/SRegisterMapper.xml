@@ -28,7 +28,9 @@
   </update>
   
   
-  
+  <insert id="addRegister" parameterType="net.tfedu.zhl.sso.users.entity.SRegister" useGeneratedKeys="true" keyProperty="register.id">
+  	insert into s_register(cardid,roleid,name,pwd,email,registertime,nodeid,flag,reendtime)values(#{register.cardid},#{register.roleid},#{register.name},#{register.pwd},#{register.email},#{register.registertime},#{register.nodeid},#{register.flag},#{register.reendtime})
+  </insert>
   
   
 </mapper>

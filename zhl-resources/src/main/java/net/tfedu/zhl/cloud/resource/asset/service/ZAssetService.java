@@ -9,9 +9,10 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 
-public interface ZAssetService {
+public interface ZAssetService extends BaseService<ZAsset>{
 	
 	/**
 	 *  自建资源 ： 查询全部一级资源类型
@@ -213,5 +214,12 @@ public interface ZAssetService {
 	public Pagination<JPrepareContentView>  getCourseAssetPage(boolean ifGetNet, Integer unifyTypeId,Long userId,String tfcode,String title,Integer page,Integer perPage);
 	
 	
+	
+	/**
+	 * 更新资源路径
+	 * @param path
+	 * @param newPath
+	 */
+	public void updateAssetPath(String path,String newPath);
 	
 }

@@ -46,12 +46,14 @@ import net.tfedu.zhl.cloud.resource.share.entity.XPlatFormShare;
 import net.tfedu.zhl.cloud.resource.share.entity.XShareResNav;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.core.service.BaseService;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 @Service("zAssetService")
-public class ZAssetServiceImpl implements ZAssetService {
+public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAssetService {
 	
 	
 	Logger logger = LoggerFactory.getLogger(ZAssetServiceImpl.class);
@@ -185,9 +187,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 		ZTypeConvert obj = new ZTypeConvert();
 		obj.setUserid(userId);
 		obj.setRespath(resPath);
+		obj.setCreatetime(Calendar.getInstance().getTime());
 		convertMapper.insert(obj);
 		
 		assetMapper.updateAssetFinished(userId, resPath);
+		
+		
+		
+		
 		
 		Integer scope = syscourseMapper.getAssetShareScope(String.valueOf(userId), resPath);
 		
@@ -958,6 +965,14 @@ public class ZAssetServiceImpl implements ZAssetService {
 		System.out.println(s.substring(0, s.lastIndexOf("."))+"_icon.jpg");
 		
 		
+	}
+
+
+
+
+	@Override
+	public void updateAssetPath(String path, String newPath) {
+		assetMapper.updateAssetPath(path, newPath);
 	}
 }
 

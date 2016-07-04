@@ -178,6 +178,18 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	
 	
 	
+	
+	
+	/**
+	 * 更新资源路径
+	 * @param path
+	 * @param newPath
+	 */
+	public  void updateAssetPath(@Param("path")String path,@Param("newPath")String newPath);
+	
+	
+	
+	
 }
 
 

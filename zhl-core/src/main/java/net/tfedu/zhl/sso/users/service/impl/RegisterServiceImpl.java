@@ -26,9 +26,12 @@ import net.tfedu.zhl.sso.school.dao.JSchoolMapper;
 import net.tfedu.zhl.sso.school.entity.JSchool;
 import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.sso.term.entity.JUserTerm;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.userinfo.dao.JUserInfoMapper;
@@ -163,7 +166,7 @@ public class RegisterServiceImpl implements RegisterService {
 	
 
 	@Override
-	public long addRegister(RegisterAddForm form) throws Exception {
+	public SRegister addRegister(RegisterAddForm form) throws Exception {
 	    String userName = form.getUserName() ;
 	    String trueName  = form.getTrueName();
 	    String nickName  = StringUtils.isEmpty(form.getNickName())?trueName:form.getNickName();
@@ -246,8 +249,9 @@ public class RegisterServiceImpl implements RegisterService {
 				+ format.format(date) + "_" + userName + "_" + 1;
 		ben.setBatchname(batchName);
 		ben.setNumbercard(1);
+		ben.setCreatetime(date);
 		ben.setFlag(false);
-		batchMapper.insert(ben);//增加批次
+		batchMapper.insertSelective(ben);//增加批次
 
 
 		SCard card = new SCard();
@@ -297,7 +301,7 @@ public class RegisterServiceImpl implements RegisterService {
 		s.setReendtime(c.getTime());//设置最后的有效期
 		
 		//增加注册信息
-		rMapper.insertSelective(s);
+		rMapper.addRegister(s);
 		
 		
 		JUser user = new JUser();
@@ -331,10 +335,27 @@ public class RegisterServiceImpl implements RegisterService {
 		term.setName(termName);
 		term = termMapper.selectOne(term);
 		
+		if(term!=null){
+			JUserTerm userTerm = new JUserTerm();   
+			userTerm.setUserid(user.getId());
+			userTerm.setTermid(term.getId());
+			userTermMapper.insertSelective(userTerm);
+		}
 		
 		
+		JSubject subject   = new  JSubject();
+		subject.setName(subjectName);
+		subject = subjectMapper.selectOne(subject);
 		
-		return s.getId();
+		if(subject!=null){
+			JTeacherSubject ts = new JTeacherSubject();   
+			ts.setUserid(user.getId());
+			ts.setSubjectid(subject.getId());
+			teachSubjectMapper.insertSelective(ts);
+		}
+		
+		
+		return s;
 	}
 
 	

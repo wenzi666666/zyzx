@@ -25,6 +25,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
+import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -144,8 +145,21 @@ public class ThirdPartyContoller {
 	        
 	    	SRegister register =  registerService.getRegister(_userName);
 	    	if(register ==null || register.getId()<1){//用户不存在
-	    		register = new SRegister();
 	    		
+	    		RegisterAddForm form = new RegisterAddForm();
+	    		form.setProvinceName(provinceName);
+	        	form.setCityName(cityName);
+	        	form.setArealName(arealName);
+	        	form.setSchoolName(schoolName);
+	        	form.setMotto(_motto);
+	        	form.setNickName(_nickName);
+	        	form.setRole("00".equals(_userType)?1:2);
+	        	form.setSex("0".equals(_sex)?false:true);
+	        	form.setSubjectName("语文");
+	        	form.setTermName("初中");
+	        	form.setTrueName(_userName);
+	        	form.setUserName(_trueName);
+	        	register =  registerService.addRegister(form);
 	    	}
 			
 			

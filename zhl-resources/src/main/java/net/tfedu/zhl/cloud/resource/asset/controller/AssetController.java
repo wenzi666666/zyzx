@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
+import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentViewUtil;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
@@ -126,21 +127,18 @@ public class AssetController {
 					.parseLong(ext.substring(index + 1, ext.length()));
 			// 获得文件服务器返回的file参数
 			String resPath = request.getParameter("file");
+			
+			String convert = request.getParameter("convert");
 			// 获取文件服务器的访问url
 			String resServiceLocal = commonWebConfig.getResServiceLocal();
 			
 			
-			
-
-			
 			assetService.setTypeConvertSucceed(resServiceLocal,userId, resPath);
 			
+			assetService.updateAssetPath(resPath.replaceAll("\\\\", "\\\\\\\\"), convert.replaceAll("\\\\", "\\\\\\\\"));
 			
-			
-			
-
 			logger.debug("文件服务格式转换后的回调,userId=" + userId + ",resPath="
-					+ resPath);
+					+ resPath+",convertPath="+convert);
 
 			return "SUCCESS";
 

@@ -37,7 +37,7 @@ public interface RegisterService {
      * 增加用户注册
      * @return
      */
-    public long addRegister(RegisterAddForm form)throws Exception;;
+    public SRegister addRegister(RegisterAddForm form)throws Exception;;
     
     
     

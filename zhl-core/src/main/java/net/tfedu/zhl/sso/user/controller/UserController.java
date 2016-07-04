@@ -31,6 +31,7 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
@@ -124,25 +125,9 @@ public class UserController {
 			SRegister reg = registerService.login(userName, userPwd);
 			// 获取用户信息
 			user = userService.getUserSimpleById(reg.getId(), model,isRepeatLogin);
-
-			// 如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
-			if (user.getUserImage() != null
-					&& user.getUserImage()
-							.trim()
-							.contains(
-									ZhlResourceCenterWrap.userimage_upload_prefix)) {
-
-				// 获取文件服务器的访问url
-				String resServiceLocal = commonWebConfig.getResServiceLocal();
-				String currentResPath = commonWebConfig
-						.getCurrentResPath(request);
-
-				String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal,
-						user.getUserImage());
-				temp = temp.replace(resServiceLocal, currentResPath);
-				user.setUserImage(temp);
-
-			}
+			//检测用户的头像
+			UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
+			
 			data = user;
 
 		}
@@ -254,25 +239,9 @@ public class UserController {
 			long userId = currentUserId;
 			String userImage = request.getParameter("userImage");
 			userService.updateUserImage(userId, userImage);
-			// 如果头像不是系统头像，而是在文件服务中保存的头像的话，需要修改userimage 为 （文件服务中保存的）头像的可访问路径
-			if (userImage != null
-								&& userImage
-										.trim()
-										.contains(
-												ZhlResourceCenterWrap.userimage_upload_prefix)) {
 
-							// 获取文件服务器的访问url
-							String resServiceLocal = commonWebConfig.getResServiceLocal();
-							String currentResPath = commonWebConfig
-									.getCurrentResPath(request);
-
-							String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal,
-									userImage);
-							temp = temp.replace(resServiceLocal, currentResPath);
-							data = temp;
-			}else{
-				data = userImage;
-			}
+			//返回检查后的头像信息
+			data = UserImageCheckUtil.checkUserImage(userImage, commonWebConfig, request);
 			
 		}
 
