@@ -12,6 +12,14 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
@@ -28,14 +36,6 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.service.UserService;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/resRestAPI")
@@ -135,7 +135,12 @@ public class AssetController {
 			
 			assetService.setTypeConvertSucceed(resServiceLocal,userId, resPath);
 			
-			assetService.updateAssetPath(resPath.replaceAll("\\\\", "\\\\\\\\"), convert.replaceAll("\\\\", "\\\\\\\\"));
+			if(resPath.indexOf(AssetTypeConvertConstant.mp3)>0
+					||
+					resPath.indexOf(AssetTypeConvertConstant.mp4)>0){
+				assetService.updateAssetPath(resPath.replaceAll("\\\\", "\\\\\\\\"), convert.replaceAll("\\\\", "\\\\\\\\"));	
+			}
+			
 			
 			logger.debug("文件服务格式转换后的回调,userId=" + userId + ",resPath="
 					+ resPath+",convertPath="+convert);
