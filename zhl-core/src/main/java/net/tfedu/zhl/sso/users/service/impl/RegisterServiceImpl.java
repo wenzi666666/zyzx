@@ -6,8 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
@@ -54,45 +53,45 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 @Service("registerService")
 public class RegisterServiceImpl implements RegisterService {
 
-	@Resource
+	@Autowired
 	SRegisterMapper rMapper;
 	
 	
-	@Resource
+	@Autowired
 	SCardMapper cardMapper;
 	
-	@Resource
+	@Autowired
 	SBatchMapper batchMapper;
 	
-	@Resource
+	@Autowired
 	JUserMapper userMapper;
 
-	@Resource
+	@Autowired
 	JUserTermMapper userTermMapper;
 	
-	@Resource
+	@Autowired
 	JTeacherSubjectMapper teachSubjectMapper;
 	
-	@Resource
+	@Autowired
 	JUserInfoMapper userInfoMapper;
 	
 	
-	@Resource
+	@Autowired
 	ProvinceMapper  proMapper;
 	
-	@Resource
+	@Autowired
 	CityMapper cityMapper;
 	
-	@Resource
+	@Autowired
 	DistrictMapper disMapper;
 	
-	@Resource
+	@Autowired
 	JSchoolMapper schMapper;
 	
-	@Resource
+	@Autowired
 	JTermMapper termMapper;
 	
-	@Resource
+	@Autowired
 	JSubjectMapper subjectMapper;
 	
 	
