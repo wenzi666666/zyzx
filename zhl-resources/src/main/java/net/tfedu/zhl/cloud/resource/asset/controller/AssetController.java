@@ -135,9 +135,9 @@ public class AssetController {
 			
 			assetService.setTypeConvertSucceed(resServiceLocal,userId, resPath);
 			
-			if(resPath.indexOf(AssetTypeConvertConstant.mp3)>0
+			if(resPath.toLowerCase().indexOf(AssetTypeConvertConstant.mp3)>0
 					||
-					resPath.indexOf(AssetTypeConvertConstant.mp4)>0){
+					resPath.toLowerCase().indexOf(AssetTypeConvertConstant.mp4)>0){
 				assetService.updateAssetPath(resPath.replaceAll("\\\\", "\\\\\\\\"), convert.replaceAll("\\\\", "\\\\\\\\"));	
 			}
 			
