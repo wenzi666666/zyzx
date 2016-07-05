@@ -68,7 +68,7 @@ public class TeachCases implements Serializable{
      * 授课时间
      */
     @Column(name = "teachDate")
-    private Date teachdate;
+    private String teachdate;
 
     /**
      * 教材版本
@@ -102,7 +102,7 @@ public class TeachCases implements Serializable{
      */
     private Boolean flag;
 
-    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, Date teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag,String gradeName,int fromflag) {
+    public TeachCases(Long id, String title, String school, String teacher, Integer termid, Integer gradeid, Integer subjectid, String teachdate, String bookversion, String thumbnailpath, Long creator, Date createdate, Date updatedate, Boolean flag,String gradeName,int fromflag) {
         this.id = id;
         this.title = title;
         this.school = school;
@@ -284,7 +284,7 @@ public class TeachCases implements Serializable{
      *
      * @return teachDate - 授课时间
      */
-    public Date getTeachdate() {
+    public String getTeachdate() {
         return teachdate;
     }
 
@@ -293,7 +293,7 @@ public class TeachCases implements Serializable{
      *
      * @param teachdate 授课时间
      */
-    public void setTeachdate(Date teachdate) {
+    public void setTeachdate(String teachdate) {
         this.teachdate = teachdate;
     }
 
