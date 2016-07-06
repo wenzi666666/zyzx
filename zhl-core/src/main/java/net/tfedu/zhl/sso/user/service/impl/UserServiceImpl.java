@@ -2,6 +2,8 @@ package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -81,8 +83,9 @@ public class UserServiceImpl implements UserService {
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        Set<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-        us.setFuncPaths(funcs);
+        List<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+
+        us.setFuncsSet(funcs);
         
         //记录状态
         String token = IdUtil.getUUID();
@@ -91,7 +94,6 @@ public class UserServiceImpl implements UserService {
 
         //放入缓存
         UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, us, isRepeatLogin);
-        
         return us;
     }
     
@@ -112,9 +114,8 @@ public class UserServiceImpl implements UserService {
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        Set<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-        us.setFuncPaths(funcs);
-        
+        List<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        us.setFuncsSet(funcs);
         return us;
     }
     @Override

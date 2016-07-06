@@ -2,7 +2,7 @@ package net.tfedu.zhl.core.interceptor;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -60,7 +60,8 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
         }
 
         // 4判断是否有权限
-        Set<String> funcs = us.getFuncPaths();
+        
+        List<String> funcs = us.getFuncsSet();
         String url = request.getRequestURI();
 
         // 直接匹配

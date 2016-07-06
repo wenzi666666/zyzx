@@ -2,11 +2,10 @@ package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * 用户信息简易版
@@ -59,7 +58,7 @@ public class UserSimple implements Serializable {
     /**
      * 用户权限
      */
-    private Set<String> funcPaths;
+    private List<String> funcsSet;
 
     public String getSubjectIds() {
         return subjectIds;
@@ -187,22 +186,23 @@ public class UserSimple implements Serializable {
         this.roleIds = roleIds;
     }
 
-    @JsonIgnore
-    public Set<String> getFuncPaths() {
-        return funcPaths;
-    }
+  
 
-    public void setFuncPaths(Set<String> funcPaths) {
-        this.funcPaths = funcPaths;
-    }
+    public List<String> getFuncsSet() {
+		return funcsSet;
+	}
 
-    @Override
+	public void setFuncsSet(List<String> funcsSet) {
+		this.funcsSet = funcsSet;
+	}
+
+	@Override
     public String toString() {
         return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
                 + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
-                + ", funcPaths=" + funcPaths + "]";
+                + ", funcsSet=" + funcsSet + "]";
     }
 
     

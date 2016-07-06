@@ -1,5 +1,7 @@
 package net.tfedu.zhl.sso.users.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,8 +15,13 @@ import javax.persistence.Table;
  *
  */
 @Table(name = "j_funclist")
-public class FuncList {
+public class FuncList  implements Serializable{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5462974241043873655L;
+
+	/**
      * 自增id
      */
     @Id

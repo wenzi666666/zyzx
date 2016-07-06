@@ -45,6 +45,7 @@ import net.tfedu.zhl.fileservice.ZipTaskContent;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.helper.encryption.EPrepareParamEncrypt;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
@@ -906,16 +907,13 @@ public class PrepareController {
 		if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)|| StringUtils.isEmpty(userName)) {
 			throw new ParamsException();
 		} else {
-			//检查用户是否登录
+			//加密
+			userName = EPrepareParamEncrypt.decode(userName);
 			JUser user =  userService.getUserByName(userName);
 			String token = UserTokenCacheUtil.getUserTokenCacheKey(model, user.getId().toString());
-        	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
-        	if(user == null || user.getId()==0){
-        		//返回错误信息
-        		response.getWriter().println("用户\""+userName+"\"尚未登录，请登录！");
-        		
-        		return  null ;
-        	}
+        	////检查用户登录状态，否则抛出异常
+			UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+			
 			String ids[] = resIds.split(",");
 			String fromFlag[] = fromFlags.split(",");
 			if (ids.length == 0 || fromFlag.length != ids.length) {

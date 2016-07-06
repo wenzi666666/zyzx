@@ -21,13 +21,21 @@
 			<arg column="tag" jdbcType="BIT" javaType="java.lang.Boolean" />
 		</constructor>
 	</resultMap>
+	
+	
+	<resultMap type="net.tfedu.zhl.sso.users.entity.FuncListSimple" id="simpleResultMap">
+		<result column="name" property="name"/>
+		<result column="path" property="path"/>
+	
+	</resultMap>
 
-	<select id="getRoleFuncByRoleIds" resultType="String">
-		SELECT f.Path
+	<select id="getRoleFuncByRoleIds" resultType="string">
+		SELECT f.path
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id
 		where f.model=#{model} and rc.RoleId in
 		<foreach collection="roleIds" item="item" index="index" open="("
 			separator="," close=")">#{item}</foreach>
+		order by f.id
 	</select>
 </mapper>
