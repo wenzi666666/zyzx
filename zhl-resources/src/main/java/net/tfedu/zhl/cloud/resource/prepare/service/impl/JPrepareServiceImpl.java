@@ -404,26 +404,29 @@ public class JPrepareServiceImpl implements JPrepareService {
 			}			
 			
 			
-			String  opertypecode = "view";
-			
-			JUserlog log = new JUserlog();
-			log.setUserid(userId);
-			log.setDownflag(false);
-			log.setCreatetime(time);
-			log.setAlltestnum(0);
-			log.setCorrtestnum(0);
-			log.setDuration("");
-			log.setFlag(false);
-			log.setIsflag(0);
-			log.setLogtypecode(JPrepareConstant.getLogTypeByFromflag(resourceSimpleInfo.getFromflag()));
-			log.setObjid(resourceSimpleInfo.getResid());
-			log.setObjname(resourceSimpleInfo.getTitle());
-			log.setOpertypecode(opertypecode);
-			log.setSubjectid(0l);
-			logList.add(log);
+			if(userId>0){
+				String  opertypecode = "view";
+				
+				JUserlog log = new JUserlog();
+				log.setUserid(userId);
+				log.setDownflag(false);
+				log.setCreatetime(time);
+				log.setAlltestnum(0);
+				log.setCorrtestnum(0);
+				log.setDuration("");
+				log.setFlag(false);
+				log.setIsflag(0);
+				log.setLogtypecode(JPrepareConstant.getLogTypeByFromflag(resourceSimpleInfo.getFromflag()));
+				log.setObjid(resourceSimpleInfo.getResid());
+				log.setObjname(resourceSimpleInfo.getTitle());
+				log.setOpertypecode(opertypecode);
+				log.setSubjectid(0l);
+				logList.add(log);				
+			}
+
 		}
 		
-		if(logList.size()>0){
+		if(userId>0&&logList.size()>0){
 			//批量插入浏览日志
 			logMapper.insertList(logList);
 		}

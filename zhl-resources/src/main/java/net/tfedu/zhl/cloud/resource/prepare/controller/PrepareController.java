@@ -12,6 +12,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSONObject;
+
 import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.downloadrescord.entity.ResZipDownRecord;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResZipDownloadService;
@@ -32,16 +44,10 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.alibaba.fastjson.JSONObject;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.UserService;
 
 /**
  * 备课夹相关接口
@@ -69,6 +75,12 @@ public class PrepareController {
 	@Resource
 	ResourceWebConfig resourceConfig;
 	
+	@Resource
+	UserService  userService;
+	
+	
+	@Autowired
+	CacheManager cacheManager;
 	
 
 	Logger logger = LoggerFactory.getLogger(PrepareController.class);
@@ -877,20 +889,33 @@ public class PrepareController {
 			HttpServletResponse response) throws Exception {
 		String resIds = request.getParameter("resId");
 		String fromFlags = request.getParameter("fromFlag");
+		String userName = request.getParameter("userName");
+		// 不同的子系统，使用不同的model参数
+		String model = ControllerHelper.getModel(request);
+
 
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
+		String clientType = request.getParameter("clientType");// browser,ePrepareClient
 
-		// 当前登录用户id
-		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
 
 		// 参数传递有问题
-		if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)) {
+		if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)|| StringUtils.isEmpty(userName)) {
 			throw new ParamsException();
 		} else {
+			//检查用户是否登录
+			JUser user =  userService.getUserByName(userName);
+			String token = UserTokenCacheUtil.getUserTokenCacheKey(model, user.getId().toString());
+        	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+        	if(user == null || user.getId()==0){
+        		//返回错误信息
+        		response.getWriter().println("用户\""+userName+"\"尚未登录，请登录！");
+        		
+        		return  null ;
+        	}
 			String ids[] = resIds.split(",");
 			String fromFlag[] = fromFlags.split(",");
 			if (ids.length == 0 || fromFlag.length != ids.length) {
@@ -900,11 +925,11 @@ public class PrepareController {
 						+ fromFlags + "'");
 				List<ResourceSimpleInfo> list = jPrepareService
 						.getResourceSimpleInfoForView(ids, fromFlag,
-								currentUserId);
+								0l);
 				// 将原始的path重置为可用的web链接
 
 				JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
-						currentResPath,false);
+						currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
 				String url = list.get(0).getPath();
 				logger.info("-getResViewPage--url:"+url);
 				response.sendRedirect(url);
