@@ -861,6 +861,60 @@ public class PrepareController {
 		return ResultJSON.getSuccess(data);
 
 	}
+	
+	
+	
+	/**
+	 * 
+	 * 前往资源的播放页面（只有播放器）
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	@RequestMapping(value = "/v1.0/resViewPage", method = RequestMethod.GET)
+	public Object getResViewPage(HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String resIds = request.getParameter("resId");
+		String fromFlags = request.getParameter("fromFlag");
+
+		// 获取文件服务器的访问url
+		String resServiceLocal = commonWebConfig.getResServiceLocal();
+		String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		// 返回
+		Object data = null;
+
+		// 参数传递有问题
+		if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)) {
+			throw new ParamsException();
+		} else {
+			String ids[] = resIds.split(",");
+			String fromFlag[] = fromFlags.split(",");
+			if (ids.length == 0 || fromFlag.length != ids.length) {
+				throw new ParamsException();
+			} else {
+				logger.debug("获取资源 的播放地址,resIds='" + resIds + "',fromFlags='"
+						+ fromFlags + "'");
+				List<ResourceSimpleInfo> list = jPrepareService
+						.getResourceSimpleInfoForView(ids, fromFlag,
+								currentUserId);
+				// 将原始的path重置为可用的web链接
+
+				JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
+						currentResPath,false);
+				String url = list.get(0).getPath();
+				logger.info("-getResViewPage--url:"+url);
+				response.sendRedirect(url);
+			}
+		}
+
+		return null;
+
+	}
+	
 
 	/**
 	 * 

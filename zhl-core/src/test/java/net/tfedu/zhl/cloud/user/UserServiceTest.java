@@ -32,7 +32,7 @@ public class UserServiceTest extends BaseControllerTestCase {
     
     @Test
     public void testGetUserSimpleById() {
-        UserSimple user = userService.getUserSimpleById(50474810105l," ");
+        UserSimple user = userService.getUserSimpleById(390410126l,"resource_center");
         log.info(user.toString());
         Assert.notNull(user);
 
