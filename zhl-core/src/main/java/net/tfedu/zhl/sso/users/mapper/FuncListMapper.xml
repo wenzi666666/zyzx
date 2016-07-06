@@ -26,11 +26,12 @@
 	<resultMap type="net.tfedu.zhl.sso.users.entity.FuncListSimple" id="simpleResultMap">
 		<result column="name" property="name"/>
 		<result column="path" property="path"/>
+		<result column="code" property="code"/>
 	
 	</resultMap>
 
-	<select id="getRoleFuncByRoleIds" resultType="string">
-		SELECT f.path
+	<select id="getRoleFuncByRoleIds" resultType="simpleResultMap">
+		SELECT f.path,f.name
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id
 		where f.model=#{model} and rc.RoleId in

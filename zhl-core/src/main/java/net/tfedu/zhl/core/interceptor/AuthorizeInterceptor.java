@@ -2,7 +2,10 @@ package net.tfedu.zhl.core.interceptor;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +21,7 @@ import net.tfedu.zhl.core.exception.NoLoginException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  * 授权拦截器
@@ -61,7 +65,13 @@ public class AuthorizeInterceptor extends HandlerInterceptorAdapter {
 
         // 4判断是否有权限
         
-        List<String> funcs = us.getFuncsSet();
+        List<FuncListSimple> funcList = us.getFuncList();
+        Set<String> funcs =new HashSet<String>();
+        for (Iterator<FuncListSimple> iterator = funcList.iterator(); iterator.hasNext();) {
+        	FuncListSimple func = (FuncListSimple) iterator.next();
+			funcs.add(func.getPath());
+		}
+        
         String url = request.getRequestURI();
 
         // 直接匹配

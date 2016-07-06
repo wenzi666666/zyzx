@@ -2,8 +2,6 @@ package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -27,6 +25,7 @@ import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  * 用户业务接口
@@ -83,9 +82,9 @@ public class UserServiceImpl implements UserService {
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        List<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        List<FuncListSimple> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
 
-        us.setFuncsSet(funcs);
+        us.setFuncList(funcs);
         
         //记录状态
         String token = IdUtil.getUUID();
@@ -114,8 +113,8 @@ public class UserServiceImpl implements UserService {
         roleIds.add(us.getRoleId());
 
         // 3 获取权限
-        List<String> funcs = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
-        us.setFuncsSet(funcs);
+        List<FuncListSimple> funcList = funcListMapper.getRoleFuncByRoleIds(roleIds, model);
+        us.setFuncList(funcList);
         return us;
     }
     @Override

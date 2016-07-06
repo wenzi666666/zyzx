@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.users.entity.FuncList;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  * 权限资源类
@@ -20,5 +21,5 @@ public interface FuncListMapper extends CoreMapper<FuncList> {
      * @param model
      * @return
      */
-    List<String> getRoleFuncByRoleIds(@Param("roleIds") Set<Long> roleIds, @Param("model")String model);
+    List<FuncListSimple> getRoleFuncByRoleIds(@Param("roleIds") Set<Long> roleIds, @Param("model")String model);
 }

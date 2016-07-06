@@ -25,6 +25,13 @@ public class FuncListSimple implements Serializable{
      * 路径
      */
     private String path;
+    
+    
+    
+    /**
+     * 功能编码（暂缺）
+     */
+    private String code ;
 
 
 	public String getName() {
@@ -45,8 +52,29 @@ public class FuncListSimple implements Serializable{
 	public void setPath(String path) {
 		this.path = path;
 	}
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+	@Override
+	public String toString() {
+		return "FuncListSimple[name:"+name+",code;"+code+",path:"+path+"]";
+	}
 	
 	
-    
-    
+	
+	
 }

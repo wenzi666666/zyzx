@@ -7,6 +7,8 @@ import java.util.Set;
 
 import javax.persistence.Transient;
 
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
+
 /**
  * 用户信息简易版
  * 
@@ -58,7 +60,7 @@ public class UserSimple implements Serializable {
     /**
      * 用户权限
      */
-    private List<String> funcsSet;
+    private List<FuncListSimple> funcList;
 
     public String getSubjectIds() {
         return subjectIds;
@@ -188,12 +190,14 @@ public class UserSimple implements Serializable {
 
   
 
-    public List<String> getFuncsSet() {
-		return funcsSet;
+  
+
+	public List<FuncListSimple> getFuncList() {
+		return funcList;
 	}
 
-	public void setFuncsSet(List<String> funcsSet) {
-		this.funcsSet = funcsSet;
+	public void setFuncList(List<FuncListSimple> funcList) {
+		this.funcList = funcList;
 	}
 
 	@Override
@@ -202,7 +206,7 @@ public class UserSimple implements Serializable {
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
                 + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
-                + ", funcsSet=" + funcsSet + "]";
+                + ", funcList=" + funcList.toString() + "]";
     }
 
     
