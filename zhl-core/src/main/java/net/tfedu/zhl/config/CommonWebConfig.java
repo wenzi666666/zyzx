@@ -112,6 +112,12 @@ public class CommonWebConfig {
 	
 	
 	
+	/**
+	 *  资源中心前端的地址
+	 */
+	@Value("#{configProperties['frontWebURL']}")
+	public String frontWebURL;
+	
 	
 	
 	/**
@@ -445,5 +451,12 @@ public class CommonWebConfig {
         return currentForum3;
 	}
 	
-	
+	public String getFrontWebURL() {
+		return frontWebURL;
+	}
+
+
+	public void setFrontWebURL(String frontWebURL) {
+		this.frontWebURL = frontWebURL;
+	}
 }
