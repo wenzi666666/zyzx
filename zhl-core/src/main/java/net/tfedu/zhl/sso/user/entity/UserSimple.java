@@ -34,6 +34,17 @@ public class UserSimple implements Serializable {
     String token;
     Date logintime;
     
+    /**
+     * 第三方平台编码 
+     */
+    String thirdParyCode;
+    
+    /**
+     * 调用退出接口之后前往的（第三方）页面
+     */
+    String logoutTarget;
+    
+    
     
     
     /**
@@ -200,13 +211,34 @@ public class UserSimple implements Serializable {
 		this.funcList = funcList;
 	}
 
+	
+	
+	public String getThirdParyCode() {
+		return thirdParyCode;
+	}
+
+	public void setThirdParyCode(String thirdParyCode) {
+		this.thirdParyCode = thirdParyCode;
+	}
+
+	
+	
+
+	public String getLogoutTarget() {
+		return logoutTarget;
+	}
+
+	public void setLogoutTarget(String logoutTarget) {
+		this.logoutTarget = logoutTarget;
+	}
+
 	@Override
     public String toString() {
         return "UserSimple [userName=" + userName + ", userId=" + userId + ", trueName=" + trueName + ", roleName="
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
                 + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
-                + ", funcList=" + funcList.toString() + "]";
+                + ", funcList=" + funcList.toString() + ",thirdParyCode="+thirdParyCode+",logoutTarget="+logoutTarget+"]";
     }
 
     

@@ -68,7 +68,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserSimple getUserSimpleById(long id, String model,boolean isRepeatLogin) {
 
-        // 1 获取UserSimple
+        
+        return getUserSimpleById(id, model, isRepeatLogin, true);
+    }
+    
+    
+    @Override
+	public UserSimple getUserSimpleById(long id, String model, boolean isRepeatLogin, boolean isCache) {
+    	 // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
         
         //设置从什么产品登录
@@ -91,10 +98,13 @@ public class UserServiceImpl implements UserService {
         us.setLogintime(new Date());
         us.setToken(token);
 
-        //放入缓存
-        UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, us, isRepeatLogin);
+        if(isCache){
+            //放入缓存
+            UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, us, isRepeatLogin);
+        }
         return us;
-    }
+	}
+    
     
     @Override
     public UserSimple getUserSimpleById(long id, String model) {
@@ -174,4 +184,6 @@ public class UserServiceImpl implements UserService {
 		
         return ResultJSON.getSuccess(data);
 	}
+
+	
 }

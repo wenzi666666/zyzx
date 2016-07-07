@@ -37,9 +37,13 @@ public interface RegisterService {
      * 增加用户注册
      * @return
      */
-    public SRegister addRegister(RegisterAddForm form)throws Exception;;
+    public SRegister addRegister(RegisterAddForm form)throws Exception;
     
     
-    
+    /**
+     * 增加用户注册(第三方)
+     * @return
+     */
+    public SRegister addRegister(RegisterAddForm form,String userName, String platformcode)throws Exception;
 
 }

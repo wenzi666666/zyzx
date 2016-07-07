@@ -31,6 +31,8 @@ import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.term.entity.JUserTerm;
+import net.tfedu.zhl.sso.th_register.dao.SThirdRegisterRelativeMapper;
+import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.userinfo.dao.JUserInfoMapper;
@@ -93,6 +95,10 @@ public class RegisterServiceImpl implements RegisterService {
 	
 	@Autowired
 	JSubjectMapper subjectMapper;
+	
+	
+	@Autowired
+	SThirdRegisterRelativeMapper relativeMapper;
 	
 	
 	/**
@@ -353,6 +359,21 @@ public class RegisterServiceImpl implements RegisterService {
 			teachSubjectMapper.insertSelective(ts);
 		}
 		
+		
+		return s;
+	}
+
+	@Override
+	public SRegister addRegister(RegisterAddForm form, String userName, String platformcode) throws Exception {
+
+		//注册
+		SRegister s = addRegister(form);
+		//增加映射关系
+		SThirdRegisterRelative record = new SThirdRegisterRelative();
+		record.setThCode(platformcode);
+		record.setThUsername(userName);
+		record.setZhlUsername(s.getName());
+		relativeMapper.insertSelective(record);
 		
 		return s;
 	}

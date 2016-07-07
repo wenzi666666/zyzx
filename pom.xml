@@ -61,7 +61,7 @@
        <!-- forum3.0  -->
        <forum3Host>http://chat.tfedu.net:7070/auth/process</forum3Host>  
        <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
-
+	   <frontWebURL>http://z.tfedu.net/</frontWebURL>
 		
 		
 	</properties>
@@ -87,6 +87,7 @@
 		         <!-- 题库对接的配置  -->
 		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
 		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
+		       <frontWebURL>http://chat.tfedu.net:12306/</frontWebURL>
 			</properties>		
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -112,6 +113,7 @@
                 <hostLocal>http://192.168.111.42:8080/</hostLocal>    
                 <resService>http://192.168.111.42:8099/down/</resService>        
 				<resServiceLocal>http://192.168.111.42:8099/down/</resServiceLocal>        
+  		       <frontWebURL>http://chat.tfedu.net:12306/</frontWebURL>
                     
 			</properties>		
 			<activation>

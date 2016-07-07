@@ -37,6 +37,14 @@ public interface UserService {
      * @return
      */
     public UserSimple getUserSimpleById(long id, String model,boolean isRepeatLogin);
+    
+    /**
+     * 根据id获取用户
+     * 
+     * @param id
+     * @return
+     */
+    public UserSimple getUserSimpleById(long id, String model,boolean isRepeatLogin,boolean isCache);
     /**
      * 根据id获取用户
      * 
