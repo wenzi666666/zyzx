@@ -39,6 +39,8 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.KickOutTokenException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
@@ -47,7 +49,6 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.encryption.EPrepareParamEncrypt;
 import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
 
 /**
@@ -910,28 +911,38 @@ public class PrepareController {
 			//加密
 			userName = EPrepareParamEncrypt.decode(userName);
 			JUser user =  userService.getUserByName(userName);
-			String token = UserTokenCacheUtil.getUserTokenCacheKey(model, user.getId().toString());
-        	////检查用户登录状态，否则抛出异常
-			UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
 			
-			String ids[] = resIds.split(",");
-			String fromFlag[] = fromFlags.split(",");
-			if (ids.length == 0 || fromFlag.length != ids.length) {
-				throw new ParamsException();
-			} else {
-				logger.debug("获取资源 的播放地址,resIds='" + resIds + "',fromFlags='"
-						+ fromFlags + "'");
-				List<ResourceSimpleInfo> list = jPrepareService
-						.getResourceSimpleInfoForView(ids, fromFlag,
-								0l);
-				// 将原始的path重置为可用的web链接
+			try {
+				
+				String token = UserTokenCacheUtil.getUserTokenCacheKey(model, user.getId().toString());
+	        	////检查用户登录状态，否则抛出异常
+				UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+				
+				String ids[] = resIds.split(",");
+				String fromFlag[] = fromFlags.split(",");
+				if (ids.length == 0 || fromFlag.length != ids.length) {
+					throw new ParamsException();
+				} else {
+					logger.debug("获取资源 的播放地址,resIds='" + resIds + "',fromFlags='"
+							+ fromFlags + "'");
+					List<ResourceSimpleInfo> list = jPrepareService
+							.getResourceSimpleInfoForView(ids, fromFlag,
+									0l);
+					// 将原始的path重置为可用的web链接
 
-				JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
-						currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
-				String url = list.get(0).getPath();
-				logger.info("-getResViewPage--url:"+url);
-				response.sendRedirect(url);
-			}
+					JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
+							currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
+					String url = list.get(0).getPath();
+					logger.info("-getResViewPage--url:"+url);
+					response.sendRedirect(url);
+				}
+			} catch(ParamsException e) {
+				response.getWriter().print(e.getMessage());
+			} catch(KickOutTokenException e) {
+				response.getWriter().print(e.getMessage());
+			} catch(InvalidAccessTokenException e) {
+				response.getWriter().print(e.getMessage());
+			} 
 		}
 
 		return null;
