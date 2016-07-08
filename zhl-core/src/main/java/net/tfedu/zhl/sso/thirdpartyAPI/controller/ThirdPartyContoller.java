@@ -167,11 +167,11 @@ public class ThirdPartyContoller {
 			user.setLogoutTarget(JNZXRelativeUtil.url_logout);
 			user.setThirdParyCode(platformcode);
 			//显示将用户信息写入缓存
-			UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, user, commonWebConfig.getIsRepeatLogin());
+			String _token = user.getToken();
+			UserTokenCacheUtil.addUserInfoCache(model,cacheManager, _token, user, commonWebConfig.getIsRepeatLogin());
 			
 			if(targetPage.contains("respool_")){
 				String frontWebURL = commonWebConfig.getFrontWebURL();
-				String _token = user.getToken();
 				//组装跳转链接
 				String url = new StringBuffer().append(frontWebURL)
 						.append("/systemres").append("?tocken=").append(_token)
@@ -179,8 +179,9 @@ public class ThirdPartyContoller {
 						.append("&iscoursewares=").append(platformcode)
 						.append("&respool=").append(targetPage.replace("respool_", ""))
 						.toString();
+				log.info("jnzx---url:"+url);
 				response.sendRedirect(url);
-
+				
 			}else{
 				throw new CustomException("不能处理的访问请求，targetPage:"+targetPage);
 			}
