@@ -1,8 +1,14 @@
 	package net.tfedu.zhl.cloud.teaching.discuss.controller;
 
-	import java.util.Calendar;
+	import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +26,9 @@ import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
+import net.tfedu.zhl.cloud.teaching.discuss.util.DiscussURLUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.users.entity.SRegister;
@@ -85,7 +93,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 			if(list!=null && list.size()>0){
 				for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
 					TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-					String _url = "http://www.baidu.com";
+					String _url = DiscussURLUtil.convert(tDiscussRecommend.getClassurl(),tDiscussRecommend.getVisit_name(),tDiscussRecommend.getVisit_pwd());
 					tDiscussRecommend.setClassurl(_url);
 				}
 			}
@@ -121,7 +129,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 			if(list!=null && list.size()>0){
 				for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
 					TDiscussRecommend tDiscussRecommend = iterator.next();
-					String _url = "http://www.baidu.com";
+					String _url = DiscussURLUtil.convert(tDiscussRecommend.getClassurl(),tDiscussRecommend.getVisit_name(),tDiscussRecommend.getVisit_pwd());
 					tDiscussRecommend.setClassurl(_url);
 				}
 			}
@@ -179,7 +187,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		List<TDiscussRecommend> data = (List<TDiscussRecommend>)result.getData();
 		for (Iterator<TDiscussRecommend> iterator = data.iterator(); iterator.hasNext();) {
 			TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-			String _url = "http://www.baidu.com";
+			String _url = DiscussURLUtil.convert(tDiscussRecommend.getClassurl(),tDiscussRecommend.getVisit_name(),tDiscussRecommend.getVisit_pwd());
 			tDiscussRecommend.setClassurl(_url);
 		}
 		
@@ -293,7 +301,39 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 	
 	
 	
-	
+	public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException {
+		
+		
+		String username = "csls10";
+		String pwd = "000000";
+		
+		String p =  username+":"+pwd;
+		p = Base64.encode(p.getBytes());
+		
+		
+		String url = "http://192.168.111.158:8090/myForum/forumGrade_forumGradeState.action?classNo=5&partId=0";
+		
+		String yun_service = null ;
+		
+		String temp = url.replace("http://", "");
+		
+		yun_service = "http://"+temp.substring(0, temp.indexOf("/")+1);
+		
+		
+		
+		System.out.println(yun_service);
+		
+		url = URLEncoder.encode(url, "utf-8");
+		
+		
+		String target = "http://192.168.111.158:8090/net_jyForum.action?args="+p+"&targetPage="+url;
+		
+
+
+
+		
+		
+	}
 	
 	
 	
