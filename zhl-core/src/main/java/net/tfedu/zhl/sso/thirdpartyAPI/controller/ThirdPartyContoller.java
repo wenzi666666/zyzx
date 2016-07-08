@@ -18,24 +18,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alibaba.fastjson.JSONObject;
-
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.ControllerHelper;
-import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
-import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
 import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.util.JNZXRelativeUtil;
+import net.tfedu.zhl.sso.thirdpartyAPI.util.ThirdPartyUtil;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
-import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -115,6 +111,8 @@ public class ThirdPartyContoller {
 		//zhl系统中的用户id
 		long zhl_userid = 0 ;
 		
+		long roleId = JNZXRelativeUtil.roleId;
+		
 		/** 
 		 * 传递Token   token=Default--31d04cf9638240cd968425fdcae80e93
 		 */
@@ -172,15 +170,28 @@ public class ThirdPartyContoller {
 			//显示将用户信息写入缓存
 			UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, user, commonWebConfig.getIsRepeatLogin());
 			
-			
+			if(targetPage.contains("respool_")){
+				String frontWebURL = commonWebConfig.getFrontWebURL();
+				String _token = user.getToken();
+				//组装跳转链接
+				String url = new StringBuffer().append(frontWebURL)
+						.append("/systemres").append("?tocken=").append(_token)
+						.append("&userId=").append(user.getUserId())
+						.append("&iscoursewares=").append(platformcode)
+						.append("&respool=").append(targetPage.replace("respool_", ""))
+						.toString();
+				response.sendRedirect(url);
+
+			}else{
+				throw new CustomException("不能处理的访问请求，targetPage:"+targetPage);
+			}
 			
 		}else{
 			log.error("校验第三方登录用户失败,平台编码("+platformcode+"),目标页面("+targetPage+"),thirdPartyToken("+thirdPartyToken+")");
 			//校验失败
 			response.sendRedirect(JNZXRelativeUtil.url_logout);
-			return null;
 		}
-		return ResultJSON.getSuccess("") ;
+		return  null;
 	}
 	
 

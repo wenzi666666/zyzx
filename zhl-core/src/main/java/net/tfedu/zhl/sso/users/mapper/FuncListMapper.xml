@@ -30,7 +30,7 @@
 	
 	</resultMap>
 
-	<select id="getRoleFuncByRoleIds" resultType="simpleResultMap">
+	<select id="getRoleFuncByRoleIds" resultMap="simpleResultMap">
 		SELECT f.path,f.name
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id

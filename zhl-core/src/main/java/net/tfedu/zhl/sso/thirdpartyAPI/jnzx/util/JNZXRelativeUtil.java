@@ -18,7 +18,17 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  *
  */
 public class JNZXRelativeUtil {
+	
+	
+	/**
+	 * 中兴对接的教师用户角色（受限）
+	 */
+	public static final long roleId = 10002l;
+	
 
+	/**
+	 * 中兴的api接口
+	 */
 	public static final String url = "http://edu.myjining.cn/serviceProxy/servlet/?json=";
 
 	/**
@@ -65,9 +75,8 @@ public class JNZXRelativeUtil {
 
 	}
 
-	
 	/**
-	 * 增加注册并增加映射关系
+	 * 增加注册并增加映射关系(指定roleId)
 	 * @param info
 	 * @param registerService
 	 * @param userName
@@ -103,7 +112,7 @@ public class JNZXRelativeUtil {
 		form.setSchoolName(schoolName);
 		form.setMotto(_motto);
 		form.setNickName(_nickName);
-		form.setRole("00".equals(_userType) ? 1 : 2);
+		form.setRole("00".equals(_userType) ? roleId : 2);
 		form.setSex("0".equals(_sex) ? false : true);
 		form.setSubjectName("语文");
 		form.setTermName("初中");
@@ -112,5 +121,6 @@ public class JNZXRelativeUtil {
 
 		return registerService.addRegister(form, userName, platformcode);
 	}
-
+	
+	
 }
