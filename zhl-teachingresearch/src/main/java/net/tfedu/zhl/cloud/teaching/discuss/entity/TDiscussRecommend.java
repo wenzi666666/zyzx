@@ -61,7 +61,7 @@ public class TDiscussRecommend {
      */
     private String visit_pwd;
 
-    public TDiscussRecommend(Long id, String classname, String visit_name, String visit_pwd, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String classurl, String note) {
+    public TDiscussRecommend(Long id, String classname, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String classurl, String note, String visit_name, String visit_pwd) {
         this.id = id;
         this.classname = classname;
         this.visit_name = visit_name;

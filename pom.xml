@@ -90,7 +90,7 @@
 		       <frontWebURL>http://chat.tfedu.net:12306/</frontWebURL>
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 
 
@@ -267,7 +267,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 	<profile>

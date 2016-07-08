@@ -19,7 +19,7 @@
   <select id="getReadLog" parameterType="Long" resultType="net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend">
 	  	SELECT r.* FROM t_discuss_log l
 	
-		LEFT JOIN t_discuss_recommend r on r.classid = l.classid
+		LEFT JOIN t_discuss_recommend r on r.id = l.classid
 		
 		where l.userid =#{userId} ORDER BY l.createtime desc  limit 10 
   </select>

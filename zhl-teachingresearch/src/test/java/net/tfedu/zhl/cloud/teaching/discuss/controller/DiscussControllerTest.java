@@ -54,7 +54,8 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 		request.setParameter( "schoolName","测试学校");		//学校名称
 		request.setParameter( "classId","20105");	//班级id
 		request.setParameter( "note","note");//班级简介
-		
+		request.setParameter("visit_name", "csls10");
+		request.setParameter("visit_pwd", "111111");
 		
 		
 		result = controller.addRecomended(request, response);
@@ -75,6 +76,8 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 		request.setParameter( "classImage","2.png");	//班级图片路径
 		request.setParameter( "schoolName","测试学校");		//学校名称
 		request.setParameter( "classId","20105");	//班级id
+		request.setParameter("visit_name", "csls10");
+		request.setParameter("visit_pwd", "111111");
 		request.setParameter( "note","note");//班级简介		
 		result = controller.updateRecomended(request, 1l);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));

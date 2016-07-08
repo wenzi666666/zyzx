@@ -1,32 +1,30 @@
 	package net.tfedu.zhl.cloud.teaching.discuss.controller;
 
 	import java.util.Calendar;
-	import java.util.Iterator;
-	import java.util.List;
+import java.util.Iterator;
+import java.util.List;
 
-	import javax.annotation.Resource;
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-	import org.springframework.stereotype.Controller;
-	import org.springframework.web.bind.annotation.PathVariable;
-	import org.springframework.web.bind.annotation.RequestMapping;
-	import org.springframework.web.bind.annotation.RequestMethod;
-	import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 
-	import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
-	import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
-import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommendQueryBack;
+import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussLog;
+import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
-	import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
-	import net.tfedu.zhl.config.CommonWebConfig;
-	import net.tfedu.zhl.helper.ControllerHelper;
-	import net.tfedu.zhl.helper.ResultJSON;
-	import net.tfedu.zhl.sso.users.entity.SRegister;
-	import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
+import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.helper.ControllerHelper;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 
 
@@ -118,13 +116,12 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 			String  forum3 =  config.getCurrentForum3(request);		
 
 			
-			PageInfo<TDiscussRecommendQueryBack> _page = ((PageInfo<TDiscussRecommendQueryBack>)result.getData());
-			List<TDiscussRecommendQueryBack> list =  _page.getList();
+			PageInfo<TDiscussRecommend> _page = ((PageInfo<TDiscussRecommend>)result.getData());
+			List<TDiscussRecommend> list =  _page.getList();
 			if(list!=null && list.size()>0){
-				for (Iterator<TDiscussRecommendQueryBack> iterator = list.iterator(); iterator.hasNext();) {
-					TDiscussRecommendQueryBack tDiscussRecommend = iterator.next();
-					String _url = forum3+"/auth/process?username="+userName+"&target="+
-							forum3 +"/circle/"+tDiscussRecommend.getClassid();
+				for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
+					TDiscussRecommend tDiscussRecommend = iterator.next();
+					String _url = "http://www.baidu.com";
 					tDiscussRecommend.setClassurl(_url);
 				}
 			}
@@ -180,10 +177,9 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 		
 		
 		List<TDiscussRecommend> data = (List<TDiscussRecommend>)result.getData();
-		for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+		for (Iterator<TDiscussRecommend> iterator = data.iterator(); iterator.hasNext();) {
 			TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
 			String _url = "http://www.baidu.com";
-
 			tDiscussRecommend.setClassurl(_url);
 		}
 		
