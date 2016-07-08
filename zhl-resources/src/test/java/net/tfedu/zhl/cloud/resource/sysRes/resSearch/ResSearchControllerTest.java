@@ -58,4 +58,25 @@ public class ResSearchControllerTest extends BaseControllerTestCase{
         
         Assert.isTrue("OK".equals(json.getCode()));
 	}
+	
+	
+	/**
+	 * 资源检索结果列表
+	 * @throws Exception
+	 */
+	@Test
+	public void testQuerySysResource()throws Exception{
+		
+		request.setParameter("searchKeyword", "数学");
+		request.setParameter("page", "1");
+		request.setParameter("perPage", "20");
+		request.setParameter("respool", "1");
+		
+		ResultJSON json = resSearchController.querySysResource(request, response);
+		
+       JsonUtil.toJsonString(json);
+       
+       Assert.isTrue("OK".equals(json.getCode()));
+		
+	}
 }

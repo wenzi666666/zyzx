@@ -274,4 +274,57 @@ union
       order by case when a.id = #{resId} then 0 else 1 end asc 
   </select>
   
+  
+  
+  
+  
+  <!--  查询指定资源库下的系统资源-->
+  <select id="querySysResource" resultType="net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity" >
+    select distinct a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname) fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize,a.ClickTimes,a.DloadTimes,a.speaker, 
+
+	m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.resolution,1 diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
+	(SELECT ((IFNULL(sum(t.Ascore),0)+a.displayLevel)/(count(t.assetId)+1)) from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
+	from z_resource a 
+	left join x_resourcetype b on a.MType = b.id and b.flag = 0 
+	left join j_filetypedetail jf on (REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))))=jf.FormatCode 
+	left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code 
+	where a.flag = 0  
+	
+	and a.fromflag in <foreach item="item" index="index" collection="sys_from" 
+                         open="(" separator="," close=")">
+                         #{item}
+                     </foreach>
+    <if test="searchKeyword != null and searchKeyword != ''">
+         and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
+     </if>
+		     
+		and a.mtype  in (
+				select p.ID from z_res_pooltype t 
+				LEFT JOIN x_resourcetype p on p.id = t.resTypeId or  p.PId = t.resTypeId
+				where poolId =#{respool}  
+
+		)
+
+
+     
+     
+    order by id
+     
+  </select>
+  
+  <!-- 
+  	and a.mtype  in (
+				select p.ID from z_res_pooltype t 
+				LEFT JOIN x_resourcetype p on p.id = t.resTypeId 
+				where poolId =#{respool}  
+				UNION  
+				select p.ID from z_res_pooltype t 
+				LEFT JOIN x_resourcetype p on  p.PId = t.resTypeId
+				where poolId =#{respool}    
+		)
+  
+  
+  
+   -->
+  
 </mapper>

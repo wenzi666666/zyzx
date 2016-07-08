@@ -142,4 +142,32 @@ public class ResSearchServiceImpl implements ResSearchService {
         return resultList;
     }
 
+	@Override
+	public Pagination<ResSearchResultEntity> querySysResource(List<Integer> sys_from,int respool, String searchKeyword, int page, int perPage,
+			int expire) {
+        // 封装结果集
+        PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
+
+        // Page插件必须放在查询语句之前紧挨的第一个位置
+        PageHelper.startPage(page, perPage);
+				
+        List<ResSearchResultEntity> list = resSearchMapper.querySysResource(sys_from,searchKeyword, respool);
+		
+     // 判断资源是否为最新
+        for (int i = 0; i < list.size(); i++) {
+        	
+            // 最后更新日期
+            Date date = list.get(i).getUpdateDT();
+            // 得到当前日期的前多少天
+            Calendar calendar = Calendar.getInstance();
+            calendar.add(Calendar.DATE, -expire);
+            Date expireDate = calendar.getTime();
+            // 比较
+            if (date.getTime() >= expireDate.getTime())
+                list.get(i).setNew(true);
+        }
+		
+		return transfer.transfer(list);
+	}
+
 }

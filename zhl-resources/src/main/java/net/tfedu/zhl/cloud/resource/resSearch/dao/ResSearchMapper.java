@@ -64,4 +64,17 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
     public List<ResRecommendationEntity> getAllDisResources_preview(@Param("searchKeyword") String searchKeyword,
             @Param("fromFlag") int fromFlag,@Param("schoolId") long schoolId,@Param("districtId") long districtId,@Param("resId")long resId,
             @Param("fileFormat") String format);
+    
+    
+
+    /**
+     * 查询指定资源库下的系统资源
+     * @param searchKeyword
+     * @param respool
+     * @return
+     */
+	public List<ResSearchResultEntity> querySysResource(@Param("sys_from") List<Integer> sys_from,@Param("searchKeyword")String searchKeyword, @Param("respool")int respool);
+	
+	
+	
 }

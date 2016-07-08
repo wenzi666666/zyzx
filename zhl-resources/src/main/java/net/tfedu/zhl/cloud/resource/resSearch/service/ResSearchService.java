@@ -31,4 +31,22 @@ public interface ResSearchService {
      */
     public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from,long userId);
     
+    
+    
+    /**
+     * 分页查询指定资源库下的系统资源
+     * @param respool
+     * @param searchKeyword
+     * @param page
+     * @param perPage
+     * @param expire
+     * @return
+     */
+    public Pagination<ResSearchResultEntity> querySysResource(List<Integer> sys_from,int respool,String searchKeyword, int page, int perPage,int expire);
+    
+    
+    
+    
+    
+    
 }

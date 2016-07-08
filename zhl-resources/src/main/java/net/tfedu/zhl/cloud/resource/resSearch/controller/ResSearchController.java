@@ -44,6 +44,59 @@ public class ResSearchController {
     //写入日志
     Logger logger = LoggerFactory.getLogger(ResSearchController.class);
 
+    
+    /**
+     * 根据检索内容，指定资源库下的文件
+     * 
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping("/v1.0/sysResourceQuery")
+    @ResponseBody
+    public ResultJSON querySysResource(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        //获取文件服务器的访问url 
+    	String resServiceLocal = commonWebConfig.getResServiceLocal();
+
+        //最新资源的日期期限
+		int expire = resourceWebConfig.getExpire(request);
+
+		
+    	String currentResPath = commonWebConfig.getCurrentResPath(request);
+ 	
+		
+    	List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+    	
+		int resPool = ControllerHelper.getIntParameter(request, "respool");
+		
+		 // 检索的关键词
+        String searchKeyword = ControllerHelper.getParameter(request, "searchKeyword");
+		
+        // 页码
+        int page = ControllerHelper.getIntParameter(request, "page");
+        
+        // 每页记录数目
+        int perPage = ControllerHelper.getIntParameter(request, "perPage");
+    	
+		
+		
+    	Pagination<ResSearchResultEntity> pagination = resSearchService.querySysResource(sys_from, resPool, searchKeyword, page, perPage, expire);
+		
+		
+        //生成文件的缩略图路径
+        ResThumbnailPathUtil.convertToPurpos_resSearch(pagination.getList(), resServiceLocal, currentResPath);
+        
+        logger.debug("querySysResource检索关键字：" + searchKeyword);
+        logger.debug("querySysResource检索结果的当前页：" + pagination.getPage());
+        logger.debug("querySysResource检索结果每页资源数目：" + pagination.getPerPage());
+        logger.debug("querySysResource检索到的资源总页：" + pagination.getTotal());
+        logger.debug("querySysResource检索到的资源总数：" + pagination.getTotalLines());
+        
+        return ResultJSON.getSuccess(pagination);
+    }
+    
+    
     /**
      * 根据检索内容，跨库检索所有资源
      * 
