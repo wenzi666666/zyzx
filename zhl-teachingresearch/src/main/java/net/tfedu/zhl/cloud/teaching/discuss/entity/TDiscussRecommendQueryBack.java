@@ -53,20 +53,7 @@ public class TDiscussRecommendQueryBack {
     private String note;
     
     
-    /**
-     * 地区
-     */
-    private String districtname;
-    
-    /**
-     * 市
-     */
-    private String cityname;
-    
-    /**
-     * 省
-     */
-    private String provincename;
+  
 
 	public Long getId() {
 		return id;
@@ -148,30 +135,6 @@ public class TDiscussRecommendQueryBack {
 		this.note = note;
 	}
 
-	public String getDistrictname() {
-		return districtname;
-	}
-
-	public void setDistrictname(String districtname) {
-		this.districtname = districtname;
-	}
-
-	public String getCityname() {
-		return cityname;
-	}
-
-	public void setCityname(String cityname) {
-		this.cityname = cityname;
-	}
-
-	public String getProvincename() {
-		return provincename;
-	}
-
-	public void setProvincename(String provincename) {
-		this.provincename = provincename;
-	}
-    
 	
 	
 	

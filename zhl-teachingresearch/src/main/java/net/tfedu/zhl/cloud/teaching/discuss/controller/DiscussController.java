@@ -87,8 +87,7 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 			if(list!=null && list.size()>0){
 				for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
 					TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-					String _url = forum3+"/auth/process?username="+userName+"&target="+
-							forum3 +"/circle/"+tDiscussRecommend.getClassid();
+					String _url = "http://www.baidu.com";
 					tDiscussRecommend.setClassurl(_url);
 				}
 			}
@@ -183,9 +182,8 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 		List<TDiscussRecommend> data = (List<TDiscussRecommend>)result.getData();
 		for (Iterator iterator = data.iterator(); iterator.hasNext();) {
 			TDiscussRecommend tDiscussRecommend = (TDiscussRecommend) iterator.next();
-			String _url = forum3+"/auth/process?username="+userName+"&target="+
-							forum3 +"/circle/"+tDiscussRecommend.getClassid();
-					
+			String _url = "http://www.baidu.com";
+
 			tDiscussRecommend.setClassurl(_url);
 		}
 		
@@ -211,11 +209,11 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 		String className = ControllerHelper.getParameter(request, "className"); //	班级名称
 		String classImage	 = ControllerHelper.getParameter(request, "classImage");	//班级图片路径
 		String schoolName = ControllerHelper.getParameter(request, "schoolName");		//学校名称
-		String classId	 = ControllerHelper.getParameter(request, "classId");	//班级id
 		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
+		String visit_name		 = ControllerHelper.getParameter(request, "visit_name");//账号
+		String visit_pwd		 = ControllerHelper.getParameter(request, "visit_pwd");//密码
 		
 		TDiscussRecommend record = new TDiscussRecommend();
-		record.setClassid(classId);
 		record.setClassname(className);
 		record.setClassimage(classImage);
 		record.setSchoolname(schoolName);
@@ -223,6 +221,8 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 		record.setCreator(currentUserId);
 		record.setCreatetime(Calendar.getInstance().getTime());
 		record.setFlag(false);
+		record.setVisit_name(visit_name);
+		record.setVisit_pwd(visit_pwd);
 		return discussService.insert(record);
 	}
 	
@@ -261,15 +261,17 @@ import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussLogService;
 		String className = ControllerHelper.getParameter(request, "className"); //	班级名称
 		String classImage	 = ControllerHelper.getParameter(request, "classImage");	//班级图片路径
 		String schoolName = ControllerHelper.getParameter(request, "schoolName");		//学校名称
-		String classId	 = ControllerHelper.getParameter(request, "classId");	//班级id
 		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
+		String visit_name		 = ControllerHelper.getParameter(request, "visit_name");//账号
+		String visit_pwd		 = ControllerHelper.getParameter(request, "visit_pwd");//密码
 		TDiscussRecommend record = new TDiscussRecommend();
 		record.setId(id);
-		record.setClassid(classId);
 		record.setClassname(className);
 		record.setClassimage(classImage);
 		record.setSchoolname(schoolName);
 		record.setNote(note);
+		record.setVisit_name(visit_name);
+		record.setVisit_pwd(visit_pwd);
 		
 		return discussService.update(record) ;
 	}

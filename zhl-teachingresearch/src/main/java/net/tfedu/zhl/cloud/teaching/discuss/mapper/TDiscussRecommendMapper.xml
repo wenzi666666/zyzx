@@ -8,7 +8,6 @@
     <constructor >
       <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="classname" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="classid" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="classimage" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="schoolname" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
@@ -16,6 +15,8 @@
       <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="classurl" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="note" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="visit_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="visit_pwd" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   

@@ -14,10 +14,7 @@ public class TDiscussRecommend {
      */
     private String classname;
 
-    /**
-     * 学校的id或主键
-     */
-    private String classid;
+
 
     /**
      * 班级图片
@@ -50,11 +47,25 @@ public class TDiscussRecommend {
     private String classurl;
 
     private String note;
+    
+    
+    
+    /**
+     * 访问账号
+     */
+    private String visit_name;
+    
+    
+    /**
+     * 访问账号密码
+     */
+    private String visit_pwd;
 
-    public TDiscussRecommend(Long id, String classname, String classid, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String classurl, String note) {
+    public TDiscussRecommend(Long id, String classname, String visit_name, String visit_pwd, String classimage, String schoolname, Date createtime, Long creator, Boolean flag, String classurl, String note) {
         this.id = id;
         this.classname = classname;
-        this.classid = classid;
+        this.visit_name = visit_name;
+        this.visit_pwd = visit_pwd;
         this.classimage = classimage;
         this.schoolname = schoolname;
         this.createtime = createtime;
@@ -100,25 +111,25 @@ public class TDiscussRecommend {
         this.classname = classname == null ? null : classname.trim();
     }
 
-    /**
-     * 获取学校的id或主键
-     *
-     * @return classid - 学校的id或主键
-     */
-    public String getClassid() {
-        return classid;
-    }
 
-    /**
-     * 设置学校的id或主键
-     *
-     * @param classid 学校的id或主键
-     */
-    public void setClassid(String classid) {
-        this.classid = classid == null ? null : classid.trim();
-    }
 
-    /**
+    public String getVisit_name() {
+		return visit_name;
+	}
+
+	public void setVisit_name(String visit_name) {
+		this.visit_name = visit_name;
+	}
+
+	public String getVisit_pwd() {
+		return visit_pwd;
+	}
+
+	public void setVisit_pwd(String visit_pwd) {
+		this.visit_pwd = visit_pwd;
+	}
+
+	/**
      * 获取班级图片
      *
      * @return classimage - 班级图片

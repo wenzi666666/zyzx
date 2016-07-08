@@ -1,12 +1,9 @@
 package net.tfedu.zhl.cloud.teaching.discuss.service.impl;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
@@ -14,14 +11,12 @@ import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.cloud.teaching.discuss.dao.TDiscussRecommendMapper;
 import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommend;
-import net.tfedu.zhl.cloud.teaching.discuss.entity.TDiscussRecommendQueryBack;
 import net.tfedu.zhl.cloud.teaching.discuss.service.DiscussRecommendService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.grade.dao.GradeMapper;
-import net.tfedu.zhl.sso.grade.entity.GradeAreaInfo;
 
 
 @Service("disCussService")
@@ -61,23 +56,7 @@ public class DiscussRecommendServiceImpl extends BaseServiceImpl<TDiscussRecomme
         // 这里不能放其它语句
         List<TDiscussRecommend> list = mapper.selectAllRecords();
         PageInfo<TDiscussRecommend> temp_page = new PageInfo<TDiscussRecommend>(list);
-        PageInfo<TDiscussRecommendQueryBack> _page = new PageInfo<TDiscussRecommendQueryBack>();
-        //复制分页信息
-        BeanUtils.copyProperties(temp_page, _page);
-        //补充地区信息
-        List<TDiscussRecommendQueryBack> _list = new ArrayList<TDiscussRecommendQueryBack>();
-        for (Iterator<TDiscussRecommend> iterator = list.iterator(); iterator.hasNext();) {
-			TDiscussRecommend t = (TDiscussRecommend) iterator.next();
-			GradeAreaInfo info =  gradeMapper.getGradeAreaInfo(t.getClassid());
-			TDiscussRecommendQueryBack obj = new TDiscussRecommendQueryBack();
-			BeanUtils.copyProperties(t, obj);
-			if(null != info){
-				BeanUtils.copyProperties(info,obj);
-			}
-			_list.add(obj);
-        }
-        _page.setList(_list);
-		return defaultSuccess(_page);
+		return defaultSuccess(temp_page);
 	}
 
 	@Override
