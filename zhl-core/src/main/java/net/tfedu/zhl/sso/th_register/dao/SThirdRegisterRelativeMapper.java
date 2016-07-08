@@ -14,6 +14,6 @@ public interface SThirdRegisterRelativeMapper extends CoreMapper<SThirdRegisterR
 	 * @param thirdCode 第三方系统的编码
 	 * @return
 	 */
-	public SThirdRegisterRelative getThirdRelativeResult(@Param("userName")String userName,@Param("userName")String thirdCode);
+	public SThirdRegisterRelative getThirdRelativeResult(@Param("userName")String userName,@Param("thirdCode")String thirdCode);
 	
 }

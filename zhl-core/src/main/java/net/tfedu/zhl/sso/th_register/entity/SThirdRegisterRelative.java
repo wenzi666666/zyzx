@@ -45,12 +45,11 @@ public class SThirdRegisterRelative implements Serializable{
     
     
 
-    public SThirdRegisterRelative(Long id, String thUsername, String zhlUsername, String thCode,String zhlUserid) {
+    public SThirdRegisterRelative(Long id, String thUsername, String zhlUsername, String thCode) {
         this.id = id;
         this.thUsername = thUsername;
         this.zhlUsername = zhlUsername;
         this.thCode = thCode;
-        this.zhlUserid = zhlUserid;
     }
 
     public SThirdRegisterRelative() {

@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
@@ -53,6 +54,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  * 
  */
 @Service("registerService")
+@Transactional
 public class RegisterServiceImpl implements RegisterService {
 
 	@Autowired
@@ -177,7 +179,7 @@ public class RegisterServiceImpl implements RegisterService {
 	    String nickName  = StringUtils.isEmpty(form.getNickName())?trueName:form.getNickName();
 	    boolean sex  =  form.isSex();
 		long role = form.getRole();	
-		String motto = ControllerHelper.checkEmpty(form.getMotto());		
+		String motto = form.getMotto()==null ||"".equals(form.getMotto().trim()) ?"":form.getMotto().trim();	
 		String birthDate = form.getBirthDate();
 		String provinceName = form.getProvinceName();
 		String cityName = form.getCityName();
@@ -329,7 +331,7 @@ public class RegisterServiceImpl implements RegisterService {
 		if(StringUtils.isNotEmpty(birthDate)){
 			userinfo.setBirthdate(format.parse(birthDate));
 		}
-		userinfo.setResume(ControllerHelper.checkEmpty(motto));
+		userinfo.setResume(motto);
 		userinfo.setFlag(false);
 		userInfoMapper.insertSelective(userinfo);
 		

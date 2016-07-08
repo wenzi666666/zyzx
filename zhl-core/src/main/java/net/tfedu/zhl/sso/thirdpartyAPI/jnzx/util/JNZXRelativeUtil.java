@@ -116,8 +116,8 @@ public class JNZXRelativeUtil {
 		form.setSex("0".equals(_sex) ? false : true);
 		form.setSubjectName("语文");
 		form.setTermName("初中");
-		form.setTrueName(_userName);
-		form.setUserName(_trueName);
+		form.setTrueName(_trueName);
+		form.setUserName(_userName);
 
 		return registerService.addRegister(form, userName, platformcode);
 	}

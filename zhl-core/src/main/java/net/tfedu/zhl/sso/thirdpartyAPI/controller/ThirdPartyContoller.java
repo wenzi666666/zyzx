@@ -132,7 +132,6 @@ public class ThirdPartyContoller {
 			if(relative!=null && relative.getId()>0){
 				
 				zhl_userid = Long.parseLong(relative.getZhlUserid());
-				
 			}else{
 		        register =  registerService.getRegister(userName);
 				//获取用户信息 
@@ -162,7 +161,7 @@ public class ThirdPartyContoller {
 			// 获取用户信息
 			String model= "";
 			//获取用户基本信息但不缓存			
-			UserSimple	user = userService.getUserSimpleById(register.getId(), model,commonWebConfig.getIsRepeatLogin(),false);
+			UserSimple	user = userService.getUserSimpleById(zhl_userid, model,commonWebConfig.getIsRepeatLogin(),false);
 			//检测用户的头像
 			UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
 			user.setLogoutTarget(JNZXRelativeUtil.url_logout);
