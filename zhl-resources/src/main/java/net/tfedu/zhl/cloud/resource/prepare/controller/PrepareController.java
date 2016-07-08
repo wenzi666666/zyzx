@@ -889,6 +889,10 @@ public class PrepareController {
 	@RequestMapping(value = "/v1.0/resViewPage", method = RequestMethod.GET)
 	public Object getResViewPage(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
+		
+		
+		
 		String resIds = request.getParameter("resId");
 		String fromFlags = request.getParameter("fromFlag");
 		String userName = request.getParameter("userName");
@@ -936,11 +940,9 @@ public class PrepareController {
 					logger.info("-getResViewPage--url:"+url);
 					response.sendRedirect(url);
 				}
-			} catch(ParamsException e) {
-				response.getWriter().print(e.getMessage());
-			} catch(KickOutTokenException e) {
-				response.getWriter().print(e.getMessage());
-			} catch(InvalidAccessTokenException e) {
+			} catch(CustomException e) {
+				response.setCharacterEncoding("GBK");
+
 				response.getWriter().print(e.getMessage());
 			} 
 		}
