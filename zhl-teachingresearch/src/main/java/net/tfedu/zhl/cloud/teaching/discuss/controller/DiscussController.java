@@ -216,6 +216,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
 		String visit_name		 = ControllerHelper.getParameter(request, "visit_name");//账号
 		String visit_pwd		 = ControllerHelper.getParameter(request, "visit_pwd");//密码
+		String classurl		 = ControllerHelper.getParameter(request, "classurl");//链接
 		
 		TDiscussRecommend record = new TDiscussRecommend();
 		record.setClassname(className);
@@ -227,6 +228,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		record.setFlag(false);
 		record.setVisit_name(visit_name);
 		record.setVisit_pwd(visit_pwd);
+		record.setClassurl(classurl);
 		return discussService.insert(record);
 	}
 	
@@ -268,6 +270,8 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		String note		 = ControllerHelper.getOptionalParameter(request, "note");//班级简介
 		String visit_name		 = ControllerHelper.getParameter(request, "visit_name");//账号
 		String visit_pwd		 = ControllerHelper.getParameter(request, "visit_pwd");//密码
+		String classurl		 = ControllerHelper.getParameter(request, "classurl");//链接
+
 		TDiscussRecommend record = new TDiscussRecommend();
 		record.setId(id);
 		record.setClassname(className);
@@ -276,6 +280,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		record.setNote(note);
 		record.setVisit_name(visit_name);
 		record.setVisit_pwd(visit_pwd);
+		record.setClassurl(classurl);
 		
 		return discussService.update(record) ;
 	}
