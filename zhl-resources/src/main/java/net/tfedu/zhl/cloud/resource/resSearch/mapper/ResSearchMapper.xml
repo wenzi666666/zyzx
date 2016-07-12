@@ -229,7 +229,7 @@ union
     </if>
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
-    </if>) resTmp order by case when id = #{resId} then 0 else 1 end asc 
+    </if>) resTmp where id != #{resId} order by id
   </select>
   
   <!-- 检索范围为系统资源时，查询推荐列表 -->
@@ -248,7 +248,7 @@ union
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
     </if>
-     order by case when a.id = #{resId} then 0 else 1 end asc 
+    and a.id != #{resId} order by a.id
   </select>
   
    <!-- 检索范围为区本 或 校本时，查询推荐列表  -->
@@ -271,11 +271,8 @@ union
     <if test="searchKeyword != null and searchKeyword != ''">
          and (a.speaker like CONCAT('%',#{searchKeyword},'%') or a.Title like CONCAT('%',#{searchKeyword},'%') or a.keyWord like CONCAT('%',#{searchKeyword},'%') or a.Des like CONCAT('%',#{searchKeyword},'%'))
      </if>
-      order by case when a.id = #{resId} then 0 else 1 end asc 
+      and a.id != #{resId} order by a.id
   </select>
-  
-  
-  
   
   
   <!--  查询指定资源库下的系统资源-->

@@ -116,7 +116,7 @@ public class ResPreviewController {
     }
 	
 	/**
-	 * 资源推荐，将当前预览的资源显示在第一条的位置
+	 * 资源推荐
 	 * @param request
 	 * @param response
 	 * @return
@@ -151,9 +151,11 @@ public class ResPreviewController {
     	//每页多少条记录
     	int perPage = ControllerHelper.getIntParameter(request, "perPage");  
     	
+    	//是否为资源检索：0 否，1 是
+    	int isSearch = ControllerHelper.getIntParameter(request, "isSearch");  
     	
     	
-    	if(StringUtils.isNotEmpty(request.getParameter("isSearch"))){ //从资源检索页面跳转到预览页面的
+    	if(isSearch == 1){ //从资源检索页面跳转到预览页面的
     		
     		//格式
         	String fileFormat = ControllerHelper.getParameter(request, "format");
@@ -181,7 +183,7 @@ public class ResPreviewController {
     			//资源类型id，默认为全部
     	    	int typeId = ControllerHelper.getIntParameter(request, "typeId");
 
-        		if(StringUtils.isNotEmpty(request.getParameter("poolId"))){ //系统资源
+        		if(fromFlag == 0){ //系统资源
         			//资源库id，默认为全部
         	    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
         			pagination = resPreviewService.sysRecommendation(tfcode, typeId, resId, poolId, page, perPage, sys_from,orderBy,fileFormat);

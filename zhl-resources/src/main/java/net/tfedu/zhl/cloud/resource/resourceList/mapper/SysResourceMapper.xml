@@ -115,21 +115,9 @@
  
  <!-- 分页查询系统资源信息的所有记录，资源预览的推荐  -->
  <select id="getAllSysRes_Preview"  resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
-    select a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
-    (SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
-	from z_resource a 
-	left join z_resnav c on a.ResCode=c.ResCode 
-	left join j_syscourse d on c.StructCode=d.TFcode 
-	where a.id = #{resId} and a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in  
-	
-	            <foreach item="item" index="index" collection="sys_from" 
-                         open="(" separator="," close=")">
-                         #{item}
-                </foreach>
-	and d.typeFlag in (0,1)   union  
-	
+  
     select id,Title,fromFlag,fullPath,thumbnailpath,FileExt,UpdateDT,DloadTimes,avgScore from (
-    select a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
+    select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.UpdateDT,a.DloadTimes,
     (SELECT case when COUNT(t.assetId) = 0 then a.displayLevel else (sum(t.Ascore) / COUNT(t.assetId) + a.displayLevel) / 2 end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore
 	from z_resource a
 	left join x_resourcetype b on a.MType = b.id 
@@ -168,12 +156,6 @@
  
  <!-- 我的上传， 预览一条资源时，产生的资源推荐。根据tfcode，查询该课程结点下的所有系统、区本、校本资源  -->
  <select id="getAllResByTfcode" resultType="net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity" >
- 
-    select distinct a.id,a.name Title,1 fromFlag,a.assetPath fullPath,a.assetPath as thumbnailpath,REVERSE(LEFT(REVERSE(a.assetPath),LOCATE('.',REVERSE(a.assetPath)))) as FileExt
-	from z_asset a where a.id = #{resId} and a.flag = 0 and a.FileType = 'A'
-	 
-    union all 
-   
     select distinct a.id,a.Title,0 as fromFlag,CONCAT(a.Fpath,'/',a.Fname) fullPath,a.thumbnailpath,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt
 	from z_resource a 
 	left join z_resnav c on a.ResCode=c.ResCode 
