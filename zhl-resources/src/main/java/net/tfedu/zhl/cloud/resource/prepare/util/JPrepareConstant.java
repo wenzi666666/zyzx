@@ -10,6 +10,7 @@ import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.fileservice.HttpUtil;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
+import net.tfedu.zhl.fileservice.zhldowncenter;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -294,22 +295,15 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
 		//如果是加密swf\mp4的文件
 		if(ZhlResourceCenterWrap.FileType_EXE.equals(flag) 
         		|| ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
-			String  url = "";
-			if(isdwj){
-				String _path =  path.replaceAll("\\\\", "/");
-				String _name = _path.substring(_path.lastIndexOf("/")+1,_path.length());
-				_path = _path.substring(0,_path.lastIndexOf("/"));
-				url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name,_path, resServiceLocal);
-			}else{
-				url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(path, "", resServiceLocal);
-			}
-			//获取exe文件的路径
-			String result =  HttpUtil.PostHttpWebRequest(url);
-			HashMap obj =  JSONObject.parseObject(result, HashMap.class);
-			path = (String)obj.get("filename");
+            if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
+            	path = zhldowncenter.MP4_EXE_PATH+File.separator+rescode+".exe";
+            }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
+            	path = zhldowncenter.FLASH_EXE_PATH+File.separator+rescode+".exe";
+            }
 		}else{
 			if(isdwj){
-				path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
+//				path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
+				path = zhldowncenter.MUTIPLE_FILE_PATH+File.separator+rescode+".zip";
 			}
 		}
     }
@@ -344,7 +338,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
             if (ZhlResourceCenterWrap.FileType_EXE.equals(fileext) 
             		||
             		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
-                String url = "";
+               /* String url = "";
                 if (isdwj) {
                     String _path = path.replaceAll("\\\\", "/");
                     String _name = _path.substring(_path.lastIndexOf("/") + 1, _path.length());
@@ -354,12 +348,22 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
                 } else {
                 	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
                 }
+                */
+                if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
+                	path = ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
+                }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
+                	path = ZhlResourceCenterWrap.GetFlashPackageURL(resServiceLocal, rescode, "");
+                }else{
+                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
+                }
+            	
+            	
             } else {
                 if (isdwj) {
-                    path = path.substring(0, path.indexOf(rescode)) + File.separator + rescode + ".zip";
+                    path = ZhlResourceCenterWrap.getMutipleResourceZipURL(resServiceLocal, rescode);
+                }else{
+                    path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
                 }
-                
-                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
             }
         }else{
         	path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
@@ -416,8 +420,9 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
             String flag = path.substring(path.lastIndexOf("."), path.length());
 
             if (isdwj) {
-                path = path.substring(0, path.indexOf(rescode)) + File.separator + rescode + ".zip";
-                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
+//                path = path.substring(0, path.indexOf(rescode)) + File.separator + rescode + ".zip";
+//                path = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, path);
+            	path = ZhlResourceCenterWrap.getMutipleResourceZipURL(resServiceLocal, rescode);
             }else  if (ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
                 // 如果是加密swf\mp4的文件
             	path = path.replace(".swf", ".tfswf").replace(".mp4", ".tfmp4");

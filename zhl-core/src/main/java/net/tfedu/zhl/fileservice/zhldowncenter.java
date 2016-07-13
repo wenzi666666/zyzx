@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -20,6 +21,28 @@ import com.alibaba.fastjson.JSONObject;
  * @version 2015/11/26
  */
 public class zhldowncenter {
+	
+	
+//	 * 	所有的动画exe在 D:\tfedu\MtData\exepackage
+//                       所有的视频exe在 D:\tfedu\MtData\Mp4ExePackage
+//                       所有的多文件zip在 D:\tfedu\MtData\MultiZIP
+
+	
+	/**
+	 * flash打包为exe文件的所在目录
+	 */
+	public static final String  FLASH_EXE_PATH= "exepackage";
+	/**
+	 * mp4打包为exe文件的所在目录
+	 */
+	public static final String  MP4_EXE_PATH= "Mp4ExePackage";
+	/**
+	 * 多文件打包zip包所在目录
+	 */
+	public static final String  MUTIPLE_FILE_PATH= "MultiZIP";
+	
+	
+	
 
     public String LastError;
 
@@ -663,6 +686,85 @@ public class zhldowncenter {
             return "";
         }
     }
+    
+    
+    
+    
+    
+    /**
+	 * 获取Flash动画离线限时播放包
+	 * 
+	 * 	所有的动画exe在 D:\tfedu\MtData\exepackage
+                        所有的视频exe在 D:\tfedu\MtData\Mp4ExePackage
+                        所有的多文件zip在 D:\tfedu\MtData\MultiZIP
+
+	 * 
+	 * @param ResCode
+	 *            资源代码
+	 * @param FileTitle
+	 *            文件标题
+	 * @return
+	 */
+	public String GetFlashPackageURL(String ResCode, String FileTitle) {
+		
+		String FileName = FLASH_EXE_PATH+"\\" + ResCode + ".exe";
+		String sign = GetApplySignCode("flashpackage", FileName, CustomerID,
+				CustomerKey);
+		try {
+			return DownloadCenterURL
+					+ ApplyMethod
+					+ GetApplyQueryString("flashpackage", FileName, sign,
+							CustomerID) + "&title="
+					+ URLEncoder.encode(FileTitle, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 获取Mp4视频离线限时播放包
+	 *   所有的动画exe在 D:\tfedu\MtData\exepackage
+                        所有的视频exe在 D:\tfedu\MtData\Mp4ExePackage
+                        所有的多文件zip在 D:\tfedu\MtData\MultiZIP
+	 * 
+	 * @param ResCode
+	 *            资源代码
+	 * @param FileTitle
+	 *            文件标题
+	 * @return
+	 */
+	public String GetMp4PackageURL(String ResCode, String FileTitle) {
+		String FileName = MP4_EXE_PATH+"\\" + ResCode + ".exe";
+		String sign = GetApplySignCode("mp4package", FileName, CustomerID,
+				CustomerKey);
+		try {
+			return DownloadCenterURL
+					+ ApplyMethod
+					+ GetApplyQueryString("mp4package", FileName, sign,
+							CustomerID) + "&title="
+					+ URLEncoder.encode(FileTitle, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+    
+	
+	
+	/**
+	 * 获取多文件资源的zip包的下载路径
+	 * @param ResCode   资源代码
+	 * @param FileTitle  文件标题
+	 * @return
+	 */
+	public String getMutipleResourceZipURL(String ResCode){
+		String fileName =  MUTIPLE_FILE_PATH+"\\"+ResCode+".zip";
+		return GetFreeDownloadURLString(fileName);
+		
+	}
+    
+    
 
     public static void main(String[] args) {
 

@@ -1,6 +1,8 @@
 package net.tfedu.zhl.fileservice;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -59,6 +61,16 @@ public class ZhlResourceCenterWrap {
 	 */
 	public static final String FileType_EXE = ".exe";
 	
+	
+	/**
+	 * 加密的文件格式
+	 */
+	public static final String FileType_SWF = ".swf";
+	
+	/**
+	 * 加密的文件格式
+	 */
+	public static final String FileType_MP4 = ".mp4";
 
 	/**
 	 * 缩略图图片格式后缀
@@ -526,4 +538,53 @@ public class ZhlResourceCenterWrap {
 				.GetResourcePlayURL(resPath, IsMultiFile, default_diskOrder);
 	}
 	
+	
+	
+	/**
+	 * 获取Mp4视频离线限时播放包
+	 *   所有的动画exe在 D:\tfedu\MtData\exepackage
+                        所有的视频exe在 D:\tfedu\MtData\Mp4ExePackage
+                        所有的多文件zip在 D:\tfedu\MtData\MultiZIP
+	 * 
+	 * @param ResCode
+	 *            资源代码
+	 * @param FileTitle
+	 *            文件标题
+	 * @return
+	 */
+	public static String GetMp4PackageURL(String resSerUrl,String ResCode, String FileTitle) {
+		
+		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).GetMp4PackageURL(ResCode, FileTitle);
+	}
+    
+	  /**
+		 * 获取Flash动画离线限时播放包
+		 * 
+		 * 	所有的动画exe在 D:\tfedu\MtData\exepackage
+	                        所有的视频exe在 D:\tfedu\MtData\Mp4ExePackage
+	                        所有的多文件zip在 D:\tfedu\MtData\MultiZIP
+
+		 * 
+		 * @param ResCode
+		 *            资源代码
+		 * @param FileTitle
+		 *            文件标题
+		 * @return
+		 */
+		public static String GetFlashPackageURL(String resSerUrl,String ResCode, String FileTitle) {
+			return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).GetFlashPackageURL(ResCode, FileTitle);
+		}
+
+	
+	/**
+	 * 获取多文件资源的zip包的下载路径
+	 * @param ResCode   资源代码
+	 * @param FileTitle  文件标题
+	 * @return
+	 */
+	public static String getMutipleResourceZipURL(String resSerUrl,String ResCode){
+		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).getMutipleResourceZipURL(ResCode);
+		
+	}
+	;
 }
