@@ -43,8 +43,8 @@
       <if test="subjectId > 0">
          and subjectid = #{subjectId}
       </if>
-        and flag = 0
-  
+        and flag = 0 order by updatedate desc
+        
   </select>
   
   <!-- 新建一个教学案例 -->
