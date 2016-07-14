@@ -73,6 +73,9 @@ public class ResPreviewServiceImpl implements ResPreviewService {
 
         }
         
+       if(info == null)
+    	   return null;
+        
         String path = "";
         if(fromFlag == 1){//自建资源
         	path = info.getFpath();

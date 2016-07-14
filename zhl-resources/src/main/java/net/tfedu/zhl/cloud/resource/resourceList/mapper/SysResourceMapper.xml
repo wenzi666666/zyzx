@@ -196,9 +196,8 @@
    (SELECT case when COUNT(t.assetId) = 0 then 0 else (sum(t.Ascore) / COUNT(t.assetId)) end avgScore from z_assetevaluate t where t.assetId = a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1) avgScore,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname)))) as FileExt,a.isDWJ 
    from z_resource a 
    left join z_resnav b on a.ResCode=b.ResCode 
-   left join j_syscourse c on c.tfcode = b.StructCode 
    left join x_resourcetype e on a.MType = e.id 
-   where b.flag=0 and c.flag=0 and a.flag=0 and a.id =#{resId} ) a limit 1
+   where b.flag=0 and a.flag=0 and a.id =#{resId} ) a limit 1
  </select>
  
  <!-- 根据一个structCode 查询  一个版本的 目录-->
