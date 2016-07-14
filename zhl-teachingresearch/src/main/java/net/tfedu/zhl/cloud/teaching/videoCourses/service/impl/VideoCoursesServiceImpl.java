@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.teaching.videoCourses.dao.TVideoResourcesMapper;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TViewedVideos;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.VideoPreviewEntity;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCoursesService;
 import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
@@ -129,6 +130,13 @@ public class VideoCoursesServiceImpl implements VideoCoursesService {
      */
 	public void addOneVisitItem(long userId,long videoId){
 		
-		tVideoResourcesMapper.addOneVisitedItem(userId, videoId);
+		TViewedVideos visit = tVideoResourcesMapper.isVisited(userId,videoId);
+		
+		//若用户之前已经浏览过，则不再插入
+		if(visit == null)
+			tVideoResourcesMapper.addOneVisitedItem(userId, videoId);
+		
+		//将该视频的浏览+1
+		tVideoResourcesMapper.updateClickTimes(videoId);
 	}
 }

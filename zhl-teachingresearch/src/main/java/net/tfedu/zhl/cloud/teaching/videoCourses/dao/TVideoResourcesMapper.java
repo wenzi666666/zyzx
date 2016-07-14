@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoResources;
+import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TViewedVideos;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.VideoPreviewEntity;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -84,4 +85,17 @@ public interface TVideoResourcesMapper extends CoreMapper<TVideoResources> {
 	 * @param videoId
 	 */
 	public void addOneVisitedItem(@Param("userId")long userId,@Param("videoId")long videoId);
+	
+	/**
+	 * 查询用户是否浏览过这个视频
+	 * @param userId
+	 * @param videoId
+	 */
+	public TViewedVideos isVisited(@Param("userId")long userId,@Param("videoId")long videoId);
+	
+	/**
+	 * 修改资源的浏览次数
+	 * @param videoId
+	 */
+	public void updateClickTimes(@Param("videoId")long videoId);
 }
