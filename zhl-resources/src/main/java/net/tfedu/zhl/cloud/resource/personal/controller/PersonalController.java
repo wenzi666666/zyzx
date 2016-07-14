@@ -529,7 +529,7 @@ public class PersonalController {
 			sub = map.get("subjectcode");
 			term = map.get("termcode");
 
-			if (sub.contains(",")) {
+			if (sub!=null && sub.contains(",")) {
 				sub = sub.split(",")[0];
 			}
 

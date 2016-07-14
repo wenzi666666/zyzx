@@ -76,4 +76,17 @@ public class MD5 {
         return md5StrBuff.toString();
     }
 
+    
+    
+   public static void main(String[] args) {
+	
+	String s = "AppId=questionTest&code=GZSX020101&page=1&pagesize=20ZHLdsTTGG123p";   
+	   
+	String md5 = MD5.getMD5Str(s);
+	System.out.println(md5);
+	
+	System.out.println(Base64.encode(md5.getBytes()));
+	
+	
+   }
 }
