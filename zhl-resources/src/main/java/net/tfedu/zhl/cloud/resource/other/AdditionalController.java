@@ -185,7 +185,9 @@ public class AdditionalController {
 	}
 
 
-	
+	public static void main(String[] args) {
+		String s = "";
+	}
 	
 	
 }

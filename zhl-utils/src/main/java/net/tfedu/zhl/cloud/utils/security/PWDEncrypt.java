@@ -84,6 +84,10 @@ public class PWDEncrypt {
 
     @SuppressWarnings("unused")
     public static void main(String[] args) {
-        System.out.println(PWDEncrypt.doEncrypt("123456"));
+        
+    	String s1 = "123";
+    	System.out.println(new String(s1.getBytes()));
+    	
+    	
     }
 }
