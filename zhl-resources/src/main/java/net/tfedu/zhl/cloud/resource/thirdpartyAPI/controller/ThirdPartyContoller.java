@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.thirdpartyAPI.controller;
+package net.tfedu.zhl.cloud.resource.thirdpartyAPI.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -18,6 +18,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import net.tfedu.zhl.cloud.resource.config.ResourceThirdPartyConfig;
+import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity.ZXCheckResult;
+import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
+import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.util.JNZXRelativeUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -25,10 +29,6 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.util.JNZXRelativeUtil;
-import net.tfedu.zhl.sso.thirdpartyAPI.util.ThirdPartyUtil;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;
@@ -66,6 +66,9 @@ public class ThirdPartyContoller {
 	@Autowired
 	CacheManager cacheManager;
 	
+	
+	@Resource
+	ResourceThirdPartyConfig resourceThirdPartyConfig;
 
 	
 	
@@ -120,7 +123,7 @@ public class ThirdPartyContoller {
 		token = token.replace("--", "-");
 		
 		//验证token 并返回
-		ZXCheckResult _result = JNZXRelativeUtil.checkToken(token);
+		ZXCheckResult _result = JNZXRelativeUtil.checkToken(token,resourceThirdPartyConfig.getJnzx_host());
 
 		//USER_ID不为空，就说明验证成功
 		if(_result!=null && null!=_result.getBODY() && StringUtils.isNotEmpty(_result.getBODY().getUSER_ID())){
@@ -135,7 +138,7 @@ public class ThirdPartyContoller {
 			}else{
 		        register =  registerService.getRegister(userName);
 				//获取用户信息 
-				ZXUserInfoResult info = JNZXRelativeUtil.getUserInfo(userName, token);						
+				ZXUserInfoResult info = JNZXRelativeUtil.getUserInfo(userName, token,resourceThirdPartyConfig.getJnzx_host());						
 		        if(register !=null && register.getId()>0){
 		    		//如果用户存在 ，修正用户名(在原有的用户名后面增加 “_”和platformcode和序号),如果还有重复，增加序号即：username_jnzx1、username_jnzx2
 		    		int i=0;
@@ -164,7 +167,7 @@ public class ThirdPartyContoller {
 			UserSimple	user = userService.getUserSimpleById(zhl_userid, model,commonWebConfig.getIsRepeatLogin(),false);
 			//检测用户的头像
 			UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
-			user.setLogoutTarget(JNZXRelativeUtil.url_logout);
+			user.setLogoutTarget(JNZXRelativeUtil.getOUTURL(resourceThirdPartyConfig.getJnzx_host()));
 			user.setThirdParyCode(platformcode);
 			//显示将用户信息写入缓存
 			String _token = user.getToken();
@@ -189,7 +192,7 @@ public class ThirdPartyContoller {
 		}else{
 			log.error("校验第三方登录用户失败,平台编码("+platformcode+"),目标页面("+targetPage+"),thirdPartyToken("+thirdPartyToken+")");
 			//校验失败
-			response.sendRedirect(JNZXRelativeUtil.url_logout);
+			response.sendRedirect(JNZXRelativeUtil.getOUTURL(resourceThirdPartyConfig.getJnzx_host()));
 		}
 		return  null;
 	}

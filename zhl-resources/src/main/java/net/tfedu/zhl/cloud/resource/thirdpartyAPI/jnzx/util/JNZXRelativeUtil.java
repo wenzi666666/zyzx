@@ -1,12 +1,13 @@
-package net.tfedu.zhl.sso.thirdpartyAPI.jnzx.util;
+package net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.util;
 
 import java.net.URLEncoder;
 
 import com.alibaba.fastjson.JSONObject;
 
+import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity.ZXCheckResult;
+import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXCheckResult;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
@@ -29,12 +30,26 @@ public class JNZXRelativeUtil {
 	/**
 	 * 中兴的api接口
 	 */
-	public static final String url = "http://edu.myjining.cn/serviceProxy/servlet/?json=";
+	private static final String url = "/serviceProxy/servlet/?json=";
 
 	/**
 	 * 退出登录后跳转的页面
 	 */
-	public static final String url_logout = "http://edu.myjining.cn/portal/login.html";
+	private static final String url_logout = "/portal/login.html";
+	
+	
+	
+	private static final String host_default = "http://edu.myjining.cn";
+	
+	
+	
+	public static String getOUTURL(String host){
+		return host_default+url_logout;
+		
+	}
+	
+	
+	
 
 	/**
 	 * 根据token 获取用户
@@ -43,14 +58,16 @@ public class JNZXRelativeUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ZXCheckResult checkToken(String token) throws Exception {
+	public static ZXCheckResult checkToken(String token,String host) throws Exception {
 
+		host = StringUtils.isEmpty(host)?host_default:host;
+		
 		// 接收参数json列表
 		JSONObject json = new JSONObject();
 		json.put("SERVICE_CODE", "zteict.proxy.user.LoginStatus");
 		json.put("CONSUMER_ID", token);
 
-		String result = HttpClientUtils.doGET(url + URLEncoder.encode(json.toJSONString(), "utf-8"));
+		String result = HttpClientUtils.doGET(host+url + URLEncoder.encode(json.toJSONString(), "utf-8"));
 
 		return JSONObject.parseObject(result, ZXCheckResult.class);
 	}
@@ -63,14 +80,15 @@ public class JNZXRelativeUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ZXUserInfoResult getUserInfo(String userName, String token) throws Exception {
+	public static ZXUserInfoResult getUserInfo(String userName, String token,String host) throws Exception {
+		host = StringUtils.isEmpty(host)?host_default:host;
 
 		// 接收参数json列表
 		JSONObject json = new JSONObject();
 		json.put("SERVICE_CODE", "com.zte.space.homework.business.BusinessCenter4Homework.open__getUserInfo");
 		json.put("CONSUMER_ID", token);
 		json.put("USER_ID", userName);
-		String result = HttpClientUtils.doGET(url + URLEncoder.encode(json.toJSONString(), "utf-8"));
+		String result = HttpClientUtils.doGET(host+url + URLEncoder.encode(json.toJSONString(), "utf-8"));
 		return JSONObject.parseObject(result, ZXUserInfoResult.class);
 
 	}

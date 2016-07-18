@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.thirdpartyAPI.util;
+package net.tfedu.zhl.cloud.resource.thirdpartyAPI.util;
 
 /**
  * 第三方对接的工具类

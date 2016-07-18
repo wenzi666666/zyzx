@@ -63,6 +63,7 @@
        <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
 	   <frontWebURL>http://z.tfedu.net/</frontWebURL>
 		
+	   <jnzx_host></jnzx_host>  
 		
 	</properties>
 
@@ -135,7 +136,8 @@
                 <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
                     
                 <host>http://192.168.111.238:8080/resources/</host>        
-                <hostLocal>http://192.168.111.238:8080/</hostLocal>        
+                <hostLocal>http://192.168.111.238:8080/</hostLocal>  
+                      
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -161,6 +163,7 @@
               	<resService>http://10.9.10.164:8099/down/</resService>        
 				<resServiceLocal>http://10.9.10.164:8099/down/</resServiceLocal>        
 				<isCloudModel>true</isCloudModel>  
+				<jnzx_host>http://10.9.10.11</jnzx_host>  
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>

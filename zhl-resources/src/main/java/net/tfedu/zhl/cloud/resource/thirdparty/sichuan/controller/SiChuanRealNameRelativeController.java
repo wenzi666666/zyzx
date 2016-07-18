@@ -30,7 +30,6 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
-import net.tfedu.zhl.sso.thirdpartyAPI.jnzx.util.JNZXRelativeUtil;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.UserService;

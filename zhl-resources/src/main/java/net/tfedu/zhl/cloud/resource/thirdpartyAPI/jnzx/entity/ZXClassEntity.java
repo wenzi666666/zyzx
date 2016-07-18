@@ -1,4 +1,4 @@
-package net.tfedu.zhl.sso.thirdpartyAPI.jnzx.entity;
+package net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity;
 
 /**
  * 班级信息
