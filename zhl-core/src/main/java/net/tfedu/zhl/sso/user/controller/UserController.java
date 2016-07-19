@@ -147,6 +147,17 @@ public class UserController {
 		// 不同的子系统，使用不同的model参数
 		String model = request.getParameter("model") == null ? " " : request
 				.getParameter("model");
+		
+		 // 用户登录状态相关检查
+        String token = request.getHeader("Authorization");
+        //如果从缓存获取直接返回
+        UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+    	if(us!=null){
+            return ResultJSON.getSuccess(us);
+    	}
+		
+		
+		
 		// 返回
 		UserSimple user = userService.getUserSimpleById(id, model);
 		if (user.getUserImage() != null
