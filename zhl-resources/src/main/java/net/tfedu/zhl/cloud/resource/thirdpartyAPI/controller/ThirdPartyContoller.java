@@ -122,6 +122,7 @@ public class ThirdPartyContoller {
 		String  token = ControllerHelper.checkEmpty(thirdPartyToken);
 		token = token.replace("--", "-");
 		
+		
 		//验证token 并返回
 		ZXCheckResult _result = JNZXRelativeUtil.checkToken(token,resourceThirdPartyConfig.getJnzx_host());
 
