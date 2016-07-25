@@ -43,7 +43,7 @@
 		<httpclient.version>4.5.1</httpclient.version>
 	
 	
-	
+	<!-- 
 	
 		<resService>http://192.168.111.22:8099/down/</resService>        
 		<resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
@@ -52,18 +52,18 @@
 		<isRepeatLogin>false</isRepeatLogin>  
 		<isCloudModel>false</isCloudModel>  
 		
-         <!-- 题库对接的配置  -->
+         题库对接的配置 
        <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
        <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
-       <!-- 情景英语对接的配置  -->
+       情景英语对接的配置 
        <sceneEnglish>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglish>  
        <sceneEnglishLocal>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglishLocal>  
-       <!-- forum3.0  -->
+       forum3.0 
        <forum3Host>http://chat.tfedu.net:7070/auth/process</forum3Host>  
        <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
 	   <frontWebURL>http://z.tfedu.net/</frontWebURL>
 		
-	   <jnzx_host></jnzx_host>  
+	   <jnzx_host></jnzx_host>   -->
 		
 	</properties>
 
@@ -71,54 +71,14 @@
 	<profiles>
 		<profile>
 		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
-			<id>resources</id>
+			<id>local</id>
 			<properties>
  				<package.environment>local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/zyzx_new?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu123</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/zyzx_new?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu123</jdbc_bo_password>   
-                    
-                <host>http://192.168.111.204:8880/resources/</host>        
-                <hostLocal>http://192.168.111.204:8880/</hostLocal>        
-		         <!-- 题库对接的配置  -->
-		       <tkHost>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHost>  
-		       <tkHostLocal>http://123.56.176.16/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
-		       <frontWebURL>http://chat.tfedu.net:12308/</frontWebURL>
 			</properties>		
 			<activation>
 				<activeByDefault>true</activeByDefault>
-			</activation>   
-
-
-		</profile>
-		<profile>
-		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
-			<id>test42</id>
-			<properties>
- 				<package.environment>test42</package.environment>					
- 				<buss.name>zhl-resources</buss.name>
-				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.42:3306/zyzx3_1?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>BWXL33@TFEDU.NET</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.42:3306/zyzx3_1?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>BWXL33@TFEDU.NET</jdbc_bo_password>   
-                    
-                <host>http://192.168.111.42:8080/resources/</host>        
-                <hostLocal>http://192.168.111.42:8080/</hostLocal>    
-                <resService>http://192.168.111.42:8099/down/</resService>        
-				<resServiceLocal>http://192.168.111.42:8099/down/</resServiceLocal>        
-  		       <frontWebURL>http://chat.tfedu.net:12306/</frontWebURL>
-                    
-			</properties>		
-			<activation>
-				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -128,16 +88,6 @@
  				<package.environment>suse_local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://localhost:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://localhost:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
-                    
-                <host>http://192.168.111.238:8080/resources/</host>        
-                <hostLocal>http://192.168.111.238:8080/</hostLocal>  
-                      
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -151,75 +101,17 @@
  				<package.environment>suse_product</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://10.9.10.163:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://10.9.10.163:3306/jn_zyzx?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
-                    
-                <host>http://10.9.10.162:8080/resources/</host>        
-                <hostLocal>http://10.9.10.162:8080/</hostLocal>    
-              	<resService>http://10.9.10.164:8099/down/</resService>        
-				<resServiceLocal>http://10.9.10.164:8099/down/</resServiceLocal>        
-				<isCloudModel>true</isCloudModel>  
-				<jnzx_host>http://10.9.10.11</jnzx_host>  
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
-		
-		<profile>
-			<id>test249</id>
-			<properties>
-                <package.environment>test249</package.environment>
-                <buss.name>zhl-resources</buss.name>
-				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu123</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.43:3306/banbantong?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu123</jdbc_bo_password>   
-                    
-                <host>http://192.168.111.249:8080/resources/</host>        
-                <hostLocal>http://192.168.111.249:8080/</hostLocal>        
-                <resService>http://192.168.111.22:8099/down/</resService>        
-                <resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
-                <isCloudModel>true</isCloudModel>  
-            </properties>  
-                      
-		</profile>
-		
 		<profile>
 			<id>yanshi156</id>
 			<properties>
                 <package.environment>yanshi156</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.156:3306/yanshi_zyzx31?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>bwxl33@tfedu.net</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.156:3306/yanshi_zyzx31?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>bwxl33@tfedu.net</jdbc_bo_password>   
-                    
-                <host>http://192.168.111.156:8080/resources/</host>        
-                <hostLocal>http://192.168.111.156:8080/</hostLocal>        
-                <resService>http://192.168.111.156:8099/down/</resService>        
-                <resServiceLocal>http://192.168.111.156:8099/down/</resServiceLocal>  
-                
-                
-				<fdHost>http://192.168.111.156:8099/fudao/</fdHost>        
-				<fdHostLocal>http://192.168.111.156:8099/fudao/</fdHostLocal>        
-		       <!-- 题库对接的配置  -->
-		       <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
-		       <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
-		       <!-- 情景英语对接的配置  -->
-		       <sceneEnglish>http://192.168.111.156:8012/com/rmlogin.ashx/</sceneEnglish>  
-		       <sceneEnglishLocal>http://192.168.111.156:8012/com/rmlogin.ashx/</sceneEnglishLocal>  
-                <isCloudModel>true</isCloudModel>  
             </properties>            
 		</profile>
 		
@@ -230,18 +122,6 @@
                 <package.environment>ali_z</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<jdbc_sso_url>jdbc:mysql://123.57.152.108:4336/maincenter_yun?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>BWXL33@TFEDU.NET</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://rm-2zews4047gh8rq87wo.mysql.rds.aliyuncs.com:3306/zyzx-3-1?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>tfzhl</jdbc_bo_username>
-                <jdbc_bo_password>bwxl33tfedu-net</jdbc_bo_password>   
-                    
-                <host>http://101.201.54.27:8080/resources/,http://101.201.50.15:8080/resources/</host>        
-                <hostLocal>http://101.201.63.196:8080/,http://101.201.54.27:8080/,http://101.201.50.15:8080/</hostLocal>        
-                <resService>http://101.200.190.27:8099/down/</resService>        
-                <resServiceLocal>http://101.200.190.27:8099/down/</resServiceLocal>        
-                <isCloudModel>true</isCloudModel>  
             </properties>   
             <activation>
 				<activeByDefault>false</activeByDefault>
@@ -254,21 +134,7 @@
                 <package.environment>local</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.10:3306/teach_app_sso_tfedu?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu123&amp;*()</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.10:3306/teach_app_service_tfedu?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu123&amp;*()</jdbc_bo_password>   
-                    
-                <host>http://127.0.0.1:8080/teachingresearch/</host>        
-                <hostLocal>http://localhost:8080/</hostLocal>        
-                <isCloudModel>true</isCloudModel>  
-		                       <!-- forum3.0  -->
-		       <forum3Host>http://chat.tfedu.net:7070/</forum3Host>  
-		       <forum3HostLocal>http://chat.tfedu.net:7070/</forum3HostLocal>  
             </properties>  
-
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>          
@@ -279,18 +145,6 @@
                 <package.environment>teachingTest</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
-				<jdbc_sso_url>jdbc:mysql://192.168.111.251:3306/teachingresearch_sso?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_sso_url>
-                <jdbc_sso_username>root</jdbc_sso_username>
-                <jdbc_sso_password>tfedu6188</jdbc_sso_password>       
-				<jdbc_bo_url>jdbc:mysql://192.168.111.251:3306/teachingresearch_business?useUnicode=true&amp;characterEncoding=UTF-8&amp;allowMultiQueries=true</jdbc_bo_url>
-                <jdbc_bo_username>root</jdbc_bo_username>
-                <jdbc_bo_password>tfedu6188</jdbc_bo_password>   
-                <host>http://192.168.111.249:8080/teachingresearch/</host>        
-                <hostLocal>http://192.168.111.249:8080/</hostLocal>        
-                <isCloudModel>true</isCloudModel>  
-                		                       <!-- forum3.0  -->
-		       <forum3Host>http://chat.tfedu.net:7070/</forum3Host>  
-		       <forum3HostLocal>http://chat.tfedu.net:7070/</forum3HostLocal>  
             </properties>  
 
 			<activation>
@@ -419,6 +273,10 @@
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
+				<includes>
+                    <include>${package.environment}/*.properties</include>
+                    <include>*.*</include>
+                </includes>
 			</resource>
 		</resources>
 		<testResources>

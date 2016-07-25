@@ -7,12 +7,13 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
 import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
 
 
-
+@Transactional
 public class PrepareControllerTest extends BaseControllerTestCase {
 
     @Resource

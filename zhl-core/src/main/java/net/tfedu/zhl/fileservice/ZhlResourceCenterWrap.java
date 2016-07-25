@@ -534,7 +534,7 @@ public class ZhlResourceCenterWrap {
 	 */
 	public static String getWebPlayUrl_EPREPARE(String resSerUrl, String resPath,
 			Boolean IsMultiFile) {
-		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl)
+		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl)
 				.GetResourcePlayURL(resPath, IsMultiFile, default_diskOrder);
 	}
 	
@@ -554,7 +554,7 @@ public class ZhlResourceCenterWrap {
 	 */
 	public static String GetMp4PackageURL(String resSerUrl,String ResCode, String FileTitle) {
 		
-		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).GetMp4PackageURL(ResCode, FileTitle);
+		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).GetMp4PackageURL(ResCode, FileTitle);
 	}
     
 	  /**
@@ -572,7 +572,7 @@ public class ZhlResourceCenterWrap {
 		 * @return
 		 */
 		public static String GetFlashPackageURL(String resSerUrl,String ResCode, String FileTitle) {
-			return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).GetFlashPackageURL(ResCode, FileTitle);
+			return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).GetFlashPackageURL(ResCode, FileTitle);
 		}
 
 	
@@ -583,7 +583,7 @@ public class ZhlResourceCenterWrap {
 	 * @return
 	 */
 	public static String getMutipleResourceZipURL(String resSerUrl,String ResCode){
-		return new zhldowncenter(CustomerID_EPREPARE, CustomerKey_EPREPARE, resSerUrl).getMutipleResourceZipURL(ResCode);
+		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).getMutipleResourceZipURL(ResCode);
 		
 	}
 	;
