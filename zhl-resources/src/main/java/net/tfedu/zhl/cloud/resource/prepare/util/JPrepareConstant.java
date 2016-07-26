@@ -373,7 +373,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
 		if(title!=null && !"".equals(title.trim())){
 			path += path.endsWith("title=")
 					? URLEncoder.encode(title, "utf-8") 
-					:  (path.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(title, "utf-8");
+					:  ((path.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(title, "utf-8"));
 		}
 		path = path.replace(resServiceLocal, currentResService);
         // 重新赋值path
@@ -441,5 +441,17 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         info.setPath(path);
 
     }
+    
+    
+    public static void main(String[] args) throws UnsupportedEncodingException {
+		String s = "男";
+		String s2 = "女";
+		
+		System.out.println(new String(s.getBytes("utf-8")) );
+		System.out.println(new String(s2.getBytes("utf-8")) );
+		
+		
+	}
+    
     
 }

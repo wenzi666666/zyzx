@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService {
     @Override
 	public UserSimple getUserSimpleById(long id, String model, boolean isRepeatLogin, boolean isCache) {
     	 // 1 获取UserSimple
-        UserSimple us = mapper.getUserSimpleById(id);
+        UserSimple us = getUserSimpleById(id);
         
         //设置从什么产品登录
         us.setModel(model);
@@ -106,11 +106,29 @@ public class UserServiceImpl implements UserService {
 	}
     
     
+    private UserSimple getUserSimpleById(long id){
+        // 1 获取UserSimple
+        UserSimple us = mapper.getUserSimpleById(id);
+        return reSetUserSimpleMale(us) ;
+    }
+    
+    private UserSimple reSetUserSimpleMale(UserSimple us){
+    	if(us==null){
+    		return us ;
+    	}
+    	 if("1".equals(us.getMale())){
+         	us.setMale("女");
+         }else if("0".equals(us.getMale())){
+         	us.setMale("男");
+         }
+    	 return us ;
+    }
+    
     @Override
     public UserSimple getUserSimpleById(long id, String model) {
 
         // 1 获取UserSimple
-        UserSimple us = mapper.getUserSimpleById(id);
+        UserSimple us = getUserSimpleById(id);
         
         //设置从什么产品登录
         //us.setModel(model);
@@ -134,7 +152,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserSimple getUserSimpleByName(String name) {
-        return mapper.getUserSimpleByName(name);
+    	
+        return  reSetUserSimpleMale(mapper.getUserSimpleByName(name));
     }
 
     @Override
