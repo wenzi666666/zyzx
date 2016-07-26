@@ -371,7 +371,9 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         
 		//增加title,支持下载文件的重命名
 		if(title!=null && !"".equals(title.trim())){
-			path +=   (path.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(title, "utf-8");
+			path += path.endsWith("title=")
+					? URLEncoder.encode(title, "utf-8") 
+					:  (path.indexOf("?")>0?"&":"?")+ "title="+URLEncoder.encode(title, "utf-8");
 		}
 		path = path.replace(resServiceLocal, currentResService);
         // 重新赋值path
