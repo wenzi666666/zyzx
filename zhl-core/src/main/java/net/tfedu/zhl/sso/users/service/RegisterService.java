@@ -45,5 +45,9 @@ public interface RegisterService {
      * @return
      */
     public SRegister addRegister(RegisterAddForm form,String userName, String platformcode)throws Exception;
+    
+    
+   
+    
 
 }

@@ -31,6 +31,10 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.subject.servcice.SubjectService;
+import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.sso.term.service.JTermService;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
@@ -47,6 +51,11 @@ public class UserController {
 
 	@Resource
 	private RegisterService registerService;
+	
+	@Resource
+	private JTermService jTermService;
+
+
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
@@ -195,6 +204,7 @@ public class UserController {
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
+		String maleStr = "";
 
 		if (currentUserId != null) {
 			long userId = currentUserId;
@@ -217,6 +227,7 @@ public class UserController {
 			}
 			//后端取前端的标识的相反值
 			male = !male;
+			maleStr = male?"女":"男";
 		
 			
 			if (StringUtils.isNotEmpty(_termId)) {
@@ -232,6 +243,17 @@ public class UserController {
 				userService.updateUserInfo(userId, trueName, male, termId,
 						subjectId);
 			}
+			
+			String token = request.getHeader("Authorization");
+	        //如果从缓存获取直接返回
+	        UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+	        us.setMale(maleStr);
+	        us.setTermName(((JTerm)jTermService.get(termId).getData()).getName());
+	        us.setSubjectNames(jTermService.getSubjectById(subjectId).getName());
+	        us.setSubjectIds(String.valueOf(subjectId));
+	        //更新缓存
+	        UserTokenCacheUtil.updateUserInfoCacheMethod(cacheManager, token, us);
+
 		}
 
 		return ResultJSON.getSuccess(data);
@@ -248,6 +270,7 @@ public class UserController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
+		String token = request.getHeader("Authorization");
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -257,9 +280,20 @@ public class UserController {
 			long userId = currentUserId;
 			String userImage = request.getParameter("userImage");
 			userService.updateUserImage(userId, userImage);
-
+			
+			
+			
+			
+	        //如果从缓存获取直接返回
+	        UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+	        us.setUserImage(userImage);
+	        //重置头像
+	        UserImageCheckUtil.checkUserImage(us, commonWebConfig, request);
+	        //更新缓存
+	        UserTokenCacheUtil.updateUserInfoCacheMethod(cacheManager, token, us);
+	        
 			//返回检查后的头像信息
-			data = UserImageCheckUtil.checkUserImage(userImage, commonWebConfig, request);
+			data = us.getUserImage();
 			
 		}
 

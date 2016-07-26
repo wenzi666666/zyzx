@@ -46,9 +46,9 @@ public class UserControllerTest extends BaseControllerTestCase {
 	public void testUpdateUserInfo() throws Exception {
 
 		request.setParameter("trueName", "admin_trueName_trueName");
-		request.setParameter("termId", "2");
-		request.setParameter("subjectId", "3");
-		request.setParameter("male", "true");
+		request.setParameter("termId", "3");
+		request.setParameter("subjectId", "4");
+		request.setParameter("male", "false");
 		request.setParameter("userImage", "/person/head/Icon10.jpg");
 		request.setParameter("_method", "PATCH");
 

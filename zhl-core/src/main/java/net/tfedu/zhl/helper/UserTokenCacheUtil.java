@@ -210,6 +210,18 @@ public class UserTokenCacheUtil {
 	}
 	
 	
+	/**
+	 * 更新用户缓存
+	 * @param cache
+	 * @param cacheManager
+	 * @param token
+	 */
+	public static void updateUserInfoCacheMethod(CacheManager cacheManager,String token,UserSimple us){
+		//缓存当前的用户登录信息
+		cacheManager.getCache(USERINFO_CACHE_NAMESPACE).put(token, us);
+		logger.info(" 更新当前的用户信息,token:"+token+",UserSimple:"+us.toString());
+		
+	}
 	
 	
 	
