@@ -207,11 +207,18 @@ public class UserController {
 			String _male = request.getParameter("male");
 			String _method = request.getParameter("_method");
 
+			
+			//前端true为男 false 为女
+			//后端true为女 false 为男
 			if (StringUtils.isNotEmpty(_male)
 					&& ("Y".equalsIgnoreCase(_male) || "true"
 							.equalsIgnoreCase(_male))) {
 				male = true;
 			}
+			//后端取前端的标识的相反值
+			male = !male;
+		
+			
 			if (StringUtils.isNotEmpty(_termId)) {
 				termId = Long.parseLong(_termId);
 			}
