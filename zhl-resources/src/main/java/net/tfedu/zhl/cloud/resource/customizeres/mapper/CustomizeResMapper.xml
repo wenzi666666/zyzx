@@ -76,7 +76,7 @@
 	FROM j_customizeres  m
 	LEFT JOIN x_resourcetype r on r.id = m.typeid 
 	LEFT JOIN z_resource  z on z.rescode = m.rescode 
-	where m.subjiect = #{subjectCode}
+	where m.subjiect = #{subjectCode} and z.id >0
 	ORDER BY m.subjiect,m.period
   </select>
   
