@@ -211,7 +211,7 @@
 	LEFT JOIN z_resource res on nav.ResCode = res.ResCode 
 	LEFT JOIN j_syscourse sys on sys.tfcode = StructCode 
 	where res.id = #{resId} and nav.flag = false and res.flag = false and sys.flag = false 
-	ORDER BY LOCATE(#{curTfcode},StructCode) desc limit 1
+	ORDER BY LOCATE(#{curTfcode},StructCode) desc 
  </select>
  
  

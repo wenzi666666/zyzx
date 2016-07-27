@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
@@ -449,7 +450,11 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
 		
 		System.out.println(new String(s.getBytes("utf-8")) );
 		System.out.println(new String(s2.getBytes("utf-8")) );
-		
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
 		
 	}
     

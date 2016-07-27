@@ -41,19 +41,19 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	*//**
 	 * 根据resId，查询资源的所有版本目录
 	 * @throws Exception
-	 *//*
+	 */
 	@Test
 	public void testGetAllLists()throws Exception{
-		request.setParameter("resId", "12");
+		request.setParameter("resId", "42941");
 		request.setParameter("fromFlag", "0");
-		request.setParameter("curTfcode", "RJCZ010109");
+		request.setParameter("curTfcode", "BJCZ010104");
 		
 		ResultJSON json =  controller.getAllLists(request, response);
 		
         JsonUtil.toJsonString(json);
         
         Assert.isTrue("OK".equals(json.getCode()));
-	}*/
+	}
 	
 	/**
 	 * 资源检索结果   的资源推荐列表
