@@ -129,6 +129,19 @@
 		</profile>
 		
 		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>yanqingRes</id>
+			<properties>
+ 				<package.environment>yanqingRes</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		
+		<profile>
 			<id>teaching</id>
 			<properties>
                 <package.environment>local</package.environment>
