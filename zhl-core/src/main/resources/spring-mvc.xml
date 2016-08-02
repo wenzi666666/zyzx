@@ -60,6 +60,15 @@
 <!--         <bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
 		
  -->       
+ 
+ 	<!-- 跨域OPTION接口拦截器   --> 
+        <mvc:interceptor>
+        	<mvc:mapping path="/**/**"/>
+           	<bean class="net.tfedu.zhl.helper.CrossDomainInterceptor" />
+      
+        </mvc:interceptor>
+ 
+ 
         <mvc:interceptor>
         	<mvc:mapping path="/*RestAPI/**/**"/>
         	<mvc:exclude-mapping path="/resRestAPI/thirdparty/**" />
