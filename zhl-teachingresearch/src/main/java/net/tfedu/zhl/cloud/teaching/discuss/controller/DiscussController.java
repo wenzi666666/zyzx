@@ -280,8 +280,8 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		record.setNote(note);
 		record.setVisit_name(visit_name);
 		record.setVisit_pwd(visit_pwd);
-		record.setClassurl(classurl);
-		
+		record.setClassurl(classurl.trim());
+		System.out.println(classurl.trim());
 		return discussService.update(record) ;
 	}
 	

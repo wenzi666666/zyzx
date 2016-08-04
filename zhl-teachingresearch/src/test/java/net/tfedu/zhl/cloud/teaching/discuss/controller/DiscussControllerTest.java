@@ -72,14 +72,15 @@ public class DiscussControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testUpdateRecomended() throws Exception {
-		request.setParameter( "className","test测试班级"); //	班级名称
-		request.setParameter( "classImage","2.png");	//班级图片路径
+		request.setParameter( "className","到很晚的我觉得"); //	班级名称
+		request.setParameter( "classImage","http://ac-LPYK8MCl.clouddn.com/83e27cf07368290fde32.jpg");	//班级图片路径
 		request.setParameter( "schoolName","测试学校");		//学校名称
-		request.setParameter( "classId","20105");	//班级id
 		request.setParameter("visit_name", "csls10");
 		request.setParameter("visit_pwd", "111111");
+		request.setParameter("classurl"
+, "http://192.168.111.8/net_jyForum.action?args=Y3N4czA1OjAwMDAwMA==&targetPage=http%3A%2F%2F192.168.111.8%2Fnet_jyForum.action%3Fargs%3DY3N4czA1OjAwMDAwMA%3D%3D%26targetPage%3Dhttp%253A%252F%252F192.168.111.8%252F%252FmyForum%252FforumGrade_forumGradeState.action%253FclassNo%253D5%2526partId%253D0%2523%2521partId50247");
 		request.setParameter( "note","note");//班级简介		
-		result = controller.updateRecomended(request, 1l);
+		result = controller.updateRecomended(request, 73l);
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 		log.info(JSONObject.toJSONString(result));
 	}

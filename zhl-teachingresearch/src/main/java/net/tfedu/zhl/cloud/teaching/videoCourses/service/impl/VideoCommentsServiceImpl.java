@@ -62,9 +62,11 @@ public class VideoCommentsServiceImpl implements VideoCommentsService{
 			
 			//根据用户id，查询其真实姓名、所在学校，用户头像路径
 			UserSimple user = jUserMapper.getUserSimpleById(userId);
-			item.setTrueName(user.getTrueName());
-			item.setUserSchool(user.getSchoolName());
-			item.setUserImage(user.getUserImage());
+			if(null!=user){
+				item.setTrueName(user.getTrueName());
+				item.setUserSchool(user.getSchoolName());
+				item.setUserImage(user.getUserImage());
+			}
 			
 		}
 		
