@@ -160,11 +160,6 @@ public class PrepareController {
 	@ResponseBody
 	public ResultJSON getPrepare(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// 返回json的结果对象
-		ResultJSON result = new ResultJSON();
-		// 异常
-		CustomException exception = (CustomException) request
-				.getAttribute(CustomException.request_key);
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -194,11 +189,7 @@ public class PrepareController {
 	@ResponseBody
 	public ResultJSON getSelfPrepare(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// 返回json的结果对象
-		ResultJSON result = new ResultJSON();
-		// 异常
-		CustomException exception = (CustomException) request
-				.getAttribute(CustomException.request_key);
+
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
@@ -234,18 +225,10 @@ public class PrepareController {
 		// 返回
 		Object data = null;
 
-		int page = 1;
-		int prePage = 10;
+		int page = ControllerHelper.getPage(request);
+		int prePage = ControllerHelper.getPageSize(request);
 
-		String _page = request.getParameter("page");
-		String _prePage = request.getParameter("perPage");
-
-		if (StringUtils.isNotEmpty(_page)) {
-			page = Integer.parseInt(_page);
-		}
-		if (StringUtils.isNotEmpty(_prePage)) {
-			prePage = Integer.parseInt(_prePage);
-		}
+		
 
 		long userId = currentUserId;
 		String tfcode = request.getParameter("tfcode");

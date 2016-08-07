@@ -32,10 +32,12 @@ import net.tfedu.zhl.helper.ResultJSON;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.github.pagehelper.PageHelper;
 
 @Service("jPrepareService")
+@Transactional
 public class JPrepareServiceImpl implements JPrepareService {
 
 	/**
@@ -173,7 +175,6 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public List<JPrepareView> queryPrepareList(String tfcode, Long userId) {
-        // TODO Auto-generated method stub
         return mapper.queryPrepareList(tfcode + "%", userId);
     }
 
@@ -185,13 +186,11 @@ public class JPrepareServiceImpl implements JPrepareService {
     
     @Override
     public List<JPrepareView> queryPrepareAndTimeScopeList(String tfcode,String title, Long userId) {
-        // TODO Auto-generated method stub
         return mapper.queryPrepareAndTimeScopeList(tfcode + "%",StringUtils.isEmpty(title)?"":("%"+title+"%"), userId);
     }
 
     @Override
     public List<JPrepareContentView> queryPrepareContentList(Long prepareId) {
-        // TODO Auto-generated method stub
 
         List<JPrepareContentView> list = mapper.queryPrepareContentList(prepareId);
         return list;
@@ -199,7 +198,6 @@ public class JPrepareServiceImpl implements JPrepareService {
 
     @Override
     public void removeResourceFromPrepare(Long prepareId, Integer contType, Long contId) {
-        // TODO Auto-generated method stub
     	mapper.removeResourceFromPrepare(prepareId, contType, contId);
     	
     	
@@ -366,7 +364,6 @@ public class JPrepareServiceImpl implements JPrepareService {
 	@Override
 	public List<ResourceSimpleInfo> getResourceSimpleInfoForView(String[] ids,
 			String[] fromFlags,Long userId) {
-		// TODO Auto-generated method stub		
 		List<ResourceSimpleInfo>  list = this.getResourceSimpleInfo(ids, fromFlags);
 		
 		List<JUserlog> logList = new ArrayList<JUserlog>();
@@ -436,7 +433,7 @@ public class JPrepareServiceImpl implements JPrepareService {
 	@Override
 	public List<ResourceSimpleInfo> getResourceSimpleInfoForDownload(
 			String[] ids, String[] fromFlags ,Long userId) {
-		// TODO Auto-generated method stub
+		
 		List<ResourceSimpleInfo>  list = this.getResourceSimpleInfo(ids, fromFlags);		
 		List<ResDownRecord> downList =new ArrayList<ResDownRecord>();
 		Date time = Calendar.getInstance().getTime();
