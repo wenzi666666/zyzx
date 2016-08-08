@@ -97,8 +97,8 @@ public class JNZXRelativeUtil {
 	 * 增加注册并增加映射关系(指定roleId)
 	 * @param info
 	 * @param registerService
-	 * @param userName
-	 * @param platformcode
+	 * @param userName    用户在 第三方平台的用户名
+	 * @param platformcode   第三方平台code
 	 * @return
 	 * @throws Exception
 	 */

@@ -78,7 +78,7 @@
 				<web.name>resources</web.name>
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -161,7 +161,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	</profiles>
@@ -559,6 +559,30 @@
 	    <artifactId>httpclient</artifactId>
 	    <version>${httpclient.version}</version>
 	</dependency>
+		
+	<!-- https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-client -->
+	<dependency>
+	    <groupId>org.apache.xmlrpc</groupId>
+	    <artifactId>xmlrpc-client</artifactId>
+	    <version>3.1.3</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.xmlrpc/xmlrpc-common -->
+	<dependency>
+	    <groupId>org.apache.xmlrpc</groupId>
+	    <artifactId>xmlrpc-common</artifactId>
+	    <version>3.1.3</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.ws.commons/ws-commons-util -->
+	<dependency>
+	    <groupId>org.apache.ws.commons</groupId>
+	    <artifactId>ws-commons-util</artifactId>
+	    <version>1.0.1</version>
+	</dependency>
+
+
+
 
 	</dependencies>
 </project>
