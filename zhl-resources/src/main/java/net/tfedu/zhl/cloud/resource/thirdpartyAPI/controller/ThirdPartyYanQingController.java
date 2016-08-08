@@ -124,7 +124,7 @@ public class ThirdPartyYanQingController {
 		
 		//支持中文提示
 		response.setCharacterEncoding("GBK");
-		
+
 		
 		
 		//第三方系统中的用户名
