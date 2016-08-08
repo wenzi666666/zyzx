@@ -122,6 +122,11 @@ public class ThirdPartyYanQingController {
 	public Object login(HttpServletRequest request ,HttpServletResponse response
 			) throws ClientProtocolException, IOException,Exception{
 		
+		//支持中文提示
+		response.setCharacterEncoding("GBK");
+		
+		
+		
 		//第三方系统中的用户名
 		String userName = null;
 		//zhl系统中的用户名
