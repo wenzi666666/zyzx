@@ -118,7 +118,7 @@ public class ThirdPartyYanQingController {
 	
 	
 	
-	@RequestMapping(value="/v1.0/login/yq/")	
+	@RequestMapping(value="/v1.0/login/yanqing/")	
 	public Object login(HttpServletRequest request ,HttpServletResponse response
 			) throws ClientProtocolException, IOException,Exception{
 		
