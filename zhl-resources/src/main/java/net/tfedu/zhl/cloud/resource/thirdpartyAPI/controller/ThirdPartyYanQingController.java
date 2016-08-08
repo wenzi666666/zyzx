@@ -122,6 +122,10 @@ public class ThirdPartyYanQingController {
 	public Object login(HttpServletRequest request ,HttpServletResponse response
 			) throws ClientProtocolException, IOException,Exception{
 		
+		response.setCharacterEncoding("utf-8");
+		
+		
+		
 		//第三方系统中的用户名
 		String userName = null;
 		//zhl系统中的用户名
