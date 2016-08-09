@@ -54,6 +54,22 @@ public class YanQingUtil {
 	
 	
 	
+	/**
+	 * 获取接口路径
+	 * @return
+	 */
+	public static String getHost(ResourceThirdPartyConfig resourceThirdPartyConfig){
+		// xml-rpc的url地址
+		String host = resourceThirdPartyConfig.getYq_host();
+		if(StringUtils.isEmpty(host)){
+			host = DEFAULT_HOST;
+		}
+				
+		return host ;
+	}
+	
+	
+	
 	
 
 	/**
@@ -68,12 +84,8 @@ public class YanQingUtil {
 	 */
 	public static String getUserId(ResourceThirdPartyConfig resourceThirdPartyConfig,String sessid)
 			throws MalformedURLException, XmlRpcException {
-		// xml-rpc的url地址
-		String host = resourceThirdPartyConfig.getJnzx_host();
-		if(StringUtils.isEmpty(host)){
-			host = DEFAULT_HOST;
-		}
-		
+		//获取接口
+		String host = getHost(resourceThirdPartyConfig);
 		
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL(host));
@@ -95,11 +107,11 @@ public class YanQingUtil {
 	 */
 	public static HashMap<String,Object> getUserInfo(ResourceThirdPartyConfig resourceThirdPartyConfig,String user_id)
 			throws MalformedURLException, XmlRpcException {
-		// xml-rpc的url地址
-		String host = resourceThirdPartyConfig.getJnzx_host();
-		if(StringUtils.isEmpty(host)){
-			host = DEFAULT_HOST;
-		}
+		
+		
+		//获取接口
+		String host = getHost(resourceThirdPartyConfig);
+
 		
 		XmlRpcClientConfigImpl config = new XmlRpcClientConfigImpl();
 		config.setServerURL(new URL(host));
