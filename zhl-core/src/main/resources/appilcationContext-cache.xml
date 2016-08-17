@@ -4,11 +4,25 @@
     <!-- DefaultCache setting. -->
     <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
                   overflowToDisk="true" maxEntriesLocalDisk="100000"/>
+               
+     <!-- 
+    <cacheManagerPeerProviderFactory
+    class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+    properties="peerDiscovery=automatic, multicastGroupAddress=230.0.111.1,
+    multicastGroupPort=4448, timeToLive=1"
+	/>
+      -->
+               
+               
                   
     <!-- 登录用户token对应对象的缓存  timeToIdleSeconds 不活跃的缓存时间 -->              
-    <cache name="UserSimpleCache" maxElementsInMemory="900000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false"/>
+    <cache name="UserSimpleCache" maxElementsInMemory="900000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
+    	 <!-- <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/> -->
+    </cache>
     <!-- 缓存对象的token -->  
-    <cache name="TokenCache" maxElementsInMemory="90000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false"/>  
+    <cache name="TokenCache" maxElementsInMemory="90000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
+	     <!-- <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/> -->
+    </cache>  
 
     <!-- 被踢出的token，保留1小时 -->  
     <cache name="KickOutTokenCache" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false"/>  

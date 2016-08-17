@@ -164,6 +164,23 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
+		
+		<profile>
+			<id>teachingProduct</id>
+			<properties>
+                <package.environment>teachingProduct</package.environment>
+                <buss.name>zhl-teachingresearch</buss.name>
+				<web.name>teachingresearch</web.name>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		
+		
 	</profiles>
 
 	<modelVersion>4.0.0</modelVersion>
