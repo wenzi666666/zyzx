@@ -181,6 +181,8 @@ public class ThirdPartyYanQingController {
 				
 				HashMap extend_temp = JSONObject.parseObject(extend_info, HashMap.class);
 				String school =  (String)extend_temp.get("k12_school");
+				school = StringUtils.isEmpty(school)?default_school:school;
+				log.debug("--school--"+school);
 				
 				
 				//当前username是否已经映射过

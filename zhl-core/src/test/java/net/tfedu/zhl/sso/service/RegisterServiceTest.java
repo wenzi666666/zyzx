@@ -61,10 +61,10 @@ public class RegisterServiceTest extends BaseControllerTestCase {
     	
     	form.setProvinceName("北京");
     	form.setCityName("北京市");
-    	form.setArealName("海淀区");
-    	form.setSchoolName("测试学校1");
+    	form.setArealName("延庆县");
+    	form.setSchoolName("延庆县测试学校1");
     	form.setMotto("xxx");
-    	form.setNickName("myTestUser");
+    	form.setNickName("myTestUser2");
     	form.setRole(2);
     	form.setSex(false);
     	form.setSubjectName("数学");

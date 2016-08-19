@@ -240,6 +240,8 @@ public class RegisterServiceImpl implements RegisterService {
 			record.setName(schoolName);
 			record.setCreatedate(date);
 			record.setDistrictid(String.valueOf(districtId));
+			schMapper.insertSelective(record);
+			schoolId = record.getId();
 		}else{
 			schoolId = schList.get(0).getId();
 		}

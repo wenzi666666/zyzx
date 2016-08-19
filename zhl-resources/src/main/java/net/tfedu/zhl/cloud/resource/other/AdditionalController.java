@@ -86,7 +86,7 @@ public class AdditionalController {
 		s = URLEncoder.encode(s, "utf-8");
 		
 		//情景英语
-		String url = config.getCurrentSceneEnglish(request)+"?s=" + s;
+		String url = config.getCurrentSceneEnglish(request).trim()+"?s=" + s;
 		System.out.println("------sceneEnglish----"+url);
 		return  ResultJSON.getSuccess(url) ;
 	}

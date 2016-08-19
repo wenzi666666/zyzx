@@ -33,6 +33,6 @@
   </select>
   
   <select id="querySchoolByDistrictIdAndName" resultMap="BaseResultMap">
-  	select * from j_school  where districtId = 17 and flag =false and name = '张家口十二中学' ORDER BY id
+  	select * from j_school  where districtId = #{districtId} and flag =false and name = #{name} ORDER BY id
   </select>
 </mapper>
