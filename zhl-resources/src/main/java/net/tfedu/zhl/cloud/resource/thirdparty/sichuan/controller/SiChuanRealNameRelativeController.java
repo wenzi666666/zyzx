@@ -218,8 +218,8 @@ public class SiChuanRealNameRelativeController {
 					form.setNickName(nickName);
 					form.setRole(roleId);
 					form.setSex(false);
-					form.setSubjectName(subjectNames);
-					form.setTermName(termId==1?"小学":termId==2?"初中":termId==3?"高中":"其他");
+					form.setSubjectName(subjectNames==null?"语文":subjectNames);
+					form.setTermName(termId==1?"小学":termId==2?"初中":termId==3?"高中":"初中");
 					form.setTrueName(trueName);
 					form.setUserName(zhl_username);
 					register =  registerService.addRegister(form, userName, platformCode);

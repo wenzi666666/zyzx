@@ -91,4 +91,11 @@ public class CountryControllerTest extends BaseControllerTestCase {
         JsonUtil.toJsonString(json);
         Assert.isTrue("OK".equals(json.getCode()));
     }
+
+    @Test
+    public void testGetById() throws Exception{
+        ResultJSON json = countryController.getById(1);
+        JsonUtil.toJsonString(json);
+        Assert.isTrue("OK".equals(json.getCode()));
+    }
 }
