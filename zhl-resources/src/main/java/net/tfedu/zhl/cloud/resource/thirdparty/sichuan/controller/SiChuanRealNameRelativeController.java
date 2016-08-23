@@ -143,7 +143,7 @@ public class SiChuanRealNameRelativeController {
 			userName = user.getName();
 			trueName = userName;
 			nickName = userName;
-			roleId = "26".equals(user.getType())?roleId:"27".equals(user.getType())?2:roleId;
+//			roleId = "26".equals(user.getType())?roleId:"27".equals(user.getType())?roleId:roleId;
 			
 			
 			//获取用户信息
