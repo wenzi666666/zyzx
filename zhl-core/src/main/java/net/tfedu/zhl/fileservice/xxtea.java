@@ -228,9 +228,10 @@ public class xxtea {
 
     /**
      * @param args
+     * RS6XaCLv1TOS8tlcmM4ecQipNX%2FylE%2BuPeCqSh%2BM0EA%3D
      */
     public static void main(String[] args) throws MalformedURLException {
-        String str = "NxdW5Ldd3uF+s68ZoB6h3xPxVK8R4kzw6GTyMYRuF1Sw7fvMcnZMJNcVY8gJ7/6pBsLBiVuhe2DjGO73MbM+oKsBYTJMiv5x";
+        String str = "RS6XaCLv1TOS8tlcmM4ecQipNX%2FylE%2BuPeCqSh%2BM0EA%3D";
         String strKey = "9k8i78jug6hd93kjf84h";
         try {
             System.out.println(xxtea.decryptstring(str, strKey));

@@ -19,6 +19,7 @@ import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutSignError;
+import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
@@ -80,6 +81,8 @@ public class AutoLoginController {
 			throw new ParamsException();
 		}
 		//获取参数
+		log.info("----args----:"+args);
+		log.info("----sign----:"+sign);
 		String parmas = getParams(args);
 		
 		//校验
@@ -131,7 +134,9 @@ public class AutoLoginController {
 	 */
 	private String getParams(String args) throws IOException{
 		
-		args = URLDecoder.decode(args, "utf-8");
+//		args = URLDecoder.decode(args, "UTF-8");
+		
+		log.info("--getParams---URLDecoder.decode--args:"+args);
 		
 		return  xxtea.decryptstring(args, MD5_KEY) ;
 		
@@ -160,21 +165,20 @@ public class AutoLoginController {
 	
 	
 	public static void main(String[] args) throws IOException {
-//		String _args = "YCRYAmjxmlXvuNHTA1gC9hlyLRB%2FG0YHh5BzNJrUyBc%3D";
-//		
-//		_args = URLDecoder.decode(_args, "utf-8");
-//		
-//		byte[] bytes =  Base64.decode(_args);
-//		
-//		byte[] temp = xxtea.decrypt(bytes, MD5_KEY.getBytes("utf-8"));
-//		
-//		
-//		System.out.println( xxtea.decryptstring(_args, MD5_KEY) );
+		String ps = "RS6XaCLv1TOS8tlcmM4ecQipNX%2FylE%2BuPeCqSh%2BM0EA%3D";
+
+		String _args = URLDecoder.decode(ps, "utf-8");
+		
+		byte[] bytes =  Base64.decode(_args);
+		
+		byte[] temp = xxtea.decrypt(bytes, MD5_KEY.getBytes("utf-8"));
+		
+		System.out.println(new String(temp,"UTF-8"));
+		System.out.println( xxtea.decryptstring(_args, MD5_KEY) );
 		
 		
 		
 		
-		String ps = "user=bjcsls01&userpwd=000000";
 		
 		
 		
