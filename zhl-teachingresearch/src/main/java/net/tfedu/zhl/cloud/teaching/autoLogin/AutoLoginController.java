@@ -113,7 +113,7 @@ public class AutoLoginController {
 		user = userService.getUserSimpleById(reg.getId(), "",commonWebConfig.getIsRepeatLogin());
 
 		//重定向到教研
-		String url = "http://fw.tfedu.net/router?userId="+user.getUserId()+"&token="+user.getToken();
+		String url = commonWebConfig.getTeachingResearchWebUrl()+"/router?userId="+user.getUserId()+"&token="+user.getToken();
 		log.info("-autologin--url--"+url);
 		response.sendRedirect(url);
 		

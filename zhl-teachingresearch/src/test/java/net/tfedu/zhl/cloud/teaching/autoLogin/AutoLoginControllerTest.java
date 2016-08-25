@@ -1,7 +1,5 @@
 package net.tfedu.zhl.cloud.teaching.autoLogin;
 
-import static org.junit.Assert.*;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
