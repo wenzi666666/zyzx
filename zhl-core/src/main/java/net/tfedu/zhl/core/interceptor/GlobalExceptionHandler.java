@@ -20,6 +20,7 @@ import net.tfedu.zhl.core.exception.PrepareContentExistException;
 import net.tfedu.zhl.core.exception.UnCustomException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
+import net.tfedu.zhl.core.exception.WithoutSignError;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -191,6 +192,16 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultJSON handleAPIErrorException(HttpServletRequest request, HttpServletResponse response,
     		APIErrorException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
+        return result;
+    }
+    
+    
+    @ResponseStatus(value = HttpStatus.OK)
+    @ExceptionHandler(WithoutSignError.class)
+    @ResponseBody
+    public ResultJSON handleWithoutSignError(HttpServletRequest request, HttpServletResponse response,
+    		WithoutSignError e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
     }

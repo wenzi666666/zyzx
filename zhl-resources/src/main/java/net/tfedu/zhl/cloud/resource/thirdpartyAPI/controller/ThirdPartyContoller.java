@@ -156,7 +156,7 @@ public class ThirdPartyContoller {
 		    			i++;
 		    		}
 		    		//可以注册了
-		    		info.getBODY().setUSER_ID(zhl_username);
+		    		info.getBODY().setUSER_ID(zhl_username);		    		
 		    	}
 	    		register =  JNZXRelativeUtil.registNewUserByZXAPI(info, registerService,userName, platformcode);
 	    		zhl_userid =  register.getId();

@@ -57,7 +57,7 @@ public class CountryController {
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResultJSON getById(@PathVariable int id) throws Exception {
-        return countryService.get(id);
+        return countryService.get(new Long(id));
     }
 
     /**

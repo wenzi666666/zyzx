@@ -130,7 +130,9 @@ public class JNZXRelativeUtil {
 		form.setSchoolName(schoolName);
 		form.setMotto(_motto);
 		form.setNickName(_nickName);
-		form.setRole("00".equals(_userType) ? roleId : 2);
+		//济宁中兴的全部都改为教师
+		form.setRole(roleId);
+//		form.setRole("00".equals(_userType) ? roleId : 2);
 		form.setSex("0".equals(_sex) ? false : true);
 		form.setSubjectName("语文");
 		form.setTermName("初中");
