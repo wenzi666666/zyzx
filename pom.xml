@@ -78,7 +78,7 @@
 				<web.name>resources</web.name>
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -149,7 +149,7 @@
 				<web.name>teachingresearch</web.name>
             </properties>  
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 	<profile>

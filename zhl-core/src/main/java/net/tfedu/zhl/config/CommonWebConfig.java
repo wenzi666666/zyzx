@@ -121,6 +121,28 @@ public class CommonWebConfig {
 	
 	
 	/**
+	 * 教研服务的前端web地址
+	 */
+	@Value("#{configProperties['teachingResearchWebUrl']}")	
+	public String  teachingResearchWebUrl;
+	
+	
+	
+	
+	
+	
+	
+	public String getTeachingResearchWebUrl() {
+		return teachingResearchWebUrl;
+	}
+
+
+	public void setTeachingResearchWebUrl(String teachingResearchWebUrl) {
+		this.teachingResearchWebUrl = teachingResearchWebUrl;
+	}
+
+
+	/**
 	 *获取配置的host
 	 * @return
 	 */
