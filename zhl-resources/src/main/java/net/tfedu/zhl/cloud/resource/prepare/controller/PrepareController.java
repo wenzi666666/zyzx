@@ -789,6 +789,11 @@ public class PrepareController {
 
 			// 增加title,支持下载文件的重命名
 			if (zipname != null && !"".equals(zipname)) {
+				
+				if(!zipname.endsWith(".zip")&& !zipname.endsWith(".ZIP")){
+					zipname += ".zip";
+				}
+				
 				zippath += (zippath.indexOf("?") > 0 ? "&" : "?") + "title="
 						+ URLEncoder.encode(zipname, "utf-8");
 			}

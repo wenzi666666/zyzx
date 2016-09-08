@@ -13,7 +13,7 @@ public class PWDEncrypt {
     /**
      * 获取字符串对应的ASCII码
      * 
-     * @param str
+     * @param str  
      * @return
      */
     private static int[] getASCII(String str) {
