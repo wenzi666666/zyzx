@@ -144,12 +144,12 @@
 		<profile>
 			<id>teaching</id>
 			<properties>
-                <package.environment>local</package.environment>
+                <package.environment>teaching</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
             </properties>  
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	<profile>
@@ -161,7 +161,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 		

@@ -7,6 +7,11 @@ import javax.persistence.*;
 @Table(name = "j_teachersubject")
 public class JTeacherSubject implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * 自增id
      */
     @Id

@@ -32,7 +32,7 @@ import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
@@ -54,7 +54,7 @@ public class ThirdPartyYanQingController {
 	Logger log = LoggerFactory.getLogger(ThirdPartyYanQingController.class);
 	
 	@Resource
-	private UserService userService;
+	private JUserService userService;
 
 	@Resource
 	private RegisterService registerService;

@@ -268,4 +268,14 @@
 	</if>
 	)final_table group by name ORDER BY name,truename
   </select>
+  
+  
+  <!--  获取maincenter_yun数据库j_user表中缺少的jx用户的注册信息     nodeid = 1700105 and RoleId = 2  -->
+  <select id="getMissUserBetweenJXAndSSO" resultType="Long">
+  	select Id from  s_register  s where nodeid = 1700105 and RoleId = 2 and NOT EXISTS (select id from j_user u where u.id = s.id )
+  </select>
+  
+  
+  
+  
 </mapper>

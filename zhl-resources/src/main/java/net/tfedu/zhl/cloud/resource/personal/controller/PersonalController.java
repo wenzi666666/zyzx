@@ -28,7 +28,7 @@ import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -75,7 +75,7 @@ public class PersonalController {
 	UserLogService userLogService;
 
 	@Resource
-	private UserService userService;
+	private JUserService userService;
 
 	@Resource
 	private RegisterService registerService;

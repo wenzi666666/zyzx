@@ -22,7 +22,7 @@ import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -42,7 +42,7 @@ public class AutoLoginController {
 	private static final String MD5_KEY = "9k8i78jug6hd93kjf84h";
 
 	@Resource
-	UserService userService;
+	JUserService userService;
 
 	@Resource
 	RegisterService registerService;

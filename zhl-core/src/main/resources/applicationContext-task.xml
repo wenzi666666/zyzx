@@ -11,6 +11,9 @@
 	<!-- Activates scanning of @Autowired -->
     <context:annotation-config/>
     
+    
+    
+    <task:annotation-driven/>
 	<!-- 通配符说明： -->
 	<!-- 1、在classpath后面的*必不可少，缺少*号的话后面的通配符不起作用。 -->
 	<!-- 2、**表示可以表示任意多级目录 -->

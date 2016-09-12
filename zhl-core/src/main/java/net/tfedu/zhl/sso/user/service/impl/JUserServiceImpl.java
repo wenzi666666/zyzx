@@ -14,6 +14,7 @@ import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
@@ -23,7 +24,7 @@ import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
 import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
@@ -34,7 +35,7 @@ import net.tfedu.zhl.sso.users.entity.FuncListSimple;
  *
  */
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserService{
 
     @Autowired
     private JUserMapper mapper;
@@ -202,6 +203,17 @@ public class UserServiceImpl implements UserService {
         PageInfo<JUserTeachingQueryEntity> data = new PageInfo<JUserTeachingQueryEntity>(list);
 		
         return ResultJSON.getSuccess(data);
+	}
+
+	@Override
+	public List<Long> getMissUserBetweenJXAndSSO() throws Exception {
+		
+		return mapper.getMissUserBetweenJXAndSSO();
+	}
+
+	@Override
+	public void addUser(JUser user) {
+		mapper.insertSelective(user);
 	}
 
 	

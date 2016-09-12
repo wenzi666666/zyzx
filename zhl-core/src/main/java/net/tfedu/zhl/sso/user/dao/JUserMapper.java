@@ -100,5 +100,15 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 */
 	public List<JUserTeachingQueryEntity> queryUserWithRoleAndName(@Param("roleId") long roleId,
 			@Param("name") String name, @Param("model") String model) throws Exception;
+	
+	
+	/**
+	 * 获取maincenter_yun数据库j_user表中缺少的jx用户的注册信息
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Long> getMissUserBetweenJXAndSSO() throws Exception;
+	
+	
 
 }

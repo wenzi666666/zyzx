@@ -23,7 +23,7 @@ import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -49,7 +49,7 @@ public class AutoLoginController {
 	
 	
 	@Resource
-	UserService userService;
+	JUserService userService;
 	
 	@Resource
 	RegisterService registerService;

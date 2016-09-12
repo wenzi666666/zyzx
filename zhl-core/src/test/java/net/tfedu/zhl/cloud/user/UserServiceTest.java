@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
 public class UserServiceTest extends BaseControllerTestCase {
 
     @Resource
-    UserService userService;
+    JUserService userService;
 
     @Test
     public void test() {

@@ -49,7 +49,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.encryption.EPrepareParamEncrypt;
 import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * 备课夹相关接口
@@ -78,7 +78,7 @@ public class PrepareController {
 	ResourceWebConfig resourceConfig;
 	
 	@Resource
-	UserService  userService;
+	JUserService  userService;
 	
 	
 	@Autowired

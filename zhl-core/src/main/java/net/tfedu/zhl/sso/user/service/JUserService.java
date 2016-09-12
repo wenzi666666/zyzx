@@ -1,7 +1,9 @@
 package net.tfedu.zhl.sso.user.service;
 
 import java.util.HashMap;
+import java.util.List;
 
+import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
@@ -12,7 +14,7 @@ import net.tfedu.zhl.sso.user.entity.UserSimple;
  * @author wangwr
  *
  */
-public interface UserService {
+public interface JUserService extends BaseService<JUser>{
 
     /**
      * 根据id获取用户
@@ -108,5 +110,21 @@ public interface UserService {
 	public ResultJSON queryUserWithRoleAndName(long roleId,String name,String model,int page,int perPage) throws Exception;
 	
 	
+	/**
+	 * 获取maincenter_yun数据库j_user表中缺少的jx用户的注册信息
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Long> getMissUserBetweenJXAndSSO() throws Exception;
 
+	
+	
+	/**
+	 * 增加user记录
+	 * @param user
+	 */
+	public void addUser(JUser user);
+	
+	
+	
 }

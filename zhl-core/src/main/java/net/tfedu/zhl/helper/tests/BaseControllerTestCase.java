@@ -12,7 +12,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * Controller 单元测试基类
@@ -36,7 +36,7 @@ public abstract class BaseControllerTestCase {
     protected long endTime;
 
     @Autowired
-    private UserService userService;
+    private JUserService userService;
     
     /**
      * 初始化

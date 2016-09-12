@@ -35,7 +35,7 @@ import net.tfedu.zhl.fileservice.zhldowncenter;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 @Controller
 @RequestMapping("/resRestAPI")
@@ -45,7 +45,7 @@ public class AssetController {
 	 * 用户service
 	 */
 	@Resource
-	private UserService userService;
+	private JUserService userService;
 
 	/**
 	 * 自建资源service

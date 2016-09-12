@@ -32,13 +32,13 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
-import net.tfedu.zhl.sso.subject.servcice.SubjectService;
+import net.tfedu.zhl.sso.subject.servcice.JSubjectService;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.term.service.JTermService;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.UserService;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
@@ -47,7 +47,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 public class UserController {
 
 	@Resource
-	private UserService userService;
+	private JUserService userService;
 
 	@Resource
 	private RegisterService registerService;
