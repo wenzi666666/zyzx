@@ -15,12 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
@@ -40,6 +42,14 @@ public class AutoLoginController {
 	 * 用于生产md5的密钥
 	 */
 	private static final String MD5_KEY = "9k8i78jug6hd93kjf84h";
+
+	
+	/**
+	 * 返回类型为json
+	 */
+	private static final String JSON = "JSON";
+	
+	
 
 	@Resource
 	JUserService userService;
@@ -61,12 +71,17 @@ public class AutoLoginController {
 	 * @throws Exception
 	 */
 	@RequestMapping("autoLogin")
-	public String autoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@ResponseBody
+	public Object autoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// 获取args
 		String args = request.getParameter("args");
 		// 获取logoutUrl
 		String logoutUrl = request.getParameter("logoutUrl");
+		//当resultType = "JSON"时，返回json数据
+		String resultType = request.getParameter("resultType");
+		
+		
 
 		// 获取参数
 		log.info("----args----:" + args);
@@ -113,6 +128,9 @@ public class AutoLoginController {
 		user.setLogoutTarget(null==logoutUrl?"":logoutUrl);
 		user.setThirdParyCode(dockingCode);
 		
+		
+		
+		
 		//组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
 				.append("/systemres").append("?tocken=").append(user.getToken())
@@ -120,9 +138,41 @@ public class AutoLoginController {
 				.append("&iscoursewares=").append(user.getThirdParyCode())
 				.toString();
 		log.info("autoLogin---url:"+url);
+		
+		if("JSON".equalsIgnoreCase(resultType)){
+			return toJSON(user,request,url);
+		}
+		
 		response.sendRedirect(url);
 		return null;
 	}
+	
+	
+	
+	/**
+	 * 返回json 
+	 * @param user    当前用户的信息
+	 * @param request 请求
+	 * @param url     web访问的url
+	 * @return
+	 */
+	@RequestMapping("autoLoginJSON")
+	@ResponseBody
+	public ResultJSON  toJSON(UserSimple user, HttpServletRequest request, String url){
+		
+		HashMap<String,Object> map = new HashMap<String,Object>();
+		
+		map.put("user", user);
+		
+		map.put("webUrl", url);
+		
+		
+		return ResultJSON.getSuccess(map) ;
+	}
+	
+	
+	
+	
 
 	/**
 	 * 返回解密后的参数
