@@ -276,6 +276,36 @@
   </select>
   
   
+  <!-- 
+  
+  <resultMap type="net.tfedu.zhl.sso.user.entity.UserAreaInfo" id="userAreaAllInfo">
+  	<result property="schoolId" column="schoolId"/>
+  	<result property="schoolName" column="schoolName"/>
+  	<result property="districtId" column="districtId"/>
+  	<result property="districtName" column="districtName"/>
+  	<result property="cityId" column="cityId"/>
+  	<result property="cityName" column="cityName"/>
+  	<result property="provinceId" column="provinceId"/>
+  	<result property="provinceName" column="provinceName"/>
+  
+  </resultMap>
+   -->
+  
+  
+  <!--  获取用户地区地理信息  -->
+  <select id="getUserAreaALLInfo"  parameterType="long" resultType="net.tfedu.zhl.sso.user.entity.UserAreaInfo">
+	  	SELECT u.schoolId,s.name AS schoolName
+		,s.districtId, qt.Name AS districtName
+		,qt.cityId,qc.name AS cityName
+		,qc.provinceId,qp.Name AS provinceName
+		FROM
+		j_user u
+		LEFT JOIN j_school s ON s.id =u.SchoolId
+		LEFT JOIN q_district qt ON qt.Id = s.districtid
+		LEFT JOIN q_city qc ON qc.id = qt.CityId
+		LEFT JOIN q_province qp ON qp.id =qc.ProvinceId
+		WHERE u.id = #{userId}
+  </select>
   
   
 </mapper>

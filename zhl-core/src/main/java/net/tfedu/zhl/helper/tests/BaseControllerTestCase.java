@@ -43,9 +43,9 @@ public abstract class BaseControllerTestCase {
      */
     @Before
     public void onSetUp() {
-        UserSimple us = userService.getUserSimpleById(1l," ",false);
+        UserSimple us = userService.getUserSimpleById(390320126l," ",false);
         request.addHeader("Authorization", us.getToken());
-        request.setAttribute("currentUserId", 1l); 
+        request.setAttribute("currentUserId", 390320126l); 
         
         
         

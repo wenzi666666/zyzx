@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 import net.tfedu.zhl.sso.school.entity.JSchool;
 import net.tfedu.zhl.sso.school.service.JSchoolService;
 import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
-import net.tfedu.zhl.sso.subject.servcice.JSubjectService;
+import net.tfedu.zhl.sso.subject.service.JSubjectService;
 import net.tfedu.zhl.sso.term.entity.JUserTerm;
 import net.tfedu.zhl.sso.term.service.JUserTermService;
 import net.tfedu.zhl.sso.user.entity.JUser;

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
+import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.entity.UsersEntity;
 
@@ -110,5 +111,12 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	public List<Long> getMissUserBetweenJXAndSSO() throws Exception;
 	
 	
+	
+	/**
+	 * 获取用户的地区信息
+	 * @param userId  用户主键
+	 * @return    用户地区信息对象
+	 */
+	public UserAreaInfo getUserAreaALLInfo(@Param("userId") long userId);
 
 }

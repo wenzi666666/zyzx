@@ -131,9 +131,9 @@ public class ZhlResourceCenterWrap {
 		.append(File.separator)
 		.append(time.get(Calendar.YEAR))
 		.append(File.separator)
-		.append(userId)
-		.append(File.separator)
 		.append(schoolId)
+		.append(File.separator)
+		.append(userId)
 		.append(File.separator)
 		.toString();
 	}
@@ -153,9 +153,9 @@ public class ZhlResourceCenterWrap {
 		.append(File.separator)
 		.append(time.get(Calendar.YEAR))
 		.append(File.separator)
-		.append(userId)
-		.append(File.separator)
 		.append(schoolId)
+		.append(File.separator)
+		.append(userId)
 		.append(File.separator)
 		.toString();
 	}

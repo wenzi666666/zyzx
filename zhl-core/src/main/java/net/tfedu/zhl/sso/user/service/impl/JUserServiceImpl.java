@@ -23,6 +23,7 @@ import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
+import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
@@ -189,7 +190,6 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 
 	@Override
 	public HashMap<String, String> getUserTermAndSubject(Long userId) {
-		// TODO Auto-generated method stub
 		return mapper.getUserTermAndSubject(userId);
 	}
 
@@ -214,6 +214,14 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 	@Override
 	public void addUser(JUser user) {
 		mapper.insertSelective(user);
+	}
+
+	@Override
+	public UserAreaInfo getUserAreaInfo(long userId) {
+		
+//		HashMap<String, String>  map = mapper.getUserAreaALLInfo(userId);
+		
+		return mapper.getUserAreaALLInfo(userId); 
 	}
 
 	

@@ -78,7 +78,7 @@
 				<web.name>resources</web.name>
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -161,7 +161,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 		
@@ -306,6 +306,7 @@
 				<includes>
                     <include>${package.environment}/*.properties</include>
                     <include>*.*</include>
+                    <include>**/*.jar</include>
                 </includes>
 			</resource>
 		</resources>
@@ -597,9 +598,9 @@
 	    <artifactId>ws-commons-util</artifactId>
 	    <version>1.0.1</version>
 	</dependency>
-
-
-
-
-	</dependencies>
+	
+	
+    
+  </dependencies>
+	
 </project>

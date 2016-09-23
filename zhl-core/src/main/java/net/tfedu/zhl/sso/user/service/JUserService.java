@@ -6,6 +6,7 @@ import java.util.List;
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 
 /**
@@ -124,6 +125,14 @@ public interface JUserService extends BaseService<JUser>{
 	 * @param user
 	 */
 	public void addUser(JUser user);
+	
+	
+	/**
+	 * 获取用户的地区信息
+	 * @param userId  用户主键
+	 * @return    用户地区信息对象
+	 */
+	public UserAreaInfo getUserAreaInfo(long userId);
 	
 	
 	
