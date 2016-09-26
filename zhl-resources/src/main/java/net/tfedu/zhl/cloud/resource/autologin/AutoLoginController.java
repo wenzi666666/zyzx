@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.autologin;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,11 +18,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import net.tfedu.zhl.cloud.utils.security.MD5Util;
 import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
@@ -149,6 +153,48 @@ public class AutoLoginController {
 	
 	
 	
+	
+	
+	
+	/**
+	 * 自动登录的处理方法(简化版) 所需参数:
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 一般采用重定向的方式，跳转到web前端页面，所以返回为null
+	 * @throws Exception
+	 */
+	@RequestMapping("autoLoginSimple")
+	@ResponseBody
+	public Object autoLoginSimple(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+        String strDate = ControllerHelper.getParameter(request, "strDate");
+        String  params = ControllerHelper.getParameter(request, "params");
+        String userName = ControllerHelper.getParameter(request, "userName");
+
+		
+        if(!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)){
+            throw new CustomException("非法用户");
+        }
+		
+		// 返回用户的信息
+		UserSimple user = null;
+
+		// 用户登录
+		SRegister reg = registerService.getRegister(userName);
+
+		// 获取用户信息
+		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+
+		return  ResultJSON.getSuccess(user);
+		
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * 返回json 
 	 * @param user    当前用户的信息
@@ -210,6 +256,24 @@ public class AutoLoginController {
 			}
 		}
 		return m;
+	}
+	
+	
+	
+	
+	public static void main(String[] args) {
+			String strDate = String.valueOf(Calendar.getInstance().getTimeInMillis());
+	        String  params = "";
+	        String userName = "csls01";
+
+			
+	        params = MD5Util.str2md5(userName + strDate + MD5_KEY);
+		
+	        
+	        System.out.println("/resRestAPI/thirdparty/autoLoginSimple?userName="+userName+"&strDate="+strDate+"&params="+params+"");
+	        
+		
+		
 	}
 
 }
