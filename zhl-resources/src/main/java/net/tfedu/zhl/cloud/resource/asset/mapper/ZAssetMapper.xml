@@ -206,6 +206,9 @@
 		select  t.tfcode  from z_asset_syscourse  t
 		LEFT JOIN j_syscourse sys on sys.tfcode = t.tfcode
 		where t.assetid = #{resId} and t.flag = false 
+		AND EXISTS (
+			SELECT TFcode FROM j_producttfcodecontrast  ps  WHERE  ps.proCode = 'zy' AND ps.tfcode = LEFT(t.tfcode,10)
+		)
 		ORDER BY LOCATE(#{curTfcode},t.tfcode) desc
 	</select>
 
