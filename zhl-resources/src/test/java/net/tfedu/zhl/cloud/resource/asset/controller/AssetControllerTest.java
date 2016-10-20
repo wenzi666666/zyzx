@@ -116,7 +116,7 @@ public class AssetControllerTest  extends BaseControllerTestCase{
     	
     	long id  = 164882966;
 		request.setParameter("_method", "PUT");
-		request.setParameter("name", "QQ截图20160422103031");
+		request.setParameter("name", "QQ截图20160422103031_update ");
 		request.setParameter("unifTypeId", "1");
 		request.setParameter("scope", "1");
 		request.setParameter("tfcode", "CXCZ01010101");

@@ -72,4 +72,18 @@ public interface DistrictResMapper extends CoreMapper<DistrictRes> {
      */
     public DisResourceEntity selectOneByTime(@Param("userId")String userId,@Param("time")Date time);
     
+    
+    
+    /**
+     * 根据自建资源获取对应的（最新）的区本、校本资源的id
+     * @param assetId
+     * 			
+     * 			自建资源 id
+     * @return
+     * 			不存在時為 null 
+     */
+    public Long getDistrictResIdByAssetId(@Param("assetId")Long assetId);
+    
+    
+    
 }

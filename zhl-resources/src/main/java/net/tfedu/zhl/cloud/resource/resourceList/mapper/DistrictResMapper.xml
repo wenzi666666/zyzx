@@ -2,6 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper" >
   
+  
+  
   <!-- 查询区本校本资源信息 -->
   <resultMap id="DisResMap" type="net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity" >
        <result column="Id" property="Id" />
@@ -205,4 +207,10 @@ where a.id =#{resId} and b.flag=0 and c.flag=0 and a.fromflag = #{fromFlag} and 
  <select id="selectOneByTime" resultMap="DisResMap">
  	select  * from z_districts_resource where  AuthorId = #{userId} and CreateDT = #{time}
  </select>
+ 
+ <select id="getDistrictResIdByAssetId" resultType="Long" parameterType="Long">
+ 	SELECT  max(id) as id  FROM `z_districts_resource` where assetid = #{assetId}
+ </select>
+ 
+ 
 </mapper>

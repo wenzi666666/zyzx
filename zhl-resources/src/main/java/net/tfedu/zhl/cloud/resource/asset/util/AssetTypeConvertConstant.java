@@ -107,6 +107,12 @@ public class AssetTypeConvertConstant {
 	
 
 	
+	/**
+	 * 根据区本、校本标识，生成区本校本资源的rescode
+	 * @param scope  区本、校本标识
+	 * @param tfcode 導航目錄code
+	 * @return
+	 */
 	public static String getResCodeForDistrictRes(int scope,String tfcode){
 		
 		String resCode = "";

@@ -391,6 +391,11 @@ public class AssetController {
 	 * @param response
 	 * @return
 	 * @throws Exception 
+	 * 
+	 * 
+	 * 
+	 * 增加资源属性的校验，如果主要属性没有变化时，不做数据库的变更
+	 * 
 	 */
 	@RequestMapping(value = "/v1.0/resource/asset/{id}", method = RequestMethod.POST)
 	@ResponseBody
@@ -404,6 +409,11 @@ public class AssetController {
 		String _method = request.getParameter("_method");
 		if (StringUtils.isNotEmpty(_method)
 				&& RequestMethod.PUT.name().equalsIgnoreCase(_method)) {
+			
+			//获取数据库中的资源信息，用于校验是否需要修改数据库
+			ZAssetEditInfo info = assetService.getEditInfo(id);
+
+			
 			// 获取文件服务器的访问url
 			String resServiceLocal = commonWebConfig.getResServiceLocal();
 			String currentResPath = commonWebConfig.getCurrentResPath(request);
@@ -418,46 +428,61 @@ public class AssetController {
 			String path = request.getParameter("path");
 			String size = request.getParameter("size");
 
-			ZAsset a = new ZAsset();
-			a.setId(id);
-			a.setUserid(currentUserId);
+			
+			
+			//如果主要的属性有一个发生变化,更新之
+			if(info!=null 
+					&&!(name.equals(info.getTitle())
+					&& unifTypeId.equals(info.getUnifytypeId())
+					&& keyword.equals(info.getKeyword())
+					&& desc.equals(info.getAssetdesc())
+					&& path.equals(info.getAssetpath())
+					&& scope.toString().equals(info.getSharescope().toString())
+					)){
+				
+			
+				ZAsset a = new ZAsset();
+				a.setId(id);
+				a.setUserid(currentUserId);
 
-			if (!StringUtils.isEmpty(path)) {
-				a.setAssetpath(path);
+				if (!StringUtils.isEmpty(path)) {
+					a.setAssetpath(path);
 
-			}
-			if (!StringUtils.isEmpty(size)) {
-				a.setAssetsize(size);
+				}
+				if (!StringUtils.isEmpty(size)) {
+					a.setAssetsize(size);
 
-			}
-			if (!StringUtils.isEmpty(desc)) {
-				a.setAssetdesc(desc);
+				}
+				if (!StringUtils.isEmpty(desc)) {
+					a.setAssetdesc(desc);
 
-			}
-			if (!StringUtils.isEmpty(unifTypeId)) {
+				}
+				if (!StringUtils.isEmpty(unifTypeId)) {
 
+					// 新版资源类型
+					a.setUnifytypeid(Integer.parseInt(unifTypeId));
+					// 旧版资源类型字段也设置为新版的类型
+					a.setTypeid(Long.parseLong(unifTypeId));
+
+				}
+				if (!StringUtils.isEmpty(name)) {
+					a.setName(name);
+
+				}
+				if (!StringUtils.isEmpty(keyword)) {
+					a.setKeyword(keyword);
+
+				}
+				
+				
+				
 				// 新版资源类型
-				a.setUnifytypeid(Integer.parseInt(unifTypeId));
-				// 旧版资源类型字段也设置为新版的类型
-				a.setTypeid(Long.parseLong(unifTypeId));
+				assetService.updateAsset(a,tfcode,scope, resServiceLocal, currentResPath,
+						hostLocal);
 
-			}
-			if (!StringUtils.isEmpty(name)) {
-				a.setName(name);
-
-			}
-			if (!StringUtils.isEmpty(keyword)) {
-				a.setKeyword(keyword);
-
-			}
+				logger.debug("编辑资源," + a.toString());
 			
-			
-			
-			// 新版资源类型
-			assetService.updateAsset(a,tfcode,scope, resServiceLocal, currentResPath,
-					hostLocal);
-
-			logger.debug("编辑资源," + a.toString());
+			}
 			
 			data = prepareService.getNodeInfo(tfcode);
 
