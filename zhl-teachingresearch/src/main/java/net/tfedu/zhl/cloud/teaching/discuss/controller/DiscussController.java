@@ -1,6 +1,7 @@
 	package net.tfedu.zhl.cloud.teaching.discuss.controller;
 
-	import java.io.UnsupportedEncodingException;
+	import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
@@ -306,7 +307,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 	
 	
 	
-	public static void main(String[] args) throws UnsupportedEncodingException, URISyntaxException {
+	public static void main(String[] args) throws URISyntaxException, IOException {
 		
 		
 		String username = "csls10";
@@ -316,26 +317,14 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 		p = Base64.encode(p.getBytes());
 		
 		
-		String url = "http://192.168.111.158:8090/myForum/forumGrade_forumGradeState.action?classNo=5&partId=0";
-		
-		String yun_service = null ;
-		
-		String temp = url.replace("http://", "");
-		
-		yun_service = "http://"+temp.substring(0, temp.indexOf("/")+1);
-		
-		
-		
-		System.out.println(yun_service);
-		
-		url = URLEncoder.encode(url, "utf-8");
-		
-		
-		String target = "http://192.168.111.158:8090/net_jyForum.action?args="+p+"&targetPage="+url;
-		
 
-
-
+		String test = "6IyD5Zu0OjAwMDAwMA==";
+		byte[] temp  = Base64.decode(test);
+		String result=  new String(temp);
+		
+		System.out.println(result.toString()); 
+		
+		
 		
 		
 	}
