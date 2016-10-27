@@ -127,7 +127,7 @@ public class AutoLoginController {
 		SRegister reg = registerService.getRegister(userName);
 
 		if(null == reg ){
-			throw new WithoutAuthorizationException();
+			throw new WithoutAuthorizationException(userName);
 		}
 		
 		

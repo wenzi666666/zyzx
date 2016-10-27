@@ -9,5 +9,8 @@ public class WithoutAuthorizationException extends CustomException {
     public WithoutAuthorizationException() {
         super("WithoutAuthorization", "用户不存在");
     }
+    public WithoutAuthorizationException(String userName) {
+        super("WithoutAuthorization", "用户"+userName+"不存在");
+    }
 
 }
