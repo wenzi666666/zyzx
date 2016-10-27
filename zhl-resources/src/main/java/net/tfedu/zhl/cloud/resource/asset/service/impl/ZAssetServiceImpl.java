@@ -417,10 +417,7 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 			
 		}
 		
-		logger.debug("start  to save data to database ...... ");
-		assetMapper.insertList(list);
 
-		logger.debug("insert asset to database batch ");
 
 		//批量添加资源的导航信息
 		List<ZAssetSyscourse> asList = new ArrayList<ZAssetSyscourse>();
@@ -428,6 +425,13 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 			int scope = scope_list.get(i);
 			
 			ZAsset asset = list.get(i);
+
+			//将保存改为 单个  insertSelective 方法
+			assetMapper.insertSelective(asset);
+
+			
+			
+			
 			String  tfcode = codes.get(i);
 			long resid= asset.getId();
 			ZAssetSyscourse  as = new ZAssetSyscourse();

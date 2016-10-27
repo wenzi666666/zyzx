@@ -23,6 +23,7 @@ import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
+import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ControllerHelper;
@@ -125,6 +126,13 @@ public class AutoLoginController {
 		// 用户登录
 		SRegister reg = registerService.getRegister(userName);
 
+		if(null == reg ){
+			throw new WithoutAuthorizationException();
+		}
+		
+		
+		
+		
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
 

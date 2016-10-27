@@ -7,9 +7,12 @@ import javax.annotation.Resource;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import tk.mybatis.mapper.annotation.NameStyle;
 
 import org.junit.Test;
 import org.springframework.util.Assert;
+
+
 
 public class AssetControllerTest  extends BaseControllerTestCase{
 
@@ -48,16 +51,16 @@ public class AssetControllerTest  extends BaseControllerTestCase{
     	request.setAttribute("currentUserId", 390320126l);
     	//网络资源
 		
-		request.setParameter("names", "网络资源测试");
-		request.setParameter("unifTypeIds", "2");
-		request.setParameter("tfcodes", "CZYW010101");
-		request.setParameter("scopes", "1");
-		request.setParameter("keywords", "java");
-		request.setParameter("descs", "");
-		request.setParameter("paths", "http://bug.tfedu.net/mantis/images/mantis_logo.png");
-		request.setParameter("sizes", "1111111");
+		request.setParameter("names", "兰花模板_wangwr");
+		request.setParameter("unifTypeIds", "58");
+		request.setParameter("tfcodes", "RJGZ010108");
+		request.setParameter("scopes", "0");
+		request.setParameter("keywords", "兰花");
+		request.setParameter("descs", "兰花");
+		request.setParameter("paths", "upFile\2016\10105\395680174\2016102515374267705-38.pptx");
+		request.setParameter("sizes", "787142");
 		request.setParameter("iscoursewares", "0");
-		request.setParameter("islocals", "1");
+		request.setParameter("islocals", "0");
 		result = assetController.deleteAsset(request, response);
 
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
