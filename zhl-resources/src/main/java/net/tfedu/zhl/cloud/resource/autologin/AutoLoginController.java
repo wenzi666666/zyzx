@@ -160,6 +160,106 @@ public class AutoLoginController {
 	}
 	
 	
+	/**
+	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code
+	 * 
+	 * s_th_register_relative
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 一般采用重定向的方式，跳转到web前端页面，所以返回为null
+	 * @throws Exception
+	 */
+	@RequestMapping("autoLoginDocking")
+	@ResponseBody
+	public Object autoLoginDocking(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		// 获取args
+		String args = request.getParameter("args");
+		// 获取logoutUrl
+		String logoutUrl = request.getParameter("logoutUrl");
+		//当resultType = "JSON"时，返回json数据
+		String resultType = request.getParameter("resultType");
+		
+		
+
+		// 获取参数
+		log.info("----args----:" + args);
+		// 格式化参数并获取用户名等信息
+		Map<String, String> ps = getParamMap(getParams(args));
+
+		
+		
+		// 获取校验信息
+		String sign = ps.get("sign");
+		
+		// 获取其他参数信息
+		// 用户名
+		String userName = ps.get("userName");
+		// 对接产品code
+		String dockingCode = ps.get("dockingCode");
+		// 时间戳
+		String timestamp = ps.get("timestamp");
+		
+		
+
+		// 准备校验
+		String temp = "userName=" + userName + "&dockingCode=" + dockingCode + "&timestamp=" + timestamp;
+		String _sign = MD5.MD5(temp + "&key=" + MD5_KEY);
+		if (StringUtils.isEmpty(sign) || !sign.equals(_sign)) {
+			throw new ParamsException();
+		}
+
+		// 检查用户信息
+		if (StringUtils.isEmpty(userName)) {
+			throw new UnusualErrorException();
+		}
+
+		
+		//获取对接后的用户名
+		
+		
+		
+		
+		// 返回用户的信息
+		UserSimple user = null;
+
+		// 用户登录
+		SRegister reg = registerService.getRegister(userName);
+
+		if(null == reg ){
+			throw new WithoutAuthorizationException(userName);
+		}
+		
+		
+		
+		
+		// 获取用户信息
+		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+
+		//设置退出url 和  对接产品的code
+		user.setLogoutTarget(null==logoutUrl?"":logoutUrl);
+		user.setThirdParyCode(dockingCode);
+		
+		
+		
+		
+		//组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
+				.append("/systemres").append("?tocken=").append(user.getToken())
+				.append("&userId=").append(user.getUserId())
+				.append("&iscoursewares=").append(user.getThirdParyCode())
+				.toString();
+		log.info("autoLogin---url:"+url);
+		
+		if("JSON".equalsIgnoreCase(resultType)){
+			return toJSON(user,request,url);
+		}
+		
+		response.sendRedirect(url);
+		return null;
+	}
+	
 	
 	
 	
