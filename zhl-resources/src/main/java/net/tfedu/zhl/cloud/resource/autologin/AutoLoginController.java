@@ -28,6 +28,8 @@ import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
+import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
@@ -61,6 +63,9 @@ public class AutoLoginController {
 
 	@Resource
 	RegisterService registerService;
+	
+	@Resource
+	SThirdRegisterService SThirdRegisterService;
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
@@ -217,8 +222,13 @@ public class AutoLoginController {
 
 		
 		//获取对接后的用户名
-		
-		
+		SThirdRegisterRelative  relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
+		if(relate!=null){
+			//对接后的用户名
+			userName = relate.getZhlUsername();
+		}else{
+			throw new WithoutAuthorizationException(userName+("(对接用户,dockingCode:"+dockingCode+")"));
+		}
 		
 		
 		// 返回用户的信息
