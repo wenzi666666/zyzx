@@ -106,7 +106,7 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 	@Test
     public void testGetTreeNodesPoolResLimit() throws Exception {
 		
-		request.setParameter("pnodeId", "67475");
+		request.setParameter("pnodeId", "57475");
 		request.setParameter("proCode", "zy");
 		request.setParameter("poolId", "1");
 
