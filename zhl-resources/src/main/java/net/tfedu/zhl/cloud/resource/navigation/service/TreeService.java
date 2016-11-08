@@ -30,5 +30,17 @@ public interface TreeService {
      * @return
      */
     public List<TreeNode> getTreeNodes(long pnodeId,String proCode);
+    
+    
+    
+    /**
+     * 加载父结点及其所有的子结点（指定资源6大库下有资源的）
+     * 
+     * @return
+     */
+    public List<TreeNode> getTreeNodesLimitedByPoolRes(int poolId,long pnodeId,String proCode);
+    
+    
+    
 
 }

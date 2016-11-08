@@ -8,6 +8,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.util.Assert;
  * @author WeiCuicui
  *
  */
+@Transactional
 public class NavigationControllerTest extends BaseControllerTestCase{
 
 	@Resource NavigationController navigationController;
@@ -92,7 +94,27 @@ public class NavigationControllerTest extends BaseControllerTestCase{
 
         ResultJSON json = navigationController.getTreeNodes(request, response);
 
-        JsonUtil.toJsonString(json);
+        System.out.println(JsonUtil.toJsonString(json)); 
         Assert.isTrue("OK".equals(json.getCode()));
     }
+	
+	
+	/**
+	 * 根据父结点id，目录树
+	 * @throws Exception
+	 */
+	@Test
+    public void testGetTreeNodesPoolResLimit() throws Exception {
+		
+		request.setParameter("pnodeId", "67475");
+		request.setParameter("proCode", "zy");
+		request.setParameter("poolId", "1");
+
+        ResultJSON json = navigationController.getTreeNodesPoolResLimit(request, response);
+
+        System.out.println(JsonUtil.toJsonString(json)); 
+        Assert.isTrue("OK".equals(json.getCode()));
+    }
+	
+	
 }

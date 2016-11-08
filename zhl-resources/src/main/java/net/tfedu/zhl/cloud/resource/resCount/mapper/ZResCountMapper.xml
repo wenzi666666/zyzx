@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.resCount.dao.ZResCountMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.resCount.entity.ZResCount" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="tfcode" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="dh_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="wk_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sy_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sc_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="jf_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="al_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+</mapper>
