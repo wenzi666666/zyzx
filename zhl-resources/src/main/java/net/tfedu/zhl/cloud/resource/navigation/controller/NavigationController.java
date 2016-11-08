@@ -154,10 +154,39 @@ public class NavigationController {
     	String proCode = resourceWebConfig.getProCode();
     	// 接收传递过来的父结点id
         long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
+        
         // 加载父结点的所有子结点（递归）
         nodes = treeService.getTreeNodes(pnodeId,proCode);
         return ResultJSON.getSuccess(nodes);
     }
+    
+    
+    /**
+     * 查询（指定资源6大库下有资源的）系统课程目录结点 
+     * 
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/v1.0/contentsPoolResLimit", method = RequestMethod.GET)
+    @ResponseBody
+    public ResultJSON getTreeNodesPoolResLimit(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	
+    	List<TreeNode> nodes = null;
+    	//产品码
+    	String proCode = resourceWebConfig.getProCode();
+    	
+        //指定的资源6大库
+        int poolId = ControllerHelper.getIntWithDefault(request, "poolId");
+    	
+    	// 接收传递过来的父结点id
+        long pnodeId = ControllerHelper.getLongParameter(request, "pnodeId");
+        // 加载父结点的所有子结点（递归）
+        nodes = treeService.getTreeNodesLimitedByPoolRes(poolId, pnodeId, proCode);
+        return ResultJSON.getSuccess(nodes);
+    }
+    
     
     /**
      * 查询用户历史选择 使用GET方法
