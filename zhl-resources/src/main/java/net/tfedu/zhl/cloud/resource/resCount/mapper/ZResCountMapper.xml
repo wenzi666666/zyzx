@@ -15,4 +15,35 @@
       <arg column="al_count" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+  
+  
+  <select id="getResCountWithChildren" parameterType="String" resultMap="BaseResultMap">
+	  select  * from z_res_count where tfcode LIKE  CONCAT(#{tfcode},'%')	
+  </select>
+  
+  <select id="getResCountWithChildrenLimitPoolResNumber" resultMap="BaseResultMap">
+	  select  * from z_res_count where tfcode LIKE  CONCAT(#{tfcode},'%')	
+	  <if test="1==poolId">
+	  	and dh_count > 0
+	  </if>	  
+	  <if test="2==poolId">
+	  	and wk_count > 0
+	  </if>	  
+	  <if test="3==poolId">
+	  	and al_count > 0
+	  </if>	  
+	  <if test="4==poolId">
+	  	and sc_count > 0
+	  </if>	  
+	  <if test="5==poolId">
+	  	and jf_count > 0
+	  </if>	  
+	  <if test="6==poolId">
+	  	and sy_count > 0
+	  </if>	  
+  </select>
+  
+  
+  
+  
 </mapper>

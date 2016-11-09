@@ -135,18 +135,27 @@ public class TreeServiceImpl implements TreeService {
         for (int i = 0; i < topChildren.size(); i++) {
             TreeNode node = topChildren.get(i);
 
+            List<ZResCount> list = zResCountMapper.getResCountWithChildrenLimitPoolResNumber(node.getTfcode(),poolId);
+			if(list == null ||  list.size()==0){
+				continue;
+			}
+			
             // 加入到结果集中
             resultNodes.add(node);
 
+            
             // 如果当前节点是叶子节点，跳过不进行递归查询子节点
             if (node.isLeaf()) {
-                continue;
+            	continue;
             }
+            
             
             // 设置当前结点属于第几个结点
             int sort = i + 1;
             node.setI(sort + "");
 
+            
+            
             // 查询children
             List<TreeNode> children = jSyscourseMapper.getTopChildrenResultMap(node.getId());
             if (children == null || children.size() == 0) {
@@ -155,10 +164,10 @@ public class TreeServiceImpl implements TreeService {
                 // 设置children
             	checkChlidrenResCount(children, poolId);
                 node.setChildren(children);
+                // 递归调用，node是父结点
+                getAllChildrenLimit(poolId,node,children, resultNodes);
             }
 
-            // 递归调用，node是父结点
-            getAllChildrenLimit(poolId,node,children, resultNodes);
         }
 
         return resultNodes;
@@ -207,38 +216,45 @@ public class TreeServiceImpl implements TreeService {
 					String tfcode =  treeNode.getTfcode();
 					boolean removeFlag = false ;//是否移出
 					ZResCount  count = zResCountMapper.selectByPrimaryKey(tfcode);
-					switch(poolId){
-					
-					case 0: //全部
+					if(null == count ){
 						
-						removeFlag = null!=count&&(count.getAlCount()+count.getDhCount()+count.getJfCount()+count.getScCount()
-								+count.getSyCount()+count.getWkCount())==0 ;
-						break ;
-					
-					case 1://动画 
-						removeFlag = null!=count && count.getDhCount()==0;
-						break ;
+						removeFlag =  true ;
+					}else{
 						
-					case 2://微课 
-						removeFlag = null!=count && count.getWkCount()==0 ;
-						break ;
+						switch(poolId){
 						
-					case 3://案例
-						removeFlag = null!=count && count.getAlCount()==0 ;
-						break ;
+						case 0: //全部
+							
+							removeFlag = null!=count&&(count.getAlCount()+count.getDhCount()+count.getJfCount()+count.getScCount()
+									+count.getSyCount()+count.getWkCount())==0 ;
+							break ;
 						
-					case 4://素材
-						removeFlag = null!=count && count.getScCount()==0;
-						break ;
-						
-					case 5://教辅
-						removeFlag = null!=count && count.getJfCount()==0;
-						break ;
-						
-					case 6://理化生实验室 
-						removeFlag = null!=count && count.getSyCount()>0;
-						break ;
+						case 1://动画 
+							removeFlag = null!=count && count.getDhCount()==0;
+							break ;
+							
+						case 2://微课 
+							removeFlag = null!=count && count.getWkCount()==0 ;
+							break ;
+							
+						case 3://案例
+							removeFlag = null!=count && count.getAlCount()==0 ;
+							break ;
+							
+						case 4://素材
+							removeFlag = null!=count && count.getScCount()==0;
+							break ;
+							
+						case 5://教辅
+							removeFlag = null!=count && count.getJfCount()==0;
+							break ;
+							
+						case 6://理化生实验室 
+							removeFlag = null!=count && count.getSyCount()>0;
+							break ;
+						}
 					}
+					
 					
 					//如果需要移出的话
 					if(removeFlag){
@@ -246,7 +262,12 @@ public class TreeServiceImpl implements TreeService {
 					}
 					
 				}else{//非叶结点 递归处理 
-					checkChlidrenResCount(treeNode.getChildren(), poolId);
+					List<ZResCount> list = zResCountMapper.getResCountWithChildrenLimitPoolResNumber(treeNode.getTfcode(),poolId);
+					if(list!=null && list.size()>0){
+						checkChlidrenResCount(treeNode.getChildren(), poolId);
+					}else{
+						iterator.remove();
+					}
 				}
 			}
 		}

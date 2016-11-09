@@ -177,6 +177,10 @@ public class NavigationController {
     	//产品码
     	String proCode = resourceWebConfig.getProCode();
     	
+    	if(null == proCode){
+    		proCode = "zy";
+    	}
+    	
         //指定的资源6大库
         int poolId = ControllerHelper.getIntWithDefault(request, "poolId");
     	

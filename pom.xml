@@ -2,6 +2,31 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
+
+
+
+
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.tfedu</groupId>
+	<artifactId>zhl-cloud</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>zhl-cloud</name>
+	<url>http://yun.tfedu.net</url>
+	<modules>
+		<module>zhl-utils</module>
+		<module>zhl-core</module>
+		<module>${buss.name}</module>
+		<module>zhl-web</module>
+	</modules>
+
+
+
+
+
+
 	<properties>
 		<!-- base setting -->
 		<sourceEncoding>UTF-8</sourceEncoding>
@@ -41,31 +66,13 @@
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
 		<commons.beanutils.version>1.8.3</commons.beanutils.version>
 		<httpclient.version>4.5.1</httpclient.version>
+		<resource-version>3.1.4</resource-version>
 	
-	
-	<!-- 
-	
-		<resService>http://192.168.111.22:8099/down/</resService>        
-		<resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
-		<fdHost>http://fd.zhihaole.net/</fdHost>        
-		<fdHostLocal>http://fd.zhihaole.net/</fdHostLocal>        
-		<isRepeatLogin>false</isRepeatLogin>  
-		<isCloudModel>false</isCloudModel>  
-		
-         题库对接的配置 
-       <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
-       <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
-       情景英语对接的配置 
-       <sceneEnglish>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglish>  
-       <sceneEnglishLocal>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglishLocal>  
-       forum3.0 
-       <forum3Host>http://chat.tfedu.net:7070/auth/process</forum3Host>  
-       <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
-	   <frontWebURL>http://z.tfedu.net/</frontWebURL>
-		
-	   <jnzx_host></jnzx_host>   -->
 		
 	</properties>
+
+
+
 
 
 	<profiles>
@@ -76,6 +83,7 @@
  				<package.environment>local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+				<version>${resource-version}</version>
 			</properties>		
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -88,6 +96,8 @@
  				<package.environment>suse_local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+				
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -100,6 +110,7 @@
 			<properties>
  				<package.environment>suse_product</package.environment>					
  				<buss.name>zhl-resources</buss.name>
+				<version>${resource-version}</version>
 				<web.name>resources</web.name>
 			</properties>		
 			<activation>
@@ -112,6 +123,7 @@
                 <package.environment>yanshi156</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+  				<version>${resource-version}</version>
             </properties>            
 		</profile>
 		
@@ -122,6 +134,7 @@
                 <package.environment>ali_z</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+ 				<version>${resource-version}</version>
             </properties>   
             <activation>
 				<activeByDefault>false</activeByDefault>
@@ -135,6 +148,7 @@
  				<package.environment>yanqingRes</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
+				<version>${resource-version}</version>
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -182,22 +196,6 @@
 		
 		
 	</profiles>
-
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.tfedu</groupId>
-	<artifactId>zhl-cloud</artifactId>
-	<version>1.0.0</version>
-	<packaging>pom</packaging>
-
-	<name>zhl-cloud</name>
-	<url>http://yun.tfedu.net</url>
-	<modules>
-		<module>zhl-utils</module>
-		<module>zhl-core</module>
-		<module>${buss.name}</module>
-		<module>zhl-web</module>
-	</modules>
-
 
 
 
@@ -278,7 +276,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
-                    <warName>${web.name}_${package.environment}</warName>
+                    <warName>${web.name}_${package.environment}_V${version}</warName>
                     <webResources>
                     	<resource>
                             <directory>src/main/resources</directory>
