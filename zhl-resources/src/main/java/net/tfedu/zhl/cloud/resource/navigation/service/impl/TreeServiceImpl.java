@@ -250,7 +250,7 @@ public class TreeServiceImpl implements TreeService {
 							break ;
 							
 						case 6://理化生实验室 
-							removeFlag = null!=count && count.getSyCount()>0;
+							removeFlag = null!=count && count.getSyCount()==0;
 							break ;
 						}
 					}
