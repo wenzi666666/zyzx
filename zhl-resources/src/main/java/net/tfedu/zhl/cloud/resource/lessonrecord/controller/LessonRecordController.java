@@ -75,7 +75,8 @@ public class LessonRecordController {
 	/**
 	 * 分页查询
 	 * @param request
-	 * @param response
+	 * @param page
+	 * @param perPage
 	 * @return
 	 */
 	@RequestMapping(value="v1.0/lessonRecordList",method=RequestMethod.GET)
@@ -86,6 +87,7 @@ public class LessonRecordController {
 		Example example = new Example(ZLessonRecord.class);
 		example.createCriteria()
 		.andCondition(" user_id =", (Long) request.getAttribute("currentUserId"))
+		.andCondition(" flag = false  ")
 				;
 		
 		return lessonRecordService.getPageByExample(example, page, perPage);
@@ -96,6 +98,7 @@ public class LessonRecordController {
 	 * 获取指定听课记录
 	 * @param request
 	 * @param response
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value="v1.0/lessonRecord/{id}",method=RequestMethod.GET)
@@ -111,6 +114,7 @@ public class LessonRecordController {
 	 * 逻辑删除
 	 * @param request
 	 * @param response
+	 * @param id
 	 * @return
 	 */
 	@RequestMapping(value="v1.0/lessonRecordDel/{id}",method=RequestMethod.POST)

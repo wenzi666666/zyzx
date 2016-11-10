@@ -14,15 +14,24 @@ public class ZTeachingPlanContent {
      * 教案内容
      */
     private String content;
+    
+    /**
+     * 刪除标示
+     */
+    private Boolean flag;
 
-    public ZTeachingPlanContent(Long assetid, String content) {
+    public ZTeachingPlanContent(Long assetid, String content,boolean flag) {
         this.assetid = assetid;
         this.content = content;
+        this.flag =  flag ;
     }
 
     public ZTeachingPlanContent() {
         super();
     }
+    
+    
+    
 
     /**
      * 获取自增主键
@@ -59,4 +68,16 @@ public class ZTeachingPlanContent {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
+	}
+    
+    
+    
+    
 }

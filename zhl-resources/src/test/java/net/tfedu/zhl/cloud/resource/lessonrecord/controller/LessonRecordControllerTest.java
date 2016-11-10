@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -48,6 +49,8 @@ public class LessonRecordControllerTest extends BaseControllerTestCase {
 		result = controller.addLessonRecord(request, record);
 
 		System.out.println(result.toString());
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 	}
 
 	@Test
@@ -68,6 +71,8 @@ public class LessonRecordControllerTest extends BaseControllerTestCase {
 		result = controller.editLessonRecord(request, record, 1l);
 
 		System.out.println(result.toString());
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 	}
 
 	@Test
@@ -76,18 +81,24 @@ public class LessonRecordControllerTest extends BaseControllerTestCase {
 		result = controller.queryPage(request, 1, 10);
 
 		System.out.println(JSONObject.toJSONString(result));
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 
 	}
 
 	@Test
 	public void testGetLessonRecord() throws Exception {
-		controller.getLessonRecord(request, response, 1l);
+		result =  controller.getLessonRecord(request, response, 1l);
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 	}
 
 	@Test
 	public void testDelLessonRecord() throws Exception {
 
-		controller.delLessonRecord(request, response, 1l);
+		result = controller.delLessonRecord(request, response, 1l);
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 	}
 
 }

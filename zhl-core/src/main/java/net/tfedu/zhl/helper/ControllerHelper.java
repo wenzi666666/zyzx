@@ -2,6 +2,9 @@ package net.tfedu.zhl.helper;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 
@@ -12,6 +15,31 @@ import net.tfedu.zhl.core.exception.ParamsException;
  *
  */
 public class ControllerHelper {
+	
+	
+	
+	/**
+	 * 获取当前的用户id
+	 * @param request
+	 * @return
+	 */
+	public static Long getCurrentUserId(HttpServletRequest request){
+		 return (Long) request.getAttribute("currentUserId");
+	}
+	
+//	/**
+//	 * 
+//	 * 
+//	 * 获取当前用户id
+//	 * @return
+//	 * 
+//	 */
+//	
+//	public static Long getCurrentUserId(){
+//		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();    
+//		return getCurrentUserId(request);
+//	}
+	
 	
 	 
 	/**

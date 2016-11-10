@@ -8,6 +8,7 @@
     <constructor >
       <idArg column="assetid" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="content" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
 </mapper>
