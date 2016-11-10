@@ -13,7 +13,9 @@ import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.CoreMapper;
+import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 基础服务类
@@ -143,6 +145,19 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		List<T> data = mapper.selectAll();
         result = defaultSuccess(data);
         return result;
+	}
+
+	@Override
+	public ResultJSON getPageByExample(Example example, int pageNum, int pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        PageHelper.orderBy("id desc");
+        // 这里不能放其它语句
+        List<T> list = mapper.selectByExample(example);
+        
+        result = defaultSuccess(new PaginationHelper<T>().transfer(list));
+
+		return result;
 	}
     
     
