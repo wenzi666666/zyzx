@@ -1,17 +1,20 @@
 package net.tfedu.zhl.cloud.resource.asset.dao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
+import net.tfedu.zhl.cloud.resource.portal.module.DynamicInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
-
-import org.apache.ibatis.annotations.Param;
 
 public interface ZAssetMapper extends CoreMapper<ZAsset> {
 
@@ -186,6 +189,69 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param newPath
 	 */
 	public  void updateAssetPath(@Param("path")String path,@Param("newPath")String newPath);
+	
+	
+	
+	
+	
+
+	/**
+	 * 學校動態
+	 * @param schoolId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DynamicInfo> schoolDynamic(long schoolId) throws Exception;
+
+	/**
+	 * 地区动态
+	 * @param districtId
+	 * @return
+	 * @throws Exception
+	 */
+	public List<DynamicInfo> distrcitDynamic(long districtId) throws Exception;
+	
+	
+	
+	
+	/**
+	 * 
+	 * 校本資源統計
+	 * @param schoolId
+	 * @return
+	 */
+	public Map<String,Object> statisticsSchoolRes(long schoolId);
+	
+	/**
+	 * 
+	 * 学校日均统计
+	 * @param schoolId
+	 * @return
+	 */
+	public Map<String,Object> statisticsDailyAvg(long schoolId);
+	
+	/**
+	 * 
+	 * 校本用户资源数据統計
+	 * @param schoolId
+	 * @return
+	 */
+	public Map<String,Object> statisticsSchoolUserRes(long schoolId);
+	
+	
+	/**
+	 * 
+	 * 系统资源更新数据数据統計
+	 * @param date       指定時間（之后更新的）
+	 * @return
+	 */
+	public Map<String,Object> statisticsSysResourceUpdate(Date date);
+	
+	
+	
+	
+	
+	
 	
 	
 	
