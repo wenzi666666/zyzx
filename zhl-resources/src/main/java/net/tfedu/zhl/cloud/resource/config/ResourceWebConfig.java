@@ -47,11 +47,30 @@ public class ResourceWebConfig {
 	@Value("#{configProperties['removeTypeIds']}")
 	public String removeTypeIds ;
 	
+	
+	
+	/**
+	 * 教研平台后端接口地址
+	 * 
+	 * http://101.201.197.110:8080;
+	 */
+	@Value("#{configProperties['teachingResearchAPIHost']}")
+	public String teachingResearchAPIHost ;
 
 
 	
 	
 	
+	public String getTeachingResearchAPIHost() {
+		return teachingResearchAPIHost;
+	}
+
+
+	public void setTeachingResearchAPIHost(String teachingResearchAPIHost) {
+		this.teachingResearchAPIHost = teachingResearchAPIHost;
+	}
+
+
 	public String getSys_from() {
 		return sys_from;
 	}

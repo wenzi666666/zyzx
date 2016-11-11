@@ -63,4 +63,14 @@ public class AdditionalControllerTest extends BaseControllerTestCase{
 		log.info(JSONObject.toJSONString(result));
 	}
 
+	
+	@Test
+	public void testTeachingResearch() throws Exception{
+		result = controller.teachingResearch(request);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+
+	
+	
 }
