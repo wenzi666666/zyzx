@@ -1,12 +1,18 @@
 package net.tfedu.zhl.cloud.resource.lessonrecord.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.tfedu.zhl.cloud.resource.lessonrecord.entity.ZLessonRecord;
 import net.tfedu.zhl.cloud.resource.lessonrecord.service.LessonRecordService;
 import net.tfedu.zhl.core.exception.ParamsException;
-import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import tk.mybatis.mapper.entity.Example;
 
@@ -36,6 +41,18 @@ public class LessonRecordController {
 	LessonRecordService lessonRecordService;
 	
 	
+	
+	@InitBinder  
+	// 此处的参数也可以是ServletRequestDataBinder类型  
+	public void initBinder(WebDataBinder binder) throws Exception {  
+	    // 注册自定义的属性编辑器  
+	    // 1、日期  
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	    //CustomDateEditor类是系统内部自带的类  
+	    CustomDateEditor dateEditor = new CustomDateEditor(df, true);  
+	    // 表示如果命令对象有Date类型的属性，将使用该属性编辑器进行类型转换  
+	    binder.registerCustomEditor(Date.class, dateEditor);  
+	}  
 	
 	/**
 	 * 新增听课记录

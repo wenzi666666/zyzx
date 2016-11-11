@@ -1,9 +1,16 @@
 package net.tfedu.zhl.cloud.resource.asset.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +41,17 @@ public class TeachingPlanController {
 	TeachingPlanService  teachingPlanService; 
 	
 	
-	
+	@InitBinder  
+	// 此处的参数也可以是ServletRequestDataBinder类型  
+	public void initBinder(WebDataBinder binder) throws Exception {  
+	    // 注册自定义的属性编辑器  
+	    // 1、日期  
+	    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	    //CustomDateEditor类是系统内部自带的类  
+	    CustomDateEditor dateEditor = new CustomDateEditor(df, true);  
+	    // 表示如果命令对象有Date类型的属性，将使用该属性编辑器进行类型转换  
+	    binder.registerCustomEditor(Date.class, dateEditor);  
+	}  
 	
 	
 	/**
