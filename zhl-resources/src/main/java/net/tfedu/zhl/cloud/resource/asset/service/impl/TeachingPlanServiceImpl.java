@@ -198,7 +198,7 @@ public class TeachingPlanServiceImpl extends BaseServiceImpl<ZTeachingPlanConten
 		//准备条件
 		Example example = new Example(ZAsset.class);
 		example.createCriteria().andCondition(" userid= "+userId)
-		.andCondition(" flag = false ")
+		.andCondition(" flag = false ").andCondition(" fileType= "+TeachingPlan.FILE_TYPE)
 		;
 		
 		PageHelper.startPage(page, perPage);
