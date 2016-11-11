@@ -23,7 +23,6 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
  * @desc 单元测试类 copyRight@ 同方知好乐教育科技(北京)有限公司
  * 
  */
-@Transactional
 public class LessonRecordControllerTest extends BaseControllerTestCase {
 
 	@Resource

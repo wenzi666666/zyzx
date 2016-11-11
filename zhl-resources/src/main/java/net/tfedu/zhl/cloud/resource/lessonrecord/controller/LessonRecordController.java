@@ -1,5 +1,7 @@
 package net.tfedu.zhl.cloud.resource.lessonrecord.controller;
 
+import java.util.Calendar;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +51,7 @@ public class LessonRecordController {
 		
 		record.setUserId((Long) request.getAttribute("currentUserId"));
 		record.setFlag(false);
+		record.setCreateTime(Calendar.getInstance().getTime());
 		
 		return lessonRecordService.insert(record);
 	}
