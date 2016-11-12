@@ -228,5 +228,35 @@
  	update z_resource  set DLoadTimes = DLoadTimes+1  where rescode =#{rescode}
  </update>
  
+ 
+ 
+ 
+ <!-- 学科资源更新  -->
+ <resultMap type="net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdate" id="subjectResourceUpdateMap">
+ 	<result column="rescode" property="rescode"/>
+ 	<result column="title" property="title"/>
+ 	<result column="imgPath" property="imgPath"/>
+ 	<result column="viewPath" property="viewPath"/>
+ 	<result column="clicktime" property="clicktime"/>
+ 	<result column="isDwj" property="isDwj"/>
+ 	<result column="fileExt" property="fileExt"/>
+ 	<result column="isEbook" property="isEbook"/>
+ </resultMap>
+ 
+ <select id="resourceViewTop" resultMap="subjectResourceUpdateMap">
+		SELECT
+			z.rescode,z.title,o.clicktimes as clicktime,CONCAT(z.FPath,'\\\\',z.Fname) as viewPath,'' as imgPath,z.isDwj
+			,REVERSE(LEFT(REVERSE(z.Fname),LOCATE('.',REVERSE(z.Fname)))) as fileExt
+			,IF(fromflag=2 and mtype=40  and LOCATE('.html',fname)>0,1,0) as isEbook
+		FROM
+		  z_resource z 
+		  LEFT JOIN  z_resource_operate_times o on o.rescode = z.rescode
+		WHERE
+			z.flag = false 
+		  and z.FPath LIKE CONCAT('%','\\\\',#{subjectCode},'\\\\','%')
+		ORDER BY o.clicktimes desc  
+		LIMIT #{num} 
+ </select>
+ 
         
 </mapper>

@@ -427,7 +427,7 @@
  
  
  
- 
+<!--                           区校页面     页面统计                                                                    -->
  
  
  <resultMap type="net.tfedu.zhl.cloud.resource.portal.module.DynamicInfo" id="dynamicInfo">
@@ -468,7 +468,7 @@
  
  
  
- 
+ <!--  统计校本资源  -->
  <select id="statisticsSchoolRes" parameterType="Long" resultType="HashMap">
 	SELECT COUNT(t.Id) as schoolResNum,IFNULL(sum(t.FSize),0) schoolResSize FROM  z_districts_resource t
 	where t.Scope = 5 
@@ -478,7 +478,8 @@
  </select>
  
  
- 
+ <!--  统计校本日均下載 资源  -->
+
   <select id="statisticsDailyAvg" parameterType="Long" resultType="HashMap">
  	<![CDATA[
 	  select * from ( 
@@ -503,6 +504,7 @@
   	]]>
   </select>
  
+  <!--  统计学校用户上传资源  -->
  
   <select id="statisticsSchoolUserRes" parameterType="Long" resultType="HashMap">
   
@@ -515,11 +517,61 @@
   </select>
  
  
+   <!--  统计系统资源更新  -->
   <select id="statisticsSysResourceUpdate" resultType="HashMap">
 	select  count(1) as baseResUpdateNum,sum(t.fsize) as baseResUpdateSize from z_resource  t
 	where flag = false and t.updateDt > #{date}
   </select>
  
+ 
+ 
+ 
+ 
+ <resultMap type="net.tfedu.zhl.cloud.resource.portal.module.SchoolUploadInfo" id="schoolUploadInfoMap">
+ 	<result property="schoolName" column="schoolName"/>
+ 	<result property="uploadNumbers" column="uploadNumbers"/>
+ </resultMap>
+ 
+ 
+ 
+ 
+ <resultMap type="net.tfedu.zhl.cloud.resource.portal.module.SharedResInfo" id="sharedResInfoMap">
+ 	<result property="resTitle" column="resTitle"/>
+ 	<result property="createMan" column="createMan"/>
+ 	<result property="clickTime" column="clickTime"/>
+ </resultMap>
+ 
+ <!-- 上传排行榜（学校资源上传量） -->
+ <select id="schoolUploadTop" resultMap="schoolUploadInfoMap">
+	SELECT count(1) as uploadNumbers,s.name as schoolName FROM z_asset t
+	LEFT JOIN j_user u on u.id = t.UserId
+	LEFT JOIN j_school s on s.id = u.SchoolId
+	LEFT JOIN x_resourcetype p on p.id = t.unifyTypeId
+	where t.flag = false AND t.FileType = 'A'
+	AND s.flag = false AND u.flag = false
+	AND s.districtId = #{districtId}
+	GROUP BY u.schoolid  ORDER BY  uploadNumbers desc 
+	LIMIT #{num} 
+ 
+ </select>
+ 
+ <!-- 共享资源排行榜（地区下用户共享资源浏览次数的排行榜） -->
+ <select id="sharedResTop" resultMap="sharedResInfoMap">
+ 	SELECT
+		t.clicks as clickTime,a.name as resTitle,u.TrueName as createMan
+	FROM
+	x_platform_share t
+	LEFT JOIN z_asset a ON a.id = t.shareId
+	LEFT JOIN x_resourcetype x ON x.id = a.unifyTypeId
+	LEFT JOIN j_user u ON u.id = a.UserId
+	LEFT JOIN j_school s ON s.id = u.schoolid 
+	WHERE
+		t.sharedType = 1
+	AND t.flag = FALSE AND a.flag = false AND u.flag = false AND s.Flag = FALSE
+	AND a.FileType='A' AND s.districtId = #{districtId} 
+	ORDER BY clicks desc 
+	LIMIT #{num} 
+ </select>
  
  
  

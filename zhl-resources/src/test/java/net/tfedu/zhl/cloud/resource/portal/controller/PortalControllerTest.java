@@ -3,6 +3,8 @@ package net.tfedu.zhl.cloud.resource.portal.controller;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
@@ -20,6 +22,7 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
   copyRight@ 同方知好乐教育科技(北京)有限公司 
 
 */
+@Transactional
 public class PortalControllerTest extends BaseControllerTestCase {
 
 	@Resource
@@ -87,11 +90,15 @@ public class PortalControllerTest extends BaseControllerTestCase {
 	@Test
 	public void testResourceViewTop()  throws Exception {
 		
-		result = controller.resourceViewTop(request, districtId);
+		result = controller.resourceViewTop(request);
 		
 		System.out.println(JSONObject.toJSONString(result));
 
 		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
 	}
+	
+	
+	
+	
 
 }

@@ -12,6 +12,8 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.portal.module.DynamicInfo;
+import net.tfedu.zhl.cloud.resource.portal.module.SchoolUploadInfo;
+import net.tfedu.zhl.cloud.resource.portal.module.SharedResInfo;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.helper.CoreMapper;
@@ -248,11 +250,20 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	public Map<String,Object> statisticsSysResourceUpdate(Date date);
 	
 	
-	
-	
-	
-	
-	
+	/**
+	 * 上传排行榜（学校资源上传量）
+	 * @param districtId    地区id
+	 * @return
+	 */
+	public List<SchoolUploadInfo> schoolUploadTop(@Param("districtId")long districtId,@Param("num")int num);
+
+	/**
+	 * 
+	 * 共享资源排行榜（共享资源浏览次数的排行榜）
+	 * @param districtId    地区id
+	 * @return
+	 */
+	public List<SharedResInfo> sharedResTop(@Param("districtId")long districtId,@Param("num")int num);
 	
 	
 	

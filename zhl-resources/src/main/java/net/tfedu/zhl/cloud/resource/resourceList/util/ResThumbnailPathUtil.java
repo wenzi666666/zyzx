@@ -1,8 +1,11 @@
 package net.tfedu.zhl.cloud.resource.resourceList.util;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdate;
+import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdateResult;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
@@ -267,5 +270,71 @@ public class ResThumbnailPathUtil {
 			}
 		}		
 	}
+	
+	
+	/**
+	 * 生成缩略图,并文件浏览路径
+	 * 注意网络资源的处理
+	 * @param list 资源集合
+	 * @param resUrlLocal  文件服务器的内网地址
+	 * @param currnetResUrl    浏览器上的当前的（可用内、外网文件服务器）地址
+	 */
+	public static void convertToPurpos_resPreview(List<SubjectResourceUpdateResult> list, String resUrlLocal,String currnetResUrl){
+		
+		for (Iterator<SubjectResourceUpdateResult> iterator = list.iterator(); iterator.hasNext();) {
+			SubjectResourceUpdateResult subjectResourceUpdateResult = (SubjectResourceUpdateResult) iterator.next();
+			List<SubjectResourceUpdate> ls = subjectResourceUpdateResult.getList();
+			for (Iterator<SubjectResourceUpdate> iterator2 = ls.iterator(); iterator2.hasNext();) {
+				SubjectResourceUpdate subjectResourceUpdate = (SubjectResourceUpdate) iterator2.next();
+
+				String path =  subjectResourceUpdate.getViewPath();
+			    boolean isEBook = subjectResourceUpdate.isEbook();
+			    boolean isDwj = subjectResourceUpdate.isDwj();
+
+				//获取全路径,设置缩略图
+				String thumbnailpath = path;
+				
+				// imgPath 以http开头 并且size 为0或空
+				if(( thumbnailpath.startsWith("http") || thumbnailpath.startsWith("HTTP"))){
+					//设置文件后缀  html
+					subjectResourceUpdate.setFileExt("html");
+				} else {
+					if(thumbnailpath.lastIndexOf(".") != -1){
+						//设置文件后缀
+						subjectResourceUpdate.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
+						//组装缩略图路径(约定)
+						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+						
+						//判断是否存在
+						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						if(StringUtils.isNotEmpty(s)){
+							HashMap m = JSONObject.parseObject(s, HashMap.class);
+							if(m != null && ((Integer)m.get("FileSize") > 0)){
+								//获取缩略图的地址（内网）
+								thumbnailpath = ZhlResourceCenterWrap.getWebThumbnail(resUrlLocal, thumbnailpath);
+								//替换
+								thumbnailpath = thumbnailpath.replace(resUrlLocal, currnetResUrl);
+								subjectResourceUpdate.setImgPath(thumbnailpath);
+								
+							}
+						} else {
+							subjectResourceUpdate.setImgPath("");
+						}
+					}
+				}
+				
+	    		if(isEBook){
+	    	        path = ZhlResourceCenterWrap.GetEBookPlayerURL(path, resUrlLocal);
+	    		}else{
+	    	        path = ZhlResourceCenterWrap.getWebPlayUrl(resUrlLocal, path, isDwj);
+	    		}
+	            
+	    		path = path.replace(resUrlLocal, currnetResUrl);
+				
+	    		subjectResourceUpdate.setViewPath(path);
+			}
+		}
+	}
+	
 
 }

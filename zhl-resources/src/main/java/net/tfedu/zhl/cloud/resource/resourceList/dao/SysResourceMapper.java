@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.resourceList.dao;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdate;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResNavEntity;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
@@ -74,5 +75,14 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      * @param rescode
      */
     public void updateDownloadTime(@Param("rescode") String rescode);
+    
+    
+	/**
+	 * 系统资源排行榜（用户浏览次数的排行榜）
+	 * @param subjectCode   学科编码
+	 * @param num      		获取条数
+	 * @return
+	 */
+	public List<SubjectResourceUpdate> resourceViewTop(@Param("subjectCode")String subjectCode, @Param("num")int num);
 
 }
