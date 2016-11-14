@@ -23,7 +23,6 @@ import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
  * 		copyRight@ 同方知好乐教育科技(北京)有限公司
  * 
  */
-@Transactional
 public class TeachingPlanControllerTest extends BaseControllerTestCase {
 
 	@Resource
@@ -53,13 +52,13 @@ public class TeachingPlanControllerTest extends BaseControllerTestCase {
 	public void testEditTeachingPlan() throws Exception {
 
 		TeachingPlan obj = new TeachingPlan();
-		obj.setId(164884592l);
+		obj.setId(164884607l);
 		obj.setContent("----示例示例示例示例示例示例示例示例 教案");
 		obj.setKeyword("-----示例,教案");
 		obj.setTfcode(tfcode);
 		obj.setTitle("-----My示例教案");
 
-		result = controller.editTeachingPlan(request, obj, 164884592l);
+		result = controller.editTeachingPlan(request, obj, 164884607l);
 
 		System.out.println(JSONObject.toJSONString(result));
 

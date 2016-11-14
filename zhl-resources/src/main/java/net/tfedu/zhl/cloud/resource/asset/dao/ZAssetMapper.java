@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
+import net.tfedu.zhl.cloud.resource.asset.entity.TeachingPlan;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetEditInfo;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
@@ -264,6 +265,13 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @return
 	 */
 	public List<SharedResInfo> sharedResTop(@Param("districtId")long districtId,@Param("num")int num);
+	
+	
+	/**
+	 * 更新教案
+	 * @param obj
+	 */
+	public void updateTeachingPlan(@Param("obj")TeachingPlan obj);
 	
 	
 	

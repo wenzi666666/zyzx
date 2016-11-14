@@ -110,24 +110,14 @@ public class TeachingPlanServiceImpl extends BaseServiceImpl<ZTeachingPlanConten
 	@Override
 	public ResultJSON editRecord(TeachingPlan obj) throws Exception {
 	
-		Date updatetime =  Calendar.getInstance().getTime();
-
-		ZAsset record = assetMapper.selectByPrimaryKey(obj.getId());
-		
-		record.setId(obj.getId());
-		record.setName(obj.getTitle());
-		record.setKeyword(obj.getKeyword());
-		record.setUpdatetime(updatetime);
-		
 		//更新资源表记录
-		assetMapper.updateByPrimaryKeySelective(record);
+		assetMapper.updateTeachingPlan(obj);
 		
 		
 		ZTeachingPlanContent content = new ZTeachingPlanContent();
 		content.setAssetid(obj.getId());
 		content.setContent(obj.getContent());
 
-		
 		
 		//更新导航
 		assetSyscourseMapper.updateAssetSyscourse(obj.getId().toString(), obj.getTfcode(), "0");

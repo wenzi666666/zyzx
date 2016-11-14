@@ -575,6 +575,10 @@
  
  
  
+ <update id="updateTeachingPlan" parameterType="net.tfedu.zhl.cloud.resource.asset.entity.TeachingPlan" >
+ 	update z_asset  set name =#{obj.title}, keyWord =#{obj.keyword} ,UpdateTime = now()  where id = #{obj.id} 
+ </update>
+ 
 </mapper>
 
 

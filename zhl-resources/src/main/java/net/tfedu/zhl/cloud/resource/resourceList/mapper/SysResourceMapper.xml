@@ -220,12 +220,12 @@
  
  <!-- 更新点击次数（+1） -->
  <update id="updateClickTime" parameterType="String">
-	 update z_resource  set ClickTimes = ClickTimes+1  where rescode =#{rescode}
+	 update z_resource_operate_times  set ClickTimes = ClickTimes+1  where rescode =#{rescode}
  </update>
  
  <!-- 更新下载次数（+1） --> 
  <update id="updateDownloadTime" parameterType="String">
- 	update z_resource  set DLoadTimes = DLoadTimes+1  where rescode =#{rescode}
+ 	update z_resource_operate_times  set downloadtimes = downloadtimes+1  where rescode =#{rescode}
  </update>
  
  
