@@ -34,7 +34,7 @@ import net.tfedu.zhl.helper.ResultJSON;
  * 
  */
 @Controller
-@RequestMapping("resRestAPI/portal/")
+@RequestMapping("resPortalAPI/portal/")
 public class PortalController {
 
 	@Resource
