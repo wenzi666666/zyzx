@@ -652,7 +652,7 @@ public class PrepareController {
 				throw new ParamsException();
 			} else {
 				List<ResourceSimpleInfo> list = jPrepareService
-						.getResourceSimpleInfo(ids, fromFlag);
+						.getResourceSimpleInfoForDownload(ids, fromFlag,currentUserId);
 				// 将原始的path重置为可用对应的下载文件的路径
 				JPrepareConstant.resetResourceDownLoadForZip(list,
 						resServiceLocal);

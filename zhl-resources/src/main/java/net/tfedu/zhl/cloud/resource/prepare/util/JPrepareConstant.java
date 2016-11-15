@@ -313,6 +313,11 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     //重新赋值path
     info.setPath(path);
 	
+    
+    
+    
+    
+    
 }
 
     /**

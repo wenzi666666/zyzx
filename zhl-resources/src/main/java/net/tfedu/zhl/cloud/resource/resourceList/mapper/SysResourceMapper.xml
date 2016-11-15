@@ -220,12 +220,18 @@
  
  <!-- 更新点击次数（+1） -->
  <update id="updateClickTime" parameterType="String">
-	 update z_resource_operate_times  set ClickTimes = ClickTimes+1  where rescode =#{rescode}
+ 	REPLACE INTO z_resource_operate_times(rescode,downloadtimes,clicktimes,collecttimes)
+	select t.rescode,IFNULL(p.downloadtimes,0),IFNULL(clicktimes,0)+1,IFNULL(p.collecttimes,0) from  
+	(select  #{rescode} as rescode from dual )t
+	LEFT JOIN z_resource_operate_times p on t.rescode = p.rescode 
  </update>
  
  <!-- 更新下载次数（+1） --> 
  <update id="updateDownloadTime" parameterType="String">
- 	update z_resource_operate_times  set downloadtimes = downloadtimes+1  where rescode =#{rescode}
+ 	REPLACE INTO z_resource_operate_times(rescode,downloadtimes,clicktimes,collecttimes)
+	select t.rescode,IFNULL(p.downloadtimes,0)+1,IFNULL(clicktimes,0),IFNULL(p.collecttimes,0) from  
+	(select  #{rescode} as rescode from dual )t
+	LEFT JOIN z_resource_operate_times p on t.rescode = p.rescode 
  </update>
  
  
