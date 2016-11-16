@@ -308,4 +308,44 @@
   </select>
   
   
+ <select id="getSchoolUserIds" resultType="Long">
+ select  u.id from  j_user u where SchoolId = #{schoolId} and flag = false  
+	 
+	 <if test="roleId>0">
+	 and RoleId =  #{roleId}
+	 </if>
+ </select>
+  
+  
+  
+ <select id="getDistrictIdUserIds" resultType="Long">
+		SELECT
+			u.id
+		FROM
+			j_user u,
+			j_school s
+		WHERE
+			u.schoolid = s.id
+		AND u.flag = FALSE
+		AND s.flag = false  
+		AND s.districtId = #{districtId} 	 
+	 <if test="roleId>0">
+	 and u.RoleId  =  #{roleId}
+	 </if>
+ </select>
+  
+  
+  <select id="getUserTrueNameAndSchoolName" resultType="HashMap">
+  	SELECT
+	u.truename,s.name as schoolname
+	FROM
+		j_user u,
+		j_school s
+	WHERE
+		u.schoolid = s.id
+	AND u.id = #{userId}
+  </select>
+  
+  
+  
 </mapper>

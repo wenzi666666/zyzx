@@ -439,27 +439,28 @@
  
  
   <!-- 學校动态 -->
- <select id="schoolDynamic" parameterType="Long" resultMap="dynamicInfo">
- 	SELECT t.Name as title,t.CreateTime as time ,CONCAT(u.TrueName,'(',s.name ,')') as username,p.mtype FROM z_asset t
-	LEFT JOIN j_user u on u.id = t.UserId
-	LEFT JOIN j_school s on s.id = u.SchoolId
+ <select id="schoolDynamic" resultMap="dynamicInfo">
+ 	SELECT t.Name as title,t.CreateTime as time ,t.userid as username,p.mtype FROM z_asset t
 	LEFT JOIN x_resourcetype p on p.id = t.unifyTypeId
 	where t.flag = false and t.FileType = 'A'
-	and s.flag = false and u.flag = false
-	and s.Id = #{schoolId}
+	and t.UserId in 
+	<foreach collection="userIds" item="id" separator="," open="(" close=")">
+		#{id}
+	</foreach>
+	
 	ORDER BY t.id desc LIMIT  10  
  </select>
  
 
  <!-- 地区动态 -->
  <select id="distrcitDynamic" parameterType="Long" resultMap="dynamicInfo">
- 	SELECT t.Name as title,t.CreateTime as time ,CONCAT(u.TrueName,'(',s.name ,')') as username,p.mtype FROM z_asset t
-	LEFT JOIN j_user u on u.id = t.UserId
-	LEFT JOIN j_school s on s.id = u.SchoolId
+ 	SELECT t.Name as title,t.CreateTime as time ,t.userid as username,p.mtype FROM z_asset t
 	LEFT JOIN x_resourcetype p on p.id = t.unifyTypeId
 	where t.flag = false and t.FileType = 'A'
-	and s.flag = false and u.flag = false
-	and s.districtId = #{districtId} 
+	and t.UserId in 
+	<foreach collection="userIds" item="id" separator="," open="(" close=")">
+		#{id}
+	</foreach>
 	ORDER BY t.id desc LIMIT  10  
  </select>
  
@@ -481,27 +482,39 @@
  <!--  统计校本日均下載 资源  -->
 
   <select id="statisticsDailyAvg" parameterType="Long" resultType="HashMap">
- 	<![CDATA[
 	  select * from ( 
 		SELECT  AVG( datenum) as schoolDownResNum ,AVG(datesize) as schoolDownResSize from (  
 		SELECT downdate,count(resid) datenum,SUM(fsize) as datesize from (
+
 		SELECT r.resId,r.downdate,t.FSize  FROM z_resdown_record r 
 		LEFT JOIN z_resource t on t.id = r.resId  
-	  LEFT JOIN j_user u on u.id = r.userid
-		where  r.fromflag = 0  and t.Flag = false  and r.downdate < now() and u.SchoolId = #{schoolId} 
+	  	where  r.fromflag = 0  and t.Flag = false  and now()  > r.downdate 
+	  	and r.userid in 
+		<foreach collection="userIds" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>
+		
 		UNION ALL 
+		
 		SELECT r.resId,r.downdate,dt.FSize  FROM z_resdown_record r 
 		LEFT JOIN z_districts_resource dt on dt.id = r.resId  
-	  LEFT JOIN j_user u on u.id = r.userid
-		where r.fromflag = 1  and dt.Flag = false and r.downdate < now() and u.SchoolId = #{schoolId} 
+		where r.fromflag = 1  and dt.Flag = false and now()> r.downdate 
+	  	and r.userid in 
+		<foreach collection="userIds" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>		
 		UNION ALL 
+		
 		select  r.resId,r.downdate,a.AssetSize as fsize from z_resdown_record r 
 		left JOIN z_asset a on a.id = r.resId 
-	  LEFT JOIN j_user u on u.id = r.userid 
-		where r.fromflag = 2  and a.Flag = false  and r.downdate < now() and u.SchoolId = #{schoolId} 
+		where r.fromflag = 2  and a.Flag = false  and  now() > r.downdate 
+	  	and r.userid in 
+		<foreach collection="userIds" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>		
+		
 		)tt GROUP BY downdate 
 		)tttt)ttt
-  	]]>
   </select>
  
   <!--  统计学校用户上传资源  -->
@@ -509,10 +522,11 @@
   <select id="statisticsSchoolUserRes" parameterType="Long" resultType="HashMap">
   
   	SELECT  count(1) schoolPersonResNum,SUM(t.AssetSize) as schoolPersonResSize FROM z_asset t
-	LEFT JOIN j_user u on u.id = t.UserId
 	where t.flag = false and t.FileType = 'A'
-	and u.flag = false
-	and u.SchoolId = #{schoolId} 
+	and t.userid in 
+	<foreach collection="userIds" item="id" separator="," open="(" close=")">
+		#{id}
+	</foreach>
 	  	
   </select>
  
@@ -546,7 +560,6 @@
 	SELECT count(1) as uploadNumbers,s.name as schoolName FROM z_asset t
 	LEFT JOIN j_user u on u.id = t.UserId
 	LEFT JOIN j_school s on s.id = u.SchoolId
-	LEFT JOIN x_resourcetype p on p.id = t.unifyTypeId
 	where t.flag = false AND t.FileType = 'A'
 	AND s.flag = false AND u.flag = false
 	AND s.districtId = #{districtId}
@@ -558,17 +571,18 @@
  <!-- 共享资源排行榜（地区下用户共享资源浏览次数的排行榜） -->
  <select id="sharedResTop" resultMap="sharedResInfoMap">
  	SELECT
-		t.clicks as clickTime,a.name as resTitle,u.TrueName as createMan
+		t.clicks as clickTime,a.name as resTitle,t.userid as createMan
 	FROM
 	x_platform_share t
 	LEFT JOIN z_asset a ON a.id = t.shareId
-	LEFT JOIN x_resourcetype x ON x.id = a.unifyTypeId
-	LEFT JOIN j_user u ON u.id = a.UserId
-	LEFT JOIN j_school s ON s.id = u.schoolid 
 	WHERE
 		t.sharedType = 1
-	AND t.flag = FALSE AND a.flag = false AND u.flag = false AND s.Flag = FALSE
-	AND a.FileType='A' AND s.districtId = #{districtId} 
+	AND t.flag = FALSE AND a.flag = false
+	AND a.FileType='A' 
+	AND t.userid IN 
+		<foreach collection="userIds" item="id" separator="," open="(" close=")">
+			#{id}
+		</foreach>	
 	ORDER BY clicks desc 
 	LIMIT #{num} 
  </select>

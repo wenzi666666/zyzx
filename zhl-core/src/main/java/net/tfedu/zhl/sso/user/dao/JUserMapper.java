@@ -2,6 +2,7 @@ package net.tfedu.zhl.sso.user.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -118,5 +119,32 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @return    用户地区信息对象
 	 */
 	public UserAreaInfo getUserAreaALLInfo(@Param("userId") long userId);
+	
+	
+	/**
+	 * 获取学校的所有指定的用户
+	 * @param schoolId   学校Id 
+	 * @param roleId     指定的用角色，0 为全部，1 为学生 2为老师     
+	 * @return
+	 */
+	public List<Long> getSchoolUserIds(@Param("schoolId")long schoolId,@Param("roleId")long roleId);
+	
+	/**
+	 * 获取学校的所有指定的用户
+	 * @param districtId 地区id
+	 * @param roleId     指定的用角色，0 为全部，1 为学生 2为老师     
+	 * @return
+	 */
+	public List<Long> getDistrictIdUserIds(@Param("districtId")long districtId,@Param("roleId")long roleId);
+	
+	
+	/**
+	 * 获取用户的真实姓名和学校名称
+	 * @param userId
+	 * @return
+	 */
+	public Map<String,Object>getUserTrueNameAndSchoolName(@Param("userId")long userId);
+	
+	
 
 }

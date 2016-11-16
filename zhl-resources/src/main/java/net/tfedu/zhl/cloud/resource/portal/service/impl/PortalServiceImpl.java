@@ -12,12 +12,15 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
+import net.tfedu.zhl.cloud.resource.portal.module.DynamicInfo;
+import net.tfedu.zhl.cloud.resource.portal.module.SharedResInfo;
 import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdateResult;
 import net.tfedu.zhl.cloud.resource.portal.service.PortalService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import tk.mybatis.mapper.entity.Example;
 
 /**
@@ -34,6 +37,10 @@ import tk.mybatis.mapper.entity.Example;
 public class PortalServiceImpl implements PortalService {
 
 	
+	@Resource 
+	JUserMapper userMapper;
+	
+	
 	@Resource
 	ZAssetMapper assetMapper;
 	
@@ -46,14 +53,37 @@ public class PortalServiceImpl implements PortalService {
 	
 	@Override
 	public ResultJSON schoolDynamic(long schoolId) throws Exception {
+		
+		List<Long> userIds =  userMapper.getSchoolUserIds(schoolId, 0);
 	
-		return ResultJSON.getSuccess(assetMapper.schoolDynamic(schoolId)) ;
+		List<DynamicInfo> result = assetMapper.schoolDynamic(schoolId,userIds);
+		
+		Map<String,Object> temp = null;
+		for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+			DynamicInfo dynamicInfo = (DynamicInfo) iterator.next();
+			temp =  userMapper.getUserTrueNameAndSchoolName(Long.parseLong(dynamicInfo.getUsername()));
+			dynamicInfo.setUsername(temp.get("truename")+"("+temp.get("schoolname")+")");
+		}
+		
+		return ResultJSON.getSuccess(result) ;
 	}
 
 	@Override
 	public ResultJSON distrcitDynamic(long districtId) throws Exception {
 
-		return ResultJSON.getSuccess(assetMapper.distrcitDynamic(districtId)) ;
+		
+		List<Long> userIds =  userMapper.getDistrictIdUserIds(districtId, 0);
+		
+		List<DynamicInfo> result = assetMapper.distrcitDynamic(districtId,userIds);
+
+		Map<String,Object> temp = null;
+		for (Iterator iterator = result.iterator(); iterator.hasNext();) {
+			DynamicInfo dynamicInfo = (DynamicInfo) iterator.next();
+			temp =  userMapper.getUserTrueNameAndSchoolName(Long.parseLong(dynamicInfo.getUsername()));
+			dynamicInfo.setUsername(temp.get("truename")+"("+temp.get("schoolname")+")");
+		}
+		
+		return ResultJSON.getSuccess(result) ;
 	}
 
 	@Override
@@ -63,11 +93,13 @@ public class PortalServiceImpl implements PortalService {
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.DAY_OF_MONTH, 0-expire);
 		
+		List<Long> userIds =  userMapper.getSchoolUserIds(schoolId, 0);
+
 		
 		Map<String,Object> result = new HashMap<String,Object>();
 		result.putAll(assetMapper.statisticsSchoolRes(schoolId));
-		result.putAll(assetMapper.statisticsSchoolUserRes(schoolId));
-		result.putAll(assetMapper.statisticsDailyAvg(schoolId));
+		result.putAll(assetMapper.statisticsSchoolUserRes(schoolId,userIds));
+		result.putAll(assetMapper.statisticsDailyAvg(schoolId,userIds));
 		result.putAll(assetMapper.statisticsSysResourceUpdate(c.getTime()));
 
 		
@@ -76,17 +108,34 @@ public class PortalServiceImpl implements PortalService {
 
 	@Override
 	public ResultJSON schoolUploadTop(long districtId) throws Exception {
+		
+		List<Long> userIds =  userMapper.getDistrictIdUserIds(districtId, 0);
+
+		
 		return ResultJSON.getSuccess(assetMapper.schoolUploadTop(districtId,6));
 	}
 
 	@Override
 	public ResultJSON sharedResTop(long districtId) throws Exception {
-		return ResultJSON.getSuccess(assetMapper.sharedResTop(districtId, 6));
+		
+		List<Long> userIds =  userMapper.getDistrictIdUserIds(districtId, 0);
+
+		List<SharedResInfo> result = assetMapper.sharedResTop(userIds,districtId, 6);
+		
+		Map<String,Object> temp = null;
+		for (Iterator<SharedResInfo> iterator = result.iterator(); iterator.hasNext();) {
+			SharedResInfo dynamicInfo = (SharedResInfo) iterator.next();
+			temp =  userMapper.getUserTrueNameAndSchoolName(Long.parseLong(dynamicInfo.getCreateMan()));
+			dynamicInfo.setCreateMan((String)temp.get("truename"));
+		}
+		
+		return ResultJSON.getSuccess(result);
 	}
 
 	@Override
 	public ResultJSON resourceViewTop() throws Exception {
-//		return ResultJSON.getSuccess(assetMapper.resourceViewTop(districtId, 6));
+		
+
 		
 		Example example = new Example(JSubject.class);
 		

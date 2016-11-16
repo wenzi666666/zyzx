@@ -201,18 +201,20 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	/**
 	 * 學校動態
 	 * @param schoolId
+	 * @param userIds 
 	 * @return
 	 * @throws Exception
 	 */
-	public List<DynamicInfo> schoolDynamic(long schoolId) throws Exception;
+	public List<DynamicInfo> schoolDynamic(@Param("schoolId")long schoolId, @Param("userIds")List<Long> userIds) throws Exception;
 
 	/**
 	 * 地区动态
 	 * @param districtId
+	 * @param userIds 
 	 * @return
 	 * @throws Exception
 	 */
-	public List<DynamicInfo> distrcitDynamic(long districtId) throws Exception;
+	public List<DynamicInfo> distrcitDynamic(@Param("districtId")long districtId, @Param("userIds")List<Long> userIds) throws Exception;
 	
 	
 	
@@ -229,17 +231,19 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * 
 	 * 学校日均统计
 	 * @param schoolId
+	 * @param userIds 
 	 * @return
 	 */
-	public Map<String,Object> statisticsDailyAvg(long schoolId);
+	public Map<String,Object> statisticsDailyAvg(@Param("schoolId")long schoolId,@Param("userIds") List<Long> userIds);
 	
 	/**
 	 * 
 	 * 校本用户资源数据統計
 	 * @param schoolId
+	 * @param userIds 
 	 * @return
 	 */
-	public Map<String,Object> statisticsSchoolUserRes(long schoolId);
+	public Map<String,Object> statisticsSchoolUserRes(@Param("schoolId")long schoolId,@Param("userIds") List<Long> userIds);
 	
 	
 	/**
@@ -253,18 +257,23 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	
 	/**
 	 * 上传排行榜（学校资源上传量）
+	 * @param userIds 
 	 * @param districtId    地区id
+	 * @param num    
 	 * @return
 	 */
-	public List<SchoolUploadInfo> schoolUploadTop(@Param("districtId")long districtId,@Param("num")int num);
+	public List<SchoolUploadInfo> schoolUploadTop(/*@Param("userIds")List<Long> userIds,*/ @Param("districtId")long districtId,@Param("num")int num);
 
 	/**
 	 * 
 	 * 共享资源排行榜（共享资源浏览次数的排行榜）
+	 * @param userIds 
 	 * @param districtId    地区id
+	 * @param num    
+	 * 
 	 * @return
 	 */
-	public List<SharedResInfo> sharedResTop(@Param("districtId")long districtId,@Param("num")int num);
+	public List<SharedResInfo> sharedResTop(@Param("userIds")List<Long> userIds, @Param("districtId")long districtId,@Param("num")int num);
 	
 	
 	/**
