@@ -5,9 +5,11 @@ import java.util.List;
 
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 
 /**
  * 用户相关接口
@@ -133,6 +135,10 @@ public interface JUserService extends BaseService<JUser>{
 	 * @return    用户地区信息对象
 	 */
 	public UserAreaInfo getUserAreaInfo(long userId);
+	
+
+	
+	
 	
 	
 	

@@ -19,6 +19,14 @@ public interface BaseService<T> {
      * @return
      */
     ResultJSON get(long id);
+    
+    
+    /**
+     * 根据主键获取
+     * @param key
+     * @return
+     */
+    ResultJSON getByPrimaryKey(Object key);    
 
     /**
      * 增加

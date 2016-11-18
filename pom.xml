@@ -69,6 +69,8 @@
 		
 		
 		<resource-version>3.1.7</resource-version>
+		<teaching-version>1.0.2</teaching-version>
+		<casProxy-version>1.0.0</casProxy-version>
 	
 		
 	</properties>
@@ -163,6 +165,7 @@
                 <package.environment>teaching</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
+				<version>${teaching-version}</version>
             </properties>  
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -174,6 +177,8 @@
                 <package.environment>teachingTest</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
+				<version>${teaching-version}</version>
+				
             </properties>  
 
 			<activation>
@@ -187,6 +192,7 @@
                 <package.environment>teachingProduct</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
+  				<version>${teaching-version}</version>
             </properties>  
 
 			<activation>
@@ -203,6 +209,7 @@
                 <package.environment>casLocal</package.environment>
                 <buss.name>zhl-casProxy</buss.name>
 				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
             </properties>  
 
 			<activation>
@@ -210,6 +217,21 @@
 			</activation>          
 		</profile>
 		
+		
+		
+		<profile>
+			<id>casLaixi</id>
+			<properties>
+                <package.environment>casLaixi</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
 		
 		
 		

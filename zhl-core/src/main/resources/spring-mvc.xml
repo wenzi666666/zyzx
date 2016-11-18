@@ -32,6 +32,7 @@
         <property name="locations">
             <list>
                 <value>classpath*:**/business_*.properties</value>
+                <value>classpath*:business_*.properties</value>
             </list>
         </property>
     </bean>

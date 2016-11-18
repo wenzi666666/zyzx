@@ -33,4 +33,9 @@
   </insert>
   
   
+  
+  <select id="getRegisterIdByName" parameterType="String" resultType="Long">
+  	select id from s_register where name = #{name}
+  </select>
+  
 </mapper>

@@ -41,6 +41,14 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+	public ResultJSON getByPrimaryKey(Object key) {
+        T data = mapper.selectByPrimaryKey(key);
+        result = defaultSuccess(data);
+        return result;
+	}
+    
+    
+    @Override
     public ResultJSON insert(T c) {
         int data = mapper.insert(c);
         result = defaultSuccess(data);
@@ -159,7 +167,8 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 
 		return result;
 	}
-    
+
+	
     
     
     

@@ -2,6 +2,12 @@ package net.tfedu.zhl.sso.users.entity;
 
 public class RegisterAddForm {
 	
+	
+	/**
+	 * 第三方用户在其系统中的唯一主键
+	 */
+	String th_uuid;
+	
 	 
 	/**
 	 * 必选  登录名
@@ -143,6 +149,12 @@ public class RegisterAddForm {
 	}
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
+	}
+	public String getTh_uuid() {
+		return th_uuid;
+	}
+	public void setTh_uuid(String th_uuid) {
+		this.th_uuid = th_uuid;
 	}
 	
 	

@@ -3,6 +3,7 @@ package net.tfedu.zhl.sso.service;
 import javax.annotation.Resource;
 
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
@@ -11,7 +12,6 @@ import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-@Transactional
 public class RegisterServiceTest extends BaseControllerTestCase {
 
     @Resource
@@ -72,7 +72,42 @@ public class RegisterServiceTest extends BaseControllerTestCase {
     	form.setTrueName("测试用户");
     	form.setUserName("myTestUser");
     	registerService.addRegister(form);
+    }
+    
+    @Test
+    public void testregisterOrUpdateUserWithThirdPartyApp()throws Exception{
+    	
+    	RegisterAddForm form = new RegisterAddForm();
+    	
+    	form.setProvinceName("山东");
+    	form.setCityName("青岛市");
+    	form.setArealName("莱西区");
+    	form.setSchoolName("莱西区测试学校");
+    	form.setMotto("xxx");
+    	form.setNickName("myuser");
+    	form.setRole(2);
+    	form.setSex(false);
+    	form.setSubjectName("数学");
+    	form.setTermName("高中");
+    	form.setTrueName("测试用户");
+    	form.setUserName("myuser");
+    	form.setTh_uuid("xxxxxxuuid"+1);
+    	
+    	SApp app = new SApp();
+    	
+    	app.setAppid(963683);
+    	app.setAppkey("45a672470c69");
+    	app.setBasedataurl("");
+    	app.setDeveloperid(3);
+    	app.setIsloginautosynbasedata(1);
+    	app.setPrefix("zjqxres");
+    	app.setUserdefaultpwd("000000");
+    	app.setUsefullife(36);
+    	
+    	registerService.registerOrUpdateUserWithThirdPartyApp(form, app);
     	
     	
     }
+    
+    
 }

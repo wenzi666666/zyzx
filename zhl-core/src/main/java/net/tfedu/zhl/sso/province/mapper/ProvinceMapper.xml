@@ -20,7 +20,7 @@
   
   <!-- 查询所有省份 -->
   <select id ="queryProvince" resultMap="resultProvince">
-     select pro_id,pro_name from ( select id as pro_id,name as pro_name from q_province where flag=0 )a
+     select pro_id,pro_name from ( select id as pro_id,name as pro_name from q_province where flag=0 )a 
   </select>
   
   

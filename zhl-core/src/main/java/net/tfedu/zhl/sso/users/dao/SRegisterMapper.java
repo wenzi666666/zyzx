@@ -31,5 +31,14 @@ public interface SRegisterMapper extends CoreMapper<SRegister> {
     public void addRegister(@Param("register")SRegister register);
     
     
+    
+    /**
+     * 根据name获取注册的id
+     * @param name
+     * @return
+     */
+    public Long getRegisterIdByName(@Param("name")String name);
+    
+    
 
 }
