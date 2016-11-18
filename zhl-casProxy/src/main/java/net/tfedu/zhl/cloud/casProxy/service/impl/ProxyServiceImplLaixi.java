@@ -52,6 +52,7 @@ public class ProxyServiceImplLaixi  implements ProxyService{
 		String provinceName = "山东";
 		String cityName = "青岛市";
 		String districtName = "莱西区";
+		String Default_schoolName = "莱西区测试学校";
 		String schoolName = "";
 		Long roleId = 10004l;//莱西对接教师
 		String default_subjcetName="语文";
@@ -80,23 +81,22 @@ public class ProxyServiceImplLaixi  implements ProxyService{
 			throw new CustomException("parseAPI:获取用户信息失败");
 		}
 		
-		schoolName = info.getUnit_name();
-		
+		schoolName = StringUtils.isEmpty(info.getUnit_name())?Default_schoolName:info.getUnit_name();
 		
 		
 		RegisterAddForm form = new RegisterAddForm();
 		form.setArealName(districtName);
-		form.setBirthDate(null);
-		form.setCityName(cityName);
-		form.setMotto("");
-		form.setNickName(info.getNick_name());
 		form.setProvinceName(provinceName);
-		form.setRole(roleId);
 		form.setSchoolName(schoolName);
-		form.setSex(info.getUser_type()==1?false:true);
 		form.setSubjectName(default_subjcetName);
 		form.setTermName(default_termName);
-		form.setTrueName(info.getReal_name());
+		form.setCityName(cityName);
+		form.setBirthDate(null);
+		form.setMotto("");
+		form.setRole(roleId);
+		form.setNickName(StringUtils.isEmpty(info.getNick_name())?"":info.getNick_name());
+		form.setSex(info.getUser_type()==1?false:true);
+		form.setTrueName(StringUtils.isEmpty(info.getReal_name())?"":info.getReal_name());
 		form.setUserName(info.getUid());
 		form.setTh_uuid(info.getUid());
 		return form;

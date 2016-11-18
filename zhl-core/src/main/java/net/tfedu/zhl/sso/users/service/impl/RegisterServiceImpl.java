@@ -425,8 +425,28 @@ public class RegisterServiceImpl implements RegisterService {
 			
 		}else{
 			
+			//返回学校id
+			long schoolId = getSchoolId(form);
 			
+			//更新用户真实姓名等信息
+			JUser user = userMapper.getUserByName(relative.getZhlUsername());
+			if(!form.getTrueName().equals(user.getTruename())
+					|| !form.getNickName().equals(user.getNickname())
+					|| !user.getRoleid().equals(String.valueOf(form.getRole()))
+					|| form.isSex() == user.getMale()
+					|| schoolId!= user.getSchoolid()
+					){
+				long userId =user.getId();
+				user = new JUser();
+				user.setId(userId);
+				user.setTruename(form.getTrueName());
+				user.setNickname(form.getNickName());
+				user.setMale(form.isSex());
+				user.setRoleid(String.valueOf(form.getRole()));
+				user.setSchoolid(schoolId);
+			}
 			
+			userMapper.updateByPrimaryKeySelective(user);
 			
 		}
 
