@@ -15,6 +15,10 @@ import net.tfedu.zhl.sso.app.entity.SApp;
 */
 public interface SAppService  extends BaseService<SApp>{
 
-
-	
+	/**
+	 * 获取APP信息
+	 * @param appId
+	 * @return
+	 */
+	public SApp getSApp(String appId);
 }

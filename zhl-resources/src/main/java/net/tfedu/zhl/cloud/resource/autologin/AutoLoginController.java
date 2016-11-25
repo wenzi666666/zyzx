@@ -11,13 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.MD5Util;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -28,12 +22,20 @@ import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.app.entity.SApp;
+import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 公司内部项目（相同的SSO库） 自动登录资源中心，并跳转到页面中
@@ -69,6 +71,9 @@ public class AutoLoginController {
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
+
+	@Resource
+	public SAppService sAppService;
 
 	Logger log = LoggerFactory.getLogger(AutoLoginController.class);
 
@@ -179,19 +184,34 @@ public class AutoLoginController {
 	@ResponseBody
 	public Object autoLoginDocking(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		return autoLoginDockingCommon(request, response);
+	}
+
+
+	public Object autoLoginDockingCommon(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParamsException,
+			UnusualErrorException, Exception, WithoutAuthorizationException {
 		// 获取args
 		String args = request.getParameter("args");
 		// 获取logoutUrl
 		String logoutUrl = request.getParameter("logoutUrl");
 		//当resultType = "JSON"时，返回json数据
 		String resultType = request.getParameter("resultType");
-		
-		
+		//应用id
+		String appId = request.getParameter("appId");
+		String md5_key=MD5_KEY;
+		if(StringUtils.isNotEmpty(appId)){
+			SApp app = sAppService.getSApp(appId);
+			if (app == null) {
+				throw new CustomException("没有注册APP信息");
+			}
+			md5_key=app.getAppkey();
+		}
 
 		// 获取参数
 		log.info("----args----:" + args);
 		// 格式化参数并获取用户名等信息
-		Map<String, String> ps = getParamMap(getParams(args));
+		Map<String, String> ps = getParamMap(getParams(args,md5_key));
 
 		
 		
@@ -210,7 +230,7 @@ public class AutoLoginController {
 
 		// 准备校验
 		String temp = "userName=" + userName + "&dockingCode=" + dockingCode + "&timestamp=" + timestamp;
-		String _sign = MD5.MD5(temp + "&key=" + MD5_KEY);
+		String _sign = MD5.MD5(temp + "&key=" + md5_key);
 		if (StringUtils.isEmpty(sign) || !sign.equals(_sign)) {
 			throw new ParamsException();
 		}
@@ -355,6 +375,26 @@ public class AutoLoginController {
 		return xxtea.decryptstring(args, MD5_KEY);
 
 	}
+
+	/**
+	 * 返回解密后的参数
+	 * 
+	 * @param args
+	 * @param md5_key
+	 * @return
+	 * @throws IOException
+	 */
+	private String getParams(String args, String md5_key) throws IOException {
+		if (args.contains(URLEncoder.encode("=", "utf-8"))) {
+			args = URLDecoder.decode(args, "UTF-8");
+		}
+
+		log.info("--getParams---URLDecoder.decode--args:" + args);
+
+		return xxtea.decryptstring(args, md5_key);
+
+	}
+
 
 	/**
 	 * 将参数转换为一个map

@@ -2,7 +2,7 @@ package net.tfedu.zhl.cloud.utils.datatype;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class StringUtils {
+public class StringUtils extends org.apache.commons.lang.StringUtils{
 
     /**
      * 判断是否为空
