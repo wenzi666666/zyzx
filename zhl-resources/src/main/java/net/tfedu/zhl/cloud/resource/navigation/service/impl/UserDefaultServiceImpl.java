@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.navigation.service.impl;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
-import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JUserDefault;
 import net.tfedu.zhl.cloud.resource.navigation.service.UserDefaultService;
 import tk.mybatis.mapper.entity.Example;
@@ -35,24 +35,30 @@ public class UserDefaultServiceImpl implements UserDefaultService {
     @Override
     public JUserDefault getUserHistoryDefault(long userId,int type) {
     	
-    	Example example = new Example(JUserDefault.class);
-    	example.createCriteria().andEqualTo("userid", userId).andEqualTo("type", type);
-    	List<JUserDefault> list = jUserDefaultMapper.selectByExample(example);
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", userId);
+        map.put("type", type);
+        return jUserDefaultMapper.getUserHistoryDefault(map);
+
     	
-    	if(list!=null && list.size()>0){
-    		JUserDefault obj = list.get(0);
-    		example = new Example(JSyscourse.class);
-    		example.createCriteria().andEqualTo("tfcode", obj.getTfcode());
-    		List<JSyscourse> target = syscourseMapper.selectByExample(example);
-    		if(target!=null){
-    			JSyscourse js = target.get(0);
-    			obj.setTermId(js.getTermid());
-    			obj.setSubjectId(js.getSubjectid());
-    		}
-    		
-    		return obj;
-    	}
-        return null;
+//    	Example example = new Example(JUserDefault.class);
+//    	example.createCriteria().andEqualTo("userid", userId).andEqualTo("type", type);
+//    	List<JUserDefault> list = jUserDefaultMapper.selectByExample(example);
+//    	
+//    	if(list!=null && list.size()>0){
+//    		JUserDefault obj = list.get(0);
+//    		example = new Example(JSyscourse.class);
+//    		example.createCriteria().andEqualTo("tfcode", obj.getTfcode());
+//    		List<JSyscourse> target = syscourseMapper.selectByExample(example);
+//    		if(target!=null){
+//    			JSyscourse js = target.get(0);
+//    			obj.setTermId(js.getTermid());
+//    			obj.setSubjectId(js.getSubjectid());
+//    		}
+//    		
+//    		return obj;
+//    	}
+//        return null;
     }
 
     /**
