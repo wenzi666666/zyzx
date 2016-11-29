@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.core.exception.APIErrorException;
+import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.DataAccessException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.InvalidPasswordException;
@@ -203,6 +204,15 @@ public class GlobalExceptionHandler {
     public ResultJSON handleWithoutSignError(HttpServletRequest request, HttpServletResponse response,
     		WithoutSignError e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
+        return result;
+    }
+
+    @ResponseStatus(value = HttpStatus.OK)
+    @ExceptionHandler(CustomException.class)
+    @ResponseBody
+    public ResultJSON handleCustomException(HttpServletRequest request, HttpServletResponse response,
+    		CustomException e) {
+        result = new ResultJSON(e.getCode(), e.getMessage(), null, null);
         return result;
     }
 }

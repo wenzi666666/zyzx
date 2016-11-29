@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<entry key="profiler.settings.instrument.empty.methods">true</entry>
+<entry key="ProfilerCPUSettings_profile_runnables">true</entry>
+<entry key="profiler.settings.n.profiled.threads.limit">32</entry>
+<entry key="ProfilerCPUSettings_filter_type">2</entry>
+<entry key="profiler.settings.obj.alloc.stack.sampling.depth">-1</entry>
+<entry key="profiler.settings.instrument.method.invoke">true</entry>
+<entry key="profiler.settings.instr.scheme">1</entry>
+<entry key="ProfilerMemorySettings_track_every">10</entry>
+<entry key="ProfilerMemorySettings_mode">4</entry>
+<entry key="ProfilerCPUSettings_root_classes">net.tfedu.zhl.cloud.**
+net.tfedu.zhl.config.**
+net.tfedu.zhl.core.entity.**
+net.tfedu.zhl.core.exception.**
+net.tfedu.zhl.core.interceptor.**
+net.tfedu.zhl.core.service.**
+net.tfedu.zhl.fileservice.**
+net.tfedu.zhl.helper.**
+net.tfedu.zhl.message.service.**
+net.tfedu.zhl.sso.app.dao.**
+net.tfedu.zhl.sso.app.entity.**
+net.tfedu.zhl.sso.app.service.**
+net.tfedu.zhl.sso.area.controller.**
+net.tfedu.zhl.sso.area.dao.**
+net.tfedu.zhl.sso.area.entity.**
+net.tfedu.zhl.sso.area.service.**
+net.tfedu.zhl.sso.city.dao.**
+net.tfedu.zhl.sso.city.entity.**
+net.tfedu.zhl.sso.developer.dao.**
+net.tfedu.zhl.sso.developer.entity.**
+net.tfedu.zhl.sso.district.dao.**
+net.tfedu.zhl.sso.district.entity.**
+net.tfedu.zhl.sso.grade.dao.**
+net.tfedu.zhl.sso.grade.entity.**
+net.tfedu.zhl.sso.message.controller.**
+net.tfedu.zhl.sso.message.dao.**
+net.tfedu.zhl.sso.message.entity.**
+net.tfedu.zhl.sso.message.service.**
+net.tfedu.zhl.sso.online.dao.**
+net.tfedu.zhl.sso.online.entity.**
+net.tfedu.zhl.sso.online.service.**
+net.tfedu.zhl.sso.province.dao.**
+net.tfedu.zhl.sso.province.entity.**
+net.tfedu.zhl.sso.role.controller.**
+net.tfedu.zhl.sso.role.dao.**
+net.tfedu.zhl.sso.role.entity.**
+net.tfedu.zhl.sso.role.service.**
+net.tfedu.zhl.sso.school.dao.**
+net.tfedu.zhl.sso.school.entity.**
+net.tfedu.zhl.sso.school.service.**
+net.tfedu.zhl.sso.service.**
+net.tfedu.zhl.sso.skip.**
+net.tfedu.zhl.sso.subject.dao.**
+net.tfedu.zhl.sso.subject.entity.**
+net.tfedu.zhl.sso.subject.service.**
+net.tfedu.zhl.sso.term.dao.**
+net.tfedu.zhl.sso.term.entity.**
+net.tfedu.zhl.sso.term.service.**
+net.tfedu.zhl.sso.th_register.dao.**
+net.tfedu.zhl.sso.th_register.entity.**
+net.tfedu.zhl.sso.th_register.service.**
+net.tfedu.zhl.sso.thirdpartyrelation.dao.**
+net.tfedu.zhl.sso.thirdpartyrelation.entity.**
+net.tfedu.zhl.sso.user.**
+</entry>
+<entry key="ProfilerCPUSettings_filter_value">net.tfedu.zhl.cloud.*,&#13;
+net.tfedu.zhl.config.*,&#13;
+net.tfedu.zhl.core.entity.*,&#13;
+net.tfedu.zhl.core.exception.*,&#13;
+net.tfedu.zhl.core.interceptor.*,&#13;
+net.tfedu.zhl.core.service.*,&#13;
+net.tfedu.zhl.fileservice.*,&#13;
+net.tfedu.zhl.helper.*,&#13;
+net.tfedu.zhl.message.service.*,&#13;
+net.tfedu.zhl.sso.app.dao.*,&#13;
+net.tfedu.zhl.sso.app.entity.*,&#13;
+net.tfedu.zhl.sso.app.service.*,&#13;
+net.tfedu.zhl.sso.area.controller.*,&#13;
+net.tfedu.zhl.sso.area.dao.*,&#13;
+net.tfedu.zhl.sso.area.entity.*,&#13;
+net.tfedu.zhl.sso.area.service.*,&#13;
+net.tfedu.zhl.sso.city.dao.*,&#13;
+net.tfedu.zhl.sso.city.entity.*,&#13;
+net.tfedu.zhl.sso.developer.dao.*,&#13;
+net.tfedu.zhl.sso.developer.entity.*,&#13;
+net.tfedu.zhl.sso.district.dao.*,&#13;
+net.tfedu.zhl.sso.district.entity.*,&#13;
+net.tfedu.zhl.sso.grade.dao.*,&#13;
+net.tfedu.zhl.sso.grade.entity.*,&#13;
+net.tfedu.zhl.sso.message.controller.*,&#13;
+net.tfedu.zhl.sso.message.dao.*,&#13;
+net.tfedu.zhl.sso.message.entity.*,&#13;
+net.tfedu.zhl.sso.message.service.*,&#13;
+net.tfedu.zhl.sso.online.dao.*,&#13;
+net.tfedu.zhl.sso.online.entity.*,&#13;
+net.tfedu.zhl.sso.online.service.*,&#13;
+net.tfedu.zhl.sso.province.dao.*,&#13;
+net.tfedu.zhl.sso.province.entity.*,&#13;
+net.tfedu.zhl.sso.role.controller.*,&#13;
+net.tfedu.zhl.sso.role.dao.*,&#13;
+net.tfedu.zhl.sso.role.entity.*,&#13;
+net.tfedu.zhl.sso.role.service.*,&#13;
+net.tfedu.zhl.sso.school.dao.*,&#13;
+net.tfedu.zhl.sso.school.entity.*,&#13;
+net.tfedu.zhl.sso.school.service.*,&#13;
+net.tfedu.zhl.sso.service.*,&#13;
+net.tfedu.zhl.sso.skip.*,&#13;
+net.tfedu.zhl.sso.subject.dao.*,&#13;
+net.tfedu.zhl.sso.subject.entity.*,&#13;
+net.tfedu.zhl.sso.subject.service.*,&#13;
+net.tfedu.zhl.sso.term.dao.*,&#13;
+net.tfedu.zhl.sso.term.entity.*,&#13;
+net.tfedu.zhl.sso.term.service.*,&#13;
+net.tfedu.zhl.sso.th_register.dao.*,&#13;
+net.tfedu.zhl.sso.th_register.entity.*,&#13;
+net.tfedu.zhl.sso.th_register.service.*,&#13;
+net.tfedu.zhl.sso.thirdpartyrelation.dao.*,&#13;
+net.tfedu.zhl.sso.thirdpartyrelation.entity.*,&#13;
+net.tfedu.zhl.sso.user.*</entry>
+<entry key="profiler.settings.istrument.getter.setter.methods">true</entry>
+<entry key="myeclipse.profiling.mode">0</entry>
+<entry key="ProfilerMemorySettings_stacktraces">-1</entry>
+<entry key="profiler.settings.sampling.interval">10</entry>
+<entry key="profiler.settings.cpu.profiling.type">0</entry>
+</properties>

@@ -430,13 +430,14 @@ public class RegisterServiceImpl implements RegisterService {
 			
 			//更新用户真实姓名等信息
 			JUser user = userMapper.getUserByName(relative.getZhlUsername());
-			if(!form.getTrueName().equals(user.getTruename())
+			if(user==null||!form.getTrueName().equals(user.getTruename())
 					|| !form.getNickName().equals(user.getNickname())
 					|| !user.getRoleid().equals(String.valueOf(form.getRole()))
 					|| form.isSex() == user.getMale()
 					|| schoolId!= user.getSchoolid()
 					){
-				long userId =user.getId();
+				String zhlUserId=relative.getZhlUserid();
+				long userId =StringUtils.isNotEmpty(zhlUserId)?Long.parseLong(zhlUserId):0;
 				user = new JUser();
 				user.setId(userId);
 				user.setTruename(form.getTrueName());
@@ -544,7 +545,7 @@ public class RegisterServiceImpl implements RegisterService {
 		s.setNodeid(1);
 		s.setRegistertime(date);
 		s.setRoleid(role);
-		s.setPwd(PWDEncrypt.doEncryptByte("tfedu000000"));
+		s.setPwd(PWDEncrypt.doEncryptByte(default_pwd));
 
 		Calendar c = Calendar.getInstance();
 		c.add(Calendar.MONDAY, expNum);

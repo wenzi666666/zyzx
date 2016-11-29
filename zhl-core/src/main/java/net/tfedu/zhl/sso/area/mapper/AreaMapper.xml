@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tfedu.zhl.sso.area.dao.AreaMapper">
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.area.entity.Area">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="code" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="pCode" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="level" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="flag" javaType="java.lang.Boolean" jdbcType="BIT" />
+    </constructor>
+  </resultMap>
+    
+	<!--  -->
+	<select id="queryAreaParent" resultType="map">
+		SELECT
+		p.id,p.code,p.pCode,p.level,p.name
+		FROM `q_area` s LEFT JOIN q_area p on s.pCode=p.`code`
+		WHERE s.flag=0 and p.flag=0 and s.`code`=#{code}
+	</select>
+</mapper>
