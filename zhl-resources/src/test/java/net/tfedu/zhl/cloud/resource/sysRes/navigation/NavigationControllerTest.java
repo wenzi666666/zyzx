@@ -117,4 +117,14 @@ public class NavigationControllerTest extends BaseControllerTestCase{
     }
 	
 	
+	@Test
+	public void getHistroy()throws Exception {
+        ResultJSON json = navigationController.getUserDefault(request, response);
+        
+        System.out.println(JsonUtil.toJsonString(json)); 
+        Assert.isTrue("OK".equals(json.getCode()));
+
+	}
+	
+	
 }
