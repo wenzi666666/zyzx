@@ -66,9 +66,10 @@
 		<commons.beanutils.version>1.8.3</commons.beanutils.version>
 		<httpclient.version>4.5.1</httpclient.version>
 		
+		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		
 		
-		<resource-version>3.1.7</resource-version>
+		<resource-version>3.1.9</resource-version>
 		<teaching-version>1.0.2</teaching-version>
 		<casProxy-version>1.0.0</casProxy-version>
 	
@@ -90,7 +91,7 @@
 				<version>${resource-version}</version>
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -213,7 +214,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 		
@@ -316,7 +317,7 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
-                    <warName>${web.name}_${package.environment}_V${version}</warName>
+                    <warName>${web.name}_${package.environment}_V${version}_${maven.build.timestamp}</warName>
                     <webResources>
                     	<resource>
                             <directory>src/main/resources</directory>
