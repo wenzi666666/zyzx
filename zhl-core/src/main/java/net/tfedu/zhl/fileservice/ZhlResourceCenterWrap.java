@@ -1,16 +1,10 @@
 package net.tfedu.zhl.fileservice;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.core.exception.ParamsException;
 /**
  * 访问IIS文件服务器的工具类
  * 
