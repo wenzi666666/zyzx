@@ -4,11 +4,15 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdate;
 import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdateResult;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResPreviewInfo;
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
+import net.tfedu.zhl.cloud.resource.resourceList.controller.ResourceListController;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
@@ -23,6 +27,10 @@ import com.alibaba.fastjson.JSONObject;
  * @param <T>
  */
 public class ResThumbnailPathUtil {
+	
+	
+    //写入日志
+    static Logger logger = LoggerFactory.getLogger(ResThumbnailPathUtil.class);
 
 	/**
 	 * 系统资源的缩略图
@@ -52,7 +60,9 @@ public class ResThumbnailPathUtil {
 						thumbnailpath = thumbnailpath.substring(0, thumbnailpath.lastIndexOf(".")) + ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
 						
 						//判断是否存在
+						logger.debug("----缩略图地址---"+thumbnailpath);
 						String s =  ZhlResourceCenterWrap.GetFileInfo(resUrlLocal, thumbnailpath);
+						logger.debug("----缩略图地址FileInfo---"+s);
 						if(StringUtils.isNotEmpty(s)){
 							HashMap m = JSONObject.parseObject(s, HashMap.class);
 							if(m != null && ((Integer)m.get("FileSize") > 0)){
