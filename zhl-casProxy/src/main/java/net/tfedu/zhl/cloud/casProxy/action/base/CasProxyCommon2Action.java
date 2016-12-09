@@ -11,12 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.cloud.casProxy.data.service.BaseDataCommonService;
+import net.tfedu.zhl.cloud.casProxy.model.AddressEntity;
+import net.tfedu.zhl.cloud.casProxy.service.AreaScopeLimitationService;
 import net.tfedu.zhl.cloud.casProxy.service.ProxyService;
+import net.tfedu.zhl.cloud.casProxy.util.AddressUtils;
+import net.tfedu.zhl.cloud.casProxy.util.HttpIpUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
+import net.tfedu.zhl.helper.CacheUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
@@ -24,6 +29,8 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -56,6 +63,15 @@ public abstract class CasProxyCommon2Action {
 	@Resource
 	BaseDataCommonService baseDataCommonService;
 
+	@Resource
+	AreaScopeLimitationService areaScopeLimitationService;
+
+	/**
+	 * 缓存管理
+	 */
+	@Autowired
+	CacheManager cacheManager;
+
 	public abstract void login(HttpServletRequest request,
 			HttpServletResponse response) throws CustomException, Exception;
 
@@ -70,6 +86,19 @@ public abstract class CasProxyCommon2Action {
 			HttpServletResponse response) throws CustomException;
 
 	/**
+	 * 地域访问限制 如果不需要限制地域，可以不实现此方法
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws CustomException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	public abstract void areaScopeLimitation(HttpServletRequest request,
+			HttpServletResponse response) throws CustomException,
+			UnsupportedEncodingException, IOException;
+
+	/**
 	 * 通用登录处理
 	 * 
 	 * @param request
@@ -81,6 +110,8 @@ public abstract class CasProxyCommon2Action {
 	public void loginCommon(HttpServletRequest request,
 			HttpServletResponse response) throws CustomException,
 			UnsupportedEncodingException, IOException {
+		// 地域访问限制
+		areaScopeLimitation(request, response);
 
 		if (null == casConfig || StringUtils.isEmpty(casConfig.getZHL_APPID())
 				|| StringUtils.isEmpty(casConfig.getTHIRDPARTY_APPID())) {
@@ -100,7 +131,8 @@ public abstract class CasProxyCommon2Action {
 			throw new CustomException("NotGetUserId", "获取用户登录id失败");
 		}
 
-		log.info("----parseAPI-----with----" + baseDataCommonService.getClass().getName());
+		log.info("----parseAPI-----with----"
+				+ baseDataCommonService.getClass().getName());
 		RegisterAddForm form = null;
 		try {
 			form = baseDataCommonService.parseAPI(userid, casConfig, app);
@@ -145,10 +177,66 @@ public abstract class CasProxyCommon2Action {
 		// 举例：
 		// http://192.168.111.204:8880/resRestAPI/thirdparty/autoLoginDocking
 		String url = casConfig.getTARGET_REDIRECT_URL() + "?args=" + args
-				+ "&logoutUrl=" + logoutUrl+"&appId="+app.getAppid();
+				+ "&logoutUrl=" + logoutUrl + "&appId=" + app.getAppid();
 		log.info("------casProxy-------url------:" + url);
-
+		/*
+		 * 第三方平台对接调整地址
+		 * http://192.168.111.204:8880/resRestAPI/thirdparty/autoLoginDocking
+		 * ?args
+		 * =f0%2FYwDWgewhf9tjRDUMgbiCMEgrWwFagpOOsJr2FjMVOV6EuVImObT5RCLzQK%
+		 * 2Bd%2Bm%2
+		 * B4HSBqNAn6VR3zlkpx9rUlhPcLrcNhOh5cvikqtekD43FUAASuPJqYbjZzzH94EcypIZmK9TXQl2OCBLtf6c5crxHc
+		 * %3D&logoutUrl=暂无&appId=273497
+		 */
 		response.sendRedirect(url);
+	}
+
+	/**
+	 * 地域访问限制
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws CustomException
+	 * @throws UnsupportedEncodingException
+	 * @throws IOException
+	 */
+	public void areaScopeLimitationCommon(HttpServletRequest request,
+			HttpServletResponse response) throws CustomException,
+			UnsupportedEncodingException, IOException {
+		// 获取客户端的真实IP地址
+		String ip = HttpIpUtil.getIpAddr(request);// "115.34.102.75";//
+		// 测试获取客户端真实ip
+		// if(StringUtils.isNotEmpty(ip)){
+		// throw new CustomException("ip", ip);
+		// }
+		Object isAllowToUseObj = CacheUtil.get(cacheManager,
+				CacheUtil.CACHE_APP, ip);
+		boolean isAllowToUse = false;
+		if (isAllowToUseObj == null
+				|| StringUtils.isEmpty(isAllowToUseObj.toString())) {
+			// 根据真实IP获取地域信息（省市区县）
+			AddressEntity addressEntity;
+			try {
+				addressEntity = AddressUtils.getAddresses(ip);
+			} catch (Exception e) {
+				throw new CustomException("NotGetAddresses", "没有获取到客户端访问所在区域信息");
+			}
+			// 如果地域信息为空
+			if (addressEntity == null
+					|| StringUtils.isEmpty(addressEntity.getRegion_id())) {
+				throw new CustomException("NotGetAddresses", "没有获取到客户端访问所在区域信息");
+			}
+			String cityCode = addressEntity.getCity_id();
+			String provinceCode = addressEntity.getRegion_id();
+			isAllowToUse = areaScopeLimitationService.isAllowToUse(cityCode,
+					provinceCode);
+			CacheUtil.put(cacheManager, CacheUtil.CACHE_APP, ip, isAllowToUse);
+		} else {
+			isAllowToUse = (Boolean) isAllowToUseObj;
+		}
+		if (!isAllowToUse) {
+			throw new CustomException("AreaPermissionDenied", "该地域没有权限使用");
+		}
 	}
 
 }
