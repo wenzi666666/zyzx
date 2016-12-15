@@ -305,6 +305,8 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 	@Override
 	public void updateUserStatutToLogout(long userId, String token) {
 		
+		log.debug("--service---用户退出-----userId="+userId+"-----token="+token);
+		
 		//修改在线记录
 		onlineMapper.updateOnlineStatus(token, ZhlOnlineUtil.ONLINE_STATUS_LOGOUT);
 		

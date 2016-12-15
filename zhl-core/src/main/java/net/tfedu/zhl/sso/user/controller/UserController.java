@@ -122,6 +122,9 @@ public class UserController {
 					throw new InvalidAccessTokenException();
 				}
 				
+				logger.debug("--controller---用户退出-----userId="+us.getUserId()+"-----token="+token);
+
+				
 				userService.logout(token, isRepeatLogin);
 				
 				//修改状态
