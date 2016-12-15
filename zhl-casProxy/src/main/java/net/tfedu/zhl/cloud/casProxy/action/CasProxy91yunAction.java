@@ -1,5 +1,8 @@
 package net.tfedu.zhl.cloud.casProxy.action;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -33,6 +36,7 @@ public class CasProxy91yunAction extends CasProxyCommon2Action {
 	@Override
 	public void login(HttpServletRequest request, HttpServletResponse response)
 			throws CustomException, Exception {
+		//通用登录处理
 		super.loginCommon(request, response);
 	}
 
@@ -53,6 +57,15 @@ public class CasProxy91yunAction extends CasProxyCommon2Action {
 			throw new CustomException("ParamsIllegal","非法参数");
 		}
 		return uid;
+	}
+
+	@RequestMapping("/areaScopeLimitation")
+	@Override
+	public void areaScopeLimitation(HttpServletRequest request,
+			HttpServletResponse response) throws CustomException,
+			UnsupportedEncodingException, IOException {
+		//地域访问限制
+		super.areaScopeLimitationCommon(request, response);
 	}
 
 }

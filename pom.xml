@@ -91,7 +91,7 @@
 				<version>${resource-version}</version>
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
 		<profile>
@@ -215,6 +215,20 @@
 
 			<activation>
 				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		<profile>
+			<id>cas91yun</id>
+			<properties>
+                <package.environment>cas91yun</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>cas91yun</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 		
