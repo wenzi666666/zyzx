@@ -3,6 +3,8 @@ package net.tfedu.zhl.sso.user.service;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
@@ -137,6 +139,24 @@ public interface JUserService extends BaseService<JUser>{
 	public UserAreaInfo getUserAreaInfo(long userId);
 	
 
+	/**
+	 * 增加用户的网页登录状态
+	 * @param userId   登录的用户
+	 * @param token    用户的token
+	 * @param registerNodeid    用户的注册节点
+	 * @param request  需要根据request获取ip、设备信息等
+	 */
+	public void addUserLoginStatusWeb(long userId,long registerNodeid,String token,HttpServletRequest request);
+	
+	
+	/**
+	 * 修改用户的状态为退出登录
+	 * @param userId  登录的用户
+	 * @param token   用户的token
+	 */
+	public void updateUserStatutToLogout(long userId,String token);
+	
+	
 	
 	
 	

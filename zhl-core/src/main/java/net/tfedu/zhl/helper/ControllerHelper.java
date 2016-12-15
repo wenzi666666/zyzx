@@ -1,4 +1,8 @@
+
 package net.tfedu.zhl.helper;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -215,5 +219,13 @@ public class ControllerHelper {
 				.getParameter("model");
     }
     
+    
+    /**
+     * 获取当前系统时间
+     * @return
+     */
+    public static Date getCurrentDate(){
+    	return Calendar.getInstance().getTime();
+    }
     
 }

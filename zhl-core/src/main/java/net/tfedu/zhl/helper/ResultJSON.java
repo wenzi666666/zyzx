@@ -1,5 +1,7 @@
 package net.tfedu.zhl.helper;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -11,9 +13,15 @@ import org.apache.commons.lang.builder.ToStringStyle;
  *
  *         JSON格式： { "code":"ok", "message":"", "data":"", "sign":"57edf4a22be3c955ac49da2e2107b67a" }
  */
-public class ResultJSON {
+public class ResultJSON implements Serializable{
+	
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2467433315357529553L;
+
+	/**
      * 成功或失败的编码
      */
     String code;

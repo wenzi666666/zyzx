@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -15,9 +17,13 @@ import com.github.pagehelper.PageInfo;
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.helper.ZhlOnlineUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
+import net.tfedu.zhl.sso.online.dao.JOnlineUsersMapper;
+import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
@@ -66,6 +72,10 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
     
     @Autowired
     CacheManager cacheManager;
+    
+    //在线状态
+    @Autowired
+    JOnlineUsersMapper onlineMapper;
     
     /**
      * 第三方对照
@@ -121,6 +131,13 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
             //放入缓存
             UserTokenCacheUtil.addUserInfoCache(model,cacheManager, token, us, isRepeatLogin);
         }
+        
+        
+        //记录登录状态(online、loginTime)
+        
+        
+        
+        
         return us;
 	}
     
@@ -239,6 +256,65 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 //		HashMap<String, String>  map = mapper.getUserAreaALLInfo(userId);
 		
 		return mapper.getUserAreaALLInfo(userId); 
+	}
+
+	@Override
+	public void addUserLoginStatusWeb(long userId,long registerNodeid, String token, HttpServletRequest request) {
+		
+		int clientType = ZhlOnlineUtil.ONLINE_CLIENTTYPE_BROWSER;
+		//当前时间
+		Date currentDate = ControllerHelper.getCurrentDate();
+		//ip
+		String ip =  ZhlOnlineUtil.getIpAddr(request);
+		//设备信息
+		String deviceInfo  =ZhlOnlineUtil.getDeviceInfoWeb(request, userId,registerNodeid, clientType);
+		// 客户端的版本
+		String clientVersion = ZhlOnlineUtil.getClientVersion(request);
+
+		
+		//将之前的登录置为 “踢出”状态
+		onlineMapper.clearRepeatUserLogin(userId, clientType, registerNodeid);
+		
+		
+		JOnlineUsers record = new JOnlineUsers();
+		
+		record.setClienttype(clientType);
+		record.setClientversion(clientVersion);
+		record.setDeviceinfo(deviceInfo);
+		record.setFlag(false);
+		record.setLastopertime(currentDate);
+		record.setLoginip(ip);
+		record.setLoginnodeid(1l);
+		record.setLogintime(currentDate);
+		record.setStatus(ZhlOnlineUtil.ONLINE_STATUS_ONLINE);
+		record.setToken(token);
+		record.setUserid(userId);
+		
+		//增加在线记录
+		onlineMapper.insertUseGeneratedKeys(record);
+		
+		//修改user表中的web登录时间
+		JUser _record = new JUser();
+		_record.setId(userId);
+		_record.setWeblogintime(currentDate);
+		mapper.updateByPrimaryKeySelective(_record);
+		
+		
+	}
+
+	@Override
+	public void updateUserStatutToLogout(long userId, String token) {
+		
+		//修改在线记录
+		onlineMapper.updateOnlineStatus(token, ZhlOnlineUtil.ONLINE_STATUS_LOGOUT);
+		
+		
+		//修改user表中的web退出时间
+		JUser _record = new JUser();
+		_record.setId(userId);
+		_record.setWeblogouttime(ControllerHelper.getCurrentDate());
+		mapper.updateByPrimaryKeySelective(_record);
+		
 	}
 
 

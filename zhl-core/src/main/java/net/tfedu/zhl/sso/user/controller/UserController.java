@@ -123,6 +123,10 @@ public class UserController {
 				}
 				
 				userService.logout(token, isRepeatLogin);
+				
+				//修改状态
+				userService.updateUserStatutToLogout(us.getUserId(), token);
+				
 			}
 		} else {
 			String userName = request.getParameter("user_name");
@@ -132,8 +136,13 @@ public class UserController {
 
 			// 用户登录
 			SRegister reg = registerService.login(userName, userPwd);
+			
 			// 获取用户信息
 			user = userService.getUserSimpleById(reg.getId(), model,isRepeatLogin);
+
+			//记录用户的登录状态
+			userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
+			
 			//检测用户的头像
 			UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
 			

@@ -67,18 +67,18 @@ public class ZhlOnlineUtil {
      * 
      * @param request
      * @param userid
-     * @param nodeid
-     * @param clientType
+     * @param registerNodeId   用户的注册节点
+     * @param clientType  	客户端类型
      * @return
      */
-    public static String getDeviceInfoWeb(HttpServletRequest request, long userid, long nodeid, int clientType) {
+    public static String getDeviceInfoWeb(HttpServletRequest request, long userid, long registerNodeId, int clientType) {
         // 由request获取浏览器版本、ip地址
         String clientVersion = request.getHeader("user-agent");
         String loginIP = getIpAddr(request);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String curTime = format.format(Calendar.getInstance().getTime());
         StringBuffer sb = new StringBuffer();
-        sb.append(curTime).append("_").append(userid).append("_").append(nodeid).append("_").append(clientType).append("_").append(loginIP).append("_").append(clientVersion).append("_")
+        sb.append(curTime).append("_").append(userid).append("_").append(registerNodeId).append("_").append(clientType).append("_").append(loginIP).append("_").append(clientVersion).append("_")
                 .append(curTime);
         return MD5.MD5(sb.toString());
     }
@@ -108,4 +108,15 @@ public class ZhlOnlineUtil {
         return ip;
     }
 
+    
+    /**
+     * 获取客户端浏览器的版本
+     * @param request
+     * @return
+     */
+    public static String getClientVersion(HttpServletRequest request) {
+    	return request.getHeader("user-agent");
+    }
+
+    
 }
