@@ -49,7 +49,7 @@ public class BaseData {
 			cityName=cityMap!=null?cityMap.get("name"):cityName;
 			String cityCode=cityMap!=null?cityMap.get("code"):"";
 			if(StringUtils.isNotEmpty(cityCode)){
-				Map<String, String> provinceMap=areaMapper.queryAreaParent(code);
+				Map<String, String> provinceMap=areaMapper.queryAreaParent(cityCode);
 				provinceName=provinceMap!=null?provinceMap.get("name"):provinceName;
 			}
 		}
