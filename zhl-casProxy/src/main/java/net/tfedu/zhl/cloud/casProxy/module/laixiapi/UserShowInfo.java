@@ -31,6 +31,13 @@ public class UserShowInfo implements Serializable{
 	String	nick_name	;
 	
 	
+	
+	/**
+	 * 登录用户名
+	 */
+	String login_name ;
+	
+	
 	/**
 	 * 真实姓名
 	 */
@@ -118,6 +125,12 @@ public class UserShowInfo implements Serializable{
 	}
 	public void setId_card(String id_card) {
 		this.id_card = id_card;
+	}
+	public String getLogin_name() {
+		return login_name;
+	}
+	public void setLogin_name(String login_name) {
+		this.login_name = login_name;
 	}
 
 	

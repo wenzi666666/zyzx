@@ -42,7 +42,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
             throws Exception {
-        endTime = System.currentTimeMillis();
+       /* endTime = System.currentTimeMillis();
         String requestRri = request.getRequestURI();
         String uriPrefix = request.getContextPath();
         // String
@@ -75,6 +75,7 @@ public class LogInterceptor implements HandlerInterceptor {
 
         // 放到一公共变量里，定时提交
         // logService.save(log);
-    }
+*/   
+    	}
 
 }
