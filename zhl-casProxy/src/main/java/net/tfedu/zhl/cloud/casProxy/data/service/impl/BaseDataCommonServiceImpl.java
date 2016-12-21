@@ -1,31 +1,16 @@
 package net.tfedu.zhl.cloud.casProxy.data.service.impl;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.cloud.casProxy.data.BaseData;
 import net.tfedu.zhl.cloud.casProxy.data.service.BaseDataCommonService;
 import net.tfedu.zhl.cloud.casProxy.model.RegisterAddFormTp;
-import net.tfedu.zhl.cloud.casProxy.model.ResultDataTp;
-import net.tfedu.zhl.cloud.casProxy.util.SignVerify;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.fileservice.MD5;
-import net.tfedu.zhl.helper.httpclient.APIForm;
-import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.area.dao.AreaMapper;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
-
-import org.apache.http.client.ClientProtocolException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.alibaba.fastjson.JSONObject;
 /**
  * 获取第三方基础数据
  * 

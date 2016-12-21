@@ -1,9 +1,11 @@
-package net.tfedu.zhl.sso.online.dao;
+package net.tfedu.zhl.cloud.online.dao;
+
+
 
 import java.util.Date;
 
+import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 
 public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
 

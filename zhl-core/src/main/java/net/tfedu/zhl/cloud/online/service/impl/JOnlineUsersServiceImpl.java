@@ -1,4 +1,6 @@
-package net.tfedu.zhl.sso.online.service.impl;
+package net.tfedu.zhl.cloud.online.service.impl;
+
+
 
 import java.util.Calendar;
 import java.util.Date;
@@ -6,16 +8,16 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
-import net.tfedu.zhl.helper.ZhlOnlineUtil;
-import net.tfedu.zhl.sso.online.dao.JOnlineUsersMapper;
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
-import net.tfedu.zhl.sso.online.service.JOnlineUsersService;
-import net.tfedu.zhl.sso.users.dao.SRegisterMapper;
-import net.tfedu.zhl.sso.users.entity.SRegister;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import net.tfedu.zhl.cloud.online.dao.JOnlineUsersMapper;
+import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
+import net.tfedu.zhl.cloud.online.service.JOnlineUsersService;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.helper.ZhlOnlineUtil;
+import net.tfedu.zhl.sso.users.dao.SRegisterMapper;
+import net.tfedu.zhl.sso.users.entity.SRegister;
 
 @Service("jOnlineUsersService")
 public class JOnlineUsersServiceImpl implements JOnlineUsersService {

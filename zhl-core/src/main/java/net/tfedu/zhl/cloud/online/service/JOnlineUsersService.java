@@ -1,10 +1,12 @@
-package net.tfedu.zhl.sso.online.service;
+package net.tfedu.zhl.cloud.online.service;
+
+
 
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
+import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 
 public interface JOnlineUsersService {
 

@@ -1,8 +1,15 @@
-package net.tfedu.zhl.sso.online.entity;
+package net.tfedu.zhl.cloud.online.entity;
+
+
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Table(name = "j_online_users")
 public class JOnlineUsers implements Serializable {

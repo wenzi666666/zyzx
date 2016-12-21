@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import net.tfedu.zhl.cloud.online.dao.JOnlineUsersMapper;
+import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
@@ -21,14 +23,10 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
-import net.tfedu.zhl.sso.app.entity.SApp;
-import net.tfedu.zhl.sso.online.dao.JOnlineUsersMapper;
-import net.tfedu.zhl.sso.online.entity.JOnlineUsers;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
 import net.tfedu.zhl.sso.th_register.dao.SThirdRegisterRelativeMapper;
-import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
@@ -38,9 +36,6 @@ import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
 import net.tfedu.zhl.sso.users.dao.SRegisterMapper;
 import net.tfedu.zhl.sso.users.entity.FuncListSimple;
-import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
-import net.tfedu.zhl.sso.users.entity.SRegister;
-import tk.mybatis.mapper.entity.Example;
 
 /**
  * 用户业务接口
