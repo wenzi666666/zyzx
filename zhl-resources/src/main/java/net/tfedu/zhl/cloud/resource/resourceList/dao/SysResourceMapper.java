@@ -63,6 +63,30 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
      */
     public List<String> getAllRescodes(@Param("resId") long resId, @Param("curTfcode") String curTfcode);
     
+    
+    
+    /**
+     * 获取资源的点击次数
+     * @param rescode
+     * @return
+     */
+    public Integer getClickTimes(@Param("rescode") String rescode);
+    
+    
+    
+    /**
+     * 增加系统资源点击、下载的记录(点击次数为1)
+     * @param rescode
+     */
+    public void insertOperateRecord(@Param("rescode") String rescode);
+    
+    /**
+     * 更新点击次数
+     * @param rescode
+     * @param clickTimes 更新点击次数的目标
+     */
+    public void updateClickTime2(@Param("rescode") String rescode,@Param("clickTimes")int clickTimes);
+    
     /**
      * 更新点击次数（+1）
      * @param rescode

@@ -396,7 +396,13 @@ public class JPrepareServiceImpl implements JPrepareService {
 				break;	
 			//系统资源
 			case JPrepareConstant.fromFlag_sysRes:
-				sysResMapper.updateClickTime(rescode);
+				
+				Integer clicktimes = sysResMapper.getClickTimes(rescode);
+				if(null == clicktimes){
+					sysResMapper.insertOperateRecord(rescode);
+				}else{
+					sysResMapper.updateClickTime(rescode);
+				}
 				break;	
 			}			
 			
