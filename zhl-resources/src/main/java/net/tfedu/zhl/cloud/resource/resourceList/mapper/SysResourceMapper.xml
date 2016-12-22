@@ -291,26 +291,32 @@
 	</select>
 
 
+
+	<select id="getClickTimes" resultType="Integer">
+		SELECT clicktimes FROM `z_resource_operate_times` where rescode =#{rescode}
+	</select>
+
+
+	<!-- 更新点击次数 -->
+	<update id="updateClickTime2" parameterType="String">
+		UPDATE z_resource_operate_times  set clicktimes = #{clickTimes}  where rescode = #{rescode}
+	</update>
+
+
+	<!-- 增加系统资源点击、下载的记录 -->
+	<insert id="insertOperateRecord" >
+		INSERT z_resource_operate_times(rescode,clicktimes,downloadtimes,collecttimes) VALUES (#{rescode},1,0,0) 
+	</insert>
+	
+
 	<!-- 更新点击次数（+1） -->
 	<update id="updateClickTime" parameterType="String">
-		REPLACE INTO
-		z_resource_operate_times(rescode,downloadtimes,clicktimes,collecttimes)
-		select
-		t.rescode,IFNULL(p.downloadtimes,0),IFNULL(clicktimes,0)+1,IFNULL(p.collecttimes,0)
-		from
-		(select #{rescode} as rescode from dual )t
-		LEFT JOIN z_resource_operate_times p on t.rescode = p.rescode
+		UPDATE z_resource_operate_times  set clicktimes = clicktimes+1  where rescode =  #{rescode}
 	</update>
 
 	<!-- 更新下载次数（+1） -->
 	<update id="updateDownloadTime" parameterType="String">
-		REPLACE INTO
-		z_resource_operate_times(rescode,downloadtimes,clicktimes,collecttimes)
-		select
-		t.rescode,IFNULL(p.downloadtimes,0)+1,IFNULL(clicktimes,0),IFNULL(p.collecttimes,0)
-		from
-		(select #{rescode} as rescode from dual )t
-		LEFT JOIN z_resource_operate_times p on t.rescode = p.rescode
+		UPDATE z_resource_operate_times  set downloadtimes = downloadtimes+1  where rescode =  #{rescode}
 	</update>
 
 

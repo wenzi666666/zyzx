@@ -102,6 +102,8 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
+		
+		
 		<profile>
 		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
 			<id>suse_local</id>
@@ -222,7 +224,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 		
@@ -265,7 +267,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 		

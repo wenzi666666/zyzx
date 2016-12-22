@@ -445,9 +445,10 @@ public class RegisterServiceImpl implements RegisterService {
 				user.setMale(form.isSex());
 				user.setRoleid(String.valueOf(form.getRole()));
 				user.setSchoolid(schoolId);
+				userMapper.updateByPrimaryKeySelective(user);
 			}
 			
-			userMapper.updateByPrimaryKeySelective(user);
+			
 			
 		}
 
