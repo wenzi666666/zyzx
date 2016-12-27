@@ -23,7 +23,7 @@
 	  SELECT t.id,t.th_username,t.zhl_username,t.th_code,s.id as zhl_userid FROM s_th_register_relative t 
 		LEFT JOIN s_register s on s.name = t.zhl_username
 		where t.th_username = #{userName}  and t.th_code =#{thirdCode}
-
+        
   </select>
   
 </mapper>

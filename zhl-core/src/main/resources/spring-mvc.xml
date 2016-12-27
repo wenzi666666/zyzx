@@ -12,7 +12,12 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven validator="validator"/>
+	
+	<!-- 验证配置，告知srpingmvc，使用的是Hibernate验证框架来完成的验证 -->
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+	</bean>
 	
 	<mvc:default-servlet-handler/>
 		
@@ -73,6 +78,7 @@
  
         <mvc:interceptor>
         	<mvc:mapping path="/*RestAPI/**/**"/>
+        	<mvc:exclude-mapping path="/*RestAPI/register/**" />
         	<mvc:exclude-mapping path="/resRestAPI/thirdparty/**" />
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/users/login" />
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/users/userCache"/>

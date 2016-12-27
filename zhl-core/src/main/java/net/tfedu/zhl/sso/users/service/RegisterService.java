@@ -1,8 +1,10 @@
 package net.tfedu.zhl.sso.users.service;
 
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
 
 public interface RegisterService {
     /**
@@ -64,5 +66,10 @@ public interface RegisterService {
 	public void registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form,SApp app)throws Exception;
     
     
-
+   /** 实现注册
+    * @param form 注册表单
+   */
+	public ResultJSON register(AccountRegisterWebForm form)throws Exception;
+	
+	
 }

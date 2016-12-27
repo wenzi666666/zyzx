@@ -16,6 +16,7 @@ import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
+import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.city.dao.CityMapper;
 import net.tfedu.zhl.sso.city.entity.City;
@@ -48,6 +49,7 @@ import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SBatch;
 import net.tfedu.zhl.sso.users.entity.SCard;
 import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
 /**
@@ -681,6 +683,80 @@ public class RegisterServiceImpl implements RegisterService {
 		}
 		
 		return schoolId;
+	}
+
+	@Override
+	public ResultJSON register(AccountRegisterWebForm form) throws Exception {
+		
+		SCard card =  cardMapper.selectByPrimaryKey(form.getCardId());
+		
+		
+		SRegister s = new SRegister();
+		s.setCardid(card.getId());
+		s.setFlag(false);
+		s.setEmail("");
+		s.setName(form.getUserName());
+		s.setNodeid(1);
+		s.setRegistertime(Calendar.getInstance().getTime());
+		s.setRoleid(card.getRoleid());
+		s.setPwd(PWDEncrypt.doEncryptByte(form.getUserPassword()));
+
+		Calendar c = Calendar.getInstance();
+		c.add(Calendar.MONDAY, card.getExpNum());
+		s.setReendtime(c.getTime());// 设置最后的有效期
+
+		// 增加注册信息
+		rMapper.addRegister(s);
+
+		JUser user = new JUser();
+		user.setId(s.getId());
+		user.setName(form.getUserName());
+		user.setTruename(form.getTrueName());
+		user.setNickname(form.getTrueName());
+		user.setFlag(false);
+		user.setIsfirstlogin(false);
+		user.setMale(form.getSex());
+		user.setRoleid(String.valueOf(card.getRoleid()));
+		user.setStatus(0);
+		user.setSchoolid(form.getSchoolId());
+
+		userMapper.insertSelective(user);
+
+		// userInfoMapper
+		JUserInfo userinfo = new JUserInfo();
+		userinfo.setUserid(user.getId());
+		userinfo.setResume("");
+		userinfo.setFlag(false);
+		userInfoMapper.insertSelective(userinfo);
+
+
+		if (form.getTermId() != null && form.getTermId()>0) {
+			JUserTerm userTerm = new JUserTerm();
+			userTerm.setUserid(user.getId());
+			userTerm.setTermid(form.getTermId());
+			userTermMapper.insertSelective(userTerm);
+		}
+
+
+		if (form.getSubjectId() != null&& form.getSubjectId()>0) {
+			JTeacherSubject ts = new JTeacherSubject();
+			ts.setUserid(user.getId());
+			ts.setSubjectid(form.getSubjectId());
+			teachSubjectMapper.insertSelective(ts);
+		}
+
+		
+		if(form.getClassId()!=null){
+			
+		}
+		
+		if(form.getGradeId()!=null){
+			
+		}
+		
+		
+		return ResultJSON.getSuccess(s.getId());
+		
 	}
 	
 	
