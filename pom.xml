@@ -398,6 +398,9 @@
 			<resource>
 				<directory>src/main/java</directory>
 				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
