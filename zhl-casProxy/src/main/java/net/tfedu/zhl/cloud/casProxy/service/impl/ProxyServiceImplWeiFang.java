@@ -80,6 +80,12 @@ public class ProxyServiceImplWeiFang  implements ProxyService{
 		
 		//拆分参数
 		String[] info = decryptInfo.split("\\|"); 
+		
+		if(StringUtils.isEmpty(info[0])||StringUtils.isEmpty(info[1])||StringUtils.isEmpty(info[2])){
+			throw new CustomException("加密参数中存在空值");
+		}
+		
+		
 		schoolName = StringUtils.isEmpty(info[0])?Default_schoolName:info[0];  //学校名称
 		String userName = info[1];    //用户名
 		String trueName = info[2];    //真实姓名

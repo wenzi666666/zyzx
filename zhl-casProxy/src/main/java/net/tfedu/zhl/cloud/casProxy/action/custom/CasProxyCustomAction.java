@@ -41,12 +41,16 @@ public class CasProxyCustomAction extends CasProxyCustomBase {
 	 */
 	@RequestMapping("/loginWF")
 	public void loginWeiFang(HttpServletRequest request, HttpServletResponse response) throws CustomException, Exception {
+		
+		if(proxy==null){
+			
+			ApplicationContext context = 
+					new FileSystemXmlApplicationContext("classpath*:applicationContext-casProxy.xml");
+			
+			proxy =  (ProxyService)context.getBean("proxyServiceImpl_weifang");
+			
+		}
 
-		ApplicationContext context = 
-	            new FileSystemXmlApplicationContext("classpath*:applicationContext-casProxy.xml");
-		
-		proxy =  (ProxyService)context.getBean("proxyServiceImpl_weifang");
-		
 		
 		super.login(request, response, proxy);
 		

@@ -155,7 +155,7 @@ public class AutoLoginController {
 		
 		//组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/systemres").append("?tocken=").append(user.getToken())
+				.append("/router").append("?tocken=").append(user.getToken())
 				.append("&userId=").append(user.getUserId())
 				.append("&iscoursewares=").append(user.getThirdParyCode())
 				.toString();
@@ -276,7 +276,7 @@ public class AutoLoginController {
 		
 		//组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/systemres").append("?tocken=").append(user.getToken())
+				.append("/router").append("?tocken=").append(user.getToken())
 				.append("&userId=").append(user.getUserId())
 				.append("&iscoursewares=").append(user.getThirdParyCode())
 				.toString();

@@ -38,11 +38,15 @@ public class DesZhuCheng {
     private static final String DEFAULTKEY ="zhucheng2015";
 	
 	public static void main(String[] args) throws Exception{
-		String enString = "E05BC5D8A7F45BB134B0879F3E26DF51F36C9EEB7343C209F62EACBDA1FC23F8E15A1E70ADEBA62B" ;
-		String string = "衡水第一小学|teacher_two|教师二";
-		String deString = decrypt(enString);
-		System.out.println(deString);
-		System.out.println(encrypt(string));
+//		String enString = "E05BC5D8A7F45BB134B0879F3E26DF51F36C9EEB7343C209F62EACBDA1FC23F8E15A1E70ADEBA62B" ;
+//		String string = "衡水第一小学|teacher_two|教师二";
+//		String deString = decrypt(enString);
+//		System.out.println(deString);
+//		System.out.println(encrypt(string));
+		
+		String string = "473F2F1C0241E3D9A1219B922B3FCC39";
+		
+		System.out.println(decrypt(string));
 	}
 
 	private static final String PASSWORD_CRYPT_KEY = DEFAULTKEY.substring(0, 8);
