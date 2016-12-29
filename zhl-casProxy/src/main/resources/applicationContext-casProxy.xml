@@ -20,6 +20,7 @@
 	</bean>
  -->
  
-
+	
+	<bean id='proxyServiceImpl_weifang' class="net.tfedu.zhl.cloud.casProxy.service.impl.ProxyServiceImplWeiFang" />
 	
 </beans>
