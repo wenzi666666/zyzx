@@ -66,12 +66,13 @@
 		<aspectj.version>1.6.12</aspectj.version>
 		<jaxp.version>1.4.2</jaxp.version>
 		<ehcache.version>2.10.1</ehcache.version>
-		<!-- <ehcache-core.version>2.6.11</ehcache-core.version> -->
+		<ehcache-core.version>2.6.11</ehcache-core.version>
 		
 		<!-- ehcahe jgroup 方式集群配置 -->
 		
 		<jgroups.version>3.5.0.Final</jgroups.version>
 		<ehcache-jgroupsreplication.version>1.7</ehcache-jgroupsreplication.version>
+		<timeToLive>32</timeToLive>
 	
 		
 		
@@ -102,6 +103,7 @@
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
 				<version>${resource-version}</version>
+				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -526,11 +528,11 @@
 			<artifactId>ehcache</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache-core.version}</version>
-		</dependency> -->
+		</dependency>
 
 		<dependency>
 			<groupId>com.alibaba</groupId>
