@@ -1,5 +1,6 @@
 package net.tfedu.zhl.helper;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
+import net.tfedu.zhl.cloud.online.service.JOnlineUsersService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * 登录状态拦截器
@@ -39,7 +43,13 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     
     @Autowired
     CommonWebConfig config;
+    
+    @Resource
+    JOnlineUsersService jOnlineUsersService;
 
+	@Resource
+	JUserService userService;
+    
 
     Logger logger = LoggerFactory.getLogger(LoginStatusCheckInterceptor.class);
 
@@ -79,6 +89,30 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         	if(us!=null){
                 currentUserId = us.getUserId();
                 currentUserName = us.getUserName();
+        	}else{
+
+            	
+        		//如果緩存中沒有，检查online表中的记录token
+        		JOnlineUsers record =  jOnlineUsersService.getUserOnlinesByToken(token);
+        		if(record!=null && record.getUserid()>0){
+        			//用戶有效時，补充cache
+
+        			String model = "";
+        			
+        			UserSimple _us = userService.getUserSimpleById(record.getUserid(), model
+        																, config.getIsRepeatLogin(), false);
+        			//重置登录时间
+        			_us.setLogintime(record.getLogintime());
+        			_us.setToken(token);
+        			
+        			//cache
+        			UserTokenCacheUtil.addUserInfoCache(model, cacheManager, token, _us, config.getIsRepeatLogin());
+        			
+                    currentUserId = _us.getUserId();
+                    currentUserName = _us.getUserName();
+
+        		}
+        		
         	}
         	
         }

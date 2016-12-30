@@ -101,7 +101,7 @@ public class UserTokenCacheUtil {
 				throw new KickOutTokenException();
 			}
 			//不是被踢出，则为超时或无效
-			throw new InvalidAccessTokenException();
+			return null ;
 		}
 		UserSimple us  = (UserSimple)o.get();
 		return us;

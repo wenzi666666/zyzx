@@ -4,6 +4,8 @@ package net.tfedu.zhl.cloud.online.dao;
 
 import java.util.Date;
 
+import org.apache.ibatis.annotations.Param;
+
 import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 import net.tfedu.zhl.helper.CoreMapper;
 
@@ -16,7 +18,7 @@ public interface JOnlineUsersMapper extends CoreMapper<JOnlineUsers> {
      * @param validTime
      * @return
      */
-    public JOnlineUsers getOnlineByToken(String token, Integer validTime);
+    public JOnlineUsers getOnlineByToken(@Param("token")String token, @Param("validTime")Integer validTime);
 
     /**
      * 踢出相同方式的用户登录((同一个用户、同一种登录client、同一个站点))

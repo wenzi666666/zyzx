@@ -24,7 +24,7 @@
   
   <select id="getOnlineByToken" resultMap="BaseResultMap">
   <![CDATA[ 
-  	SELECT * from  j_online_users where token = #{0} and status= 1 and flag =false and loginTime > DATE_ADD(NOW(),INTERVAL -2 HOUR)
+  	SELECT * from  j_online_users where token = #{token} and status= 1 and flag =false and loginTime > DATE_ADD(NOW(),INTERVAL -#{validTime} HOUR)
   ]]>
   </select>
   

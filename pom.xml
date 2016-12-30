@@ -106,7 +106,7 @@
 				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
 		
@@ -231,7 +231,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 		
@@ -398,9 +398,9 @@
 			<resource>
 				<directory>src/main/java</directory>
 				<filtering>true</filtering>
-				<excludes>
+<!-- 				<excludes>
 					<exclude>**/*.java</exclude>
-				</excludes>
+				</excludes> -->
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
