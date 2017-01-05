@@ -117,6 +117,21 @@ public class CommonWebConfig {
 	 */
 	@Value("#{configProperties['cartoonWebService']}")
 	public String cartoonWebService;
+	
+	/**
+	 * 项目密钥appKey  用于支持url中传递token
+	 */
+	@Value("#{configProperties['appKey']}")
+	public String appKey;
+	
+	
+	public String getAppKey() {
+		return appKey;
+	}
+
+	public void setAppKey(String appKey) {
+		this.appKey = appKey;
+	}
 
 	public String getTeachingResearchWebUrl() {
 		return teachingResearchWebUrl;

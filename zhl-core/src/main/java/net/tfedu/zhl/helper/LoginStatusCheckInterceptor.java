@@ -32,6 +32,10 @@ import net.tfedu.zhl.sso.user.service.JUserService;
  * 
  *         获取内外网路径
  *
+ *	@version 
+ *		create	1.0
+ *  	update  2.0 2017-01-05 兼容url中传递参数的方式
+ *  
  *
  *
  */
@@ -74,6 +78,9 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     	
         // 用户登录状态相关检查
         String token = request.getHeader("Authorization");
+        
+        
+        
         Long currentUserId = null;
         String currentUserName = null ;
         //默认继续往下走

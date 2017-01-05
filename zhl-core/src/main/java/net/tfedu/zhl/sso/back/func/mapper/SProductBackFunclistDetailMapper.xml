@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="net.tfedu.zhl.sso.back.func.dao.SProductBackFunclistDetailMapper">
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.back.func.entity.SProductBackFunclistDetail">
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor>
+      <idArg column="Id" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="funcId" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="Name" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="code" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="FuncDesc" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="Path" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="Area" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="scope" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="IsBase" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="IsFree" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="IsEnabled" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="Flag" javaType="java.lang.Boolean" jdbcType="BIT" />
+      <arg column="pid" javaType="java.lang.Long" jdbcType="BIGINT" />
+      <arg column="iconPath" javaType="java.lang.String" jdbcType="CHAR" />
+    </constructor>
+  </resultMap>
+</mapper>
