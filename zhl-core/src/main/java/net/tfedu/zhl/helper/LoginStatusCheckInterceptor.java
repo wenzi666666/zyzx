@@ -16,8 +16,12 @@ import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 import net.tfedu.zhl.cloud.online.service.JOnlineUsersService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
+import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.MD5SignError;
 import net.tfedu.zhl.core.exception.NoTokenException;
+import net.tfedu.zhl.core.exception.PropertiesMissing;
+import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 
@@ -76,8 +80,28 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
     		return false ;
     	}
     	
-        // 用户登录状态相关检查
+        //从header中获取token 或从 url中获取token（md5校验）
         String token = request.getHeader("Authorization");
+        if(StringUtils.isEmpty(token)){
+        	//获取sign
+        	String sign = request.getParameter("sign");
+        	if(StringUtils.isNotEmpty(sign)){
+        		String appKey =  config.getAppKey();
+        		//检查配置信息
+        		if(StringUtils.isEmpty(appKey)){
+        			throw new PropertiesMissing("appKey");
+        		}
+        		//md5校验
+        		if(!sign.equals(SignUtil.createSign(request, appKey))){
+        			throw new MD5SignError();
+        		}
+        		//获取token
+        		token = request.getParameter("token");
+        	}
+        }
+        
+        
+        
         
         
         

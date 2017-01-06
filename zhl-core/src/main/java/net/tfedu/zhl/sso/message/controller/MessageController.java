@@ -6,11 +6,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.ParamsException;
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.message.service.JMessageService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
+
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.message.service.JMessageService;
 
 /**
  * 消息

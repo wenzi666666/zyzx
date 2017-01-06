@@ -9,4 +9,8 @@ public class ParamsException extends CustomException {
     public ParamsException() {
         super("ParamsError", "参数异常");
     }
+    
+    public ParamsException(String msg) {
+        super("ParamsError", msg);
+    }
 }

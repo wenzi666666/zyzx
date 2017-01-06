@@ -34,7 +34,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     protected ResultJSON result;
     
     @Override
-    public ResultJSON get(long id) {
+    public ResultJSON get(Object id) {
         T data = mapper.selectByPrimaryKey(id);
         result = defaultSuccess(data);
         return result;
@@ -56,7 +56,7 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public ResultJSON delete(long id) {
+    public ResultJSON delete(Object id) {
         int data = mapper.deleteByPrimaryKey(id);
         result = defaultSuccess(data);
         return result;

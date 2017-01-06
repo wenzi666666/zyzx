@@ -125,6 +125,24 @@ public class CommonWebConfig {
 	public String appKey;
 	
 	
+	/**
+	 * 当前项目的产品编码 
+	 */
+	@Value("#{configProperties['productCode']}")
+	public String productCode;
+	
+	
+	
+	
+	
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+
 	public String getAppKey() {
 		return appKey;
 	}

@@ -11,4 +11,17 @@
       <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
     </constructor>
   </resultMap>
+  
+  
+  
+  <!-- 获取管理员的角色 -->
+  <select id="getManagerRole" resultMap="BaseResultMap">
+  	SELECT r.* FROM `s_product_back_userrole`  t
+	LEFT JOIN s_product_back_role  r  on r.id = t.RoleId
+	where t.flag = false and t.userid = #{userId}
+	and r.Flag = false  and r.product_code = #{productCode}
+  </select>
+  
+  
+  
 </mapper>

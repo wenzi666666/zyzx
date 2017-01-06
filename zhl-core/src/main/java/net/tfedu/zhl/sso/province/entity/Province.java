@@ -1,6 +1,9 @@
 package net.tfedu.zhl.sso.province.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name = "q_province")
 public class Province {
@@ -18,6 +21,8 @@ public class Province {
     /**
      * ʡ
      */
+    @NotEmpty(message = "省份名称不能为空！")
+    @NotNull(message = "省份名称不能为null！")
     @Column(name = "Name")
     private String name;
 

@@ -42,8 +42,7 @@ public class BaseController<T> {
 	 *            主键id
 	 * @return
 	 */
-	public ResultJSON delete(long id) throws Exception {
-
+	public ResultJSON delete(Object id) throws Exception {
 		return baseService.delete(id);
 	}
 

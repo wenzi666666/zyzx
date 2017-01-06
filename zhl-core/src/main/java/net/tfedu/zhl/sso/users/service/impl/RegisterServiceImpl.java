@@ -392,11 +392,14 @@ public class RegisterServiceImpl implements RegisterService {
 			// 是否已经注册了
 			Long _tempId = rMapper.getRegisterIdByName(zhl_username);
 
-			int i = 1;
+//			int i = 1;
 			while (_tempId != null && _tempId > 0) {
-				zhl_username = zhl_username + "" + i;
-				i++;
-				_tempId = rMapper.getRegisterIdByName(zhl_username);
+				//如果已经注册了，直接返回
+				return ;
+//				
+//				zhl_username = zhl_username + "" + i;
+//				i++;
+//				_tempId = rMapper.getRegisterIdByName(zhl_username);
 			}
 
 			

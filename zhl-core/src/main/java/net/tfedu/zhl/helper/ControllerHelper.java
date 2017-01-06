@@ -6,9 +6,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 
@@ -217,6 +214,16 @@ public class ControllerHelper {
     public static String getModel(HttpServletRequest request){
     	 return request.getParameter("model") == null ? " " : request
 				.getParameter("model");
+    }
+    
+    /**
+     * 不同的子系统，使用不同的model参数
+     * @param request
+     * @return
+     */
+    public static String getTokenByURL(HttpServletRequest request){
+    	return request.getParameter("token") == null ? "" : request
+    			.getParameter("token");
     }
     
     

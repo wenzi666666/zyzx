@@ -22,4 +22,23 @@
       <arg column="iconPath" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
+  
+  	<resultMap type="net.tfedu.zhl.sso.back.user.bean.FuncDetail" id="funcSimpleMap">
+  		<id column="id" property="id"/>
+  		<result column="name" property="name"/>
+  		<result column="code" property="code"/>
+  		<result column="path" property="path"/>
+  		<result column="funcId" property="funcId"/>
+  	</resultMap>
+  
+  
+  
+  	<select id="getFuncDetailList" resultMap="funcSimpleMap">
+  	select  id,funcId,name,code,path from s_product_back_funclist_detail  t where funcId = #{funcId} and flag= false 
+	and EXISTS (
+	SELECT id from s_product_back_roleconfig_detail d where d.flag= false and d.roleid =#{roleId} and d.funcdetailid = t.id 
+	)
+  	</select>
+  
+  
 </mapper>

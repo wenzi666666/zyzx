@@ -21,4 +21,31 @@
       <arg column="iconPath" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
+  
+  <!-- 查询角色对应的(一級)功能 -->
+  <select id="getFuncListForRole" resultMap="BaseResultMap">
+  	SELECT f.*  FROM `s_product_back_roleconfig` t
+	LEFT JOIN s_product_back_funclist f on f.id = t.funcid 
+	where t.flag = false and t.roleid = #{roleId} and f.product_code = #{productCode} 
+	and  pid = 0  
+  </select>
+  
+  
+  <!-- 获取指定功能的子功能 -->
+  <select id="getFuncListByParent" resultMap="BaseResultMap">
+  	select  * from s_product_back_funclist  where pid in 
+  	<foreach collection="parentIds" item="id" open="(" close=")" separator=",">
+  		id
+  	</foreach>
+  	order by pid 
+  </select>
+  
+  
+  <!-- 获取指定功能的子功能 -->
+  <select id="getFuncListByTheParent" resultMap="BaseResultMap">
+  	select  * from s_product_back_funclist  where pid = #{parentId} order by id
+  </select>
+  
+  
+  
 </mapper>

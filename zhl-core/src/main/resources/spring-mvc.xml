@@ -12,15 +12,18 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<mvc:annotation-driven validator="validator"/>
 	
 	<!-- 验证配置，告知srpingmvc，使用的是Hibernate验证框架来完成的验证 -->
-	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+ 	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
 	</bean>
+	<mvc:annotation-driven validator="validator"/> 
+
+
+<!-- 
+	<mvc:annotation-driven /> -->
 	
 	<mvc:default-servlet-handler/>
-		
 		
 		
  	<context:component-scan base-package="cn.outofmemory.hellospring.properties.annotation"/>
@@ -75,7 +78,7 @@
       
         </mvc:interceptor>
  
- 
+ 	<!-- 天台接口 -->
         <mvc:interceptor>
         	<mvc:mapping path="/*RestAPI/**/**"/>
         	<mvc:exclude-mapping path="/*RestAPI/register/**" />
@@ -91,6 +94,14 @@
         	<mvc:exclude-mapping path="/questionbankajax_*" />
         	<mvc:exclude-mapping path="/realName_login.action" />
         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
+        </mvc:interceptor>
+        
+        
+        
+          <mvc:interceptor>
+        	<mvc:mapping path="/*BackAPI/**/**"/>
+        	<mvc:exclude-mapping path="/*BackAPI/v1.0/login" />
+        	<bean class="net.tfedu.zhl.cloud.back.login.interceptor.LoginBackStatusInterceptor" />
         </mvc:interceptor>
         
     </mvc:interceptors>

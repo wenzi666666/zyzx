@@ -1,6 +1,9 @@
 package net.tfedu.zhl.sso.district.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name = "q_district")
 public class District {
@@ -9,6 +12,8 @@ public class District {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    
+    @Min(value=1,message="所在市的id不能小于1")
     @Column(name = "CityId")
     private String cityid;
 
@@ -18,6 +23,7 @@ public class District {
     @Column(name = "Code")
     private String code;
 
+    @NotEmpty(message="不能缺少名称")
     @Column(name = "Name")
     private String name;
 
