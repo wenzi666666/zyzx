@@ -24,7 +24,7 @@ import net.tfedu.zhl.sso.city.entity.City;
  * 		copyRight@ 同方知好乐教育科技(北京)有限公司
  */
 @Controller
-@RequestMapping(value = "/*BackAPI/v1.0")
+@RequestMapping(value = "/*BackAPI/v1.0/area")
 public class AreaCityController extends BaseController<City> {
 
 	

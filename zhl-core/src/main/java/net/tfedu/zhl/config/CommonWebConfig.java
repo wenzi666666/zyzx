@@ -132,9 +132,39 @@ public class CommonWebConfig {
 	public String productCode;
 	
 	
+	/**
+	 * 多媒体学报的对接地址
+	 */
+	@Value("#{configProperties['dmtbHost']}")
+	public String dmtbHost;
+	
+	
+	/**
+	 * 多媒体学报的内網对接地址
+	 */
+	@Value("#{configProperties['dmtbHostLocal']}")
+	public String dmtbHostLocal;
 	
 	
 	
+	
+	
+	public String getDmtbHost() {
+		return dmtbHost;
+	}
+
+	public void setDmtbHost(String dmtbHost) {
+		this.dmtbHost = dmtbHost;
+	}
+
+	public String getDmtbHostLocal() {
+		return dmtbHostLocal;
+	}
+
+	public void setDmtbHostLocal(String dmtbHostLocal) {
+		this.dmtbHostLocal = dmtbHostLocal;
+	}
+
 	public String getProductCode() {
 		return productCode;
 	}
@@ -514,6 +544,34 @@ public class CommonWebConfig {
 			current = cartoonWeb;
 		} else if (hostLocal.contains(URI)) {
 			current = cartoonWebLocal;
+		}
+
+		return current;
+	}
+	
+	/**
+	 * 获取当前浏览器下的 动漫练习（尚学动漫） web端的地址
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public String getCurrentDMTBWeb(HttpServletRequest request) {
+		String URI = request.getScheme() + "://" + request.getServerName()
+				+ (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath()
+				+ "/";
+		// 动漫练习（尚学动漫） web端
+		String current = "";
+
+		// 云模式，直接返回论坛3.0服务器地址的外网地址
+		if (isCloudModel) {
+			current = dmtbHost;
+			return current;
+		}
+
+		if (host.contains(URI)) {
+			current = dmtbHost;
+		} else if (hostLocal.contains(URI)) {
+			current = dmtbHostLocal;
 		}
 
 		return current;

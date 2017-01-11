@@ -16,6 +16,7 @@ import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.city.dao.CityMapper;
@@ -60,7 +61,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  */
 @Service("registerService")
 @Transactional
-public class RegisterServiceImpl implements RegisterService {
+public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements RegisterService {
 
 	@Autowired
 	SRegisterMapper rMapper;

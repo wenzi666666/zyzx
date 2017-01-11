@@ -1,12 +1,13 @@
 package net.tfedu.zhl.sso.users.service;
 
+import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
 
-public interface RegisterService {
+public interface RegisterService extends BaseService<SRegister>{
     /**
      * id获取注册用户
      */

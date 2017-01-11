@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -205,6 +206,59 @@ public class AdditionalController {
 		return ResultJSON.getSuccess(url);
 
 	}
+	
+	
+	
+	/**
+	 * 对接旧版的学报
+	 * @param request
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value = "/dmtb")
+	@ResponseBody
+	public ResultJSON dmtbOld(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//默认地址
+		String dmtbURL = "http://192.168.30.35:8099/dmtb/";
+		
+		//是否使用默认地址
+		String currentDMTBWeb = StringUtils.isEmpty(config.getCurrentDMTBWeb(request))
+									?dmtbURL:config.getCurrentDMTBWeb(request).trim();
+		
+		// 当前登录用户id
+		Long currentUserId = (Long) request.getAttribute("currentUserId");
+
+		SRegister register = regSerivce.getRegister(currentUserId);
+
+		String userName = register.getName();
+		String password = PWDEncrypt.getPWD(register.getPwd());
+
+		String key = additional_key;
+		
+		// page 学生为1 教师为0
+		String page = "1".equals(register.getRoleid().toString()) ? "1" : "0";
+
+		//參數
+		String params = "user=" + userName + "&pass=" + password
+				+ "&page=" + page;
+		String sign = MD5.MD5(params+"&key="+key);
+		
+		String s =  params + "&sign=" + sign;
+		
+		
+		byte[] sbytes;
+		sbytes = xxtea.encrypt(s.getBytes("utf-8"),
+				"9k8i78jug6hd93kjf84h".getBytes());
+		s = Base64.encode(sbytes, 0, sbytes.length);
+		s = URLEncoder.encode(s, "utf-8");
+
+		String url = currentDMTBWeb + "/com/rmlogin.ashx?s=" + s;
+		return  ResultJSON.getSuccess(url);
+	}
+	
+	
+	
+	
 
 	public static void main(String[] args) {
 		String s = "";

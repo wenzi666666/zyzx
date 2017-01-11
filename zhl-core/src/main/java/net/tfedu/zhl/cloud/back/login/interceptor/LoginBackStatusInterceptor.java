@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -73,7 +74,14 @@ public class LoginBackStatusInterceptor implements HandlerInterceptor {
 		if (RequestMethod.OPTIONS.toString().equals(method)) {
 			return false;
 		}
-
+		
+		//上传请求不过滤
+		if(request instanceof  DefaultMultipartHttpServletRequest){
+			return true ;
+		}
+		
+		
+		
 		String token = null;
 		// 获取token
 		token = request.getParameter("token");

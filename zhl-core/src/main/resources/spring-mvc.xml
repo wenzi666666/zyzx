@@ -138,9 +138,25 @@
         </property>  
     </bean>
 
+
+
+	
+	
+	<!--  增加对excel导出的配置支持 
+	http://www.mkyong.com/spring-mvc/spring-mvc-export-data-to-excel-file-via-abstractjexcelview/
+	--> 
+	<!--  -->
+		<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		   <property name="location">
+		       <value>classpath:spring-excel-views.xml</value>
+		   </property>
+		</bean>
+
     <!-- 对模型视图添加前后缀 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/WEB-INF/views/" p:suffix=".jsp"/>
+          p:prefix="/WEB-INF/views/" p:suffix=".jsp" >
+     
+     </bean>
 
     <!-- 配置springMVC处理上传文件的信息 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

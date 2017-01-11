@@ -2,7 +2,13 @@ package net.tfedu.zhl.sso.users.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.Min;
 
 @Table(name = "s_card")
 public class SCard implements Serializable {
@@ -83,13 +89,14 @@ public class SCard implements Serializable {
      * 
      */
     @Column(name = "Exp_num")
+    @Min(value=1,message="注册期限大于一个月")
     private Integer expNum;
 
     @Column(name = "Section")
     private String section;
 
     /**
-     * 标明卡号的位置定位到学校还是区县
+     * 标明卡号的位置定位
      */
     @Column(name = "PositionId")
     private Long positionid;

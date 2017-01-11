@@ -18,7 +18,6 @@ public class City {
     /**
      * 省id（父节点）
      */
-    @NotEmpty(message="不能缺少省id")
     @Min(value=1,message="所在省的id不能小于1")
     @Column(name = "ProvinceId")
     private Integer provinceid;
