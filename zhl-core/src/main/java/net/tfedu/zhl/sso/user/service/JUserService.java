@@ -5,13 +5,17 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.github.pagehelper.PageInfo;
+
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.app.entity.SApp;
+import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
+import net.tfedu.zhl.sso.user.entity.UserEditForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryResult;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 
 /**
  * 用户相关接口
@@ -78,6 +82,13 @@ public interface JUserService extends BaseService<JUser>{
      * @param subjectId
      */
     public void updateUserInfo(Long userId, String trueName, Boolean male, Long termId, Long subjectId);
+    
+    
+    /**
+     * 修改用户的信息
+     * @param form
+     */
+    public void updateUserInfo(UserEditForm form );
 
     /**
      * 修改用户头像
@@ -155,6 +166,20 @@ public interface JUserService extends BaseService<JUser>{
 	 * @param token   用户的token
 	 */
 	public void updateUserStatutToLogout(long userId,String token);
+	
+	
+	
+	
+	/**
+	 * 根据条件分页查询用户
+	 * @param scopeList  管理員的管理范围
+	 * @param form
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 * @throws Exception
+	 */
+	public PageInfo<UserQueryResult> queryUserByForm(List<SBackUserScope> scopeList, UserQueryForm form ,int pageNum, int pageSize)throws Exception;
 	
 	
 	

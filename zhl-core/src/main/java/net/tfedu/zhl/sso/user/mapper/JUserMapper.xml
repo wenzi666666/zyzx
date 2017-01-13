@@ -347,6 +347,87 @@
   </select>
   
   
+  <!-- 分页查询的结果对象 -->
+  <resultMap type="net.tfedu.zhl.sso.user.entity.UserQueryResult" id="userQueryResultMap">
+  	<id property="id" column="id"/>
+  	<result property="trueName" column="trueName"/>
+  	<result property="userName" column="userName"/>
+  	<result property="schoolName" column="schoolName"/>
+  	<result property="registerTime" column="registerTime"/>
+  	<result property="endTime" column="endTime"/>
+  	<result property="status" column="status"/>
+  	<result property="subjectNames" column="subjectNames"/>
+  </resultMap>
+  
+  <!--  根据用户的指定范围（全部、指定区、指定校）查询用户 -->
+  <select id="queryUserByForm" resultMap="userQueryResultMap" >
+	  	 
+	select g.id,u.trueName,u.name as userName,s.name as schoolName 
+	,g.registerTime ,g.reEndTime as endTime,g.status
+	
+	,IF(g.RoleId=1,'',(select  GROUP_CONCAT(b.name) from j_teachersubject ts,j_subject b where ts.userid= g.id and ts.flag = false and ts.subjectid = b.id) ) as subjectNames 
+	from s_register as  g
+	LEFT JOIN j_user as  u on g.id = u.id 
+	LEFT JOIN j_school s on s.id = u.schoolid 
+	LEFT JOIN q_district d on d.id = s.districtId
+	LEFT JOIN q_city c on c.id = d.CityId
+	LEFT JOIN q_province p on p.id = c.ProvinceId
+	where  g.flag = false and u.flag = false and s.flag = false 
+	
+	<if test=" form.schoolId !=null  and form.schoolId> 0">
+		AND s.id = #{form.schoolId}
+	</if>
+	
+	<if test=" form.districtId !=null  and form.districtId> 0">
+		AND d.id = #{form.districtId}
+	</if>
+	
+	<if test=" form.cityId !=null  and form.cityId> 0">
+		AND c.id = #{form.cityId}
+	</if>
+	
+	<if test=" form.provinceId !=null  and form.provinceId> 0">
+		AND p.id = #{form.provinceId}
+	</if>
+	
+	<if test=" form.keyword !=null  and form.keyword.length() > 0">
+		and (u.name like #{form.keyword} OR u.TrueName like #{form.keyword})
+	</if>
+	
+	
+	<if test="provinceIds!=null and provinceIds.length > 0 ">
+		and p.id in 
+		<foreach collection="provinceIds" separator="," open="(" close=")" item="id">
+			id
+		</foreach>
+	</if>
+	
+	<if test="cityIds!=null and cityIds.length > 0 ">
+		and c.id in 
+		<foreach collection="cityIds" separator="," open="(" close=")" item="id">
+			id
+		</foreach>
+	</if>
+	
+	<if test="districtIds!=null and districtIds.length > 0 ">
+		and d.id in 
+		<foreach collection="districtIds" separator="," open="(" close=")" item="id">
+			id
+		</foreach>
+	</if>
+	
+	<if test="schoolIds !=null and schoolIds.length > 0 ">
+		and s.id in 
+		<foreach collection="schoolIds" separator="," open="(" close=")" item="id">
+			id
+		</foreach>
+	</if>
+	
+	
+	ORDER BY g.id desc 
+	  
+  
+  </select>
   
   
 </mapper>

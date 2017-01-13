@@ -7,9 +7,12 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.helper.CoreMapper;
+import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
+import net.tfedu.zhl.sso.user.entity.UserQueryForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryResult;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.entity.UsersEntity;
 
@@ -144,6 +147,25 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @return
 	 */
 	public Map<String,Object>getUserTrueNameAndSchoolName(@Param("userId")long userId);
+	
+	
+	
+	/**
+	 * 根据用户的指定范围（全部、指定区、指定校）查询用户
+	 * 
+	 *   全部范围同时为空时，认为是查询全部
+	 * @param form         查询提交
+	 * @param provinceIds  省级管理员的管理范围
+	 * @param cityIds	         市级管理员的管理范围
+	 * @param districtIds  区级管理员的管理范围
+	 * @param schoolIds    校级管理员的管理范围
+	 * @return
+	 */
+	public List<UserQueryResult> queryUserByForm(@Param("form")UserQueryForm form
+			,@Param("provinceIds") Long[] provinceIds,@Param("cityIds") Long[] cityIds
+			,@Param("districtIds") Long[] districtIds,@Param("schoolIds") Long[] schoolIds);
+	
+	
 	
 	
 

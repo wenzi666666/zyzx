@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 import net.tfedu.zhl.sso.subject.service.JSubjectService;
 
 @Service( value="subjectService")
-public class JSubjectServiceImpl implements JSubjectService {
+public class JSubjectServiceImpl   extends BaseServiceImpl<JSubject>  implements JSubjectService {
 
 	@Autowired
 	JTeacherSubjectMapper subjectMapper;

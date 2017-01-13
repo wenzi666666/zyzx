@@ -20,13 +20,23 @@ import tk.mybatis.mapper.entity.Example;
 */
 public interface SCardService extends BaseService<SCard> {
 	
-	   /** 卡号是否有效
+		/**
+		 * 卡号是否有效
+		 * @param cardNum
+		 * @param cardPwd
+		 * @return 卡号是否ok，当指定了学校时，在data中有个map包含schoolId,schoolName
+		 * @throws CustomException
+		 */
+	   public ResultJSON isCardAvailable(String cardNum, String cardPwd) throws CustomException;
+	   /**
 	    * 
+	    *  卡号是否有效
 	    * @param cardNum 卡号
 	    * @param cardPwd 卡密码
-	    * 
+	    * @return 卡号是否ok，并返回SCard对象
+		 *@throws CustomException
 	    */
-	   public ResultJSON isCardAvailable(String cardNum, String cardPwd) throws CustomException;
+	   public ResultJSON isCardAvailable2(String cardNum, String cardPwd) throws CustomException;
 	
 	   
 	   

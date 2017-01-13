@@ -82,23 +82,27 @@ public class LoginBackStatusInterceptor implements HandlerInterceptor {
 		
 		
 		
-		String token = null;
-		// 获取token
-		token = request.getParameter("token");
-		// 获取sign
-		String sign = request.getParameter("sign");
-		if (StringUtils.isNotEmpty(sign)) {
-			String appKey = config.getAppKey();
-			// 检查配置信息
-			if (StringUtils.isEmpty(appKey)) {
-				throw new PropertiesMissing("appKey");
-			}
-			// md5校验
-			if (!sign.equals(SignUtil.createSign(request, appKey))) {
+		String token =   request.getHeader("Authorization");
+		
+		if(null == token ){
+			
+			// 获取token
+			token = request.getParameter("token");
+			// 获取sign
+			String sign = request.getParameter("sign");
+			if (StringUtils.isNotEmpty(sign)) {
+				String appKey = config.getAppKey();
+				// 检查配置信息
+				if (StringUtils.isEmpty(appKey)) {
+					throw new PropertiesMissing("appKey");
+				}
+				// md5校验
+				if (!sign.equals(SignUtil.createSign(request, appKey))) {
+					throw new MD5SignError();
+				}
+			}else{
 				throw new MD5SignError();
 			}
-		}else{
-			throw new MD5SignError();
 		}
 
 		Long currentUserId = null;
@@ -137,7 +141,9 @@ public class LoginBackStatusInterceptor implements HandlerInterceptor {
 
 					currentUserId = _us.getUserId();
 					currentUserName = _us.getUserName();
-
+					//管理员的管理范围
+					request.setAttribute("scopeList", _us.getScopeList());
+					
 				}
 
 			}

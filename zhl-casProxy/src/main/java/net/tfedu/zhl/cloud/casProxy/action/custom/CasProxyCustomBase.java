@@ -11,11 +11,9 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.alibaba.fastjson.JSONObject;
 
-import net.tfedu.zhl.cloud.casProxy.action.CasProxyHaiYangAction;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.cloud.casProxy.service.ProxyService;
 import net.tfedu.zhl.core.exception.CustomException;

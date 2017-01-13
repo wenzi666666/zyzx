@@ -14,13 +14,16 @@
 
 	
 	<!-- 验证配置，告知srpingmvc，使用的是Hibernate验证框架来完成的验证 -->
+	
+	 
+ 	<!--
  	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
 	</bean>
 	<mvc:annotation-driven validator="validator"/> 
+-->
 
-
-<!-- 
+<!--
 	<mvc:annotation-driven /> -->
 	
 	<mvc:default-servlet-handler/>
@@ -145,13 +148,13 @@
 	<!--  增加对excel导出的配置支持 
 	http://www.mkyong.com/spring-mvc/spring-mvc-export-data-to-excel-file-via-abstractjexcelview/
 	--> 
-	<!--  -->
+	<!-- 
 		<bean class="org.springframework.web.servlet.view.XmlViewResolver">
 		   <property name="location">
 		       <value>classpath:spring-excel-views.xml</value>
 		   </property>
 		</bean>
-
+	 -->
     <!-- 对模型视图添加前后缀 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/views/" p:suffix=".jsp" >

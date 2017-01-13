@@ -52,7 +52,18 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     public ResultJSON insert(T c) {
         int data = mapper.insert(c);
         result = defaultSuccess(data);
+        
         return result;
+    }
+    
+    
+    @Override
+    public ResultJSON insertUseGeneratedKeys(T c) {
+    	int data =  mapper.insertUseGeneratedKeys(c);
+
+    	result = defaultSuccess(data);
+    	
+    	return result;
     }
 
     @Override

@@ -29,6 +29,15 @@
 			<artifactId>zhl-core</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		
+		
+		<dependency>
+			<groupId>net.zdsoft</groupId>
+			<artifactId>passport-remoting</artifactId>
+			<version>0.4.3</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/passport-remoting-0.4.3.jar</systemPath>
+		</dependency>
 
   </dependencies>
   

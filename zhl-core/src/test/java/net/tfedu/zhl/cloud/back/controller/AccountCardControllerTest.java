@@ -117,8 +117,13 @@ public class AccountCardControllerTest extends BaseControllerTestCase{
 		}
 
 	@Test
-	public void testRegisterCardBatch() {
+	public void testRegisterCardBatch() throws Exception {
 		
+		result =  controller.registerCardBatch("", request, response);
+		
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+		
+		log.info(JSONObject.toJSONString(result));
 		
 	}
 

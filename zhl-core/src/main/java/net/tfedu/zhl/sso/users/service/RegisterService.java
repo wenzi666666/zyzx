@@ -1,13 +1,19 @@
 package net.tfedu.zhl.sso.users.service;
 
+import java.util.List;
+
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
+import net.tfedu.zhl.sso.users.util.CardExcelForm;
 
 public interface RegisterService extends BaseService<SRegister>{
+	
+	
+	
     /**
      * id获取注册用户
      */
@@ -34,6 +40,24 @@ public interface RegisterService extends BaseService<SRegister>{
      * @return
      */
     public SRegister login(String userName, String password)    throws Exception;
+    
+    
+    /**
+     * 增加用户注册
+     * @param form  卡号批量注册的信息
+     * @return     注冊成功
+     * @throws Exception 
+     */
+    public List<CardExcelForm> addRegister(List<CardExcelForm> list)throws Exception;
+    
+    
+    /**
+     * 增加用户注册
+     * @param form
+     * @return
+     */
+    public SRegister addRegister(SRegister record)throws Exception;
+    
     
     
     

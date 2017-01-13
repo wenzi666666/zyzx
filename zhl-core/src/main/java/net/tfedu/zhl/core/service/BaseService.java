@@ -32,6 +32,11 @@ public interface BaseService<T> {
      * 增加
      */
     ResultJSON insert(T c);
+    
+    /**
+     * 增加
+     */
+    ResultJSON insertUseGeneratedKeys(T c);
 
     /**
      * 删除

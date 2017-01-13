@@ -16,6 +16,7 @@
       <arg column="Flag" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="reEndTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="Pwd" javaType="byte[]" jdbcType="BINARY" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   

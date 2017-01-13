@@ -748,7 +748,7 @@
     <artifactId>validation-api</artifactId>
     <version>${validation-api.version}</version>
 </dependency>
-	<!--  -->
+	<!--  
 	<dependency>  
        <groupId>javax.el</groupId>  
        <artifactId>javax.el-api</artifactId>  
@@ -761,7 +761,7 @@
        <version>${el.version}</version>  
    </dependency>  
 	
-    
+    -->
     
     <!-- JExcelAPI library --> 
     <dependency>

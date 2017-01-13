@@ -48,10 +48,12 @@ public class SCardServiceImpl extends BaseServiceImpl<SCard> implements SCardSer
 	@Resource 
 	JSchoolMapper schoolMapper;
 	
-
 	@Override
-	public ResultJSON isCardAvailable(String cardNum, String cardPwd)  throws CustomException{
+	public ResultJSON isCardAvailable2(String cardNum, String cardPwd) throws CustomException {
+		return 	checkCardAvailable(cardNum, cardPwd, true);
+	}
 
+	public ResultJSON checkCardAvailable(String cardNum, String cardPwd,Boolean beanBackFlag)throws CustomException {
 		Example example = new Example(SCard.class);
 		example.createCriteria().andCondition(" cardnumber="+cardNum);
 		List<SCard> list =  mapper.selectByExample(example);
@@ -78,19 +80,28 @@ public class SCardServiceImpl extends BaseServiceImpl<SCard> implements SCardSer
 			throw new RegisterCardError(RegisterCardErrorInfoEuam.EXPIRE);
 		}
 		
-		//是否設置學校
-		if(null!=card.getPositionid() && card.getPositionid()>0){
-			JSchool school =  schoolMapper.selectByPrimaryKey(card.getPositionid());
-			if(school!=null){
-				Map<String,Object> sch = new HashMap<String,Object>();
-				sch.put("schoolId", school.getId());
-				sch.put("schoolName", school.getName());
-				return ResultJSON.getSuccess(sch);
+		if(!beanBackFlag){
+			//是否設置學校
+			if(null!=card.getPositionid() && card.getPositionid()>0){
+				JSchool school =  schoolMapper.selectByPrimaryKey(card.getPositionid());
+				if(school!=null){
+					Map<String,Object> sch = new HashMap<String,Object>();
+					sch.put("schoolId", school.getId());
+					sch.put("schoolName", school.getName());
+					return ResultJSON.getSuccess(sch);
+				}
+				
+			}else{
+				return ResultJSON.getSuccess("");
 			}
-			
 		}
 		
-		return ResultJSON.getSuccess("");
+		return ResultJSON.getSuccess(card);
+	}
+	
+	@Override
+	public ResultJSON isCardAvailable(String cardNum, String cardPwd)  throws CustomException{
+		return checkCardAvailable(cardNum, cardPwd, false);
 	}
 
 
@@ -181,6 +192,8 @@ public class SCardServiceImpl extends BaseServiceImpl<SCard> implements SCardSer
 	public List<SCard> queryCardByExampe(Example example) throws CustomException {
 		return mapper.selectByExample(example);
 	}
+
+
 
 	
 	

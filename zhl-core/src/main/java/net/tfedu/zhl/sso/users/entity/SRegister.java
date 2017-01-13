@@ -72,8 +72,15 @@ public class SRegister implements Serializable {
      */
     @Column(name = "Pwd")
     private byte[] pwd;
+    
 
-    public SRegister(Long id, Long cardid, Long roleid, String name, String email, Date registertime, Integer nodeid, Boolean flag, Date reendtime, byte[] pwd) {
+    /**
+     * 用户是否停用 0启用  1停用 ，默认为0 
+     */
+    @Column(name = "status")
+    private Integer status;
+
+    public SRegister(Long id, Long cardid, Long roleid, String name, String email, Date registertime, Integer nodeid, Boolean flag, Date reendtime, byte[] pwd,Integer status) {
         this.id = id;
         this.cardid = cardid;
         this.roleid = roleid;
@@ -84,6 +91,7 @@ public class SRegister implements Serializable {
         this.flag = flag;
         this.reendtime = reendtime;
         this.pwd = pwd;
+        this.status = status;
     }
 
     public SRegister() {
@@ -279,4 +287,22 @@ public class SRegister implements Serializable {
     public void setPwd(byte[] pwd) {
         this.pwd = pwd;
     }
+
+    /**
+     * 用户是否停用 0启用  1停用 ，默认为0 
+     * @return
+     */
+	public Integer getStatus() {
+		return status;
+	}
+
+	/**
+	 * 用户是否停用 0启用  1停用 ，默认为0 
+	 * @param status
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
+    
+    
 }

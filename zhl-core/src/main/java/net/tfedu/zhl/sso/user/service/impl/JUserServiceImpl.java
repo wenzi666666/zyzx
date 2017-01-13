@@ -2,15 +2,18 @@ package net.tfedu.zhl.sso.user.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
@@ -23,6 +26,7 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
+import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
 import net.tfedu.zhl.sso.role.dao.JRoleMapper;
 import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JUserTermMapper;
@@ -31,6 +35,9 @@ import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
+import net.tfedu.zhl.sso.user.entity.UserEditForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryResult;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.dao.FuncListMapper;
@@ -204,6 +211,25 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
         }
         
     }
+    
+    
+    @Override
+	public void updateUserInfo(UserEditForm form) {
+    	 JUser user = new JUser();
+         user.setId(form.getId());
+         user.setTruename(form.getTrueName());
+         user.setMale(form.getMale());
+         user.setNickname( StringUtils.isEmpty(form.getNickName())?form.getTrueName():form.getNickName());
+         mapper.updateByPrimaryKeySelective(user);
+         if (form.getTermId() > 0) {
+             termMapper.updateUserTerm(form.getId(), form.getTermId());
+         }
+         if (form.getSubjectId()>0){
+             subjectMapper.udpateTeacherSubject(form.getId(), form.getSubjectId());
+             subjectMapper.removeRepeatData(form.getId());
+         }
+    	
+	}
 
     /**
      * 修改用户头像
@@ -248,7 +274,6 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 	@Override
 	public UserAreaInfo getUserAreaInfo(long userId) {
 		
-//		HashMap<String, String>  map = mapper.getUserAreaALLInfo(userId);
 		
 		return mapper.getUserAreaALLInfo(userId); 
 	}
@@ -313,6 +338,60 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 		mapper.updateByPrimaryKeySelective(_record);
 		
 	}
+
+	@SuppressWarnings({ "static-access", "unchecked", "rawtypes" })
+	@Override
+	public PageInfo<UserQueryResult> queryUserByForm(List<SBackUserScope> scopeList,UserQueryForm form, int pageNum, int pageSize) throws Exception {
+		
+		
+		//根据管理范围划分管理员有3种，全局的管理员、区级管理员、校级管理员。一个管理员只能是其中一种
+		//1全国 2省 3市 4区 5校
+		
+		Long[] districtIds = new Long[]{};
+		Long[] schoolIds = new Long[]{};
+		
+		Long[] cityIds = new Long[]{};
+		Long[] provinceIds = new Long[]{};
+		
+		//整备查询范围的数组
+		if(scopeList!=null){
+			
+			for (Iterator<SBackUserScope> iterator = scopeList.iterator(); iterator.hasNext();) {
+				SBackUserScope sBackUserScope = (SBackUserScope) iterator.next();
+				switch(Integer.parseInt(sBackUserScope.getScope())){
+				case 5 : 
+					ArrayUtils.add(schoolIds, sBackUserScope.getSchoolid());
+					break;
+				case 4 : 
+					ArrayUtils.add(districtIds, sBackUserScope.getDistrictid());
+					break;
+				case 3 : 
+					ArrayUtils.add(cityIds, sBackUserScope.getCityid());
+					break;
+				case 2 :
+					ArrayUtils.add(provinceIds, sBackUserScope.getProvinceid());
+					break;
+				case 1 : 
+				default: 
+					break;
+					
+				}
+				
+			}
+		}
+		
+		//处理查询关键字，当关键字不为空时，增加 ‘%%’
+		if(null!=form.getKeyword() && StringUtils.isNotEmpty(form.getKeyword())){
+			form.setKeyword("%"+form.getKeyword()+"%");
+		}
+		
+		PageHelper pageHelper = new PageHelper();
+		pageHelper.startPage(pageNum, pageSize);
+		List<UserQueryResult> list = mapper.queryUserByForm(form, provinceIds, cityIds, districtIds, schoolIds);
+		return  new PageInfo((Page<UserQueryResult>)list) ;
+	}
+
+	
 
 
 }

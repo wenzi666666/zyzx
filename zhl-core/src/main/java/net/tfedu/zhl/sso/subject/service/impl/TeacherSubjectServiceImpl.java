@@ -2,6 +2,8 @@ package net.tfedu.zhl.sso.subject.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
+import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 import net.tfedu.zhl.sso.subject.service.TeacherSubjectService;
 
 /**
@@ -12,6 +14,6 @@ import net.tfedu.zhl.sso.subject.service.TeacherSubjectService;
 
 */
 @Service("teacherSubjectService")
-public class TeacherSubjectServiceImpl implements TeacherSubjectService {
+public class TeacherSubjectServiceImpl extends BaseServiceImpl<JTeacherSubject> implements TeacherSubjectService {
 
 }

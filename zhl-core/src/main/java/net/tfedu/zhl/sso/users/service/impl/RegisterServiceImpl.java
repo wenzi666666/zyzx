@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.core.exception.OutOfDateException;
+import net.tfedu.zhl.core.exception.RegisterCardError;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
+import net.tfedu.zhl.core.exception.euam.RegisterCardErrorInfoEuam;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.app.entity.SApp;
@@ -52,6 +55,8 @@ import net.tfedu.zhl.sso.users.entity.SCard;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.sso.users.util.CardExcelForm;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 注册表service
@@ -59,8 +64,8 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  * @author wangwr
  * 
  */
+@Transactional(value="ssoTransactionManager")
 @Service("registerService")
-@Transactional
 public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements RegisterService {
 
 	@Autowired
@@ -761,6 +766,121 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		
 		return ResultJSON.getSuccess(s.getId());
 		
+	}
+
+	@Override
+	public SRegister addRegister(SRegister record) throws Exception {
+		rMapper.addRegister(record);
+		return record;
+	}
+
+	@Override
+	public List<CardExcelForm> addRegister(List<CardExcelForm> list) throws Exception {
+		//开始注册
+		CardExcelForm form = null ;
+		SRegister reg = null;
+		JUser user = null ;
+		JUserInfo userInfo = null;
+		JUserTerm userTerm = null;
+		JTeacherSubject ts = null;
+		Calendar curr = Calendar.getInstance();
+		Calendar end = null ;
+
+		
+		for (Iterator<CardExcelForm> iterator = list.iterator(); iterator.hasNext();) {
+			 
+			form = (CardExcelForm)iterator.next();
+			
+			
+			if(0==form.getCardId() ||0 == form.getRoleId() ){
+				//根据卡号获取roleid ,expnum
+				Example example = new Example(SCard.class);
+				example.createCriteria().andCondition(" cardnumber= ", form.getCardNumber())
+				.andCondition(" cardpwd=",form.getCardPwd());
+				
+				List<SCard>  ls=  cardMapper.selectByExample(example);
+				if(ls==null || ls.size()==0){
+					//卡号不存在
+					throw new RegisterCardError(RegisterCardErrorInfoEuam.NOEXIST);
+				}else{
+					form.setCardId(ls.get(0).getId());
+					form.setRoleId(ls.get(0).getRoleid());
+					form.setCardExpNum(ls.get(0).getExpNum());
+				}
+				
+			}else if(form.getCardId()>0 && (0 == form.getRoleId() || form.getCardExpNum()==0)){
+				SCard  c =  cardMapper.selectByPrimaryKey(form.getCardId());
+				form.setCardId(c.getId());
+				form.setRoleId(c.getRoleid());
+				form.setCardExpNum(c.getExpNum());
+			}
+			
+			 //用戶對象
+			 reg= new SRegister();
+			 reg.setCardid(form.getCardId());
+			 reg.setEmail("");
+			 reg.setFlag(false);
+			 reg.setName(form.getUserName());
+			 reg.setRoleid(form.getRoleId());
+			 
+			 reg.setNodeid(1);
+			 reg.setPwd(PWDEncrypt.doEncryptByte(form.getUserPwd()));
+			 reg.setRegistertime(curr.getTime());
+			 
+			 end = Calendar.getInstance();
+			 end.add(Calendar.MONTH, form.getCardExpNum());
+			 reg.setReendtime(end.getTime());
+			 
+			 //写入sso
+			 rMapper.addRegister(reg);
+			 
+			 //JUser 
+			 user = new JUser();
+			 user.setId(reg.getId());
+			 user.setMale("男".equals(form.getSexName())?false:true);
+			 user.setFlag(false);
+			 user.setName(form.getUserName());
+			 user.setTruename(form.getTrueName());
+			 user.setNickname(form.getNickName());
+			 user.setRoleid(String.valueOf(form.getRoleId()));
+			 user.setSchoolid(form.getSchoolId());
+			 
+			 userInfo = new JUserInfo();
+			 userInfo.setUserid(reg.getId());
+			 userInfo.setScouresum(0);
+			 userInfo.setResume("");
+			 userInfo.setOperatescore(0);
+			 userInfo.setAnswerscore(0);
+			 userInfo.setForumflowernum(0);
+			 userInfo.setResume("");
+			 userInfo.setFlag(false);
+			 
+			 userMapper.insertSelective(user);
+			 userInfoMapper.insertSelective(userInfo);
+			 
+			 if(form.getTermId()>0){
+				 userTerm = new JUserTerm();
+				 userTerm.setUserid(reg.getId());
+				 userTerm.setTermid(form.getTermId());
+				 userTerm.setFlag(false);
+				 
+				 userTermMapper.insertSelective(userTerm);
+			 }
+			 
+			 
+			 if(form.getSubjectId()>0){
+				 ts = new JTeacherSubject();
+				 ts.setUserid(reg.getCardid());
+				 ts.setSubjectid(form.getSubjectId());
+				 ts.setFlag(false);
+				 teachSubjectMapper.insertSelective(ts);
+			 }
+			 
+			 form.setMessage("SUCCESS");
+		}
+		
+		
+		return list;
 	}
 	
 	

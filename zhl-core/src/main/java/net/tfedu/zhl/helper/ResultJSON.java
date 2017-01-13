@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import net.tfedu.zhl.core.exception.CustomException;
+
 /**
  * 新的api标准 返回的json 对象
  * 
@@ -95,6 +97,21 @@ public class ResultJSON implements Serializable{
     	return new ResultJSON("OK", "成功", data==null?"":data, "");
     	
     }
+    /**
+     * 缺省错误处理
+     * 
+     * @param data
+     * @param e
+     * @return
+     */
+    public static ResultJSON defaultError(CustomException e ) {
+    	ResultJSON result = new ResultJSON(e.getCode(), e.getMessage(), "", "");
+        e.printStackTrace();
+        return result;
+    }
+
+    
+    
     
     @Override
     public String toString() {
