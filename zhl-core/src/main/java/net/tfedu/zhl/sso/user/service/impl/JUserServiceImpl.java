@@ -218,8 +218,15 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
     	 JUser user = new JUser();
          user.setId(form.getId());
          user.setTruename(form.getTrueName());
-         user.setMale(form.getMale());
          user.setNickname( StringUtils.isEmpty(form.getNickName())?form.getTrueName():form.getNickName());
+
+         if(form.getMale()!=null){
+        	 user.setMale(form.getMale());
+         }
+         if(form.getSchoolId()!=null && form.getSchoolId()>0){
+             user.setSchoolid(form.getSchoolId());
+         }
+         
          mapper.updateByPrimaryKeySelective(user);
          if (form.getTermId() > 0) {
              termMapper.updateUserTerm(form.getId(), form.getTermId());

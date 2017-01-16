@@ -105,17 +105,16 @@ public class CardExcelForm {
 	 public long schoolId = 0;
 	 
 	 
-	 @Min(value=1,message="注册学校不能为空")
+	 @Min(value=1,message="注册学段不能为空")
 	 public long termId = 0 ;
 	 
 	 
 	 public long classId = 0 ;
 	
 	 
-	 @Min(value=1,message="注册学校不能为空")
 	 public long roleId = 0 ;
 	 
-	 @Min(value=1,message="注册学校不能为空")
+	 @Min(value=1,message="注册学课不能为空")
 	 public long subjectId = 0 ;
 	 
 	 public long cardId = 0 ;
@@ -123,6 +122,14 @@ public class CardExcelForm {
 	 
 	 
 	 
+	public Boolean getMale() {
+		return male;
+	}
+
+	public void setMale(Boolean male) {
+		this.male = male;
+	}
+
 	public long getCardId() {
 		return cardId;
 	}

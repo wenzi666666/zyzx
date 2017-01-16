@@ -431,7 +431,8 @@ public class AccountCardController extends BaseController<SCard> {
 				} else {
 					JSchool c = new JSchool();
 					c.setName(schoolName);
-					List<JSchool> schoolList = ((List<JSchool>) schoolService.select(c).getData());
+					@SuppressWarnings("unchecked")
+					List<JSchool> schoolList = (List<JSchool>) schoolService.select(c).getData();
 
 					if (schoolList == null || schoolList.size() == 0) {
 						error = true;
@@ -459,6 +460,7 @@ public class AccountCardController extends BaseController<SCard> {
 					JTerm t = new JTerm();
 					t.setName(termName);
 
+					@SuppressWarnings("unchecked")
 					List<JTerm> ls = (List<JTerm>) jTermService.select(t).getData();
 					if (ls == null || ls.size() == 0) {
 						error = true;
@@ -483,6 +485,7 @@ public class AccountCardController extends BaseController<SCard> {
 				} else {
 					JSubject sub = new JSubject();
 					sub.setName(subject);
+					@SuppressWarnings("unchecked")
 					List<JSubject> subList = (List<JSubject>) jSubjectService.select(sub).getData();
 					if (subList == null || subList.size() == 0) {
 						error = true;

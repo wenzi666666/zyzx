@@ -837,7 +837,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			 //JUser 
 			 user = new JUser();
 			 user.setId(reg.getId());
-			 user.setMale("男".equals(form.getSexName())?false:true);
+			 user.setMale(form.male!=null?form.male:"男".equals(form.getSexName())?false:true);
 			 user.setFlag(false);
 			 user.setName(form.getUserName());
 			 user.setTruename(form.getTrueName());
