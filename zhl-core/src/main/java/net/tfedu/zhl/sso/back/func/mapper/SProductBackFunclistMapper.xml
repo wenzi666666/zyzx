@@ -19,6 +19,7 @@
       <arg column="Flag" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="pid" javaType="java.lang.Long" jdbcType="BIGINT" />
       <arg column="iconPath" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="product_code" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   
@@ -34,7 +35,7 @@
   <!-- 获取指定功能的子功能 -->
   <select id="getFuncListByParent" resultMap="BaseResultMap">
   	select  * from s_product_back_funclist  where pid in 
-  	<foreach collection="parentIds" item="id" open="(" close=")" separator=",">
+  	<foreach close=")" collection="parentIds" item="id" open="(" separator=",">
   		id
   	</foreach>
   	order by pid 

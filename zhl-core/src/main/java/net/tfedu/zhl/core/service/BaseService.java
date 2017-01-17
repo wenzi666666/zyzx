@@ -36,6 +36,11 @@ public interface BaseService<T> {
     /**
      * 增加
      */
+    ResultJSON insertSelective(T c);
+    
+    /**
+     * 增加
+     */
     ResultJSON insertUseGeneratedKeys(T c);
 
     /**

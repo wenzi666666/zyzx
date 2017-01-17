@@ -24,6 +24,7 @@ public class BaseController<T> {
 	@Autowired
 	BaseService<T> baseService;
 
+	
 	/**
 	 * 增加
 	 * 
@@ -33,6 +34,28 @@ public class BaseController<T> {
 	 */
 	public ResultJSON insert(T c) throws Exception {
 		return baseService.insert(c);
+	}
+	
+	/**
+	 * 增加
+	 * 
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON insertSelective(T c) throws Exception {
+		return baseService.insertSelective(c);
+	}
+	
+	/**
+	 * 增加
+	 * 
+	 * @param c
+	 * @return
+	 * @throws Exception
+	 */
+	public ResultJSON insertUseGeneratedKeys(T c) throws Exception {
+		return baseService.insertUseGeneratedKeys(c);
 	}
 
 	/**

@@ -96,8 +96,11 @@ public abstract class BaseControllerTestCase {
      * @param result
      */
 	public void assertAndLog(ResultJSON result){
-		Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
-		log.info(JSONObject.toJSONString(result));
+		if(result!=null){
+			Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
+			log.info(JSONObject.toJSONString(result));
+		}
+		
 	}
 	
 }

@@ -52,10 +52,17 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     public ResultJSON insert(T c) {
         int data = mapper.insert(c);
         result = defaultSuccess(data);
-        
         return result;
+           
     }
-    
+
+    @Override
+    public ResultJSON insertSelective(T c) {
+        int data = mapper.insertSelective(c);
+        result = defaultSuccess(data);
+        return result;
+           
+    }
     
     @Override
     public ResultJSON insertUseGeneratedKeys(T c) {
@@ -160,12 +167,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
 	@Override
 	public ResultJSON selectAll() {
-		// TODO Auto-generated method stub
 		List<T> data = mapper.selectAll();
         result = defaultSuccess(data);
         return result;
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public ResultJSON getPageByExample(Example example, int pageNum, int pageSize) {
 

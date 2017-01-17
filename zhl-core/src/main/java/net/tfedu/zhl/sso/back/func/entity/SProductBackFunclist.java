@@ -1,10 +1,23 @@
 package net.tfedu.zhl.sso.back.func.entity;
 
-import javax.persistence.*;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name = "s_product_back_funclist")
-public class SProductBackFunclist {
+public class SProductBackFunclist implements Serializable{
     /**
+	 * 序列化
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * 自增id
      */
     @Id
@@ -16,6 +29,7 @@ public class SProductBackFunclist {
      * 功能名称
      */
     @Column(name = "Name")
+    @NotEmpty(message="功能名称不能为空")
     private String name;
 
     /**
@@ -28,6 +42,7 @@ public class SProductBackFunclist {
      * 路径
      */
     @Column(name = "Path")
+    @NotEmpty(message="功能路径不能为空")
     private String path;
 
     /**
@@ -81,8 +96,15 @@ public class SProductBackFunclist {
      */
     @Column(name = "iconPath")
     private String iconpath;
+    
+    /**
+     * 产品标示
+     */
+    @Column(name = "product_code")
+    @NotEmpty(message="产品标示不能为空")
+    private String productCode;
 
-    public SProductBackFunclist(Long id, String name, String funcdesc, String path, String area, String scope, Boolean isbase, Boolean isfree, Boolean isenabled, Integer ordernum, Boolean flag, Long pid, String iconpath) {
+    public SProductBackFunclist(Long id, String name, String funcdesc, String path, String area, String scope, Boolean isbase, Boolean isfree, Boolean isenabled, Integer ordernum, Boolean flag, Long pid, String iconpath,String productCode) {
         this.id = id;
         this.name = name;
         this.funcdesc = funcdesc;
@@ -92,6 +114,7 @@ public class SProductBackFunclist {
         this.isbase = isbase;
         this.isfree = isfree;
         this.isenabled = isenabled;
+        this.productCode = productCode;
         this.ordernum = ordernum;
         this.flag = flag;
         this.pid = pid;
@@ -335,4 +358,24 @@ public class SProductBackFunclist {
     public void setIconpath(String iconpath) {
         this.iconpath = iconpath == null ? null : iconpath.trim();
     }
+
+    /**
+     * 获取产品code
+     *
+     * @return product_code - 产品code
+     */
+    public String getProductCode() {
+        return productCode;
+    }
+
+    /**
+     * 设置产品code
+     *
+     * @param productCode 产品code
+     */
+    public void setProductCode(String productCode) {
+        this.productCode = productCode == null ? null : productCode.trim();
+    }
+    
+    
 }

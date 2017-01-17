@@ -49,13 +49,43 @@ public class ControllerHelper {
 	 * @return
 	 * @throws Exception
 	 */
-    public static String checkEmpty(String str) throws Exception{
-    	if(StringUtils.isEmpty(str)){
-    		throw new  ParamsException();
-    	}
-    	return str.trim();
-    }
+   public static String checkEmpty(String str) throws Exception{
+   	if(StringUtils.isEmpty(str)){
+   		throw new  ParamsException();
+   	}
+   	return str.trim();
+   }
+   
+   
+   /**
+    * 检测Long类型的参数是否为null或是否为0
+    * @param l
+    * @return
+    * @throws Exception
+    */
+   public static void checkLongEmpty(Long l) throws Exception{
+	   if(l==null || l==0){
+		   throw new  ParamsException();
+	   }
+   }
 
+   
+   
+   /**
+    * 检查数组是否为空
+    * @param array
+    * @throws Exception
+    */
+   public static void checkArrayEmpty(Object[] array) throws Exception{
+	   if(array==null || array.length ==0){
+		   throw new  ParamsException();
+	   }
+   }
+   
+   
+   
+   
+   
     /**
      * 获取单个参数值
      * 
