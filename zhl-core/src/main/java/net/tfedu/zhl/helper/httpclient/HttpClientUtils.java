@@ -25,9 +25,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.core.exception.APIErrorException;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -58,23 +55,25 @@ public class HttpClientUtils {
 		String result = null ;
 		HttpClient client = HttpClients.createDefault();
 		HttpGet get = new HttpGet(url);
-	
-		HttpResponse response=client.execute(get);
+		HttpResponse response= null ;
+						
+			try {
+				response=client.execute(get);
 
-			String statusLine = response.getStatusLine().toString();
-			if(statusLine.contains("200")){
-				HttpEntity entity = response.getEntity();
-				result = (EntityUtils.toString(entity, "utf-8"));	
+				String statusLine = response.getStatusLine().toString();
 				
-				client = null ;
+				if(statusLine.contains("200")){
+					HttpEntity entity = response.getEntity();
+					result = (EntityUtils.toString(entity, "utf-8"));	
+				}else{
+					throw new APIErrorException(statusLine);
+				}
+				
+			} catch (Exception e) {
+				throw e ;
+			}finally{
 				response = null ;
-				
-			}else{
-				
 				client = null ;
-				response = null ;
-
-				throw new APIErrorException(statusLine);
 			}
 			return result ;
 	}
@@ -126,19 +125,29 @@ public class HttpClientUtils {
 
 		}
 
-		CloseableHttpResponse response = client.execute(get);
-		String statusLine = response.getStatusLine().toString();
-		if (statusLine.contains("200")) {
-			HttpEntity entity = response.getEntity();
-			json = EntityUtils.toString(entity, "utf-8");
-			response.close();
-			client.close();
-		} else {
-			response.close();
-			client.close();
-			throw new APIErrorException(statusLine);
-		}
+		CloseableHttpResponse response = null;
 
+		try {
+			response = client.execute(get);
+			String statusLine = response.getStatusLine().toString();
+			if (statusLine.contains("200")) {
+				HttpEntity entity = response.getEntity();
+				json = EntityUtils.toString(entity, "utf-8");
+			} else {
+				throw new APIErrorException(statusLine);
+			}	
+		} finally {
+			if(null!=response){
+				response.close();
+				response = null;
+			}
+			
+			if(null!=client){
+				client.close();
+				client = null;
+			}
+		}
+		
 		return json;
 	}
 
@@ -179,18 +188,30 @@ public class HttpClientUtils {
 			}
 		}
 		post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
-		CloseableHttpResponse response = client.execute(post);
 
-		String statusLine = response.getStatusLine().toString();
-		if (statusLine.contains("200")) {
-			HttpEntity entity = response.getEntity();
-			json = (EntityUtils.toString(entity));
-			response.close();
-			client.close();
-		} else {
-			response.close();
-			client.close();
-			throw new APIErrorException(statusLine);
+		
+		
+		CloseableHttpResponse response =  null ;
+		
+		try {
+			response =  client.execute(post);
+			String statusLine = response.getStatusLine().toString();
+			if (statusLine.contains("200")) {
+				HttpEntity entity = response.getEntity();
+				json = (EntityUtils.toString(entity));
+			} else {
+				throw new APIErrorException(statusLine);
+			}
+			
+		} finally {
+			if(null!=response){
+				response.close();
+				response = null;
+			}
+			if(null!=client){
+				client.close();
+				client = null;
+			}
 		}
 		return json;
 	}
