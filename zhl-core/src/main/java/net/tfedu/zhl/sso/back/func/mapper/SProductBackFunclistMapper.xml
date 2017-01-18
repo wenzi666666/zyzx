@@ -49,4 +49,49 @@
   
   
   
+  <resultMap type="net.tfedu.zhl.sso.back.role.bean.SProductBackFuncInfoPermissionView" id="funcPermissionViewMap">
+  	<id property="id" column="id"/>
+  	<result property="name" column="name"/>
+  	<result property="path" column="path"/>
+  	<result property="permission" column="permission"/>
+  </resultMap>
+  
+  
+  
+  <!-- 查询角色在指定产品的功能权限 --> 
+  <select id="getRolePremissionAboutProductTopFunc" resultMap="funcPermissionViewMap">
+	select  id,name,path,IF(permission is null,FALSE,TRUE  ) as permission from (
+	select  f.id,f.name,f.pid,f.path,
+	(select t.id from s_product_back_roleconfig t where t.roleid = #{roleId} and t.flag= false  and t.FuncId = f.Id ) as permission  
+	  from s_product_back_funclist f 
+	  where  f.product_code = #{productCode} and f.flag = false and f.Pid = 0 
+	ORDER BY f.id
+	)temp
+  </select>
+  
+  
+  <!-- 查询角色在指定功能的子功能下的权限 -->
+  <select id="getRolePremissionAboutProductChildrenFunc"  resultMap="funcPermissionViewMap">
+	select  id,name,path,IF(permission is null,FALSE,TRUE  ) as permission from (
+	select  f.id,f.name,f.pid,f.path,
+	(select t.id from s_product_back_roleconfig t where t.roleid = #{roleId} and t.flag= false and t.FuncId = f.Id ) as permission  
+	  from s_product_back_funclist f 
+	where  f.flag = false and f.Pid = #{parentId}
+	ORDER BY f.id
+	)temp
+  </select>
+  
+  
+  <!--  获取角色在指定功能的所有功能点操作的权限信息 -->
+  <select id="getRolePermissionAboutFuncDetail" resultMap="funcPermissionViewMap">
+	SELECT  id,name,path,IF(permission is null,false,true)permission from (
+	SELECT id,name,path
+	,(select id from s_product_back_roleconfig_detail d where d.funcDetailId = t.id and d.flag = false and d.RoleId = #{roleId} )permission
+	FROM s_product_back_funclist_detail t 
+	where flag = false and funcId =  #{funcId}
+	)temp
+  </select>
+  
+  
+  
 </mapper>

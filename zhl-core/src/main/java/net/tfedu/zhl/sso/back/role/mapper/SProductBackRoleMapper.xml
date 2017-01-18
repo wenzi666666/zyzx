@@ -9,6 +9,7 @@
       <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="Name" jdbcType="CHAR" javaType="java.lang.String" />
       <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="product_code" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   

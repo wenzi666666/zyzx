@@ -65,7 +65,15 @@ public class HttpClientUtils {
 			if(statusLine.contains("200")){
 				HttpEntity entity = response.getEntity();
 				result = (EntityUtils.toString(entity, "utf-8"));	
+				
+				client = null ;
+				response = null ;
+				
 			}else{
+				
+				client = null ;
+				response = null ;
+
 				throw new APIErrorException(statusLine);
 			}
 			return result ;
@@ -126,6 +134,8 @@ public class HttpClientUtils {
 			response.close();
 			client.close();
 		} else {
+			response.close();
+			client.close();
 			throw new APIErrorException(statusLine);
 		}
 
@@ -178,6 +188,8 @@ public class HttpClientUtils {
 			response.close();
 			client.close();
 		} else {
+			response.close();
+			client.close();
 			throw new APIErrorException(statusLine);
 		}
 		return json;

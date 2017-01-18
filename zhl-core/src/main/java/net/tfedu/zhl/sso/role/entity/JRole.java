@@ -2,6 +2,7 @@ package net.tfedu.zhl.sso.role.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -27,7 +28,7 @@ public class JRole implements Serializable {
     /**
      * 角色说明
      */
-    private String description;
+    private String note;
 
     /**
      * 系统模块
@@ -38,13 +39,21 @@ public class JRole implements Serializable {
      * 0-公共角色,1-子系统自定义角色
      */
     private Boolean tag;
+    
+    
+    /**
+     * 是否删除标识；0-----未删除；1----删除
+     */
+    @Column(name = "Flag")
+    private Boolean flag;
 
-    public JRole(Long id, String name, String description, String model, Boolean tag) {
+    public JRole(Long id, String name, String note, String model, Boolean tag,Boolean flag) {
         this.id = id;
         this.name = name;
-        this.description = description;
+        this.note = note;
         this.model = model;
         this.tag = tag;
+        this.flag = flag ;
     }
 
     public JRole() {
@@ -83,23 +92,6 @@ public class JRole implements Serializable {
         this.name = name == null ? null : name.trim();
     }
 
-    /**
-     * 获取角色说明
-     *
-     * @return description - 角色说明
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * 设置角色说明
-     *
-     * @param description 角色说明
-     */
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
 
     /**
      * 获取系统模块
@@ -136,4 +128,24 @@ public class JRole implements Serializable {
     public void setTag(Boolean tag) {
         this.tag = tag;
     }
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
+	}
+
+	public Boolean getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Boolean flag) {
+		this.flag = flag;
+	}
+    
+    
+    
+    
 }

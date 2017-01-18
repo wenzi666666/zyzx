@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 @Table(name = "s_product_back_role")
 public class SProductBackRole {
     /**
@@ -29,10 +31,18 @@ public class SProductBackRole {
     @Column(name = "Flag")
     private Boolean flag;
 
-    public SProductBackRole(Long id, String name, Boolean flag) {
+    
+    /**
+     * 产品标示
+     */
+    @Column(name = "product_code")
+    private String productCode;
+    
+    public SProductBackRole(Long id, String name, Boolean flag,String productCode) {
         this.id = id;
         this.name = name;
         this.flag = flag;
+        this.productCode = productCode;
     }
 
     public SProductBackRole() {
@@ -92,4 +102,15 @@ public class SProductBackRole {
     public void setFlag(Boolean flag) {
         this.flag = flag;
     }
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
+	}
+    
+    
+    
 }

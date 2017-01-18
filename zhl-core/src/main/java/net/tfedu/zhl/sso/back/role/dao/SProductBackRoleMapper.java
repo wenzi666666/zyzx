@@ -20,4 +20,12 @@ public interface SProductBackRoleMapper extends CoreMapper<SProductBackRole> {
 	public List<SProductBackRole> getManagerRole(@Param("userId") long userId,@Param("productCode")String productCode);
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
 }
