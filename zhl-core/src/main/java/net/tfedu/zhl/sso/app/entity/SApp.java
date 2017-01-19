@@ -2,6 +2,9 @@ package net.tfedu.zhl.sso.app.entity;
 
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name = "s_tp_app")
 public class SApp {
@@ -11,15 +14,18 @@ public class SApp {
     @Id
     @Column(name = "appId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Min(value=1,message="开发者id不能为空且不能小于1")
     private Integer appid;
 
     @Column(name = "appKey")
+    @NotEmpty(message="开发者密钥不能为空")
     private String appkey;
 
     /**
      * 开发者id
      */
     @Column(name = "developerId")
+    @Min(value=1,message="缺少开发者id")
     private Integer developerid;
 
     /**
@@ -50,23 +56,27 @@ public class SApp {
      * 有效期（单位月）
      */
     @Column(name = "usefulLife")
+    @Min(value=1,message="缺少对接用户的默认有效期")
     private Integer usefullife;
 
     /**
      * 最大用户数
      */
     @Column(name = "maxCount")
+    @Min(value=1,message="缺少默认最大用户数")
     private Integer maxcount;
 
     /**
      * 用户名前缀，防止对接用户跟本服务器用户冲突
      */
+    @NotEmpty(message="缺少对接用户名的前缀（或称之为对接code编码）")
     private String prefix;
 
     /**
      * 第三方用户在我们平台的默认密码
      */
     @Column(name = "userDefaultPwd")
+    @NotEmpty(message="第三方用户在我们平台的默认密码")
     private String userdefaultpwd;
 
     /**

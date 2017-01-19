@@ -39,8 +39,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
-import net.tfedu.zhl.core.exception.KickOutTokenException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.ZipTaskContent;
@@ -330,7 +328,6 @@ public class PrepareController {
 			throws Exception {
 
 		// 当前登录用户id
-		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
 
@@ -464,6 +461,7 @@ public class PrepareController {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		// 当前登录用户id
+		@SuppressWarnings("unused")
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
@@ -528,6 +526,7 @@ public class PrepareController {
 			HttpServletResponse response) throws Exception {
 
 		// 当前登录用户id
+		@SuppressWarnings("unused")
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
@@ -743,8 +742,6 @@ public class PrepareController {
 	public ResultJSON getZipDownloadStatus(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		// 当前登录用户id
-		Long currentUserId = (Long) request.getAttribute("currentUserId");
 		// 返回
 		Object data = null;
 
@@ -893,8 +890,6 @@ public class PrepareController {
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
 		String clientType = request.getParameter("clientType");// browser,ePrepareClient
 
-		// 返回
-		Object data = null;
 
 		// 参数传递有问题
 		if (StringUtils.isEmpty(fromFlags) || StringUtils.isEmpty(resIds)|| StringUtils.isEmpty(userName)) {
@@ -1061,7 +1056,7 @@ public class PrepareController {
 	
 
 	public static void main(String[] args) {
-		String s = "20150416160806813.swf";
+//		String s = "20150416160806813.swf";
 
 		System.out.println("1212112");
 

@@ -72,6 +72,20 @@ public class ControllerHelper {
    
    
    /**
+    * 检测Integer类型的参数是否为null或是否为0
+    * @param l
+    * @return
+    * @throws Exception
+    */
+   public static void checkIntegerEmpty(Integer l) throws Exception{
+	   if(l==null || l==0){
+		   throw new  ParamsException();
+	   }
+   }
+
+   
+   
+   /**
     * 检查数组是否为空
     * @param array
     * @throws Exception
