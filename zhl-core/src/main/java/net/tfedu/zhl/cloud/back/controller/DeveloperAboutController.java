@@ -9,6 +9,7 @@ import javax.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.tfedu.zhl.core.controller.BaseController;
@@ -48,7 +49,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("addDeveloper")
+	@RequestMapping(value = "addDeveloper",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON addDeveloper(SDeveloper developer, HttpServletRequest request  )throws Exception{
 		ControllerHelper.checkEmpty(developer.getCompanyname());
@@ -66,7 +67,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("updateDeveloper")
+	@RequestMapping(value = "updateDeveloper",method = RequestMethod.POST)
 	@ResponseBody	
 	public ResultJSON updateDeveloper(SDeveloper developer, HttpServletRequest request  )throws Exception{
 		
@@ -83,7 +84,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("delDeveloper")
+	@RequestMapping(value = "delDeveloper",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON delDeveloper(Integer id , HttpServletRequest request )throws Exception{
 		
@@ -101,7 +102,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("pageDeveloper")
+	@RequestMapping(value = "pageDeveloper",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON pageDeveloper(Integer pageNum, Integer pageSize, HttpServletRequest request )throws Exception{
 		
@@ -126,7 +127,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("addApp")
+	@RequestMapping(value = "addApp",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON addApp(@Valid SApp app,BindingResult bindingResult, HttpServletRequest request  )throws Exception{
 		
@@ -148,7 +149,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("updateApp")
+	@RequestMapping(value = "updateApp",method = RequestMethod.POST)
 	@ResponseBody	
 	public ResultJSON updateApp(SApp app,HttpServletRequest request  )throws Exception{
 		
@@ -165,7 +166,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("delApp")
+	@RequestMapping(value = "delApp",method = RequestMethod.POST)
 	@ResponseBody
 	public ResultJSON delApp(Integer appId , HttpServletRequest request )throws Exception{
 		
@@ -183,7 +184,7 @@ public class DeveloperAboutController extends BaseController<SDeveloper> {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("pageApp")
+	@RequestMapping(value = "pageApp",method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON pageApp(Integer pageNum, Integer pageSize, HttpServletRequest request )throws Exception{
 		

@@ -16,18 +16,18 @@
 	<!-- 验证配置，告知srpingmvc，使用的是Hibernate验证框架来完成的验证 -->
 	
 	 
- 	<!--
+ 	<!---->
  	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
 	</bean>
 	<mvc:annotation-driven validator="validator"/> 
--->
+
 
 <!--
-	<mvc:annotation-driven /> -->
+	<mvc:annotation-driven />
 	
+		 -->
 	<mvc:default-servlet-handler/>
-		
 		
  	<context:component-scan base-package="cn.outofmemory.hellospring.properties.annotation"/>
  		

@@ -2,13 +2,11 @@ package net.tfedu.zhl.sso.back.user.service;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.cache.CacheManager;
-
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.back.user.bean.ManagerSimple;
 import net.tfedu.zhl.sso.back.user.entity.SBackUser;
+import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
 
 /**
  * 管理員管理
@@ -70,5 +68,43 @@ public interface SBackUserService extends BaseService<SBackUser> {
 	 */
     public ManagerSimple getManagerSimpleById(long id, String model,boolean isRepeatLogin,String productCode)throws Exception;
 	
+    
+    
+
+    /**
+     * 新增管理员账号
+     * @param user
+     * @return
+     * @throws Exception
+     */
+    public ResultJSON addManager(SBackUser user)throws Exception;
+    
 	
+    
+    
+    /**
+     * 增加管理员的角色和管辖范围
+     * @param userId
+     * @param roleId
+     * @param userScope
+     * @return
+     * @throws Exception
+     */
+    public ResultJSON addManagerRoleAndScope(Long userId,Long roleId,SBackUserScope userScope)throws Exception;
+    
+    
+    
+    
+   /**
+    * 
+    * @param userid
+    * @param pwd
+    * @return
+    * @throws Exception
+    */
+    public ResultJSON resetPwd(Long userid,String pwd)throws Exception;
+    
+    
+    
+    
 }

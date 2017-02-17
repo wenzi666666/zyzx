@@ -3,6 +3,10 @@ package net.tfedu.zhl.sso.back.user.entity;
 
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Table(name = "s_back_user")
 public class SBackUser {
@@ -14,18 +18,25 @@ public class SBackUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message="用户名不能为空")
+    @Size(min=2,max=20,message="用户名的长度在2-20个字符之间")
     private String name;
 
+    
+    @NotEmpty(message="真实姓名不能为空")
+    @Size(min=2,max=40,message="真实姓名的长度在2-40个字符之间")
     @Column(name = "TrueName")
     private String truename;
 
     @Column(name = "NickName")
+    @Size(min=2,max=40,message="昵称的长度在2-40个字符之间")
     private String nickname;
 
     /**
      * 性别，0——男，1——女 
      */
     @Column(name = "Male")
+    @NotNull(message="必选指明用户的性别")
     private Boolean male;
 
     /**
@@ -87,6 +98,7 @@ public class SBackUser {
     /**
      * 账号使用的最后期限
      */
+    @NotNull(message="账号使用的最后期限不能为空")
     @Column(name = "reEndTime")
     private Date reendtime;
 

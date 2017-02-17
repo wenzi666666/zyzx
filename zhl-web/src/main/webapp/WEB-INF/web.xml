@@ -88,7 +88,7 @@
 
 	<!-- 首页 -->
 	<welcome-file-list>
-		<welcome-file>/security/tologin</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
 
 	<!-- 错误页 -->

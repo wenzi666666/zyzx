@@ -11,8 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import net.tfedu.zhl.cloud.utils.datatype.IdUtil;
+import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
@@ -32,10 +34,11 @@ import net.tfedu.zhl.sso.back.user.bean.FuncInfo;
 import net.tfedu.zhl.sso.back.user.bean.ManagerSimple;
 import net.tfedu.zhl.sso.back.user.dao.SBackUserMapper;
 import net.tfedu.zhl.sso.back.user.dao.SBackUserScopeMapper;
+import net.tfedu.zhl.sso.back.user.dao.SProductBackUserRoleMapper;
 import net.tfedu.zhl.sso.back.user.entity.SBackUser;
 import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
+import net.tfedu.zhl.sso.back.user.entity.SProductBackUserRole;
 import net.tfedu.zhl.sso.back.user.service.SBackUserService;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
 
 /**
  
@@ -47,12 +50,17 @@ import net.tfedu.zhl.sso.user.entity.UserSimple;
     copyRight@ 同方知好乐教育科技(北京)有限公司 
 */
 @Service("sBackUserService")
+@Transactional("ssoTransactionManager")
 public class SBackUserServiceImpl extends BaseServiceImpl<SBackUser> implements SBackUserService {
 
 	@Autowired
 	SBackUserMapper  mapper;	
 	@Autowired
 	SBackUserScopeMapper  scopeMapper;
+	
+	@Autowired
+	SProductBackUserRoleMapper userRoleMapper;
+	
 	@Autowired
 	SProductBackRoleMapper  roleMapper;
 	@Autowired
@@ -276,6 +284,40 @@ public class SBackUserServiceImpl extends BaseServiceImpl<SBackUser> implements 
 		user.setLogouttime(Calendar.getInstance().getTime());
 		
 		mapper.updateByPrimaryKeySelective(user);
+	}
+
+
+	@Override
+	public ResultJSON addManagerRoleAndScope(Long userId,Long roleId, SBackUserScope userScope) throws Exception {
+		
+		SProductBackUserRole record = new SProductBackUserRole();
+		
+		record.setFlag(false);
+		record.setRoleid(roleId);
+		record.setUserid(userId);
+		
+		userRoleMapper.insertSelective(record);
+		
+		scopeMapper.insertSelective(userScope);
+		
+		return ResultJSON.getSuccess("");
+	}
+
+
+	@Override
+	public ResultJSON resetPwd(Long userid, String pwd) throws Exception {
+		
+		mapper.updatePwd(userid, PWDEncrypt.doEncryptByte(pwd));
+		return defaultSuccess("");
+	}
+
+
+	@Override
+	public ResultJSON addManager(SBackUser user) throws Exception {
+		
+		mapper.addManager(user);
+		
+		return defaultSuccess("");
 	}
 
 	

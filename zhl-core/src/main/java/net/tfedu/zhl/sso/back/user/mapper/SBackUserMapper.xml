@@ -31,4 +31,22 @@
       <arg column="Pwd" jdbcType="BINARY" javaType="byte[]" />
     </constructor>
   </resultMap>
+  
+  
+  
+  
+  
+  <insert id="addManager" parameterType="net.tfedu.zhl.sso.back.user.entity.SBackUser">
+  	insert into s_back_user(name,pwd,truename,nickname,male)values(#{user.name},#{user.pwd},#{user.truename},#{user.nickname},#{user.male})
+  </insert>
+  
+  
+  
+  <update id="updatePwd">
+  	update s_back_user set pwd = #{pwd} where  id = #{userId}
+  </update>
+  
+  
+  
+  
 </mapper>
