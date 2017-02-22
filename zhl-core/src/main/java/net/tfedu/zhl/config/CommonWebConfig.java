@@ -146,6 +146,20 @@ public class CommonWebConfig {
 	public String dmtbHostLocal;
 	
 	
+	/**
+	 * 当前产品 
+	 */
+	@Value("#{configProperties['bussinessname']}")
+	public String bussinessname;
+	
+	
+	
+	/**
+	 * 当前当前版本
+	 */
+	@Value("#{configProperties['version']}")
+	public String version;
+	
 	
 	
 	
@@ -577,4 +591,21 @@ public class CommonWebConfig {
 		return current;
 	}
 
+	public String getBussinessname() {
+		return bussinessname;
+	}
+
+	public void setBussinessname(String bussinessname) {
+		this.bussinessname = bussinessname;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+
+	
 }

@@ -80,8 +80,6 @@ public class ResourceListController {
 		logger.debug("---查询系统资源列表---文件服务器地址:"+currentResPath);
 		
 		
-		//e备课排除的资源类型
-		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 		
 		//判断是否为最新资源的期限
 		int expire = resourceWebConfig.getExpire(request);
@@ -105,6 +103,10 @@ public class ResourceListController {
 		int perPage = ControllerHelper.getIntParameter(request, "perPage");
 		
         if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
+ 
+    		//e备课排除的资源类型
+    		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
+
         	//模糊查询的关键字
         	String searchWord = request.getParameter("searchWord");
         	//e备课查询系统资源

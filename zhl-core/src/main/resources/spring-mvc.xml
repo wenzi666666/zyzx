@@ -39,6 +39,9 @@
 	<aop:aspectj-autoproxy  proxy-target-class="true" expose-proxy="true"/>
  	
  	
+ 	
+ 	
+ 	<bean id="applicationContextHelper" class="net.tfedu.zhl.helper.ApplicationContextHelper"></bean>
  		
     <bean id="configProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="locations">
@@ -106,6 +109,18 @@
         	<mvc:exclude-mapping path="/*BackAPI/v1.0/login" />
         	<bean class="net.tfedu.zhl.cloud.back.login.interceptor.LoginBackStatusInterceptor" />
         </mvc:interceptor>
+        
+        
+        
+         <mvc:interceptor>
+        	<mvc:mapping path="/baseData/**/**"/>
+        	<bean class="net.tfedu.zhl.cloud.basedata.interceptor.BaseDataAPISignCheckInterceptor" />
+        </mvc:interceptor>
+        
+        
+        
+        
+        
         
     </mvc:interceptors>
     

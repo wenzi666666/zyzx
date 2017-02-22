@@ -129,4 +129,21 @@ public class SignUtil {
 		return map;
 	}
 	
+	
+	
+	public static void main(String[] args) {
+		
+		String appId = "679636";
+		String appKey = "0dd97ecaf1d3";
+		
+		String result =  SignUtil.createSignMap(new String[]{"userName","appId"}, new String[]{"test001",appId}, appKey);
+		
+		
+		System.out.println(result);
+		System.out.println("&sign="+result);
+		
+	}
+	
+	
+	
 }

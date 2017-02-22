@@ -1,5 +1,6 @@
 package net.tfedu.zhl.sso.app.service;
 
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.sso.app.entity.SApp;
 
@@ -20,5 +21,5 @@ public interface SAppService  extends BaseService<SApp>{
 	 * @param appId
 	 * @return
 	 */
-	public SApp getSApp(String appId);
+	public SApp getSApp(String appId)throws ParamsException;
 }

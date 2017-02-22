@@ -1,6 +1,7 @@
 package net.tfedu.zhl.sso.app.service.impl;
 
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.CacheUtil;
 import net.tfedu.zhl.sso.app.dao.SAppMapper;
@@ -29,7 +30,7 @@ public class SAppServiceImpl extends BaseServiceImpl<SApp> implements
 	SAppMapper sAppMapper;
 
 	@Override
-	public SApp getSApp(String appId) {
+	public SApp getSApp(String appId) throws ParamsException {
 		if (StringUtils.isEmpty(appId)) {
 			return null;
 		}
@@ -37,6 +38,9 @@ public class SAppServiceImpl extends BaseServiceImpl<SApp> implements
 		if (sApp == null) {
 			Integer appIdInt = Integer.parseInt(appId);
 			sApp = sAppMapper.selectByPrimaryKey(appIdInt);
+			if(null == sApp){
+				throw new ParamsException("NO THIS APP");
+			}
 			CacheUtil.put(cacheManager, CacheUtil.CACHE_APP, appId, sApp);
 		}
 		return sApp;

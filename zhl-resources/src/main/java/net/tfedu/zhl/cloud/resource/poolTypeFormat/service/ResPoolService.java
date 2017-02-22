@@ -17,4 +17,14 @@ public interface ResPoolService {
      * @return
      */
     public List<ResPool> getAllPools();
+    
+    /**
+     * 查询所有资源库
+     * @return
+     */
+    public List<ResPool> getExistPools();
+    
+    
+    
+    
 }

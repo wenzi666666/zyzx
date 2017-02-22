@@ -1,15 +1,15 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
-
-import org.springframework.stereotype.Service;
+import tk.mybatis.mapper.entity.Example;
 
 /**
  * 查询 资源库
@@ -29,8 +29,7 @@ public class ResPoolServiceImpl implements ResPoolService {
     @Override
     public List<ResPool> getAllPools() {
 
-        List<ResPool> pools = new ArrayList<ResPool>();
-        pools = resPoolMapper.getAllPools();
+        List<ResPool> pools = resPoolMapper.getAllPools();
 
         // 添加“全部”这个资源库类型
         ResPool all = new ResPool();
@@ -42,4 +41,14 @@ public class ResPoolServiceImpl implements ResPoolService {
 
         return pools;
     }
+
+	@Override
+	public List<ResPool> getExistPools() {
+		
+		Example example = new Example(ResPool.class);
+		
+		example.createCriteria().andCondition(" flag = false ");
+		
+		return resPoolMapper.selectByExample(example);
+	}
 }
