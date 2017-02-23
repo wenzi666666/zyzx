@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jxl.Cell;
-import jxl.CellType;
-import jxl.NumberCell;
 import jxl.Sheet;
 import jxl.Workbook;
 /**
@@ -23,9 +21,7 @@ public class ExcelReaderJXL {
 	 * @return
 	 */
 	
-	@SuppressWarnings("deprecation")
 	public List<CardExcelForm> getDocument(File excelFile) {
-		StringBuffer content = new StringBuffer();
 		//以下均为对应列号
 		short cardId = 0;      //卡号
 		short CardPwd = 1;     //卡密码
@@ -121,8 +117,8 @@ public class ExcelReaderJXL {
 							message += "未填写学段;";
 						}
 						
-						String productName = "";
-						int product = productName!=null&&!"".equals(productName)?Integer.parseInt(productName):0;
+						//String productName = "";
+						//int product = productName!=null&&!"".equals(productName)?Integer.parseInt(productName):0;
 
 						
 						
@@ -162,18 +158,18 @@ public class ExcelReaderJXL {
 	}
 	
 	public static void main(String []args){
-		String filePath = "E:/批量注册.xls";
-		File file = new File(filePath);
-		ExcelReaderJXL reader = new ExcelReaderJXL();
-		
-		List<CardExcelForm> list = reader.getDocument(file);
-		
-		
-		
-		for(int i=0;i<list.size();i++){
-			
-			CardExcelForm q = (CardExcelForm)list.get(i);
-			
-		}
+//		String filePath = "E:/批量注册.xls";
+//		File file = new File(filePath);
+//		ExcelReaderJXL reader = new ExcelReaderJXL();
+//		
+//		List<CardExcelForm> list = reader.getDocument(file);
+//		
+//		
+//		
+//		for(int i=0;i<list.size();i++){
+//			
+//			CardExcelForm q = (CardExcelForm)list.get(i);
+//			
+//		}
 	}	
 }

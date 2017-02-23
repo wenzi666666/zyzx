@@ -77,7 +77,7 @@ public class MessageController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			perPage = Integer.parseInt(_prePage);
 		}
-		PageInfo page_result = jMessageService.queryMessage(currentUserId,
+		PageInfo<?> page_result = jMessageService.queryMessage(currentUserId,
 				page, perPage);
 
 		HashMap<String, Object> map = new HashMap<String, Object>();

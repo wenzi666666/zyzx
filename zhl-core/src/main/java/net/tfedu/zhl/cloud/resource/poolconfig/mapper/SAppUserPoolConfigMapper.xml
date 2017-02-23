@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.tfedu.zhl.cloud.resource.poolconfig.dao.ZAppUserPoolConfigMapper" >
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.poolconfig.entity.ZAppUserPoolConfig" >
+<mapper namespace="net.tfedu.zhl.cloud.resource.poolconfig.dao.SAppUserPoolConfigMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.poolconfig.entity.SAppUserPoolConfig" >
     <!--
       WARNING - @mbggenerated
     -->
@@ -24,39 +24,13 @@
   
   
   
-  
-  <select id="getPoolsAndAppUserConfig" resultType="Map">
-
-	
-	  	
-  	select p.id,p.name,IFNULL((now() > c.start_date and c.expire_date>now()),FALSE) permission, IFNULL(c.expire_date,'')as expire_date from z_res_pool p 
-
-	LEFT JOIN z_appuser_pool_config c on c.poolid = p.id and c.appid = #{appId} and c.userid = #{userName} and c.flag = false 
-	
-	<if test="termId > 0 ">
-		and termid = #{termId}
-	</if>
-	 
-	<if test="termId > 0 ">
-		and subjectid = #{subjectId}
-	</if>
-	
-	where p.flag = false 
-	
-	  	
-  
-  </select>
-  
-  
   <select id="getAppUserPoolConfig" resultType="Map">
   	
-  	select p.id,p.name,IFNULL((now() > c.start_date and c.expire_date>now()),FALSE) permission, IFNULL(c.expire_date,'')as expire_date from z_res_pool p 
+  	select c.poolid as id ,'' as name ,termid,subjectid,IFNULL((now() > c.start_date and c.expire_date>now()),FALSE) permission, IFNULL(c.expire_date,'')as expire_date from 
 
-	LEFT JOIN z_appuser_pool_config c on c.poolid = p.id 
+	s_appuser_pool_config c 
 	
-	where p.flag = false 
-	
-	and c.appid = #{appId} and c.userid = #{userName} and c.flag = false 
+	where c.appid = #{appId} and c.userid = #{userName} and c.flag = false 
   
   	<if test="termId > 0 ">
 		and termid = #{termId}

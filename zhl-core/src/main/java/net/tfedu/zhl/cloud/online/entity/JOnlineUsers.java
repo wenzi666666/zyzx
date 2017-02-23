@@ -14,6 +14,11 @@ import javax.persistence.Table;
 @Table(name = "j_online_users")
 public class JOnlineUsers implements Serializable {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * ID
      */
     @Id

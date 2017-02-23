@@ -31,8 +31,6 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
-import net.tfedu.zhl.sso.subject.service.JSubjectService;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.term.service.JTermService;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;

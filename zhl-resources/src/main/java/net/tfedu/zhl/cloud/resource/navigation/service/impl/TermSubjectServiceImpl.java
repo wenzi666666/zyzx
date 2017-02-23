@@ -8,6 +8,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.term.dao.JTermMapper;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,6 +26,7 @@ public class TermSubjectServiceImpl implements TermSubjectService {
      *  查询学段下的所有学科
      */
     @Override
+    @Cacheable(value="bussinesscache",key="'subjectsByTerm_'+#p0")
     public List<JSubject> getAllSubjectsByTerm(Long termId) {
     	return termMapper.getSubjectsByTerm(termId);
     }

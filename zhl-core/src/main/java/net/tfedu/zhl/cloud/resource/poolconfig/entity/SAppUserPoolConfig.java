@@ -4,8 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "z_appuser_pool_config")
-public class ZAppUserPoolConfig implements Serializable {
+@Table(name = "s_appuser_pool_config")
+public class SAppUserPoolConfig implements Serializable {
     /**
 	 * 序列化
 	 */
@@ -73,7 +73,7 @@ public class ZAppUserPoolConfig implements Serializable {
      */
     private Boolean flag;
 
-    public ZAppUserPoolConfig(Long id, Long appid, String userid, Long poolid, Long termid, Long subjectid, Date startDate, Date expireDate, Date addTime, Date editTime, Boolean flag) {
+    public SAppUserPoolConfig(Long id, Long appid, String userid, Long poolid, Long termid, Long subjectid, Date startDate, Date expireDate, Date addTime, Date editTime, Boolean flag) {
         this.id = id;
         this.appid = appid;
         this.userid = userid;
@@ -87,7 +87,7 @@ public class ZAppUserPoolConfig implements Serializable {
         this.flag = flag;
     }
 
-    public ZAppUserPoolConfig() {
+    public SAppUserPoolConfig() {
         super();
     }
 

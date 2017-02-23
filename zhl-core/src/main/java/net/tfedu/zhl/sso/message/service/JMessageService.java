@@ -18,7 +18,7 @@ public interface JMessageService {
 	 * @param perPage
 	 * @return
 	 */
-	public PageInfo queryMessage(Long userId,Integer page,Integer perPage);
+	public PageInfo<?> queryMessage(Long userId,Integer page,Integer perPage);
 	
 	
 	

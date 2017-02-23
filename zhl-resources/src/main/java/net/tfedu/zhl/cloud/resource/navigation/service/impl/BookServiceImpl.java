@@ -9,6 +9,7 @@ import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.service.BookService;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -26,6 +27,7 @@ public class BookServiceImpl implements BookService {
      *  获得所有教材信息
      */
     @Override
+    @Cacheable(value="bussinesscache",key="'allBooks_'+#p0+'_'+#p1")
     public List<JSyscourse> getAllBooks(long pnodeId, String proCode) {
 
         HashMap<String, Object> map = new HashMap<String, Object>();

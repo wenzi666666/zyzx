@@ -70,7 +70,8 @@ public class CartoonController {
 		// 获取用户信息 用于同步
 		JUser user = userService.getUserById(currentUserId);
 
-		String result = synchronizationZhlToThirdpartSchool(info);
+//		String result = synchronizationZhlToThirdpartSchool(info);
+		synchronizationZhlToThirdpartSchool(info);
 
 		long userId = currentUserId;
 		// 用户名、昵称、学校id
@@ -111,13 +112,20 @@ public class CartoonController {
 
 		}
 
-		result = synchronizationZhlToThirdpartUserInfo(userName, roleId, nickName, schoolId, grade,
+		synchronizationZhlToThirdpartUserInfo(userName, roleId, nickName, schoolId, grade,
 				className/** 学生暂时取第一个行政班（待开发） */
 				, subject/** 老师任教科目，如果是同时任教数学和英语时，默认选第一个（待开发） */
 				, "1"/** avatarid 头像ID，预留接口，目前统一传值1（动漫练习平台在不支持） */
 				, "20170101"/** expirationtime 验证字符串，暂略（动漫练习平台在不支持） */
 		);
 
+//		String result = synchronizationZhlToThirdpartUserInfo(userName, roleId, nickName, schoolId, grade,
+//				className/** 学生暂时取第一个行政班（待开发） */
+//				, subject/** 老师任教科目，如果是同时任教数学和英语时，默认选第一个（待开发） */
+//				, "1"/** avatarid 头像ID，预留接口，目前统一传值1（动漫练习平台在不支持） */
+//				, "20170101"/** expirationtime 验证字符串，暂略（动漫练习平台在不支持） */
+//				);
+//		
 		// 生成动漫尚学登录链接
 		// String createHyperlink =
 		// "http://210.14.132.162:8011/zhihaole/user/index.php?w=1536&h=737";

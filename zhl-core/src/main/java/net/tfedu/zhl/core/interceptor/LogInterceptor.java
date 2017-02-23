@@ -1,17 +1,10 @@
 package net.tfedu.zhl.core.interceptor;
 
-import java.util.Date;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-
-import eu.bitwalker.useragentutils.UserAgent;
-import net.tfedu.zhl.cloud.utils.datatype.JsonUtil;
-import net.tfedu.zhl.cloud.utils.http.IPUtil;
-import net.tfedu.zhl.core.entity.Log;
 
 /**
  * 日志拦截器
@@ -27,8 +20,10 @@ public class LogInterceptor implements HandlerInterceptor {
     // @Autowired
     // private UserService userService;
 
-    private Long beginTime;// 1、开始时间
-    private Long endTime;// 2、结束时间
+    @SuppressWarnings("unused")
+	private Long beginTime;// 1、开始时间
+    @SuppressWarnings("unused")
+	private Long endTime;// 2、结束时间
 
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {

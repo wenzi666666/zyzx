@@ -3,7 +3,7 @@ package net.tfedu.zhl.cloud.resource.poolconfig.service;
 import java.util.List;
 import java.util.Map;
 
-import net.tfedu.zhl.cloud.resource.poolconfig.entity.ZAppUserPoolConfig;
+import net.tfedu.zhl.cloud.resource.poolconfig.entity.SAppUserPoolConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.service.BaseService;
 
@@ -17,20 +17,7 @@ import net.tfedu.zhl.core.service.BaseService;
   
     copyRight@ 同方知好乐教育科技(北京)有限公司 
 */
-public interface ZAppUserPoolConfigService extends BaseService<ZAppUserPoolConfig> {
-	
-	
-	/**
-	 * 资源库以及用户是否有权限
-	 * @param termId    学段
-	 * @param subjectId 学科
-	 * @param userName  用户
-	 * @param appId     第三方appid
-	 * @return 所有指定资源库以及用户是否有权限
-	 * @throws CustomException
-	 */
-	public List<Map<String,Object>> getPoolsAndAppUserConfig(Long termId, Long subjectId,String userName,String appId)
-			throws CustomException;
+public interface SAppUserPoolConfigService extends BaseService<SAppUserPoolConfig> {
 	
 	
 	/**
@@ -48,5 +35,4 @@ public interface ZAppUserPoolConfigService extends BaseService<ZAppUserPoolConfi
 	
 	
 	
-
 }

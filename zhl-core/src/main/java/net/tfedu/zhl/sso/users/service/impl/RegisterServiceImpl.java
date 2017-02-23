@@ -254,8 +254,6 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			schoolId = schList.get(0).getId();
 		}
 
-		//
-		SRegister register = new SRegister();
 		// 卡有效期
 		int expNum = 36;
 
@@ -389,8 +387,6 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		// 当前username是否已经映射过
 		SThirdRegisterRelative relative = relativeMapper.getThirdRelativeResult(form.getUserName(), thirdCode);
 
-		// 没有则添加用户
-		SRegister register = null;
 		if (relative == null || relative.getId() == 0) {
 			// 注册时，增加前缀
 			String zhl_username = thirdCode + "_" + form.getUserName();
@@ -506,8 +502,6 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		String subjectName = form.getSubjectName();
 
 		
-		//
-		SRegister register = new SRegister();
 		
 
 		SBatch ben = new SBatch();
@@ -679,7 +673,6 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		List<JSchool> schList = schMapper.querySchoolByDistrictIdAndName(districtId, schoolName);
 		if (schList == null || 0 == schList.size()) {
 			Date date = Calendar.getInstance().getTime();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 			JSchool record = new JSchool();
 			record.setName(schoolName);

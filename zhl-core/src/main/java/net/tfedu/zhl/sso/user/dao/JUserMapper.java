@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;

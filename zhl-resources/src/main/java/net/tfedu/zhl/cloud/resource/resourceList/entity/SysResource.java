@@ -191,8 +191,8 @@ public class SysResource implements Serializable {
     /**
      * 新版3.1资源类型
      */
-    @Column(name = "unifyTypeid")
-    private String unifytypeid;
+//    @Column(name = "unifyTypeid")
+//    private String unifytypeid;
 
     @Column(name = "Des")
     private String des;
@@ -218,7 +218,7 @@ public class SysResource implements Serializable {
             Integer dloadtimes, Integer dloadscore, Integer clicktimes, Integer sctimes, String rdes, Boolean flag,
             Integer fromflag, Boolean isdwj, String fileext, String authorunit, Integer displaylevel,
             String newteachingtype, Integer mtype, Integer displayindex, String fullpath, String speaker,
-            String speakerunit, Integer resolution, String unifytypeid, String des) {
+            String speakerunit, Integer resolution, /*String unifytypeid,*/ String des) {
         this.id = id;
         this.rescode = rescode;
         this.provider = provider;
@@ -260,7 +260,7 @@ public class SysResource implements Serializable {
         this.speaker = speaker;
         this.speakerunit = speakerunit;
         this.resolution = resolution;
-        this.unifytypeid = unifytypeid;
+//        this.unifytypeid = unifytypeid;
         this.des = des;
     }
 
@@ -932,24 +932,24 @@ public class SysResource implements Serializable {
         this.resolution = resolution;
     }
 
-    /**
+   /* *//**
      * 获取新版3.1资源类型
      *
      * @return unifyTypeid - 新版3.1资源类型
-     */
+     *//*
     public String getUnifytypeid() {
         return unifytypeid;
     }
 
-    /**
+    *//**
      * 设置新版3.1资源类型
      *
      * @param unifytypeid
      *            新版3.1资源类型
-     */
+     *//*
     public void setUnifytypeid(String unifytypeid) {
         this.unifytypeid = unifytypeid == null ? null : unifytypeid.trim();
-    }
+    }*/
 
     /**
      * @return Des

@@ -19,7 +19,7 @@ import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
-import net.tfedu.zhl.cloud.resource.poolconfig.service.ZAppUserPoolConfigService;
+import net.tfedu.zhl.cloud.resource.poolconfig.service.SAppUserPoolConfigService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
@@ -31,6 +31,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -71,7 +72,7 @@ public class BaseResourceDataAPIController {
 	ResPoolService resPoolService;
 
 	@Resource
-	ZAppUserPoolConfigService appUserPoolConfigService;
+	SAppUserPoolConfigService appUserPoolConfigService;
 
 	@Resource
 	SysResourceService sysResourceService;
@@ -164,7 +165,7 @@ public class BaseResourceDataAPIController {
 		String appId = ControllerHelper.getParameter(request, "appId");
 
 		return ResultJSON
-				.getSuccess(appUserPoolConfigService.getPoolsAndAppUserConfig(termId, subjectId, userName, appId));
+				.getSuccess(appUserPoolConfigService.getAppUserPoolConfig(termId, subjectId, userName, appId));
 	}
 
 	/**
@@ -319,11 +320,22 @@ public class BaseResourceDataAPIController {
 
 	/**
 	 * 资源的播放链接
+	 * @param appId
+	 * @param userName
 	 * @param resId
+	 * @param request
+	 * @throws CustomException 
 	 */
 	@RequestMapping(value="v1.0/sysResourcePlay",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON sysResourcePlay(Long resId,HttpServletRequest request) {
+	public ResultJSON sysResourcePlay(String appId,String userName, Long resId,HttpServletRequest request) throws CustomException {
+		
+		
+		if(!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)){
+			throw new NoAuthorizationException();
+		}
+		
+		
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
@@ -345,12 +357,20 @@ public class BaseResourceDataAPIController {
 	}
 
 	/**获取资源的下载链接
+	 * @param appId
+	 * @param userName
 	 * @param resId
-	 * @throws UnsupportedEncodingException 
+	 * @param request	 * @throws UnsupportedEncodingException 
+	 * @throws CustomException 
+	 * @throws NoAuthorizationException 
 	 */
 	@RequestMapping(value="v1.0/sysResourceDown",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON sysResourceDown(Long resId,HttpServletRequest request) throws UnsupportedEncodingException {
+	public ResultJSON sysResourceDown(String appId,String userName,Long resId,HttpServletRequest request) throws UnsupportedEncodingException, NoAuthorizationException, CustomException {
+		
+		if(!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)){
+			throw new NoAuthorizationException();
+		}
 		
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();

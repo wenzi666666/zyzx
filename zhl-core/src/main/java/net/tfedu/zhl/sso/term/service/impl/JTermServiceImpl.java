@@ -11,7 +11,6 @@ import net.tfedu.zhl.sso.subject.entity.JSubject;
 import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.term.service.JTermService;
-import tk.mybatis.mapper.entity.Example;
 
 @Service("jTermService")
 public class JTermServiceImpl extends BaseServiceImpl<JTerm> implements JTermService {

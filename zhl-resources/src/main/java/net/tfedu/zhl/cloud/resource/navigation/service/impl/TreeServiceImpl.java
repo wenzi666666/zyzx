@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
@@ -79,6 +80,7 @@ public class TreeServiceImpl implements TreeService {
      * @return
      */
     @Override
+    @Cacheable(value="bussinesscache")
     public List<TreeNode> getTreeNodes(long pnodeId,String proCode) {
 
         // 查询父结点下的直接子结点
@@ -204,7 +206,7 @@ public class TreeServiceImpl implements TreeService {
 	 */
 	protected void  checkChlidrenResCount(List<TreeNode> chirdren,int poolId) {
 		if(null!=chirdren){
-			for (Iterator iterator = chirdren.iterator(); iterator.hasNext();) {
+			for (Iterator<TreeNode> iterator = chirdren.iterator(); iterator.hasNext();) {
 				TreeNode treeNode = (TreeNode) iterator.next();
 				 // 查询children
 	            List<TreeNode> _children = jSyscourseMapper.getTopChildrenResultMap(treeNode.getId());

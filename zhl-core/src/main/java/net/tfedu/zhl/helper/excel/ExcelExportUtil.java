@@ -68,6 +68,7 @@ public class ExcelExportUtil {
 		//检查后缀
 		excelName = getExcelName(excelName);
 		
+		@SuppressWarnings("unused")
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 		List<SheetData> sheets = new ArrayList<SheetData>();

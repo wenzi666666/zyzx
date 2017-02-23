@@ -167,6 +167,7 @@ public class LoginBackStatusInterceptor implements HandlerInterceptor {
 	
 	
 	public static void main(String[] args) {
+		@SuppressWarnings("unused")
 		Map<String,String> map = new HashMap<String,String>();
 		String s = SignUtil.createSignMap(new String[]{"token"}, new String[]{"D88ED104F3FA408AB1BAF3CE69DFA9BC"}, "zhlresource");
 		System.out.println(s);

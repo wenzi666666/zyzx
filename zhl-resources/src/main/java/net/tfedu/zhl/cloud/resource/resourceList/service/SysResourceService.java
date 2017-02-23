@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
+import net.tfedu.zhl.core.exception.CustomException;
 
 /**
  * 系统资源 service
@@ -48,5 +49,20 @@ public interface SysResourceService {
      */
     public Pagination<SysResourceEntity> getAllSysRes_EPrepare(long poolId, int mTypeId, String fileFormat, String tfcode,
             int orderBy, int page, int perPage,String searchWord,List<Integer> removeTypeIds,List<Integer> sys_from,int expire);
+    
+    
+    
+    
+    /**
+	 * 第三方用戶是否有权限下载浏览
+	 * @param userName
+	 * @param appId
+	 * @param resId
+	 * @return
+	 */
+	public boolean hasPermissionToViewAndDown(String userName,String appId,Long resId)throws CustomException;
+	
+
+    
     
 }

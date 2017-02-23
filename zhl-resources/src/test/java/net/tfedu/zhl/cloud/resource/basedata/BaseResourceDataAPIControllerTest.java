@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
@@ -140,15 +141,22 @@ public class BaseResourceDataAPIControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testSysResourcePlay() {
-		result = controller.sysResourcePlay(1l, request);
+	public void testSysResourcePlay() throws CustomException {
+		result = controller.sysResourcePlay(appId,userName,1l, request);
 	}
 
 	@Test
-	public void testSysResourceDown() throws UnsupportedEncodingException {
-		result = controller.sysResourceDown(1l, request);
+	public void testSysResourceDown() throws UnsupportedEncodingException, NoAuthorizationException, CustomException {
+		result = controller.sysResourceDown(appId,userName,1l, request);
 	}
 	
 	
 
+	
+	
+	public static void main(String[] args) {
+//		Sheet sheet =  null;
+		
+		
+	}
 }

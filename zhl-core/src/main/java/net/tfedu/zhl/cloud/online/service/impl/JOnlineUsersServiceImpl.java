@@ -47,7 +47,7 @@ public class JOnlineUsersServiceImpl implements JOnlineUsersService {
 		}
 
 		// token的有效时间
-		int validTime = ZhlOnlineUtil.getTokenValidTime(request);
+		//int validTime = ZhlOnlineUtil.getTokenValidTime(request);
 		// 获取设备信息
 		String deviceInfo = ZhlOnlineUtil.getDeviceInfoWeb(request, userId,
 				registerNodeId, clientType);
