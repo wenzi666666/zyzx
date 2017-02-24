@@ -11,8 +11,9 @@
 <title>上传图片</title>  
 </head>  
 <body>  
-<form action="<%=path %>/resBackAPI/v1.0/account/uploadCard"
+<form action="<%=path %>/resBackAPI/appUserPoolConfig/v1.0/uploadExcelFile"
 method="post" enctype="multipart/form-data">  
+<input type="text" name="appId">
 <input type="file" name="file" /> <input type="submit" value="Submit" /></form>  
 </body>  
 </html>  

@@ -16,7 +16,6 @@ import net.tfedu.zhl.cloud.online.entity.JOnlineUsers;
 import net.tfedu.zhl.cloud.online.service.JOnlineUsersService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
-import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.MD5SignError;
 import net.tfedu.zhl.core.exception.NoTokenException;

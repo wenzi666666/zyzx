@@ -11,6 +11,12 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.MD5Util;
 import net.tfedu.zhl.config.CommonWebConfig;
@@ -31,12 +37,6 @@ import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 /**
  * 公司内部项目（相同的SSO库） 自动登录资源中心，并跳转到页面中
  * 
@@ -56,7 +56,7 @@ public class AutoLoginController {
 	/**
 	 * 返回类型为json
 	 */
-	private static final String JSON = "JSON";
+	private static final String JSONTYPE = "JSON";
 	
 	
 

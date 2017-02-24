@@ -26,5 +26,13 @@ public interface ResPoolService {
     
     
     
+
+    /**
+     * 查询所有资源库，包括SSO中扩展的资源库(情景英语、题库)
+     * @return
+     */
+    public List<ResPool> getAllPoolsWithAppend()throws Exception;
+    
+    
     
 }

@@ -126,6 +126,8 @@ public class ExcelReaderJXL {
 						query.setMessage(message);
 						list.add(query);
 						
+						
+						
 					}
 				}
 				

@@ -64,7 +64,7 @@ public class ExcelExportUtil {
 	 * @throws NoSuchMethodException
 	 * @throws ParseException
 	 */
-	public static <T> ModelAndView getView(String excelName,String sheetName,Class c,List<T> list ) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, ParseException{
+	public static <T> ModelAndView getView(String excelName,String sheetName,Class<?> c,List<T> list ) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, ParseException{
 		//检查后缀
 		excelName = getExcelName(excelName);
 		
@@ -76,8 +76,9 @@ public class ExcelExportUtil {
 		s.setName(sheetName);
 		
 		List<Map<String,Object>> dataList = new ArrayList<Map<String,Object>>();
-		for (Iterator iterator = list.iterator(); iterator.hasNext();) {
+		for (Iterator<T> iterator = list.iterator(); iterator.hasNext();) {
 			Object o = (Object) iterator.next();
+			@SuppressWarnings("unchecked")
 			Map<String,Object> map = BeanUtils.describe(o);
 			dataList.add(map);
 		}

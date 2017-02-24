@@ -27,6 +27,7 @@ import net.tfedu.zhl.helper.excel.module.SheetData;
  * @author wangwr
  *
  */
+@SuppressWarnings("deprecation")
 public class ExcelExportView extends AbstractJExcelView {
 	
 	/**
@@ -50,7 +51,7 @@ public class ExcelExportView extends AbstractJExcelView {
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		
-		for (Iterator iterator = ss.iterator(); iterator.hasNext();) {
+		for (Iterator<SheetData> iterator = ss.iterator(); iterator.hasNext();) {
 			//获取单页信息
 			SheetData sheetData = (SheetData) iterator.next();
 			

@@ -85,10 +85,10 @@ public class PaginationHelper<T> {
      * @param list
      * @return
      */
-    public static <T> PaginationHelper transfer(List<T> list) {
+    public static <T> PaginationHelper<T> transfer(List<T> list) {
         
     	// 将查询结果封装到pagination
-        PageInfo pageInfo = new PageInfo(list);
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
 
         PaginationHelper<T> pagination = new PaginationHelper<T>();
 
@@ -116,10 +116,10 @@ public class PaginationHelper<T> {
      * @param list
      * @return
      */
-    public static <T> PaginationHelper transferVideoCourse(List<T> list,int count) {
+    public static <T> PaginationHelper<T> transferVideoCourse(List<T> list,int count) {
         
     	// 将查询结果封装到pagination
-        PageInfo pageInfo = new PageInfo(list);
+        PageInfo<T> pageInfo = new PageInfo<T>(list);
 
         PaginationHelper<T> pagination = new PaginationHelper<T>();
 

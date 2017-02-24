@@ -22,6 +22,24 @@
   
   
   
+  <resultMap type="net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigRecord" id="recordMap">
+  	
+  	<id property="id" column="id"/>
+  
+  	<result  column="appid"  property="appId"/>
+  	<result  column="username"  property="userName"/>
+  	<result  column="poolid"  property="poolId"/>
+  	<result  column="termid"  property="termId"/>
+  	<result  column="subjectid"  property="subjectId"/>
+  	<result  column="add_time"  property="addTime"/>
+  	<result  column="start_date"  property="startDate"/>
+  	<result  column="expire_date"  property="expireDate"/>
+  	<result  column="termname"  property="termName"/>
+  	<result  column="subjectname"  property="subjectName"/>
+  	<result  column="poolname"  property="poolName"/>
+  
+  </resultMap>
+  
   
   
   <select id="getAppUserPoolConfig" resultType="Map">
@@ -40,6 +58,33 @@
 		and subjectid = #{subjectId}
 	</if>
 	
+  </select>
+  
+  
+  <select id="queryAppUserPoolConfig" resultMap="recordMap">
+  SELECT t.id,t.appid,t.userid as username,t.poolid,t.termid,t.subjectid,t.add_time,t.start_date,t.expire_date 
+	,IF(0=t.termid,'全学段',m.name) as termname
+	,if(0=t.subjectid,'全学课',s.name) as subjectname
+	,'' as poolname 
+	FROM s_appuser_pool_config t
+	LEFT JOIN j_term m on m.id = t.termid 
+	LEFT JOIN j_subject s on s.id = t.subjectid
+	where t.appid = #{appId} and t.flag = false
+	<if test="termId!=null and termId >0 ">
+		and t.termid = #{termId} 
+	</if>
+	
+	<if test="year!=null and year > 0 ">
+		and YEAR(t.add_time)  =#{year} 
+	</if>
+	
+	
+	<if test="userName!=null and userName.length()>0">
+		and t.userid like CONCAT('%',#{userName},'%')
+	</if>
+	
+	
+  
   </select>
   
 </mapper>

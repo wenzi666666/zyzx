@@ -100,7 +100,7 @@ public class HttpClientUtils {
 		if (request_params != null && request_params.size() > 0) {
 			for (HashMap<String, String> hashMap : request_params) {
 				Set<Entry<String, String>> temp = hashMap.entrySet();
-				for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				for (Iterator<Entry<String, String>> iterator = temp.iterator(); iterator.hasNext();) {
 					Entry<String, String> entry = (Entry<String, String>) iterator.next();
 					NameValuePair e = new BasicNameValuePair(entry.getKey(), entry.getValue());
 					pairs.add(e);
@@ -116,7 +116,7 @@ public class HttpClientUtils {
 		if (header_params != null && header_params.size() > 0) {
 			for (HashMap<String, String> hashMap : header_params) {
 				Set<Entry<String, String>> temp = hashMap.entrySet();
-				for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				for (Iterator<Entry<String, String>> iterator = temp.iterator(); iterator.hasNext();) {
 					Entry<String, String> entry = (Entry<String, String>) iterator.next();
 					get.addHeader(entry.getKey(), entry.getValue());
 				}
@@ -151,6 +151,7 @@ public class HttpClientUtils {
 		return json;
 	}
 
+	@SuppressWarnings("deprecation")
 	public static String doPost(APIForm form) throws ClientProtocolException, IOException, CustomException {
 		// 获取form表单中的参数
 		ArrayList<HashMap<String, String>> header_params = form.getHeader_params();
@@ -166,7 +167,7 @@ public class HttpClientUtils {
 		if (header_params != null && header_params.size() > 0) {
 			for (HashMap<String, String> hashMap : header_params) {
 				Set<Entry<String, String>> temp = hashMap.entrySet();
-				for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				for (Iterator<Entry<String, String>> iterator = temp.iterator(); iterator.hasNext();) {
 					Entry<String, String> entry = (Entry<String, String>) iterator.next();
 					post.addHeader(entry.getKey(), entry.getValue());
 				}
@@ -179,7 +180,7 @@ public class HttpClientUtils {
 		if (request_params != null && request_params.size() > 0) {
 			for (HashMap<String, String> hashMap : request_params) {
 				Set<Entry<String, String>> temp = hashMap.entrySet();
-				for (Iterator iterator = temp.iterator(); iterator.hasNext();) {
+				for (Iterator<Entry<String, String>> iterator = temp.iterator(); iterator.hasNext();) {
 					Entry<String, String> entry = (Entry<String, String>) iterator.next();
 					NameValuePair value = new BasicNameValuePair(entry.getKey(), entry.getValue());
 					params.add(value);

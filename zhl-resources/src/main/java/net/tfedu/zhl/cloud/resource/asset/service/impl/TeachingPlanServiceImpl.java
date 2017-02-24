@@ -181,6 +181,7 @@ public class TeachingPlanServiceImpl extends BaseServiceImpl<ZTeachingPlanConten
 		return ResultJSON.getSuccess(record);
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public ResultJSON queryRecord(int page, int perPage, long userId) throws Exception {
 		
@@ -196,9 +197,9 @@ public class TeachingPlanServiceImpl extends BaseServiceImpl<ZTeachingPlanConten
 		
 		List<ZAsset> list =  assetMapper.selectByExample(example);
 		
-		PaginationHelper<Object> resultPage = PaginationHelper.transfer(list);
+		PaginationHelper resultPage = PaginationHelper.transfer(list);
 		
-		List<Object> result = new ArrayList<Object>();
+		List<TeachingPlan> result = new ArrayList<TeachingPlan>();
 		for (Iterator<ZAsset> iterator = list.iterator(); iterator.hasNext();) {
 			ZAsset asset = iterator.next();
 			
