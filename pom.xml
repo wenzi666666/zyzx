@@ -115,6 +115,22 @@
 		
 		<profile>
 		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>22Res</id>
+			<properties>
+ 				<package.environment>22Res</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+				<timeToLive>1</timeToLive>
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
 			<id>suse_local</id>
 			<properties>
  				<package.environment>suse_local</package.environment>					

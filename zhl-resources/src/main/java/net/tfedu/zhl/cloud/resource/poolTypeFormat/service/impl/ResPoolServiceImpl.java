@@ -5,11 +5,13 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
+import net.tfedu.zhl.helper.CacheUtil;
 import net.tfedu.zhl.sso.respoolappend.dao.SResPoolAppendMapper;
 import net.tfedu.zhl.sso.respoolappend.entity.SResPoolAppend;
 import tk.mybatis.mapper.entity.Example;
@@ -59,6 +61,7 @@ public class ResPoolServiceImpl implements ResPoolService {
 	}
 
 	@Override
+	@Cacheable(value=CacheUtil.CACHE_APP)
 	public List<ResPool> getAllPoolsWithAppend() throws Exception {
 		 
 		List<ResPool> list = getExistPools();

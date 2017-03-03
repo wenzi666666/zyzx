@@ -144,6 +144,25 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 	}
     
     
+    @Override
+	public UserSimple getUserSimpleByIdForThirdParty(long id, String model, boolean isRepeatLogin, String logoutUrl,
+			String thirdPartyCode) {
+
+    	UserSimple user = getUserSimpleById(id, "", isRepeatLogin,false);
+
+		//设置退出url 和  对接产品的code
+		user.setLogoutTarget(null==logoutUrl?"":logoutUrl);
+		user.setThirdParyCode(thirdPartyCode);
+		
+		//写入缓存
+        UserTokenCacheUtil.addUserInfoCache(model,cacheManager, user.getToken(), user, isRepeatLogin);
+
+    	return user;
+	}
+
+    
+    
+    
     private UserSimple getUserSimpleById(long id){
         // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
@@ -398,6 +417,7 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 		return  new PageInfo((Page<UserQueryResult>)list) ;
 	}
 
+	
 	
 
 

@@ -1,15 +1,11 @@
 package net.tfedu.zhl.cloud.resource.autologin;
 
-import static org.junit.Assert.fail;
-
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.springframework.stereotype.Controller;
 
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
@@ -31,7 +27,7 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 	public void test() throws Exception {
 		
 		//对接产品code
-		String dockingCode = "xlfres";
+		String dockingCode = "yunzhou";
 		
 		if(null!=request.getServletContext().getInitParameter("resourceCenterAutoLoginUrl")){
 			dockingCode = request.getServletContext().getInitParameter("resourceCenterAutoLoginUrl");
@@ -39,7 +35,7 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 		
 		
 		
-		String  params = "userName=csls01&dockingCode="+dockingCode+"&timestamp="+Calendar.getInstance().getTimeInMillis();
+		String  params = "userName=test001&dockingCode="+dockingCode+"&timestamp="+Calendar.getInstance().getTimeInMillis();
 		
 		String sign = MD5.MD5(params+"&key="+MD5_KEY);
 		
@@ -55,7 +51,10 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 		
 		request.setParameter("args", args);
 		request.setParameter("logoutUrl", logoutUrl);
-		controller.autoLogin(request, response);
+		
+//		controller.autoLogin(request, response);
+		controller.autoLoginDocking(request, response);
+		
 		
 	}
 

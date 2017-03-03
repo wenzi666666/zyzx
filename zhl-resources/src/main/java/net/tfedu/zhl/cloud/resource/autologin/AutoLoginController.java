@@ -56,7 +56,7 @@ public class AutoLoginController {
 	/**
 	 * 返回类型为json
 	 */
-	private static final String JSONTYPE = "JSON";
+//	private static final String JSONTYPE = "JSON";
 	
 	
 
@@ -265,11 +265,8 @@ public class AutoLoginController {
 		
 		
 		// 获取用户信息
-		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
-
-		//设置退出url 和  对接产品的code
-		user.setLogoutTarget(null==logoutUrl?"":logoutUrl);
-		user.setThirdParyCode(dockingCode);
+		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), ""
+					, commonWebConfig.getIsRepeatLogin(), null==logoutUrl?"":logoutUrl,dockingCode);
 		
 		
 		

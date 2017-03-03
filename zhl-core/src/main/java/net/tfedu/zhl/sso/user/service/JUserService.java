@@ -43,6 +43,14 @@ public interface JUserService extends BaseService<JUser>{
 
     /**
      * 根据id获取用户
+     * (第三方用戶自动登录专用)
+     * @param id
+     * @return
+     */
+    public UserSimple getUserSimpleByIdForThirdParty(long id, String model,boolean isRepeatLogin,String logoutUrl,String thirdPartyCode);
+    
+    /**
+     * 根据id获取用户
      * 
      * @param id
      * @return

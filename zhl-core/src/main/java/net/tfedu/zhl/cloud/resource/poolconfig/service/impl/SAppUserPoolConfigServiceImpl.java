@@ -1,5 +1,6 @@
 package net.tfedu.zhl.cloud.resource.poolconfig.service.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -22,6 +23,9 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.term.dao.JTermMapper;
+import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 import tk.mybatis.mapper.entity.Example;
 
 /**
@@ -40,6 +44,8 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 	@Autowired
 	SAppUserPoolConfigMapper mapper;
 	
+	@Autowired
+	JTermMapper termMapper;
 	
 	
 	@Override
@@ -194,6 +200,42 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 		config.setFlag(true);
 		
 		return super.update(config);
+	}
+
+
+
+	@Override
+	public List<FuncListSimple> getAppUserPool(String appId, String userName, String termName) throws CustomException {
+		
+		long termId = 0;
+		long subjectId = 0 ;
+		
+		//先获取学科id
+		Example example = new Example(JTerm.class);
+		example.createCriteria().andCondition(" flag=false ").andCondition(" name="+termName);
+		List<JTerm> ls =  termMapper.selectByExample(example);
+		if(ls!=null &&ls.size()>0){
+			termId = ls.get(0).getId();
+		}
+		
+		//利用現有方法
+		List<Map<String, Object>>  result = getAppUserPoolConfig(termId, subjectId, userName, appId);
+		if(result!=null && result.size()>0){
+			
+			List<FuncListSimple> l = new ArrayList<FuncListSimple>();
+			FuncListSimple f = null;
+			for (Iterator<Map<String, Object>> iterator = result.iterator(); iterator.hasNext();) {
+				Map<String, Object> map = (Map<String, Object>) iterator.next();
+			
+				f = new FuncListSimple();
+				f.setCode(String.valueOf((Long)map.get("id")));
+				l.add(f);
+			}
+			
+			return l;
+		}
+		
+		return null;
 	}
 
 

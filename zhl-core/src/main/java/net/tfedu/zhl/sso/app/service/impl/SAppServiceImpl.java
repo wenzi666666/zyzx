@@ -1,5 +1,10 @@
 package net.tfedu.zhl.sso.app.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
@@ -7,10 +12,6 @@ import net.tfedu.zhl.helper.CacheUtil;
 import net.tfedu.zhl.sso.app.dao.SAppMapper;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.stereotype.Service;
 
 /**
  * @author wangwr
@@ -44,6 +45,18 @@ public class SAppServiceImpl extends BaseServiceImpl<SApp> implements
 			CacheUtil.put(cacheManager, CacheUtil.CACHE_APP, appId, sApp);
 		}
 		return sApp;
+	}
+
+	
+	@Override
+	@Cacheable(value=CacheUtil.CACHE_APP)
+	public SApp getSAppByCode(String appCode) throws ParamsException {
+		
+		SApp demo = new SApp();
+		demo.setPrefix(appCode);
+		demo.setFlag(false);
+		
+		return sAppMapper.selectOne(demo);
 	}
 
 }

@@ -54,7 +54,7 @@
 		and termid = #{termId}
 	</if>
 	 
-	<if test="termId > 0 ">
+	<if test="subjectId > 0 ">
 		and subjectid = #{subjectId}
 	</if>
 	

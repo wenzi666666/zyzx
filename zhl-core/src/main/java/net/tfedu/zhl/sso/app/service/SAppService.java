@@ -22,4 +22,10 @@ public interface SAppService  extends BaseService<SApp>{
 	 * @return
 	 */
 	public SApp getSApp(String appId)throws ParamsException;
+	/**
+	 * 获取APP信息
+	 * @param appCode  第三方编码（用户名前缀）
+	 * @return
+	 */
+	public SApp getSAppByCode(String appCode)throws ParamsException;
 }

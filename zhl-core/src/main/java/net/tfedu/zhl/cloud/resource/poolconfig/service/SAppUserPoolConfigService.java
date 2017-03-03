@@ -8,6 +8,7 @@ import net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigIndentInf
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  * 
@@ -22,7 +23,7 @@ import net.tfedu.zhl.helper.ResultJSON;
 public interface SAppUserPoolConfigService extends BaseService<SAppUserPoolConfig> {
 
 	/**
-	 * 查询用户有权限的资源库
+	 * 查询用户有权限的资源库(返回资源库的id但是缺少name)
 	 * 
 	 * @param termId
 	 *            学段
@@ -95,5 +96,17 @@ public interface SAppUserPoolConfigService extends BaseService<SAppUserPoolConfi
 	 *            需要更新的记录的主键
 	 */
 	public ResultJSON delAppUserPoolConfig(Long recordId) throws CustomException;
+	
+	
+	/**
+	 * 根据第三方用户及其学段获取有权限的资源库(返回资源库的id但是缺少name)
+	 * @param appId  	第三方id
+	 * @param userName	第三方用户名
+	 * @param termName  学段 
+	 * @return
+	 * @throws CustomException
+	 */
+	public List<FuncListSimple> getAppUserPool(String appId, String userName,String termName)throws CustomException;
+	
 
 }
