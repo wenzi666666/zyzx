@@ -43,7 +43,7 @@
   
   
   <select id="getAppUserPoolConfig" resultType="Map">
-  	
+  	select  * from (
   	select c.poolid as id ,'' as name ,termid,subjectid,IFNULL((now() > c.start_date and c.expire_date>now()),FALSE) permission, IFNULL(c.expire_date,'')as expire_date from 
 
 	s_appuser_pool_config c 
@@ -57,11 +57,12 @@
 	<if test="subjectId > 0 ">
 		and subjectid = #{subjectId}
 	</if>
-	
+	)temp ORDER BY id desc 
   </select>
   
   
   <select id="queryAppUserPoolConfig" resultMap="recordMap">
+  select  * from (
   SELECT t.id,t.appid,t.userid as username,t.poolid,t.termid,t.subjectid,t.add_time,t.start_date,t.expire_date 
 	,IF(0=t.termid,'全学段',m.name) as termname
 	,if(0=t.subjectid,'全学课',s.name) as subjectname
@@ -82,7 +83,7 @@
 	<if test="userName!=null and userName.length()>0">
 		and t.userid like CONCAT('%',#{userName},'%')
 	</if>
-	
+	)temp ORDER BY id desc 
 	
   
   </select>

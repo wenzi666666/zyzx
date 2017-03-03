@@ -83,7 +83,6 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 		
 		
 		PageHelper.startPage(page, perPage);
-        PageHelper.orderBy("id desc");
         
         List<AppUserPoolConfigRecord> list = mapper.queryAppUserPoolConfig(year, termId, userName, appId);
 		PageInfo<AppUserPoolConfigRecord> _page = new PageInfo<AppUserPoolConfigRecord>(list);

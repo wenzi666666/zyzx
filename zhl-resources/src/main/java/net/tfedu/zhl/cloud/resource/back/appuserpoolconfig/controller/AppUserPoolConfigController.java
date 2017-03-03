@@ -3,7 +3,10 @@ package net.tfedu.zhl.cloud.resource.back.appuserpoolconfig.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -16,11 +19,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.cloud.resource.back.appuserpoolconfig.util.ExcelUtilToParseAppUserConfigIndentInfo;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigIndentInfo;
+import net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigRecord;
 import net.tfedu.zhl.cloud.resource.poolconfig.service.SAppUserPoolConfigService;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.ControllerHelper;
@@ -67,13 +72,34 @@ public class AppUserPoolConfigController {
 	 *            第三方用户主键（可选）
 	 * @param appId
 	 *            第三方app主键
-	 * @throws CustomException 
+	 * @throws Exception 
 	 */
 	@RequestMapping(value="/v1.0/pageQuery",method=RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long poolId,
-			String userName, String appId) throws CustomException {
-		return appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId,poolId, userName, appId);
+			String userName, String appId) throws Exception {
+		
+		Map<Long,String> pools = new HashMap<Long,String>();
+		List<ResPool> ls = resPoolService.getAllPoolsWithAppend();
+		for (Iterator<ResPool> iterator = ls.iterator(); iterator.hasNext();) {
+			ResPool resPool = (ResPool) iterator.next();
+			pools.put(resPool.getId(), resPool.getName());
+		}
+		
+		ResultJSON result =  appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId,poolId, userName, appId);
+		
+		@SuppressWarnings("unchecked")
+		PageInfo<AppUserPoolConfigRecord> _page = (PageInfo<AppUserPoolConfigRecord>)result.getData();
+		
+		List<AppUserPoolConfigRecord> list =  _page.getList();
+		AppUserPoolConfigRecord appUserPoolConfigRecord = null;
+		for (Iterator<AppUserPoolConfigRecord> iterator = list.iterator(); iterator.hasNext();) {
+			appUserPoolConfigRecord = (AppUserPoolConfigRecord) iterator.next();
+			
+			appUserPoolConfigRecord.setPoolName(pools.get(appUserPoolConfigRecord.getPoolId()));
+		}
+		
+		return result ;
 	}
 
 	/**
