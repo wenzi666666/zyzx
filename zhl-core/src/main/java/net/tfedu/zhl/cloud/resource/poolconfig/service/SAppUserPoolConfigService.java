@@ -50,13 +50,15 @@ public interface SAppUserPoolConfigService extends BaseService<SAppUserPoolConfi
 	 *            开放年份
 	 * @param termId
 	 *            学段Id，全部时为0
+	 * @param poolId 
+	 * 				资源库Id，全部时为0
 	 * @param userName
 	 *            第三方用户主键（可选）
 	 * @param appId
 	 *            第三方app主键
 	 */
 	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,
-			String userName, String appId) throws CustomException;
+			Long poolId, String userName, String appId) throws CustomException;
 
 	/**
 	 * 更新用户的资源库授权

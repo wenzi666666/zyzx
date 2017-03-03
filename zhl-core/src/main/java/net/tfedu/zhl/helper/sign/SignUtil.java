@@ -136,7 +136,9 @@ public class SignUtil {
 		String appId = "679636";
 		String appKey = "0dd97ecaf1d3";
 		
-		String result =  SignUtil.createSignMap(new String[]{"userName","appId","resId"}, new String[]{"test001",appId,"1"}, appKey);
+		String result =  SignUtil.createSignMap(
+				new String[]{"page","perPage","year","termId","userName","appId","poolId","token"},
+				new String[]{"1","10","2016","0","",appId,"0","F74E13E419FA48DDA00A9BAE82CD18A7"}, appKey);
 		
 		
 		System.out.println(result);

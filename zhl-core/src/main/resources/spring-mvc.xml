@@ -104,11 +104,23 @@
         
         
         
+        
+         <mvc:interceptor>
+        	<mvc:mapping path="/*BackAPI/appUserPoolConfig/**"/>
+        	<bean class="net.tfedu.zhl.cloud.back.login.interceptor.BackAppUserManageInterceptor" />
+        </mvc:interceptor>
+        
+        
           <mvc:interceptor>
         	<mvc:mapping path="/*BackAPI/**/**"/>
         	<mvc:exclude-mapping path="/*BackAPI/v1.0/login" />
+        	<mvc:exclude-mapping path="/*BackAPI/appUserPoolConfig/**" />
         	<bean class="net.tfedu.zhl.cloud.back.login.interceptor.LoginBackStatusInterceptor" />
         </mvc:interceptor>
+        
+        
+        
+        
         
         
         

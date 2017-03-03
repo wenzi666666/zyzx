@@ -61,6 +61,8 @@ public class AppUserPoolConfigController {
 	 *            开放年份
 	 * @param termId
 	 *            学段Id，全部时为0
+	 * @param poolId
+	 *            资源库Id，全部时为0
 	 * @param userName
 	 *            第三方用户主键（可选）
 	 * @param appId
@@ -69,9 +71,9 @@ public class AppUserPoolConfigController {
 	 */
 	@RequestMapping(value="/v1.0/pageQuery",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,
+	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long poolId,
 			String userName, String appId) throws CustomException {
-		return appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId, userName, appId);
+		return appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId,poolId, userName, appId);
 	}
 
 	/**

@@ -48,19 +48,37 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 	JTermMapper termMapper;
 	
 	
+	
+	/**
+	 * 查询物权分配的历史记录
+	 * @param poolId  资源库的id
+	 * @param termId  学段id
+	 * @param subjectId 学科id
+	 * @param userName  用户名
+	 * @param appId		
+	 * @return
+	 * @throws CustomException 
+	 */
+	private List<Map<String, Object>> getAppUserPoolConfig(Long poolId,Long termId, Long subjectId,String userName, String appId) throws CustomException{
+		
+		return mapper.getAppUserPoolConfig(termId, subjectId, userName, appId);
+	}
+	
+	
 	@Override
     @Cacheable(value="bussinesscache")
 	public List<Map<String, Object>> getAppUserPoolConfig(Long termId, Long subjectId,String userName, String appId)
 			throws CustomException {
 		
-		
-		return mapper.getAppUserPoolConfig(termId, subjectId, userName, appId);
+		return getAppUserPoolConfig(0l, termId, subjectId, userName, appId);
 	}
 
 
+	
+	
 
 	@Override
-	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,
+	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long subjectId,
 			String userName, String appId) {
 		
 		
