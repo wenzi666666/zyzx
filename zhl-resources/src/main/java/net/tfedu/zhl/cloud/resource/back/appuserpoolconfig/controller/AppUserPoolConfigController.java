@@ -225,7 +225,7 @@ public class AppUserPoolConfigController {
     * 获取全部的资源库
  * @throws Exception 
     * */
-   @RequestMapping(value="/v1.0/allPools",method=RequestMethod.GET)
+   @RequestMapping(value="/v1.0/getAllPools",method=RequestMethod.GET)
    @ResponseBody
    public ResultJSON getAllPools() throws Exception{
 	   return ResultJSON.getSuccess(resPoolService.getAllPoolsWithAppend());

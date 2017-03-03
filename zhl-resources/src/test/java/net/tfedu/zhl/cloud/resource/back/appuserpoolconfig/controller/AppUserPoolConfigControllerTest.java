@@ -38,7 +38,7 @@ public class AppUserPoolConfigControllerTest extends BaseControllerTestCase{
 	}
 
 	@Test
-	public void testPageQueryAppUserPoolConfig() throws CustomException {
+	public void testPageQueryAppUserPoolConfig() throws Exception {
 		result = controller.pageQueryAppUserPoolConfig(1, 10, 0, 0l,0l, "", appId);
 	}
 
