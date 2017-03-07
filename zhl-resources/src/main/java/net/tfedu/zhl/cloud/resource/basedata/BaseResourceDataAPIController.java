@@ -36,6 +36,8 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.sign.SignUtil;
+import net.tfedu.zhl.sso.app.entity.SApp;
+import net.tfedu.zhl.sso.app.service.SAppService;
 
 /**
  * 
@@ -84,6 +86,9 @@ public class BaseResourceDataAPIController {
 	@Resource
 	JPrepareService jPrepareService;
 
+	@Resource
+	SAppService sAppService;
+	
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
@@ -105,10 +110,18 @@ public class BaseResourceDataAPIController {
 	 * 根据参数生成sign
 	 * 
 	 * @return
+	 * @throws ParamsException 
 	 */
 	@RequestMapping(value="v1.0/createSign",method=RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON createSign(String appKey, HttpServletRequest request) {
+	public ResultJSON createSign(HttpServletRequest request) throws ParamsException {
+		
+		
+		Integer appId = ControllerHelper.getIntParameter(request, "appId");
+
+		SApp app = (SApp)( sAppService.get(appId).getData());
+		
+		String appKey = app.getAppkey();
 		
 		String sign = SignUtil.createSign(request, appKey);
 		
