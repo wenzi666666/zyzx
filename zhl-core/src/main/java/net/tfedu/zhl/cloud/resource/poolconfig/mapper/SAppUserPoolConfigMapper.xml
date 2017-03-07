@@ -75,6 +75,18 @@
 		and t.termid = #{termId} 
 	</if>
 	
+	<if test="subjectId!=null and subjectId > 0 ">
+		and t.subjectid = #{subjectId}
+	</if>
+	
+	
+	
+	<if test="poolId!=null and poolId > 0 ">
+		and t.poolId = #{poolId}
+	</if>
+	
+	
+	
 	<if test="year!=null and year > 0 ">
 		and YEAR(t.add_time)  =#{year} 
 	</if>

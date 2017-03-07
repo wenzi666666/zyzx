@@ -68,6 +68,8 @@ public class AppUserPoolConfigController {
 	 *            学段Id，全部时为0
 	 * @param poolId
 	 *            资源库Id，全部时为0
+	 * @param subjectId
+	 *            学科Id，全部时为0
 	 * @param userName
 	 *            第三方用户主键（可选）
 	 * @param appId
@@ -77,6 +79,7 @@ public class AppUserPoolConfigController {
 	@RequestMapping(value="/v1.0/pageQuery",method=RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long poolId,
+			Long subjectId,
 			String userName, String appId) throws Exception {
 		
 		Map<Long,String> pools = new HashMap<Long,String>();
@@ -86,7 +89,7 @@ public class AppUserPoolConfigController {
 			pools.put(resPool.getId(), resPool.getName());
 		}
 		
-		ResultJSON result =  appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId,poolId, userName, appId);
+		ResultJSON result =  appUserPoolConfigService.pageQueryAppUserPoolConfig(page, perPage, year, termId,poolId,subjectId, userName, appId);
 		
 		@SuppressWarnings("unchecked")
 		PageInfo<AppUserPoolConfigRecord> _page = (PageInfo<AppUserPoolConfigRecord>)result.getData();

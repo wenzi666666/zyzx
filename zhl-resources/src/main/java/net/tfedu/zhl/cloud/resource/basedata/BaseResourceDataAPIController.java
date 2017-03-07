@@ -35,6 +35,7 @@ import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.sign.SignUtil;
 
 /**
  * 
@@ -100,6 +101,21 @@ public class BaseResourceDataAPIController {
 	private static final int fromFlag = 0;
 
 
+	/**
+	 * 根据参数生成sign
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value="v1.0/createSign",method=RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON createSign(String appKey, HttpServletRequest request) {
+		
+		String sign = SignUtil.createSign(request, appKey);
+		
+		
+		return ResultJSON.getSuccess(sign);
+	}
+	
 	/**
 	 * 获取全部学段
 	 * 

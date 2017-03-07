@@ -31,12 +31,15 @@ public interface SAppUserPoolConfigMapper extends CoreMapper<SAppUserPoolConfig>
 	 * 查询 指定年份 增加的  、指定学段的、   指定应用 的、指定用户名 的物权记录
 	 * @param year
 	 * @param termId
+	 * @param poolId
+	 * @param poolId
 	 * @param userName
 	 * @param appId
 	 * @return
 	 * @throws Exception
 	 */
 	public List<AppUserPoolConfigRecord> queryAppUserPoolConfig(@Param(value="year")Integer year, @Param(value="termId")Long termId,
-			@Param(value="userName")String userName, @Param(value="appId")String appId) ;
+				@Param(value="poolId")Long poolId,@Param(value="subjectId")Long subjectId,
+				@Param(value="userName")String userName, @Param(value="appId")String appId) ;
 	
 }

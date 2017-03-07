@@ -78,13 +78,13 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 	
 
 	@Override
-	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long subjectId,
+	public ResultJSON pageQueryAppUserPoolConfig(Integer page, Integer perPage, Integer year, Long termId,Long poolId,Long subjectId,
 			String userName, String appId) {
 		
 		
 		PageHelper.startPage(page, perPage);
         
-        List<AppUserPoolConfigRecord> list = mapper.queryAppUserPoolConfig(year, termId, userName, appId);
+        List<AppUserPoolConfigRecord> list = mapper.queryAppUserPoolConfig(year, termId, poolId,subjectId, userName, appId);
 		PageInfo<AppUserPoolConfigRecord> _page = new PageInfo<AppUserPoolConfigRecord>(list);
         result = defaultSuccess(_page);
         return result;

@@ -126,6 +126,7 @@
         
          <mvc:interceptor>
         	<mvc:mapping path="/baseData/**/**"/>
+        	<mvc:exclude-mapping path="/baseData/resource/v1.0/createSign" />
         	<bean class="net.tfedu.zhl.cloud.basedata.interceptor.BaseDataAPISignCheckInterceptor" />
         </mvc:interceptor>
         
