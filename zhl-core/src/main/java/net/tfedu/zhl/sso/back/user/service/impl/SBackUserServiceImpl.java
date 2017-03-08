@@ -1,6 +1,7 @@
 package net.tfedu.zhl.sso.back.user.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.core.exception.WithoutUserException;
+import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.BackManagerTokenCacheUtil;
 import net.tfedu.zhl.helper.ControllerHelper;
@@ -91,7 +93,12 @@ public class SBackUserServiceImpl extends BaseServiceImpl<SBackUser> implements 
 			throw new UnusualErrorException();
 		}
 		
+		
 		SBackUser currentUser = list.get(0);
+		
+		if(!Arrays.equals(PWDEncrypt.doEncryptByte(password), currentUser.getPwd())){
+			throw new WrongPassWordException();
+		} 
 		
 		
 		ManagerSimple simple = getBackUserSimpleInfo(productCode, currentUser, cacheManager, true);
