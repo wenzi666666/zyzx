@@ -134,7 +134,7 @@ public class AdditionalController {
 
 		SRegister register = regSerivce.getRegister(currentUserId);
 		String userName = register.getName();
-		String password = PWDEncrypt.getPWD(register.getPwd());
+//		String password = PWDEncrypt.getPWD(register.getPwd());
 		String forum3 = config.getCurrentForum3(request);
 		forum3 += "?username=" + userName + "&token=" + UUID.randomUUID().toString();
 		System.out.println("------forum3----" + forum3);
@@ -156,7 +156,7 @@ public class AdditionalController {
 
 		SRegister register = regSerivce.getRegister(currentUserId);
 		String userName = register.getName();
-		String password = PWDEncrypt.getPWD(register.getPwd());
+//		String password = PWDEncrypt.getPWD(register.getPwd());
 
 		String url = config.getCurrentForum3(request);
 		if (url == null || "".equals(url.trim())) {
@@ -261,7 +261,7 @@ public class AdditionalController {
 	
 
 	public static void main(String[] args) {
-		String s = "";
+//		String s = "";
 	}
 
 }

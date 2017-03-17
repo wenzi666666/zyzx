@@ -72,5 +72,16 @@ public class AdditionalControllerTest extends BaseControllerTestCase{
 	}
 
 	
+	@Test
+	public void testdmtbOld() throws Exception{
+		result = controller.dmtbOld(request, response);
+		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
+		log.info(JSONObject.toJSONString(result));
+	}
+	
+	
+	
+	
+	
 	
 }
