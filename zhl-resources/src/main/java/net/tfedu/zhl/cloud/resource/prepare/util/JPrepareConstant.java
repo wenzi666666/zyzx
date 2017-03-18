@@ -3,17 +3,12 @@ package net.tfedu.zhl.cloud.resource.prepare.util;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
-import net.tfedu.zhl.fileservice.HttpUtil;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.zhldowncenter;
-
-import com.alibaba.fastjson.JSONObject;
 
 /**
  * （资源中心）备课夹 常量
@@ -222,7 +217,7 @@ public class JPrepareConstant {
      */
     public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare) {
 
-        String rescode = info.getRescode();
+//        String rescode = info.getRescode();
         //资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
         Integer fromflag = info.getFromflag();
         Boolean isnet = info.getIsnet();
@@ -284,7 +279,7 @@ public class JPrepareConstant {
 public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String resServiceLocal){
     String rescode = info.getRescode();
     Integer fromflag= info.getFromflag();		
-    Boolean isnet = info.getIsnet();	    
+//    Boolean isnet = info.getIsnet();	    
     Boolean isdwj= info.getIsdwj();	    
     String path = info.getPath();
 
@@ -330,7 +325,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) throws UnsupportedEncodingException {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
-        Boolean isnet = info.getIsnet();
+//        Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
         String title = info.getTitle();
@@ -419,7 +414,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     public static void resetResourceDownLoadURLForEPrepareClient(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
-        Boolean isnet = info.getIsnet();
+//        Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
 

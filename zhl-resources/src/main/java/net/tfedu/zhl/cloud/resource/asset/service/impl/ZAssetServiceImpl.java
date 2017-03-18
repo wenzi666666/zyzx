@@ -46,7 +46,6 @@ import net.tfedu.zhl.cloud.resource.share.entity.XPlatFormShare;
 import net.tfedu.zhl.cloud.resource.share.entity.XShareResNav;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
-import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -184,12 +183,16 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 
 	@Override
 	public void setTypeConvertSucceed(String resServiceLocal,Long userId, String resPath) {
+		
+		
+		//增加转换记录
 		ZTypeConvert obj = new ZTypeConvert();
 		obj.setUserid(userId);
 		obj.setRespath(resPath);
 		obj.setCreatetime(Calendar.getInstance().getTime());
 		convertMapper.insert(obj);
 		
+		//标记转换成功	
 		assetMapper.updateAssetFinished(userId, resPath);
 		
 		
@@ -198,7 +201,11 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 		
 		Integer scope = syscourseMapper.getAssetShareScope(String.valueOf(userId), resPath);
 		
-		logger.debug("自建资源“"+resPath+"”更新状态，scope = "+scope);
+		if(scope ==null){
+			logger.debug("自建资源“"+resPath+"”转码回掉时尚未保存记录到数据库 （scope="+scope+"）");
+			return ;
+		}
+		logger.debug("自建资源“"+resPath+"”转码回掉更新状态，scope = "+scope);
 		
 		//共享范围   0 个人可见 1 校本共享 2 区本共享
 		if(scope!=null && scope>0){
@@ -258,13 +265,13 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 		
 		
 		
-		List<DistrictRes> dResList = new ArrayList();
-		List<DistrictsResNav> dResNavList = new ArrayList();
+		List<DistrictRes> dResList = new ArrayList<DistrictRes>();
+		List<DistrictsResNav> dResNavList = new ArrayList<DistrictsResNav>();
 		
 
 		
-		List<XShareResNav> shareResnavList = new ArrayList();
-		List<XPlatFormShare> shareList = new ArrayList();
+		List<XShareResNav> shareResnavList = new ArrayList<XShareResNav>();
+		List<XPlatFormShare> shareList = new ArrayList<XPlatFormShare>();
 		
 		List<String> source_4_copy = new ArrayList<String>();
 		List<String> target_4_copy = new ArrayList<String>();
@@ -396,7 +403,7 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 				
 				
 				if(isfinished == 0 && asset.getIslocal() == 0 ){
-					
+					log.debug("-----资源保存时已经转码完成---"+asset.getAssetpath());
 					//格式转换完成，拷贝缩略图
 					source_4_copy.add(assetPath.substring(0, assetPath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
 					target_4_copy.add(_fullpath.substring(0, _fullpath.lastIndexOf("."))+ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE);
@@ -494,7 +501,7 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 		//如果需要共享到dResList
 		if(scope_list.contains(1)||scope_list.contains(2)){
 			//批量增加资源
-			logger.debug("add districtRes to database batch .....");
+			logger.debug("add districtRes to database batch .[0]...."+dResList.get(0).getFullpath());
 			districtMapper.insertList(dResList);
 			for (DistrictsResNav nav : dResNavList) {
 				logger.debug("add districtResNav to database .....");
