@@ -450,18 +450,23 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     
     
     public static void main(String[] args) throws UnsupportedEncodingException {
-		String s = "男";
-		String s2 = "女";
-		
-		System.out.println(new String(s.getBytes("utf-8")) );
-		System.out.println(new String(s2.getBytes("utf-8")) );
-		System.out.println(UUID.randomUUID().toString());
-		System.out.println(UUID.randomUUID().toString());
-		System.out.println(UUID.randomUUID().toString());
-		System.out.println(UUID.randomUUID().toString());
-		System.out.println(UUID.randomUUID().toString());
-		
-	}
+    	String resServiceLocal = "http://down.tfedu.net/";
+    	String currentResService = "http://down.tfedu.net/";
+    	
+    	ResourceSimpleInfo info = new ResourceSimpleInfo();
+    	info.setFileext("");
+    	info.setFromflag(3);
+    	info.setIsdwj(false);
+    	info.setIsebook(false);    	
+    	info.setIsnet(false);
+    	info.setPath("/SchoolBase/88200411/2017/GZ/WL/xlsx/2017031811380695900-11.xlsx");
+    	
+    	
+    	
+    	resetResourceViewUrl(info, resServiceLocal, currentResService, false);
+    	
+    
+    }
     
     
 }

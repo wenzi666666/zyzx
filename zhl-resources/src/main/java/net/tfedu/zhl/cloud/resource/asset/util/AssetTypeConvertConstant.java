@@ -33,19 +33,19 @@ public class AssetTypeConvertConstant {
 	public static String convertType(String tempPath){
 		
 		int index = tempPath.lastIndexOf(".");
-	    String type = tempPath.substring(index + 1, tempPath.length());
+	    String type = tempPath.substring(index, tempPath.length());
 	    
 	    //若当前文件属于需要转码的文本类型
 	    if(doctypes.indexOf(type) >= 0)
-	    	tempPath = tempPath.replace(type, "pdf");
+	    	tempPath = tempPath.replace(type, ".pdf");
 	    
 	    //若当前文件属于需要转码的视频类
 	    else if(shipin.indexOf(type) >= 0){
-	    	tempPath =  tempPath.replace(type, "mp4");
+	    	tempPath =  tempPath.replace(type, ".mp4");
 	    	
 	    //若当前文件属于需要转码的音频类
 		}else if(yinpin.indexOf(type) >= 0){
-			tempPath = tempPath.replace(type, "mp3");
+			tempPath = tempPath.replace(type, ".mp3");
 		}
 	    
 	    return tempPath;
@@ -154,9 +154,8 @@ public class AssetTypeConvertConstant {
 	*/
 	
 	public static void main(String[] args) {
-		String path = "upFile\\2016\\390410126\\10105\\2016070415531745742-31.mp4";
-		path = path.replaceAll("\\\\", "\\\\\\\\");
-		System.out.println(path);
+		String path = "SchoolBase/88200411/2017/GZ/WL/xlsx/2017031811380695900-11.xlsx";
+		System.out.println(convertType(path));
 	}
 	
 	
