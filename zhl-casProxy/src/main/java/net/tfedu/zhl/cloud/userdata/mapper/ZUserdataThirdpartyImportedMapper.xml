@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.userdata.dao.ZUserdataThirdpartyImportedMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.userdata.entity.ZUserdataThirdpartyImported" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="uuid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <idArg column="appid" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="truename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="nickname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="sex" jdbcType="BIT" javaType="java.lang.Boolean" />
+      <arg column="role" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="motto" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="birthdate" jdbcType="DATE" javaType="java.util.Date" />
+      <arg column="provincename" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="cityname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="areaname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="schoolname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="termname" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="subjectname" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+</mapper>

@@ -379,7 +379,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 	}
 
 	@Override
-	public void registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form, SApp app) throws Exception {
+	public Long registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form, SApp app) throws Exception {
 
 		// 第三方编码为app中的前缀
 		String thirdCode = app.getPrefix();
@@ -397,7 +397,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 //			int i = 1;
 			while (_tempId != null && _tempId > 0) {
 				//如果已经注册了，直接返回
-				return ;
+				return _tempId;
 //				
 //				zhl_username = zhl_username + "" + i;
 //				i++;
@@ -430,6 +430,8 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			stp.setOperationtype(STPRelation.OPERATION_TYPE_REGISTER);
 			tpIdRelationMapper.insert(stp);
 			
+			
+			return userId;
 		}else{
 			
 			//返回学校id
@@ -456,7 +458,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			}
 			
 			
-			
+			return user.getId();
 		}
 
 	}

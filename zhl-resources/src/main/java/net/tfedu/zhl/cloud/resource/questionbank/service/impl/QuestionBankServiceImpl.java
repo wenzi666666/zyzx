@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.CourseViewTk;
 import net.tfedu.zhl.cloud.resource.navigation.entity.EditionViewTK;
@@ -31,9 +33,6 @@ import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
 import net.tfedu.zhl.sso.user.entity.UsersEntity;
-import net.tfedu.zhl.sso.users.dao.SRegisterMapper;
-
-import org.springframework.stereotype.Service;
 
 /**
  * 题库对接的service

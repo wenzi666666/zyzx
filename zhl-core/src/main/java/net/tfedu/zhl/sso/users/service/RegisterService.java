@@ -88,7 +88,7 @@ public interface RegisterService extends BaseService<SRegister>{
 	 * @param form  注册用户的信息表单,其中的用户名为 第三方系统中的用户名 ,zhl系统中的用户名在方法内部生成
 	 * @param app   第三方在知好乐系统中的APP信息
 	 */
-	public void registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form,SApp app)throws Exception;
+	public Long registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form,SApp app)throws Exception;
     
     
    /** 实现注册
