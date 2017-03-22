@@ -8,6 +8,9 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.junit.Test;
+import org.springframework.util.Assert;
+
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepare;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContent;
 import net.tfedu.zhl.cloud.resource.prepare.entity.JPrepareContentView;
@@ -17,9 +20,6 @@ import net.tfedu.zhl.cloud.resource.prepare.entity.UserPrepareStatisInfo;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-
-import org.junit.Test;
-import org.springframework.util.Assert;
 
 public class JPrepareServiceTest extends BaseControllerTestCase {
 
@@ -268,7 +268,8 @@ public class JPrepareServiceTest extends BaseControllerTestCase {
         int page = 1;
         int prePage = 10;
 
-        Pagination p = jPrepareService.getPrepareContentListByUserId(userId, unifyTypeId, fileFormat, page, prePage);
+        @SuppressWarnings("rawtypes")
+		Pagination p = jPrepareService.getPrepareContentListByUserId(userId, unifyTypeId, fileFormat, page, prePage);
 
         System.out.println("getTotal:" + p.getTotal() + ";getPage:" + p.getPage() + ";getPerPage:" + p.getPerPage()
                 + ";list.size:" + p.getList().size());

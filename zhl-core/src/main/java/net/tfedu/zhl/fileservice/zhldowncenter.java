@@ -37,6 +37,10 @@ public class zhldowncenter {
 	 */
 	public static final String  MP4_EXE_PATH= "Mp4ExePackage";
 	/**
+	 * 视频素材打包为exe文件的所在目录
+	 */
+	public static final String  VIDEO_EXE_PATH= "videoMaterialExePackage";
+	/**
 	 * 多文件打包zip包所在目录
 	 */
 	public static final String  MUTIPLE_FILE_PATH= "MultiZIP";
@@ -749,7 +753,30 @@ public class zhldowncenter {
 		}
 		return null;
 	}
-    
+
+	/**
+	 * 获取视频素材的exe文件的下载路径
+	 *   videoMaterialExePackage
+	 *  
+	 * @param rescode
+	 * @param fileTitle
+	 * @return
+	 */
+	public String GetVideoMaterialExePackageURL(String rescode, String fileTitle) {
+		String FileName = VIDEO_EXE_PATH+"\\" + rescode + ".exe";
+		String sign = GetApplySignCode("mp4package", FileName, CustomerID,
+				CustomerKey);
+		try {
+			return DownloadCenterURL
+					+ ApplyMethod
+					+ GetApplyQueryString("mp4package", FileName, sign,
+							CustomerID) + "&title="
+					+ URLEncoder.encode(fileTitle, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 	
 	/**
@@ -835,4 +862,5 @@ public class zhldowncenter {
          * System.out.println(down.GetFreeDownloadURLString("GZ\\1602.zip")); // task.NotifyUrl = "http://localhost/d/sss.aspx?zip=" + HttpUtility.UrlEncode(task.ZipFileName);
          */
     }
+
 }

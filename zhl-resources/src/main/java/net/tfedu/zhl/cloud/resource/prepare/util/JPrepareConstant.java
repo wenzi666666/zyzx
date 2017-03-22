@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
+import aj.org.objectweb.asm.Type;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -124,6 +125,13 @@ public class JPrepareConstant {
      * 区本资源的来源表示
      */
     public static final int fromFlag_districtRes = 4;
+    
+    
+    /**
+     * 资源素材的资源类型
+     */
+    public static final int MTYPEID_VIDEO_Material = 5; 
+    
 
     /**
      * 将fromFlag转换成 备课夹中的conttype 0系统资源，1自建资源，2共享资源,3校本资源,4区本资源
@@ -321,6 +329,10 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
      * @param info
      * @param currentResService 
      * @throws UnsupportedEncodingException 
+     * 
+     *   20170322 修改 ： 将系统资源中 的视频素材 下载 修改为从指定目录下获取exe文件
+     *   mtypeid = 5
+     * 
      */
     public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) throws UnsupportedEncodingException {
         String rescode = info.getRescode();
@@ -330,6 +342,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
         String path = info.getPath();
         String title = info.getTitle();
         String fileext = info.getFileext();
+        int mtypeid = info.getMtypeid();
 
         // 如果是系统资源
         if (fromflag == fromFlag_sysRes) {
@@ -350,8 +363,13 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
                 	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
                 }
                 */
+            	
                 if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
-                	path = ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
+                	
+                	//如果是视频素材
+                	path = (MTYPEID_VIDEO_Material == mtypeid)
+                			?ZhlResourceCenterWrap.GetVideoMaterialExePackageURL(resServiceLocal, rescode,"")
+                			:ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
                 }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
                 	path = ZhlResourceCenterWrap.GetFlashPackageURL(resServiceLocal, rescode, "");
                 }else{

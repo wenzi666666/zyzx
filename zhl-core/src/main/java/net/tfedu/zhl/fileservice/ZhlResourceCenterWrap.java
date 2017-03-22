@@ -550,6 +550,20 @@ public class ZhlResourceCenterWrap {
 		
 		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).GetMp4PackageURL(ResCode, FileTitle);
 	}
+	
+	
+	/**
+	 * 获取视频素材的exe文件的下载路径
+	 * @param resService  资源服务器的地址
+	 * @param rescode
+	 * @param string
+	 * @return
+	 */
+	public static String GetVideoMaterialExePackageURL(String resService, String rescode, String FileTitle) {
+
+			
+		return new zhldowncenter(CustomerID, CustomerKey, resService).GetVideoMaterialExePackageURL(rescode, FileTitle);
+	}
     
 	  /**
 		 * 获取Flash动画离线限时播放包
@@ -580,5 +594,8 @@ public class ZhlResourceCenterWrap {
 		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).getMutipleResourceZipURL(ResCode);
 		
 	}
-	;
+
+
+
+	
 }

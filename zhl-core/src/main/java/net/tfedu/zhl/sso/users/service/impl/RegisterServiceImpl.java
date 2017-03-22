@@ -637,7 +637,11 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		long schoolId = 0;
 
 		// 机构信息处理
-		List<Province> proList = proMapper.queryProvinceByName(provinceName);
+		List<Province> proList = proMapper.queryProvinceByName(
+				provinceName.replace(provinceName, "省")
+							.replace(provinceName, "市")
+							.replace(provinceName, "自治区")
+				);
 		if (proList == null || 0 == proList.size()) {
 			Province record = new Province();
 			record.setName(provinceName);
