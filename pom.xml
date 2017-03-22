@@ -87,7 +87,7 @@
 		
 		<resource-version>3.1.19</resource-version>
 		<teaching-version>1.0.2</teaching-version>
-		<casProxy-version>1.0.0</casProxy-version>
+		<casProxy-version>1.0.6</casProxy-version>
 	
 		
 	</properties>
