@@ -73,8 +73,8 @@ public class ProxyServiceImplZoucheng implements ProxyService {
 		form.setRole(roleId);
 		form.setSchoolName(obj.getSchoolname());
 		form.setSex(obj.getSex());
-		form.setSubjectName(obj.getSubjectname());
-		form.setTermName(obj.getTermname());
+		form.setSubjectName(null == obj.getSubjectname()?"语文":obj.getSubjectname());
+		form.setTermName(null == obj.getTermname()?"初中":obj.getTermname());
 		form.setTh_uuid(obj.getUuid());
 		form.setTrueName(obj.getTruename());
 		form.setUserName(obj.getUsername());

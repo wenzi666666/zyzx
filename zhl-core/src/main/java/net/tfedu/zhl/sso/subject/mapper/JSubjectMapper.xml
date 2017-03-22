@@ -20,4 +20,12 @@
       <arg column="schoolId" jdbcType="INTEGER" javaType="java.lang.Integer" />
     </constructor>
   </resultMap>
+  
+  
+  
+  	<select id="getSubjectByName" resultMap="BaseResultMap">
+  		select  * from j_subject where  name = #{name}
+  	
+  	</select>
+  
 </mapper>

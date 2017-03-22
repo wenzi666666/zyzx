@@ -17,6 +17,12 @@
   		update  j_teachersubject set subjectid =#{1} where userid =#{0}  and flag = false
   </update>
   
+
+  
+  <insert id="addTeacherSubject">
+  		INSERT INTO j_teachersubject(userid,subjectid)value(#{0} ,#{1})
+  </insert>
+  
   
   <update id="removeRepeatData" parameterType="Long">
   	update j_teachersubject t1 

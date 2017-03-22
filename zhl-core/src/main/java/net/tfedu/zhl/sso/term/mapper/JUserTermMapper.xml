@@ -16,7 +16,7 @@
   
   
   <update id="updateUserTerm">
-		update j_userterm set termid =#{1} where userid = #{0}
+  		REPLACE INTO j_userterm(userid,termid,flag)values ( #{0},#{1},0)
   </update>
   
   

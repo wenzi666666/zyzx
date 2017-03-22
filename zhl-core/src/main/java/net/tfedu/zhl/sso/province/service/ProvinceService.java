@@ -1,5 +1,7 @@
 package net.tfedu.zhl.sso.province.service;
 
+import java.util.List;
+
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.sso.province.entity.Province;
 
@@ -14,5 +16,8 @@ import net.tfedu.zhl.sso.province.entity.Province;
     copyRight@ 同方知好乐教育科技(北京)有限公司 
 */
 public interface ProvinceService extends BaseService<Province> {
+	
+	
+	List<Province> queryProvinceByName(String name);
 
 }

@@ -12,6 +12,13 @@ public interface JTeacherSubjectMapper extends CoreMapper<JTeacherSubject> {
      * @param subjectId
      */
     public void udpateTeacherSubject(Long userId, Long subjectId);
+    /**
+     * add用户的学科（教师）
+     * 
+     * @param userId
+     * @param subjectId
+     */
+    public void addTeacherSubject(Long userId, Long subjectId);
 
     /**
      * 清理（用户的学科）重复记录

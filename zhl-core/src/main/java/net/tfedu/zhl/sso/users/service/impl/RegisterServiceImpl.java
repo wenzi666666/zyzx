@@ -458,6 +458,60 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			}
 			
 			
+			//更新用戶的學段、學科
+			
+			String termName = form.getTermName();
+			String subjectName = form.getSubjectName();
+			
+			
+			termName = StringUtils.isEmpty(termName)?"初中":termName.trim();
+			subjectName = StringUtils.isEmpty(subjectName)?"语文":subjectName.trim();
+			
+			JTerm term =  termMapper.getTermByName(termName);
+			if(null!=term){
+				
+				Example e = new Example(JUserTerm.class);
+				e.createCriteria().andCondition("userid="+user.getId()).andCondition("flag = false");
+				List<JUserTerm> ls =  userTermMapper.selectByExample(e);
+				
+				if(ls!=null&& ls.size()>0 && ls.get(0).getTermid()!=term.getId()){
+					userTermMapper.updateUserTerm(user.getId(), term.getId());
+				}else{
+					userTermMapper.updateUserTerm(user.getId(), term.getId());
+				}
+				
+				
+				
+				
+			}
+			
+			JSubject subject =  subjectMapper.getSubjectByName(subjectName);
+			
+			if(subject!=null){
+				
+				Example e = new Example(JTeacherSubject.class);
+				e.createCriteria().andCondition("userid="+user.getId()).andCondition("flag = false");
+				List<JTeacherSubject> ls2 =  teachSubjectMapper.selectByExample(e);
+				
+				if(ls2!=null && ls2.size()>0){
+					
+					boolean update = true ;
+					for (Iterator<JTeacherSubject> iterator = ls2.iterator(); iterator.hasNext();) {
+						JTeacherSubject jTeacherSubject = (JTeacherSubject) iterator.next();
+						if(jTeacherSubject.getSubjectid() == subject.getId()){
+							update = false ;
+						}
+					}
+					if(update){
+						teachSubjectMapper.addTeacherSubject(user.getId(), subject.getId());
+					}
+					
+				}else{
+					teachSubjectMapper.addTeacherSubject(user.getId(), subject.getId());
+				}
+				
+			}
+			
 			return user.getId();
 		}
 
@@ -626,10 +680,10 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 	 */
 	protected Long getSchoolId(RegisterAddForm form) {
 		
-		String provinceName = form.getProvinceName();
-		String cityName = form.getCityName();
-		String arealName = form.getArealName();
-		String schoolName = form.getSchoolName();
+		String provinceName =StringUtils.trim(form.getProvinceName().replaceAll(" ", ""));
+		String cityName = StringUtils.trim(form.getCityName().replaceAll(" ", ""));
+		String arealName = StringUtils.trim(form.getArealName().replaceAll(" ", ""));
+		String schoolName = StringUtils.trim(form.getSchoolName().replaceAll(" ", ""));
 		
 		long provinceId = 0;
 		long cityId = 0;
@@ -638,9 +692,9 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 
 		// 机构信息处理
 		List<Province> proList = proMapper.queryProvinceByName(
-				provinceName.replace(provinceName, "省")
-							.replace(provinceName, "市")
-							.replace(provinceName, "自治区")
+				provinceName.replace("省","")
+							.replace("市","")
+							.replace("自治区","")
 				);
 		if (proList == null || 0 == proList.size()) {
 			Province record = new Province();

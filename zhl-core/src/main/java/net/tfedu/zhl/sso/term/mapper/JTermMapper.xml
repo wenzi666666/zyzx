@@ -20,6 +20,16 @@
 		<result column="name" property="name" />
 		<result column="code" property="code" />
   </resultMap>
+  
+  
+  
+  <select id="getTermByName" resultMap="AllTermsMap">
+  	select id,name,code from j_term where name = #{name}
+  </select>
+  
+  
+  
+  
   <select id="getAllTerms" resultMap="AllTermsMap">
 		select id,name,code from j_term where name not like '其他%' and flag = false 
   </select>
