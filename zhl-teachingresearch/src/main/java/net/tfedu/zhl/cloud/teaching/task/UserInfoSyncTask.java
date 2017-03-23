@@ -73,7 +73,7 @@ public class UserInfoSyncTask {
 	 */
 //	@Scheduled(fixedRate = 1000 * 60) // 1分钟一次
 
-	 @Scheduled(cron="0 00 2 * * ?") //每天凌晨2点执行一次
+	@Scheduled(cron="0 00 2 * * ?") //每天凌晨2点执行一次
 	public void syncUserInfo() {
 
 		logger.info("start---to---syncUserInfo");
