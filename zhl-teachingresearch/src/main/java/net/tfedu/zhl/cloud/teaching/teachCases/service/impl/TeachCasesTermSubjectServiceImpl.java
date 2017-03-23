@@ -4,14 +4,15 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.teaching.teachCases.dao.TGradeMapper;
 import net.tfedu.zhl.cloud.teaching.teachCases.dao.TermMapper;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TGrade;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.TSubject;
 import net.tfedu.zhl.cloud.teaching.teachCases.entity.Term;
 import net.tfedu.zhl.cloud.teaching.teachCases.service.TeachCasesTermSubjectService;
-
-import org.springframework.stereotype.Service;
 
 /**
  * 教学案例中与学段、学科、年级相关的接口
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 @Service("teachCasesTermSubjectService")
 public class TeachCasesTermSubjectServiceImpl implements TeachCasesTermSubjectService{
 
-	@Resource TermMapper termMapper;
+	@Autowired TermMapper  tMapper;
 	@Resource TGradeMapper tGradeMapper;
 	
 	/**
@@ -29,7 +30,7 @@ public class TeachCasesTermSubjectServiceImpl implements TeachCasesTermSubjectSe
 	 * @return
 	 */
 	public List<Term> getAllTerms(){
-		return termMapper.getAllTerms();
+		return tMapper.getAllTerms();
 	}
 	
 	/**
@@ -37,7 +38,7 @@ public class TeachCasesTermSubjectServiceImpl implements TeachCasesTermSubjectSe
 	 * @return
 	 */
 	public List<TSubject> getSubjectsByTerm(int termId){
-		return termMapper.getSubjectsByTerm(termId);
+		return tMapper.getSubjectsByTerm(termId);
 	}
 	
 	/**

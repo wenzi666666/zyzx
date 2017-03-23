@@ -1,7 +1,6 @@
 package net.tfedu.zhl.sso.term.service.impl;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
@@ -15,10 +14,12 @@ import net.tfedu.zhl.sso.term.service.JTermService;
 @Service("jTermService")
 public class JTermServiceImpl extends BaseServiceImpl<JTerm> implements JTermService {
 
-	@Resource
+
+	
+	@Autowired
 	JSubjectMapper subjectMapper;
 	
-	@Resource
+	@Autowired
 	JTermMapper termMapper;
 
 	
