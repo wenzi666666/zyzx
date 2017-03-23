@@ -86,7 +86,7 @@
 		
 		
 		<resource-version>3.1.20</resource-version>
-		<teaching-version>1.0.2</teaching-version>
+		<teaching-version>1.0.3</teaching-version>
 		<casProxy-version>1.0.6</casProxy-version>
 	
 		
@@ -108,7 +108,7 @@
 				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
 		
@@ -323,7 +323,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 		
