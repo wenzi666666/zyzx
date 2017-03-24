@@ -42,7 +42,7 @@ public class SysResourceViewTopTimerUpdateTask {
 	 * 7200秒执行一次
 	 * @throws Exception 
 	 */
-	@Scheduled(fixedRate = 7200000)
+	@Scheduled(fixedRate = 7200000,initialDelay=2000)
 //	@Scheduled(fixedRate = 10000)
 	public void viewTopTimerUpdate() throws Exception{
 		log.info("----------------------系统资源点击排行榜 定时更新--------------start----");

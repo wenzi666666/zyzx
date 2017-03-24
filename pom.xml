@@ -121,7 +121,7 @@
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
 				<version>${resource-version}</version>
-				<timeToLive>1</timeToLive>
+				<timeToLive>0</timeToLive>
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
