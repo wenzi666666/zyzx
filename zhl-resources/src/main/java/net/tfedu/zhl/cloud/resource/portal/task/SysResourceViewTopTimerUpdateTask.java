@@ -1,22 +1,15 @@
 package net.tfedu.zhl.cloud.resource.portal.task;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.portal.controller.PortalController;
-import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdateResult;
 import net.tfedu.zhl.cloud.resource.portal.service.PortalService;
-import net.tfedu.zhl.cloud.resource.resourceList.util.ResThumbnailPathUtil;
-import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.ResultJSON;
 
 
