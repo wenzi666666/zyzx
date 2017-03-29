@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.basedata;
+package net.tfedu.zhl.cloud.resource.basedata.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;

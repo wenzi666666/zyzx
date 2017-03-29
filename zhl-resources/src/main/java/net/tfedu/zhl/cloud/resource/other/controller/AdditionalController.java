@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.other;
+package net.tfedu.zhl.cloud.resource.other.controller;
 
 import java.net.URLEncoder;
 import java.util.UUID;

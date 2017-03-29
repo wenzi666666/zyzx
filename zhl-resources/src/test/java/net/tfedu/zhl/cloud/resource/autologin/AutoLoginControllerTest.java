@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import net.tfedu.zhl.cloud.resource.autologin.controller.AutoLoginController;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;

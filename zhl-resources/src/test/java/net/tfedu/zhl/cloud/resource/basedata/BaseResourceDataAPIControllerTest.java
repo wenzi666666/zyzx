@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import net.tfedu.zhl.cloud.resource.basedata.controller.BaseResourceDataAPIController;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.ParamsException;

@@ -3,6 +3,7 @@ package net.tfedu.zhl.cloud.resource.other;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.cloud.resource.other.controller.AdditionalController;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 

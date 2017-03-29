@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.autologin;
+package net.tfedu.zhl.cloud.resource.autologin.controller;
 
 import java.io.IOException;
 import java.net.URLDecoder;
