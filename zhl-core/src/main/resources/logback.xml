@@ -33,13 +33,13 @@
     <logger name="org.hibernate" level="WARN" />
     <logger name="org.springframework" level="WARN" />
     <logger name="com.opensymphony" level="WARN" />
-    <logger name="org.mybatis" level="DEBUG" />
-    <logger name="tk.mybatis" level="DEBUG" />
+    <logger name="org.mybatis" level="INFO" />
+    <logger name="tk.mybatis" level="INFO" />
     <Logger name="com.fasterxml.jackson" level="INFO"/>
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="WARN" />
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="WARN" />
-    <logger name="org.hibernate.SQL" level="DEBUG" />
-    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
-    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicBinder" level="INFO" />
+    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor" level="INFO" />
+    <logger name="org.hibernate.SQL" level="INFO" />
+    <logger name="org.hibernate.engine.QueryParameters" level="INFO" />
+    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="INFO" />
 
 </configuration>
