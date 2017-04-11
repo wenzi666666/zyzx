@@ -132,6 +132,13 @@ public class UserController {
 		} else {
 			String userName = request.getParameter("user_name");
 			String userPwd = request.getParameter("user_pwd");
+			
+			
+			if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(userPwd)){
+				return ResultJSON.defaultError(new ParamsException());
+			}
+			
+			
 			// 返回用户的信息
 			UserSimple user = null;
 
