@@ -326,7 +326,22 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
+			
+			
 		
+		<profile>
+			<id>casJimo</id>
+			<properties>
+                <package.environment>casJimo</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
 		
 		
 	</profiles>
@@ -804,6 +819,21 @@
 	
     </dependency>
     
+	    
+	    <!-- https://mvnrepository.com/artifact/org.codehaus.xfire/xfire-all -->
+	<dependency>
+	    <groupId>org.codehaus.xfire</groupId>
+	    <artifactId>xfire-all</artifactId>
+	    <version>1.2.6</version>
+	    <exclusions>
+		<exclusion>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring</artifactId>
+			<!-- <version>1.2.6</version> -->
+		</exclusion>
+	</exclusions>
+	</dependency>
+	    
     
     
   </dependencies>

@@ -86,7 +86,7 @@ public class TypesAndFormatsController {
     	List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
     	
     	//资源库id
-    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
+    	long poolId = ControllerHelper.getOptionalLongParameter(request, "poolId");
     	
         if(request.getParameter("isEPrepare") != null){//e备课
         	//新的类型查询方法（去除一些类型）
@@ -117,7 +117,7 @@ public class TypesAndFormatsController {
         
     	String pTfcode = ControllerHelper.getParameter(request, "pTfcode");
     	int typeId = ControllerHelper.getIntParameter(request, "typeId");
-    	long poolId = ControllerHelper.getLongParameter(request, "poolId");
+    	long poolId = ControllerHelper.getOptionalLongParameter(request, "poolId");
 
         // 根据 resourceIds和typeIds，查询资源格式
         //formats = resFormatService.getSysResFormats(poolId,pTfcode,typeId,sys_from);

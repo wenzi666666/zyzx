@@ -920,7 +920,6 @@ public class PrepareController {
 					JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
 							currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
 					String url = list.get(0).getPath();
-					logger.info("-getResViewPage--url:"+url);
 					response.sendRedirect(url);
 				}
 			} catch(CustomException e) {

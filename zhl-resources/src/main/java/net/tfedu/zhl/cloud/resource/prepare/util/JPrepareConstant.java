@@ -5,7 +5,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.List;
 
-import aj.org.objectweb.asm.Type;
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
@@ -290,26 +289,34 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
 //    Boolean isnet = info.getIsnet();	    
     Boolean isdwj= info.getIsdwj();	    
     String path = info.getPath();
+    int mtypeid = info.getMtypeid();
+
 
     //如果是系统资源 
     if(fromflag==fromFlag_sysRes){
 		String flag = path.substring(path.lastIndexOf("."),path.length());
 		
-		
-		//如果是加密swf\mp4的文件
-		if(ZhlResourceCenterWrap.FileType_EXE.equals(flag) 
-        		|| ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
+		 // 如果是加密swf\mp4的文件
+        if (ZhlResourceCenterWrap.FileType_EXE.equals(info.getFileext()) 
+        		||
+        		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
+        	
             if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
-            	path = zhldowncenter.MP4_EXE_PATH+File.separator+rescode+".exe";
-            }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
+            	
+            	//如果是视频素材
+            	path = (MTYPEID_VIDEO_Material == mtypeid)
+            			?(zhldowncenter.VIDEO_EXE_PATH+File.separator + rescode + ".exe")
+            			:(zhldowncenter.MP4_EXE_PATH+File.separator+rescode+".exe");
+            }else {
             	path = zhldowncenter.FLASH_EXE_PATH+File.separator+rescode+".exe";
             }
-		}else{
-			if(isdwj){
-//				path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
-				path = zhldowncenter.MUTIPLE_FILE_PATH+File.separator+rescode+".zip";
-			}
-		}
+        	
+        	
+        } else {
+            if (isdwj) {
+            	path = zhldowncenter.MUTIPLE_FILE_PATH+File.separator+rescode+".zip";
+            }
+        }
     }
 	
     
@@ -352,17 +359,6 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
             if (ZhlResourceCenterWrap.FileType_EXE.equals(fileext) 
             		||
             		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
-               /* String url = "";
-                if (isdwj) {
-                    String _path = path.replaceAll("\\\\", "/");
-                    String _name = _path.substring(_path.lastIndexOf("/") + 1, _path.length());
-                    _path = _path.substring(0, _path.lastIndexOf("/"));
-                    url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name, _path, resServiceLocal);
-                    path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, _name, _path);
-                } else {
-                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
-                }
-                */
             	
                 if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
                 	
@@ -370,10 +366,8 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
                 	path = (MTYPEID_VIDEO_Material == mtypeid)
                 			?ZhlResourceCenterWrap.GetVideoMaterialExePackageURL(resServiceLocal, rescode,"")
                 			:ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
-                }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
+                }else {
                 	path = ZhlResourceCenterWrap.GetFlashPackageURL(resServiceLocal, rescode, "");
-                }else{
-                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
                 }
             	
             	

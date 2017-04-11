@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
+import net.tfedu.zhl.cloud.casProxy.action.controller.CasProxyZouchengAction;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 

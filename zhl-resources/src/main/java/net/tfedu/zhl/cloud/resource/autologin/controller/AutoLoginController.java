@@ -3,7 +3,6 @@ package net.tfedu.zhl.cloud.resource.autologin.controller;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSONObject;
+
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.cloud.utils.security.MD5Util;
 import net.tfedu.zhl.config.CommonWebConfig;
@@ -28,6 +29,7 @@ import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
@@ -287,8 +289,97 @@ public class AutoLoginController {
 		return null;
 	}
 	
-	
-	
+	/**
+	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code
+	 * 對autoLoginDocking简化
+	 * 参数在url中明文传递，增加一个校验字段sign做教研，要求至少要有appId,userName,dockingCode,在加上timestamp
+	 * 
+	 * 
+	 * s_th_register_relative
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 一般采用重定向的方式，跳转到web前端页面，所以返回为null
+	 * @throws Exception
+	 */
+	@RequestMapping("autoLoginDockingSimple")
+	@ResponseBody
+	public Object autoLoginDockingSimple(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, ParamsException,
+			UnusualErrorException, Exception, WithoutAuthorizationException {
+		SApp app = null;
+		
+		String userName = ControllerHelper.getParameter(request, "userName");
+		String dockingCode = ControllerHelper.getParameter(request, "dockingCode");
+		String appId = ControllerHelper.getParameter(request, "appId");
+		String sign =  ControllerHelper.getParameter(request, "sign");
+		String _sign = "";//用于校验
+		
+		if(StringUtils.isNotEmpty(appId)){
+			app = sAppService.getSApp(appId);
+			if (app == null) {
+				log.debug("没有注册APP信息");
+				throw new CustomException("没有注册APP信息");
+			}
+			
+			_sign = SignUtil.createSign(request, app.getAppkey());
+		}else{
+			log.debug("没有注册APP信息");
+			throw new CustomException("没有注册APP信息");
+		}
+		
+		
+		
+		
+		if (StringUtils.isEmpty(sign) || !sign.equals(_sign)) {
+			log.debug("sign信息校验失败");
+			throw new ParamsException();
+		}
+
+		// 检查用户信息
+		if (StringUtils.isEmpty(userName)) {
+			log.debug("userName为空");
+			throw new UnusualErrorException();
+		}
+
+		
+		//获取对接后的用户名
+		SThirdRegisterRelative  relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
+		if(relate!=null){
+			//对接后的用户名
+			userName = relate.getZhlUsername();
+		}else{
+			throw new WithoutAuthorizationException(userName+("(对接用户,dockingCode:"+dockingCode+")"));
+		}
+		
+		
+		// 返回用户的信息
+		UserSimple user = null;
+
+		// 用户登录
+		SRegister reg = registerService.getRegister(userName);
+
+		if(null == reg ){
+			throw new WithoutAuthorizationException(userName);
+		}
+		
+		log.debug("-----第三方对接后的SRegister--"+JSONObject.toJSONString(reg));
+		// 获取用户信息
+		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), ""
+					, commonWebConfig.getIsRepeatLogin(), 
+					null==app.getThirdpartylogouturl()?"":app.getThirdpartylogouturl(),dockingCode);
+		
+		//组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
+				.append("/router").append("?tocken=").append(user.getToken())
+				.append("&userId=").append(user.getUserId())
+				.append("&iscoursewares=").append(user.getThirdParyCode())
+				.toString();
+		log.info("autoLogin---url:"+url);
+		
+		response.sendRedirect(url);
+		return null;
+	}
 	
 	
 	/**
@@ -363,13 +454,9 @@ public class AutoLoginController {
 	 * @throws IOException
 	 */
 	private String getParams(String args) throws IOException {
-		if(args.contains(URLEncoder.encode("=", "utf-8"))){
-			args = URLDecoder.decode(args, "UTF-8");
-		}
 
-		log.info("--getParams---URLDecoder.decode--args:" + args);
 
-		return xxtea.decryptstring(args, MD5_KEY);
+		return getParams(args, MD5_KEY);
 
 	}
 
@@ -417,17 +504,7 @@ public class AutoLoginController {
 	
 	
 	public static void main(String[] args) {
-			String strDate = String.valueOf(Calendar.getInstance().getTimeInMillis());
-	        String  params = "";
-	        String userName = "csls01";
-
 			
-	        params = MD5Util.str2md5(userName + strDate + MD5_KEY);
-		
-	        
-	        System.out.println("/resRestAPI/thirdparty/autoLoginSimple?userName="+userName+"&strDate="+strDate+"&params="+params+"");
-	        
-		
 		
 	}
 

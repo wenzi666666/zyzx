@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.casProxy.action;
+package net.tfedu.zhl.cloud.casProxy.action.controller;
 
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSONObject;
 
+import net.tfedu.zhl.cloud.casProxy.action.custom.jimo.controller.CasProxyCustomJimo;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.cloud.casProxy.service.ProxyService;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -46,7 +47,7 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 @RequestMapping("casProxy/zoucheng")
 public class CasProxyZouchengAction {
 
-	Logger log = LoggerFactory.getLogger(CasProxyHaiYangAction.class);
+	Logger log = LoggerFactory.getLogger(CasProxyZouchengAction.class);
 
 	// 对接约定的密钥
 	public static final String key = "9k8i78jug6hd93kjf84h";

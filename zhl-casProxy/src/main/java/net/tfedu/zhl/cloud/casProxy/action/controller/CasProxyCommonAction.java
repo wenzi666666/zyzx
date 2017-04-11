@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.casProxy.action;
+package net.tfedu.zhl.cloud.casProxy.action.controller;
 
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -38,10 +38,10 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  * 
  */
 @Controller
-@RequestMapping("/casProxyHaiyang/")
-public class CasProxyHaiYangAction {
+@RequestMapping("/casProxy/")
+public class CasProxyCommonAction {
 
-	Logger log = LoggerFactory.getLogger(CasProxyHaiYangAction.class);
+	Logger log = LoggerFactory.getLogger(CasProxyCommonAction.class);
 
 	// 对接约定的密钥
 	public static final String key = "9k8i78jug6hd93kjf84h";
@@ -50,7 +50,7 @@ public class CasProxyHaiYangAction {
 	 * 处理服务接口,通过修改配置文件中的实现类，切换不同的场景
 	 */
 	@Resource
-	ProxyService proxyServiceHaiyang;
+	ProxyService proxyService;
 
 	@Resource
 	ThirdPartyCASConfig casConfig;
@@ -64,18 +64,11 @@ public class CasProxyHaiYangAction {
 	@RequestMapping("/login")
 	public void login(HttpServletRequest request, HttpServletResponse response) throws CustomException, Exception {
 
-		if (null == casConfig || StringUtils.isEmpty(casConfig.getZHL_APPID())
-				|| StringUtils.isEmpty(casConfig.getTHIRDPARTY_APPID())) {
-			throw new CustomException("APP配置信息异常");
-		}
+		SApp app = getApp();
 
-		String appID = casConfig.getZHL_APPID();
+		log.info("----parseAPI-----with----" + proxyService.getClass().getName());
 
-		SApp app = (SApp) sAppService.getByPrimaryKey(Integer.parseInt(appID)).getData();
-
-		log.info("----parseAPI-----with----" + proxyServiceHaiyang.getClass().getName());
-
-		RegisterAddForm form = proxyServiceHaiyang.parseAPI(request, casConfig);
+		RegisterAddForm form = proxyService.parseAPI(request, casConfig);
 
 		log.info("----parseAPI---result-------" + JSONObject.toJSONString(form));
 
@@ -113,6 +106,23 @@ public class CasProxyHaiYangAction {
 
 		response.sendRedirect(url);
 
+	}
+
+	/**
+	 * 获取app
+	 * @return
+	 * @throws CustomException
+	 */
+	protected SApp getApp() throws CustomException {
+		if (null == casConfig || StringUtils.isEmpty(casConfig.getZHL_APPID())
+				|| StringUtils.isEmpty(casConfig.getTHIRDPARTY_APPID())) {
+			throw new CustomException("APP配置信息异常");
+		}
+
+		String appID = casConfig.getZHL_APPID();
+
+		SApp app = (SApp) sAppService.getByPrimaryKey(Integer.parseInt(appID)).getData();
+		return app;
 	}
 
 }

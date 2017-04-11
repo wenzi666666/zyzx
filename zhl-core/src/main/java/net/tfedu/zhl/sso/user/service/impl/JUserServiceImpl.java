@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -53,6 +55,9 @@ import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 @Service("userService")
 public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserService{
 
+    Logger log = LoggerFactory.getLogger(JUserServiceImpl.class);
+    
+	
     @Autowired
     private JUserMapper mapper;
 
@@ -106,7 +111,8 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
     
     @Override
 	public UserSimple getUserSimpleById(long id, String model, boolean isRepeatLogin, boolean isCache) {
-    	 // 1 获取UserSimple
+    	
+    	// 1 获取UserSimple
         UserSimple us = getUserSimpleById(id);
         
         //设置从什么产品登录
@@ -166,6 +172,8 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
     private UserSimple getUserSimpleById(long id){
         // 1 获取UserSimple
         UserSimple us = mapper.getUserSimpleById(id);
+
+        
         return reSetUserSimpleMale(us) ;
     }
     
@@ -178,6 +186,7 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
          }else if("0".equals(us.getMale())){
          	us.setMale("男");
          }
+
     	 return us ;
     }
     

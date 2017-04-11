@@ -250,7 +250,7 @@ public class PrepareControllerTest extends BaseControllerTestCase {
     	
     
     	
-    	request.setParameter("resIds", "42941,389943,290146");
+    	request.setParameter("resIds", "15863,16545,16547");
     	request.setParameter("fromFlags", "0,0,0");
 //    	request.setParameter("clientType", "ePrepareClient");
         result = controller.getDown(request, response);
