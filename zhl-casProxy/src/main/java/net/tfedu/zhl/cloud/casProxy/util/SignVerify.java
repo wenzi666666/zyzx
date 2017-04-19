@@ -47,4 +47,9 @@ public class SignVerify {
 		return MD5.getMD5Str(uid + separator + timestamp + separator + appId
 				+ separator + appKey);
 	}
+	
+	
+	public static void main(String[] args) {
+		System.out.println(SignVerify.createSignVerify("33031", 679636, "0dd97ecaf1d3"));
+	}
 }

@@ -111,7 +111,7 @@ public abstract class CasProxyCommon2Action {
 			HttpServletResponse response) throws CustomException,
 			UnsupportedEncodingException, IOException {
 		// 地域访问限制
-		areaScopeLimitation(request, response);
+		//areaScopeLimitation(request, response);
 
 		if (null == casConfig || StringUtils.isEmpty(casConfig.getZHL_APPID())
 				|| StringUtils.isEmpty(casConfig.getTHIRDPARTY_APPID())) {
