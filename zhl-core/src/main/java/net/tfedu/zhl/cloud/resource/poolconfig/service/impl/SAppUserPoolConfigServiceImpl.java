@@ -229,7 +229,7 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 		
 		//先获取学科id
 		Example example = new Example(JTerm.class);
-		example.createCriteria().andCondition(" flag=false ").andCondition(" name="+termName);
+		example.createCriteria().andCondition(" flag=false ").andCondition(" name='"+termName+"'");
 		List<JTerm> ls =  termMapper.selectByExample(example);
 		if(ls!=null &&ls.size()>0){
 			termId = ls.get(0).getId();

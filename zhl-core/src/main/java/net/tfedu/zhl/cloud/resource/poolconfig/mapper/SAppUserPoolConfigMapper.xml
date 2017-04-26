@@ -51,11 +51,11 @@
 	where c.appid = #{appId} and c.userid = #{userName} and c.flag = false 
   
   	<if test="termId > 0 ">
-		and termid = #{termId}
+		and (termid = #{termId} OR termid = 0)
 	</if>
 	 
 	<if test="subjectId > 0 ">
-		and subjectid = #{subjectId}
+		and (subjectid = #{subjectId} OR subjectid = 0)
 	</if>
 	)temp ORDER BY id desc 
   </select>

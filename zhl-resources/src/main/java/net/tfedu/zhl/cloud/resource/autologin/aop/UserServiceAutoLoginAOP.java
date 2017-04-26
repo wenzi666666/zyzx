@@ -53,10 +53,10 @@ public class UserServiceAutoLoginAOP {
 	/**
 	 * 云洲对接的第三方编码（对接后知好乐用户名的前缀）
 	 */
-	private static final String THIRDPARTYCODE_YUNZHOU = "yunzhou";
+	public static final String THIRDPARTYCODE_YUNZHOU = "yunzhou";
 
 	@Resource
-	private CommonWebConfig commonWebConfig;
+	CommonWebConfig commonWebConfig;
 	
 	@Resource
 	SAppUserPoolConfigService appUserPoolConfigService;
@@ -72,7 +72,7 @@ public class UserServiceAutoLoginAOP {
 	ResPoolService resPoolService;
 	
 	
-	private  Map<Long,String> allPoolsMap = null;
+	Map<Long,String> allPoolsMap = null;
 	
 	
 
@@ -84,6 +84,7 @@ public class UserServiceAutoLoginAOP {
 
 	@Around("getUserSimpleByIdForThirdParty()")
 	public Object doAround(ProceedingJoinPoint pjp) throws ServletException, IOException {
+		
 		
 
 		Object result = null;
@@ -160,12 +161,15 @@ public class UserServiceAutoLoginAOP {
 	 * @param ls
 	 */
 	protected void resetPoolsName(List<FuncListSimple> ls) {
-		for (Iterator<FuncListSimple> iterator = ls.iterator(); iterator.hasNext();) {
-			FuncListSimple funcListSimple =  iterator.next();
-			String  poolName  = allPoolsMap.get(Long.parseLong(funcListSimple.getCode()));
-			funcListSimple.setCode(poolName);
-			funcListSimple.setName(poolName);
-			funcListSimple.setPath(poolName);
+		
+		if(ls!=null && ls.size()>0){
+			for (Iterator<FuncListSimple> iterator = ls.iterator(); iterator.hasNext();) {
+				FuncListSimple funcListSimple =  iterator.next();
+				String  poolName  = allPoolsMap.get(Long.parseLong(funcListSimple.getCode()));
+				funcListSimple.setCode(poolName);
+				funcListSimple.setName(poolName);
+				funcListSimple.setPath(poolName);
+			}
 		}
 	}
 

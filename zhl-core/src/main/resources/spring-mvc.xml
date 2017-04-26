@@ -36,7 +36,7 @@
  	 <context:component-scan base-package="net.tfedu.zhl.cloud.**.aop" />
  	
  	
- 	<context:component-scan base-package="net.tfedu.zhl.core.**" />
+ 	<context:component-scan base-package="net.tfedu.zhl.core" />
     	<!-- 自动识别切面编程类  通知spring使用cglib而不是jdk的来生成代理方法 AOP可以拦截到Controller  expose-proxy="true" -->	
     	
     	
@@ -70,8 +70,8 @@
 	
 
 	
-    <!-- 扫描controller（controller层注入） -->
-    <context:component-scan base-package="net.tfedu.zhl.**.controller" use-default-filters="false">
+    <!-- 扫描controller（controller层注入）  use-default-filters="false"  -->
+    <context:component-scan base-package="net.tfedu.zhl" >
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
         <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
     </context:component-scan>
