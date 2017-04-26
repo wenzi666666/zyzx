@@ -85,7 +85,7 @@
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		
 		
-		<resource-version>3.1.24</resource-version>
+		<resource-version>3.1.25</resource-version>
 		<teaching-version>1.0.3</teaching-version>
 		<casProxy-version>1.0.6</casProxy-version>
 	
@@ -335,6 +335,20 @@
                 <package.environment>casJimo</package.environment>
                 <buss.name>zhl-casProxy</buss.name>
 				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+				
+		<profile>
+			<id>casYunzhou</id>
+			<properties>
+                <package.environment>casYunzhou</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casYunzhou</web.name>
    				<version>${casProxy-version}</version>
             </properties>  
 
