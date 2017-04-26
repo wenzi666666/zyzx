@@ -39,6 +39,9 @@ public class BaseDataCommonServiceImpl extends BaseData implements BaseDataCommo
 
 		// 用户对象转换器
 		RegisterAddForm form = RegisterAddFormConversion(userinfo,areaMapper);
+		
+		
+		
 
 		return form;
 	}

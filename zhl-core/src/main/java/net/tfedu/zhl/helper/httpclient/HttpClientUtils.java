@@ -40,8 +40,7 @@ public class HttpClientUtils {
 	
 	
 	public static void main(String[] args) throws Exception {
-		String json = "{\"CONSUMER_ID\":\"Default-69dee715b1d14f64adad1a4dd18a9564\",\"SERVICE_CODE\":\"zteict.proxy.user.LoginStatus\"}";
-		String url = "http://edu.myjining.cn/serviceProxy/servlet/?json="+URLEncoder.encode(json, "utf-8");
+		String url = "http://www.webapi.ccroom.com.cn:8033/userBaseData/GetUserBaseData?id=33031&appid=679636&sign=259123ded2f5ba1b578f2d76ba75f8ba";
 		
 		String result = doGET(url);
 

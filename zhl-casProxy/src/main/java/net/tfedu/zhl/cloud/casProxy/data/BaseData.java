@@ -19,6 +19,7 @@ import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 
 import org.apache.http.client.ClientProtocolException;
 
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
 
 /**
@@ -56,26 +57,26 @@ public class BaseData {
 		
 		form.setCityName(cityName);
 		form.setProvinceName(provinceName);
-		form.setMotto(userinfo.getMotto());
-		form.setNickName(userinfo.getNickname());
+		form.setMotto(StringUtils.isEmpty(userinfo.getMotto())?"":userinfo.getMotto());
+		form.setNickName(StringUtils.isEmpty(userinfo.getNickname())?"":userinfo.getNickname());
 		String rolename = userinfo.getRolename();
 		// 根据角色名称转换成角色id
 		long roleId = roleConversion(rolename);
 		form.setRole(roleId);
 		form.setSchoolName(userinfo.getSchoolname());
 		// 性别
-		String sexStr = userinfo.getRolename();
+		String sexStr = userinfo.getSex();
 		form.setSex(sexConversion(sexStr));
-		String subjectname=userinfo.getSubjectname();
-		String termname=userinfo.getTermname();
+		String subjectname=StringUtils.isEmpty(userinfo.getSubjectname())?"":userinfo.getSubjectname();
+		String termname=StringUtils.isEmpty(userinfo.getTermname())?"":userinfo.getTermname();
 		if(StringUtils.isEmpty(subjectname)){
 			subjectname="语文";
 		}
 		if(StringUtils.isEmpty(termname)){
 			termname="初中";
 		}
-		form.setSubjectName(userinfo.getSubjectname());
-		form.setTermName(userinfo.getTermname());
+		form.setSubjectName(subjectname);
+		form.setTermName(termname);
 		form.setTh_uuid(userinfo.getUuid());
 		form.setTrueName(userinfo.getTruename());
 		form.setUserName(userinfo.getUsername());
@@ -131,6 +132,7 @@ public class BaseData {
 		APIForm form = new APIForm();
 		form.setUrl(thirdpartybasedataurl);
 		HashMap<String, String> request_param1 = new HashMap<String, String>();
+		request_param1.put("id", userid);
 		request_param1.put("uid", userid);
 		request_param1.put("appid", appid + "");
 		request_param1.put("sign", sign);
@@ -148,6 +150,15 @@ public class BaseData {
 			e.printStackTrace();
 			throw new CustomException("IOException", "获取基础信息网络异常");
 		}
+		
+		if(result.indexOf("\\\"")>0){
+			result = result.replace("\\\"", "\"");
+		}
+		if(result.startsWith("\"")){
+			result = result.substring(1, result.length()-1);
+		}
+		
+		
 		ResultDataTp resultDataTp = JSONObject.parseObject(result,
 				ResultDataTp.class);
 		// 如果获取信息为空或者获取状态失败，返回
@@ -168,6 +179,23 @@ public class BaseData {
 		}
 		
 		return userinfo;
+	}
+	
+	
+	public static void main(String[] args) {
+		String result = "{\"userinfo\":{\"uuid\":\"33031\",\"username\":\"test001\",\"truename\":\"test001\",\"sex\":\"女\",\"rolename\":\"教师\",\"termname\":\"\",\"areacode\":\"610103\",\"areaname\":\"碑林区\",\"schoolname\":\"\"},\"timestamp\":\"1493114548\",\"sign\":\"57b69f71ec1d19dcad6f5fca5cb445e9\",\"code\":\"ok\",\"message\":\"成功\"}";
+		
+		
+//		result = JSONUtils.parse(result);
+		
+		
+		ResultDataTp resultDataTp = JSONObject.parseObject(result,
+				ResultDataTp.class);
+		
+		
+		System.out.println(resultDataTp!=null && resultDataTp.getCode().equalsIgnoreCase("ok"));
+		System.out.println(resultDataTp);
+		
 	}
 
 }
