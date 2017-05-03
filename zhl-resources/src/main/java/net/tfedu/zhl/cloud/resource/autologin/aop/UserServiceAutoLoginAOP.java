@@ -112,7 +112,7 @@ public class UserServiceAutoLoginAOP {
 					//根据知好乐的用户名获取云洲的用户名
 					String yunzhou_name = user.getUserName().startsWith(THIRDPARTYCODE_YUNZHOU)?
 							user.getUserName().substring(THIRDPARTYCODE_YUNZHOU.length()+1,
-							user.getUserName().length()-1)
+							user.getUserName().length())
 							:user.getUserName();
 					String termName = user.getTermName();
 					
