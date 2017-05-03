@@ -108,7 +108,7 @@
 				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
 		
@@ -249,7 +249,7 @@
             </properties>  
 
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 		
@@ -348,7 +348,7 @@
 			<properties>
                 <package.environment>casYunzhou</package.environment>
                 <buss.name>zhl-casProxy</buss.name>
-				<web.name>casYunzhou</web.name>
+				<web.name>casProxy</web.name>
    				<version>${casProxy-version}</version>
             </properties>  
 

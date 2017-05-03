@@ -142,6 +142,15 @@ public class SAppUserPoolConfigServiceImpl extends BaseServiceImpl<SAppUserPoolC
 				info = list.get(i);
 				
 				
+				if(info.getSubjectId()==null){
+					info.setSubjectId(0L);
+				}
+				
+				if(info.getTermId()==null){
+					info.setTermId(0L);
+				}
+				
+				
 				pools = info.getPools();
 				for (Iterator<Long> iterator = pools.iterator(); iterator.hasNext();) {
 					poolId = (Long) iterator.next();

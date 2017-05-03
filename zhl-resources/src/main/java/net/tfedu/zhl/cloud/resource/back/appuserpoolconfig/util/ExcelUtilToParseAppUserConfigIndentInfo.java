@@ -91,8 +91,10 @@ public class ExcelUtilToParseAppUserConfigIndentInfo {
 		//只读取第一个sheet
 		Sheet sheet = sheets[0];
 		
-		rowNums = sheet.getColumns();
+		rowNums = sheet.getRows();
 		for (rowOffest = 1; rowOffest < rowNums; rowOffest++) {
+			
+			
 			Cell[] aRow =  sheet.getRow(rowOffest);
 			
 			//如果用戶名為空   跳過
