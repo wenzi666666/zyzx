@@ -44,6 +44,7 @@ public class CasProxyCustomAction extends CasProxyCustomBase {
 		
 		if(proxy==null){
 			
+			@SuppressWarnings("resource")
 			ApplicationContext context = 
 					new FileSystemXmlApplicationContext("classpath*:applicationContext-casProxy.xml");
 			

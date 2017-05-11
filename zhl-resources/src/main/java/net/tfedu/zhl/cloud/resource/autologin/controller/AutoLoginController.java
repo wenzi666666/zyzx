@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.autologin.controller;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -503,8 +504,23 @@ public class AutoLoginController {
 	
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] _args) throws IOException {
 			
+		String args = "yxxv4Fr7jDpNx04oQJ%2FfwtJDqsQZEO5XGokJcf67XZ9tdDhCyRJFhot7wuqmK5meqmyJK%2B7MYEd%2B61pp3NiAUD1Sh6aJAJSzOJtsJ%2Bzu6nsneRrzOaaAG7E%2FMxX96LLothASO%2F2WKqDN%2Bfeh";
+		
+		
+		args = args.replace(URLEncoder.encode("/","utf-8"),"/");
+		args = args.replace(URLEncoder.encode("+","utf-8"),"+");
+		
+		AutoLoginController c = new AutoLoginController();
+		
+		Map<String, String> ps = c.getParamMap(c.getParams(args,MD5_KEY));
+
+		
+		System.out.println(ps.toString());
+		
+		
+		
 		
 	}
 
