@@ -23,7 +23,8 @@
   <select id="getAssetShareScope" resultType="Integer">
   	SELECT s.sharescope from z_asset a
 	LEFT JOIN z_asset_syscourse s on s.assetid = a.id 
-	WHERE a.userid = #{userId} and a.AssetPath = #{assetPath}
+	WHERE a.userid = #{userId} and a.AssetPath = #{assetPath}	
+	OR a.AssetPath = REPLACE(#{assetPath},'\\','/')	
 	ORDER BY s.id limit 1 
   </select>
   

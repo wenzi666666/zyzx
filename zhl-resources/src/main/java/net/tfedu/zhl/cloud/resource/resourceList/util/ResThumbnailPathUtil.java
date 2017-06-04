@@ -255,6 +255,9 @@ public class ResThumbnailPathUtil {
 				//设置文件后缀  html
 				info.setFileExt("html");
 			} else {
+				
+				
+				
 				if(thumbnailpath.lastIndexOf(".") != -1){
 					//设置文件后缀
 					info.setFileExt(thumbnailpath.substring(thumbnailpath.lastIndexOf(".") + 1,thumbnailpath.length()));
