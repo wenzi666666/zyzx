@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.casProxy.service.impl;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,9 +52,10 @@ public class ProxyServiceImplWuChang  implements ProxyService{
 		String name = ControllerHelper.getParameter(request, "name");
 		
 		try {
-			name = new String(Base64.decode(name));
+			name = URLDecoder.decode(new String( Base64.decode(name)),"utf-8");
 		} catch (IOException e) {
 			//如果报错  不做处理
+			throw  new CustomException(e);
 		}
 		
 		schoolName = Default_schoolName;
@@ -77,5 +79,22 @@ public class ProxyServiceImplWuChang  implements ProxyService{
 		return form;
 	}
 	
+	
+	public static void main(String[] args) throws IOException {
+		
+			String name ="测试";
+			String code = "utf-8";
+		
+			String result = "JUU3JUFFJUExJUU3JTkwJTg2JUU1JTkxJTk4";
+			
+			
+			String ss =  URLDecoder.decode(new String( Base64.decode(result)),"utf-8");
+			
+			
+			System.out.println(ss);
+			
+			
+		
+	}
 
 }
