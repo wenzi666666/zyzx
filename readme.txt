@@ -27,3 +27,10 @@ git 1.9+
 7、启动服务，运行mvn tomcat:run
 8、sso相关的类，包名开头为net.tfedu.zhl.sso，其他开头为net.tfedu.zhl.cloud，不同的数据源，包名需要区分开来。
 9、代码生成命令：在zhl-core项目目录下，运行mvn mybatis-generator:generate
+
+
+
+说明：
+为实现昌平二期的教研服务功能，特建立分支develop_teaching.实现（旧有SSO）数据源的拆分，会影响到（公用）core层。
+因此develop_teaching 作为一个单独的分支使用，不与其他的分支合并。
+
