@@ -1,15 +1,15 @@
 package net.tfedu.zhl.helper;
 
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
-import net.tfedu.zhl.core.exception.KickOutTokenException;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
+
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.KickOutTokenException;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 
 /**
@@ -35,7 +35,7 @@ public class UserTokenCacheUtil {
 	/**
 	 * 缓存用户信息的命名空间
 	 */
-	private static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
+	public static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
 	
 	/**
 	 * 缓存用户token的命名空间

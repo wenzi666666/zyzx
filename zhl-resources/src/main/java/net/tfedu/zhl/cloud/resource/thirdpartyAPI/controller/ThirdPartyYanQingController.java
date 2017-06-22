@@ -22,20 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.cloud.resource.config.ResourceThirdPartyConfig;
-import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.entity.ZXUserInfoResult;
-import net.tfedu.zhl.cloud.resource.thirdpartyAPI.jnzx.util.JNZXRelativeUtil;
 import net.tfedu.zhl.cloud.resource.thirdpartyAPI.util.YanQingUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
-import net.tfedu.zhl.sso.user.UserImageCheckUtil;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.userlayer.user.UserImageCheckUtil;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 延庆信息中心对接

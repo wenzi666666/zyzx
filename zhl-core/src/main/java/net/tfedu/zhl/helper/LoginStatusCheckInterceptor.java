@@ -21,8 +21,8 @@ import net.tfedu.zhl.core.exception.MD5SignError;
 import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.core.exception.PropertiesMissing;
 import net.tfedu.zhl.helper.sign.SignUtil;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.JUserService;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 登录状态拦截器

@@ -8,6 +8,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
@@ -15,11 +19,7 @@ import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
-
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 
 /**
  * 资源跨库检索的service

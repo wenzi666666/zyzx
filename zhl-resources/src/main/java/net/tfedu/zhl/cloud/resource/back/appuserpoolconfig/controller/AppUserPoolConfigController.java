@@ -30,8 +30,8 @@ import net.tfedu.zhl.cloud.resource.poolconfig.service.SAppUserPoolConfigService
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.term.entity.JTerm;
-import net.tfedu.zhl.sso.term.service.JTermService;
+import net.tfedu.zhl.userlayer.term.entity.JTerm;
+import net.tfedu.zhl.userlayer.term.service.JTermService;
 
 
 /**

@@ -90,6 +90,16 @@
       
         </mvc:interceptor>
  
+ 
+ 
+       <mvc:interceptor>
+        	<mvc:mapping path="/*AutoLogin/v2.0/login"/>
+        	<bean class="net.tfedu.zhl.core.interceptor.RequestParamsMD5CheckInterceptor" />
+        </mvc:interceptor>
+        
+ 
+ 
+ 
  	<!-- 天台接口 -->
         <mvc:interceptor>
         	<mvc:mapping path="/*RestAPI/**/**"/>

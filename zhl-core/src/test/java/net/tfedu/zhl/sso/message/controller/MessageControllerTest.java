@@ -1,14 +1,15 @@
 package net.tfedu.zhl.sso.message.controller;
 
 
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.userlayer.message.controller.MessageController;
 
 @Transactional
 public class MessageControllerTest extends BaseControllerTestCase {

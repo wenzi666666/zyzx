@@ -12,10 +12,10 @@ import net.tfedu.zhl.core.exception.AccountRegisterWebFormError;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.area.service.AreaService;
-import net.tfedu.zhl.sso.term.service.JTermService;
 import net.tfedu.zhl.sso.users.module.AccountRegisterWebForm;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 import net.tfedu.zhl.sso.users.service.SCardService;
+import net.tfedu.zhl.userlayer.term.service.JTermService;
 
 /**
  * 

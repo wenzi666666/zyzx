@@ -12,20 +12,27 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
+import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.core.exception.WithoutSignError;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.JUserService;
+import net.tfedu.zhl.helper.ControllerHelper;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 自动登录的 controller
@@ -56,6 +63,9 @@ public class AutoLoginController {
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
+	
+	@Autowired
+	CacheManager cacheManager ; 
 	
 	
 	Logger log = LoggerFactory.getLogger(AutoLoginController.class);
@@ -122,6 +132,51 @@ public class AutoLoginController {
 		
 		return null ;
 	}
+	
+	
+	/**
+	 * 
+	 * 登录处理方法
+	 * @param request 
+	 * @param response
+	 * @return  返回ResultJSON(UserSimple)
+	 * @throws Exception
+	 * 
+	 * 
+	 *  ?args=YCRYAmjxmlXvuNHTA1gC9hlyLRB%2FG0YHh5BzNJrUyBc%3D&sign=4b2d7d9602e7a3310b5828423423de04
+	 */
+	@RequestMapping("/v2.0/login")
+	@ResponseBody
+	public ResultJSON login2(HttpServletRequest request,String userName) throws Exception{
+		
+		UserSimple user =  null;
+		
+		String model = "";
+		
+		ControllerHelper.checkEmpty(userName);
+
+		SRegister register =  registerService.getRegister(userName);
+		
+		if(null == register){
+			throw new WithoutAuthorizationException(userName);
+		}
+
+		
+		
+		String key =  UserTokenCacheUtil.getUserTokenCacheKey(model, register.getId().toString());
+		//用户token未被缓存
+		if(cacheManager.getCache(UserTokenCacheUtil.USERINFO_CACHE_NAMESPACE).get(key)==null){
+			// 获取用户信息
+			user =  userService.getUserSimpleById(register.getId(), model,commonWebConfig.getIsRepeatLogin());	
+		}else{
+			String token   = UserTokenCacheUtil.getUserTokenCacheKey(model, register.getId().toString());
+			
+			user = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+			
+		}
+		return  ResultJSON.getSuccess(user);
+	}
+	
 	
 	
 	

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.tfedu.zhl.core.controller.BaseController;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.city.entity.City;
+import net.tfedu.zhl.userlayer.city.entity.City;
 
 /**
  * 地区管理之市管理

@@ -3,7 +3,7 @@ package net.tfedu.zhl.cloud.resource.customizeres.entity;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.userlayer.subject.entity.JSubject;
 
 /**
  * 返回全部的推荐、定制资源

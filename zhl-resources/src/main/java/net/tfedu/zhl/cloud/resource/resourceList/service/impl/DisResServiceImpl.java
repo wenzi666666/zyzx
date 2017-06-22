@@ -8,17 +8,17 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
-
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 
 /**
  * 区本、校本资源的serviceImpl

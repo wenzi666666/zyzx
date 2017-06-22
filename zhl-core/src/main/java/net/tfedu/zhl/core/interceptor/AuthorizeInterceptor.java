@@ -20,8 +20,8 @@ import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.NoLoginException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ZhlOnlineUtil;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.users.entity.FuncListSimple;
+import net.tfedu.zhl.userlayer.funclist.entity.FuncListSimple;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 /**
  * 授权拦截器

@@ -23,8 +23,8 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
-import net.tfedu.zhl.sso.term.dao.JTermMapper;
+import net.tfedu.zhl.userlayer.subject.dao.JSubjectMapper;
+import net.tfedu.zhl.userlayer.term.dao.JTermMapper;
 import tk.mybatis.mapper.entity.Example;
 
 /**

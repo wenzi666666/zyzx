@@ -20,19 +20,19 @@ import net.tfedu.zhl.cloud.resource.subjecttk.entity.SubjectViewTK;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.city.dao.CityMapper;
-import net.tfedu.zhl.sso.city.entity.City;
-import net.tfedu.zhl.sso.district.dao.DistrictMapper;
-import net.tfedu.zhl.sso.district.entity.District;
-import net.tfedu.zhl.sso.province.dao.ProvinceMapper;
-import net.tfedu.zhl.sso.province.entity.Province;
-import net.tfedu.zhl.sso.school.dao.JSchoolMapper;
-import net.tfedu.zhl.sso.school.entity.JSchool;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
-import net.tfedu.zhl.sso.term.dao.JTermMapper;
-import net.tfedu.zhl.sso.term.entity.JTerm;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
-import net.tfedu.zhl.sso.user.entity.UsersEntity;
+import net.tfedu.zhl.userlayer.city.dao.CityMapper;
+import net.tfedu.zhl.userlayer.city.entity.City;
+import net.tfedu.zhl.userlayer.district.dao.DistrictMapper;
+import net.tfedu.zhl.userlayer.district.entity.District;
+import net.tfedu.zhl.userlayer.province.dao.ProvinceMapper;
+import net.tfedu.zhl.userlayer.province.entity.Province;
+import net.tfedu.zhl.userlayer.school.dao.JSchoolMapper;
+import net.tfedu.zhl.userlayer.school.entity.JSchool;
+import net.tfedu.zhl.userlayer.subject.entity.JSubject;
+import net.tfedu.zhl.userlayer.term.dao.JTermMapper;
+import net.tfedu.zhl.userlayer.term.entity.JTerm;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
+import net.tfedu.zhl.userlayer.user.entity.UsersEntity;
 
 /**
  * 题库对接的service

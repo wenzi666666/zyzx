@@ -8,8 +8,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
-import net.tfedu.zhl.sso.term.dao.JTermMapper;
-import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.userlayer.term.dao.JTermMapper;
+import net.tfedu.zhl.userlayer.term.entity.JTerm;
 
 /**
  * 查询所有学段 serviceImpl

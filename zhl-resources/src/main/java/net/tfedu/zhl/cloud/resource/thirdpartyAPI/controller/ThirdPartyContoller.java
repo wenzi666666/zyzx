@@ -29,11 +29,11 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
-import net.tfedu.zhl.sso.user.UserImageCheckUtil;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.userlayer.user.UserImageCheckUtil;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 
 

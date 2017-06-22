@@ -1,7 +1,6 @@
 package net.tfedu.zhl.cloud.resource.autologin.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -35,10 +34,10 @@ import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative;
 import net.tfedu.zhl.sso.th_register.service.SThirdRegisterService;
-import net.tfedu.zhl.sso.user.entity.UserSimple;
-import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 公司内部项目（相同的SSO库） 自动登录资源中心，并跳转到页面中

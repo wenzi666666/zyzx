@@ -8,16 +8,16 @@ import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.area.service.AreaService;
-import net.tfedu.zhl.sso.city.dao.CityMapper;
-import net.tfedu.zhl.sso.city.entity.City;
-import net.tfedu.zhl.sso.district.dao.DistrictMapper;
-import net.tfedu.zhl.sso.district.entity.District;
-import net.tfedu.zhl.sso.grade.dao.GradeMapper;
-import net.tfedu.zhl.sso.grade.entity.Grade;
-import net.tfedu.zhl.sso.province.dao.ProvinceMapper;
-import net.tfedu.zhl.sso.province.entity.Province;
-import net.tfedu.zhl.sso.school.dao.JSchoolMapper;
-import net.tfedu.zhl.sso.school.entity.JSchool;
+import net.tfedu.zhl.userlayer.city.dao.CityMapper;
+import net.tfedu.zhl.userlayer.city.entity.City;
+import net.tfedu.zhl.userlayer.district.dao.DistrictMapper;
+import net.tfedu.zhl.userlayer.district.entity.District;
+import net.tfedu.zhl.userlayer.grade.dao.GradeMapper;
+import net.tfedu.zhl.userlayer.grade.entity.Grade;
+import net.tfedu.zhl.userlayer.province.dao.ProvinceMapper;
+import net.tfedu.zhl.userlayer.province.entity.Province;
+import net.tfedu.zhl.userlayer.school.dao.JSchoolMapper;
+import net.tfedu.zhl.userlayer.school.entity.JSchool;
 
 
 @Service("areaServiceImpl")

@@ -4,9 +4,8 @@ import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.customizeres.entity.CustomizeRes;
-import net.tfedu.zhl.cloud.resource.customizeres.entity.CustomizeResResult;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.userlayer.subject.entity.JSubject;
 
 public interface CustomizeResMapper extends CoreMapper<CustomizeRes> {
 	

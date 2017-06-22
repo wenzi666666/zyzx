@@ -16,7 +16,7 @@ import jxl.read.biff.BiffException;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigIndentInfo;
 import net.tfedu.zhl.core.exception.ParamsException;
-import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.userlayer.term.entity.JTerm;
 
 /**
  	

@@ -17,13 +17,13 @@ import net.tfedu.zhl.core.exception.RegisterCardError;
 import net.tfedu.zhl.core.exception.euam.RegisterCardErrorInfoEuam;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.school.dao.JSchoolMapper;
-import net.tfedu.zhl.sso.school.entity.JSchool;
 import net.tfedu.zhl.sso.users.dao.SBatchMapper;
 import net.tfedu.zhl.sso.users.dao.SCardMapper;
 import net.tfedu.zhl.sso.users.entity.SBatch;
 import net.tfedu.zhl.sso.users.entity.SCard;
 import net.tfedu.zhl.sso.users.service.SCardService;
+import net.tfedu.zhl.userlayer.school.dao.JSchoolMapper;
+import net.tfedu.zhl.userlayer.school.entity.JSchool;
 import tk.mybatis.mapper.entity.Example;
 
 /**

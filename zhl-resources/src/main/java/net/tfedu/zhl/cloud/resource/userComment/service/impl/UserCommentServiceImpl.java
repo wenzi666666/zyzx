@@ -5,14 +5,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.resource.asset.entity.FromFlagForReview;
 import net.tfedu.zhl.cloud.resource.userComment.dao.UserCommentMapper;
 import net.tfedu.zhl.cloud.resource.userComment.entity.UserComment;
 import net.tfedu.zhl.cloud.resource.userComment.service.UserCommentService;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
-
-import org.hamcrest.core.IsCollectionContaining;
-import org.springframework.stereotype.Service;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 
 /**
  * 用户评论service

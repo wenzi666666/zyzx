@@ -16,7 +16,7 @@ import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.grade.dao.GradeMapper;
+import net.tfedu.zhl.userlayer.grade.dao.GradeMapper;
 
 
 @Service("disCussService")

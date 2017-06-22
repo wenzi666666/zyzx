@@ -6,13 +6,13 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
-
-import org.springframework.stereotype.Service;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 
 /**
  * 资源格式 serviceImpl

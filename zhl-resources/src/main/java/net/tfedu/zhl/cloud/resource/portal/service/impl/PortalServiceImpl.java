@@ -18,9 +18,9 @@ import net.tfedu.zhl.cloud.resource.portal.module.SubjectResourceUpdateResult;
 import net.tfedu.zhl.cloud.resource.portal.service.PortalService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
-import net.tfedu.zhl.sso.subject.entity.JSubject;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.userlayer.subject.dao.JSubjectMapper;
+import net.tfedu.zhl.userlayer.subject.entity.JSubject;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 import tk.mybatis.mapper.entity.Example;
 
 /**

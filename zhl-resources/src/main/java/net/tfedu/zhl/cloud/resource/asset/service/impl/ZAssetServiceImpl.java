@@ -49,7 +49,7 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
 
 @Service("zAssetService")
 public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAssetService {

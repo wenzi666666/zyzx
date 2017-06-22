@@ -2,12 +2,12 @@ package net.tfedu.zhl.message.service;
 
 import javax.annotation.Resource;
 
-
 import org.junit.Test;
 
 import com.github.pagehelper.PageInfo;
+
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
-import net.tfedu.zhl.sso.message.service.JMessageService;
+import net.tfedu.zhl.userlayer.message.service.JMessageService;
 
 public class JMessageServiceTest extends BaseServiceTestCase {
 	

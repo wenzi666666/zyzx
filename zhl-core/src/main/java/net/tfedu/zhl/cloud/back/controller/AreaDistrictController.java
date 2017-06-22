@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.tfedu.zhl.core.controller.BaseController;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.district.entity.District;
+import net.tfedu.zhl.userlayer.district.entity.District;
 
 /**
  * 地区管理之区县管理

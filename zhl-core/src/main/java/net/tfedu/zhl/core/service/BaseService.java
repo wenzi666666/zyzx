@@ -72,6 +72,17 @@ public interface BaseService<T> {
     ResultJSON getPageByExample(Example example,int pageNum, int pageSize);
     
     /**
+     * 分页查询
+     * @param example
+     * @param pageNum
+     * @param pageSize
+     * @param orderPro   指明用于排序的字段 
+     * @param positiveSequence   是否正序排列
+     * @return
+     */
+    ResultJSON getPageByExample(Example example,int pageNum, int pageSize,String orderPro,Boolean positiveSequence);
+    
+    /**
      * 更新部分属性
      */
     ResultJSON update(T c);

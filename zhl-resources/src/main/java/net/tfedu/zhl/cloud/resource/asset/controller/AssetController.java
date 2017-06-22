@@ -34,8 +34,8 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.zhldowncenter;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.service.JUserService;
+import net.tfedu.zhl.userlayer.user.entity.JUser;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 @Controller
 @RequestMapping("/resRestAPI")

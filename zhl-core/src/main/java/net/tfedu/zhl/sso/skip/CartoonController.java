@@ -19,11 +19,11 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.soap.ZHLSOAPUtil;
-import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
-import net.tfedu.zhl.sso.subject.service.impl.JSubjectServiceImpl;
-import net.tfedu.zhl.sso.user.entity.JUser;
-import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
-import net.tfedu.zhl.sso.user.service.JUserService;
+import net.tfedu.zhl.userlayer.subject.entity.JTeacherSubject;
+import net.tfedu.zhl.userlayer.subject.service.impl.JSubjectServiceImpl;
+import net.tfedu.zhl.userlayer.user.entity.JUser;
+import net.tfedu.zhl.userlayer.user.entity.UserAreaInfo;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 增加动漫练习的对接

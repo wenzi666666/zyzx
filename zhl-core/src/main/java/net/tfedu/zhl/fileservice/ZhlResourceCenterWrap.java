@@ -241,11 +241,13 @@ public class ZhlResourceCenterWrap {
 	}
 
 	/**
-	 * 返回 上传的url
 	 * 
-	 * @param resSerUrl
+	 * 获取指定上传路径的上传URL
+	 * 
+	 * @param resSerUrl   	
+	 * 						文件服务器的访问地址（局域网内都是内网地址，等页面中使用时 需要相应替换为外网地址） 
 	 * @param uploadPath
-	 *            指定的上传路径
+	 *            			指定的上传路径
 	 * @return
 	 */
 	public static String getUploadUrl(String resSerUrl, String uploadPath) {

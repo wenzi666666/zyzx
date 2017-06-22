@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import net.tfedu.zhl.core.controller.BaseController;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.province.entity.Province;
+import net.tfedu.zhl.userlayer.province.entity.Province;
 
 /**
  * 地区管理之省管理
