@@ -16,7 +16,7 @@ public class PersonalBlogComment implements Serializable {
      * 评论主键
      */
     @Id
-    @SequenceGenerator(name="uuid",sequenceName="SELECT LAST_INSERT_ID()")
+    @GeneratedValue(generator="UUID")
     private String uuid;
 
     /**

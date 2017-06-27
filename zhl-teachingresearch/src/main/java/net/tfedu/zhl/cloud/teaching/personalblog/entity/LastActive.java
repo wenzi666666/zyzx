@@ -16,35 +16,35 @@ copyRight@ 同方知好乐教育科技(北京)有限公司
  */
 public class LastActive implements Comparable {
 	/** 活动类型或是“个人反思” */
-	private String typeName;
+	private String typename;
 	/** 创建人头像 */
-	private String userImage;
+	private String userimage;
 
 	/** 个人反思主键或活动主键 */
 	public String uuid;
 	/** 创建人 */
-	public long userId;
+	public long userid;
 	/** 标题 */
 	public String title;
 	/** 内容 */
 	public String content;
 	/** 创建时间 */
-	public Date createTime;
+	public Date createtime;
 
-	public String getTypeName() {
-		return typeName;
+	public String getTypename() {
+		return typename;
 	}
 
-	public void setTypeName(String typeName) {
-		this.typeName = typeName;
+	public void setTypename(String typename) {
+		this.typename = typename;
 	}
 
-	public String getUserImage() {
-		return userImage;
+	public String getUserimage() {
+		return userimage;
 	}
 
-	public void setUserImage(String userImage) {
-		this.userImage = userImage;
+	public void setUserimage(String userimage) {
+		this.userimage = userimage;
 	}
 
 	public String getUuid() {
@@ -55,12 +55,12 @@ public class LastActive implements Comparable {
 		this.uuid = uuid;
 	}
 
-	public long getUserId() {
-		return userId;
+	public long getUserid() {
+		return userid;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setUserid(long userid) {
+		this.userid = userid;
 	}
 
 	public String getTitle() {
@@ -79,30 +79,30 @@ public class LastActive implements Comparable {
 		this.content = content;
 	}
 
-	public Date getCreateTime() {
-		return createTime;
+	public Date getCreatetime() {
+		return createtime;
 	}
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
 	}
 
 	@Override
 	public int compareTo(Object o) {
-		
-		if( o  instanceof  LastActive){
-			
-			LastActive a = (LastActive)o;
-		
-			//当前对象的创建时间比 o中的创建时间大 
-			if(a.getCreateTime().before(this.createTime)){
+
+		if (o instanceof LastActive) {
+
+			LastActive a = (LastActive) o;
+
+			// 当前对象的创建时间比 o中的创建时间大
+			if (a.getCreatetime().before(this.getCreatetime())) {
 				return 1;
-			}else{
-				return -1 ;
+			} else {
+				return -1;
 			}
-			
+
 		}
-		
+
 		return 0;
 	}
 

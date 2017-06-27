@@ -1,10 +1,8 @@
 package net.tfedu.zhl.cloud.teaching.personalblog.service.impl;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.tfedu.zhl.cloud.teaching.personalblog.dao.PersonalBlogMapper;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
 import net.tfedu.zhl.cloud.teaching.personalblog.service.PersonalBlogService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
@@ -41,7 +39,7 @@ implements PersonalBlogService{
 	   
 	   
 	   if(!"W".equalsIgnoreCase(scope) && StringUtils.isNotEmpty(scope) && 0 < scopeId){
-		   c.andCondition(" scope= "+scope).andCondition(" scopeid= "+scopeId);
+		   c.andCondition(" scope= '"+scope+"'").andCondition(" scopeid= "+scopeId);
 	   }
 	   
 	   

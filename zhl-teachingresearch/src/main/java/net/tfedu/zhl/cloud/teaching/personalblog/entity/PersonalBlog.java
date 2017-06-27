@@ -16,7 +16,8 @@ public class PersonalBlog  implements Serializable {
      * 博客主键
      */
     @Id
-    @SequenceGenerator(name="uuid",sequenceName="SELECT LAST_INSERT_ID()")
+//    @SequenceGenerator(name="uuid",sequenceName="SELECT  REPLACE(UUID(),'-','')")
+    @GeneratedValue(generator="UUID")
     private String uuid;
 
     /**

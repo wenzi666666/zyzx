@@ -36,7 +36,7 @@ public class PersonalBlogPraiseRecordServiceImpl extends BaseServiceImpl<Persona
 		
 		PersonalBlog blog =  blogmapper.selectByPrimaryKey(record.getBlogUuid());
 		
-		blog.setPraiseNum(1+blog.getPraiseNum());
+		blog.setPraiseNum(blog.getPraiseNum()==null?1:(1+blog.getPraiseNum()));
 		
 		super.insert(record);
 		

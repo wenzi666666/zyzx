@@ -162,7 +162,86 @@ public class CommonWebConfig {
 	
 	
 	
+	/**
+	 * 访问云平台的外网地址
+	 */
+	@Value("#{configProperties['cloudPlatForm']}")	
+	public String  cloudPlatForm;
 	
+	
+	
+	/**
+	 * 访问云平台的内网地址
+	 */
+	@Value("#{configProperties['cloudPlatFormLocal']}")	
+	public String  cloudPlatFormLocal;
+	
+	
+	
+	/**
+	 * 访问语文双课堂后端接口的外网地址
+	 */
+	@Value("#{configProperties['sktHost']}")	
+	public String  sktHost;
+	
+	
+	
+	/**
+	 * 访问语文双课堂后端接口的内网地址
+	 */
+	@Value("#{configProperties['sktHostLocal']}")	
+	public String  sktHostLocal;
+	
+	
+	
+	
+	
+	
+	/**
+	 * 获取当前浏览器下云平台的访问地址
+	 * @param request
+	 * @return
+	 */
+	public String getCurrentCloudPlatform(HttpServletRequest request){
+		String URI = request.getScheme() + "://" + request.getServerName() + (request.getServerPort() == 80 ? "" : (":" + request.getServerPort())) + request.getContextPath() + "/";
+		// 当前云平台的访问地址
+		String currentResPath = "";
+		
+		//云模式，直接返回外网地址
+		if(isCloudModel){
+			currentResPath = cloudPlatForm;
+			return currentResPath;
+		}
+		
+		
+		if (host.contains(URI)) {
+			currentResPath = cloudPlatForm;
+		}
+		else if (hostLocal.contains(URI)) {
+			currentResPath = cloudPlatFormLocal;
+		}
+		
+		return currentResPath;
+	}
+	
+	
+	
+	public String getCloudPlatForm() {
+		return cloudPlatForm;
+	}
+
+	public void setCloudPlatForm(String cloudPlatForm) {
+		this.cloudPlatForm = cloudPlatForm;
+	}
+
+	public String getCloudPlatFormLocal() {
+		return cloudPlatFormLocal;
+	}
+
+	public void setCloudPlatFormLocal(String cloudPlatFormLocal) {
+		this.cloudPlatFormLocal = cloudPlatFormLocal;
+	}
+
 	public String getDmtbHost() {
 		return dmtbHost;
 	}
@@ -607,5 +686,31 @@ public class CommonWebConfig {
 		this.version = version;
 	}
 
+
+
+	public String getSktHost() {
+		return sktHost;
+	}
+
+
+
+	public void setSktHost(String sktHost) {
+		this.sktHost = sktHost;
+	}
+
+
+
+	public String getSktHostLocal() {
+		return sktHostLocal;
+	}
+
+
+
+	public void setSktHostLocal(String sktHostLocal) {
+		this.sktHostLocal = sktHostLocal;
+	}
+
+	
+	
 	
 }

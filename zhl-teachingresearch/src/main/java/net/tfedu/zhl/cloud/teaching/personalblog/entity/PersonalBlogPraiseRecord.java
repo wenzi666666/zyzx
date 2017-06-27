@@ -15,7 +15,7 @@ public class PersonalBlogPraiseRecord implements Serializable {
      * 记录主键
      */
     @Id
-    @SequenceGenerator(name="uuid",sequenceName="SELECT LAST_INSERT_ID()")
+    @GeneratedValue(generator="UUID")
     private String uuid;
 
     /**
