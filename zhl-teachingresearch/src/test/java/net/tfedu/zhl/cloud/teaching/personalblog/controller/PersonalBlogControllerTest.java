@@ -8,6 +8,7 @@ import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlogComment;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlogPraiseRecord;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 /**
@@ -30,6 +31,27 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	
 	
 	
+	
+	
+	
+	public static void main(String[] args) {
+		long userId = 390320126L;
+		String title = "testnnnew20170701";
+		String content = "testnnnew20170701testtestcontent";
+		String scope = "P";
+		int scopeid = 0;
+		String token = "09DA1D90C80E4260850179E1196F9EB2";
+		
+		
+		String sign =  SignUtil.createSignMap(new String[]{"userId","title","content","scope","scopeid","token"}
+			, new Object[]{userId,title,content,scope,scopeid,token}
+			, "9k8i78jug6hd93kjf84h");
+		
+		
+		System.out.println("sign:"+sign);
+		
+		
+	}
 
 	@Test
 	public void testAdd() {
@@ -84,7 +106,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 		long  userId =(Long) request.getAttribute("currentUserId");
 
 		
-		result = controller.query(request, userId, 1, 10);
+		result = controller.query(request, 390320126L, 1, 10);
 		assertAndLog(result);
 	}
 
@@ -103,7 +125,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 		PersonalBlogPraiseRecord record = new PersonalBlogPraiseRecord();
 		
 				//
-		record.setBlogUuid("558ffd9223bc40f68dfbd02e3e811c5b");
+		record.setBlogUuid("6d230f0c174b46afa65675fa583b064a");
 		
 		
 		result = controller.addPraise(request, record);
@@ -132,13 +154,15 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testLastBlog() throws Exception {
-		result = controller.lastBlog(request, "S", 1001L, 5);
+		result = controller.lastBlog(request, "D", 82L, 5);
 		assertAndLog(result);
 	}
 
 	@Test
 	public void testLastActive() {
-		
+		request.setAttribute("currentUserName","panyu");
+		result = controller.lastActive(request, "D", 82L, 1, 10);
+		assertAndLog(result);
 	}
 
 }

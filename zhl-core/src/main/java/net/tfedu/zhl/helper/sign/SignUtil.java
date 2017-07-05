@@ -26,7 +26,7 @@ public class SignUtil {
 	 * @param app_key
 	 * @return
 	 */
-	public static String createSign(HttpServletRequest request,String app_key){
+	public static String createSign(HttpServletRequest request,String separator,String app_key){
 		Map<String, String> map = SignUtil.getParameterMap(request);
 		if(map==null||map.isEmpty()){
 			return null;
@@ -39,6 +39,15 @@ public class SignUtil {
 		}
 		signSB.append(app_key);
 		return MD5.getMD5Str(signSB.toString());
+	}
+	/**
+	 * 根据参数集合生成校验码
+	 * @param map
+	 * @param app_key
+	 * @return
+	 */
+	public static String createSign(HttpServletRequest request,String app_key){
+		return createSign(request, separator, app_key);
 	}
 
 	/**

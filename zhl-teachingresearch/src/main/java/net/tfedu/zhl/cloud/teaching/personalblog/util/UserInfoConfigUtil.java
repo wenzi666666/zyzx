@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
+import net.tfedu.zhl.cloud.teaching.personalblog.entity.LastActive;
 import net.tfedu.zhl.cloud.teaching.personalblog.model.CloudPlatformUsrInfo;
 import net.tfedu.zhl.cloud.teaching.personalblog.model.Constant4AppIntegral;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -108,6 +109,65 @@ public class UserInfoConfigUtil {
 		}
 	}
 
+	public static void resetUserImageForActive(String cloudPlatFormLocal, String cloudPlatForm, List<LastActive> all) throws Exception {
+
+		if(all!=null && all.size()>0){
+			StringBuffer userIds = new StringBuffer();
+			Map<Long, Object> map = new HashMap<Long, Object>();// 用于记录查询结果
+	
+			LastActive obj = null;
+			
+			for (Iterator<LastActive> iterator = all.iterator(); iterator.hasNext();) {
+				obj = iterator.next();
+				obj.getUserId();
+				String temp = obj.getUserId() + ",";
+				if (!userIds.toString().contains(temp)) {
+					userIds.append(temp);
+				}
+			}
+			
+			
+			if (StringUtils.isNotEmpty(userIds.toString())) {
+				String ids = userIds.substring(0, userIds.length() - 1);
+				String url = cloudPlatFormLocal + "/base_getUserInfo.action";
+
+				String result = createURLAndGetResult(url, "userIds", ids);
+
+				ResultJSON json = JSONObject.parseObject(result, ResultJSON.class);
+
+				if ("OK".equalsIgnoreCase(json.getCode()) && json.getData() != null) {
+
+					JSONArray array = (JSONArray) json.getData();
+
+					CloudPlatformUsrInfo userinfo = null;
+					for (int i = 0; i < array.size(); i++) {
+
+						userinfo = JSONObject.parseObject(JSONObject.toJSONString(array.get(i)),
+								CloudPlatformUsrInfo.class);
+
+						map.put(userinfo.getId(), userinfo);
+					}
+					
+					if(all!=null && all.size()>0){
+						for (Iterator<LastActive> iterator = all.iterator(); iterator.hasNext();) {
+								obj = iterator.next();
+							 CloudPlatformUsrInfo info = (CloudPlatformUsrInfo) map.get(obj.getUserId());
+							 if(info!=null){
+								 obj.setUserImage(info.getUserImage());
+							 }
+							 
+						}
+					}
+				} else {
+					System.out.println(json.getMessage() + ":" + url);
+				}
+
+			}
+		}
+		
+	}
+	
+	
 	private static String getTermName(Long termId) {
 		return 1 == termId ? "小学" : 2 == termId ? "初中" : 3 == termId ? "高中" : "其他 ";
 	}
@@ -131,5 +191,7 @@ public class UserInfoConfigUtil {
 		return HttpClientUtils.doGET(url);
 
 	}
+
+	
 
 }

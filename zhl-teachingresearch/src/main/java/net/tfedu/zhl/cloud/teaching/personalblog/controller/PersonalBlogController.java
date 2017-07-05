@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.mysql.jdbc.util.ResultSetUtil;
 
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.LastActive;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
@@ -44,7 +45,8 @@ import tk.mybatis.mapper.entity.Example;
 
 /** 个人反思的主要业务处理类 */
 @Controller
-@RequestMapping("teachingServiceRestAPI/v1.0/personalBlog")
+//@RequestMapping("teachingServiceRestAPI/v1.0/personalBlog")
+@RequestMapping("*RestAPI/v1.0/personalBlog")
 public class PersonalBlogController {
 
 	@Resource
@@ -314,16 +316,32 @@ public class PersonalBlogController {
 			
 			ValueWrapper list_ALL =  cacheManager.getCache("appCache").get(cacheKey_ALL);
 			if(null!=list_ALL){
-				all = ((List<LastActive>)list_ALL);
+				all = ((List<LastActive>)list_ALL.get());
 			}else{
 				all = getLastTiveFromSKTAndLocal(scope, scopeId, currentUserName);
+				
+				String cloudPlatFormLocal= commonWebConfig.getCloudPlatFormLocal();
+				
+				String cloudPlatForm = commonWebConfig.getCurrentCloudPlatform(request);
+
+				UserInfoConfigUtil.resetUserImageForActive(cloudPlatFormLocal, cloudPlatForm, all);
+				
 				cacheManager.getCache("appCache").put(cacheKey_ALL,all);
 				
 			}
 			
 			//100条结果，去分页
 			//组装
-			List<LastActive> pageIN =  all.subList((page-1)*pageSize, (page)*pageSize-1);
+			List<LastActive> pageIN =  null ; 
+			
+			
+			pageIN  = 
+					(page-1)*pageSize>all.size()?
+							null:
+					(page)*pageSize>all.size()?
+							all.subList((page-1)*pageSize,all.size()-1):
+								all.subList((page-1)*pageSize, (page)*pageSize-1);
+			
 			PageInfo<LastActive> pageInfo = new PageInfo<LastActive>(pageIN);
 			pageInfo.setPageNum(page);
 			pageInfo.setPageSize(pageSize);
@@ -355,8 +373,10 @@ public class PersonalBlogController {
 		
 		LastActive actve = null;
 		PersonalBlog personalBlog = null;	
+		
+		PaginationHelper temp = (PaginationHelper)(personalBlogService.lastBlog(scope, scopeId, 1, 50).getData());
 
-		lastLog = (List<PersonalBlog>) personalBlogService.lastBlog(scope, scopeId, 1, 50);
+		lastLog = temp.getList();
 		
 		lastActive = getLastTopicFromSKTbackend(currentUserName, scope, scopeId, 50);
 
@@ -375,6 +395,7 @@ public class PersonalBlogController {
 		Collections.sort(all);
 		
 		
+		
 		return all;
 	}
 
@@ -389,7 +410,7 @@ public class PersonalBlogController {
 			
 			BeanUtils.copyProperties(actve, personalBlog);
 			
-			actve.setTypename("个人反思");
+			actve.setTypeName("个人反思");
 			
 			all.add(actve);
 		}
