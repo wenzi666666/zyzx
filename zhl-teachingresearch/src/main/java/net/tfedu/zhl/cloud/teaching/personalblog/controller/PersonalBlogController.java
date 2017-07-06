@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.mysql.jdbc.util.ResultSetUtil;
 
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.LastActive;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
