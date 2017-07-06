@@ -19,6 +19,11 @@ public class ResultJSON implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = -2467433315357529553L;
+	
+	/**
+	 * 成功标识
+	 */
+	private static final String OK = "OK";
 
 	/**
      * 成功或失败的编码
@@ -91,7 +96,7 @@ public class ResultJSON implements Serializable{
      * @return
      */
     public static ResultJSON getSuccess(Object data){
-    	return new ResultJSON("OK", "成功", data==null?"":data, "");
+    	return new ResultJSON(OK, "成功", data==null?"":data, "");
     	
     }
     /**
@@ -107,6 +112,18 @@ public class ResultJSON implements Serializable{
         return result;
     }
 
+    
+    
+    /**
+     * 操作的返回结果是否为成功
+     * @param json
+     * @return
+     */
+    public static Boolean isSuccess(ResultJSON json){
+    	return json !=null && OK.equalsIgnoreCase(json.getCode());
+    }
+    
+    
     
     
     

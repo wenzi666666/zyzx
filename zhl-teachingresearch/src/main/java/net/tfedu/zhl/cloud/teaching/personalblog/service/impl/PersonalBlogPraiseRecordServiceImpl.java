@@ -34,6 +34,8 @@ public class PersonalBlogPraiseRecordServiceImpl extends BaseServiceImpl<Persona
 	public ResultJSON addPraise(HttpServletRequest request, PersonalBlogPraiseRecord record) {
 		
 		
+		
+		
 		PersonalBlog blog =  blogmapper.selectByPrimaryKey(record.getBlogUuid());
 		
 		blog.setPraiseNum(blog.getPraiseNum()==null?1:(1+blog.getPraiseNum()));

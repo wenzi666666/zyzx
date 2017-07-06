@@ -7,6 +7,7 @@ import org.junit.Test;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlogComment;
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlogPraiseRecord;
+import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
@@ -119,7 +120,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testAddPraise() {
+	public void testAddPraise() throws CustomException {
 		long  userId =(Long) request.getAttribute("currentUserId");
 	
 		PersonalBlogPraiseRecord record = new PersonalBlogPraiseRecord();

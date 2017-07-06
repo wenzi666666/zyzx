@@ -36,6 +36,7 @@ import net.tfedu.zhl.cloud.teaching.personalblog.util.ListUtil;
 import net.tfedu.zhl.cloud.teaching.personalblog.util.UserInfoConfigUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.RepeatOperateException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
@@ -157,9 +158,23 @@ public class PersonalBlogController {
 	 * @param record
 	 *            个人反思主键
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "praise/add", method = RequestMethod.POST)
 	@ResponseBody
-	public ResultJSON addPraise(HttpServletRequest request, PersonalBlogPraiseRecord record) {
+	public ResultJSON addPraise(HttpServletRequest request, PersonalBlogPraiseRecord record) throws CustomException {
+		
+		
+		ResultJSON  res = personalBlogPraiseRecordService.select(record);
+		
+		if(ResultJSON.isSuccess(res) && null!= res.getData()){
+			ArrayList<PersonalBlogPraiseRecord> tem = (ArrayList<PersonalBlogPraiseRecord>)res.getData();
+			if(tem!=null && tem.size()>0){
+				return ResultJSON.defaultError(new RepeatOperateException("点赞"));
+			}
+			
+		}
+		
+		
 		long  userId =(Long) request.getAttribute("currentUserId");
 		record.setUserId(userId);
 		record.setDeleteFlag(false);
