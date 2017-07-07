@@ -36,11 +36,14 @@ import net.tfedu.zhl.cloud.teaching.personalblog.util.ListUtil;
 import net.tfedu.zhl.cloud.teaching.personalblog.util.UserInfoConfigUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.RepeatOperateException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
+import net.tfedu.zhl.userlayer.user.entity.UserAreaInfo;
+import net.tfedu.zhl.userlayer.user.service.JUserService;
 import tk.mybatis.mapper.entity.Example;
 
 /** 个人反思的主要业务处理类 */
@@ -49,6 +52,10 @@ import tk.mybatis.mapper.entity.Example;
 @RequestMapping("*RestAPI/v1.0/personalBlog")
 public class PersonalBlogController {
 
+	
+	@Resource
+	private JUserService userSerivce ;
+	
 	@Resource
 	private PersonalBlogService personalBlogService;
 	@Resource
@@ -145,9 +152,74 @@ public class PersonalBlogController {
 	 */
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET)
-	public ResultJSON get(HttpServletRequest request, String uuid) {
+	public ResultJSON get(HttpServletRequest request, String uuid) throws CustomException {
+		
+		long  userId =(Long) request.getAttribute("currentUserId");
 
-		return personalBlogService.getByPrimaryKey(uuid);
+		ResultJSON json = personalBlogService.getByPrimaryKey(uuid);
+		//是否有权限
+		if(ResultJSON.isSuccess(json) && json.getData()!=null){
+			PersonalBlog blog = (PersonalBlog)json.getData();
+			
+			String scope =  blog.getScope();
+			Long scopeId = blog.getScopeid();
+			
+			//NoAuthorizationException
+			if("P".equalsIgnoreCase(scope)){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}
+			UserAreaInfo info = userSerivce.getUserAreaInfo(userId);
+			if("S".equalsIgnoreCase(scope)&& (scopeId != info.getSchoolId())){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}else if("D".equalsIgnoreCase(scope)&& (scopeId != info.getDistrictId())){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}
+			
+			if(userId != blog.getUserId()){
+				//增加点击记录
+				blog.setClickNum(blog.getClickNum()+1);
+				personalBlogService.update(blog);
+			}
+		}
+		
+		return json;
+		
+	}
+	/**
+	 * 是否有浏览权限
+	 * 
+	 * @param request
+	 * @param uuid
+	 *            个人反思主键
+	 */
+	@ResponseBody
+	@RequestMapping(value="ifViewPremiss", method = RequestMethod.GET)
+	public ResultJSON ifViewPremiss(HttpServletRequest request, String uuid) throws CustomException {
+		
+		long  userId =(Long) request.getAttribute("currentUserId");
+		
+		ResultJSON json = personalBlogService.getByPrimaryKey(uuid);
+		//是否有权限
+		if(ResultJSON.isSuccess(json) && json.getData()!=null){
+			PersonalBlog blog = (PersonalBlog)json.getData();
+			
+			String scope =  blog.getScope();
+			Long scopeId = blog.getScopeid();
+			
+			//NoAuthorizationException
+			if("P".equalsIgnoreCase(scope)){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}
+			UserAreaInfo info = userSerivce.getUserAreaInfo(userId);
+			if("S".equalsIgnoreCase(scope)&& (scopeId != info.getSchoolId())){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}else if("D".equalsIgnoreCase(scope)&& (scopeId != info.getDistrictId())){
+				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+			}
+
+		}
+		
+		return json;
 		
 	}
 
@@ -250,7 +322,8 @@ public class PersonalBlogController {
 		}
 		
 		ControllerHelper.checkEmpty(scope);
-		ControllerHelper.checkLongEmpty(scopeId);
+		
+		scopeId = scopeId==null?0L:scopeId;
 		
 		
 		ResultJSON result =  personalBlogService.lastBlog(scope, scopeId, 1, number);
@@ -290,7 +363,12 @@ public class PersonalBlogController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "lastActive", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON lastActive(HttpServletRequest request, String scope, Long scopeId, int page, int pageSize) {
+	public ResultJSON lastActive(HttpServletRequest request, String scope, Long scopeId, int page, int pageSize) throws Exception{
+		
+		ControllerHelper.checkEmpty(scope);
+		
+		scopeId = scopeId==null?0L:scopeId;
+		
 		
 		
 		String currentUserName = (String)request.getAttribute("currentUserName");

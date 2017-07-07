@@ -9,5 +9,8 @@ public class NoAuthorizationException extends CustomException {
     public NoAuthorizationException() {
         super("NoAuthorizationException", "您没有权限。");
     }
+    public NoAuthorizationException(String operName) {
+    	super("NoAuthorizationException", "您没有权限"+operName+"指定对象");
+    }
 
 }

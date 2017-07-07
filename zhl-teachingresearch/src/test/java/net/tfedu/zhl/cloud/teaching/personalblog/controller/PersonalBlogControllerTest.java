@@ -104,7 +104,6 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testQuery() {
-		long  userId =(Long) request.getAttribute("currentUserId");
 
 		
 		result = controller.query(request, 390320126L, 1, 10);
@@ -112,7 +111,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testGet() {
+	public void testGet() throws CustomException {
 
 		
 		result = controller.get(request, "558ffd9223bc40f68dfbd02e3e811c5b");
@@ -121,12 +120,11 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testAddPraise() throws CustomException {
-		long  userId =(Long) request.getAttribute("currentUserId");
 	
 		PersonalBlogPraiseRecord record = new PersonalBlogPraiseRecord();
 		
 				//
-		record.setBlogUuid("6d230f0c174b46afa65675fa583b064a");
+		record.setBlogUuid("4fc2dbdd5fc541e09e62587cfd335b2f");
 		
 		
 		result = controller.addPraise(request, record);
@@ -160,7 +158,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testLastActive() {
+	public void testLastActive() throws Exception {
 		request.setAttribute("currentUserName","panyu");
 		result = controller.lastActive(request, "D", 82L, 1, 10);
 		assertAndLog(result);
