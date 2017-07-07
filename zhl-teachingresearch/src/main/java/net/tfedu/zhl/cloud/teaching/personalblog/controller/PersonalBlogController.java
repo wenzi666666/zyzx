@@ -375,24 +375,33 @@ public class PersonalBlogController {
 		
 		
 		//cacheManager
-		//是否缓存当前分页的查询结果
-		String cacheKey =  new StringBuffer()
+		//是否缓存当前合并排序后的查询结果
+		String cacheKey_ALL =  new StringBuffer()
 					.append("final_lastActive_")
 					.append(scope)
 					.append("_")
 					.append(scopeId)
-					.append("_")
-					.append(page)
-					.append("_")
-					.append(pageSize)
+					.append("_ALLSORTED")
 					.toString();
+		
+		//是否缓存当前分页的查询结果
+		String cacheKey =  new StringBuffer()
+				.append("final_lastActive_")
+				.append(scope)
+				.append("_")
+				.append(scopeId)
+				.append("_")
+				.append(page)
+				.append("_")
+				.append(pageSize)
+				.toString();
 		
 		
 		
 		ValueWrapper o =  cacheManager.getCache("appCache").get(cacheKey);
 		
 		if(null != o ){
-			PageInfo<LastActive> pageInfo = (PageInfo) o ;
+			PageInfo<LastActive> pageInfo = (PageInfo<LastActive>) o.get() ;
 			return ResultJSON.getSuccess(pageInfo);
 		}
 		
@@ -401,10 +410,6 @@ public class PersonalBlogController {
 			
 			
 			List<LastActive> all = null ; 
-			//是否缓存当前合并排序后的查询结果
-			String cacheKey_ALL = new StringBuffer(cacheKey).append("_").append("ALLSORTED").toString();
-			
-			
 			
 			ValueWrapper list_ALL =  cacheManager.getCache("appCache").get(cacheKey_ALL);
 			if(null!=list_ALL){
