@@ -246,13 +246,13 @@ public class PersonalBlogController {
 			
 		}
 		
-		
 		long  userId =(Long) request.getAttribute("currentUserId");
 		record.setUserId(userId);
 		record.setDeleteFlag(false);
 		record.setCreateTime(Calendar.getInstance().getTime());
+		ResultJSON rs = personalBlogPraiseRecordService.addPraise(request, record);
 
-		return personalBlogPraiseRecordService.addPraise(request, record);
+		return rs ; 
 	}
 
 	/**
@@ -271,8 +271,22 @@ public class PersonalBlogController {
 		comment.setDeleteFlag(false);
 		comment.setCreateTime(Calendar.getInstance().getTime());
 
-
-		return personalBlogCommentService.insert(comment);
+		ResultJSON rs = personalBlogCommentService.insert(comment);
+		if(ResultJSON.isSuccess(rs)){
+			
+			ResultJSON rss = personalBlogService.getByPrimaryKey(comment.getBlogUuid());
+			if(ResultJSON.isSuccess(rss)){
+				
+				PersonalBlog blog = (PersonalBlog)rss.getData();
+				
+				blog.setCommentNum(blog.getCommentNum()+1);
+				
+				personalBlogService.update(blog);
+				
+			}
+		}
+		
+		return rs ; 
 
 	}
 

@@ -124,7 +124,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 		PersonalBlogPraiseRecord record = new PersonalBlogPraiseRecord();
 		
 				//
-		record.setBlogUuid("4fc2dbdd5fc541e09e62587cfd335b2f");
+		record.setBlogUuid("699ffb1877c14ab8a2c60c785cc51355");
 		
 		
 		result = controller.addPraise(request, record);
@@ -135,7 +135,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	public void testAddComment() {
 		PersonalBlogComment comment = new PersonalBlogComment();
 		
-		comment.setBlogUuid("558ffd9223bc40f68dfbd02e3e811c5b");
+		comment.setBlogUuid("699ffb1877c14ab8a2c60c785cc51355");
 		comment.setContent("contesnt1212121-");
 		
 		
