@@ -187,23 +187,11 @@ public class UserController {
 		
 		// 返回
 		UserSimple user = userService.getUserSimpleById(id, model);
-		if (user.getUserImage() != null
-				&& user.getUserImage()
-						.trim()
-						.contains(
-								ZhlResourceCenterWrap.userimage_upload_prefix)) {
-
-			// 获取文件服务器的访问url
-			String resServiceLocal = commonWebConfig.getResServiceLocal();
-			String currentResPath = commonWebConfig
-					.getCurrentResPath(request);
-
-			String temp = ZhlResourceCenterWrap.getDownUrl(resServiceLocal,
-					user.getUserImage());
-			temp = temp.replace(resServiceLocal, currentResPath);
-			user.setUserImage(temp);
-		}
-
+		
+		//设置头像路径
+		UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
+		
+		
 		return ResultJSON.getSuccess(user);
 	}
 

@@ -106,6 +106,7 @@ public class ZhlResourceCenterWrap {
 	 * 
 	 */
 	public static final String userimage_upload_prefix = "userimage_warehouse";
+	public static final String userimage_upload_prefix_default = "person";
 	
 	
 	
