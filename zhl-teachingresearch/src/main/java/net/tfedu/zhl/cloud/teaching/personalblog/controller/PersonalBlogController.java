@@ -450,8 +450,8 @@ public class PersonalBlogController {
 					(page-1)*pageSize>all.size()?
 							null:
 					(page)*pageSize>all.size()?
-							all.subList((page-1)*pageSize,all.size()-1):
-								all.subList((page-1)*pageSize, (page)*pageSize-1);
+							all.subList((page-1)*pageSize,all.size()):
+								all.subList((page-1)*pageSize, (page)*pageSize);
 			
 			PageInfo<LastActive> pageInfo = new PageInfo<LastActive>(pageIN);
 			pageInfo.setPageNum(page);
@@ -572,7 +572,21 @@ public class PersonalBlogController {
 	
 	
 
-	
+	public static void main(String[] args) {
+		
+		List<Integer> ls = new ArrayList<Integer>();
+		
+		ls.add(1);
+		ls.add(2);
+		ls.add(3);
+		ls.add(4);
+		ls.add(5);
+		ls.add(6);
+		
+		
+		System.out.println(ls.subList(0, 6).toString());
+		
+	}
 	
 
 }
