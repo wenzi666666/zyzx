@@ -15,15 +15,19 @@
  
 	
 	<bean id='proxyServiceImpl_weifang' class="net.tfedu.zhl.cloud.casProxy.service.impl.ProxyServiceImplWeiFang" />
- -->
- 
- 	<bean id="proxyServiceImpl" class="${proxyServiceImpl}"/>
+	
+	
 	
 	<bean id="casConfig" class="net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig" />
 
-	<bean id="proxyAction" class="net.tfedu.zhl.cloud.casProxy.action.CasProxyCommonAction" lazy-init="true">
+ 	<bean id="proxyService" class="${proxyServiceImpl}"/>
+ -->
+ 
+	
+	<bean id="proxyAction" class="net.tfedu.zhl.cloud.casProxy.action.controller.CasProxyCommonAction" lazy-init="true">
 		<property name="proxyService" ref="proxyServiceImpl" ></property>
 		<property name="casConfig" ref="casConfig"></property>
 	</bean>
+	
  	
 </beans>
