@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.cloud.zns.caidian.dao.EduTeacherClassMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.zns.caidian.entity.EduTeacherClass" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="teacher_class_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="school_guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="grade_guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="class_guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="year_guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="teacher_guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="data_context" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="year" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="is_delete" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="guid" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+</mapper>

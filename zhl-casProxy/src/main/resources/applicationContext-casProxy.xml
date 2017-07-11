@@ -10,7 +10,14 @@
 
 
 <!-- 
-	<bean id="proxyServiceImpl" class="${proxyServiceImpl}"/>
+
+
+ 
+	
+	<bean id='proxyServiceImpl_weifang' class="net.tfedu.zhl.cloud.casProxy.service.impl.ProxyServiceImplWeiFang" />
+ -->
+ 
+ 	<bean id="proxyServiceImpl" class="${proxyServiceImpl}"/>
 	
 	<bean id="casConfig" class="net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig" />
 
@@ -18,9 +25,5 @@
 		<property name="proxyService" ref="proxyServiceImpl" ></property>
 		<property name="casConfig" ref="casConfig"></property>
 	</bean>
- -->
- 
-	
-	<bean id='proxyServiceImpl_weifang' class="net.tfedu.zhl.cloud.casProxy.service.impl.ProxyServiceImplWeiFang" />
-	
+ 	
 </beans>

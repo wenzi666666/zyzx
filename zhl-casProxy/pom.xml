@@ -40,9 +40,9 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>net.zdsoft</groupId>
-			<artifactId>passport-remoting</artifactId>
-			<version>0.4.3</version>
+			<groupId>org.jasig</groupId>
+			<artifactId>cas-client-core</artifactId>
+			<version>3.2.1</version>
 			<scope>system</scope>
 			<systemPath>${basedir}/lib/cas-client-core-3.2.1.jar</systemPath>
 		</dependency>
