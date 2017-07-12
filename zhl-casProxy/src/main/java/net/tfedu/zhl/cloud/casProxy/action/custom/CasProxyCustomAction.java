@@ -58,5 +58,32 @@ public class CasProxyCustomAction extends CasProxyCustomBase {
 
 	}
 	
+	/**
+	 * 潍坊的登录接口
+	 * @param request
+	 * @param response
+	 * @throws CustomException
+	 * @throws Exception
+	 */
+	@RequestMapping("/loginCommon")
+	public void loginCommon(HttpServletRequest request, HttpServletResponse response) throws CustomException, Exception {
+		
+		if(proxy==null){
+			
+			@SuppressWarnings("resource")
+			ApplicationContext context = 
+					new FileSystemXmlApplicationContext("classpath*:applicationContext-casProxy.xml");
+			
+			proxy =  (ProxyService)context.getBean("commonProxyServiceImpl");
+			
+		}
+
+		
+		super.login(request, response, proxy);
+		
+
+	}
+	
+	
 
 }

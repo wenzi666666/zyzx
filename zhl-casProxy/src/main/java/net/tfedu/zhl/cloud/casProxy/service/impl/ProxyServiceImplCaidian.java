@@ -25,7 +25,6 @@ import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
   copyRight@ 同方知好乐教育科技(北京)有限公司 
 
 */  
-@Service("proxyServiceCaidian")
 public class ProxyServiceImplCaidian  implements ProxyService{
 	
 	
