@@ -24,6 +24,8 @@ public class LastActive implements Comparable {
 	public String uuid;
 	/** 创建人 */
 	public long userId;
+	/** 创建人 */
+	public String trueName;
 	/** 标题 */
 	public String title;
 	/** 内容 */
