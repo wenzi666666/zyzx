@@ -180,6 +180,10 @@ public class UserController {
         //如果从缓存获取直接返回
         UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
     	if(us!=null){
+    		
+    		//设置头像路径
+    		UserImageCheckUtil.checkUserImage(us, commonWebConfig, request);
+    		
             return ResultJSON.getSuccess(us);
     	}
 		
