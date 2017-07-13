@@ -42,6 +42,8 @@
   
   <resultMap id="userMapSimple" type="net.tfedu.zhl.userlayer.user.entity.UserSimple" >
   	<id column="userId" property="userId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+  	<id column="schoolId" property="schoolId" javaType="java.lang.Long" jdbcType="BIGINT"/>
+  	<id column="districtId" property="districtId" javaType="java.lang.Long" jdbcType="BIGINT"/>
     <result column="userName" property="userName" javaType="java.lang.String" jdbcType="CHAR" />
     <result column="trueName" property="trueName" javaType="java.lang.String" jdbcType="CHAR" />
     <result column="userImage" property="userImage" javaType="java.lang.String" jdbcType="CHAR" />
@@ -114,7 +116,7 @@
     	u.male as male,
 		r.Name as roleName,
     	t.Name as termName,
-		s.name as schoolName,
+		s.name as schoolName,s.id as schoolId,s.districtId,
 		ui.UserImage as userImage,
 		GROUP_CONCAT(su.id) as subjectIds,
 		GROUP_CONCAT(su.name)as subjectNames		
@@ -139,7 +141,7 @@
     	u.male as male,
 		r.Name as roleName,
     	t.Name as termName,
-		s.name as schoolName,
+		s.name as schoolName,s.id as schoolId,s.districtId,
 		ui.UserImage as userImage,
 		GROUP_CONCAT(su.id) as subjectIds,
 		GROUP_CONCAT(su.name)as subjectNames		

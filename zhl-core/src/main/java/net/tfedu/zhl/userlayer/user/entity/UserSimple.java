@@ -34,6 +34,12 @@ public class UserSimple implements Serializable {
     Long roleId;
     String token;
     Date logintime;
+    Long schoolId;
+    Long districtId ; 
+    
+    
+    
+    
     
     /**
      * 第三方平台编码 
@@ -232,6 +238,24 @@ public class UserSimple implements Serializable {
 	public void setLogoutTarget(String logoutTarget) {
 		this.logoutTarget = logoutTarget;
 	}
+	
+	
+
+	public Long getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(Long schoolId) {
+		this.schoolId = schoolId;
+	}
+
+	public Long getDistrictId() {
+		return districtId;
+	}
+
+	public void setDistrictId(Long districtId) {
+		this.districtId = districtId;
+	}
 
 	@Override
     public String toString() {
@@ -239,6 +263,7 @@ public class UserSimple implements Serializable {
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
                 + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
+                +",schoolId="+schoolId+",districtId="+districtId
                 + ", funcList=" + (funcList==null?"":funcList.toString()) + ",thirdParyCode="+thirdParyCode+",logoutTarget="+logoutTarget+"]";
     }
 
