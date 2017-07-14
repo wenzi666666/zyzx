@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import net.tfedu.zhl.cloud.casProxy.service.ProxyService;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.zns.caidian.dao.EduTeacherMapper;
 
 /**
              各地自定义的接口
@@ -75,7 +76,7 @@ public class CasProxyCustomAction extends CasProxyCustomBase {
 					new FileSystemXmlApplicationContext("classpath*:applicationContext-casProxy.xml");
 			
 			proxy =  (ProxyService)context.getBean("commonProxyServiceImpl");
-			
+						
 		}
 
 		

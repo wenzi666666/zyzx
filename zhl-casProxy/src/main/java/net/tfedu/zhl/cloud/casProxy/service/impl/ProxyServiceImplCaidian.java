@@ -1,19 +1,19 @@
 package net.tfedu.zhl.cloud.casProxy.service.impl;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.cloud.casProxy.service.ProxyService;
-import net.tfedu.zhl.cloud.zns.caidian.dao.EduTeacherMapper;
-import net.tfedu.zhl.cloud.zns.caidian.model.UserInfo4Caidian;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
+import net.tfedu.zhl.zns.caidian.dao.EduTeacherMapper;
+import net.tfedu.zhl.zns.caidian.model.UserInfo4Caidian;
 
 /**
  
@@ -25,13 +25,16 @@ import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
   copyRight@ 同方知好乐教育科技(北京)有限公司 
 
 */  
+@Service("proxyCaidian")
 public class ProxyServiceImplCaidian  implements ProxyService{
 	
 	
 	Logger log = LoggerFactory.getLogger(ProxyServiceImplCaidian.class);
 	
-	@Resource 
+
+	@Autowired
 	EduTeacherMapper mapper;
+	
 	
 	
 
@@ -58,6 +61,10 @@ public class ProxyServiceImplCaidian  implements ProxyService{
 		
 		
 		
+		System.out.println(request.getRemoteUser());
+		System.out.println(request.getUserPrincipal());
+		
+		
 		String loginName= request.getRemoteUser();
 		
 		UserInfo4Caidian info = mapper.getUserInfo(loginName);
@@ -73,7 +80,7 @@ public class ProxyServiceImplCaidian  implements ProxyService{
 		form.setProvinceName(provinceName);
 		form.setSchoolName(schoolName);
 		form.setSubjectName(default_subjcetName);
-		form.setTermName(default_termName);
+		form.setTermName(info.getTermname()!=null ?info.getTermname():default_termName);
 		form.setCityName(cityName);
 		form.setBirthDate(null);
 		form.setMotto("");

@@ -47,8 +47,8 @@
 	<bean id="casMiddleSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="casMiddleDataSource" />
 		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
-		<property name="typeAliasesPackage" value="net.tfedu.zhl.casMiddle.**.entity"></property>
-		<property name="mapperLocations" value="classpath*:net/tfedu/zhl/casMiddle/**/*Mapper.xml" />
+		<property name="typeAliasesPackage" value="net.tfedu.zhl.zns.**.entity"></property>
+		<property name="mapperLocations" value="classpath*:net/tfedu/zhl/zns/**/*Mapper.xml" />
 		<property name="plugins">
 			<array>
 				<bean class="com.github.pagehelper.PageHelper">
@@ -63,9 +63,9 @@
 	</bean>
 
 	<!-- 自动扫描 mybatis mapper接口 -->
-	<!-- 由sqlSessionFactoryBeanName指定数据源，包扫描路径一定不能重复 -->
+	<!-- 由sqlSessionFactoryBeanName指定数据源，包扫描路径一定不能重复  net.tfedu.zhl..zns.caidian.dao -->
 	<bean class="tk.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="net.tfedu.zhl.casMiddle.**.dao" />
+		<property name="basePackage" value="net.tfedu.zhl.zns.**.dao" />
 		<property name="sqlSessionFactoryBeanName" value="casMiddleSqlSessionFactory" />
 		<property name="properties">
 	        <value>

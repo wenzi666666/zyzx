@@ -4,31 +4,6 @@
     <!-- DefaultCache setting. -->
     <defaultCache maxEntriesLocalHeap="10000" eternal="false" timeToIdleSeconds="300" timeToLiveSeconds="600"
                   overflowToDisk="true" maxEntriesLocalDisk="100000"/>
-               
-     
-    <!-- 自动的成员发现 RMI的组播  
-    
-    timeToLive是指搜索范围：0是同一台服务器，1是同一个子网，32是指同一站点，64是指同一块地域，128是同一块大陆
-    
-      -->
-    <cacheManagerPeerProviderFactory
-    class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-    properties="peerDiscovery=automatic,multicastGroupAddress=230.0.0.1,
-    multicastGroupPort=4448,timeToLive=${timeToLive}"
-	/>
-     
-     
-    <!-- 监听从成员们发向当前CacheManager的消息
-    
-    	hostname (可选) – 运行监听器的服务器名称。
-    					如果hostName不可用，CacheManager将拒绝启动并抛出一个连接被拒绝的异常
-    -->    
-             
-     
-   <cacheManagerPeerListenerFactory
-		class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
-		properties="port=40001,hostName=localhost,
-		socketTimeoutMillis=2000"/>
             
      <!--          
        <cacheManagerPeerProviderFactory
@@ -51,36 +26,21 @@
                   
     <!-- 登录用户token对应对象的缓存  timeToIdleSeconds 不活跃的缓存时间 -->              
     <cache name="UserSimpleCache" maxElementsInMemory="900000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
-    	 
-    	 <!--   <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-				properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,replicateUpdatesViaCopy=true, replicateRemovals=true "/>  
-		-->  
-		
-<!-- 		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.jgroups.JGroupsCacheReplicatorFactory"/> -->
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
     </cache>
     <!-- 缓存对象的token -->  
     <cache name="TokenCache" maxElementsInMemory="90000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>    </cache>  
+	</cache>  
 
     <!-- 被踢出的token，保留1小时 -->  
     <cache name="KickOutTokenCache" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false">  
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
 	</cache>
      <!-- app应用信息缓存，空闲缓存1小时，不活跃缓存1小时 -->
     <cache name="appCache" maxElementsInMemory="3600" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false">
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
-    </cache>  
+	</cache>  
    
     <!-- 活跃用户，为单点登录的ticket所用，保留1小时 -->  
     <cache name="ticketCache" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false">
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
-    </cache>
+	</cache>
    
     <!-- 空闲时间保留1天，如果一直活跃，基本是长期存在了 -->
     <cache name="usernamesCache" maxElementsInMemory="900000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false"/>
@@ -94,18 +54,11 @@
                      
     <!--后台 登录用户token对应对象的缓存  timeToIdleSeconds 不活跃的缓存时间 -->              
     <cache name="ManagerSimpleCache_BACK" maxElementsInMemory="900000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
     </cache>
     <!-- 缓存对象的token -->  
-    <cache name="TokenCache_BACK" maxElementsInMemory="90000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false">
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>    </cache>  
+    <cache name="TokenCache_BACK" maxElementsInMemory="90000" timeToIdleSeconds="7200" overflowToDisk="false" diskPersistent="false"/>
     <!-- 被踢出的token，保留1小时 -->  
-    <cache name="KickOutTokenCache_BACK" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false">  
-		 <cacheEventListenerFactory  class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" properties="replicateUpdatesViaCopy=true"/>
-		 <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
-	</cache>
+    <cache name="KickOutTokenCache_BACK" maxElementsInMemory="90000" timeToIdleSeconds="3600" overflowToDisk="false" diskPersistent="false"/>  
       
       
     

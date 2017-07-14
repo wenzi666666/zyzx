@@ -596,6 +596,37 @@ public class ZhlResourceCenterWrap {
 	}
 
 
+	
+	public static void main(String[] args) {
+		
+		String resSerPath=  "http://192.168.111.22:8099/down/";
+		
+		String zippath = "\\AreaBase\\my_zip_test.zip";
+		
+		ZipTaskContent content = new ZipTaskContent() ;
+		
+		
+		content.setZipFileName(zippath);
+		
+		String[] src = new String[]{"\\AreaBase\\822017\\XX\\0102\\jpg\\2017052617021665333-32.jpg"
+				
+				,"\\AreaBase\\822017\\XX\\0102\\jpg\\2017052617021665333-32_icon.jpg"
+		};
+		String[] end = new String[]{"\\2017052617021665333-32.jpg","\\2017052617021665333-32_icon.jpg"};
+		
+
+		content.setSourceFile(src);
+		content.setEntryName(end);
+		content.setNotifyUrl("");
+		
+		boolean flag =  sendZipTask(content, resSerPath);
+	
+		
+		System.out.println(flag);
+		
+		
+		
+	}
 
 	
 }
