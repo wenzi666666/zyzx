@@ -97,11 +97,11 @@ public class LastActive implements Comparable {
 			LastActive a = (LastActive) o;
 
 			if (null != a.getCreateTime() && this.getCreateTime() != null) {
-				// 当前对象的创建时间比 o中的创建时间大
+				// 当前对象的创建时间比 o中的创建时间小
 				if (a.getCreateTime().before(this.getCreateTime())) {
-					return 1;
-				} else {
 					return -1;
+				} else {
+					return 1;
 				}
 			}
 
