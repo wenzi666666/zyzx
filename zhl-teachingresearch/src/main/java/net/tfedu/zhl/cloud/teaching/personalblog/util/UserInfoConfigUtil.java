@@ -86,7 +86,11 @@ public class UserInfoConfigUtil {
 
 							for (Iterator<Map<String, Object>> iterator = list.iterator(); iterator.hasNext();) {
 								Map<String, Object> ls = iterator.next();
-								CloudPlatformUsrInfo info = (CloudPlatformUsrInfo) map.get(ls.get("userid"));
+							
+								Object id_o = ls.containsKey("userid")?ls.get("userid"):ls.get("userId");
+								
+								CloudPlatformUsrInfo info = (CloudPlatformUsrInfo) map.get(
+										Long.parseLong(id_o.toString()));
 
 								if (info != null) {
 

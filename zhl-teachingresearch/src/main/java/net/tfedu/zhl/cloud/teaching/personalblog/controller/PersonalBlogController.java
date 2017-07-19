@@ -149,10 +149,12 @@ public class PersonalBlogController {
 	 * @param request
 	 * @param uuid
 	 *            个人反思主键
+	 * @throws Exception 
 	 */
+	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(method = RequestMethod.GET)
-	public ResultJSON get(HttpServletRequest request, String uuid) throws CustomException {
+	public ResultJSON get(HttpServletRequest request, String uuid) throws Exception {
 		
 		long  userId =(Long) request.getAttribute("currentUserId");
 
@@ -165,21 +167,40 @@ public class PersonalBlogController {
 			Long scopeId = blog.getScopeid();
 			
 			//NoAuthorizationException
-			if("P".equalsIgnoreCase(scope)){
-				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
-			}
-			UserAreaInfo info = userSerivce.getUserAreaInfo(userId);
-			if("S".equalsIgnoreCase(scope)&& (scopeId != info.getSchoolId())){
-				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
-			}else if("D".equalsIgnoreCase(scope)&& (scopeId != info.getDistrictId())){
-				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
-			}
+//			if("P".equalsIgnoreCase(scope)){
+//				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+//			}
+//			UserAreaInfo info = userSerivce.getUserAreaInfo(userId);
+//			if("S".equalsIgnoreCase(scope)&& (scopeId != info.getSchoolId())){
+//				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+//			}else if("D".equalsIgnoreCase(scope)&& (scopeId != info.getDistrictId())){
+//				return ResultJSON.defaultError(new NoAuthorizationException("浏览"));
+//			}
 			
 			if(userId != blog.getUserId()){
 				//增加点击记录
 				blog.setClickNum(blog.getClickNum()+1);
 				personalBlogService.update(blog);
 			}
+			
+			
+			
+			//需要将blog转map并设置头像
+			
+			Map<String, Object> blogMap =  null;
+			try {
+				blogMap = BeanUtils.describe(blog);
+			} catch (Exception e) {
+				throw new CustomException("类型PersonalBlog转map失败");
+			}
+			List<Map<String, Object>> tempL = new ArrayList<Map<String, Object>>();
+			tempL.add(blogMap);
+			
+			
+			UserInfoConfigUtil.resetUserImage(commonWebConfig.getCloudPlatFormLocal()
+					, commonWebConfig.getCurrentCloudPlatform(request), tempL);
+
+			json.setData(tempL.get(0));
 		}
 		
 		return json;

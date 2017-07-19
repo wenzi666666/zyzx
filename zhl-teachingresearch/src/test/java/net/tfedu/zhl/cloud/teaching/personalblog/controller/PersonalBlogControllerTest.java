@@ -111,10 +111,10 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 	}
 
 	@Test
-	public void testGet() throws CustomException {
+	public void testGet() throws Exception {
 
 		
-		result = controller.get(request, "558ffd9223bc40f68dfbd02e3e811c5b");
+		result = controller.get(request, "0960305cbbf74a24a5c042f32ebc18ea");
 		assertAndLog(result);
 	}
 
