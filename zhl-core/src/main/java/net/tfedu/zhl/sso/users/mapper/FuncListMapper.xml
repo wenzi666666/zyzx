@@ -35,7 +35,7 @@
 		from j_roleconfig rc
 		LEFT JOIN j_funclist f on rc.FuncId=f.id
 		where f.model=#{model} 
-		and f.menuid = 10
+		and f.menuid = 10 and f.flag = false 
 		and rc.RoleId in
 		<foreach collection="roleIds" item="item" index="index" open="("
 			separator="," close=")">#{item}</foreach>
