@@ -89,6 +89,15 @@ public class LastActive implements Comparable {
 		this.createTime = createTime;
 	}
 
+	
+	public String getTrueName() {
+		return trueName;
+	}
+
+	public void setTrueName(String trueName) {
+		this.trueName = trueName;
+	}
+
 	@Override
 	public int compareTo(Object o) {
 

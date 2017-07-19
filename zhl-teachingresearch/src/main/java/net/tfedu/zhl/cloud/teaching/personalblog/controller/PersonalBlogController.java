@@ -522,7 +522,6 @@ public class PersonalBlogController {
 			BeanUtils.copyProperties(actve, personalBlog);
 			
 			actve.setTypeName("个人反思");
-			
 			all.add(actve);
 		}
 	}

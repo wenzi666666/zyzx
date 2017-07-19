@@ -154,6 +154,7 @@ public class UserInfoConfigUtil {
 							 CloudPlatformUsrInfo info = (CloudPlatformUsrInfo) map.get(obj.getUserId());
 							 if(info!=null){
 								 obj.setUserImage(info.getUserImage());
+								 obj.setTrueName(info.getTrueName());
 							 }
 							 
 						}
