@@ -190,6 +190,8 @@ public class PersonalBlogController {
 			Map<String, Object> blogMap =  null;
 			try {
 				blogMap = BeanUtils.describe(blog);
+				blogMap.put("createTime", blog.getCreateTime().getTime());
+				blogMap.put("updateTime", blog.getUpdateTime().getTime());
 			} catch (Exception e) {
 				throw new CustomException("类型PersonalBlog转map失败");
 			}
