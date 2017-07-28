@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -418,6 +419,51 @@ public class AutoLoginController {
 	}
 	
 	
+	/**
+	 * 自动登录的处理方法(简化版) 所需参数:
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 一般采用重定向的方式，跳转到web前端页面，所以返回为null
+	 * @throws Exception
+	 */
+	@RequestMapping("autoLoginSimpleWeb")
+	public Object autoLoginSimpleWeb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		String strDate = ControllerHelper.getParameter(request, "strDate");
+		String  params = ControllerHelper.getParameter(request, "params");
+		String userName = ControllerHelper.getParameter(request, "userName");
+		
+		
+		if(!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)){
+			throw new CustomException("非法用户");
+		}
+		
+		// 返回用户的信息
+		UserSimple user = null;
+		
+		// 用户登录
+		SRegister reg = registerService.getRegister(userName);
+		
+		// 获取用户信息
+		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+		
+
+		//组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
+				.append("/router").append("?tocken=").append(user.getToken())
+				.append("&userId=").append(user.getUserId())
+				.append("&iscoursewares=").append(user.getThirdParyCode())
+				.toString();
+		log.info("autoLogin---url:"+url);
+		
+		response.sendRedirect(url);
+		return null;
+		
+		
+	}
+	
+	
 	
 	
 	
@@ -506,21 +552,34 @@ public class AutoLoginController {
 	
 	public static void main(String[] _args) throws IOException {
 			
-		String args = "yxxv4Fr7jDpNx04oQJ%2FfwtJDqsQZEO5XGokJcf67XZ9tdDhCyRJFhot7wuqmK5meqmyJK%2B7MYEd%2B61pp3NiAUD1Sh6aJAJSzOJtsJ%2Bzu6nsneRrzOaaAG7E%2FMxX96LLothASO%2F2WKqDN%2Bfeh";
+//		String args = "yxxv4Fr7jDpNx04oQJ%2FfwtJDqsQZEO5XGokJcf67XZ9tdDhCyRJFhot7wuqmK5meqmyJK%2B7MYEd%2B61pp3NiAUD1Sh6aJAJSzOJtsJ%2Bzu6nsneRrzOaaAG7E%2FMxX96LLothASO%2F2WKqDN%2Bfeh";
+//		
+//		
+//		args = args.replace(URLEncoder.encode("/","utf-8"),"/");
+//		args = args.replace(URLEncoder.encode("+","utf-8"),"+");
+//		
+//		AutoLoginController c = new AutoLoginController();
+//		
+//		Map<String, String> ps = c.getParamMap(c.getParams(args,MD5_KEY));
+//
+//		
+//		System.out.println(ps.toString());
+//		
 		
 		
-		args = args.replace(URLEncoder.encode("/","utf-8"),"/");
-		args = args.replace(URLEncoder.encode("+","utf-8"),"+");
 		
-		AutoLoginController c = new AutoLoginController();
-		
-		Map<String, String> ps = c.getParamMap(c.getParams(args,MD5_KEY));
-
-		
-		System.out.println(ps.toString());
+		String userName = "xzczls01";
+		long strDate= Calendar.getInstance().getTime().getTime();		
+		String params =  MD5Util.str2md5(userName + strDate + MD5_KEY);
 		
 		
 		
+		String url = "/resRestAPI/thirdparty/autoLoginSimpleWeb?userName="+userName
+				+"&strDate="+strDate
+				+"&params="+params
+				;
+		
+		System.out.println(url);
 		
 	}
 
