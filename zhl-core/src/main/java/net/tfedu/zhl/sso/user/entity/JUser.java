@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * 用户
@@ -140,28 +141,34 @@ public class JUser implements Serializable {
     /**
      * 用户角色
      */
+    @Transient
     private String roleName;
 
     /**
      * 用户学段
      */
+    @Transient
     private String termName;
-
+    
+    @Transient
     private Long termId;
 
     /**
      * 用户学校
      */
+    @Transient
     private String schoolName;
 
     /**
      * 获取用户学科ids
      */
+    @Transient
     private String subjectIds;
 
     /**
      * 获取用户学科
      */
+    @Transient
     private String subjectNames;
 
     public JUser(Long id, String name, String roleid, Long channelid, Long channellimit, Date logintime,

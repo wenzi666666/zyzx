@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1101,6 +1102,18 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 	@Override
 	public void updateAssetPath(String path, String newPath) {
 		assetMapper.updateAssetPath(path, newPath);
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> statisticsSchoolUpload(String[] schoolIds) {
+		if(schoolIds == null || schoolIds.length==0){
+			return null;
+		}
+		
+		return assetMapper.statisticsSchoolUpload(schoolIds);
 	}
 }
 

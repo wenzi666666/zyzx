@@ -427,6 +427,12 @@ public class JUserServiceImpl extends BaseServiceImpl<JUser> implements JUserSer
 	}
 
 	
+	@Override
+	public void updateUserTermSubject(String userName, String termId, String[] subjectIds) {
+		
+	}
+
+	
 	
 
 

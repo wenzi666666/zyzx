@@ -191,8 +191,13 @@ public interface JUserService extends BaseService<JUser>{
 	
 	
 	
-	
-	
+	/**
+	 * 修改用户的学段、学科
+	 * @param userName
+	 * @param termId
+	 * @param subjectIds
+	 */
+	void updateUserTermSubject(String userName,String termId,String[] subjectIds);
 	
 	
 }
