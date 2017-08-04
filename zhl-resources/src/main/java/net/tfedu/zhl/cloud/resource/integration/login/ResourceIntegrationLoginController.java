@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.integration.cloud.login;
+package net.tfedu.zhl.cloud.resource.integration.login;
 
 import java.util.HashMap;
 

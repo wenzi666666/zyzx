@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.integration.cloud.api;
+package net.tfedu.zhl.cloud.resource.integration.api;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
 import net.tfedu.zhl.cloud.resource.constant.ResourcePlatformWebConstant;
-import net.tfedu.zhl.cloud.resource.integration.cloud.util.CloudClientMD5;
+import net.tfedu.zhl.cloud.resource.integration.util.CloudClientMD5;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;

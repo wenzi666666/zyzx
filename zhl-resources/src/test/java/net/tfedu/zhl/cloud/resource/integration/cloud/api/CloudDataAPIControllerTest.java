@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 
+import net.tfedu.zhl.cloud.resource.integration.api.CloudDataAPIController;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 /**

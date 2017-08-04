@@ -1,4 +1,4 @@
-package net.tfedu.zhl.cloud.resource.integration.cloud.util;
+package net.tfedu.zhl.cloud.resource.integration.util;
 
 
 import java.security.MessageDigest;
