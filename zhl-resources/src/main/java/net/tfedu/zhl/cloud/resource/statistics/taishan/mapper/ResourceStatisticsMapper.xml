@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="net.tfedu.zhl.cloud.resource.statistics.taishan.dao.ResourceStatisticsMapper">
+
+	<select id="getResDynamic" resultType="Map">
+
+		SELECT * FROM (
+		SELECT 'asset' as logtypcode,'create' as
+		opertypecode,a.id,t.userid,t.truename,a.name,a.createtime FROM z_ASset
+		a
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid ,u.TrueName FROM j_user u
+		RIGHT JOIN j_school s on s.id = u.SchoolId
+		WHERE u.flag = false AND
+		s.flag = false
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+		AND u.id > 0
+		) t on a.UserId = t.userid
+		WHERE a.flag = false and
+		a.fileType='A'
+		UNION
+		SELECT 'asset' as logtypcode,'share' as
+		opertypecode,e.id,t2.userid,t2.truename,e.name,r.createtime FROM
+		x_platform_share r
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid
+		,u.TrueName FROM j_user u
+		RIGHT JOIN j_school s on s.id = u.SchoolId
+		WHERE u.flag = false AND s.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+
+		AND u.id > 0
+		) t2 on r.UserId = t2.userid
+		LEFT JOIN z_ASset e on (e.id =
+		r.shareId AND r.sharedType = 1 )
+		WHERE r.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND r.scope ='D'
+			</when>
+			<when test='scope=="D"'>
+				AND r.scope ='C'
+			</when>
+		</choose>
+		)temp_table ORDER BY createtime DESC limit 0,#{number}
+	</select>
+
+	<select id="getBastSysRes" resultType="Map">
+		SELECT * FROM (
+		SELECT 'sysres' AS resType,
+		r.id,r.rescode,r.title,r.FPath,r.fname,r.isDWJ,r.FileExt,1 as fromflag
+		,ttt.downloadtimes,ttt.clicktimes,ttt.collecttimes,m.res_time as
+		restime FROM (
+		SELECT rescode,downloadtimes,clicktimes,collecttimes
+		,(downloadtimes+clicktimes+collecttimes ) alltimes
+		FROM z_resource_operate_times
+		ORDER BY alltimes DESC LIMIT 0,#{number}
+		)ttt LEFT JOIN z_resource r on r.ResCode = ttt.rescode
+		LEFT JOIN z_res_medium m on r.ResCode = m.res_code
+		WHERE r.flag = false
+		)mytempt
+	</select>
+
+	<select id="getBastScopeRes" resultType="Map">
+
+		SELECT * from (
+		SELECT IF(3=FROMflag,'schoolres','districtres') AS restype,
+		id,rescode,title,fpath,fname,REVERSE(LEFT(REVERSE(Fname),LOCATE('.',REVERSE(Fname))))
+		AS FileExt,isDWJ,fromflag
+		,ClickTimes as clicktimes, DLoadTimes as downloadtimes, SCTimes as collecttimes ,
+		'' as restime
+		FROM z_districts_resource
+
+		<if test='scope == "S" or scope == "D"'>
+
+			WHERE
+			<choose>
+				<when test='scope=="S"'>
+					scope =5
+				</when>
+				<when test='scope=="D"'>
+					scope =4
+				</when>
+			</choose>
+			AND scopeid = #{scopeId}
+			AND State = 6 and flag = false
+
+		</if>
+		ORDER BY (ClickTimes+DLoadTimes+SCTimes) DESC LIMIT 0,#{number}
+		)tt
+	</select>
+	
+	
+	<select id="getLastAsset" resultType="Map">
+	SELECT * from ( 
+		 SELECT 'asset' as restype,0 as fromflag,a.id,t.userid,t.truename,t.schoolname,a.name,a.createtime,a.islocal  
+		 ,a.AssetPath,IF(IsLocal=1,'.html',REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath))))) AS FileExt 
+		 FROM z_ASset a 
+		 RIGHT JOIN  
+		 ( 
+		 SELECT DISTINCT u.id AS userid ,u.TrueName,s.name as schoolName  FROM j_user u 
+		 RIGHT JOIN j_school s on s.id = u.SchoolId 
+		 WHERE u.flag = false AND s.flag = false  
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+
+		 AND u.id > 0  
+		 ) t on a.UserId = t.userid  
+		 WHERE a.flag = false  and a.fileType='A' 
+		 ORDER BY createtime desc  limit 0,#{number}
+		 )tt
+	
+	</select>
+	<select id="getSchoolAssetStatistics" resultType="Map">
+	SELECT * from ( 
+		 SELECT t.schoolid,t.schoolname,count(1) AS uploads 
+		 FROM z_ASset a 
+		 RIGHT JOIN  
+		 ( 
+		 SELECT DISTINCT u.id AS userid,u.schoolid,s.name AS schoolname  FROM j_user u 
+		 RIGHT JOIN j_school s on s.id = u.SchoolId 
+		 WHERE u.flag = false AND s.flag = false  
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+		 AND u.id > 0  
+		 ) t on a.UserId = t.userid  
+		 WHERE a.flag = false AND a.fileType='A' 
+		 GROUP BY schoolid  
+		 )tt
+	</select>
+</mapper>

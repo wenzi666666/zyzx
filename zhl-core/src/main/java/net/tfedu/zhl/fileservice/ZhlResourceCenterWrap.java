@@ -2,8 +2,11 @@ package net.tfedu.zhl.fileservice;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
 /**
  * 访问IIS文件服务器的工具类
@@ -595,7 +598,25 @@ public class ZhlResourceCenterWrap {
 		
 	}
 
-
+	/**
+	 * （通过GetFileInfo接口）判断指定文件是否存在
+	 * @param resServiceLocal
+	 * @param filePath
+	 * @return
+	 */
+	public static boolean isFileExist(String resServiceLocal,String filePath){
+		// 判断是否存在
+        String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, filePath);
+        if (StringUtils.isNotEmpty(s)) {
+            HashMap m = (HashMap)JSONObject.toBean(JSONObject.fromObject(s), HashMap.class);
+            if (m != null && ((Integer) m.get("FileSize") > 0)) {
+            	return true ;
+            }
+        } 
+        
+        return false ;
+	}
+	
 
 	
 }
