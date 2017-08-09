@@ -54,4 +54,38 @@ public interface ResourceStatisticsService {
 	 */
 	public List<Map<String, Object>> getSchoolAssetStatistics(String scope, Long scopeId);
 
+	/**
+	 * 
+	 * 6、指定学校的校本资源总量+指定学校的本周/月更新资源（校本+共享）资源达人 校本资源总量+本周更新
+	 * 
+	 * schoolId
+	 * 
+	 * @return
+	 */
+	public ResultJSON getSchoolStatistics(Long schoolId);
+
+	/**
+	 * 7资源达人（学校中按人排序，最少三人）
+	 * 
+	 * 用户头像 用户id 真实姓名 学段、学课、上传资源总量
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getSchoolUploadTop(Long schoolId, Integer number);
+
+	/**
+	 * 8指定班级浏览资源次数
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> getGradeClickTop(String userIds, String startTime, String endTime);
+	
+	/**
+	 *  9班级浏览资源日志
+	 * @return
+	 */
+	public List<Map<String, Object>> getGradeClickLog(String userIds, Integer number);
+	
+	
+
 }

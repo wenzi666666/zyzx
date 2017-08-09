@@ -19,6 +19,7 @@ import net.tfedu.zhl.cloud.resource.statistics.taishan.service.ResourceStatistic
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
@@ -117,6 +118,67 @@ public class ResourceStatisticsController {
 	@ResponseBody
 	public ResultJSON getSchoolAssetStatistics(String scope, Long scopeId) throws CustomException {
 		List<Map<String, Object>> list = resourceStatisticsService.getSchoolAssetStatistics(scope, scopeId);
+		return ResultJSON.getSuccess(list);
+	}
+
+	/**
+	 * 
+	 * 6、指定学校的校本资源总量+指定学校的本周/月更新资源（校本+共享）资源达人 校本资源总量+本周更新
+	 * 
+	 * 
+	 * schoolId
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "resourceData_schoolStatistics.action", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getSchoolStatistics(Long schoolId) throws CustomException {
+		return resourceStatisticsService.getSchoolStatistics(schoolId);
+	}
+
+	/**
+	 * 7资源达人（学校中按人排序，最少三人）
+	 * 
+	 * 用户头像 用户id 真实姓名 学段、学课、上传资源总量
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "resourceData_schoolUploadTop.action", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getSchoolUploadTop(String cloudPlatFormLocal, String cloudPlatForm, Long schoolId, Integer number)
+			throws CustomException {
+		number = number == 0 ? 3 : number;
+		List<Map<String, Object>> list = resourceStatisticsService.getSchoolUploadTop(schoolId, number);
+		resetUserImage(cloudPlatFormLocal, cloudPlatForm, list);
+		return ResultJSON.getSuccess(list);
+	}
+
+	/**
+	 * 8指定班级浏览资源次数
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "resourceData_gradeClickTop.action", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getGradeClickTop(String cloudPlatFormLocal, Long gradeId, String startTime, String endTime)
+			throws Exception {
+		String userIds = getGradeUserIds(cloudPlatFormLocal, gradeId);
+		List<Map<String, Object>> list = resourceStatisticsService.getGradeClickTop(userIds, startTime, endTime);
+		return ResultJSON.getSuccess(list);
+	}
+	/**
+	 *  9班级浏览资源日志
+	 * @return
+	 * @throws Exception 
+	 */
+	@RequestMapping(value = "resourceData_gradeClickLog.action", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON getGradeClickLog(String cloudPlatFormLocal, String cloudPlatForm, Long gradeId, Integer number)
+			throws Exception {
+		number = number == 0 ? 10 : number;
+		String userIds = getGradeUserIds(cloudPlatFormLocal, gradeId);
+		List<Map<String, Object>> list = resourceStatisticsService.getGradeClickLog(userIds, number);
+		resetUserImage(cloudPlatFormLocal, cloudPlatForm, list);
 		return ResultJSON.getSuccess(list);
 	}
 
@@ -274,5 +336,45 @@ public class ResourceStatisticsController {
 
 		}
 
+	}
+
+	public static String getGradeUserIds(String server, long gradeId) throws Exception {
+
+		String url = server + "/phoneWork_loadStudentByGradeId.action";
+
+		String secretKey = "zhl.interface.tfedu.net";
+
+		Map<String, Object> ps = new HashMap<String, Object>();
+		ps.put("gradeId", gradeId);
+
+		String paramsJson = JSONObject.toJSONString(ps);
+
+		String sign = MD5.getMD5Str(paramsJson + secretKey);
+
+		url = url + "?paramsJson=" + paramsJson + "&sign=" + sign;
+
+		String result = HttpClientUtils.getUrlString(url);
+
+		if (StringUtils.isNotEmpty(result)) {
+			ResultJSON js = JSONObject.parseObject(result, ResultJSON.class);
+
+			StringBuffer ids = new StringBuffer();
+
+			JSONArray array = (JSONArray) js.getData();
+			int length = array.size();
+			for (int i = 0; i < length; i++) {
+				Map map = JSONObject.parseObject(JSONObject.toJSONString(array.get(i)), HashMap.class);
+
+				ids.append(map.get("UserId").toString());
+				if (i < length - 1) {
+					ids.append(",");
+				}
+			}
+
+			return ids.toString();
+
+		}
+
+		return "";
 	}
 }
