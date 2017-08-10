@@ -78,5 +78,16 @@ public class ResourcePlatformWebConstant {
 	public static final String COURSE = "course";
 	
 	
+	/**
+	 * 自建资源在共享记录表(x_platform_share)中的共享对接类型  
+	 */
+	public static final int SHAREDTYPE_FOR_ASSET = 1;
+	
+	
+	
+	
+	public static final String RESOURCE_NOT_EXIST = "指定资源不存在";
+	
+	
 	
 }

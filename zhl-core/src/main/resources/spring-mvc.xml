@@ -89,6 +89,15 @@
            	<bean class="net.tfedu.zhl.helper.CrossDomainInterceptor" />
       
         </mvc:interceptor>
+
+
+
+ 	<!-- 跨域OPTION接口拦截器   --> 
+        <mvc:interceptor>
+        	<mvc:mapping path="/cloudData_*.action"/>
+           	<bean class="net.tfedu.zhl.helper.CrossDomainInterceptor" />
+      
+        </mvc:interceptor>
  
  	<!-- 天台接口 -->
         <mvc:interceptor>

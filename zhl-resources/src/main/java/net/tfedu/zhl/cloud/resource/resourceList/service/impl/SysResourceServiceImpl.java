@@ -23,6 +23,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.sso.subject.dao.JSubjectMapper;
 import net.tfedu.zhl.sso.term.dao.JTermMapper;
 import tk.mybatis.mapper.entity.Example;
@@ -34,7 +35,7 @@ import tk.mybatis.mapper.entity.Example;
  *
  */
 @Service("sysResourceService")
-public class SysResourceServiceImpl implements SysResourceService {
+public class SysResourceServiceImpl extends BaseServiceImpl<SysResource> implements SysResourceService  {
 
 	@Autowired
     SysResourceMapper sysResourceMapper;

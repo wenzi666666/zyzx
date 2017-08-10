@@ -3,8 +3,10 @@ package net.tfedu.zhl.cloud.resource.resourceList.service;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.service.BaseService;
 
 /**
  * 系统资源 service
@@ -12,7 +14,7 @@ import net.tfedu.zhl.core.exception.CustomException;
  * @author WeiCuicui
  *
  */
-public interface SysResourceService {
+public interface SysResourceService extends BaseService<SysResource> {
 
 	
     /**

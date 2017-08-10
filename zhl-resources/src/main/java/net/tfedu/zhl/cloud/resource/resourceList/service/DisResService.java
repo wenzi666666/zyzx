@@ -3,7 +3,9 @@ package net.tfedu.zhl.cloud.resource.resourceList.service;
 import java.util.List;
 
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DisResourceEntity;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
+import net.tfedu.zhl.core.service.BaseService;
 
 /**
  * 区本、校本资源的service
@@ -11,7 +13,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
  * @author WeiCuicui
  *
  */
-public interface DisResService {
+public interface DisResService extends BaseService<DistrictRes>{
 
     /**
      * 查询区本、校本资源信息

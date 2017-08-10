@@ -109,4 +109,20 @@ public interface SysResourceMapper extends CoreMapper<SysResource> {
 	 */
 	public List<SubjectResourceUpdate> resourceViewTop(@Param("subjectCode")String subjectCode, @Param("num")int num);
 
+
+	
+	/**
+	 * 获取系统资源下载的次数
+	 * @param rescode
+	 * @return
+	 */
+	public Integer getDownloadTimes(String rescode);
+
+
+	/**
+	 * 增加系统资源下载的记录
+	 * @param rescode
+	 */
+	public void insertDownloadRecord(String rescode);
+
 }

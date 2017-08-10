@@ -665,7 +665,7 @@
 
 
 
-	<select id="statisticsSchoolUpload" resultType="HashMap">
+	<select id="statisticsSchoolUpload" resultType="Map">
 		SELECT
 		count(id) AS totalupload,
 		IFNULL(sum(today), 0) AS todayupload

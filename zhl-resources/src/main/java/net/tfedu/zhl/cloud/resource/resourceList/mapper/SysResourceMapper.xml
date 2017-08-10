@@ -320,6 +320,18 @@
 	</update>
 
 
+    <!-- 获取系统资源下载的记录 -->
+    <select id="getDownloadTimes" resultType="Integer">
+        SELECT downloadtimes FROM `z_resource_operate_times` where rescode =#{rescode}
+    </select>
+
+
+
+    <!-- 增加系统资源下载的记录 -->
+    <insert id="insertDownloadRecord" >
+        INSERT z_resource_operate_times(rescode,clicktimes,downloadtimes,collecttimes) VALUES (#{rescode},0,1,0) 
+    </insert>
+
 
 
 	<!-- 学科资源更新 -->

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="net.tfedu.zhl.cloud.resource.intergral.dao.UserResourceIntergralRecordMapper">
+	<resultMap id="BaseResultMap"
+		type="net.tfedu.zhl.cloud.resource.intergral.entity.UserResourceIntergralRecord">
+		<!-- WARNING - @mbggenerated -->
+		<constructor>
+			<idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="userid" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="createman" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="score" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="createtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+			<arg column="invalidtime" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+			<arg column="flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+			<arg column="operatetype" jdbcType="VARCHAR" javaType="java.lang.String" />
+			<arg column="operateid" jdbcType="BIGINT" javaType="java.lang.Long" />
+		</constructor>
+	</resultMap>
+
+
+	<!-- 用户共享资源 获取的积分总数 -->
+	<select id="getIntegralIncrementByShare" resultType="Integer">
+		SELECT sum(score) as score
+		from (
+		SELECT IFNULL(SUM(score),0) as score from user_resource_intergral_record
+		where userid =#{userId} and flag = false and operatetype =
+		'down_shared_res' and score > 0
+		UNION
+		SELECT IFNULL(SUM(score),0) as score from user_resource_intergral_record
+		where userid = #{userId} and flag = false and operatetype =
+		'imp_shared_res' and score > 0
+		)result
+	</select>
+
+
+	<!-- 获取用户推荐资源 获取的积分 -->
+	<select id="getIntegralIncrementByRecommend"  resultType="Integer">
+		SELECT IFNULL(SUM(score),0) as score from
+		user_resource_intergral_record where userid = #{userId} and flag =
+		false and operatetype ='pass_recommend_dres' and score > 0
+	</select>
+
+
+	<!-- 获取资源消费的总积分 -->
+	<select id="getIntegralDecrement"  resultType="Integer">
+	   
+		SELECT IFNULL(SUM(score),0) as score from user_resource_intergral_record
+		where userid = #{userId} and flag = false and score &lt; 0
+	</select>
+
+
+
+</mapper>
