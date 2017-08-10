@@ -26,8 +26,8 @@ import net.tfedu.zhl.cloud.resource.integration.constant.JQueryEasyUIConstantt;
 import net.tfedu.zhl.cloud.resource.integration.entity.CourseNode;
 import net.tfedu.zhl.cloud.resource.integration.entity.ResultInfo;
 import net.tfedu.zhl.cloud.resource.integration.util.BeanConvertUtil;
-import net.tfedu.zhl.cloud.resource.integration.util.CloudClientMD5;
 import net.tfedu.zhl.cloud.resource.integration.util.CloudHttpInterfaceUtil;
+import net.tfedu.zhl.cloud.resource.integration.util.CloudIntegralParamCheckUtil;
 import net.tfedu.zhl.cloud.resource.integration.util.ResourceFileConvertUtil;
 import net.tfedu.zhl.cloud.resource.intergral.service.UserResourceIntergralService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
@@ -49,7 +49,10 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
+import net.tfedu.zhl.sso.school.entity.JSchool;
+import net.tfedu.zhl.sso.school.service.JSchoolService;
 import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
@@ -67,22 +70,6 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
  */
 @Controller
 public class CloudDataAPIController {
-
-	/**
-	 * 云平台 用于加密的md5的密钥
-	 */
-	private static final String CLIENT_KEY = "tfedu1234&*()";
-
-	/**
-	 * 云平台对接链接中用于对接校验的时间戳的参数名称
-	 */
-	private static final String PARAM_MD5_CHECK_NOWDATE = "nowdate";
-
-	/**
-	 * 云平台对接链接中的校验字符串
-	 */
-
-	private static final String PARAM_MD5_CHECK_NOWDATE_MD5_STR = "mdStr";
 
 	/**
 	 * 通过接口获取资源中心数据时，排除多媒体教辅库 (exceptPoolIds = "5")
@@ -105,24 +92,6 @@ public class CloudDataAPIController {
 	 * tree 接口中类型区分：知识点目录
 	 */
 	private static final int KONW_NAVIGATION_TYPE = 2;
-
-	private static String getMdStr(String newdate) {
-		return newdate != null ? CloudClientMD5.Md5(newdate + CLIENT_KEY, 1, 1) : "";
-	}
-
-	private static boolean isCloud(HttpServletRequest request) {
-		String newdate = request.getParameter(PARAM_MD5_CHECK_NOWDATE);
-		String mdStr = request.getParameter(PARAM_MD5_CHECK_NOWDATE_MD5_STR);
-		return newdate != null && mdStr != null && getMdStr(newdate).equals(mdStr);
-	}
-
-	public static ResultInfo checkCloudParams(HttpServletRequest request) {
-
-		if (!isCloud(request)) {
-			return ResultInfo.error();
-		}
-		return null;
-	}
 
 	@Resource
 	ZAssetService zAssetService;
@@ -156,6 +125,9 @@ public class CloudDataAPIController {
 	@Resource
 	UserResourceIntergralService userResourceIntergralService;
 
+	@Resource
+	JSchoolService schoolService;
+
 	/**
 	 * 获取（地区下）学校的上传统计信息
 	 * 
@@ -165,7 +137,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo areaUpload(HttpServletRequest request) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		if (result == null) {
 			String schoolIds;
@@ -189,7 +161,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo updateTermSubject(HttpServletRequest request) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		if (result == null) {
 			try {
@@ -225,14 +197,11 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo tree(HttpServletRequest request, String id, String type) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		if (result == null) {
 
-			String message = ResourcePlatformWebConstant.SUCCESS;
-			List info = new ArrayList();
 			try {
-				Long userId = 0L;
 
 				id = ControllerHelper.checkEmpty(id);
 
@@ -330,7 +299,7 @@ public class CloudDataAPIController {
 
 		String resId = request.getParameter("resId");
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 		try {
 
 			if (result == null) {
@@ -359,7 +328,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo downRecord(HttpServletRequest request, HttpServletResponse response, Long resId) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		// fromflag 0 自建资源 1 系统资源 2共享资源 (3 区本 4 校本资源 暂不支持)
 
@@ -493,8 +462,8 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo downUrlForZip(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
-		ResultInfo result = checkCloudParams(request);
-		List list = new ArrayList();
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
 		// 获取参数传递的browser中的云平台当前地址和 云平台内网地址
 		String cloudPlatFormLocal = request.getParameter("cloudPlatFormLocal");
@@ -695,6 +664,7 @@ public class CloudDataAPIController {
 							String fileInfo = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal,
 									isdwj == 1 ? convertPath : path);
 							if (fileInfo != null && fileInfo.length() > 0) {
+								@SuppressWarnings("rawtypes")
 								Map m = JSONObject.parseObject(fileInfo, HashMap.class);
 								md5Code = m.get("MD5").toString();
 							}
@@ -741,7 +711,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo getUpUrl(HttpServletRequest request, HttpServletResponse response) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		try {
 			if (null == result) {
@@ -786,7 +756,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo pool(HttpServletRequest request, HttpServletResponse response) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		try {
 			if (null == result) {
@@ -812,16 +782,13 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo resInfo(HttpServletRequest request, HttpServletResponse response) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		try {
 			if (null == result) {
 
-				String hostLocal = commonWebConfig.getHostLocalOne();
 				String resServiceLocal = commonWebConfig.getResServiceLocal();
 				String currentResPath = commonWebConfig.getCurrentResPath(request);
-				String cloudPlatFormLocal = ControllerHelper.getOptionalParameter(request, "cloudPlatFormLocal");
-				String currentCloudForm = ControllerHelper.getOptionalParameter(request, "currentCloudForm");
 
 				long subjectId = 0;
 
@@ -829,7 +796,7 @@ public class CloudDataAPIController {
 				Integer fromflag = ControllerHelper.getIntParameter(request, "fromflag");
 				Long resId = ControllerHelper.getLongParameter(request, "resId");
 				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				HashMap info = null;
+				Map<String, Object> info = null;
 				String resPlayUrl = "";// 最终的播放地址
 
 				switch (fromflag) {// 1 系统资源
@@ -839,7 +806,7 @@ public class CloudDataAPIController {
 					SysResource sys = (SysResource) sysResourceService.get(resId).getData();
 
 					if (sys != null && sys.getId() > 0) {
-						info = new HashMap();
+						info = new HashMap<String, Object>();
 
 						ResType type = (ResType) resTypeService.get(sys.getMtype()).getData();
 
@@ -902,7 +869,7 @@ public class CloudDataAPIController {
 
 						ResType type = (ResType) resTypeService.get(asset.getUnifytypeid()).getData();
 
-						info = new HashMap();
+						info = new HashMap<String, Object>();
 						String title = asset.getName();// rs.getString("name");
 						String assetPath = asset.getAssetpath();// rs.getString("assetPath");
 						String typeName = (null != type ? type.getMtype() : ""); // rs.getString("type_name");
@@ -940,7 +907,7 @@ public class CloudDataAPIController {
 
 					if (null != dRes && dRes.getId() > 0) {
 
-						info = new HashMap();
+						info = new HashMap<String, Object>();
 
 						ResType type = (ResType) resTypeService.get(dRes.getMtype()).getData();
 
@@ -971,7 +938,7 @@ public class CloudDataAPIController {
 					info.put("resPlayUrl", resPlayUrl);
 				}
 
-				List list = new ArrayList();
+				List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 				list.add(info);
 
 				result = ResultInfo.success(list);
@@ -1005,7 +972,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo isUserIntegralEnough(HttpServletRequest request, HttpServletResponse response) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		try {
 			if (null == result) {
@@ -1040,7 +1007,7 @@ public class CloudDataAPIController {
 	@ResponseBody
 	public ResultInfo userIntegralExpend(HttpServletRequest request, HttpServletResponse response) {
 
-		ResultInfo result = checkCloudParams(request);
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
 		try {
 			if (null == result) {
@@ -1054,6 +1021,36 @@ public class CloudDataAPIController {
 						sharedAssetIds.split(","), sharedAssetIntegrals.split(","));
 
 				result = ResultInfo.success(flag);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = ResultInfo.error();
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * 获取地区学校列表
+	 * 
+	 * @return
+	 */
+	@RequestMapping("cloudData_schoolList.action")
+	@ResponseBody
+	public ResultInfo schoolList(HttpServletRequest request, HttpServletResponse response) {
+
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+
+		try {
+			if (null == result) {
+				Long userId = ControllerHelper.getLongParameter(request, "userId");
+
+				UserAreaInfo info = userService.getUserAreaInfo(userId);
+				List<JSchool> list = schoolService.getSchoolsByDistrictId(info.getDistrictId());
+
+				result = ResultInfo.success(BeanConvertUtil.toListMapLowerCase(list));
 
 			}
 		} catch (Exception e) {

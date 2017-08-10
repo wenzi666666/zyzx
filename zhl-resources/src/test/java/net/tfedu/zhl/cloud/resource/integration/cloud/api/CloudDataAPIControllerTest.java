@@ -254,5 +254,16 @@ public class CloudDataAPIControllerTest extends BaseControllerTestCase {
 
 		
 	}
+	
+	@Test
+	public void testSchoolList() throws Exception {
+		setCloudCheck(request);
+		
+		request.setParameter("userId", "390320126");
+		
+		System.out.println(JSONObject.toJSONString(controller.schoolList(request, response)));
+		
+		
+	}
 
 }
