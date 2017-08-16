@@ -120,12 +120,10 @@ public class UserResourceIntegralController {
 		if (listUserIntergral != null && listUserIntergral.size() > 0) {
 			for (int i = 0; i < listUserIntergral.size(); i++) {
 				Map<String, String> map = listUserIntergral.get(i);
-
-				int score = Integer.parseInt(map.get("score"));
+				Integer score = Integer.parseInt(String.valueOf(map.get("score")));
 				String operatetype = map.get("operatetype");
 				String resName = map.get("resName");
-				String createtime = map.get("createtime");
-				Integer scope = Integer.parseInt(map.get("scope"));
+				Integer scope = Integer.parseInt(String.valueOf(map.get("scope")));
 
 				resName = "<span class='resource'>" + resName + "</span>";
 
@@ -150,7 +148,7 @@ public class UserResourceIntegralController {
 					integral_desc = "消耗" + Math.abs(score) + "积分";
 				}
 
-				map.put("createtime", format.format(createtime));
+				map.put("createtime", format.format(map.get("createtime")));
 				map.put("operate_desc", operate_desc);
 				map.put("integral_desc", integral_desc);
 			}

@@ -1,5 +1,8 @@
 package net.tfedu.zhl.cloud.resource.intergral.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 import net.tfedu.zhl.cloud.resource.intergral.entity.UserResourceIntergralRecord;
@@ -30,5 +33,11 @@ public interface UserResourceIntergralRecordMapper extends CoreMapper<UserResour
 	 * @return
 	 */
 	public Integer getIntegralDecrement(@Param("userId") Long userId);
-
+	/**
+	 * 分页查询用户积分记录
+	 * @param userId
+	 * @return
+	 */
+	public List<Map<String,Object>> getUserIntegralRecord(@Param("userId") Long userId);
+	
 }
