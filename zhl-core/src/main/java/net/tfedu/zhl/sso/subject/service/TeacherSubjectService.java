@@ -1,5 +1,8 @@
 package net.tfedu.zhl.sso.subject.service;
 
+import java.util.List;
+import java.util.Map;
+
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 
@@ -12,4 +15,9 @@ import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 */
 public interface TeacherSubjectService extends BaseService<JTeacherSubject>{
 
+	
+	
+	public List<Map<String,Object>> getUserSubjects(Long userId);
+	
+	
 }

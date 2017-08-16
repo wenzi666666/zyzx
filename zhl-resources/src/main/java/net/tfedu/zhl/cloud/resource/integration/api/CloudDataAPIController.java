@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
 import net.tfedu.zhl.cloud.resource.asset.service.ZAssetService;
+import net.tfedu.zhl.cloud.resource.config.ResourceWebConfig;
 import net.tfedu.zhl.cloud.resource.constant.ResourcePlatformWebConstant;
 import net.tfedu.zhl.cloud.resource.downloadrescord.service.ResDownRecordService;
 import net.tfedu.zhl.cloud.resource.integration.constant.JQueryEasyUIConstantt;
@@ -30,6 +31,7 @@ import net.tfedu.zhl.cloud.resource.integration.util.CloudHttpInterfaceUtil;
 import net.tfedu.zhl.cloud.resource.integration.util.CloudIntegralParamCheckUtil;
 import net.tfedu.zhl.cloud.resource.integration.util.ResourceFileConvertUtil;
 import net.tfedu.zhl.cloud.resource.intergral.service.UserResourceIntergralService;
+import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
@@ -37,10 +39,12 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
+import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.DistrictRes;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
+import net.tfedu.zhl.cloud.resource.user.teach.service.JTeachSyscourseService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.Custom500Exception;
@@ -75,7 +79,6 @@ public class CloudDataAPIController {
 	 * 通过接口获取资源中心数据时，排除多媒体教辅库 (exceptPoolIds = "5")
 	 * 
 	 */
-
 	public static final String EXCEPTPOOLIDS = "5";
 
 	/**
@@ -92,6 +95,16 @@ public class CloudDataAPIController {
 	 * tree 接口中类型区分：知识点目录
 	 */
 	private static final int KONW_NAVIGATION_TYPE = 2;
+
+	// 0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	private static final int TYPE_FROMFLAG_ASSET = 0;
+	private static final int TYPE_FROMFLAG_SHARED_RESOURCE = 2;
+	private static final int TYPE_FROMFLAG_SYS_RESOURCE = 1;
+	private static final int TYPE_FROMFLAG_DISTRICT_RESOURCE = 4;
+	private static final int TYPE_FROMFLAG_SCHOOL_RESOURCE = 3;
+
+	@Resource
+	JTeachSyscourseService jTeachSyscourseService;
 
 	@Resource
 	ZAssetService zAssetService;
@@ -117,6 +130,9 @@ public class CloudDataAPIController {
 	CommonWebConfig commonWebConfig;
 
 	@Resource
+	ResourceWebConfig resourceWebConfig;
+
+	@Resource
 	ResPoolService resPoolService;
 
 	@Resource
@@ -127,6 +143,12 @@ public class CloudDataAPIController {
 
 	@Resource
 	JSchoolService schoolService;
+
+	@Resource
+	TreeService sysCourseTreeService;
+
+	@Resource
+	ResSearchService resSearchService;
 
 	/**
 	 * 获取（地区下）学校的上传统计信息
@@ -1060,6 +1082,329 @@ public class CloudDataAPIController {
 
 		return result;
 
+	}
+
+	/**
+	 * 获取(系统、自建、区本、校本、共享)资源类型
+	 * 
+	 * @param request
+	 * @param type
+	 *            0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	 * @param isCollect
+	 *            自建资源页面区分0:所有1:自建2:收藏3我的共享
+	 * @param fromFlag
+	 *            六大库（0-6） 0 为全部
+	 * @param id
+	 *            需要查询的自建目录节点
+	 * @param tfcode
+	 *            系统目录的code
+	 * @param searchFlag
+	 *            共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+	 * @param mType
+	 *            系统资源类型
+	 * @return
+	 */
+	@RequestMapping("cloudData_resType.action")
+	@ResponseBody
+	public ResultInfo resType(HttpServletRequest request, Integer type, Integer isCollect, Integer fromFlag, Long id,
+			String tfcode, Integer searchFlag, Long mType) {
+
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+
+		List<Map<String, Object>> types = null;
+		List<Map<String, Object>> formats = null;
+		try {
+			if (null == result) {
+				Long userId = getUserId(request);
+
+				type = null == type ? 0 : type;
+				id = null == id ? 0 : id;
+				long courseId = id;
+
+				List<Long> courseIds = new ArrayList<Long>();
+				List<Long> list = new ArrayList<Long>();
+
+				switch (type) {
+				case 0:// 0 为自建资源
+					courseIds.clear();
+					if (courseId > 0) {
+						list.add(courseId);
+					}
+
+					getCourse(courseIds, list, userId);
+
+					types = resSearchService.getAssetResourceType(userId, isCollect, courseIds);
+					formats = resSearchService.getAssetFileFormat(userId, isCollect, courseIds);
+
+					break;
+
+				case 1: // 1 系统资源
+					List<String> syscourseCodes = new ArrayList<String>();
+					if (courseId == 0) {
+						syscourseCodes.clear();
+						boolean isEmpyt = getUserSysCourseList(syscourseCodes, userId);
+						getTfCode(syscourseCodes, courseId);
+					} else {
+						syscourseCodes.clear();
+						getTfCode(syscourseCodes, courseId);
+					}
+
+					
+					
+					
+					
+					
+					break;
+
+				}
+
+				result = ResultInfo.success();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = ResultInfo.error();
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * 获取(系统、自建、区本、校本、共享)资源列表
+	 * 
+	 * @param request
+	 * @param type
+	 *            0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	 * @param isCollect
+	 *            自建资源页面区分0:所有1:自建2:收藏3我的共享
+	 * @param fromFlag
+	 *            六大库（0-6） 0 为全部
+	 * @param id
+	 *            需要查询的自建目录节点
+	 * @param tfcode
+	 *            系统目录的code
+	 * @param searchFlag
+	 *            共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+	 * @param mType
+	 *            系统资源类型
+	 * @return
+	 */
+	@RequestMapping("cloudData_resList.action")
+	@ResponseBody
+	public ResultInfo resList(HttpServletRequest request, Integer type, Integer isCollect, Integer fromFlag, Long id,
+			String tfcode, Integer searchFlag, Long mType) {
+
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+		try {
+			if (null == result) {
+				Long userId = getUserId(request);
+
+				type = null == type ? 0 : type;
+				id = null == id ? 0 : id;
+				long courseId = id;
+
+				List<Long> courseIds = new ArrayList<Long>();
+				List<Long> list = new ArrayList<Long>();
+
+				HashMap resTypeMap = new HashMap();
+				HashMap formatMap = new HashMap();
+
+				switch (type) {
+				case 0:
+					courseIds.clear();
+					if (courseId > 0) {
+						list.add(courseId);
+					}
+
+					getCourse(courseIds, list, userId);
+
+					break;
+
+				}
+
+				result = ResultInfo.success();
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = ResultInfo.error();
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * 获取学案资源信息 批量获取资源的信息
+	 * 
+	 * @param request
+	 * @param fromflags
+	 *            0 自建资源 1 系统资源 2共享资源 (3 区本 4 校本资源 暂不支持)
+	 * @param ids
+	 * @return
+	 */
+	@RequestMapping("cloudData_xueResInfo.action")
+	@ResponseBody
+	public ResultInfo xueResInfo(HttpServletRequest request, String fromflags, String ids) {
+
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+
+		List<Map<String, Object>> dataList = null;
+		try {
+			if (null == result) {
+				Long userId = getUserId(request);
+
+				String resServiceLocal = commonWebConfig.getResServiceLocal();
+				String currentResPath = commonWebConfig.getCurrentResPath(request);
+
+				List<Long> assetIdList = new ArrayList<Long>();
+				List<Long> sysResourceIdList = new ArrayList<Long>();
+				List<Long> districtResIdList = new ArrayList<Long>();
+
+				if (StringUtils.isNotEmpty(ids) && StringUtils.isNotEmpty(fromflags)) {
+
+					String[] idArray = ids.split(",");
+					String[] fromflagArray = fromflags.split(",");
+
+					if (idArray.length != fromflagArray.length) {
+						return ResultInfo.error();
+					}
+
+					for (int i = 0; i < fromflagArray.length; i++) {
+
+						String string = fromflagArray[i];// 0 自建资源 1 系统资源 2共享资源
+															// (3 区本 4 校本资源
+															// 暂不支持)
+
+						switch (Integer.parseInt(string)) {
+						case TYPE_FROMFLAG_ASSET:
+						case TYPE_FROMFLAG_SHARED_RESOURCE:
+							assetIdList.add(Long.parseLong(idArray[i]));
+							break;
+
+						case TYPE_FROMFLAG_SYS_RESOURCE:
+							sysResourceIdList.add(Long.parseLong(idArray[i]));
+							break;
+
+						case TYPE_FROMFLAG_SCHOOL_RESOURCE:
+						case TYPE_FROMFLAG_DISTRICT_RESOURCE:
+							districtResIdList.add(Long.parseLong(idArray[i]));
+							break;
+						}
+
+					}
+
+					Long[] assetIds = new Long[assetIdList.size()];
+					Long[] sysResourceIds = new Long[sysResourceIdList.size()];
+					Long[] districtResIds = new Long[districtResIdList.size()];
+
+					assetIdList.toArray(assetIds);
+					sysResourceIdList.toArray(sysResourceIds);
+					districtResIdList.toArray(districtResIds);
+
+					dataList = resSearchService.queryBatchResourceInfo(assetIds, sysResourceIds, districtResIds);
+
+					for (int i = 0; i < dataList.size(); i++) {
+						Map<String, Object> res = (Map<String, Object>) dataList.get(i);
+						String resType = (String) res.get("restype");
+						String assetPath = (String) res.get("assetpath");
+						String isfinished = null == res.get("isfinished") ? "" : res.get("isfinished").toString();// 上传之后的后台任务是否完成
+						String asseturl = "";
+
+						if ("sys_res".equals(resType)) {// 系统资源
+							if ((Boolean) res.get("isdwj")) {// 如果是多文件
+								String rescode = (String) res.get("rescode");
+								String fpath = (String) res.get("fpath");
+								asseturl = ZhlResourceCenterWrap.getMutipleResourceZipPath(rescode);
+							} else if (assetPath.toLowerCase().indexOf(".swf") > 0
+									|| assetPath.toLowerCase().indexOf(".mp4") > 0) {
+								assetPath = assetPath.replace(".swf", ".tfswf").replace(".mp4", ".tfmp4");
+								asseturl = assetPath;
+							} else {
+								asseturl = assetPath;
+							}
+
+							asseturl = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, asseturl);
+							if (!resServiceLocal.equals(currentResPath)) {
+								asseturl = asseturl.replace(resServiceLocal, currentResPath);
+							}
+						} else {
+
+							asseturl = assetPath;
+							asseturl = ZhlResourceCenterWrap.getDownUrl(resServiceLocal, asseturl);
+							if (!!resServiceLocal.equals(currentResPath)) {
+								asseturl = asseturl.replace(resServiceLocal, currentResPath);
+							}
+						}
+						res.put("assetpath", assetPath);
+						res.put("asseturl", asseturl);
+						res.put("isfinished", isfinished);
+					}
+				}
+
+				result = ResultInfo.success(dataList);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = ResultInfo.error();
+		}
+
+		return result;
+
+	}
+
+	/**
+	 * 
+	 * 遍历查询某个教师自建目录下的所有节点
+	 * 
+	 * @param courseIds
+	 *            用于收集所有节点
+	 * @param list
+	 * @param userId
+	 * @param dbId
+	 * @throws Exception
+	 */
+	private void getCourse(List<Long> courseIds, List<Long> list, long userId) throws Exception {
+		// List<Long> alist = new ArrayList();
+
+	}
+
+	/**
+	 * 将指定系统目录的全部节点的Id查询并放到集合（syscourseCodes）中
+	 * 
+	 * @param syscourseCodes
+	 * @param syscourseId
+	 */
+	private void getTfCode(List<String> syscourseCodes, Long syscourseId) {
+
+		syscourseCodes = sysCourseTreeService.querySysChildren(syscourseId);
+
+		syscourseCodes.add(sysCourseTreeService.getTfCodeById(syscourseId));
+
+	}
+
+	/**
+	 * 获取用户的默认教材
+	 * 
+	 * @param syscourseCodes
+	 * @param userId
+	 * @return
+	 * @throws CustomException
+	 */
+	private boolean getUserSysCourseList(List<String> syscourseCodes, Long userId) throws CustomException {
+		String tfcode = jTeachSyscourseService.queryTeachingSelectTfcode(userId);
+
+		CourseNode node = sysCourseTreeService.getTreeNodeByCode(tfcode);
+
+		if (null != node) {
+
+			getTfCode(syscourseCodes, Long.parseLong(node.getId()));
+
+		}
+
+		return false;
 	}
 
 }

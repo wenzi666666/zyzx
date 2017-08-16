@@ -86,7 +86,11 @@ public class ZhlResourceCenterWrap {
 
 	public static final int default_diskOrder = 1;
 	
-	
+	/**
+	 * 多文件打包zip包所在目录
+	 */
+	public static final String MUTIPLE_FILE_PATH = "MultiZIP";
+
 	
 	/**
 	 * 打包文件路径前缀
@@ -618,5 +622,43 @@ public class ZhlResourceCenterWrap {
 	}
 	
 
+	/**
+	 * 获取教材的封面
+	 * 
+	 * @param ebookpath
+	 * @param tfcode
+	 * @return
+	 */
+	public static String getEBOOkImagePath(String ebookpath, String tfcode,
+			String resSerUrl, String currentResService) {
+
+		String imgpath = ebookpath + "/" + tfcode + ".jpg";
+		String info = GetFileInfo(resSerUrl, imgpath);
+
+		if (info != null && info.trim().length() > 0) {
+
+			HashMap m = (HashMap) JSONObject.toBean(
+					JSONObject.fromObject(info), HashMap.class);
+			if (m != null && ((Integer) m.get("FileSize") > 0)) {
+				// 获取封面的地址（内网）
+				return ZhlResourceCenterWrap
+						.getWebThumbnail(resSerUrl, imgpath).replace(resSerUrl,
+								currentResService);
+			}
+		}
+
+		return "";
+	}
 	
+	
+	
+	/**
+	 * 获取指定资源的路径
+	 * 
+	 * @param ResCode
+	 * @return
+	 */
+	public static String getMutipleResourceZipPath(String ResCode) {
+		return MUTIPLE_FILE_PATH + "\\" + ResCode + ".zip";
+	}
 }

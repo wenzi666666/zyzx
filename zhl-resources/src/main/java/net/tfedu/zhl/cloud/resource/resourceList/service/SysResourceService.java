@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.resourceList.service;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.integration.entity.CourseNode;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResourceEntity;

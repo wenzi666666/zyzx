@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.navigation.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -35,5 +36,11 @@ public class EditionServiceImpl implements EditionService {
         map.put("subjectId", subjectId);
         return jSyscourseMapper.getAllEditions(map);
     }
+
+	@Override
+	public List<Map<String, Object>> getSyscourseVersion(String proCode,Long termId, Long subjectId) {
+		
+		return null;
+	}
 
 }

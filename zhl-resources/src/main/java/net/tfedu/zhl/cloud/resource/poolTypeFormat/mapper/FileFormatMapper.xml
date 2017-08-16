@@ -1,72 +1,326 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper" >
-       
-  <resultMap id="BaseResultMap" type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat" >
-    <!--
-      WARNING - @mbggenerated
-    -->
-    <constructor >
-      <idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
-      <arg column="FormatCode" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="FileFormat" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="TypeDesc" jdbcType="CHAR" javaType="java.lang.String" />
-      <arg column="OrderNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
-    </constructor>
-  </resultMap>
-  
-  <!-- 系统资源，查询资源格式，文本，图片... -->
-  <resultMap id="FileFormatsResultMap"  type="String">
-       <result column="FileFormat" property="fileformat" />
-  </resultMap>
-  <select id="getSysResFormatsByMType"  resultMap="FileFormatsResultMap" >
-  select DISTINCT b.FileFormat
-  from z_resource a 
-  left join z_resnav c on a.ResCode=c.ResCode
-  left join j_syscourse d on c.StructCode=d.tfcode 
-  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag in 
-       <foreach item="item" index="index" collection="sys_from" 
-                         open="(" separator="," close=")">
-                         #{item}
-       </foreach>
-       <if test="typeIds.size() == 0">
-         and a.mtype in ('')
-       </if>
-       <if test="typeIds.size() > 0">
-         and a.mtype in <foreach item="item" index="index" collection="typeIds" 
-                         open="(" separator="," close=")">
-                         #{item}
-                 </foreach>
-       </if>
-  </select>
-  
-  <!-- 区本校本资源，查询资源格式，文本，图片... -->
-  <select id="getDisResFormatsByMType"  resultMap="FileFormatsResultMap">
-  select DISTINCT b.FileFormat
-  from z_districts_resource a 
-  left join z_districts_resnav c on a.ResCode=c.ResCode
-  left join j_syscourse d on c.StructCode=d.tfcode 
-  left join j_filetypedetail b on LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) = b.FormatCode
-  where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%') and FileFormat is not null and a.fromFlag = #{fromFlag} 
-   <if test="fromFlag == 3">
-         and a.scopeId = #{schoolId} and a.scope = 5 
-    </if>
-    <if test="fromFlag == 4">
-         and a.scopeId = #{districtId} and a.scope = 4 
-    </if>
-  and a.mtype in (
-  SELECT b.id type_id from x_resourcetype b where b.flag=0 
-    <if test="mtype != 0">
-      and (b.id = #{mtype} or b.pid = #{mtype})
-    </if> 
-  )
-  </select>
+<mapper
+	namespace="net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper">
 
-  <select id="getAllFileFormat" resultType="String">
-  		select  distinct fileformat as fileformat  from j_filetypedetail where flag = false order by ordernum 
-  </select>
-  
-  
+	<resultMap id="BaseResultMap"
+		type="net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat">
+		<!-- WARNING - @mbggenerated -->
+		<constructor>
+			<idArg column="Id" jdbcType="BIGINT" javaType="java.lang.Long" />
+			<arg column="FormatCode" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="FileFormat" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="TypeDesc" jdbcType="CHAR" javaType="java.lang.String" />
+			<arg column="OrderNum" jdbcType="INTEGER" javaType="java.lang.Integer" />
+			<arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
+		</constructor>
+	</resultMap>
+
+	<!-- 系统资源，查询资源格式，文本，图片... -->
+	<resultMap id="FileFormatsResultMap" type="String">
+		<result column="FileFormat" property="fileformat" />
+	</resultMap>
+	<select id="getSysResFormatsByMType" resultMap="FileFormatsResultMap">
+		select DISTINCT b.FileFormat
+		from z_resource a
+		left join z_resnav c on a.ResCode=c.ResCode
+		left join j_syscourse d on c.StructCode=d.tfcode
+		left join j_filetypedetail b on
+		LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) =
+		b.FormatCode
+		where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%')
+		and FileFormat is not null and a.fromFlag in
+		<foreach item="item" index="index" collection="sys_from" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="typeIds.size() == 0">
+			and a.mtype in ('')
+		</if>
+		<if test="typeIds.size() > 0">
+			and a.mtype in
+			<foreach item="item" index="index" collection="typeIds" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<!-- 区本校本资源，查询资源格式，文本，图片... -->
+	<select id="getDisResFormatsByMType" resultMap="FileFormatsResultMap">
+		select DISTINCT b.FileFormat
+		from z_districts_resource a
+		left join z_districts_resnav c on a.ResCode=c.ResCode
+		left join j_syscourse d on c.StructCode=d.tfcode
+		left join j_filetypedetail b on
+		LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) =
+		b.FormatCode
+		where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%')
+		and FileFormat is not null and a.fromFlag = #{fromFlag}
+		<if test="fromFlag == 3">
+			and a.scopeId = #{schoolId} and a.scope = 5
+		</if>
+		<if test="fromFlag == 4">
+			and a.scopeId = #{districtId} and a.scope = 4
+		</if>
+		and a.mtype in (
+		SELECT b.id type_id from x_resourcetype b where b.flag=0
+		<if test="mtype != 0">
+			and (b.id = #{mtype} or b.pid = #{mtype})
+		</if>
+		)
+	</select>
+
+	<select id="getAllFileFormat" resultType="String">
+		select distinct fileformat as fileformat from j_filetypedetail where flag =
+		false order by ordernum
+	</select>
+
+
+
+
+
+
+	<!-- 可复用sql 用户上传 自建资源 -->
+	<sql id="queryUserAsset_upload">
+		SELECT DISTINCT 0 AS iscollect, a.isfinished,a.id,a.iscourseware
+		isdwj,
+		a. name name,a. name title,a.assetpath,a.keyword,
+		d.mtype type_name, a.unifyTypeId typeId,
+		a.islocal islocal,1 beasset,b.createtime createtime,
+		b.courseid courseid,a.fileformat fileext,
+		if ((select count(shareid) from x_platform_share
+		where flag = 0 and sharedtype = 1 and shareid = a.id
+		) >= 1,'true','false') isshare,
+		0 diskorder,-1 rescoursefrom,'' collectcourseid, j.ordernum,
+		0 quotes,0 clicks,0 downloads,'' scope,a.assetsize fsize,0 res_time
+		FROM z_asset a
+		LEFT JOIN X_RESCOURSE b ON a.id = b.ResId
+		LEFT JOIN x_resourcetype d ON d.id = a.unifyTypeId
+		LEFT JOIN j_filetypedetail j ON a.filecode = j.formatcode
+		AND j.flag = 0
+		WHERE
+		b.userid = #{userId}
+		AND c.user_id = a.userid
+		AND a.flag = 0
+		AND b.flag = 0
+		AND d.flag = 0
+		AND b.IsUpload = 0
+		AND a.fileType = 'A'
+
+		<if test="null!=courseId and courseId.size()>0">
+			and b.courseId in
+			<foreach collection="courseIds" item="courseId" separator=","
+				open="(" close=")">
+				#{courseId}
+			</foreach>
+		</if>
+	</sql>
+
+	<!-- 可复用sql 用户收藏的系统资源 -->
+	<sql id="queryUserAsset_collect_sysres">
+		select 2 as iscollect,0 as isfinished,a.id,a.isdwj,a.fname
+		name,a.title title,
+		a.fpath assetpath,a.keyword,c.type_name, a.mtype typeid,0 islocal,
+		0 beasset, b.createtime createtime,
+		b.dirid courseid,a.fileformat fileext,'' isshare,k.diskorder,
+		0 rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,0 clicks,0
+		downloads,
+		'' scope,a.fsize fsize,m.res_time from z_resource a
+		left join z_rescollection b on a.id=b.resid
+		left join z_resourcetype c on b.typeId=c.type_id
+		left join x_resourcetype d on a.mtype = d.id
+		left join z_res_medium m on a.id = m.res_Id and a.resCode = m.res_code
+		left join z_res_disk k on a.resCode = k.resCode
+		left join j_filetypedetail j on LOWER(SUBSTRING_INDEX(a.fname,'.',-1))
+		= SUBSTR(j.FormatCode,2) and j.flag = 0 where b.userId= #{userId}
+		and a.flag=0 and b.flag=0 and b.fromFlag = 0
+		and c.flag=0 and d.flag=0
+		<if test="null!=courseId and courseId.size()>0">
+			and b.dirId in
+			<foreach collection="courseIds" item="courseId" separator=","
+				open="(" close=")">
+				#{courseId}
+			</foreach>
+		</if>
+	</sql>
+
+
+
+	<!-- 可复用sql 用户收藏的共享资源 -->
+	<sql id="queryUserAsset_collect_shared">
+		SELECT
+		2 as iscollect,a.isfinished,a.id,a.iscourseware isdwj,a. name name,
+		a. name title,a.assetpath assetpath,a.keyword,c.mtype type_name,
+		a.unifytypeid as typeid,a.islocal,1 beasset,b.createtime createtime,
+		b.dirid courseid,j.fileformat fileext,'' isshare,0 diskorder,
+		- 1 rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,
+		0 clicks,0 downloads,'' scope,a.assetsize fsize,0 res_time,a.filecode
+		FROM
+		z_asset a
+		LEFT JOIN z_rescollection b ON a.id = b.resid
+		LEFT JOIN x_resourcetype c ON a.unifyTypeId = c.id
+		LEFT JOIN j_filetypedetail j ON a.filecode = j.formatcode
+		WHERE
+		b.userId = #{userId}
+		AND a.flag = 0
+		AND b.flag = 0
+		AND b.fromFlag = 1
+		<if test="null!=courseId and courseId.size()>0">
+			and b.dirId in
+			<foreach collection="courseIds" item="courseId" separator=","
+				open="(" close=")">
+				#{courseId}
+			</foreach>
+		</if>
+	</sql>
+
+
+	<!-- 可复用sql 用户收藏的区校资源 -->
+	<sql id="queryUserAsset_collect_distrctres">
+		select 2 as iscollect,0 as isfinished,a.id,a.isdwj,a.fname
+		name,a.title title,
+		a.fullpath assetpath,a.keyword,c.type_name,b.typeid,a.islocal, 0 beasset,
+		b.createtime createtime,
+		b.dirid courseid,j.fileformat as fileext,
+		'' isshare,0 diskorder, a.fromflag rescoursefrom,b.dirid
+		collectcourseid,j.ordernum,
+		0 quotes,0 clicks,0 downloads,'' scope ,a.fsize fsize,0 res_time
+		from z_districts_resource a
+		left join z_rescollection b on a.id=b.resid
+		left join z_resourcetype c on b.typeId=c.type_id
+		left join j_filetypedetail j
+		on LOWER(SUBSTRING_INDEX(a.fname,'.',-1)) = SUBSTR(j.FormatCode,2) and
+		j.flag = 0
+		where b.userId= #{userId} and a.flag=0 and b.flag=0 and b.fromFlag in (3,4)
+		and c.flag=0
+
+		<if test="null!=courseId and courseId.size()>0">
+			and b.dirId in
+			<foreach collection="courseIds" item="courseId" separator=","
+				open="(" close=")">
+				#{courseId}
+			</foreach>
+		</if>
+	</sql>
+
+
+
+
+
+	<!-- 可复用sql 用户的共享资源 -->
+	<sql id="queryUserAsset_myshare">
+
+		select DISTINCT 2 as iscollect, a.isfinished,a.id,a.iscourseware
+		isdwj,a.name name,
+		a.name title,a.assetpath,d.mtype type_name,d.id typeid,a.keyword,a.islocal
+		islocal,
+		1 beasset, b.createtime createtime,b.courseid courseid,j.fileformat
+		fileext,
+		if((select count(shareid) from x_platform_share where flag =0 and sharedtype =1
+		and shareid = a.id)>=1,'true','false')isshare,
+		0 diskorder,6 rescoursefrom,'' collectcourseid,j.ordernum
+		,p.quotes,p.clicks,
+		p.downloads,p.scope,a.assetsize fsize,0 res_time
+		from z_asset a
+		left join X_RESCOURSE b on a.id=b.ResId
+		LEFT JOIN x_platform_share p on a.id = p.shareId
+		left join z_resourcetype d on c.type_id = d.type_id
+		left join j_filetypedetail j on a.filecode = j.formatcode and j.flag = 0
+		where b.userid = #{userId} and a.flag = 0 and b.flag=0 and d.flag = 0
+		and p.flag=0 and b.IsUpload=0 and p.sharedType=1
+
+		<if test="null!=courseId and courseId.size()>0">
+			and b.courseId in
+			<foreach collection="courseIds" item="courseId" separator=","
+				open="(" close=")">
+				#{courseId}
+			</foreach>
+		</if>
+	</sql>
+
+
+
+	<sql id="query_asset_tab">
+
+		<if test="1 == isCollect ">
+			<include refid="queryUserAsset_upload" />
+		</if>
+
+		<if test="2 == isCollect ">
+			<include refid="queryUserAsset_collect_sysres" />
+			UNION ALL
+			<include refid="queryUserAsset_collect_shared" />
+			UNION ALL
+			<include refid="queryUserAsset_collect_distrctres" />
+		</if>
+
+		<if test="3 == isCollect ">
+			<include refid="queryUserAsset_myshare" />
+		</if>
+
+	</sql>
+
+
+
+	<!-- 获取用户自建资源涉及的系统资源类型 1:自建 2:收藏 3我的共享 -->
+	<select id="getAssetResourceType" resultType="HashMap">
+		select type_name,typeid
+		<!-- ,count(1) as num -->
+		from (
+		<include refid="query_asset_tab" />
+
+		) temp group by typeid
+	</select>
+
+
+
+	<!-- 获取用户自建资源涉及的文件格式 -->
+	<select id="getAssetFileFormat" resultType="HashMap">
+
+		select fileext
+		<!-- ,count(1) as num -->
+		from (
+		<include refid="query_asset_tab" />
+
+		) temp group by typeid
+
+
+	</select>
+
+
+
+   <!-- 获取资源库对应的资源类型  -->
+   <select id="getPoolType" resultType="Long">
+    SELECT id from (
+		SELECT b.id,b.pid,a.poolId 
+		from z_res_pooltype a 
+		LEFT JOIN x_resourcetype b on a.resTypeId = b.ID 
+		where a.flag=0 and b.flag=0 
+		UNION SELECT a.id,a.pid,b.poolId  
+		from x_resourcetype a 
+		LEFT JOIN z_res_pooltype b 
+		on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp
+	WHERE 1 = 1 
+	
+	<if test="null != poolId and poolId > 0 ">
+	   AND poolId = #{poolId}
+	</if>
+	
+	<if test="null != exceptPoolIds and exceptPoolIds.size()>0 ">
+	   AND poolId NOT IN 
+	   <foreach collection="exceptPoolIds" item="id" separator="," open="(" close=")">
+	       #{id}
+	   </foreach>
+        AND id not in (37,38,39)
+    </if>
+	
+   </select>
+
+
+
+
+
+
+
 </mapper>

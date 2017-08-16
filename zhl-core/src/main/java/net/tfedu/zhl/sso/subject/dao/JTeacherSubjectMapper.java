@@ -1,5 +1,8 @@
 package net.tfedu.zhl.sso.subject.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 
@@ -26,5 +29,13 @@ public interface JTeacherSubjectMapper extends CoreMapper<JTeacherSubject> {
      * @param userId
      */
     public void removeRepeatData(Long userId);
+    
+    /**
+     * 获取用户的学科
+     * 返回 id,name,termId,code
+     * @param userId
+     * @return
+     */
+    public List<Map<String,Object>> getUserSubjects(Long userId);
 
 }

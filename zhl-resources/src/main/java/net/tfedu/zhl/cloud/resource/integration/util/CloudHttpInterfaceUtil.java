@@ -3,6 +3,8 @@ package net.tfedu.zhl.cloud.resource.integration.util;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
@@ -10,7 +12,10 @@ import net.tfedu.zhl.cloud.resource.integration.entity.CourseNode;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.httpclient.HttpClientUtils;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 /**
  * 
@@ -71,6 +76,34 @@ public class CloudHttpInterfaceUtil {
 
 		} catch (Exception e) {
 			throw new CustomException(e.getMessage());
+		}
+
+	}
+	
+	/**
+	 * 根据username获取userid(依赖参数userName、cloudPlatFormLocal)
+	 * @param request
+	 * @param registerService
+	 * @return
+	 * @throws Exception
+	 */
+	public static Long getUserId(HttpServletRequest request,RegisterService registerService) throws Exception {
+		String userName = ControllerHelper.getParameter(request, "userName");
+
+		SRegister reg = registerService.getRegister(userName);
+
+		boolean isExist = reg != null;
+
+		if (!isExist) {
+			String cloudPlatFormLocal = ControllerHelper.getParameter(request, "cloudPlatFormLocal");
+
+			if (StringUtils.isNotEmpty(cloudPlatFormLocal) && cloudPlatFormLocal.indexOf(",") >= 0) {
+				cloudPlatFormLocal = cloudPlatFormLocal.split(",")[0];
+			}
+			return CloudHttpInterfaceUtil.getUserIdFromCloud(userName, cloudPlatFormLocal);
+
+		} else {
+			return reg.getId();
 		}
 
 	}

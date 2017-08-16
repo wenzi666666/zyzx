@@ -52,20 +52,22 @@ public class JTeachSyscourseServiceImpl extends BaseServiceImpl<JTeachSyscourse>
 	@CacheEvict(value = "bussinesscache", key = "'TEACHINGSELECT_'+#userId")
 	@Override
 	public void replaceUserTeachingSelect(Long userId, Long termId, Long subjectId, Long syscourseId) {
+		
+		JTeachSyscourse record = new JTeachSyscourse();
+		record.setUserid(userId);
+		
 		List<JTeachSyscourse> records = getTeachingSelectALLWithDeleted(userId);
 		
 		if (null != records && records.size() > 0) {
-			
-			JTeachSyscourse record = new JTeachSyscourse();
-			record.setUserid(userId);
-			
 			mapper.delete(record);
-
+		} 
+		
+		record.setFlag(false);
+		record.setSubjectid(subjectId.intValue());
+		record.setTermid(termId.intValue());
+		record.setSyscourseid(syscourseId);
 			
-		} else {
-
-		}
-
+		mapper.insertUseGeneratedKeys(record);
 	}
 
 	/**

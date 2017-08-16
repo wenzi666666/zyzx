@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -31,143 +32,191 @@ import com.github.pagehelper.PageHelper;
 public class ResSearchServiceImpl implements ResSearchService {
 
 	@Resource
-    ResSearchMapper resSearchMapper;
-    @Resource
-    FileFormatMapper fileFormatMapper;
-    @Resource DistrictResMapper districtResMapper;
-    
-    @Resource JUserMapper jUserMapper;
+	ResSearchMapper resSearchMapper;
+	@Resource
+	FileFormatMapper fileFormatMapper;
+	@Resource
+	DistrictResMapper districtResMapper;
 
-    /**
-     * 跨库检索资源
-     */
-    @Override
-    public Pagination<ResSearchResultEntity> getResources(int fromFlag, List<Integer> sys_from, String searchKeyword,
-            String format, int page, int perPage,long userId,int expire) {
+	@Resource
+	JUserMapper jUserMapper;
 
-        // 存放查询结果
-        List<ResSearchResultEntity> list = new ArrayList<ResSearchResultEntity>();
-        // 封装结果集
-        PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
+	/**
+	 * 跨库检索资源
+	 */
+	@Override
+	public Pagination<ResSearchResultEntity> getResources(int fromFlag, List<Integer> sys_from, String searchKeyword,
+			String format, int page, int perPage, long userId, int expire) {
 
-        
-        long schoolId = 0;
-        long districtId = 0;
+		// 存放查询结果
+		List<ResSearchResultEntity> list = new ArrayList<ResSearchResultEntity>();
+		// 封装结果集
+		PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 
-        // 根据userId查询schoolId 和 districtId
-        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
-		if(map!=null){
+		long schoolId = 0;
+		long districtId = 0;
+
+		// 根据userId查询schoolId 和 districtId
+		HashMap<String, Object> map = jUserMapper.getUserAreaInfo(userId);
+		if (map != null) {
 			districtId = (map.get("districtid") instanceof java.lang.String)
-							? Long.parseLong(map.get("districtid").toString())
-							: Long.parseLong(String.valueOf(map.get("districtid")));
+					? Long.parseLong(map.get("districtid").toString())
+					: Long.parseLong(String.valueOf(map.get("districtid")));
 			schoolId = (map.get("schoolid") instanceof java.lang.String)
-					?Long.parseLong(map.get("schoolid").toString())
-					:Long.parseLong(String.valueOf(map.get("schoolid")));
+					? Long.parseLong(map.get("schoolid").toString())
+					: Long.parseLong(String.valueOf(map.get("schoolid")));
 		}
-  
-        // 查询满足条件的全部资源
-        if (fromFlag == -1) {
 
-            // Page插件必须放在查询语句之前紧挨的第一个位置
-            PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllResources(searchKeyword, format, sys_from,schoolId, districtId);
-        } else if (fromFlag == 0) { // 系统资源
+		// 查询满足条件的全部资源
+		if (fromFlag == -1) {
 
-            // Page插件必须放在查询语句之前紧挨的第一个位置
-            PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllSysResources(searchKeyword, format, sys_from);
-        } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源
+			// Page插件必须放在查询语句之前紧挨的第一个位置
+			PageHelper.startPage(page, perPage);
+			list = resSearchMapper.getAllResources(searchKeyword, format, sys_from, schoolId, districtId);
+		} else if (fromFlag == 0) { // 系统资源
 
-        	
-            // Page插件必须放在查询语句之前紧挨的第一个位置
-            PageHelper.startPage(page, perPage);
-            list = resSearchMapper.getAllDisResources(searchKeyword, fromFlag, format,schoolId, districtId);
-        }
-        
-        // 判断资源是否为最新
-        for (int i = 0; i < list.size(); i++) {
-        	
-            // 最后更新日期
-            Date date = list.get(i).getUpdateDT();
-            // 得到当前日期的前多少天
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -expire);
-            Date expireDate = calendar.getTime();
-            // 比较
-            if (date.getTime() >= expireDate.getTime())
-                list.get(i).setNew(true);
-        }
-        //将pageIn封装为自定义的pagination
-        return transfer.transfer(list);
-    }
-    
-    /**
-     * 查询资源格式
-     */
-    @Override
-	public List<String> getFileFormats(String searchKeyword,int fromFlag,List<Integer> sys_from,long userId){
-    	 
-        
-        List<String> resultList = new ArrayList<String>();
-        
-        long schoolId = 0;
-        long districtId = 0;
+			// Page插件必须放在查询语句之前紧挨的第一个位置
+			PageHelper.startPage(page, perPage);
+			list = resSearchMapper.getAllSysResources(searchKeyword, format, sys_from);
+		} else if (fromFlag == 3 || fromFlag == 4) { // 校本资源、区本资源
 
-        // 根据userId查询schoolId 和 districtId
-        HashMap<String,Object> map =  jUserMapper.getUserAreaInfo(userId);
-		if(map!=null){
+			// Page插件必须放在查询语句之前紧挨的第一个位置
+			PageHelper.startPage(page, perPage);
+			list = resSearchMapper.getAllDisResources(searchKeyword, fromFlag, format, schoolId, districtId);
+		}
+
+		// 判断资源是否为最新
+		for (int i = 0; i < list.size(); i++) {
+
+			// 最后更新日期
+			Date date = list.get(i).getUpdateDT();
+			// 得到当前日期的前多少天
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DATE, -expire);
+			Date expireDate = calendar.getTime();
+			// 比较
+			if (date.getTime() >= expireDate.getTime())
+				list.get(i).setNew(true);
+		}
+		// 将pageIn封装为自定义的pagination
+		return transfer.transfer(list);
+	}
+
+	/**
+	 * 查询资源格式
+	 */
+	@Override
+	public List<String> getFileFormats(String searchKeyword, int fromFlag, List<Integer> sys_from, long userId) {
+
+		List<String> resultList = new ArrayList<String>();
+
+		long schoolId = 0;
+		long districtId = 0;
+
+		// 根据userId查询schoolId 和 districtId
+		HashMap<String, Object> map = jUserMapper.getUserAreaInfo(userId);
+		if (map != null) {
 			districtId = (map.get("districtid") instanceof java.lang.String)
-							? Long.parseLong(map.get("districtid").toString())
-							: Long.parseLong(String.valueOf(map.get("districtid")));
+					? Long.parseLong(map.get("districtid").toString())
+					: Long.parseLong(String.valueOf(map.get("districtid")));
 			schoolId = (map.get("schoolid") instanceof java.lang.String)
-					?Long.parseLong(map.get("schoolid").toString())
-					:Long.parseLong(String.valueOf(map.get("schoolid")));
+					? Long.parseLong(map.get("schoolid").toString())
+					: Long.parseLong(String.valueOf(map.get("schoolid")));
 		}
-        
-        // 查询全部资源的格式
-        if (fromFlag == -1) {
 
-        	resultList = resSearchMapper.getAllFileFormats(searchKeyword, sys_from,schoolId,districtId);
-        	
-        } else if (fromFlag == 0) { // 系统资源的格式
+		// 查询全部资源的格式
+		if (fromFlag == -1) {
 
-        	resultList = resSearchMapper.getSysFileFormats(searchKeyword, sys_from);
-        } else if(fromFlag == 3 || fromFlag == 4){ // 校本资源、区本资源的格式
+			resultList = resSearchMapper.getAllFileFormats(searchKeyword, sys_from, schoolId, districtId);
 
-            resultList = resSearchMapper.getDisFileFormats(searchKeyword, fromFlag,schoolId,districtId);
-        }
-        
-        resultList.add(0,"全部"); // 增加一个全部的链接
-        
-        return resultList;
-    }
+		} else if (fromFlag == 0) { // 系统资源的格式
+
+			resultList = resSearchMapper.getSysFileFormats(searchKeyword, sys_from);
+		} else if (fromFlag == 3 || fromFlag == 4) { // 校本资源、区本资源的格式
+
+			resultList = resSearchMapper.getDisFileFormats(searchKeyword, fromFlag, schoolId, districtId);
+		}
+
+		resultList.add(0, "全部"); // 增加一个全部的链接
+
+		return resultList;
+	}
 
 	@Override
-	public Pagination<ResSearchResultEntity> querySysResource(List<Integer> sys_from,int respool, String searchKeyword, int page, int perPage,
-			int expire) {
-        // 封装结果集
-        PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
+	public Pagination<ResSearchResultEntity> querySysResource(List<Integer> sys_from, int respool, String searchKeyword,
+			int page, int perPage, int expire) {
+		// 封装结果集
+		PageInfoToPagination<ResSearchResultEntity> transfer = new PageInfoToPagination<ResSearchResultEntity>();
 
-        // Page插件必须放在查询语句之前紧挨的第一个位置
-        PageHelper.startPage(page, perPage);
-				
-        List<ResSearchResultEntity> list = resSearchMapper.querySysResource(sys_from,searchKeyword, respool);
-		
-     // 判断资源是否为最新
-        for (int i = 0; i < list.size(); i++) {
-        	
-            // 最后更新日期
-            Date date = list.get(i).getUpdateDT();
-            // 得到当前日期的前多少天
-            Calendar calendar = Calendar.getInstance();
-            calendar.add(Calendar.DATE, -expire);
-            Date expireDate = calendar.getTime();
-            // 比较
-            if (date.getTime() >= expireDate.getTime())
-                list.get(i).setNew(true);
-        }
-		
+		// Page插件必须放在查询语句之前紧挨的第一个位置
+		PageHelper.startPage(page, perPage);
+
+		List<ResSearchResultEntity> list = resSearchMapper.querySysResource(sys_from, searchKeyword, respool);
+
+		// 判断资源是否为最新
+		for (int i = 0; i < list.size(); i++) {
+
+			// 最后更新日期
+			Date date = list.get(i).getUpdateDT();
+			// 得到当前日期的前多少天
+			Calendar calendar = Calendar.getInstance();
+			calendar.add(Calendar.DATE, -expire);
+			Date expireDate = calendar.getTime();
+			// 比较
+			if (date.getTime() >= expireDate.getTime())
+				list.get(i).setNew(true);
+		}
+
 		return transfer.transfer(list);
+	}
+
+	@Override
+	public List<Map<String, Object>> queryBatchResourceInfo(Long[] assetIds, Long[] sysResourceIds,
+			Long[] districtResIds) {
+		
+		if ((null == assetIds || assetIds.length == 0) && (null ==  sysResourceIds || sysResourceIds.length == 0) 
+				&& (null ==  districtResIds|| districtResIds.length == 0 )) {
+			return null;
+		}
+
+		
+		List<Map<String, Object>> ls = resSearchMapper.queryAssets(assetIds);
+		List<Map<String, Object>> ls2 = resSearchMapper.querySysResources(sysResourceIds);
+		List<Map<String, Object>> ls3 = resSearchMapper.queryDistrcitResources(districtResIds);
+		
+		
+		ls.addAll(ls2);
+		ls.addAll(ls3);
+		
+		return ls ; 
+	}
+
+	@Override
+	public List<Map<String, Object>> getAssetResourceType(Long userId, Integer isCollect, List<Long> courseIds) {
+		return fileFormatMapper.getAssetResourceType(userId, isCollect, courseIds);
+	}
+
+	@Override
+	public List<Map<String, Object>> getAssetFileFormat(Long userId, Integer isCollect, List<Long> courseIds) {
+		return fileFormatMapper.getAssetFileFormat(userId, isCollect, courseIds);
+	}
+
+	@Override
+	public List<Map<String, Object>> getSysResourceType(String exceptPoolIds, Integer poolId,
+			List<String> syscourseCodes, String sysFrom) {
+		
+		
+		
+		
+		
+		return null;
+	}
+
+	@Override
+	public List<Map<String, Object>> getSysResourceFileFormat(String exceptPoolIds, Integer poolId,
+			List<String> syscourseCodes, String sysFrom) {
+		
+		return null;
 	}
 
 }

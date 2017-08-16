@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.cloud.resource.integration.api.CloudDataAPIController;
+import net.tfedu.zhl.cloud.resource.integration.entity.ResultInfo;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
 /**
@@ -264,6 +265,21 @@ public class CloudDataAPIControllerTest extends BaseControllerTestCase {
 		System.out.println(JSONObject.toJSONString(controller.schoolList(request, response)));
 		
 		
+	}
+	@Test
+	public void testxueResInfo() throws Exception {
+		setCloudCheck(request);
+		
+
+
+		request.setParameter("userName", "csls01");
+		request.setParameter("cloudPlatFormLocal", "http://192.168.111.8");
+		request.setParameter("cloudPlatForm", "http://192.168.111.8");
+
+		ResultInfo result = controller.xueResInfo(request, "0,1,2,3,4", "164884630,1,164884632,871648,871647");
+		
+		System.out.println(JSONObject.toJSONString(result));
+
 	}
 
 }

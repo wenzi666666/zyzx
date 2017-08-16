@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 
+import net.tfedu.zhl.cloud.resource.integration.entity.CourseNode;
+import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResPoolTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPoolType;
@@ -210,6 +212,8 @@ public class SysResourceServiceImpl extends BaseServiceImpl<SysResource> impleme
 		}
 		return hasPermission;
 	}
+
+
 
 	
 }

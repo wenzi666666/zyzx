@@ -62,13 +62,14 @@
 		<id column="id" property="id" />
 		<result column="name" property="name" />
 		<result column="tfcode" property="tfcode" />
+		<result column="ebookpath" property="ebookpath" />
   </resultMap>
   <select id="getAllBooks" parameterType="HashMap" resultMap="BooksResultMap">
   
 	select s.id, case when bookname is NULL then s.Name
-	else bookname end as name, s.tfcode from j_syscourse s
+	else bookname end as name, s.tfcode,s.ebookpath  from j_syscourse s
 	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
-	where pnodeid =#{pnodeId} and s.flag = false and proCode = #{proCode} order by orderNo
+	where pnodeid =#{pnodeId} and s.flag = false and proCode = #{proCode} and s.flag = false order by orderNo
 
   </select>
   
@@ -76,16 +77,26 @@
   <resultMap id="TopChildrenResultMap" type="net.tfedu.zhl.cloud.resource.navigation.entity.TreeNode" >
 		<id column="id" property="id" />
 		<result column="label" property="label" />
+		<result column="name" property="name" />
 		<result column="tfcode" property="tfcode" />
+		<result column="termId" property="termId" />
+		<result column="subjectId" property="subjectId" />
+		<result column="pNodeId" property="pNodeId" />
   </resultMap>
   <select id="getTopChildrenResultMap" parameterType="Long" resultMap="TopChildrenResultMap">
-		select id,name label,tfcode from j_syscourse where pnodeid =#{pnodeId} and visible = 1 and typeFlag in (0,1) and flag = false order by orderNum
+		select id,name as label,tfcode,name,subjectid,termid,pnodeid from j_syscourse where pnodeid =#{pnodeId} and visible = 1 and typeFlag in (0,1) and flag = false order by orderNum
+  </select>
+  
+  
+  <!-- 查询所有字节点的code  -->
+  <select id="getAllChildrenIds" parameterType="Long" resultType="String">
+		select tfcode from j_syscourse where pnodeid =#{pnodeId} and visible = 1 and typeFlag in (0,1) and flag = false 
   </select>
   
   <!-- 根据id，查询一课程信息  -->
   <select id="getOneCourseInfo" resultMap="TopChildrenResultMap">
     select s.id, case when bookname is NULL then s.Name
-	else bookname end as label, s.tfcode from j_syscourse s
+	else bookname end as label, s.tfcode ,name,subjectid,termid,pnodeid from j_syscourse s
 	LEFT JOIN j_producttfcodecontrast jp on s.tfcode = jp.tfcode
 	where s.id =#{id} and s.flag = false and proCode =#{proCode} and s.visible = 1 and s.typeFlag in (0,1) 
   </select>
@@ -141,6 +152,22 @@
 		and  11 > LENGTH(TFcode);
   </select>
  
+ 
+ 
+ <select id="getSyscourseVersion" resultType="HashMap">
+	SELECT id,name,tfcode,ordernum,termname,subjectname FROM( 
+		SELECT s.id,REPLACE(REPLACE(s.name,j.name,''),sub.name,'') as name,tfcode,
+		s.ordernum,j.name AS termname,sub.name AS subjectname 
+		FROM j_syscourse s 
+		LEFT JOIN j_term j on s.termId = j.id 
+		LEFT JOIN j_subject sub on s.subjectId = sub.id 
+		WHERE s.termid =#{termId} AND s.subjectid =#{subjectId} AND s.flag = false 
+		AND j.flag = false AND sub.flag = false AND s.pnodeid = 0  
+		AND tfcode IN (SELECT DISTINCT LEFT(tfcode,8) 
+		AS tfcode FROM j_producttfcodecontrASt  p WHERE p.procode = #{proCode}
+	)ORDER BY s.orderNum ASC,s.id DESC)tmp  
+	WHERE name is not null AND name != ''   
+ </select>
  
  
   <!-- 开启二级缓存 -->

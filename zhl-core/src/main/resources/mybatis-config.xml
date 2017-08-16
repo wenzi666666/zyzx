@@ -54,7 +54,7 @@
         <setting name="aggressiveLazyLoading" value="false"/>
         
         
-        <!-- <setting name="logImpl" value="LOG4J"/> -->
+        <!----> <setting name="logImpl" value="LOG4J"/> 
         
 
     </settings>
