@@ -77,23 +77,25 @@
   <!--  查询用户信息  -->
   <select id="getUserInfo" resultMap="userinfoMap" parameterType="String">
   	  SELECT
-			t.guid as uuid ,
-			t.school_guid as school_id,
-			s.name as school_name ,
-			t.NAME as true_name ,
-			t.gender,
-			t.birthday,
-			t.email
-		,n.name as termname,a.user_name
-		FROM
-		edu_teacher t
-		LEFT JOIN edu_school s on s.guid = t.school_guid
-		LEFT JOIN edu_teacher_class tc on tc.teacher_guid = t.guid
-		LEFT JOIN edu_class c on c.guid = tc.class_guid
-		LEFT JOIN edu_grade g on c.grade_guid= g.guid
-		LEFT JOIN edu_section n on n.guid = g.section_guid
-		LEFT JOIN edu_account  a on a.person_guid = t.guid 
-		where a.user_name =#{loginName}   
+	    t.guid as uuid ,
+	    t.school_guid as school_id,
+	    s.name as school_name ,
+	    t.NAME as true_name ,
+	    t.gender,
+	    t.birthday,
+	    t.email
+	   ,n.name as termname,a.user_name
+	FROM
+	edu_teacher t
+	LEFT JOIN edu_school s on s.guid = t.school_guid
+	LEFT JOIN edu_teacher_class tc on tc.teacher_guid = t.guid and tc.is_delete = 0 
+	LEFT JOIN edu_class c on c.guid = tc.class_guid and c.is_delete = 0 
+	LEFT JOIN edu_grade g on c.grade_guid= g.guid and g.is_delete = 0 
+	LEFT JOIN edu_section n on n.guid = g.section_guid and n.is_delete = 0 
+	LEFT JOIN edu_account  a on a.person_guid = t.guid 
+	where a.user_name =#{loginName} 
+	and t.is_delete = 0 and  a.is_delete = 0 
+	LIMIT 1   
   </select>
   
   
