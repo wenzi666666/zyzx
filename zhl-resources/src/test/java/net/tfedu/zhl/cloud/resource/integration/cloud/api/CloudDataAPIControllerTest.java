@@ -281,5 +281,59 @@ public class CloudDataAPIControllerTest extends BaseControllerTestCase {
 		System.out.println(JSONObject.toJSONString(result));
 
 	}
+	@Test
+	public void testResType() throws Exception {
+		setCloudCheck(request);
+		request.setParameter("userName", "csls01");
+		request.setParameter("cloudPlatFormLocal", "http://192.168.111.8");
+		request.setParameter("cloudPlatForm", "http://192.168.111.8");
+		
+		
+		//type 0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+		//isCollect 自建资源页面区分0:所有1:自建2:收藏3我的共享
+		int type = 4 ;
+		int isCollect =0;
+		Integer  fromFlag = 1 ;
+		Long id =  12650L  ;
+		String  tfcode = "RJGZ010101";
+		Integer searchFlag = 1 ;
+		Long mType= 0L ;
+		
+
+		
+		ResultInfo result = controller.resType(request, type, isCollect, fromFlag, id, tfcode, searchFlag, mType);
+		
+		System.out.println(JSONObject.toJSONString(result));
+		
+	}
+	@Test
+	public void testResList() throws Exception {
+		setCloudCheck(request);
+		request.setParameter("userName", "csls01");
+		request.setParameter("cloudPlatFormLocal", "http://192.168.111.8");
+		request.setParameter("cloudPlatForm", "http://192.168.111.8");
+		
+		
+		//type 0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+		//isCollect 自建资源页面区分0:所有1:自建2:收藏3我的共享
+		int type = 0 ;
+		int curPage =1;
+		int perPage =10;
+		int isCollect =1;
+		Integer  fromFlag = 1 ;
+		Long id =  12650L  ;
+		String  tfcode = "RJGZ010101";
+		Integer searchFlag = 1 ;
+		Long mTypeId= 0L ;
+		String  resType = "all";
+		String  resPattern = "all";
+		
+		
+		ResultInfo result = controller.resList(request, type, isCollect, fromFlag, id, tfcode, searchFlag, 
+				mTypeId, resPattern, resType, curPage, perPage);
+		
+		System.out.println(JSONObject.toJSONString(result));
+		
+	}
 
 }

@@ -54,7 +54,7 @@ public interface TreeService {
 	/**
 	 * 根据父节点查询子节点（系统目录）
 	 * 
-	 * @param pNodeId
+	 * @param pNodeId 
 	 * @return
 	 * @throws NamingException
 	 * @throws SQLException
@@ -65,12 +65,12 @@ public interface TreeService {
 	/**
 	 * 根据父节点查询子节点（系统目录）
 	 * 返回字节点的code的集合
-	 * @param pNodeId  
+	 * @param  tfcode 
 	 * @return
 	 * @throws NamingException
 	 * @throws SQLException
 	 */
-	public List<String> querySysChildren(Long pNodeId);
+	public List<String> querySysChildren(String tfcode);
 	
 	
 	/**

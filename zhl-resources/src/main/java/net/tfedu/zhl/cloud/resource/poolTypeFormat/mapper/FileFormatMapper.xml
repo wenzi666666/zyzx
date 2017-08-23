@@ -23,12 +23,14 @@
 	<select id="getSysResFormatsByMType" resultMap="FileFormatsResultMap">
 		select DISTINCT b.FileFormat
 		from z_resource a
-		left join z_resnav c on a.ResCode=c.ResCode
+		left join z_resnav c on
+		a.ResCode=c.ResCode
 		left join j_syscourse d on c.StructCode=d.tfcode
 		left join j_filetypedetail b on
 		LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) =
 		b.FormatCode
-		where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%')
+		where a.flag = 0 and d.flag = 0 and c.StructCode like
+		CONCAT(#{tfcode},'%')
 		and FileFormat is not null and a.fromFlag in
 		<foreach item="item" index="index" collection="sys_from" open="("
 			separator="," close=")">
@@ -50,13 +52,17 @@
 	<select id="getDisResFormatsByMType" resultMap="FileFormatsResultMap">
 		select DISTINCT b.FileFormat
 		from z_districts_resource a
-		left join z_districts_resnav c on a.ResCode=c.ResCode
-		left join j_syscourse d on c.StructCode=d.tfcode
+		left join
+		z_districts_resnav c on a.ResCode=c.ResCode
+		left join j_syscourse d on
+		c.StructCode=d.tfcode
 		left join j_filetypedetail b on
 		LOWER(REVERSE(LEFT(REVERSE(a.fname),LOCATE('.',REVERSE(a.fname))))) =
 		b.FormatCode
-		where a.flag = 0 and d.flag = 0 and c.StructCode like CONCAT(#{tfcode},'%')
-		and FileFormat is not null and a.fromFlag = #{fromFlag}
+		where a.flag = 0 and d.flag = 0 and c.StructCode like
+		CONCAT(#{tfcode},'%')
+		and FileFormat is not null and a.fromFlag =
+		#{fromFlag}
 		<if test="fromFlag == 3">
 			and a.scopeId = #{schoolId} and a.scope = 5
 		</if>
@@ -64,7 +70,8 @@
 			and a.scopeId = #{districtId} and a.scope = 4
 		</if>
 		and a.mtype in (
-		SELECT b.id type_id from x_resourcetype b where b.flag=0
+		SELECT b.id type_id from x_resourcetype b where
+		b.flag=0
 		<if test="mtype != 0">
 			and (b.id = #{mtype} or b.pid = #{mtype})
 		</if>
@@ -72,8 +79,10 @@
 	</select>
 
 	<select id="getAllFileFormat" resultType="String">
-		select distinct fileformat as fileformat from j_filetypedetail where flag =
-		false order by ordernum
+		select distinct
+		fileformat as fileformat from j_filetypedetail where flag =
+		false order
+		by ordernum
 	</select>
 
 
@@ -86,29 +95,37 @@
 		SELECT DISTINCT 0 AS iscollect, a.isfinished,a.id,a.iscourseware
 		isdwj,
 		a. name name,a. name title,a.assetpath,a.keyword,
-		d.mtype type_name, a.unifyTypeId typeId,
-		a.islocal islocal,1 beasset,b.createtime createtime,
-		b.courseid courseid,a.fileformat fileext,
+		d.mtype
+		type_name, a.unifyTypeId typeId,
+		a.islocal islocal,1
+		beasset,b.createtime createtime,
+		b.courseid courseid,j.fileformat
+		fileext,
 		if ((select count(shareid) from x_platform_share
-		where flag = 0 and sharedtype = 1 and shareid = a.id
+		where flag = 0
+		and sharedtype = 1 and shareid = a.id
 		) >= 1,'true','false') isshare,
-		0 diskorder,-1 rescoursefrom,'' collectcourseid, j.ordernum,
-		0 quotes,0 clicks,0 downloads,'' scope,a.assetsize fsize,0 res_time
+		0
+		diskorder,-1 rescoursefrom,'' collectcourseid, j.ordernum,
+		0 quotes,0
+		clicks,0 downloads,'' scope,a.assetsize fsize,0 res_time
 		FROM z_asset a
 		LEFT JOIN X_RESCOURSE b ON a.id = b.ResId
-		LEFT JOIN x_resourcetype d ON d.id = a.unifyTypeId
-		LEFT JOIN j_filetypedetail j ON a.filecode = j.formatcode
+		LEFT JOIN x_resourcetype d ON
+		d.id = a.unifyTypeId
+		LEFT JOIN j_filetypedetail j ON a.filecode =
+		j.formatcode
 		AND j.flag = 0
 		WHERE
 		b.userid = #{userId}
-		AND c.user_id = a.userid
 		AND a.flag = 0
-		AND b.flag = 0
+		AND
+		b.flag = 0
 		AND d.flag = 0
 		AND b.IsUpload = 0
 		AND a.fileType = 'A'
 
-		<if test="null!=courseId and courseId.size()>0">
+		<if test="null!=courseIds and courseIds.size()>0">
 			and b.courseId in
 			<foreach collection="courseIds" item="courseId" separator=","
 				open="(" close=")">
@@ -121,22 +138,32 @@
 	<sql id="queryUserAsset_collect_sysres">
 		select 2 as iscollect,0 as isfinished,a.id,a.isdwj,a.fname
 		name,a.title title,
-		a.fpath assetpath,a.keyword,c.type_name, a.mtype typeid,0 islocal,
+		a.fpath assetpath,a.keyword,c.type_name, a.mtype
+		typeid,0 islocal,
 		0 beasset, b.createtime createtime,
-		b.dirid courseid,a.fileformat fileext,'' isshare,k.diskorder,
-		0 rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,0 clicks,0
+		b.dirid
+		courseid,j.fileformat fileext,'' isshare,k.diskorder,
+		0
+		rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,0 clicks,0
 		downloads,
 		'' scope,a.fsize fsize,m.res_time from z_resource a
-		left join z_rescollection b on a.id=b.resid
-		left join z_resourcetype c on b.typeId=c.type_id
+		left join
+		z_rescollection b on a.id=b.resid
+		left join z_resourcetype c on
+		b.typeId=c.type_id
 		left join x_resourcetype d on a.mtype = d.id
-		left join z_res_medium m on a.id = m.res_Id and a.resCode = m.res_code
-		left join z_res_disk k on a.resCode = k.resCode
-		left join j_filetypedetail j on LOWER(SUBSTRING_INDEX(a.fname,'.',-1))
-		= SUBSTR(j.FormatCode,2) and j.flag = 0 where b.userId= #{userId}
-		and a.flag=0 and b.flag=0 and b.fromFlag = 0
+		left
+		join z_res_medium m on a.id = m.res_Id and a.resCode = m.res_code
+		left
+		join z_res_disk k on a.resCode = k.resCode
+		left join j_filetypedetail j
+		on LOWER(SUBSTRING_INDEX(a.fname,'.',-1))
+		= SUBSTR(j.FormatCode,2) and
+		j.flag = 0 where b.userId= #{userId}
+		and a.flag=0 and b.flag=0 and
+		b.fromFlag = 0
 		and c.flag=0 and d.flag=0
-		<if test="null!=courseId and courseId.size()>0">
+		<if test="null!=courseIds and courseIds.size()>0">
 			and b.dirId in
 			<foreach collection="courseIds" item="courseId" separator=","
 				open="(" close=")">
@@ -150,23 +177,30 @@
 	<!-- 可复用sql 用户收藏的共享资源 -->
 	<sql id="queryUserAsset_collect_shared">
 		SELECT
-		2 as iscollect,a.isfinished,a.id,a.iscourseware isdwj,a. name name,
+		2 as iscollect,a.isfinished,a.id,a.iscourseware isdwj,a. name
+		name,
 		a. name title,a.assetpath assetpath,a.keyword,c.mtype type_name,
 		a.unifytypeid as typeid,a.islocal,1 beasset,b.createtime createtime,
 		b.dirid courseid,j.fileformat fileext,'' isshare,0 diskorder,
-		- 1 rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,
-		0 clicks,0 downloads,'' scope,a.assetsize fsize,0 res_time,a.filecode
+		- 1
+		rescoursefrom,b.dirid collectcourseid,j.ordernum,0 quotes,
+		0 clicks,0
+		downloads,'' scope,a.assetsize fsize,0 res_time
 		FROM
 		z_asset a
-		LEFT JOIN z_rescollection b ON a.id = b.resid
-		LEFT JOIN x_resourcetype c ON a.unifyTypeId = c.id
-		LEFT JOIN j_filetypedetail j ON a.filecode = j.formatcode
+		LEFT JOIN
+		z_rescollection b ON a.id = b.resid
+		LEFT JOIN x_resourcetype c ON
+		a.unifyTypeId = c.id
+		LEFT JOIN j_filetypedetail j ON a.filecode =
+		j.formatcode
 		WHERE
 		b.userId = #{userId}
 		AND a.flag = 0
 		AND b.flag = 0
-		AND b.fromFlag = 1
-		<if test="null!=courseId and courseId.size()>0">
+		AND
+		b.fromFlag = 1
+		<if test="null!=courseIds and courseIds.size()>0">
 			and b.dirId in
 			<foreach collection="courseIds" item="courseId" separator=","
 				open="(" close=")">
@@ -180,22 +214,34 @@
 	<sql id="queryUserAsset_collect_distrctres">
 		select 2 as iscollect,0 as isfinished,a.id,a.isdwj,a.fname
 		name,a.title title,
-		a.fullpath assetpath,a.keyword,c.type_name,b.typeid,a.islocal, 0 beasset,
+		a.fullpath
+		assetpath,a.keyword,c.mtype
+		type_name,b.typeid,a.islocal, 0 beasset,
 		b.createtime createtime,
 		b.dirid courseid,j.fileformat as fileext,
-		'' isshare,0 diskorder, a.fromflag rescoursefrom,b.dirid
+		''
+		isshare,0 diskorder,
+		a.fromflag rescoursefrom,b.dirid
 		collectcourseid,j.ordernum,
-		0 quotes,0 clicks,0 downloads,'' scope ,a.fsize fsize,0 res_time
-		from z_districts_resource a
-		left join z_rescollection b on a.id=b.resid
-		left join z_resourcetype c on b.typeId=c.type_id
+		0 quotes,0
+		clicks,0 downloads,'' scope
+		,a.fsize fsize,0 res_time
+		from
+		z_districts_resource a
+		left join
+		z_rescollection b on a.id=b.resid
+		left
+		join x_resourcetype c on
+		b.typeId=c.id
 		left join j_filetypedetail j
-		on LOWER(SUBSTRING_INDEX(a.fname,'.',-1)) = SUBSTR(j.FormatCode,2) and
+		on
+		LOWER(SUBSTRING_INDEX(a.fname,'.',-1)) = SUBSTR(j.FormatCode,2) and
 		j.flag = 0
-		where b.userId= #{userId} and a.flag=0 and b.flag=0 and b.fromFlag in (3,4)
+		where b.userId= #{userId} and a.flag=0 and b.flag=0 and
+		b.fromFlag in (3,4)
 		and c.flag=0
 
-		<if test="null!=courseId and courseId.size()>0">
+		<if test="null!=courseIds and courseIds.size()>0">
 			and b.dirId in
 			<foreach collection="courseIds" item="courseId" separator=","
 				open="(" close=")">
@@ -213,34 +259,44 @@
 
 		select DISTINCT 2 as iscollect, a.isfinished,a.id,a.iscourseware
 		isdwj,a.name name,
-		a.name title,a.assetpath,d.mtype type_name,d.id typeid,a.keyword,a.islocal
+		a.name title,a.assetpath,d.mtype type_name,d.id
+		typeid,a.keyword,a.islocal
 		islocal,
-		1 beasset, b.createtime createtime,b.courseid courseid,j.fileformat
+		1 beasset, b.createtime
+		createtime,b.courseid courseid,j.fileformat
 		fileext,
-		if((select count(shareid) from x_platform_share where flag =0 and sharedtype =1
+		if((select
+		count(shareid) from x_platform_share where flag =0 and sharedtype =1
 		and shareid = a.id)>=1,'true','false')isshare,
-		0 diskorder,6 rescoursefrom,'' collectcourseid,j.ordernum
+		0 diskorder,6
+		rescoursefrom,'' collectcourseid,j.ordernum
 		,p.quotes,p.clicks,
 		p.downloads,p.scope,a.assetsize fsize,0 res_time
 		from z_asset a
-		left join X_RESCOURSE b on a.id=b.ResId
-		LEFT JOIN x_platform_share p on a.id = p.shareId
-		left join z_resourcetype d on c.type_id = d.type_id
-		left join j_filetypedetail j on a.filecode = j.formatcode and j.flag = 0
-		where b.userid = #{userId} and a.flag = 0 and b.flag=0 and d.flag = 0
-		and p.flag=0 and b.IsUpload=0 and p.sharedType=1
+		left
+		join X_RESCOURSE b on a.id=b.ResId
+		LEFT JOIN x_platform_share p on a.id
+		= p.shareId
+		LEFT JOIN x_resourcetype d ON a.unifyTypeId = d.id
+		left join
+		j_filetypedetail j on a.filecode = j.formatcode and j.flag = 0
+		where
+		b.userid = #{userId} and a.flag = 0 and b.flag=0 and d.flag = 0
+		and
+		p.flag=0 and b.IsUpload=0 and p.sharedType=1
 
-		<if test="null!=courseId and courseId.size()>0">
+		<if test="null!=courseIds and courseIds.size()>0">
 			and b.courseId in
-			<foreach collection="courseIds" item="courseId" separator=","
-				open="(" close=")">
-				#{courseId}
+			<foreach collection="courseIds" item="id" separator="," open="("
+				close=")">
+				#{id}
 			</foreach>
 		</if>
 	</sql>
 
 
 
+	<!-- 云平台插入资源页面的查询自建资源的sql -->
 	<sql id="query_asset_tab">
 
 		<if test="1 == isCollect ">
@@ -290,36 +346,381 @@
 
 
 
-   <!-- 获取资源库对应的资源类型  -->
-   <select id="getPoolType" resultType="Long">
-    SELECT id from (
-		SELECT b.id,b.pid,a.poolId 
-		from z_res_pooltype a 
-		LEFT JOIN x_resourcetype b on a.resTypeId = b.ID 
-		where a.flag=0 and b.flag=0 
-		UNION SELECT a.id,a.pid,b.poolId  
-		from x_resourcetype a 
-		LEFT JOIN z_res_pooltype b 
-		on a.Pid = b.resTypeId where a.flag=0 and b.flag=0) temp
-	WHERE 1 = 1 
-	
-	<if test="null != poolId and poolId > 0 ">
-	   AND poolId = #{poolId}
-	</if>
-	
-	<if test="null != exceptPoolIds and exceptPoolIds.size()>0 ">
-	   AND poolId NOT IN 
-	   <foreach collection="exceptPoolIds" item="id" separator="," open="(" close=")">
-	       #{id}
-	   </foreach>
-        AND id not in (37,38,39)
-    </if>
-	
-   </select>
+	<!-- 1:自建 2:收藏 3我的共享 查询自建资源列表 -->
+	<select id="queryAssetList" resultType="HashMap">
+
+		<if test="1 == isCollect ">
+			select * from (
+
+			<include refid="queryUserAsset_upload" />
+
+			<if test=" null != mTypeId and mTypeId >0 ">
+				and d.id = #{mTypeId}
+			</if>
+
+			<if test=" null != fileFormat and fileFormat.length() >0 ">
+				and j.fileformat = #{fileFormat}
+			</if>
+
+			) temp order by createTime desc,orderNum asc
+		</if>
+
+		<if test="2 == isCollect ">
+
+
+			<include refid="queryUserAsset_collect_sysres" />
+
+			<if test=" null != mTypeId and mTypeId >0 ">
+				and d.id = #{mTypeId}
+			</if>
+
+			<if test=" null != fileFormat and fileFormat.length() >0 ">
+				and j.fileformat = #{fileFormat}
+			</if>
+
+			UNION ALL
+			<include refid="queryUserAsset_collect_shared" />
+			<if test=" null != mTypeId and mTypeId >0 ">
+				and c.id = #{mTypeId}
+			</if>
+
+			<if test=" null != fileFormat and fileFormat.length() >0 ">
+				and j.fileformat = #{fileFormat}
+			</if>
+			UNION ALL
+			<include refid="queryUserAsset_collect_distrctres" />
+			<if test=" null != mTypeId and mTypeId >0 ">
+				and c.id = #{mTypeId}
+			</if>
+
+			<if test=" null != fileFormat and fileFormat.length() >0 ">
+				and j.fileformat = #{fileFormat}
+			</if>
+		</if>
+
+		<if test="3 == isCollect ">
+			<include refid="queryUserAsset_myshare" />
+			<if test=" null != mTypeId and mTypeId >0 ">
+				and d.id = #{mTypeId}
+			</if>
+
+			<if test=" null != fileFormat and fileFormat.length() >0 ">
+				and j.fileformat = #{fileFormat}
+			</if>
+		</if>
+
+
+
+	</select>
 
 
 
 
+
+	<!-- 获取资源库对应的资源类型 -->
+	<select id="getPoolType" resultType="Long">
+		SELECT id from (
+		SELECT b.id,b.pid,a.poolId
+		from z_res_pooltype a
+		LEFT
+		JOIN x_resourcetype b on a.resTypeId = b.ID
+		where a.flag=0 and b.flag=0
+		UNION SELECT a.id,a.pid,b.poolId
+		from x_resourcetype a
+		LEFT JOIN
+		z_res_pooltype b
+		on a.Pid = b.resTypeId where a.flag=0 and b.flag=0)
+		temp
+		WHERE 1 = 1
+
+		<if test="null != poolId and poolId > 0 ">
+			AND poolId = #{poolId}
+		</if>
+
+		<if test="null != exceptPoolIds and exceptPoolIds.size()>0 ">
+			AND poolId NOT IN
+			<foreach collection="exceptPoolIds" item="id" separator=","
+				open="(" close=")">
+				#{id}
+			</foreach>
+			AND id not in (37,38,39)
+		</if>
+
+
+		<if test=" null != typeId and typeId > 0 ">
+			AND id = #{typeId} or pid = #{typeId}
+		</if>
+	</select>
+
+
+
+
+
+	<!-- 获取系统资源涉及的系统资源类型 -->
+	<select id="getSysResourceType" resultType="HashMap">
+		<choose>
+			<when test="null == poolId or 0 == poolId or 4 == poolId">
+				select case when b.PId=0 then b.MType ELSE pb.MType
+				END mtype,
+				case when b.PId=0 then b.id ELSE pb.id END
+				id,count(b.MType) mtypenum
+				from z_resource a
+				left join X_RESOURCETYPE
+				b on a.MType = b.id
+				left join X_RESOURCETYPE pb
+				on pb.Id=b.pid
+				LEFT
+				JOIN z_resnav c ON a.ResCode = c.ResCode
+			</when>
+			<otherwise>
+				select b.mtype,b.id,count(b.MType) mtypenum
+				from z_resource
+				a
+				LEFT JOIN z_resnav c ON a.ResCode = c.ResCode
+				left join
+				x_resourcetype b on a.MType = b.id and b.level = 2
+			</otherwise>
+		</choose>
+
+		where a.flag = 0 and b.flag = 0 AND c.flag = 0
+		<if test="null!=syscourseCodes and syscourseCodes.size()>0">
+			AND c.StructCode in
+			<foreach collection="syscourseCodes" item="code" close=")"
+				open="(" separator=",">
+				#{code}
+			</foreach>
+		</if>
+
+		<if test="null!=typeIds and typeIds.size()>0">
+			AND b.id IN
+			<foreach collection="typeIds" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null != sysFromFlag and sysFromFlag.length > 0 ">
+			AND a.fromflag IN
+			<foreach collection="sysFromFlag" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+	</select>
+
+
+	<!-- 查询系统资源的文件格式信息 -->
+	<select id="getSysResourceFileFormat" resultType="HashMap">
+		SELECT fileformat ,count(fileformat) count
+		from z_resource a
+		right join
+		z_resnav v on v.rescode = a.rescode
+		left join j_filetypedetail b on
+		fileExt = b.FormatCode
+		LEFT JOIN
+		x_resourcetype r on r.id = a.mtype
+		WHERE 1=1
+
+		<if test="null!=syscourseCodes and syscourseCodes.size()>0">
+			and v.structcode in
+			<foreach collection="syscourseCodes" item="code" close=")"
+				open="(" separator=",">
+				#{code}
+			</foreach>
+		</if>
+
+		<if test="null!=typeIds and typeIds.size()>0">
+			AND r.id IN
+			<foreach collection="typeIds" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+
+		<if test="null!=sysFromFlag and sysFromFlag.length>0">
+			AND a.fromflag IN
+			<foreach collection="sysFromFlag" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+
+		and a.flag = 0 and b.flag = 0
+		group by fileformat
+	</select>
+
+
+	<!-- 查询他人共享资源的主要sql -->
+	<sql id="other_shared_sql_main">
+		FROM
+		z_asset a
+		LEFT JOIN x_rescourse b ON b.resId = a.id
+		LEFT JOIN
+		x_platform_share c ON (c.shareId = a.id AND c.sharedType = 1 )
+		LEFT
+		JOIN x_share_resnav d ON c.shareId = d.resId
+		LEFT JOIN x_resourcetype e
+		ON c.sysResourceType = e.id
+		LEFT JOIN j_filetypedetail jf ON a.FileCode
+		= jf.FormatCode
+		AND jf.flag = 0
+		LEFT JOIN j_user j ON c.userId = j.id
+		LEFT JOIN j_school s ON s.id = j.SchoolId
+		WHERE
+		a.flag = 0
+		AND b.flag = 0
+		AND c.flag = 0
+		AND d.flag = 0
+		AND e.flag = 0
+		AND j.flag = 0
+
+		<if test=" null != tfcode and tfcode.length() > 0 ">
+			and d.structCode like #{tfcode}
+		</if>
+		<choose>
+			<when test=" 1 == searchFlag ">
+				and d.codeType = 0
+			</when>
+			<otherwise>
+				and d.codeType = 1
+			</otherwise>
+		</choose>
+		and ( (c.scope = 'D' and c.scopeId = #{schoolId} ) OR (c.scope = 'C'
+		and c.scopeId=#{districtId} ))
+
+		<if test=" null != sysResType and sysResType > 0 ">
+			and ( e.id = #{sysResType} or e.pid = #{sysResType} )
+		</if>
+
+
+	</sql>
+
+	<!-- 获取他人共享资源的资源类型的统计信息 -->
+	<select id="getOtherSharedAssetType" resultType="HashMap">
+		select ty.mType,ty.typeId, count(ty.mType) count from (
+		SELECT DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
+		filecode,jf.orderNum,e.displayIndex
+		<include refid="other_shared_sql_main" />
+		) ty group by ty.mType order by ty.displayIndex asc
+
+	</select>
+
+	<!-- 获取他人共享资源的文件格式的统计信息 -->
+	<select id="getOtherSharedAssetFormat" resultType="HashMap">
+		select pa.fileCode, count(pa.fileCode) count from (
+		SELECT DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
+		filecode,jf.orderNum,e.displayindex
+		<include refid="other_shared_sql_main" />
+		) pa group by pa.fileCode order by pa.orderNum asc
+	</select>
+
+	<!-- 完整的 查询共享资源的接口 -->
+	<sql id="other_shared_sql_complete">
+		SELECT DISTINCT(a.id) id,e.id typeId,e.mType,jf.fileformat
+		fileCode,e.displayIndex
+		,a.name ,a.name title,a.assetpath,a.Notes,
+		a.AssetDesc,a.keyWord,a.IsLocal islocal,
+		1
+		beasset,c.createTime,d.structCode, b.courseId teachCourseId,c.clicks,
+		c.quotes,c.downloads,j.TrueName userName,
+		if((SELECT count(resId) from
+		z_rescollection z where z.resId = a.id and
+		a.FileType ='A' and z.fromFlag = 1 and z.flag = 0 and a.flag = 0 and z.userId =
+		390320126 )>=1,'true','false') collected,
+
+		(SELECT count(1) from z_assetevaluate u where u.AssetId = a.id and u.flag = 0
+		and u.IsScore = 1 and u.aType = 2) contentCount,
+		(SELECT avg(t.ascore)
+		from z_assetevaluate t where t.AssetId = a.id and t.flag = 0 and
+		t.isScore = 0 and t.aType = 0) avgScore,
+
+		a.assetsize fsize,a.userId
+		,j.truename,s.name as schoolname,c.intergral,a.filepath
+		<include refid="other_shared_sql_main" />
+	</sql>
+
+
+
+
+	<!-- 获取区本资源的资源类型的统计信息 3校本资源 4 区本资源 -->
+	<select id="getDistrictResourceType" resultType="HashMap">
+		SELECT mtype,id,count(1) as mtypenum from (
+		select case when b.PId=0
+		then b.MType ELSE pb.MType END MType,case when b.PId=0 then b.id ELSE
+		pb.id END id,b.DisplayIndex from
+		z_districts_resource a
+		left join
+		x_resourcetype b on a.MType = b.id
+		left join x_resourcetype pb on
+		pb.Id=b.pid
+		LEFT JOIN z_districts_resnav n on n.ResCode = a.ResCode
+		where 1 =1
+
+		<if test="null!=syscourseCodes and syscourseCodes.size()>0">
+			and n.structcode in
+			<foreach collection="syscourseCodes" item="code" close=")"
+				open="(" separator=",">
+				#{code}
+			</foreach>
+		</if>
+
+		<if test=" 3 == resourceFromFlag ">
+			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId = ${schoolId}
+		</if>
+
+		<if test=" 4 == resourceFromFlag ">
+			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId = ${districtId}
+		</if>
+
+		and a.flag = 0 and n.Flag = false and b.flag = 0
+		and (a.state=3 or a.state=6) and (pb.flag = 0 or pb.flag is null)
+		)temm
+		group by MType order by displayIndex asc
+
+	</select>
+	<!-- 获取区本资源的文件格式的统计信息 3校本资源 4 区本资源 -->
+	<select id="getDistrictResourceFormat" resultType="HashMap">
+
+		SELECT
+		FileFormat as formatcode,
+		count(FileFormat) count
+
+		FROM
+		z_districts_resource a
+		RIGHT JOIN j_filetypedetail b ON (
+		LOWER(fileExt) = b.FormatCode
+		OR CONCAT('.', LOWER(fileExt)) = b.FormatCode
+		)
+		LEFT JOIN
+		z_districts_resnav n on n.ResCode = a.ResCode
+
+		WHERE
+		1 = 1
+
+		<if test="null!=syscourseCodes and syscourseCodes.size()>0">
+			and n.structcode in
+			<foreach collection="syscourseCodes" item="code" close=")"
+				open="(" separator=",">
+				#{code}
+			</foreach>
+		</if>
+
+		<if test=" 3 == resourceFromFlag ">
+			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId = ${schoolId}
+		</if>
+
+		<if test=" 4 == resourceFromFlag ">
+			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId = ${districtId}
+		</if>
+
+		AND a.flag = 0
+		AND (a.state = 3 OR a.state = 6)
+		AND b.flag = 0
+		group by
+		FileFormat
+	</select>
 
 
 

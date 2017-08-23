@@ -9,6 +9,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
+
+import net.tfedu.zhl.cloud.resource.integration.entity.ResultInfo;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
@@ -17,10 +24,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
-
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
+import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 
 /**
  * 资源跨库检索的service
@@ -173,50 +177,137 @@ public class ResSearchServiceImpl implements ResSearchService {
 	@Override
 	public List<Map<String, Object>> queryBatchResourceInfo(Long[] assetIds, Long[] sysResourceIds,
 			Long[] districtResIds) {
-		
-		if ((null == assetIds || assetIds.length == 0) && (null ==  sysResourceIds || sysResourceIds.length == 0) 
-				&& (null ==  districtResIds|| districtResIds.length == 0 )) {
+
+		if ((null == assetIds || assetIds.length == 0) && (null == sysResourceIds || sysResourceIds.length == 0)
+				&& (null == districtResIds || districtResIds.length == 0)) {
 			return null;
 		}
 
-		
 		List<Map<String, Object>> ls = resSearchMapper.queryAssets(assetIds);
 		List<Map<String, Object>> ls2 = resSearchMapper.querySysResources(sysResourceIds);
 		List<Map<String, Object>> ls3 = resSearchMapper.queryDistrcitResources(districtResIds);
-		
-		
+
 		ls.addAll(ls2);
 		ls.addAll(ls3);
-		
-		return ls ; 
+
+		return ls;
 	}
 
 	@Override
-	public List<Map<String, Object>> getAssetResourceType(Long userId, Integer isCollect, List<Long> courseIds) {
-		return fileFormatMapper.getAssetResourceType(userId, isCollect, courseIds);
+	public List<Map<String, Object>> getAssetFileTypeAndFormat(Long userId, Integer isCollect, List<Long> courseIds) {
+
+		List<Map<String, Object>> types = fileFormatMapper.getAssetResourceType(userId, isCollect, courseIds);
+		List<Map<String, Object>> formats = fileFormatMapper.getAssetFileFormat(userId, isCollect, courseIds);
+
+		return fillResultList(types, formats);
 	}
 
 	@Override
-	public List<Map<String, Object>> getAssetFileFormat(Long userId, Integer isCollect, List<Long> courseIds) {
-		return fileFormatMapper.getAssetFileFormat(userId, isCollect, courseIds);
+	public List<Map<String, Object>> getOtherSharedAssetTypeAndFormat(Long userId, Integer searchFlag, String tfcode,
+			Long sysResType) {
+
+		long schoolId = 0;
+		long districtId = 0;
+
+		UserAreaInfo info = jUserMapper.getUserAreaALLInfo(userId);
+		if (null != info) {
+			schoolId = info.getSchoolId();
+			districtId = info.getDistrictId();
+
+		}
+
+		List<Map<String, Object>> types = fileFormatMapper.getOtherSharedAssetType(userId, searchFlag, tfcode,
+				sysResType, schoolId, districtId);
+		List<Map<String, Object>> formats = fileFormatMapper.getOtherSharedAssetFormat(userId, searchFlag, tfcode,
+				sysResType, schoolId, districtId);
+
+		return fillResultList(types, formats);
+	}
+
+	/**
+	 * 将获取的结果用指定的结构返回
+	 * 
+	 * @param types
+	 * @param formats
+	 * @return
+	 */
+	protected List<Map<String, Object>> fillResultList(List<Map<String, Object>> types,
+			List<Map<String, Object>> formats) {
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> tMap = new HashMap<String, Object>();
+		Map<String, Object> fMap = new HashMap<String, Object>();
+
+		tMap.put("res_type", types);
+		fMap.put("formats", formats);
+
+		resultList.add(tMap);
+		resultList.add(fMap);
+		return resultList;
 	}
 
 	@Override
-	public List<Map<String, Object>> getSysResourceType(String exceptPoolIds, Integer poolId,
+	public List<Map<String, Object>> getSysResourceTypeAndFormat(Long typeId, String exceptPoolIds, Integer poolId,
 			List<String> syscourseCodes, String sysFrom) {
-		
-		
-		
-		
-		
-		return null;
+
+		Long[] exceptIds = null;
+		Long[] sysFromFlag = null;
+
+		if (StringUtils.isEmpty(exceptPoolIds)) {
+			String[] temp = exceptPoolIds.split(",");
+			exceptIds = new Long[temp.length];
+			for (int i = 0; i < temp.length; i++) {
+				exceptIds[i] = Long.parseLong(temp[i]);
+			}
+		}
+
+		if (StringUtils.isEmpty(sysFrom)) {
+			String[] temp = sysFrom.split(",");
+			sysFromFlag = new Long[temp.length];
+			for (int i = 0; i < temp.length; i++) {
+				sysFromFlag[i] = Long.parseLong(temp[i]);
+			}
+		}
+
+		// 根据资源库获取对应的资源类型
+		List<Long> typeIds = fileFormatMapper.getPoolType(null, poolId, exceptIds);
+
+		List<Map<String, Object>> types = fileFormatMapper.getSysResourceType(poolId, syscourseCodes, sysFromFlag,
+				typeIds);
+		List<Map<String, Object>> formats = fileFormatMapper.getSysResourceFileFormat(poolId, syscourseCodes,
+				sysFromFlag, typeIds);
+
+		return fillResultList(types, formats);
 	}
 
 	@Override
-	public List<Map<String, Object>> getSysResourceFileFormat(String exceptPoolIds, Integer poolId,
-			List<String> syscourseCodes, String sysFrom) {
-		
-		return null;
+	public List<Map<String, Object>> getDistrictResourceTypeAndFormat(Long userId, Integer resourceFromFlag,
+			List<String> syscourseCodes, Long sysResType) {
+
+		long schoolId = 0;
+		long districtId = 0;
+
+		UserAreaInfo info = jUserMapper.getUserAreaALLInfo(userId);
+		if (null != info) {
+			schoolId = info.getSchoolId();
+			districtId = info.getDistrictId();
+
+		}
+
+		List<Map<String, Object>> types = fileFormatMapper.getDistrictResourceType(resourceFromFlag, syscourseCodes,
+				sysResType, schoolId, districtId);
+		List<Map<String, Object>> formats = fileFormatMapper.getDistrictResourceFormat(resourceFromFlag, syscourseCodes,
+				sysResType, schoolId, districtId);
+
+		return fillResultList(types, formats);
 	}
 
+	@Override
+	public List<Map<String, Object>> queryAssetList(Long userId, Integer isCollect, List<Long> courseIds, Integer page,
+			Integer perPage, Long mtype, String fileFormat) {
+
+		PageHelper.startPage(page, perPage);
+        // 这里不能放其它语句
+		
+		return fileFormatMapper.queryAssetList(userId, isCollect,courseIds,mtype,fileFormat);
+	}
 }

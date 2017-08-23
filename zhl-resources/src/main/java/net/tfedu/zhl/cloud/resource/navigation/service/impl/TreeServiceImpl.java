@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -370,13 +371,13 @@ public class TreeServiceImpl implements TreeService {
 	}
 
 	@Override
-	public List<String> querySysChildren(Long pNodeId) {
+	public List<String> querySysChildren(String tfcode) {
 		
-		if (null == pNodeId) {
+		if (StringUtils.isEmpty(tfcode) ){
 			return null;
 		}
 
-		return jSyscourseMapper.getAllChildrenIds(pNodeId);
+		return jSyscourseMapper.getAllChildrenIds(tfcode+"%");
 	}
 
 	@Override

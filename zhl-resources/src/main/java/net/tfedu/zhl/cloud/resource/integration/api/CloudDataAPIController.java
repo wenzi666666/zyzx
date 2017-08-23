@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -45,7 +46,6 @@ import net.tfedu.zhl.cloud.resource.resourceList.entity.SysResource;
 import net.tfedu.zhl.cloud.resource.resourceList.service.DisResService;
 import net.tfedu.zhl.cloud.resource.resourceList.service.SysResourceService;
 import net.tfedu.zhl.cloud.resource.user.teach.service.JTeachSyscourseService;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.Custom500Exception;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -76,12 +76,6 @@ import net.tfedu.zhl.sso.users.service.RegisterService;
 public class CloudDataAPIController {
 
 	/**
-	 * 通过接口获取资源中心数据时，排除多媒体教辅库 (exceptPoolIds = "5")
-	 * 
-	 */
-	public static final String EXCEPTPOOLIDS = "5";
-
-	/**
 	 * tree 接口中类型区分：自建目录
 	 */
 
@@ -96,12 +90,17 @@ public class CloudDataAPIController {
 	 */
 	private static final int KONW_NAVIGATION_TYPE = 2;
 
-	// 0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	/**
+	 * 0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	 */
 	private static final int TYPE_FROMFLAG_ASSET = 0;
 	private static final int TYPE_FROMFLAG_SHARED_RESOURCE = 2;
 	private static final int TYPE_FROMFLAG_SYS_RESOURCE = 1;
 	private static final int TYPE_FROMFLAG_DISTRICT_RESOURCE = 4;
 	private static final int TYPE_FROMFLAG_SCHOOL_RESOURCE = 3;
+
+	//
+	public static final String ALL = "all";
 
 	@Resource
 	JTeachSyscourseService jTeachSyscourseService;
@@ -1111,8 +1110,8 @@ public class CloudDataAPIController {
 
 		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 
-		List<Map<String, Object>> types = null;
-		List<Map<String, Object>> formats = null;
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
+
 		try {
 			if (null == result) {
 				Long userId = getUserId(request);
@@ -1125,7 +1124,8 @@ public class CloudDataAPIController {
 				List<Long> list = new ArrayList<Long>();
 
 				switch (type) {
-				case 0:// 0 为自建资源
+				// 0 为自建资源
+				case 0:
 					courseIds.clear();
 					if (courseId > 0) {
 						list.add(courseId);
@@ -1133,38 +1133,69 @@ public class CloudDataAPIController {
 
 					getCourse(courseIds, list, userId);
 
-					types = resSearchService.getAssetResourceType(userId, isCollect, courseIds);
-					formats = resSearchService.getAssetFileFormat(userId, isCollect, courseIds);
+					resultList = resSearchService.getAssetFileTypeAndFormat(userId, isCollect, courseIds);
 
 					break;
-
-				case 1: // 1 系统资源
+				// 1 系统资源
+				case 1:
 					List<String> syscourseCodes = new ArrayList<String>();
+
+					syscourseCodes.clear();
 					if (courseId == 0) {
-						syscourseCodes.clear();
-						boolean isEmpyt = getUserSysCourseList(syscourseCodes, userId);
-						getTfCode(syscourseCodes, courseId);
+						syscourseCodes = getUserSysCourseList(userId);
 					} else {
-						syscourseCodes.clear();
-						getTfCode(syscourseCodes, courseId);
+						syscourseCodes = getTfCode(courseId);
 					}
 
-					
-					
-					
-					
-					
+					// 获取资源库id
+					Integer poolId = fromFlag == null ? null : fromFlag.intValue();
+
+					resultList = resSearchService.getSysResourceTypeAndFormat(mType,
+							resourceWebConfig.getExceptPoolIds(), poolId, syscourseCodes,
+							resourceWebConfig.getSys_from());
+					break;
+
+				// 2 共享资源
+				case 2:
+
+					String knowlageId = ControllerHelper.getOptionalParameter(request, "knowlageId");
+
+					// 共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+					if (2 == searchFlag) {
+						tfcode = knowlageId;
+					}
+					if (StringUtils.isEmpty(tfcode) || ALL.equals(tfcode)) {
+						tfcode = jTeachSyscourseService.queryTeachingSelectTfcode(userId);
+					}
+
+					resultList = resSearchService.getOtherSharedAssetTypeAndFormat(userId, searchFlag, tfcode, mType);
+					break;
+				// 3校本资源 4 区本资源
+				case 3:
+				case 4:
+					syscourseCodes = new ArrayList<String>();
+
+					syscourseCodes.clear();
+					if (courseId == 0) {
+						syscourseCodes = getUserSysCourseList(userId);
+					} else {
+						syscourseCodes = getTfCode(courseId);
+					}
+
+					resultList = resSearchService.getDistrictResourceTypeAndFormat(userId, type, syscourseCodes, mType);
+					break;
+				default:
 					break;
 
 				}
-
-				result = ResultInfo.success();
 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = ResultInfo.error();
 		}
+
+		result = ResultInfo.success(resultList);
 
 		return result;
 
@@ -1186,17 +1217,33 @@ public class CloudDataAPIController {
 	 *            系统目录的code
 	 * @param searchFlag
 	 *            共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
-	 * @param mType
+	 * @param mTypeId
 	 *            系统资源类型
+	 * @param resPattern
+	 *            系统资源类型 all、空 为全部
+	 * @param resType
+	 *            文件类型要求 0 或 all 或空 为 全部
 	 * @return
 	 */
 	@RequestMapping("cloudData_resList.action")
 	@ResponseBody
 	public ResultInfo resList(HttpServletRequest request, Integer type, Integer isCollect, Integer fromFlag, Long id,
-			String tfcode, Integer searchFlag, Long mType) {
+			String tfcode, Integer searchFlag, Long mTypeId, String resPattern, String resType, Integer curPage,
+			Integer perPage) {
+
+		if (StringUtils.isEmpty(resPattern) || ALL.equals(resPattern.trim())) {
+			resPattern = "";
+		}
+		if (StringUtils.isEmpty(resType) || ALL.equals(resType.trim())) {
+			mTypeId = 0L;
+		} else {
+			mTypeId = Long.parseLong(resType);
+		}
 
 		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		try {
+
 			if (null == result) {
 				Long userId = getUserId(request);
 
@@ -1207,10 +1254,11 @@ public class CloudDataAPIController {
 				List<Long> courseIds = new ArrayList<Long>();
 				List<Long> list = new ArrayList<Long>();
 
-				HashMap resTypeMap = new HashMap();
-				HashMap formatMap = new HashMap();
+				curPage = ControllerHelper.getPage(request);
+				perPage = ControllerHelper.getPageSize(request, 15);
 
 				switch (type) {
+				// 0 为自建资源
 				case 0:
 					courseIds.clear();
 					if (courseId > 0) {
@@ -1219,6 +1267,57 @@ public class CloudDataAPIController {
 
 					getCourse(courseIds, list, userId);
 
+					resultList = resSearchService.queryAssetList(userId, isCollect, courseIds, curPage, perPage,
+							mTypeId, resPattern);
+					
+					//收藏的系统资源，取其缩略图 
+					
+
+					break;
+				// 1 系统资源
+				case 1:
+					List<String> syscourseCodes = new ArrayList<String>();
+
+					syscourseCodes.clear();
+					if (courseId == 0) {
+						syscourseCodes = getUserSysCourseList(userId);
+					} else {
+						syscourseCodes = getTfCode(courseId);
+					}
+
+					// 获取资源库id
+					Integer poolId = fromFlag == null ? null : fromFlag.intValue();
+
+					break;
+
+				// 2 共享资源
+				case 2:
+
+					String knowlageId = ControllerHelper.getOptionalParameter(request, "knowlageId");
+
+					// 共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+					if (2 == searchFlag) {
+						tfcode = knowlageId;
+					}
+					if (StringUtils.isEmpty(tfcode) || ALL.equals(tfcode)) {
+						tfcode = jTeachSyscourseService.queryTeachingSelectTfcode(userId);
+					}
+
+					break;
+				// 3校本资源 4 区本资源
+				case 3:
+				case 4:
+					syscourseCodes = new ArrayList<String>();
+
+					syscourseCodes.clear();
+					if (courseId == 0) {
+						syscourseCodes = getUserSysCourseList(userId);
+					} else {
+						syscourseCodes = getTfCode(courseId);
+					}
+
+					break;
+				default:
 					break;
 
 				}
@@ -1377,12 +1476,17 @@ public class CloudDataAPIController {
 	 * @param syscourseCodes
 	 * @param syscourseId
 	 */
-	private void getTfCode(List<String> syscourseCodes, Long syscourseId) {
+	private List<String> getTfCode(Long syscourseId) {
 
-		syscourseCodes = sysCourseTreeService.querySysChildren(syscourseId);
+		String tfcode = sysCourseTreeService.getTfCodeById(syscourseId);
 
-		syscourseCodes.add(sysCourseTreeService.getTfCodeById(syscourseId));
+		List<String> syscourseCodes = sysCourseTreeService.querySysChildren(tfcode);
 
+		if (null != syscourseCodes) {
+			syscourseCodes.add(tfcode);
+		}
+
+		return syscourseCodes;
 	}
 
 	/**
@@ -1393,18 +1497,20 @@ public class CloudDataAPIController {
 	 * @return
 	 * @throws CustomException
 	 */
-	private boolean getUserSysCourseList(List<String> syscourseCodes, Long userId) throws CustomException {
+	private List<String> getUserSysCourseList(Long userId) throws CustomException {
 		String tfcode = jTeachSyscourseService.queryTeachingSelectTfcode(userId);
 
 		CourseNode node = sysCourseTreeService.getTreeNodeByCode(tfcode);
 
 		if (null != node) {
 
-			getTfCode(syscourseCodes, Long.parseLong(node.getId()));
+			return getTfCode(Long.parseLong(node.getId()));
 
 		}
 
-		return false;
+		List<String> ls = new ArrayList<String>();
+		ls.add(tfcode);
+		return ls;
 	}
 
 }

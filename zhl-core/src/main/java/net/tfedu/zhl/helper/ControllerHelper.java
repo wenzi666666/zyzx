@@ -248,6 +248,21 @@ public class ControllerHelper {
         String strPageSize = request.getParameter("perPage");
         return StringUtils.isNotEmpty(strPageSize) ? Integer.parseInt(strPageSize) : 10;
     }
+    /**
+     * 获取页大小
+     * 
+     * @param request
+     * @return
+     * @throws ParamsException
+     */
+    public static int getPageSize(HttpServletRequest request,Integer perPage) throws ParamsException {
+    	String strPageSize = request.getParameter("perPage");
+    	if(null == perPage || 0 == perPage){
+    		return getPageSize(request);
+    	}
+    	
+    	return StringUtils.isNotEmpty(strPageSize) ? Integer.parseInt(strPageSize) : perPage;
+    }
     
     
     /**

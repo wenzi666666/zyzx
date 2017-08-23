@@ -89,8 +89,8 @@
   
   
   <!-- 查询所有字节点的code  -->
-  <select id="getAllChildrenIds" parameterType="Long" resultType="String">
-		select tfcode from j_syscourse where pnodeid =#{pnodeId} and visible = 1 and typeFlag in (0,1) and flag = false 
+  <select id="getAllChildrenIds" parameterType="String" resultType="String">
+		select tfcode from j_syscourse where tfcode like #{tfcode} and visible = 1 and typeFlag in (0,1) and flag = false 
   </select>
   
   <!-- 根据id，查询一课程信息  -->
