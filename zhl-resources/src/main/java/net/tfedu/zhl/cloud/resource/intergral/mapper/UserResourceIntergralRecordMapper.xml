@@ -49,6 +49,16 @@
 		where userid = #{userId} and flag = false and score &lt; 0
 	</select>
 
-
-
+	<select id="getUserIntegralRecord" resultType="Map">
+		SELECT * FROM ( 
+		 SELECT r.createtime,operatetype,a.Name AS resName,score, m.scope AS scope  FROM user_resource_INtergral_record r  
+		 LEFT JOIN z_ASset_recommended m on m.Id = r.operateid 
+		 LEFT JOIN z_ASset a on m.ASsetid = a.id  
+		 WHERE r.userid = #{userId} AND r.flag = false AND  operatetype ='pASs_recommend_dres' 
+		 UNION ALL 
+		 SELECT r.createtime,operatetype,a.Name AS resName,score,0 AS scope  FROM user_resource_INtergral_record r  
+		 LEFT JOIN z_ASset a on r.operateid = a.id  
+		 WHERE r.userid = #{userId} AND r.flag = false AND r.operatetype IN ('down_shared_res','imp_shared_res') 
+		 )te123 ORDER BY createtime DESC,score
+	</select>
 </mapper>

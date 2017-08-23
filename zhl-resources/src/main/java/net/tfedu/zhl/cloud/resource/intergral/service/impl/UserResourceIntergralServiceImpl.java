@@ -17,6 +17,8 @@ import org.apache.commons.beanutils.locale.converters.DateLocaleConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+
 import net.tfedu.zhl.cloud.resource.intergral.constant.ResourceIntegralConstants;
 import net.tfedu.zhl.cloud.resource.intergral.dao.ResourceIntergralOperateTypeMapper;
 import net.tfedu.zhl.cloud.resource.intergral.dao.UserResourceIntergralMapper;
@@ -24,6 +26,7 @@ import net.tfedu.zhl.cloud.resource.intergral.dao.UserResourceIntergralRecordMap
 import net.tfedu.zhl.cloud.resource.intergral.entity.UserResourceIntergral;
 import net.tfedu.zhl.cloud.resource.intergral.entity.UserResourceIntergralRecord;
 import net.tfedu.zhl.cloud.resource.intergral.service.UserResourceIntergralService;
+import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
@@ -294,10 +297,10 @@ public class UserResourceIntergralServiceImpl extends BaseServiceImpl<UserResour
 			decrease.setOperateid(sharedAssetId);
 			decrease.setOperatetype(ResourceIntegralConstants.DOWN_SHAREDRES_CODE);
 			decrease.setScore(sharedAssetIntegral);
-			
-			
+
 			// 复制相同属性
-			ConvertUtils.register(new DateLocaleConverter(Locale.SIMPLIFIED_CHINESE,"yyyy-MM-dd HH:mm:ss"), Date.class);
+			ConvertUtils.register(new DateLocaleConverter(Locale.SIMPLIFIED_CHINESE, "yyyy-MM-dd HH:mm:ss"),
+					Date.class);
 			BeanUtils.copyProperties(increase, decrease);
 			// 分别设置积分增减的用户id
 			decrease.setUserid(userId);
@@ -338,8 +341,15 @@ public class UserResourceIntergralServiceImpl extends BaseServiceImpl<UserResour
 
 	@Override
 	public Pagination list(Long userId, Integer curPage, Integer numPerPage) throws Exception {
-
-		return null;
+		// Page插件必须放在查询语句之前紧挨的第一个位置
+		// Page插件必须放在查询语句之前紧挨的第一个位置
+		PageHelper.startPage(curPage, numPerPage);
+		// 获取日期分页
+		List<Map<String, Object>> list = recordMapper.getUserIntegralRecord(userId);
+		// 封装结果集
+		PageInfoToPagination<Map<String, Object>> transfer = new PageInfoToPagination<Map<String, Object>>();
+		Pagination<Map<String, Object>> page = transfer.transfer(list);
+		return page;
 	}
 
 	@Override
@@ -410,22 +420,21 @@ public class UserResourceIntergralServiceImpl extends BaseServiceImpl<UserResour
 	private boolean increaseUserIntegral(Long userId, int score) {
 
 		UserResourceIntergral record = getUserIntegral(userId);
-		
-		if(null == record){
+
+		if (null == record) {
 			record = new UserResourceIntergral();
 			record.setTotalScore(score);
 			record.setUseableScore(score);
 			record.setUserid(userId);
 			mapper.insert(record);
-			
-		}else{
-			
+
+		} else {
+
 			record.setTotalScore(record.getTotalScore() + score);
 			record.setUseableScore(record.getUseableScore() + score);
-			
+
 			mapper.updateByPrimaryKey(record);
 		}
-
 
 		return true;
 
