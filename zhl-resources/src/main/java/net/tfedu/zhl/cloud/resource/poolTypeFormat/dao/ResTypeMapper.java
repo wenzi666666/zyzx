@@ -114,7 +114,12 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
     public List<FirstLevelResType> getAllResType();
     
     
-    
+    /**
+     * 根据指定的id，获取资源类型及其子类型
+     * @param typeId
+     * @return
+     */
+    public List<Integer> getTypeIdsByOne(@Param("typeId") Integer typeId);
   
     
     

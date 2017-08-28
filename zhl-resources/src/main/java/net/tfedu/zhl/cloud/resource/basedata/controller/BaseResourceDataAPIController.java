@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.basedata.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -17,8 +18,10 @@ import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TermSubjectService;
 import net.tfedu.zhl.cloud.resource.navigation.service.TreeService;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.poolconfig.service.SAppUserPoolConfigService;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
@@ -82,21 +85,22 @@ public class BaseResourceDataAPIController {
 
 	@Resource
 	ResPreviewService resPreviewService;
-	
+
 	@Resource
 	JPrepareService jPrepareService;
 
 	@Resource
 	SAppService sAppService;
-	
+
+	@Resource
+	ResTypeService resTypeService;
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
 
 	@Resource
 	private ResourceWebConfig resourceWebConfig;
-	
-	
+
 	/**
 	 * 
 	 * 资源中心的基础数据 一般为系统资源
@@ -105,36 +109,33 @@ public class BaseResourceDataAPIController {
 	 */
 	private static final int fromFlag = 0;
 
-
 	/**
 	 * 根据参数生成sign
 	 * 
 	 * @return
-	 * @throws ParamsException 
+	 * @throws ParamsException
 	 */
-	@RequestMapping(value="v1.0/createSign",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/createSign", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON createSign(HttpServletRequest request) throws ParamsException {
-		
-		
+
 		Integer appId = ControllerHelper.getIntParameter(request, "appId");
 
-		SApp app = (SApp)( sAppService.get(appId).getData());
-		
+		SApp app = (SApp) (sAppService.get(appId).getData());
+
 		String appKey = app.getAppkey();
-		
+
 		String sign = SignUtil.createSign(request, appKey);
-		
-		
+
 		return ResultJSON.getSuccess(sign);
 	}
-	
+
 	/**
 	 * 获取全部学段
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value="v1.0/terms",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/terms", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON terms() {
 		return ResultJSON.getSuccess(termService.selectAll());
@@ -145,7 +146,7 @@ public class BaseResourceDataAPIController {
 	 * 
 	 * @param termId
 	 */
-	@RequestMapping(value="v1.0/subjects",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/subjects", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON subjects(Long termId) {
 		return ResultJSON.getSuccess(termSubjectService.getAllSubjectsByTerm(termId));
@@ -157,7 +158,7 @@ public class BaseResourceDataAPIController {
 	 * @param termId
 	 * @param subjectId
 	 */
-	@RequestMapping(value="v1.0/editions",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/editions", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON editions(Long termId, Long subjectId) {
 
@@ -169,7 +170,7 @@ public class BaseResourceDataAPIController {
 	 * 
 	 * @param pnodeId
 	 */
-	@RequestMapping(value="v1.0/books",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/books", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON books(Long pnodeId) {
 
@@ -186,15 +187,28 @@ public class BaseResourceDataAPIController {
 	 * @param subjectId
 	 * @throws CustomException
 	 */
-	@RequestMapping(value="v1.0/pools",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/pools", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON pools(Long termId, Long subjectId, HttpServletRequest request) throws CustomException {
 
 		String userName = ControllerHelper.getParameter(request, "userName");
 		String appId = ControllerHelper.getParameter(request, "appId");
 
-		return ResultJSON
-				.getSuccess(appUserPoolConfigService.getAppUserPoolConfig(termId, subjectId, userName, appId));
+		return ResultJSON.getSuccess(appUserPoolConfigService.getAppUserPoolConfig(termId, subjectId, userName, appId));
+	}
+
+	/**
+	 * 获取全部资源库
+	 * 
+	 * @param termId
+	 * @param subjectId
+	 * @throws CustomException
+	 */
+	@RequestMapping(value = "v1.0/nologinPools", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON nologinPools(Long termId, Long subjectId, HttpServletRequest request) throws CustomException {
+
+		return appUserPoolConfigService.selectAll();
 	}
 
 	/**
@@ -202,7 +216,7 @@ public class BaseResourceDataAPIController {
 	 * 
 	 * @param pnodeId
 	 */
-	@RequestMapping(value="v1.0/contents",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/contents", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON contents(Long pnodeId) {
 
@@ -223,7 +237,7 @@ public class BaseResourceDataAPIController {
 	 * @param typeId
 	 *            资源类型Id（可以指定为全部，即0
 	 */
-	@RequestMapping(value="v1.0/formats",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/formats", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON formats(Long poolId, String pTfcode, int typeId, HttpServletRequest request) {
 
@@ -236,18 +250,44 @@ public class BaseResourceDataAPIController {
 	}
 
 	/**
+	 * 
+	 * 资源格式查询接口 根据教材目录节点、资源库查询资源格式
+	 * 
+	 * @param poolId
+	 *            资源库id
+	 * @param pTfcode
+	 *            课程结点的tfcode
+	 * @param request
+	 */
+	@RequestMapping(value = "v1.0/types", method = RequestMethod.GET)
+	@ResponseBody
+	public ResultJSON types(Long poolId, String pTfcode, HttpServletRequest request) {
+
+		// 查询结果
+		List<ResType> types = new ArrayList<ResType>();
+
+		// 资源来源
+		List<Integer> sys_from = resourceWebConfig.getSys_from(request);
+
+
+		types = resTypeService.getSysResTypes(poolId, pTfcode, sys_from);
+
+		return ResultJSON.getSuccess(types);
+
+	}
+
+	/**
 	 * 资源分页查询接口 根据教材目录节点、资源库、资源格式、分页信息等查询资源
 	 * 
 	 * @param request
 	 */
-	@RequestMapping(value="v1.0/sysResource",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/sysResource", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON sysResource(HttpServletRequest request) throws CustomException {
 
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
-
 
 		// 判断是否为最新资源的期限
 		int expire = resourceWebConfig.getExpire(request);
@@ -287,20 +327,20 @@ public class BaseResourceDataAPIController {
 	 * 
 	 * @param resId
 	 */
-	@RequestMapping(value="v1.0/syscourseResInfo",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/syscourseResInfo", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON syscourseResInfo(Long resId) {
-
 
 		return ResultJSON.getSuccess(resPreviewService.getResPreviewInfo(resId, 0, fromFlag));
 	}
 
 	/**
 	 * 资源的推荐列表
+	 * 
 	 * @param request
 	 * @throws ParamsException
 	 */
-	@RequestMapping(value="v1.0/resRecommendation",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/resRecommendation", method = RequestMethod.GET)
 	@ResponseBody
 	public ResultJSON resRecommendation(HttpServletRequest request) throws ParamsException {
 
@@ -310,12 +350,10 @@ public class BaseResourceDataAPIController {
 
 		List<Integer> sys_from = resourceWebConfig.getSys_from(request);
 
-
 		String tfcode = "";
 
 		// 当前预览的资源id
 		long resId = ControllerHelper.getLongParameter(request, "resId");
-
 
 		// 当前页码
 		int page = ControllerHelper.getIntParameter(request, "page");
@@ -324,7 +362,7 @@ public class BaseResourceDataAPIController {
 		int perPage = ControllerHelper.getIntParameter(request, "perPage");
 
 		// 是否为资源检索：0 否，1 是
-		//int isSearch = 0;
+		// int isSearch = 0;
 
 		// 格式
 		String fileFormat = ControllerHelper.getParameter(request, "format");
@@ -349,73 +387,70 @@ public class BaseResourceDataAPIController {
 
 	/**
 	 * 资源的播放链接
+	 * 
 	 * @param appId
 	 * @param userName
 	 * @param resId
 	 * @param request
-	 * @throws CustomException 
+	 * @throws CustomException
 	 */
-	@RequestMapping(value="v1.0/sysResourcePlay",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/sysResourcePlay", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON sysResourcePlay(String appId,String userName, Long resId,HttpServletRequest request) throws CustomException {
-		
-		
-		if(!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)){
+	public ResultJSON sysResourcePlay(String appId, String userName, Long resId, HttpServletRequest request)
+			throws CustomException {
+
+		if (!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)) {
 			throw new NoAuthorizationException();
 		}
-		
-		
+
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
 
-		List<ResourceSimpleInfo> list = jPrepareService
-				.getResourceSimpleInfoForView(new String[]{String.valueOf(resId)}, new String[]{String.valueOf(fromFlag)},
-						0l);
-		
+		List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForView(
+				new String[] { String.valueOf(resId) }, new String[] { String.valueOf(fromFlag) }, 0l);
+
 		// 将原始的path重置为可用的web链接
 
-		JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
-				currentResPath,false);
-		
-		if(list!=null&&list.size()>0){
+		JPrepareConstant.resetResourceViewUrl(list, resServiceLocal, currentResPath, false);
+
+		if (list != null && list.size() > 0) {
 			return ResultJSON.getSuccess(list.get(0));
 		}
 
 		return ResultJSON.getSuccess("");
 	}
 
-	/**获取资源的下载链接
+	/**
+	 * 获取资源的下载链接
+	 * 
 	 * @param appId
 	 * @param userName
 	 * @param resId
-	 * @param request	 * @throws UnsupportedEncodingException 
-	 * @throws CustomException 
-	 * @throws NoAuthorizationException 
+	 * @param request
+	 *            * @throws UnsupportedEncodingException
+	 * @throws CustomException
+	 * @throws NoAuthorizationException
 	 */
-	@RequestMapping(value="v1.0/sysResourceDown",method=RequestMethod.GET)
+	@RequestMapping(value = "v1.0/sysResourceDown", method = RequestMethod.GET)
 	@ResponseBody
-	public ResultJSON sysResourceDown(String appId,String userName,Long resId,HttpServletRequest request) throws UnsupportedEncodingException, NoAuthorizationException, CustomException {
-		
-		if(!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)){
+	public ResultJSON sysResourceDown(String appId, String userName, Long resId, HttpServletRequest request)
+			throws UnsupportedEncodingException, NoAuthorizationException, CustomException {
+
+		if (!sysResourceService.hasPermissionToViewAndDown(userName, appId, resId)) {
 			throw new NoAuthorizationException();
 		}
-		
+
 		// 获取文件服务器的访问url
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
 
-		
-		List<ResourceSimpleInfo> list = jPrepareService
-				.getResourceSimpleInfoForDownload(new String[]{String.valueOf(resId)}, 
-				new String[]{String.valueOf(fromFlag)}, 0l
-				);
+		List<ResourceSimpleInfo> list = jPrepareService.getResourceSimpleInfoForDownload(
+				new String[] { String.valueOf(resId) }, new String[] { String.valueOf(fromFlag) }, 0l);
 
-		
-		if(list!=null&&list.size()>0){
+		if (list != null && list.size() > 0) {
 
-			JPrepareConstant.resetResourceDownLoadURLWeb(list,
-					resServiceLocal, currentResPath);
+			JPrepareConstant.resetResourceDownLoadURLWeb(list, resServiceLocal, currentResPath);
 			return ResultJSON.getSuccess(list.get(0));
 		}
 		return ResultJSON.getSuccess("");

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +17,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 
 import net.tfedu.zhl.cloud.resource.integration.entity.ResultInfo;
+import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.resSearch.dao.ResSearchMapper;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.service.ResSearchService;
@@ -24,6 +28,7 @@ import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
 
 /**
@@ -41,6 +46,11 @@ public class ResSearchServiceImpl implements ResSearchService {
 	FileFormatMapper fileFormatMapper;
 	@Resource
 	DistrictResMapper districtResMapper;
+	@Resource
+	ResTypeMapper resTypeMapper;
+
+	@Resource
+	JSyscourseMapper sysCourseMapper;
 
 	@Resource
 	JUserMapper jUserMapper;
@@ -306,8 +316,281 @@ public class ResSearchServiceImpl implements ResSearchService {
 			Integer perPage, Long mtype, String fileFormat) {
 
 		PageHelper.startPage(page, perPage);
-        // 这里不能放其它语句
-		
-		return fileFormatMapper.queryAssetList(userId, isCollect,courseIds,mtype,fileFormat);
+		// 这里不能放其它语句
+
+		return fileFormatMapper.queryAssetList(userId, isCollect, courseIds, mtype, fileFormat);
 	}
+
+	@Override
+	public List<Map<String, Object>> querySysResourceList(Long typeId, String exceptPoolIds, Integer poolId,
+			List<String> syscourseCodes, String sysFrom, Integer page, Integer perPage, String fileFormat,
+			Integer orderBy) {
+		Long[] exceptIds = null;
+		Long[] sysFromFlag = null;
+
+		if (StringUtils.isEmpty(exceptPoolIds)) {
+			String[] temp = exceptPoolIds.split(",");
+			exceptIds = new Long[temp.length];
+			for (int i = 0; i < temp.length; i++) {
+				exceptIds[i] = Long.parseLong(temp[i]);
+			}
+		}
+
+		if (StringUtils.isEmpty(sysFrom)) {
+			String[] temp = sysFrom.split(",");
+			sysFromFlag = new Long[temp.length];
+			for (int i = 0; i < temp.length; i++) {
+				sysFromFlag[i] = Long.parseLong(temp[i]);
+			}
+		}
+
+		// 根据资源库获取对应的资源类型
+		List<Long> typeIds = fileFormatMapper.getPoolType(null == typeId || 0 == typeId ? null : typeId.intValue(),
+				poolId, exceptIds);
+
+		// 获取指定的后缀
+		List<String> fileExts = null;
+		List<String> resCodes = null;
+
+		if (StringUtils.isNotEmpty(fileFormat)) {
+			fileExts = fileFormatMapper.getFileExtForFileFormat(fileFormat);
+		}
+
+		// 根据导航获取资源的code的范围
+		resCodes = fileFormatMapper.getResCodesFromResnav(syscourseCodes);
+
+		PageHelper.startPage(page, perPage);
+
+		List<Map<String, Object>> result = fileFormatMapper.querySysResourceList(resCodes, typeIds, fileExts,
+				sysFromFlag, orderBy);
+
+		// 更新结果的资源类型
+		resetMtype(result);
+
+		return result;
+	}
+
+	
+
+	@Override
+	public Boolean ifSysResourceCollected(Long userId, Long resId) {
+
+		return fileFormatMapper.ifSysResourceCollected(userId, resId);
+	}
+
+	@Override
+	public List<Map<String, Object>> querySharedAssetList(Long userId, Long typeId, Integer searchFlag, String tfcode,
+			Integer page, Integer perPage, String fileFormat, Integer orderBy) {
+
+		long schoolId = 0;
+		long districtId = 0;
+		String schoolName ="";
+
+		// 根据userId查询schoolId 和 districtId
+		HashMap<String, Object> map = jUserMapper.getUserAreaInfo(userId);
+		if (map != null) {
+			districtId = (map.get("districtid") instanceof java.lang.String)
+					? Long.parseLong(map.get("districtid").toString())
+					: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					? Long.parseLong(map.get("schoolid").toString())
+					: Long.parseLong(String.valueOf(map.get("schoolid")));
+					
+		}
+
+		// 获取指定的后缀
+		List<String> fileExts = null;
+		List<Integer> typeIds =  null ; 
+
+		if (StringUtils.isNotEmpty(fileFormat)) {
+			fileExts = fileFormatMapper.getFileExtForFileFormat(fileFormat);
+		}
+
+		if(null != typeId && typeId > 0 ){
+			typeIds  = resTypeMapper.getTypeIdsByOne(typeId.intValue());
+		}
+
+		PageHelper.startPage(page, perPage);
+
+
+		List<Map<String, Object>> result = fileFormatMapper.querySharedAssetList(searchFlag, districtId, schoolId,
+				tfcode + "%", typeIds, fileExts, orderBy);
+
+		// 更新结果的资源类型
+		resetMtype(result);
+
+		// 是否已经被当前用户收藏
+		ifSharedAssetCollected(userId,result);
+
+		//补充共享人的信息 username truename schoolname
+		supplementShareUserInfo(result);
+		
+		
+		return result;
+
+	}
+
+	/**
+	 * 补充共享人的信息 username truename schoolname
+	 * @param result
+	 */
+	private void supplementShareUserInfo(List<Map<String, Object>> result) {
+		
+		if (null != result && result.size() > 0) {
+
+			Map<String, Object> map = null;
+
+			long  userId ;
+			
+			JUser user ; 
+
+			for (Iterator<Map<String, Object>> iterator = result.iterator(); iterator.hasNext();) {
+				map = iterator.next();
+				//共享资源id
+				userId = (Long) map.get("userid");
+				
+				user = jUserMapper.getUserById(userId);
+				
+				if(null != user && user.getId()> 0 ){
+					
+					map.put("username", user.getName());
+					map.put("truename", user.getTruename());
+					map.put("schoolname", user.getSchoolName());
+					map.put("sname", user.getSchoolName());
+					
+				}
+			}
+		}
+		
+	}
+
+	/**
+	 * 共享资源是否已经被当前用户收藏
+	 * @param userId
+	 * @param result
+	 */
+	private void ifSharedAssetCollected(Long userId, List<Map<String, Object>> result) {
+		
+		if (null != result && result.size() > 0) {
+
+			Map<String, Object> map = null;
+
+			long resId ;
+
+			for (Iterator<Map<String, Object>> iterator = result.iterator(); iterator.hasNext();) {
+				map = iterator.next();
+				//共享资源id
+				resId = (Long) map.get("id");
+				
+				Boolean collected =  fileFormatMapper.ifSharedAssetCollected(userId, resId);
+				
+				map.put("collected", collected);
+
+			}
+		}
+		
+	}
+	
+	/**
+	 * 设置资源类型
+	 * 
+	 * @param result
+	 */
+	private void resetMtype(List<Map<String, Object>> result) {
+
+		if (null != result && result.size() > 0) {
+
+			Map<String, Object> map = null;
+
+			ResType type = null;
+
+			for (Iterator<Map<String, Object>> iterator = result.iterator(); iterator.hasNext();) {
+				map = iterator.next();
+				int id = (Integer) map.get("typeid");
+				type = resTypeMapper.selectByPrimaryKey(id);
+
+				if (null != type) {
+					map.put("mtype", type.getMtype());
+				}
+
+			}
+		}
+
+	}
+
+	@Override
+	public List<Map<String, Object>> queryDistrictResource(Long userId, Long mTypeId, Integer type, String tfcode,
+			Integer curPage, Integer perPage, String resPattern, Integer orderBy) {
+		long schoolId = 0;
+		long districtId = 0;
+		String schoolName ="";
+
+		// 根据userId查询schoolId 和 districtId
+		HashMap<String, Object> map = jUserMapper.getUserAreaInfo(userId);
+		if (map != null) {
+			districtId = (map.get("districtid") instanceof java.lang.String)
+					? Long.parseLong(map.get("districtid").toString())
+					: Long.parseLong(String.valueOf(map.get("districtid")));
+			schoolId = (map.get("schoolid") instanceof java.lang.String)
+					? Long.parseLong(map.get("schoolid").toString())
+					: Long.parseLong(String.valueOf(map.get("schoolid")));
+					
+		}
+
+		// 获取指定的后缀
+		List<String> fileExts = null;
+		List<Integer> typeIds =  null ; 
+
+		if (StringUtils.isNotEmpty(resPattern)) {
+			fileExts = fileFormatMapper.getFileExtForFileFormat(resPattern);
+		}
+
+		if(null != mTypeId && mTypeId > 0 ){
+			typeIds = resTypeMapper.getTypeIdsByOne(mTypeId.intValue());
+		}
+
+		PageHelper.startPage(curPage, perPage);
+
+
+		List<Map<String, Object>> result = fileFormatMapper.queryDistrictResList(type, districtId, schoolId,
+				tfcode + "%", typeIds, fileExts, orderBy);
+
+		// 更新结果的资源类型
+		resetMtype(result);
+
+		// 是否已经被当前用户收藏
+		ifDistrictResCollected(userId,result);
+
+		//补充共享人的信息 username truename schoolname
+		supplementShareUserInfo(result);
+		
+		return result;
+		
+	}
+
+	/**
+	 * 区校资源是否已经被当前用户收藏
+	 * @param userId
+	 * @param result
+	 */
+	private void ifDistrictResCollected(Long userId, List<Map<String, Object>> result) {
+		if (null != result && result.size() > 0) {
+
+			Map<String, Object> map = null;
+
+			long resId ;
+
+			for (Iterator<Map<String, Object>> iterator = result.iterator(); iterator.hasNext();) {
+				map = iterator.next();
+				//资源资源id
+				resId = (Long) map.get("id");
+				
+				String collected =  fileFormatMapper.ifDistrictResCollected(userId, resId);
+				
+				map.put("collected", collected);
+
+			}
+		}
+	}
+
 }

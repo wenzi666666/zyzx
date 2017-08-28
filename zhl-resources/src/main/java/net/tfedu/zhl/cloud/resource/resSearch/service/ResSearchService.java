@@ -137,4 +137,71 @@ public interface ResSearchService {
 	public List<Map<String, Object>> queryAssetList(Long userId, Integer isCollect, List<Long> courseIds, Integer page,
 			Integer perPage, Long mtype, String fileFormat);
 
+	
+	/**
+	 * 分页获取系统资源
+	 * @param typeId			指定资源的类型
+	 * @param exceptPoolIds		需要排除的资源库
+	 * @param poolId			指定查询的资源库
+	 * @param syscourseCodes    需要查询的节点
+	 * @param sysFrom           系统资源的来源（z_reource表中的fromflag）
+	 * @param page        页码 
+	 * @param perPage		页面条目数
+	 * @param fileFormat	文件格式的描述
+	 * @param orderBy		页面排序方式   0：默认排序（displayLevel） 1:点击次数 2收藏次数 3下载次数 4评论平均得分
+	 * @return
+	 */
+	public List<Map<String, Object>> querySysResourceList(Long typeId, String exceptPoolIds, Integer poolId,
+			List<String> syscourseCodes, String sysFrom,
+			Integer page,Integer perPage,String fileFormat,Integer orderBy
+			);
+	
+	
+	
+	/**
+	 * 查询用户是否已经收藏当前系统资源
+	 * @param userId
+	 * @param resId
+	 * @return
+	 */
+	public Boolean ifSysResourceCollected(Long userId,Long resId);
+	
+	
+	
+	
+	/**
+	 * 分页获取共享资源
+	 * @param userId		当前用户，用于获取用户的区校信息和是否已经收藏的判断
+	 * @param typeId		指定资源的类型
+	 * @param searchFlag	共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+	 * @param tfcode		教材目录\知识点目录的code
+	 * @param page        	页码 
+	 * @param perPage		页面条目数
+	 * @param fileFormat	文件格式的描述
+	 * @param orderBy		页面排序方式   0：默认排序（共享时间） 1:点击次数 2引用次数 3下载次数 4评论平均得分
+	 * @return
+	 */
+	public List<Map<String, Object>> querySharedAssetList(Long userId,Long typeId,Integer searchFlag, String tfcode,
+			Integer page,Integer perPage,String fileFormat,Integer orderBy
+			);
+
+	
+	/**
+	 * 分页获取区校资源
+	 * @param userId		当前用户，用于获取用户的区校信息和是否已经收藏的判断
+	 * @param mTypeId		指定资源的类型
+	 * @param type			0 为自建课程树 1 系统资源 2 共享资源 3校本资源 4 区本资源
+	 * @param tfcode		教材目录\知识点目录的code
+	 * @param page        	页码 
+	 * @param perPage		页面条目数
+	 * @param resPattern	文件格式的描述
+	 * @param orderBy		页面排序方式   0：默认排序（创建时间） 1:点击次数 2引用次数 3下载次数 4评论平均得分
+	 * @return
+	 */
+	public List<Map<String, Object>> queryDistrictResource(Long userId, Long mTypeId, Integer type, String tfcode,
+			Integer curPage, Integer perPage, String resPattern, Integer orderBy);
+	
+	
+	
+	
 }

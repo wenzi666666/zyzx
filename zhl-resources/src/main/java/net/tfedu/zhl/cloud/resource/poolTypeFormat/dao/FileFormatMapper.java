@@ -15,6 +15,17 @@ import net.tfedu.zhl.helper.CoreMapper;
  *
  */
 public interface FileFormatMapper extends CoreMapper<FileFormat> {
+	
+	
+	/**
+	 * 根据文件后缀获取对应的文件格式
+	 * @param fileExt  文件后缀   例如".jpg"
+	 * @return
+	 */
+	public FileFormat getFileFormatByFileExt(@Param("fileExt") String fileExt);
+	
+	
+	
 
 	/**
 	 * 系统资源，根据资源ids和typeIds，查询得到资源格式
@@ -192,28 +203,142 @@ public interface FileFormatMapper extends CoreMapper<FileFormat> {
 	 * @param syscourseCodes
 	 *            教材目录code
 	 * @param sysResType
-	 *            选择的系统资源的id号  预留参数
+	 *            选择的系统资源的id号 预留参数
 	 * @param schoolId
 	 *            学校id
 	 * @param districtId
-	 *            地区id            
+	 *            地区id
 	 * @return
 	 */
 	public List<Map<String, Object>> getDistrictResourceFormat(@Param("resourceFromFlag") Integer resourceFromFlag,
 			@Param("syscourseCodes") List<String> syscourseCodes, @Param("sysResType") Long sysResType,
 			@Param("schoolId") Long schoolId, @Param("districtId") Long districtId);
 
-	
 	/**
-	 * @param userId    用户主键
-	 * @param isCollect   标签 1:自建 2:收藏 3我的共享
-	 * @param courseIds   用户自建目录ids
-	 * @param mTypeId			指定资源类型的id
-	 * @param fileFormat	文件格式的描述
+	 * @param userId
+	 *            用户主键
+	 * @param isCollect
+	 *            标签 1:自建 2:收藏 3我的共享
+	 * @param courseIds
+	 *            用户自建目录ids
+	 * @param mTypeId
+	 *            指定资源类型的id
+	 * @param fileFormat
+	 *            文件格式的描述
 	 * @return
 	 */
-	public List<Map<String, Object>> queryAssetList(@Param("userId") Long userId,
-			@Param("isCollect") Integer isCollect, @Param("courseIds") List<Long> courseIds,@Param("mTypeId")Long mTypeId,
+	public List<Map<String, Object>> queryAssetList(@Param("userId") Long userId, @Param("isCollect") Integer isCollect,
+			@Param("courseIds") List<Long> courseIds, @Param("mTypeId") Long mTypeId,
 			@Param("fileFormat") String fileFormat);
+
+	/**
+	 * 根据文件的媒体类型获取文件的后缀
+	 * 
+	 * @param fileFormat
+	 * @return
+	 */
+	public List<String> getFileExtForFileFormat(@Param("fileFormat") String fileFormat);
+
+	/**
+	 * 根据查询的系统目录节点的集合，获取关联的系统资源
+	 * 
+	 * @param syscourseCodes
+	 * @return
+	 */
+	public List<String> getResCodesFromResnav(@Param("syscourseCodes") List<String> syscourseCodes);
+
+	/**
+	 * 查询系统资源
+	 * 
+	 * @param resCodes
+	 *            code范围
+	 * @param typeIds
+	 *            类型范围
+	 * @param fileExts
+	 *            后缀的范围
+	 * @param sysFromFlag
+	 *            系统资源来源
+	 * @param orderBy
+	 *            页面排序方式 0：默认排序（displayLevel） 1:点击次数 2收藏次数 3下载次数 4评论平均得分
+	 * @return
+	 */
+	public List<Map<String, Object>> querySysResourceList(@Param("resCodes") List<String> resCodes,
+			@Param("typeIds") List<Long> typeIds, @Param("fileExts") List<String> fileExts,
+			@Param("sysFromFlag") Long[] sysFromFlag, @Param("orderBy") Integer orderBy);
+
+	/**
+	 * 查询用户是否已经收藏当前系统资源
+	 * 
+	 * @param userId
+	 * @param resId
+	 * @return
+	 */
+	public Boolean ifSysResourceCollected(@Param("userId") Long userId, @Param("resId") Long resId);
+
+	/**
+	 * 查询指定范围的共享资源列表
+	 * 
+	 * @param searchFlag
+	 *            共享时searchFlag查询方式 1按教材目录查询 2按知识点目录查询
+	 * @param districtId
+	 *            地区id,可以为null或0，但是此时schoolId必须是有效的
+	 * @param schoolId
+	 *            学校id,可以为null或0，但是此时districtId必须是有效的
+	 * @param tfcode
+	 *            tfcode
+	 * @param typeIds
+	 *            类型范围
+	 * @param fileExts
+	 *            后缀的范围
+	 * @param orderBy
+	 *            页面排序方式 0：默认排序（共享时间） 1:点击次数 2引用次数 3下载次数 4评论平均得分
+	 * 
+	 * @return
+	 */
+	public List<Map<String, Object>> querySharedAssetList(@Param("searchFlag") Integer searchFlag,
+			@Param("districtId") Long districtId, @Param("schoolId") Long schoolId, @Param("tfcode") String tfcode,
+			@Param("typeIds") List<Integer> typeIds, @Param("fileExts") List<String> fileExts,
+			@Param("orderBy") Integer orderBy);
+
+	/**
+	 * 查询用户是否已经收藏当前共享资源
+	 * 
+	 * @param userId
+	 * @param resId
+	 * @return
+	 */
+	public Boolean ifSharedAssetCollected(@Param("userId") Long userId, @Param("resId") Long resId);
+
+	/**
+	 * 查询区校资源列表
+	 * @param fromFlag
+	 *            资源来源 3校本资源 4 区本资源
+	 * @param districtId
+	 *            地区id,可以为null或0，但是此时schoolId必须是有效的
+	 * @param schoolId
+	 *            学校id,可以为null或0，但是此时districtId必须是有效的
+	 * @param tfcode
+	 *            tfcode
+	 * @param typeIds
+	 *            类型范围
+	 * @param fileExts
+	 *            后缀的范围
+	 * @param orderBy
+	 *            页面排序方式 0：默认排序（共享时间） 1:点击次数 2引用次数 3下载次数 4评论平均得分
+	 * @return
+	 */
+	public List<Map<String, Object>> queryDistrictResList(@Param("fromFlag")Integer fromFlag, 
+			@Param("districtId") Long districtId, @Param("schoolId") Long schoolId, @Param("tfcode") String tfcode,
+			@Param("typeIds") List<Integer> typeIds, @Param("fileExts") List<String> fileExts,
+			@Param("orderBy") Integer orderBy);
+	
+
+	/**
+	 * 区校资源是否已经被当前用户收藏
+	 * @param userId
+	 * @param resId
+	 * @return
+	 */
+	public String ifDistrictResCollected(@Param("userId")Long userId, @Param("resId")Long resId);
 
 }

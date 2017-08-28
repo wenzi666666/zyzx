@@ -377,7 +377,7 @@ public class TreeServiceImpl implements TreeService {
 			return null;
 		}
 
-		return jSyscourseMapper.getAllChildrenIds(tfcode+"%");
+		return jSyscourseMapper.getAllChildrenCodes(tfcode+"%");
 	}
 
 	@Override

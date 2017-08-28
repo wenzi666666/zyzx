@@ -15,6 +15,10 @@
 			<arg column="Flag" jdbcType="BIT" javaType="java.lang.Boolean" />
 		</constructor>
 	</resultMap>
+	<!-- 根据文件后缀获取对应的文件格式 -->
+	<select id="getFileFormatByFileExt" resultMap="BaseResultMap">
+	   SELECT * FROM `j_filetypedetail` where FormatCode = #{fileExt} and flag = false 
+	</select>
 
 	<!-- 系统资源，查询资源格式，文本，图片... -->
 	<resultMap id="FileFormatsResultMap" type="String">
@@ -600,7 +604,8 @@
 	<!-- 获取他人共享资源的资源类型的统计信息 -->
 	<select id="getOtherSharedAssetType" resultType="HashMap">
 		select ty.mType,ty.typeId, count(ty.mType) count from (
-		SELECT DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
+		SELECT
+		DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
 		filecode,jf.orderNum,e.displayIndex
 		<include refid="other_shared_sql_main" />
 		) ty group by ty.mType order by ty.displayIndex asc
@@ -610,7 +615,8 @@
 	<!-- 获取他人共享资源的文件格式的统计信息 -->
 	<select id="getOtherSharedAssetFormat" resultType="HashMap">
 		select pa.fileCode, count(pa.fileCode) count from (
-		SELECT DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
+		SELECT
+		DISTINCT(a.id) id,e.id typeid,e.mtype,jf.fileformat
 		filecode,jf.orderNum,e.displayindex
 		<include refid="other_shared_sql_main" />
 		) pa group by pa.fileCode order by pa.orderNum asc
@@ -627,17 +633,24 @@
 		c.quotes,c.downloads,j.TrueName userName,
 		if((SELECT count(resId) from
 		z_rescollection z where z.resId = a.id and
-		a.FileType ='A' and z.fromFlag = 1 and z.flag = 0 and a.flag = 0 and z.userId =
-		390320126 )>=1,'true','false') collected,
+		a.FileType ='A' and
+		z.fromFlag = 1 and z.flag = 0 and a.flag = 0 and z.userId =
+		${userId}
+		)>=1,'true','false') collected,
 
-		(SELECT count(1) from z_assetevaluate u where u.AssetId = a.id and u.flag = 0
-		and u.IsScore = 1 and u.aType = 2) contentCount,
+		(SELECT count(1) from z_assetevaluate u
+		where u.AssetId = a.id and u.flag = 0
+		and u.IsScore = 1 and u.aType =
+		2) contentCount,
 		(SELECT avg(t.ascore)
-		from z_assetevaluate t where t.AssetId = a.id and t.flag = 0 and
-		t.isScore = 0 and t.aType = 0) avgScore,
+		from z_assetevaluate t where
+		t.AssetId = a.id and t.flag = 0 and
+		t.isScore = 0 and t.aType = 0)
+		avgScore,
 
 		a.assetsize fsize,a.userId
-		,j.truename,s.name as schoolname,c.intergral,a.filepath
+		,j.truename,s.name as
+		schoolname,c.intergral,a.filepath
 		<include refid="other_shared_sql_main" />
 	</sql>
 
@@ -667,17 +680,21 @@
 		</if>
 
 		<if test=" 3 == resourceFromFlag ">
-			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId = ${schoolId}
+			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId =
+			${schoolId}
 		</if>
 
 		<if test=" 4 == resourceFromFlag ">
-			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId = ${districtId}
+			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId =
+			${districtId}
 		</if>
 
 		and a.flag = 0 and n.Flag = false and b.flag = 0
-		and (a.state=3 or a.state=6) and (pb.flag = 0 or pb.flag is null)
+		and (a.state=3 or
+		a.state=6) and (pb.flag = 0 or pb.flag is null)
 		)temm
-		group by MType order by displayIndex asc
+		group by MType
+		order by displayIndex asc
 
 	</select>
 	<!-- 获取区本资源的文件格式的统计信息 3校本资源 4 区本资源 -->
@@ -691,7 +708,8 @@
 		z_districts_resource a
 		RIGHT JOIN j_filetypedetail b ON (
 		LOWER(fileExt) = b.FormatCode
-		OR CONCAT('.', LOWER(fileExt)) = b.FormatCode
+		OR CONCAT('.', LOWER(fileExt)) =
+		b.FormatCode
 		)
 		LEFT JOIN
 		z_districts_resnav n on n.ResCode = a.ResCode
@@ -708,11 +726,13 @@
 		</if>
 
 		<if test=" 3 == resourceFromFlag ">
-			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId = ${schoolId}
+			AND a.fromFlag = 3 AND a.scope = 5 and a.ScopeId =
+			${schoolId}
 		</if>
 
 		<if test=" 4 == resourceFromFlag ">
-			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId = ${districtId}
+			AND a.fromFlag = 4 AND a.scope = 4 and a.ScopeId =
+			${districtId}
 		</if>
 
 		AND a.flag = 0
@@ -723,5 +743,368 @@
 	</select>
 
 
+	<!-- 根据文件的媒体类型获取文件的后缀 -->
+	<select id="getFileExtForFileFormat" resultType="String"
+		parameterType="String">
+		SELECT fileext from (
+		SELECT FormatCode as fileext FROM
+		j_filetypedetail where FileFormat =
+		#{fileFormat}
+		)temp1
+	</select>
 
+
+	<!--根据查询的系统目录节点的集合，获取关联的系统资源 -->
+	<select id="getResCodesFromResnav" resultType="String">
+
+		SELECT DISTINCT rescode from z_resnav n
+		RIGHT JOIN j_syscourse d ON
+		n.StructCode = d.TFcode
+		where n.flag =false and d.Flag = false
+		and
+		d.tfcode in
+		<foreach collection="syscourseCodes" item="code" close=")"
+			open="(" separator=",">
+			#{code}
+		</foreach>
+
+	</select>
+
+	<!--查询系统资源 -->
+	<select id="querySysResourceList" resultType="HashMap">
+		SELECT * from (
+		SELECT DISTINCT
+		a.id,a.title,a.fname,a.fpath,'' as
+		mtype,a.mtype typeid,
+		a.keyword,a.speaker,a.speakerunit,a.resolution,a.updatedt,
+		a.fileext,1
+		as diskorder,a.isdwj,p.collecttimes as sctimes,
+		p.clicktimes,p.downloadtimes as dloadtimes,
+		(
+		select count(1) from
+		z_assetevaluate u
+		where u.assetid = a.id and u.flag = 0
+		and u.isscore =
+		1 and u.atype = 1
+		) contentcount,
+		(
+		select(
+		(ifnull(sum(t.ascore), 0) +
+		a.displaylevel ) / (count(t.assetid) + 1)
+		)
+		from
+		z_assetevaluate t
+		where
+		t.assetid = a.id and t.flag = 0
+		and t.isscore = 0 and t.atype = 1
+		)
+		avgscore,
+
+		false as collected,
+		a.displaylevel,
+		a.fsize fsize,
+		m.res_time
+		FROM
+		z_resource a
+		LEFT JOIN
+		z_res_medium m ON a.id = m.res_Id
+		AND
+		a.Rescode = m.res_code
+		LEFT JOIN
+		z_resource_operate_times p ON p.rescode
+		= a.rescode
+		WHERE
+		a.flag = 0
+		<if test="null!=resCodes and resCodes.size()>0">
+			AND a.rescode IN
+			<foreach collection="resCodes" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null!=sysFromFlag and sysFromFlag.length>0">
+			AND a.fromflag IN
+			<foreach collection="sysFromFlag" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null!=typeIds and typeIds.size()>0">
+			AND a.MType IN
+			<foreach collection="typeIds" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null!=fileExts and fileExts.size()>0">
+			AND a.FileExt IN
+			<foreach collection="fileExts" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+		) temp
+		order by
+		<if test="null == orderBy or 0 == orderBy">
+			displayLevel desc,
+		</if>
+
+		<if test="1 == orderBy">
+			clicktimes desc,
+		</if>
+
+		<if test="2 == orderBy">
+			sctimes desc,
+		</if>
+
+		<if test="3 == orderBy">
+			dloadtimes desc,
+		</if>
+
+		<if test="4 == orderBy">
+			avgscore desc,
+		</if>
+
+		updatedt desc
+	</select>
+
+
+	<!-- 查询用户是否已经收藏当前系统资源 -->
+	<select id="ifSysResourceCollected" resultType="Boolean">
+		SELECT
+		IF(count(1)> 0 ,true,false)as flag
+		FROM
+		z_rescollection z
+		WHERE
+		z.resId =
+		#{resId}
+		AND z.fromFlag = 0
+		AND flag = 0
+		AND userId = #{userId}
+	</select>
+	<!-- 查询用户是否已经收藏当前共享资源 -->
+	<select id="ifSharedAssetCollected" resultType="Boolean">
+		SELECT
+		IF(count(1)> 0 ,true,false)as flag
+		FROM
+		z_rescollection z
+		WHERE
+		z.resId =
+		#{resId}
+		AND z.fromFlag = 1
+		AND flag = 0
+		AND userId = #{userId}
+	</select>
+
+	<!-- 查询指定范围的共享资源列表 -->
+	<select id="querySharedAssetList"  resultType="HashMap">
+		SELECT * from (
+		SELECT DISTINCT
+		a.id id,a.name,a.name
+		title,a.assetpath,a.notes,
+		a.assetdesc,a.keyword,a.unifytypeid
+		typeid,'' as mtype,
+		0 as displayindex,a.islocal islocal,1 beasset,
+		c.createtime,d.structcode,a.filecode,b.courseid teachcourseid,
+		c.clicks,c.quotes,c.downloads,
+		false as collected,
+		(
+		select count(1) from
+		z_assetevaluate u
+		where u.assetid = a.id and u.flag = 0 and u.isscore =
+		1 and u.atype = 2
+		) contentcount,
+		(
+		select avg(t.ascore) from
+		z_assetevaluate t
+		where t.assetid = a.id and t.flag = 0 and t.isscore =
+		0 and t.atype = 0
+		) avgscore,
+		a.assetsize
+		fsize,a.userid,c.intergral,a.filepath
+		FROM
+		z_asset a
+		RIGHT JOIN
+		x_rescourse b ON b.resId = a.id
+		RIGHT JOIN x_platform_share c ON a.id =
+		c.shareId
+		RIGHT JOIN x_share_resnav d ON c.shareId = d.resId
+		WHERE
+		a.flag = 0 AND b.flag = 0
+		AND c.flag = 0 AND d.flag = 0
+		AND c.sharedType
+		= 1
+
+		<if test="null!=fileExts and fileExts.size()>0">
+			AND a.FileCode IN
+			<foreach collection="fileExts" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null!=typeIds and typeIds.size()>0">
+			AND c.sysResourceType IN
+			<foreach collection="typeIds" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test=" null != tfcode and tfcode.length() > 0 ">
+			and d.structCode like #{tfcode}
+		</if>
+		<choose>
+			<when test=" 1 == searchFlag ">
+				and d.codeType = 0
+			</when>
+			<otherwise>
+				and d.codeType = 1
+			</otherwise>
+		</choose>
+
+		and (
+		<if test="null != schoolId and schoolId > 0 ">
+			(c.scope = 'D' and c.scopeId = #{schoolId})
+		</if>
+
+		<if
+			test="null != schoolId and schoolId > 0  and null != districtId and districtId > 0 ">
+			OR
+		</if>
+
+		<if test="null != districtId and districtId > 0 ">
+			(c.scope = 'C' and c.scopeId = #{districtId})
+		</if>
+		)
+		)temp
+
+		order by
+		<if test="null == orderBy or 0 == orderBy">
+			createtime desc,
+		</if>
+
+		<if test="1 == orderBy">
+			clicks desc,
+		</if>
+
+		<if test="2 == orderBy">
+			quotes desc,
+		</if>
+
+		<if test="3 == orderBy">
+			downloads desc,
+		</if>
+		avgscore desc
+	</select>
+
+	<!-- 查询区校资源列表 -->
+	<select id="queryDistrictResList" resultType="HashMap">
+		SELECT DISTINCT
+		a.rescode,a.id,a.title,a.fname,a.fpath,a.authorid as
+		userid,
+		a.fullpath,a.islocal,'' mtype,
+		a.mtype as typeid,a.sctimes,
+		a.clicktimes,a.dloadtimes,a.keyword,
+		a.updatedt,a.fileext,a.speaker,a.resolution,
+		a.thumbnailpath,
+		(
+		select
+		count(1) from z_assetevaluate u
+		where u.assetid = a.id
+		and u.flag = 0
+		and u.isscore = 1 and u.atype = 1
+		) contentcount,
+		(
+		select
+		( (
+		ifnull(sum(t.ascore), 0) + a.displaylevel ) / (count(t.assetid) +
+		1)
+		)
+		from z_assetevaluate t
+		where
+		t.assetid = a.id and t.flag = 0 and
+		t.isscore = 0
+		and t.atype = #{fromFlag}
+		) avgscore,
+
+		false iscollect,
+		a.displaylevel,
+		a.fsize fsize
+		FROM
+		Z_DISTRICTS_RESOURCE a
+		RIGHT JOIN
+		Z_DISTRICTS_RESNAV c ON a.ResCode = c.ResCode
+		WHERE
+		1 = 1
+
+		<if test=" null != tfcode and tfcode.length() > 0 ">
+			and c.structCode like #{tfcode}
+		</if>
+		AND c.flag = 0
+		AND (a.state = 3 OR a.state = 6)
+
+		<if test="null!=fileExts and fileExts.size()>0">
+			AND a.FileExt IN
+			<foreach collection="fileExts" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		<if test="null!=typeIds and typeIds.size()>0">
+			AND a.MType IN
+			<foreach collection="typeIds" item="id" close=")" open="("
+				separator=",">
+				#{id}
+			</foreach>
+		</if>
+
+		and a.fromFlag = #{fromFlag}
+
+		<choose>
+			<when test=" 3 == fromFlag ">
+				and a.scopeId = #{schoolId}
+			</when>
+			<otherwise>
+				and a.scopeId = #{districtId}
+			</otherwise>
+		</choose>
+		
+		order by
+        <if test="null == orderBy or 0 == orderBy">
+            a.CreateDT desc,
+        </if>
+
+        <if test="1 == orderBy">
+            ClickTimes desc,
+        </if>
+
+        <if test="2 == orderBy">
+            SCTimes desc,
+        </if>
+
+        <if test="3 == orderBy">
+            DLoadTimes desc,
+        </if>
+        avgscore desc
+	</select>
+
+
+    <!-- 区校资源是否已经被当前用户收藏 -->
+    <select id="ifDistrictResCollected" resultType="String">
+        SELECT
+        IF(count(1)>=1 ,'A','B')as flag
+        FROM
+        z_rescollection z
+        WHERE
+        z.resId =
+        #{resId}
+        AND z.fromFlag = 3
+        AND flag = 0
+        AND userId = #{userId}
+    </select>
 </mapper>

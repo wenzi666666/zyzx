@@ -133,12 +133,12 @@ public class SignUtil {
 	
 	public static void main(String[] args) {
 		
-		String appId = "679636";
-		String appKey = "0dd97ecaf1d3";
+		String appId = "642584";
+		String appKey = "c5f06463d14e";
 		
 		String result =  SignUtil.createSignMap(
-				new String[]{"page","perPage","year","termId","userName","appId","poolId","token"},
-				new String[]{"1","10","2017","0","",appId,"0","F74E13E419FA48DDA00A9BAE82CD18A7"}, appKey);
+				new String[]{"appId"},
+				new String[]{appId}, appKey);
 		
 		
 		System.out.println(result);

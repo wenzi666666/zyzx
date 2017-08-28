@@ -89,7 +89,7 @@
   
   
   <!-- 查询所有字节点的code  -->
-  <select id="getAllChildrenIds" parameterType="String" resultType="String">
+  <select id="getAllChildrenCodes" parameterType="String" resultType="String">
 		select tfcode from j_syscourse where tfcode like #{tfcode} and visible = 1 and typeFlag in (0,1) and flag = false 
   </select>
   

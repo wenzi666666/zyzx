@@ -2,6 +2,8 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service;
 
 import java.util.List;
 
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat;
+
 
 /**
  * 资源格式 service
@@ -30,4 +32,13 @@ public interface ResFormatService {
      */
     public List<String> getSysResFormats(String pTfcode, int typeId,List<Integer> sys_from,long poolId);
     
+    
+
+
+	/**
+	 * 根据文件后缀获取对应的文件格式
+	 * @param fileExt  文件后缀   例如".jpg"
+	 * @return
+	 */
+	public FileFormat getFileFormatByFileExt(String fileExt);
 }

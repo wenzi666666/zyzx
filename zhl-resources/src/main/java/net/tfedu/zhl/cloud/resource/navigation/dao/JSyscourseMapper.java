@@ -54,10 +54,10 @@ public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
 	/**
 	 * 根据父结点id，查询子结点
 	 * 
-	 * @param tfcode
+	 * @param tfcode  需调用方调用时在后面在'%'
 	 * @return
 	 */
-	public List<String> getAllChildrenIds(String tfcode);
+	public List<String> getAllChildrenCodes(String tfcode);
 
 	/**
 	 * 根据课程结点id，获取课程的详细信息
@@ -106,4 +106,6 @@ public interface JSyscourseMapper extends CoreMapper<JSyscourse> {
 	public List<Map<String, Object>> getSyscourseVersion(@Param("proCode") String proCode, @Param("termId") Long termId,
 			@Param("subjectId") Long subjectId);
 
+	
+	
 }

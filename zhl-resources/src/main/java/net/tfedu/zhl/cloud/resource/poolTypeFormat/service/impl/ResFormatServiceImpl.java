@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.FileFormatMapper;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResFormatService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.sso.user.dao.JUserMapper;
@@ -81,4 +82,9 @@ public class ResFormatServiceImpl implements ResFormatService {
         return formats;
 
     }
+
+	@Override
+	public FileFormat getFileFormatByFileExt(String fileExt) {
+		return fileFormatMapper.getFileFormatByFileExt(fileExt);
+	}
 }

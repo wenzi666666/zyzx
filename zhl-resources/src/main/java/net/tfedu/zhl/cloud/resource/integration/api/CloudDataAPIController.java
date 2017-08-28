@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +38,7 @@ import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResPool;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResPoolService;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.impl.ResFormatServiceImpl;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
 import net.tfedu.zhl.cloud.resource.prepare.service.JPrepareService;
 import net.tfedu.zhl.cloud.resource.prepare.util.JPrepareConstant;
@@ -101,6 +103,11 @@ public class CloudDataAPIController {
 
 	//
 	public static final String ALL = "all";
+	
+	/**
+	 * 上传资源的默认(系统)类型为素材
+	 */
+	private static final Integer DEFAULT_ASSET_TYPE = 1;
 
 	@Resource
 	JTeachSyscourseService jTeachSyscourseService;
@@ -148,6 +155,9 @@ public class CloudDataAPIController {
 
 	@Resource
 	ResSearchService resSearchService;
+	
+	@Resource
+	ResFormatServiceImpl resFormatService;
 
 	/**
 	 * 获取（地区下）学校的上传统计信息
@@ -1243,6 +1253,7 @@ public class CloudDataAPIController {
 		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
 		List<Map<String, Object>> resultList = new ArrayList<Map<String, Object>>();
 		try {
+			Integer orderBy = ControllerHelper.getOptionalIntegerParameter(request, "orderBy");
 
 			if (null == result) {
 				Long userId = getUserId(request);
@@ -1269,13 +1280,13 @@ public class CloudDataAPIController {
 
 					resultList = resSearchService.queryAssetList(userId, isCollect, courseIds, curPage, perPage,
 							mTypeId, resPattern);
-					
-					//收藏的系统资源，取其缩略图 
-					
 
+					// 收藏的系统资源，取其缩略图
+					resetCollectedSysResourceImage(resultList, request);
 					break;
 				// 1 系统资源
 				case 1:
+
 					List<String> syscourseCodes = new ArrayList<String>();
 
 					syscourseCodes.clear();
@@ -1287,6 +1298,16 @@ public class CloudDataAPIController {
 
 					// 获取资源库id
 					Integer poolId = fromFlag == null ? null : fromFlag.intValue();
+
+					resultList = resSearchService.querySysResourceList(mTypeId, resourceWebConfig.getExceptPoolIds(),
+							poolId, syscourseCodes, resourceWebConfig.getSys_from(), curPage, perPage, resPattern,
+							orderBy);
+
+					// 增加是否收藏的判断
+					resetIsCollected(userId, resultList);
+
+					// 增加缩略图
+					ressetSysResourceImagePath(resultList, request);
 
 					break;
 
@@ -1303,6 +1324,11 @@ public class CloudDataAPIController {
 						tfcode = jTeachSyscourseService.queryTeachingSelectTfcode(userId);
 					}
 
+					resultList = resSearchService.querySharedAssetList(userId, mTypeId, searchFlag, tfcode, curPage,
+							perPage, resPattern, orderBy);
+
+					resetSharedAssetImage(resultList, request);
+
 					break;
 				// 3校本资源 4 区本资源
 				case 3:
@@ -1316,13 +1342,18 @@ public class CloudDataAPIController {
 						syscourseCodes = getTfCode(courseId);
 					}
 
+					resultList = resSearchService.queryDistrictResource(userId, mTypeId, type, tfcode, curPage, perPage,
+							resPattern, orderBy);
+
+					resetDistrictResImage(resultList, request);
+
 					break;
 				default:
 					break;
 
 				}
 
-				result = ResultInfo.success();
+				result = ResultInfo.success(resultList);
 
 			}
 		} catch (Exception e) {
@@ -1453,6 +1484,11 @@ public class CloudDataAPIController {
 		return result;
 
 	}
+	
+	
+	
+	
+	
 
 	/**
 	 * 
@@ -1512,5 +1548,346 @@ public class CloudDataAPIController {
 		ls.add(tfcode);
 		return ls;
 	}
+
+	/**
+	 * 更新用户是否已经收藏系统资源
+	 * 
+	 * @param userId
+	 * @param resultList
+	 */
+	private void resetIsCollected(Long userId, List<Map<String, Object>> resultList) {
+		if (null != resultList && resultList.size() > 0) {
+			for (Iterator<Map<String, Object>> iterator = resultList.iterator(); iterator.hasNext();) {
+				Map<String, Object> map = iterator.next();
+				Long id = (Long) map.get("id");
+				Boolean flag = resSearchService.ifSysResourceCollected(userId, id);
+				map.put("collected", flag);
+			}
+
+		}
+	}
+
+	/**
+	 * 设置系统资源缩略图
+	 * 
+	 * @param resultList
+	 */
+	private void ressetSysResourceImagePath(List<Map<String, Object>> resultList, HttpServletRequest request) {
+
+		if (null != resultList && resultList.size() > 0) {
+
+			Map<String, Object> temp = null;
+
+			String assetpath = null;
+
+			String fname = null;
+
+			String imgPath = null;
+
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+
+			String currentResSerivce = commonWebConfig.getCurrentResPath(request);
+
+			boolean isNeeded = !resServiceLocal.equals(currentResSerivce);
+
+			for (Iterator<Map<String, Object>> iterator = resultList.iterator(); iterator.hasNext();) {
+
+				temp = iterator.next();
+
+				fname = (String) temp.get("fname");
+
+				assetpath = (String) temp.get("fpath") + File.separator + fname;
+
+				imgPath = assetpath.substring(0, assetpath.lastIndexOf("."))
+						+ ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+				imgPath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imgPath);
+
+				if (isNeeded) {
+					imgPath = imgPath.replace(resServiceLocal, currentResSerivce);
+				}
+
+				temp.put("imgpath", imgPath);
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * 收藏的系统资源，取其缩略图
+	 * 
+	 * @param resultList
+	 * @param request
+	 */
+	private void resetCollectedSysResourceImage(List<Map<String, Object>> resultList, HttpServletRequest request) {
+		if (null != resultList && resultList.size() > 0) {
+
+			Map<String, Object> temp = null;
+
+			String assetpath = null;
+
+			String fname = null;
+
+			String imgPath = null;
+
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+
+			String currentResSerivce = commonWebConfig.getCurrentResPath(request);
+
+			boolean isNeeded = !resServiceLocal.equals(currentResSerivce);
+
+			for (Iterator<Map<String, Object>> iterator = resultList.iterator(); iterator.hasNext();) {
+				temp = iterator.next();
+
+				imgPath = "";
+
+				long rescourseFrom = temp.get("rescoursefrom") instanceof Integer
+						? (new Integer((Integer) temp.get("rescoursefrom")).longValue())
+						: (Long) temp.get("rescoursefrom");
+
+				if (0 == rescourseFrom) {// 收藏系统资源
+
+					fname = (String) temp.get("fname");
+
+					assetpath = (String) temp.get("fpath") + File.separator + fname;
+
+					imgPath = assetpath.substring(0, assetpath.lastIndexOf("."))
+							+ ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+					imgPath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imgPath);
+
+					if (isNeeded) {
+						imgPath = imgPath.replace(resServiceLocal, currentResSerivce);
+					}
+				}
+
+				temp.put("imgpath", imgPath);
+			}
+
+		}
+	}
+
+	/**
+	 * 区校资源，补充缩略图
+	 * 
+	 * @param resultList
+	 * @param request
+	 */
+	private void resetDistrictResImage(List<Map<String, Object>> resultList, HttpServletRequest request) {
+		resetDifferentResourceWithPropertyName(resultList, request, "fullpath");
+	}
+
+	/**
+	 * 共享资源，补充缩略图
+	 * 
+	 * @param resultList
+	 * @param request
+	 */
+	private void resetSharedAssetImage(List<Map<String, Object>> resultList, HttpServletRequest request) {
+		resetDifferentResourceWithPropertyName(resultList, request, "assetpath");
+	}
+
+	/**
+	 * 设置资源的缩略图
+	 * 
+	 * @param resultList
+	 * @param request
+	 * @param fullPathName
+	 *            指定资源的相对全路径
+	 */
+	private void resetDifferentResourceWithPropertyName(List<Map<String, Object>> resultList,
+			HttpServletRequest request, String fullPathName) {
+		if (null != resultList && resultList.size() > 0) {
+
+			Map<String, Object> temp = null;
+
+			String assetpath = null;
+
+			String imgPath = null;
+
+			String resServiceLocal = commonWebConfig.getResServiceLocal();
+
+			String currentResSerivce = commonWebConfig.getCurrentResPath(request);
+
+			boolean isNeeded = !resServiceLocal.equals(currentResSerivce);
+
+			for (Iterator<Map<String, Object>> iterator = resultList.iterator(); iterator.hasNext();) {
+				temp = iterator.next();
+
+				assetpath = (String) temp.get(fullPathName);
+
+				imgPath = null;
+
+				//非网络资源
+				if (!ControllerHelper.isNetResource(assetpath)) {
+					imgPath = assetpath.substring(0, assetpath.lastIndexOf("."))
+							+ ZhlResourceCenterWrap.THUMBNAILS_IMG_TYPE;
+
+					if (ZhlResourceCenterWrap.isFileExist(resServiceLocal, imgPath)) {
+
+						imgPath = ZhlResourceCenterWrap.getWebThumbnail(resServiceLocal, imgPath);
+
+						if (isNeeded) {
+							imgPath = imgPath.replace(resServiceLocal, currentResSerivce);
+						}
+					}
+				}
+
+				temp.put("imgpath", imgPath);
+			}
+
+		}
+	}
+	
+	
+	
+	/**
+	 * 云平台备课夹上传资源    改为自动保存
+	 * 学案中的资源上传的支持      改为自动保存  返回json数据
+	 * 支持批量
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping("cloudData_uploadAndSaveNew.action")
+	@ResponseBody
+	public ResultInfo uploadAndSaveNew(HttpServletRequest request,HttpServletResponse response)throws Exception{
+		String cloudPlatFormLocal =  request.getParameter("cloudPlatFormLocal");//对接使用云平台的内网地址
+		String currentCloudForm =  request.getParameter("currentCloudForm");//对接使用云平台的地址
+		cloudPlatFormLocal = cloudPlatFormLocal==null?"":cloudPlatFormLocal.trim();
+		currentCloudForm = currentCloudForm==null?"":currentCloudForm.trim();
+		
+		ResultInfo result = CloudIntegralParamCheckUtil.checkCloudParams(request);
+		if (null != result) {
+			return result;
+		}
+		
+		
+		
+		//自动保存
+		try {
+		
+			
+			Long userId = getUserId(request);
+			long prepareId = ControllerHelper.getOptionalLongParameter(request, "prepareId");
+			long subjectId = ControllerHelper.getOptionalLongParameter(request, "subjectId");
+			long courseId = ControllerHelper.getOptionalLongParameter(request, "courseId");
+
+			String str = ControllerHelper.getParameter(request, "str");
+			String rsize = ControllerHelper.getParameter(request, "rsize");
+			String rpath = ControllerHelper.getParameter(request, "rpath");
+			String subjectName = ControllerHelper.getParameter(request, "subjectName");
+			// 文件服务上传v1 新增字段 上传成功之后后续任务
+			String taskTypes = ControllerHelper.getOptionalParameter(request, "taskTypes");
+			if (taskTypes.endsWith(",")) {
+				taskTypes = taskTypes.substring(0, taskTypes.length() - 1);
+			}
+
+			// 关键字
+			String keyword = ControllerHelper.getOptionalParameter(request, "keyword");
+			// 资源介绍为空
+			String note = "";
+			// 资源类型默认为素材
+			long rtype = DEFAULT_ASSET_TYPE;
+
+			
+			String[] strs = str.split(";");
+			String[] paths = rpath.split("[|]");
+			String[] fileFormats = new String[paths.length];
+			String[] rname = new String[rpath.length()];
+			String[] fileTypes = new String[rpath.length()];
+			String[] task_types = taskTypes.split(",");//文件服务上传v1 新增字段    上传成功之后后续任务
+
+			long[] resIds = new long[rname.length];
+			for (int i = 0; i < paths.length; i++) {
+				String format = paths[i].substring(paths[i].lastIndexOf("."), paths[i].length());
+				rname[i] = strs[i].split(",")[1].split(format)[0]+format;
+				fileFormats[i] = resFormatService.getFileFormatByFileExt(format).getFileformat();
+				fileFormats[i] = "";
+				fileTypes[i] = format;
+			}
+
+			for (int i = 0; i < paths.length; i++)
+			{
+				
+				
+				
+				
+//				
+//				long resId = resImpl.insetAssetAndRel(userId, rname[i], paths[i], note,keyword,
+//							rsize.split(",")[i], rtype, "", courseId, fileFormats[i],subjectId, dbId);
+//
+//				
+//				//文件服务上传v1 新增字段  	后台文件操作任务 
+//				String task_type =  task_types.length>i ?task_types[i] :"";
+//				//是否已经完成上传并转换编码或解包等任务  
+//				int isFinished = 0;
+//				//若文件需要进行类型转换 ，或是有 后台文件操作任务 
+//				if(isNeedConvert(paths[i]) || StringUtils.isNotEmpty(task_type)){
+//					isFinished = 1;
+//				}
+//				//path 变量，同  z_type_convert表中的 resPath 字段
+//				resImpl.afterAssetSave(userId, paths[i], isFinished,dbId);
+//				
+//
+//				
+//				
+//				
+//				if(resId > 0 ){
+//					resIds[i] = resId ;
+//				}
+//				//上传资源，加入日志
+//				UserLogImpl userLogImpl = (UserLogImpl) CommonConstantWeb.getLogicInterface("UserLogService");
+//				UserLogBean logObj = new UserLogBean();
+//				logObj.setObjId(resId);
+//				String typeleixing = "我的资源";
+//				logObj.setObjName(typeleixing+":" + rname[i]);
+//				logObj.setUserId(userId);
+//				logObj.setLogTypeCode(UserLogTypeBean.OTHER);
+//				logObj.setOperTypeCode(UserOperBean.CREATE);
+//				logObj.setSubjectId(subjectId);
+//				userLogImpl.addUserLogWeb(logObj, dbId);
+//				
+//				
+//				
+//				
+//				HashMap map = new HashMap();
+//				map.put("id", resId);
+//				map.put("name", rname[i]);
+//				map.put("format", fileFormats[i]);
+//				map.put("fileType", fileTypes[i]);
+//				map.put("isfinished", isFinished);
+//				
+//				result.add(map);
+				
+			}
+
+			
+			
+			
+			
+			
+			
+//			message = "success";
+		} catch (Exception e) {
+				
+//			System.out.println("--uploadAndSaveNew---error--url:"+request.getRequestURL().toString());
+//			
+//			e.printStackTrace();
+//			message = e.getMessage();
+//			result.clear();
+		}finally{
+//			root.put("message", message);
+//			root.put("result", result);
+		}
+//		return "ajax";
+
+		
+		return null;
+	}
+
+	
+	
+	
+	
 
 }

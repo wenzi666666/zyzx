@@ -100,6 +100,10 @@ public class BaseResourceDataAPIControllerTest extends BaseControllerTestCase {
 	public void testFormats() {
 		result = controller.formats(1l, "BJCZ030801", 0, request);
 	}
+	@Test
+	public void testTypes() {
+		result = controller.types(1L, "RJCZ010101", request);
+	}
 
 	@Test
 	public void testSysResource() throws CustomException {
