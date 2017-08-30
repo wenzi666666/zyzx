@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -36,11 +38,17 @@ import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.NoAuthorizationException;
 import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.JUserService;
+import net.tfedu.zhl.sso.users.entity.SRegister;
+import net.tfedu.zhl.sso.users.service.RegisterService;
 
 /**
  * 
@@ -94,6 +102,15 @@ public class BaseResourceDataAPIController {
 
 	@Resource
 	ResTypeService resTypeService;
+
+	@Resource
+	JUserService userService;
+
+	@Resource
+	RegisterService registerService;
+
+	@Autowired
+	CacheManager cacheManager;
 
 	@Resource
 	private CommonWebConfig commonWebConfig;
@@ -268,7 +285,6 @@ public class BaseResourceDataAPIController {
 
 		// 资源来源
 		List<Integer> sys_from = resourceWebConfig.getSys_from(request);
-
 
 		types = resTypeService.getSysResTypes(poolId, pTfcode, sys_from);
 
@@ -454,6 +470,49 @@ public class BaseResourceDataAPIController {
 			return ResultJSON.getSuccess(list.get(0));
 		}
 		return ResultJSON.getSuccess("");
+	}
+
+	/**
+	 * 
+	 * 登录处理方法
+	 * 
+	 * @param request
+	 * @param response
+	 * @return 返回ResultJSON(UserSimple)
+	 * @throws Exception
+	 * 
+	 * 
+	 *             ?args=YCRYAmjxmlXvuNHTA1gC9hlyLRB%2FG0YHh5BzNJrUyBc%3D&sign=
+	 *             4b2d7d9602e7a3310b5828423423de04
+	 */
+	@RequestMapping("/v2.0/login")
+	@ResponseBody
+	public ResultJSON login2(HttpServletRequest request, String userName) throws Exception {
+
+		UserSimple user = null;
+
+		String model = "";
+
+		ControllerHelper.checkEmpty(userName);
+
+		SRegister register = registerService.getRegister(userName);
+
+		if (null == register) {
+			throw new WithoutAuthorizationException(userName);
+		}
+
+		String key = UserTokenCacheUtil.getUserTokenCacheKey(model, register.getId().toString());
+		// 用户token未被缓存
+		if (cacheManager.getCache(UserTokenCacheUtil.USERINFO_CACHE_NAMESPACE).get(key) == null) {
+			// 获取用户信息
+			user = userService.getUserSimpleById(register.getId(), model, commonWebConfig.getIsRepeatLogin());
+		} else {
+			String token = UserTokenCacheUtil.getUserTokenCacheKey(model, register.getId().toString());
+
+			user = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, commonWebConfig.getIsRepeatLogin());
+
+		}
+		return ResultJSON.getSuccess(user);
 	}
 
 }

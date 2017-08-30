@@ -1,7 +1,6 @@
 package net.tfedu.zhl.cloud.resource.autologin.controller;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -56,12 +55,11 @@ public class AutoLoginController {
 	 */
 	private static final String MD5_KEY = "9k8i78jug6hd93kjf84h";
 
-	
 	/**
 	 * 返回类型为json
 	 */
-//	private static final String JSONTYPE = "JSON";
-	
+	// private static final String JSONTYPE = "JSON";
+
 	
 
 	@Resource
@@ -69,7 +67,7 @@ public class AutoLoginController {
 
 	@Resource
 	RegisterService registerService;
-	
+
 	@Resource
 	SThirdRegisterService SThirdRegisterService;
 
@@ -97,21 +95,17 @@ public class AutoLoginController {
 		String args = request.getParameter("args");
 		// 获取logoutUrl
 		String logoutUrl = request.getParameter("logoutUrl");
-		//当resultType = "JSON"时，返回json数据
+		// 当resultType = "JSON"时，返回json数据
 		String resultType = request.getParameter("resultType");
-		
-		
 
 		// 获取参数
 		log.info("----args----:" + args);
 		// 格式化参数并获取用户名等信息
 		Map<String, String> ps = getParamMap(getParams(args));
 
-		
-		
 		// 获取校验信息
 		String sign = ps.get("sign");
-		
+
 		// 获取其他参数信息
 		// 用户名
 		String userName = ps.get("userName");
@@ -119,8 +113,6 @@ public class AutoLoginController {
 		String dockingCode = ps.get("dockingCode");
 		// 时间戳
 		String timestamp = ps.get("timestamp");
-		
-		
 
 		// 准备校验
 		String temp = "userName=" + userName + "&dockingCode=" + dockingCode + "&timestamp=" + timestamp;
@@ -140,40 +132,31 @@ public class AutoLoginController {
 		// 用户登录
 		SRegister reg = registerService.getRegister(userName);
 
-		if(null == reg ){
+		if (null == reg) {
 			throw new WithoutAuthorizationException(userName);
 		}
-		
-		
-		
-		
+
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
 
-		//设置退出url 和  对接产品的code
-		user.setLogoutTarget(null==logoutUrl?"":logoutUrl);
+		// 设置退出url 和 对接产品的code
+		user.setLogoutTarget(null == logoutUrl ? "" : logoutUrl);
 		user.setThirdParyCode(dockingCode);
-		
-		
-		
-		
-		//组装跳转链接
-		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/router").append("?tocken=").append(user.getToken())
-				.append("&userId=").append(user.getUserId())
-				.append("&iscoursewares=").append(user.getThirdParyCode())
-				.toString();
-		log.info("autoLogin---url:"+url);
-		
-		if("JSON".equalsIgnoreCase(resultType)){
-			return toJSON(user,request,url);
+
+		// 组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
+				.append(user.getToken()).append("&userId=").append(user.getUserId()).append("&iscoursewares=")
+				.append(user.getThirdParyCode()).toString();
+		log.info("autoLogin---url:" + url);
+
+		if ("JSON".equalsIgnoreCase(resultType)) {
+			return toJSON(user, request, url);
 		}
-		
+
 		response.sendRedirect(url);
 		return null;
 	}
-	
-	
+
 	/**
 	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code
 	 * 
@@ -191,37 +174,33 @@ public class AutoLoginController {
 		return autoLoginDockingCommon(request, response);
 	}
 
-
-	public Object autoLoginDockingCommon(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ParamsException,
-			UnusualErrorException, Exception, WithoutAuthorizationException {
+	public Object autoLoginDockingCommon(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ParamsException, UnusualErrorException, Exception, WithoutAuthorizationException {
 		// 获取args
 		String args = request.getParameter("args");
 		// 获取logoutUrl
 		String logoutUrl = request.getParameter("logoutUrl");
-		//当resultType = "JSON"时，返回json数据
+		// 当resultType = "JSON"时，返回json数据
 		String resultType = request.getParameter("resultType");
-		//应用id
+		// 应用id
 		String appId = request.getParameter("appId");
-		String md5_key=MD5_KEY;
-		if(StringUtils.isNotEmpty(appId)){
+		String md5_key = MD5_KEY;
+		if (StringUtils.isNotEmpty(appId)) {
 			SApp app = sAppService.getSApp(appId);
 			if (app == null) {
 				throw new CustomException("没有注册APP信息");
 			}
-			md5_key=app.getAppkey();
+			md5_key = app.getAppkey();
 		}
 
 		// 获取参数
 		log.info("----args----:" + args);
 		// 格式化参数并获取用户名等信息
-		Map<String, String> ps = getParamMap(getParams(args,md5_key));
+		Map<String, String> ps = getParamMap(getParams(args, md5_key));
 
-		
-		
 		// 获取校验信息
 		String sign = ps.get("sign");
-		
+
 		// 获取其他参数信息
 		// 用户名
 		String userName = ps.get("userName");
@@ -229,8 +208,6 @@ public class AutoLoginController {
 		String dockingCode = ps.get("dockingCode");
 		// 时间戳
 		String timestamp = ps.get("timestamp");
-		
-		
 
 		// 准备校验
 		String temp = "userName=" + userName + "&dockingCode=" + dockingCode + "&timestamp=" + timestamp;
@@ -244,56 +221,45 @@ public class AutoLoginController {
 			throw new UnusualErrorException();
 		}
 
-		
-		//获取对接后的用户名
-		SThirdRegisterRelative  relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
-		if(relate!=null){
-			//对接后的用户名
+		// 获取对接后的用户名
+		SThirdRegisterRelative relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
+		if (relate != null) {
+			// 对接后的用户名
 			userName = relate.getZhlUsername();
-		}else{
-			throw new WithoutAuthorizationException(userName+("(对接用户,dockingCode:"+dockingCode+")"));
+		} else {
+			throw new WithoutAuthorizationException(userName + ("(对接用户,dockingCode:" + dockingCode + ")"));
 		}
-		
-		
+
 		// 返回用户的信息
 		UserSimple user = null;
 
 		// 用户登录
 		SRegister reg = registerService.getRegister(userName);
 
-		if(null == reg ){
+		if (null == reg) {
 			throw new WithoutAuthorizationException(userName);
 		}
-		
-		
-		
-		
+
 		// 获取用户信息
-		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), ""
-					, commonWebConfig.getIsRepeatLogin(), null==logoutUrl?"":logoutUrl,dockingCode);
-		
-		
-		
-		
-		//组装跳转链接
-		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/router").append("?tocken=").append(user.getToken())
-				.append("&userId=").append(user.getUserId())
-				.append("&iscoursewares=").append(user.getThirdParyCode())
-				.toString();
-		log.info("autoLogin---url:"+url);
-		
-		if("JSON".equalsIgnoreCase(resultType)){
-			return toJSON(user,request,url);
+		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), "", commonWebConfig.getIsRepeatLogin(),
+				null == logoutUrl ? "" : logoutUrl, dockingCode);
+
+		// 组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
+				.append(user.getToken()).append("&userId=").append(user.getUserId()).append("&iscoursewares=")
+				.append(user.getThirdParyCode()).toString();
+		log.info("autoLogin---url:" + url);
+
+		if ("JSON".equalsIgnoreCase(resultType)) {
+			return toJSON(user, request, url);
 		}
-		
+
 		response.sendRedirect(url);
 		return null;
 	}
-	
+
 	/**
-	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code
-	 * 對autoLoginDocking简化
+	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code 對autoLoginDocking简化
 	 * 参数在url中明文传递，增加一个校验字段sign做教研，要求至少要有appId,userName,dockingCode,在加上timestamp
 	 * 
 	 * 
@@ -306,33 +272,29 @@ public class AutoLoginController {
 	 */
 	@RequestMapping("autoLoginDockingSimple")
 	@ResponseBody
-	public Object autoLoginDockingSimple(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, ParamsException,
-			UnusualErrorException, Exception, WithoutAuthorizationException {
+	public Object autoLoginDockingSimple(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ParamsException, UnusualErrorException, Exception, WithoutAuthorizationException {
 		SApp app = null;
-		
+
 		String userName = ControllerHelper.getParameter(request, "userName");
 		String dockingCode = ControllerHelper.getParameter(request, "dockingCode");
 		String appId = ControllerHelper.getParameter(request, "appId");
-		String sign =  ControllerHelper.getParameter(request, "sign");
-		String _sign = "";//用于校验
-		
-		if(StringUtils.isNotEmpty(appId)){
+		String sign = ControllerHelper.getParameter(request, "sign");
+		String _sign = "";// 用于校验
+
+		if (StringUtils.isNotEmpty(appId)) {
 			app = sAppService.getSApp(appId);
 			if (app == null) {
 				log.debug("没有注册APP信息");
 				throw new CustomException("没有注册APP信息");
 			}
-			
+
 			_sign = SignUtil.createSign(request, app.getAppkey());
-		}else{
+		} else {
 			log.debug("没有注册APP信息");
 			throw new CustomException("没有注册APP信息");
 		}
-		
-		
-		
-		
+
 		if (StringUtils.isEmpty(sign) || !sign.equals(_sign)) {
 			log.debug("sign信息校验失败");
 			throw new ParamsException();
@@ -344,46 +306,40 @@ public class AutoLoginController {
 			throw new UnusualErrorException();
 		}
 
-		
-		//获取对接后的用户名
-		SThirdRegisterRelative  relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
-		if(relate!=null){
-			//对接后的用户名
+		// 获取对接后的用户名
+		SThirdRegisterRelative relate = SThirdRegisterService.getThirdRelativeResult(userName, dockingCode);
+		if (relate != null) {
+			// 对接后的用户名
 			userName = relate.getZhlUsername();
-		}else{
-			throw new WithoutAuthorizationException(userName+("(对接用户,dockingCode:"+dockingCode+")"));
+		} else {
+			throw new WithoutAuthorizationException(userName + ("(对接用户,dockingCode:" + dockingCode + ")"));
 		}
-		
-		
+
 		// 返回用户的信息
 		UserSimple user = null;
 
 		// 用户登录
 		SRegister reg = registerService.getRegister(userName);
 
-		if(null == reg ){
+		if (null == reg) {
 			throw new WithoutAuthorizationException(userName);
 		}
-		
-		log.debug("-----第三方对接后的SRegister--"+JSONObject.toJSONString(reg));
+
+		log.debug("-----第三方对接后的SRegister--" + JSONObject.toJSONString(reg));
 		// 获取用户信息
-		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), ""
-					, commonWebConfig.getIsRepeatLogin(), 
-					null==app.getThirdpartylogouturl()?"":app.getThirdpartylogouturl(),dockingCode);
-		
-		//组装跳转链接
-		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/router").append("?tocken=").append(user.getToken())
-				.append("&userId=").append(user.getUserId())
-				.append("&iscoursewares=").append(user.getThirdParyCode())
-				.toString();
-		log.info("autoLogin---url:"+url);
-		
+		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), "", commonWebConfig.getIsRepeatLogin(),
+				null == app.getThirdpartylogouturl() ? "" : app.getThirdpartylogouturl(), dockingCode);
+
+		// 组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
+				.append(user.getToken()).append("&userId=").append(user.getUserId()).append("&iscoursewares=")
+				.append(user.getThirdParyCode()).toString();
+		log.info("autoLogin---url:" + url);
+
 		response.sendRedirect(url);
 		return null;
 	}
-	
-	
+
 	/**
 	 * 自动登录的处理方法(简化版) 所需参数:
 	 * 
@@ -395,16 +351,15 @@ public class AutoLoginController {
 	@RequestMapping("autoLoginSimple")
 	@ResponseBody
 	public Object autoLoginSimple(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-        String strDate = ControllerHelper.getParameter(request, "strDate");
-        String  params = ControllerHelper.getParameter(request, "params");
-        String userName = ControllerHelper.getParameter(request, "userName");
 
-		
-        if(!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)){
-            throw new CustomException("非法用户");
-        }
-		
+		String strDate = ControllerHelper.getParameter(request, "strDate");
+		String params = ControllerHelper.getParameter(request, "params");
+		String userName = ControllerHelper.getParameter(request, "userName");
+
+		if (!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)) {
+			throw new CustomException("非法用户");
+		}
+
 		// 返回用户的信息
 		UserSimple user = null;
 
@@ -414,11 +369,10 @@ public class AutoLoginController {
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
 
-		return  ResultJSON.getSuccess(user);
-		
+		return ResultJSON.getSuccess(user);
+
 	}
-	
-	
+
 	/**
 	 * 自动登录的处理方法(简化版) 所需参数:
 	 * 
@@ -429,69 +383,58 @@ public class AutoLoginController {
 	 */
 	@RequestMapping("autoLoginSimpleWeb")
 	public Object autoLoginSimpleWeb(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		String strDate = ControllerHelper.getParameter(request, "strDate");
-		String  params = ControllerHelper.getParameter(request, "params");
+		String params = ControllerHelper.getParameter(request, "params");
 		String userName = ControllerHelper.getParameter(request, "userName");
-		
-		
-		if(!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)){
+
+		if (!MD5Util.str2md5(userName + strDate + MD5_KEY).equals(params)) {
 			throw new CustomException("非法用户");
 		}
-		
+
 		// 返回用户的信息
 		UserSimple user = null;
-		
+
 		// 用户登录
 		SRegister reg = registerService.getRegister(userName);
-		
+
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
-		
 
-		//组装跳转链接
-		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL())
-				.append("/router").append("?tocken=").append(user.getToken())
-				.append("&userId=").append(user.getUserId())
-				.append("&iscoursewares=").append(user.getThirdParyCode())
-				.toString();
-		log.info("autoLogin---url:"+url);
-		
+		// 组装跳转链接
+		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
+				.append(user.getToken()).append("&userId=").append(user.getUserId()).append("&iscoursewares=")
+				.append(user.getThirdParyCode()).toString();
+		log.info("autoLogin---url:" + url);
+
 		response.sendRedirect(url);
 		return null;
-		
-		
+
 	}
-	
-	
-	
-	
-	
-	
+
 	/**
-	 * 返回json 
-	 * @param user    当前用户的信息
-	 * @param request 请求
-	 * @param url     web访问的url
+	 * 返回json
+	 * 
+	 * @param user
+	 *            当前用户的信息
+	 * @param request
+	 *            请求
+	 * @param url
+	 *            web访问的url
 	 * @return
 	 */
 	@RequestMapping("autoLoginJSON")
 	@ResponseBody
-	public ResultJSON  toJSON(UserSimple user, HttpServletRequest request, String url){
-		
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		
+	public ResultJSON toJSON(UserSimple user, HttpServletRequest request, String url) {
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
 		map.put("user", user);
-		
+
 		map.put("webUrl", url);
-		
-		
-		return ResultJSON.getSuccess(map) ;
+
+		return ResultJSON.getSuccess(map);
 	}
-	
-	
-	
-	
 
 	/**
 	 * 返回解密后的参数
@@ -501,7 +444,6 @@ public class AutoLoginController {
 	 * @throws IOException
 	 */
 	private String getParams(String args) throws IOException {
-
 
 		return getParams(args, MD5_KEY);
 
@@ -526,7 +468,6 @@ public class AutoLoginController {
 
 	}
 
-
 	/**
 	 * 将参数转换为一个map
 	 * 
@@ -546,41 +487,33 @@ public class AutoLoginController {
 		}
 		return m;
 	}
-	
-	
-	
-	
+
 	public static void main(String[] _args) throws IOException {
-			
-//		String args = "yxxv4Fr7jDpNx04oQJ%2FfwtJDqsQZEO5XGokJcf67XZ9tdDhCyRJFhot7wuqmK5meqmyJK%2B7MYEd%2B61pp3NiAUD1Sh6aJAJSzOJtsJ%2Bzu6nsneRrzOaaAG7E%2FMxX96LLothASO%2F2WKqDN%2Bfeh";
-//		
-//		
-//		args = args.replace(URLEncoder.encode("/","utf-8"),"/");
-//		args = args.replace(URLEncoder.encode("+","utf-8"),"+");
-//		
-//		AutoLoginController c = new AutoLoginController();
-//		
-//		Map<String, String> ps = c.getParamMap(c.getParams(args,MD5_KEY));
-//
-//		
-//		System.out.println(ps.toString());
-//		
-		
-		
-		
+
+		// String args =
+		// "yxxv4Fr7jDpNx04oQJ%2FfwtJDqsQZEO5XGokJcf67XZ9tdDhCyRJFhot7wuqmK5meqmyJK%2B7MYEd%2B61pp3NiAUD1Sh6aJAJSzOJtsJ%2Bzu6nsneRrzOaaAG7E%2FMxX96LLothASO%2F2WKqDN%2Bfeh";
+		//
+		//
+		// args = args.replace(URLEncoder.encode("/","utf-8"),"/");
+		// args = args.replace(URLEncoder.encode("+","utf-8"),"+");
+		//
+		// AutoLoginController c = new AutoLoginController();
+		//
+		// Map<String, String> ps = c.getParamMap(c.getParams(args,MD5_KEY));
+		//
+		//
+		// System.out.println(ps.toString());
+		//
+
 		String userName = "xzczls01";
-		long strDate= Calendar.getInstance().getTime().getTime();		
-		String params =  MD5Util.str2md5(userName + strDate + MD5_KEY);
-		
-		
-		
-		String url = "/resRestAPI/thirdparty/autoLoginSimpleWeb?userName="+userName
-				+"&strDate="+strDate
-				+"&params="+params
-				;
-		
+		long strDate = Calendar.getInstance().getTime().getTime();
+		String params = MD5Util.str2md5(userName + strDate + MD5_KEY);
+
+		String url = "/resRestAPI/thirdparty/autoLoginSimpleWeb?userName=" + userName + "&strDate=" + strDate
+				+ "&params=" + params;
+
 		System.out.println(url);
-		
+
 	}
 
 }

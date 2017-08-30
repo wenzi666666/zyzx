@@ -35,7 +35,7 @@ public class UserTokenCacheUtil {
 	/**
 	 * 缓存用户信息的命名空间
 	 */
-	private static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
+	public static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
 	
 	/**
 	 * 缓存用户token的命名空间

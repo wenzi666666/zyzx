@@ -133,16 +133,19 @@ public class SignUtil {
 	
 	public static void main(String[] args) {
 		
+		String url = "http://192.168.111.204:8880/baseData/resource/v2.0/login";
+		
 		String appId = "642584";
 		String appKey = "c5f06463d14e";
 		
+		String userName = "csls01";
+		
 		String result =  SignUtil.createSignMap(
-				new String[]{"appId"},
-				new String[]{appId}, appKey);
+				new String[]{"userName","appId"},
+				new String[]{"csls01",appId}, appKey);
 		
 		
-		System.out.println(result);
-		System.out.println("&sign="+result);
+		System.out.println(url+"?userName="+userName+"&appId="+appId+"&sign="+result);
 		
 	}
 	
