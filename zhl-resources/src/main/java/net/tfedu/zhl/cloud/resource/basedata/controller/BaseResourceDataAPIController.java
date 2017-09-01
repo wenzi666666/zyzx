@@ -225,7 +225,7 @@ public class BaseResourceDataAPIController {
 	@ResponseBody
 	public ResultJSON nologinPools(Long termId, Long subjectId, HttpServletRequest request) throws CustomException {
 
-		return appUserPoolConfigService.selectAll();
+		return ResultJSON.getSuccess(resPoolService.getAllPools());
 	}
 
 	/**

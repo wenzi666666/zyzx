@@ -45,6 +45,8 @@ import net.tfedu.zhl.sso.user.service.JUserService;
 public class LoginStatusCheckInterceptor implements HandlerInterceptor {
 	
 	
+	
+	
     @Autowired
     CacheManager cacheManager;
     
@@ -115,7 +117,13 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
         }
         else {
         	
+        	
+        	logger.info("interceptor---token:{},isRepeatLogin:{}",token,config.getIsRepeatLogin());
+        	
         	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
+        	
+        	logger.info("interceptor---UserSimple:{}",us);
+
         	if(us!=null){
                 currentUserId = us.getUserId();
                 currentUserName = us.getUserName();
