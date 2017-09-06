@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 @Transactional
 public class AutoLoginControllerTest extends BaseControllerTestCase {
@@ -58,8 +59,10 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 		System.out.println("OK".equalsIgnoreCase(result.getCode()));
 		System.out.println(com.alibaba.fastjson.JSONObject.toJSONString(result));
 		
+		UserSimple user = (UserSimple)result.getData();
+		UserSimple _user = controller.getCachedUserSimple(user.getToken());
 		
-		
-		
+		System.out.println(_user);
+
 	}
 }

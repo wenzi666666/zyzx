@@ -19,7 +19,7 @@
 	<!-- 2、**表示可以表示任意多级目录 -->
 	<!-- 3、*表示多个任意字符 -->
 
-	<!-- 包自动扫描 -->
+	<!-- 包自动扫描 
 	<context:component-scan base-package="net.tfedu.zhl.cloud.**.task" />
-	
+	-->
 </beans>

@@ -114,8 +114,15 @@ public class LoginStatusCheckInterceptor implements HandlerInterceptor {
             throw new NoTokenException();
         }
         else {
+
+        	
+        	
+        	logger.info("interceptor---token:{},isRepeatLogin:{}",token,config.getIsRepeatLogin());
         	
         	UserSimple us  = UserTokenCacheUtil.getUserInfoValueWrapper(cacheManager, token, config.getIsRepeatLogin());
+        	
+        	logger.info("interceptor---UserSimple:{}",us);
+
         	if(us!=null){
                 currentUserId = us.getUserId();
                 currentUserName = us.getUserName();

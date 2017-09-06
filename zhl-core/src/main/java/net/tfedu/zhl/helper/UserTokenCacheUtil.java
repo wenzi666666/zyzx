@@ -80,7 +80,7 @@ public class UserTokenCacheUtil {
 	private static UserSimple getValueWrapper(CacheManager cacheManager,String token) throws InvalidAccessTokenException{
 		ValueWrapper o = cacheManager.getCache(USERINFO_CACHE_NAMESPACE).get(token);
 		if(null == o ){
-			throw  new InvalidAccessTokenException();
+			return null;
 		}
 		UserSimple us  = (UserSimple)o.get();
 		return us;
