@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.teaching.personalblog.service.impl;
 
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.teaching.personalblog.entity.PersonalBlog;
@@ -29,6 +30,7 @@ implements PersonalBlogService{
     * @param scopeId 相应的学校id或地区id，全站范围时可以为0
     * @param page 页码
     * @param pageSize 页面条目数 */
+   @Cacheable(value="bussinesscache")
    public ResultJSON lastBlog(String scope, Long scopeId, int page, int pageSize){
 	   
 	   Example example = new Example(PersonalBlog.class);
