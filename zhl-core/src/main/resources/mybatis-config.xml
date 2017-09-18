@@ -55,7 +55,7 @@
         
         <!-- 打印查询语句 mybatis的日志打印方式比较多，SLF4J | LOG4J | LOG4J2 | JDK_LOGGING | COMMONS_LOGGING 
             | STDOUT_LOGGING | NO_LOGGING，可以根据自己的需要进行配置 -->
-        <setting name="logImpl" value="SLF4J"/>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
         
 
     </settings>

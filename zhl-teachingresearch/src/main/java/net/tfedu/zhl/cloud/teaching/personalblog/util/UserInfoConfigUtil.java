@@ -47,15 +47,17 @@ public class UserInfoConfigUtil {
 					Map<String, Object> _map = iterator.next();
 
 					if(_map!=null){
+						String temp = null ; 
 						
-						
-						
-						String temp = (_map.containsKey("userid")? 
-								_map.get("userid").toString():
-								_map.get("userId").toString()
-								)
-								+ ",";
-						if (!userIds.toString().contains(temp)) {
+						if(_map.containsKey("userid")){
+							temp = _map.get("userid").toString();
+						}else if(_map.containsKey("userId")){
+							temp = _map.get("userId").toString();
+						}else{
+							continue;
+						}
+								
+						if (null !=temp && !userIds.toString().contains(temp)) {
 							userIds.append(temp);
 						}
 					}

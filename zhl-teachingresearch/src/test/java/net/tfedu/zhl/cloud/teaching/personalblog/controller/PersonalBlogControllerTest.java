@@ -153,7 +153,7 @@ public class PersonalBlogControllerTest extends BaseControllerTestCase {
 
 	@Test
 	public void testLastBlog() throws Exception {
-		result = controller.lastBlog(request, "D", 82L, 5);
+		result = controller.lastBlog(request, "W", 0L, 4);
 		assertAndLog(result);
 	}
 
