@@ -85,7 +85,7 @@
 		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
 		
 		
-		<resource-version>3.1.27</resource-version>
+		<resource-version>3.1.28</resource-version>
 		<teaching-version>1.0.3</teaching-version>
 		<casProxy-version>1.0.7</casProxy-version>
 	
