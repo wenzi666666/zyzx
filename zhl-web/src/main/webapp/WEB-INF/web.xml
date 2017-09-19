@@ -5,35 +5,6 @@
     http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 	<display-name>zhl cloud platform</display-name>
 	
-	
-	<!-- 
-	<filter>
-		<filter-name>jimoInitFilter</filter-name>
-		<filter-class>net.tfedu.zhl.cloud.casProxy.action.custom.jimo.passport.filter.JimoPassportInitFilter</filter-class>
-		
-		<init-param>
-			<param-name>serverId</param-name>
-			<param-value>5043701</param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>verifyKey</param-name>
-			<param-value>U7LFDLEAHVAAPQDL37KF3JSPA7U8CZYR</param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>passportURL</param-name>
-			<param-value>http://passport.jimoedu.net/</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>jimoInitFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	
-	 -->
-	
 	<!-- 加载顺序 content-param -> listener -> filter -> servlet -->
 
 	<!-- Spring -->
@@ -124,35 +95,6 @@
 
 
 
-
-	
-
-<!-- 
-	
-	<servlet>
-		<servlet-name>jimo_passort_servlet</servlet-name>
-		<servlet-class>net.tfedu.zhl.cloud.casProxy.action.custom.jimo.passport.servlet.PassportClientInitServlet</servlet-class>
-		
-		<init-param>
-			<param-name>serverId</param-name>
-			<param-value>5043701</param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>verifyKey</param-name>
-			<param-value>U7LFDLEAHVAAPQDL37KF3JSPA7U8CZYR</param-value>
-		</init-param>
-		
-		<init-param>
-			<param-name>passportURL</param-name>
-			<param-value>http://passport.jimoedu.net/</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>jimo_passort_servlet</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
-	 -->
 
 
 

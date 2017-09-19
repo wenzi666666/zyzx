@@ -384,7 +384,22 @@
             </properties>  
 
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <activeByDefault>true</activeByDefault>
+            </activation>          
+        </profile>
+		
+		
+        <profile>
+            <id>casNation</id>
+            <properties>
+                <package.environment>casNation</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+                <web.name>casProxy</web.name>
+                <version>${casProxy-version}</version>
+            </properties>  
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
             </activation>          
         </profile>
 		
