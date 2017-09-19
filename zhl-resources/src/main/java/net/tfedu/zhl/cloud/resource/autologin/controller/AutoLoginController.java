@@ -80,6 +80,9 @@ public class AutoLoginController {
 	Logger log = LoggerFactory.getLogger(AutoLoginController.class);
 
 	/**
+	 * 
+	 * 已经弃用   推荐autoLoginDockingSimple
+	 * 
 	 * 自动登录的处理方法 所需参数:
 	 * 
 	 * @param request
@@ -89,6 +92,7 @@ public class AutoLoginController {
 	 */
 	@RequestMapping("autoLogin")
 	@ResponseBody
+	@Deprecated
 	public Object autoLogin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// 获取args
@@ -143,6 +147,8 @@ public class AutoLoginController {
 		user.setLogoutTarget(null == logoutUrl ? "" : logoutUrl);
 		user.setThirdParyCode(dockingCode);
 
+		
+		
 		// 组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
 				.append(user.getToken()).append("&userId=").append(user.getUserId()).append("&iscoursewares=")
@@ -158,6 +164,9 @@ public class AutoLoginController {
 	}
 
 	/**
+	 * 
+	 * 已经弃用   推荐autoLoginDockingSimple
+
 	 * 第三方对接自动登录的处理方法 所需参数: 第三方用户名，第三方对接code
 	 * 
 	 * s_th_register_relative
@@ -169,6 +178,7 @@ public class AutoLoginController {
 	 */
 	@RequestMapping("autoLoginDocking")
 	@ResponseBody
+	@Deprecated
 	public Object autoLoginDocking(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		return autoLoginDockingCommon(request, response);
@@ -243,6 +253,8 @@ public class AutoLoginController {
 		// 获取用户信息
 		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), "", commonWebConfig.getIsRepeatLogin(),
 				null == logoutUrl ? "" : logoutUrl, dockingCode);
+		//记录用户的登录状态
+		userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
 
 		// 组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
@@ -329,6 +341,8 @@ public class AutoLoginController {
 		// 获取用户信息
 		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), "", commonWebConfig.getIsRepeatLogin(),
 				null == app.getThirdpartylogouturl() ? "" : app.getThirdpartylogouturl(), dockingCode);
+		//记录用户的登录状态
+		userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
 
 		// 组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
@@ -368,6 +382,8 @@ public class AutoLoginController {
 
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+		//记录用户的登录状态
+		userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
 
 		return ResultJSON.getSuccess(user);
 
@@ -400,6 +416,8 @@ public class AutoLoginController {
 
 		// 获取用户信息
 		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+		//记录用户的登录状态
+		userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
 
 		// 组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")
