@@ -141,13 +141,11 @@ public class AutoLoginController {
 		}
 
 		// 获取用户信息
-		user = userService.getUserSimpleById(reg.getId(), "", commonWebConfig.getIsRepeatLogin());
+		user = userService.getUserSimpleByIdForThirdParty(reg.getId(), "", commonWebConfig.getIsRepeatLogin(),
+				null == logoutUrl ? "" : logoutUrl, dockingCode);
+		//记录用户的登录状态
+		userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
 
-		// 设置退出url 和 对接产品的code
-		user.setLogoutTarget(null == logoutUrl ? "" : logoutUrl);
-		user.setThirdParyCode(dockingCode);
-
-		
 		
 		// 组装跳转链接
 		String url = new StringBuffer().append(commonWebConfig.getFrontWebURL()).append("/router").append("?tocken=")

@@ -16,6 +16,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
@@ -48,6 +50,9 @@ import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 @Component
 @Aspect
 public class UserServiceAutoLoginAOP {
+	
+	
+	Logger logger = LoggerFactory.getLogger(UserServiceAutoLoginAOP.class);
 	
 	
 	/**
@@ -117,7 +122,6 @@ public class UserServiceAutoLoginAOP {
 					String termName = user.getTermName();
 					
 					
-					
 					//获取app
 					SApp app = sAppService.getSAppByCode(THIRDPARTYCODE_YUNZHOU);
 					
@@ -129,7 +133,9 @@ public class UserServiceAutoLoginAOP {
 					
 					//更新用户的功能菜单
 					user.setFuncList(ls);
-					
+
+					logger.info("ThirdParty--AUTOLOGIN---UserSimple"+user.toString());
+
 					
 					//重置用戶的緩存
 			        UserTokenCacheUtil.addUserInfoCache(user.getModel()
