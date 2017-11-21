@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationResultJSON;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationTokenInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationUserInfo;
+import net.tfedu.zhl.cloud.casProxy.constant.ConstantForUserRole;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 
 /**
  * 
@@ -104,6 +106,33 @@ public class NationCasUtil {
 		checkSuccess(ret);
 
 		return JSONObject.toJavaObject(ret.getData(), NationUserInfo.class);
+	}
+	
+	/**
+	 * 将央馆的信息格式化为注册form表单
+	 * @param userInfo
+	 * @return
+	 */
+	public static RegisterAddForm formatRegisterForm(NationUserInfo userInfo,String PROVINCE_NAME,
+			String CITY_NAME,String DISTRICT_NAME,String SCHOOL_NAME) {
+		RegisterAddForm form = new RegisterAddForm();
+		form.setTh_uuid(userInfo.getUserId());
+		form.setUserName(userInfo.getUserId());
+		form.setNickName(userInfo.getName());
+		form.setTrueName(userInfo.getName());
+		// 性别：0-未知；1-男；2-女
+		String gender = userInfo.getGender();
+		form.setSex("2".equals(gender) ? true : false);
+
+		form.setProvinceName(PROVINCE_NAME);
+		form.setCityName(CITY_NAME);
+		form.setArealName(DISTRICT_NAME);
+		form.setSchoolName(SCHOOL_NAME);
+		form.setRole(ConstantForUserRole.ROLE_SEX_POOL);
+		form.setTermName(ConstantForUserRole.DEFAULT_TERMNAME);
+		form.setSubjectName(ConstantForUserRole.DEFAULT_SUBJECTMNAME);
+		form.setMotto("");
+		return form;
 	}
 	
 	
