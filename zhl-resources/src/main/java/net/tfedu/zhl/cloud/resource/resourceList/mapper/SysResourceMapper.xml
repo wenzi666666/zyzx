@@ -260,7 +260,7 @@
 		COUNT(t.assetId)) end avgScore from z_assetevaluate t where t.assetId
 		= a.id and t.flag = 0 and t.IsScore = 0 and t.aType = 1)
 		avgScore,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))
-		as FileExt,a.isDWJ
+		as FileExt,a.isDWJ,a.speaker,a.speakerUnit
 		from z_resource a
 		left join z_resnav b on a.ResCode=b.ResCode
 		left join x_resourcetype e on a.MType = e.id

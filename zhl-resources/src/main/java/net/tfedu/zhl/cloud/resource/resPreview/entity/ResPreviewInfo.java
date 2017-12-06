@@ -98,6 +98,19 @@ public class ResPreviewInfo implements Serializable {
      * 是否为本地文件（0：否 ；1：是）
      */
     private boolean isLocal;
+    
+    
+    /**
+     * 主讲人 
+     */
+    private String speaker;
+    /**
+     * 主讲单位
+     */
+    private String speakerUnit;
+    
+    
+    
 
     public boolean isLocal() {
         return isLocal;
@@ -247,9 +260,34 @@ public class ResPreviewInfo implements Serializable {
         return serialVersionUID;
     }
 
-    @Override
-    public String toString() {
-        return "previewInfo[resId=" + id + ",title=" + Title + ",keyword=" + keyWord + ",des=" + Des + ",fpath="+ Fpath +",fname="+ fname +"]";
-    }
+	public String getSpeaker() {
+		return speaker;
+	}
+
+	public void setSpeaker(String speaker) {
+		this.speaker = speaker;
+	}
+
+	public String getSpeakerUnit() {
+		return speakerUnit;
+	}
+
+	public void setSpeakerUnit(String speakerUnit) {
+		this.speakerUnit = speakerUnit;
+	}
+
+	public void setScore(Integer score) {
+		this.score = score;
+	}
+
+	@Override
+	public String toString() {
+		return "ResPreviewInfo [id=" + id + ", Title=" + Title + ", keyWord=" + keyWord + ", Des=" + Des + ", fSize="
+				+ fSize + ", MType=" + MType + ", typeId=" + typeId + ", DLoadTimes=" + DLoadTimes + ", ClickTimes="
+				+ ClickTimes + ", fromflag=" + fromflag + ", fname=" + fname + ", Fpath=" + Fpath + ", userNum="
+				+ userNum + ", score=" + score + ", avgScore=" + avgScore + ", FileExt=" + FileExt + ", isDWJ=" + isDWJ
+				+ ", isLocal=" + isLocal + ", speaker=" + speaker + ", speakerUnit=" + speakerUnit + "]";
+	}
+
 
 }

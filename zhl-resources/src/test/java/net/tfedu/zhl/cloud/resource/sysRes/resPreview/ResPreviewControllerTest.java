@@ -26,10 +26,12 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	@Test
 	public void testPreview() throws Exception {
 
-		request.setParameter("resId", "871635");
-		request.setParameter("fromFlag", "4");
+//		request.setParameter("resId", "871635");
+//		request.setParameter("fromFlag", "4");
 		//request.setParameter("isEPrepare", "1");
 		
+		request.setParameter("resId", "277330");
+		request.setParameter("fromFlag", "0");
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
 		
         JsonUtil.toJsonString(json);
