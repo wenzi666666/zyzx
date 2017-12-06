@@ -1,7 +1,6 @@
 package net.tfedu.zhl.cloud.casProxy.action.custom.nation.controller;
 
 import java.net.URLEncoder;
-import java.util.Calendar;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,14 +19,11 @@ import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationTokenInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationUserInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.util.NationCasUtil;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
-import net.tfedu.zhl.cloud.casProxy.constant.ConstantForUserRole;
-import net.tfedu.zhl.cloud.utils.security.PWDEncrypt;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
-import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
