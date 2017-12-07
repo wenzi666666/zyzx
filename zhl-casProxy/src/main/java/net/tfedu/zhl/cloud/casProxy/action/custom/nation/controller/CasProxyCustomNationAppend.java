@@ -184,7 +184,7 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		//获取央馆的用户信息
 		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
 		//将央馆的信息格式化为注册form表单
-		RegisterAddForm form = NationCasUtil.formatRegisterForm(userInfo, PROVINCE_NAME, CITY_NAME,
+		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
 				DISTRICT_NAME,SCHOOL_NAME);
 
 		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
@@ -200,6 +200,7 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 
 		String _url = casConfig.getTARGET_REDIRECT_URL()+"?user.name="+form.getUserName()
 						+"&user.pwd="+zhlApp.getUserdefaultpwd()+"&checkwd=8888&init_Code=8888";
+		System.out.println("------loginYun----" + _url);
 
 		response.sendRedirect(_url);
 

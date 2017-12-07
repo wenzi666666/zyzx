@@ -431,6 +431,9 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			tpIdRelationMapper.insert(stp);
 			
 			
+			form.setUserName(relative.getZhlUsername());
+			
+			
 			return userId;
 		}else{
 			
@@ -439,7 +442,58 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			
 			//更新用户真实姓名等信息
 			JUser user = userMapper.getUserByName(relative.getZhlUsername());
-			if(user==null||!form.getTrueName().equals(user.getTruename())
+			
+			//如果没有用户记录表
+			if(null == user ){
+				user = new JUser();
+				user.setId(Long.parseLong(relative.getZhlUserid()));
+				user.setName(relative.getZhlUsername());
+				user.setTruename(form.getTrueName());
+				user.setNickname(form.getNickName());
+				user.setFlag(false);
+				user.setIsfirstlogin(false);
+				user.setMale(form.isSex());
+				user.setRoleid(String.valueOf(form.getRole()));
+				user.setStatus(0);
+				user.setSchoolid(schoolId);
+
+				userMapper.insertSelective(user);
+
+				// userInfoMapper
+				JUserInfo userinfo = new JUserInfo();
+				userinfo.setUserid(user.getId());
+				if (StringUtils.isNotEmpty(form.getBirthDate())) {
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					userinfo.setBirthdate(format.parse(form.getBirthDate()));
+				}
+				userinfo.setResume(form.getMotto());
+				userinfo.setFlag(false);
+				userInfoMapper.insertSelective(userinfo);
+
+				// 学段 学科
+				JTerm term = new JTerm();
+				term.setName(form.getTermName());
+				term = termMapper.selectOne(term);
+
+				if (term != null) {
+					JUserTerm userTerm = new JUserTerm();
+					userTerm.setUserid(user.getId());
+					userTerm.setTermid(term.getId());
+					userTermMapper.insertSelective(userTerm);
+				}
+
+				JSubject subject = new JSubject();
+				subject.setName(form.getSubjectName());
+				subject = subjectMapper.selectOne(subject);
+
+				if (subject != null) {
+					JTeacherSubject ts = new JTeacherSubject();
+					ts.setUserid(user.getId());
+					ts.setSubjectid(subject.getId());
+					teachSubjectMapper.insertSelective(ts);
+				}
+
+			}else if(!form.getTrueName().equals(user.getTruename())
 					|| !form.getNickName().equals(user.getNickname())
 					|| !user.getRoleid().equals(String.valueOf(form.getRole()))
 					|| form.isSex() == user.getMale()
@@ -512,6 +566,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 				
 			}
 			
+			form.setUserName(relative.getZhlUsername());
 			return user.getId();
 		}
 
@@ -632,7 +687,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 
 		// userInfoMapper
 		JUserInfo userinfo = new JUserInfo();
-		userinfo.setUserid(user.getId());
+		userinfo.setUserid(s.getId());
 		if (StringUtils.isNotEmpty(birthDate)) {
 			userinfo.setBirthdate(format.parse(birthDate));
 		}
@@ -647,7 +702,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 
 		if (term != null) {
 			JUserTerm userTerm = new JUserTerm();
-			userTerm.setUserid(user.getId());
+			userTerm.setUserid(s.getId());
 			userTerm.setTermid(term.getId());
 			userTermMapper.insertSelective(userTerm);
 		}
@@ -658,14 +713,14 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 
 		if (subject != null) {
 			JTeacherSubject ts = new JTeacherSubject();
-			ts.setUserid(user.getId());
+			ts.setUserid(s.getId());
 			ts.setSubjectid(subject.getId());
 			teachSubjectMapper.insertSelective(ts);
 		}
 
 		
 		
-		return user.getId();
+		return s.getId();
 	}
 	
 	

@@ -23,6 +23,11 @@ public class ConstantForUserRole {
 	public static final long ROLE_SEX_POOL = 10005l;
 	
 	
+	/**
+	 * 默认教师角色
+	 */
+	public static final long ROLE_TEACHER_DEFAULT = 2L;
+	
 	
 	/**
 	 * 默认初中学段

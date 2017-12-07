@@ -115,8 +115,8 @@
 			<id>casNationQJYY</id>
 			<properties>
                 <package.environment>casNationQJYY</package.environment>
-                <buss.name>zhl-teachingresearch</buss.name>
-				<web.name>teachingresearch</web.name>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
 				<version>${teaching-version}</version>
             </properties>  
 			<activation>

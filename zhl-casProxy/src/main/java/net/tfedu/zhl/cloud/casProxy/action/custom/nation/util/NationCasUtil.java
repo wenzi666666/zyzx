@@ -135,6 +135,33 @@ public class NationCasUtil {
 		return form;
 	}
 	
+	/**
+	 * 将央馆的信息格式化为注册form表单
+	 * @param userInfo
+	 * @return
+	 */
+	public static RegisterAddForm formatRegisterFormWithDefaultTeacherRole(NationUserInfo userInfo,String PROVINCE_NAME,
+			String CITY_NAME,String DISTRICT_NAME,String SCHOOL_NAME) {
+		RegisterAddForm form = new RegisterAddForm();
+		form.setTh_uuid(userInfo.getUserId());
+		form.setUserName(userInfo.getUserId());
+		form.setNickName(userInfo.getName());
+		form.setTrueName(userInfo.getName());
+		// 性别：0-未知；1-男；2-女
+		String gender = userInfo.getGender();
+		form.setSex("2".equals(gender) ? true : false);
+		
+		form.setProvinceName(PROVINCE_NAME);
+		form.setCityName(CITY_NAME);
+		form.setArealName(DISTRICT_NAME);
+		form.setSchoolName(SCHOOL_NAME);
+		form.setRole(ConstantForUserRole.ROLE_TEACHER_DEFAULT);
+		form.setTermName(ConstantForUserRole.DEFAULT_TERMNAME);
+		form.setSubjectName(ConstantForUserRole.DEFAULT_SUBJECTMNAME);
+		form.setMotto("");
+		return form;
+	}
+	
 	
 	public static void main(String[] args) {
 		
