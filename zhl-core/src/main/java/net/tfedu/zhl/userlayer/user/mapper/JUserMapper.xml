@@ -78,14 +78,14 @@
 		,r.Name as roleName,t.Id as termId,t.Name as termName,
 		s.name as schoolName,GROUP_CONCAT(su.id) as subjectIds,GROUP_CONCAT(su.name)as subjectNames
 		from j_user u
-		LEFT JOIN j_role r on r.id = u.RoleId
-		LEFT JOIN j_userterm ut on ut.UserId = u.id
-		LEFT JOIN j_term t on t.id = ut.TermId
+		LEFT JOIN j_role r on r.id = u.RoleId and r.flag  =false 
+		LEFT JOIN j_userterm ut on ut.UserId = u.id and ut.flag = false 
+		LEFT JOIN j_term t on t.id = ut.TermId and t.flag = false 
 		LEFT JOIN j_school s on s.id = u.SchoolId
 		LEFT JOIN j_teachersubject ts on ts.userid = u.Id  and ts.flag = false 
   		LEFT JOIN j_subject su on su.id = ts.SubjectId and su.flag = false 
 		where u.name = #{name}
-		and r.flag  =false and ut.flag = false and t.flag = false 
+		
 	</select>
 
   
