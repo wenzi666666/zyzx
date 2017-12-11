@@ -301,7 +301,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		s.setFlag(false);
 		s.setEmail("");
 		s.setName(userName);
-		s.setNodeid(1);
+		s.setNodeid(null != form.getNodeId() && form.getNodeId()>0 ?form.getNodeId().intValue():1);
 		s.setRegistertime(date);
 		s.setRoleid(role);
 		s.setPwd(PWDEncrypt.doEncryptByte("tfedu000000"));
@@ -431,7 +431,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			tpIdRelationMapper.insert(stp);
 			
 			
-			form.setUserName(relative.getZhlUsername());
+			form.setUserName(zhl_username);
 			
 			
 			return userId;
@@ -440,11 +440,23 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			//返回学校id
 			long schoolId = getSchoolId(form);
 			
+			if(null != form.getNodeId() && form.getNodeId() > 0 ){
+				SRegister s =  rMapper.selectByPrimaryKey(Long.parseLong(relative.getZhlUserid()));
+				
+				if(s.getNodeid().longValue() != form.getNodeId().longValue()){
+					SRegister temp = new SRegister();
+					temp.setId(s.getId());
+					temp.setNodeid(form.getNodeId().intValue());
+					rMapper.updateByPrimaryKeySelective(temp);
+				}
+			}
+			
 			//更新用户真实姓名等信息
 			JUser user = userMapper.getUserByName(relative.getZhlUsername());
 			
 			//如果没有用户记录表
 			if(null == user ){
+				
 				user = new JUser();
 				user.setId(Long.parseLong(relative.getZhlUserid()));
 				user.setName(relative.getZhlUsername());
@@ -567,6 +579,10 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			}
 			
 			form.setUserName(relative.getZhlUsername());
+			
+			
+			
+			
 			return user.getId();
 		}
 

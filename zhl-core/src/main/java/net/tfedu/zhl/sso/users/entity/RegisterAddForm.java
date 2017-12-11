@@ -70,6 +70,9 @@ public class RegisterAddForm {
 	 */
 	String subjectName;
 	
+	Long nodeId ; 
+	
+	
 	
 	
 	public String getUserName() {
@@ -155,6 +158,12 @@ public class RegisterAddForm {
 	}
 	public void setTh_uuid(String th_uuid) {
 		this.th_uuid = th_uuid;
+	}
+	public Long getNodeId() {
+		return nodeId;
+	}
+	public void setNodeId(Long nodeId) {
+		this.nodeId = nodeId;
 	}
 	
 	

@@ -1,6 +1,8 @@
 package net.tfedu.zhl.cloud.casProxy.action.custom.nation.controller;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,11 +21,13 @@ import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationTokenInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationUserInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.util.NationCasUtil;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
+import net.tfedu.zhl.cloud.utils.security.DESUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
+import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
@@ -173,6 +177,9 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	public String loginYun(String ticket, String sysCode, HttpServletRequest request, HttpServletResponse response)
 			throws CustomException, Exception {
 
+		long nodeId_JX = 1700105;
+		
+		
 		SApp zhlApp = getApp();
 
 		log.debug("----zhlApp---" + JSONObject.toJSONString(zhlApp));
@@ -187,6 +194,9 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
 				DISTRICT_NAME,SCHOOL_NAME);
 
+		//设置jx的节点号
+		form.setNodeId(nodeId_JX);
+		
 		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
 
 		// 同步用户信息
@@ -206,8 +216,89 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 
 		return null;
 	}
+	
+	/**
+	 * 登录云平台接口
+	 * 
+	 * @param request
+	 * @param response
+	 * @throws CustomException
+	 * @throws Exception
+	 */
+	@RequestMapping("/loginZWX")
+	public String loginZWX(String ticket, String sysCode, HttpServletRequest request, HttpServletResponse response)
+			throws CustomException, Exception {
+		
+		SApp zhlApp = getApp();
+		
+		log.debug("----zhlApp---" + JSONObject.toJSONString(zhlApp));
+		
+		if (StringUtils.isEmpty(ticket)) {
+			throw new CustomException("ticket为空");
+		}
+		
+		//获取央馆的用户信息
+		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
+		//将央馆的信息格式化为注册form表单
+		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
+				DISTRICT_NAME,SCHOOL_NAME);
+		
+		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
+		
+		// 同步用户信息
+		try {
+			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
+			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException("同步用户信息失败");
+		}
+		
+		request.setAttribute("userName", form.getUserName());
+		request.setAttribute("pwd", zhlApp.getUserdefaultpwd());
+		
+		String loginArgs = "{'userName':'"+form.getUserName()+"','pwd':'"+zhlApp.getUserdefaultpwd()+"'}";
+		
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+		//扫描二位码之后的网址
+		String targetPath = "/casProxyNation/check?loginArgs="+DESUtil.encryptDES(loginArgs, DESUtil.init());
+		
+		request.setAttribute("targetPath", targetPath);
+
+		return "zwx";
+	}
 
 
+	
+	/**
+	 * 用户手机扫描二维码之后，跳转到此方法
+	 * @param loginArgs   用户名和密码de字符串(DESUtil加解密，解密后为json格式)
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws CustomException
+	 * @throws Exception
+	 */
+	@RequestMapping("/check")
+	public String check(String loginArgs, HttpServletRequest request, HttpServletResponse response)
+			throws CustomException, Exception {
+		
+		ControllerHelper.checkEmpty(loginArgs);
+		
+		//解密为json字符串
+		String json = DESUtil.decryptDES(loginArgs, DESUtil.init());
+		
+		Map map = JSONObject.parseObject(json, HashMap.class);
+		
+		if(null != map ){
+			String userName = (String)map.get("userName");
+			String pwd = (String)map.get("pwd");
+			request.setAttribute("userName", userName);
+			request.setAttribute("pwd", pwd);
+		}
+		
+		return "check";
+	}
 	
 	
 

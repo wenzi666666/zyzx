@@ -138,6 +138,20 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
+				
+		<profile>
+			<id>casNationZWX</id>
+			<properties>
+                <package.environment>casNationZWX</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
 		
 	</profiles>
 
