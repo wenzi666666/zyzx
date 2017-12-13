@@ -248,16 +248,18 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
 				DISTRICT_NAME,SCHOOL_NAME);
 		
+		//设为学生
+		form.setRole(1L);
+		
 		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
 		
 		// 同步用户信息
 		try {
-			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
 			//助我学m_register
 			
-			mRegisterId = mRegisterService.syncMRegister(zhl_userId, zhlApp.getUserdefaultpwd(), form);
+			mRegisterId = mRegisterService.syncMRegister(form,zhlApp);
 			
-			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
+			log.debug("---同步用户信息成功--mregister：" + mRegisterId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CustomException("同步用户信息失败");
