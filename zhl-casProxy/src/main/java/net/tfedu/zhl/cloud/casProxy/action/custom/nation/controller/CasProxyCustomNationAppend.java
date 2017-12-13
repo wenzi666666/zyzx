@@ -1,8 +1,6 @@
 package net.tfedu.zhl.cloud.casProxy.action.custom.nation.controller;
 
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -21,7 +20,6 @@ import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationTokenInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.bean.NationUserInfo;
 import net.tfedu.zhl.cloud.casProxy.action.custom.nation.util.NationCasUtil;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
-import net.tfedu.zhl.cloud.utils.security.DESUtil;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.fileservice.Base64;
@@ -31,7 +29,9 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
+import net.tfedu.zhl.sso.users.entity.ZWXMRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
+import net.tfedu.zhl.sso.users.service.ZWXMRegisterService;
 
 /**
  * 央教馆对接
@@ -72,6 +72,9 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 
 	@Resource
 	RegisterService registerService;
+	
+	@Resource
+	ZWXMRegisterService mRegisterService;
 
 	/**
 	 * 获取app
@@ -231,6 +234,8 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		
 		SApp zhlApp = getApp();
 		
+		Long mRegisterId = null ;
+		
 		log.debug("----zhlApp---" + JSONObject.toJSONString(zhlApp));
 		
 		if (StringUtils.isEmpty(ticket)) {
@@ -248,31 +253,25 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		// 同步用户信息
 		try {
 			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
+			//助我学m_register
+			
+			mRegisterId = mRegisterService.syncMRegister(zhl_userId, zhlApp.getUserdefaultpwd(), form);
+			
 			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CustomException("同步用户信息失败");
 		}
-		
-		request.setAttribute("userName", form.getUserName());
-		request.setAttribute("pwd", zhlApp.getUserdefaultpwd());
-		
-		String loginArgs = "{'userName':'"+form.getUserName()+"','pwd':'"+zhlApp.getUserdefaultpwd()+"'}";
-		
-		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
-		//扫描二位码之后的网址
-		String targetPath = "/casProxyNation/check?loginArgs="+DESUtil.encryptDES(loginArgs, DESUtil.init());
-		
-		request.setAttribute("targetPath", targetPath);
-
-		return "zwx";
+		return "redirect:/casProxyNation/check?mRegisterId="+mRegisterId;
 	}
 
 
 	
+	
+	
 	/**
-	 * 用户手机扫描二维码之后，跳转到此方法
-	 * @param loginArgs   用户名和密码de字符串(DESUtil加解密，解密后为json格式)
+	 * 跳转到此方法，提供二维码
+	 * @param mRegisterId
 	 * @param request
 	 * @param response
 	 * @return
@@ -280,24 +279,38 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	 * @throws Exception
 	 */
 	@RequestMapping("/check")
-	public String check(String loginArgs, HttpServletRequest request, HttpServletResponse response)
+	public String check(@RequestParam Integer mRegisterId,HttpServletRequest request, HttpServletResponse response)
 			throws CustomException, Exception {
 		
-		ControllerHelper.checkEmpty(loginArgs);
+		ControllerHelper.checkIntegerEmpty(mRegisterId);
 		
-		//解密为json字符串
-		String json = DESUtil.decryptDES(loginArgs, DESUtil.init());
+		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
+		//扫描二位码之后的网址
+		String targetPath = basePath+"/casProxyNation/qrcodeAfter?mRegisterId="+mRegisterId;
 		
-		Map map = JSONObject.parseObject(json, HashMap.class);
+		request.setAttribute("targetPath", targetPath);
+		return "zwx";
+	}
+	
+	/**
+	 * 跳转到此方法，提供二维码
+	 * @param mRegisterId
+	 * @param request
+	 * @param response
+	 * @return
+	 * @throws CustomException
+	 * @throws Exception
+	 */
+	@RequestMapping("/qrcodeAfter")
+	public String qrcodeAfter(@RequestParam Integer mRegisterId,HttpServletRequest request, HttpServletResponse response)
+			throws CustomException, Exception {
 		
-		if(null != map ){
-			String userName = (String)map.get("userName");
-			String pwd = (String)map.get("pwd");
-			request.setAttribute("userName", userName);
-			request.setAttribute("pwd", pwd);
-		}
+		ControllerHelper.checkIntegerEmpty(mRegisterId);
 		
-		return "check";
+		ZWXMRegister reg = (ZWXMRegister) mRegisterService.getByPrimaryKey(mRegisterId).getData();
+		request.setAttribute("userName", reg.getUsername());
+		request.setAttribute("pwd", new String(reg.getUserpwd()));
+		return "zwx-intro/index";
 	}
 	
 	

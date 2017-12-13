@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+		<meta name="renderer" content="webkit" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="keywords" content="助我学" />
+		<meta name="description" content="助我学" />
+		<title>助我学</title>
+		<link rel="shortcut icon" href="img/logoicon.png" />
+		<link rel="stylesheet" href="css/home.css" />
+		<link rel="stylesheet" href="css/slides.css" />
+		<link rel="stylesheet" href="css/smallClass.css" />
+		<link rel="stylesheet" href="css/login.css" />
+		
+		<script type="text/javascript" src="js/ip.js"></script>
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="js/jquery.xdomainrequest.min.js"></script>
+		<script type="text/javascript" src="js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="js/slides.jquery.js" ></script>
+		<script type="text/javascript" src="js/head.js"></script>
+		<script type="text/javascript" src="js/login.js"></script>
+		<script type="text/javascript" src="js/home.js" ></script>
+		<script type="text/javascript" src="js/smallClass.js" ></script>
+		<script type="text/javascript" src="js/json.js"></script>
+		<script type="text/javascript" src="js/jqthumb.min.js"></script>
+		<script type="text/javascript" src="js/reload.js" ></script>
+	</head>
+
+	<body>
+		
+		<!--查看微课弹出框-->
+		<div class="mb">
+			<div class="videoInfo" id="videoInfo">
+				<div></div>
+			</div>
+		</div>
+		<div class="smallClass" id="smallClass">
+			<!--年级-->
+			<div class="small_main" id="smallMain">
+				<span class="offVideo"></span>
+				<div class="small_title">名师微课</div>
+				<ul class="small_term" id="smallTerm">
+					<li class="style" id="seven">七年级</li>
+					<li id="eight">八年级</li>
+					<li id="nine">九年级</li>
+					<li id="hs1">高一</li>
+					<li id="hs2">高二</li>
+					<li id="hs3">高考</li>
+				</ul>
+				<!--科目-->
+				<div class="small_video">
+					<div class="subject math">
+						<ul class="videoUl" id="mathUl">
+						</ul>
+						<div class="ulHead">
+							数学
+						</div>
+					</div>
+					<div class="subject physics">
+						<ul class="videoUl" id="physicsUl">
+						</ul>
+						<div class="ulHead">
+							物理
+						</div>
+					</div>
+					<div class="subject chemistry">
+						<ul class="videoUl" id="chemistryUl">	
+						</ul>
+						<div class="ulHead">
+							化学
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!--登陆、注册-->
+		<!--遮罩-->
+		<div class="cover1">
+
+		</div>
+		<div class="popChange">
+			<span class="tit2"></span>
+		</div>
+		<input type="hidden" id="userId" />
+		<input type="hidden" id="userName" />
+		<input type="hidden" id="trueName" />
+		<input type="hidden" id="schoolId" />
+		<input type="hidden" id="schoolName" />
+
+		<!--弹出蒙版层-->
+		<div class="cover">
+		</div>
+		<!--cover-->
+		<!--登陆弹框-->
+		<div class="pop popLogin">
+			<div class="pop-left">
+				<img src="img/login.gif" />
+			</div>
+			<div class="pop-right">
+				<span class="offVideo"></span>
+				<span class="login-title">登陆账号</span>
+				<div class="pop-item">
+					<label for="" class="userIcon"></label>
+					<input type="text" value="" class="user" placeholder="账号" />
+				</div>
+				<div class="pop-item">
+					<label for="" class="pswIcon"></label>
+					<input type="password" class="psw" value="" placeholder="密码" />
+					<span class="showLoginPsw" id="showLoginPsw"></span>
+				</div>
+				
+				<span class="lisePsw">忘记密码</span>
+				<span class="errorMes" id="loginError"></span>
+				<button class="loginBtn" type="submit">登陆</button>
+				<span class="registerLink">还没有账号？<span id="registerLink">请注册账号</span></span>
+			</div>
+		</div>
+		<!--登陆弹框结束-->
+
+		<!--注册弹框-->
+		<div class="pop popRegister">
+			<div class="pop-left">
+				<img src="img/register.gif" />
+			</div>
+			<div class="pop-right">
+				<span class="offVideo"></span>
+				<span class="register-title">注册账号</span>
+				<div class="pop-item">
+					<label for="" class="emailIcon"></label>
+					<input type="text" class="email" placeholder="手机号"/>
+				</div>	
+				<div class="pop-item">
+					<label for="" class="valiCodeIcon"></label>
+					<input type="text"  class="valiCode" id="valiCode" value="" placeholder="验证码"/>
+					<span type="text" id="codeTime" class="codeTime" />获取验证码</span>
+				</div>
+				<div class="pop-item">
+					<label for="" class="setUserIcon"></label>
+					<input type="text" class="setUser" placeholder="账号"/>
+				</div>
+				<div class="pop-item">
+					<label for="" class="setPswIcon"></label>
+					<input type="password" class="setPsw" id="setPsw" placeholder="密码"/>
+					<span class="showPsw" id="showPsw"></span>
+				</div>
+				
+				<span class="errorMes" id="registerError"></span>
+				<button class="setAdmin">下一步</button>
+				<span class="registerLink">已有账户？<span id="loginLink" >请登录</span></span>
+			</div>
+		</div>
+		<input type="hidden" id="code" />
+		<input type="hidden" id="registerId" />
+		<!--注册弹框结束-->
+		<!--注册激活邮件弹出框-->
+		<div class="popRegisterSuc">
+			<div class="activeEmail">
+				<span>激活邮件已经发送至您的邮箱</span>
+				<span class="registerEmail">906005454@qq.com</span>
+			</div>
+			<span class="finish">请进入邮箱激活，完成注册</span>
+			<span class="intoEmail"></span>
+		</div>
+
+		<!--注册激活邮件弹出结束-->
+		<!--注册成功-->
+		<div class="popSuccess">
+			<div></div>
+			<span class="finish">恭喜,您已注册成功！</span>
+		</div>
+
+		<!--注册成功-->
+		<!--完善信息-->
+		<div class="popFillInfo">
+			<span class="find">完善信息</span>
+			<div class="pop-itemW">
+				<span class="realIcon"></span>
+				<input type="text" id="areaTrueNameRegister" placeholder="真实姓名"/>
+			</div>
+			<div class="infopop-itemW">
+				<span class="regionIcon"></span>
+				<label>地区</label>
+				<select class="areaS" id="areaProvinceRegister">
+					<option>省/直辖市</option>
+				</select>
+				<select class="areaC" id="areaCityRegister">
+					<option>市</option>
+				</select>
+				<select class="areaT" id="areaDistrictRegister">
+					<option>区</option>
+				</select>
+			</div>
+			<div class="infopop-itemW">
+				<span class="schoolIcon"></span>
+				<label>学校</label>
+				<select class="s" id="areaSchoolRegister">
+					<option data-id="0">请选择学校</option>
+				</select>
+			</div>
+			<!--<span class="a">没有学校？<span class="apply">请申请添加</span></span>-->
+			<div class="infopop-itemW">
+				<span class="duanIcon"></span>
+				<label>学段</label>
+				<select class="s" id="areaTermRegister">
+					<option data-id="3">高中</option>
+					<option data-id="2">初中</option>
+				</select>
+			</div>
+			<div class="infopop-itemW">
+				<span class="keIcon"></span>
+				<label>学科</label>
+					<select class="s" id="areaSubjectRegister">
+					<option data-id="2">数学</option>
+					<option data-id="4">物理</option>
+					<option data-id="5">化学</option>
+				</select>
+			</div>
+
+
+			<span class="a simple">方便加入班级!</span>
+			<span class="a" id="infoError"></span>
+			<button class="setAdmin2" id="setTeacherInfo">创建</button>
+			<span class="b">信息完善后才能使用该平台</span>
+		</div>
+		<!--完善信息结束-->
+		
+		<!--忘记密码-->
+		<!--<div class="popLisePsw">
+			<span class="find">找回密码</span>
+			<span class="bemail">绑定邮箱</span>
+			<input type="text" />
+			<input type="text" class="validate" placeholder="输入验证码"><span class="random"><span id="random">1122</span >看不清？<em>换一个</em></span>
+			<button class="lastStep"></button>
+			<button class="nextStep"></button>
+		</div>-->
+		<!--忘记密码结束-->
+		<!--忘记密码下一步-->
+		<!--<div class="popLisePswNext">
+			<span class="find">找回密码</span>
+			<div class="liseMain">
+				<span class="span1">验证码已经发送至绑定邮件</span>
+				<span>请登录邮箱重新设置密码</span>
+			</div>
+			<span class="liseBack"></span>
+		</div>-->
+		<!--忘记密码下一步结束-->
+		<!--申请-->
+		<!--<div class="popApply">
+			<span class="find">申&nbsp;&nbsp;请</span>
+			<span class="d">输入学校名称</span>
+			<input type="text" />
+			<span class="d c">请正确输入学校全称</span>
+			<button class="sure"></button>
+			<button class="backa"></button>
+		</div>-->
+		<!--申请结束-->
+
+		<!--<div class="head">
+			<div class="center">
+				<div class="loginLogo"><img src="img/logo.png" /></div>
+				<div class="welcome"><img src="img/welcome.png" /></div>
+				<div class="enter">
+					<span class="school"></span>
+					<img class="teacher" src="">
+					<a href="new.html" title="消息" class = "head_personalInfo">
+						<span class="shortMessage"><i class="NewCur"></i></span>
+						<div class="personalInfo">
+							<div class="per">
+								<span class="manInfo">个人信息</span>
+								<span class="changePwd">修改密码</span>
+								<span class="exit">退出</span>
+							</div>
+						</div>
+					</a>
+				</div>
+
+				<button class="place register">注册</button>
+				<button class="place login">登录</button>
+			</div>-->
+			
+			
+			
+			<!--<div class="infoPop popManInfo">
+				<span class="h">编辑教师信息</span>
+				<div class="techHead">
+					<i>头像</i>
+					<img src="" id="infoTechHead" />
+					<input type="file" id="file_upload" name="file_upload" onchange="change(this)" />
+				</div>
+
+				<label class="us">用户名</label>
+				<input type="text" id="infoUserName" />
+				<label>真实姓名</label>
+				<input type="text" id="infoRealName" />
+				<label>所属地区</label>
+				<select class="address" id="areaProvince">
+					<option>省</option>
+				</select>
+				<select class="address" id="areaCity">
+
+					<option>市</option>
+				</select>
+				<select class="address" id="areaDistrict">
+
+					<option>县</option>
+				</select>
+				<label>所在学校</label>
+				<select class="s" id="areaSchool">
+					<option>北洼路学校</option>
+				</select>
+				<label>所属学段</label>
+				<select class="s" id="areaTerm">
+					
+					<option data-id="2">初中</option>
+					<option data-id="3">高中</option>
+				</select>
+				<label>任教学科</label>
+				<select class="s" id="areaSubject">
+					<option data-id="2">数学</option>
+					<option data-id="4">物理</option>
+					<option data-id="5">化学</option>
+				</select>
+				<span class="action action1"></span>
+				<span class="ibtn ibtn1" id="infoCancel">取消</span><span class="ibtn ibtn1" id="infoSure">确定</span>
+			</div>-->
+			
+			
+			
+
+			<!--<div class=" infoPop popChangePwd">
+				<span class="h">修改密码</span>
+				<label>旧密码</label>
+				<input type="password" id="prePwd" />
+				<label>新密码</label>
+				<input type="password" id="newPwd" />
+				<label>确认新密码</label>
+				<input type="password" id="newPwds" />
+				<span class="action action2"></span>
+				<span class="ibtn" id="pwdCancel">取消</span><span class="ibtn" id="pwdSure">确定</span>
+			</div>
+
+			<div class="popChangeHead">
+				<div class="headTitle">修改图片 <span></span></div>
+				<div class="headImg">
+					<div class="frame">
+						<img id="photo" src="">
+					</div>
+				</div>
+				<span class="ibtn ibtn1" id="changeCancel">取消</span><span class="ibtn ibtn1" id="changeSure">确定</span>
+			</div>
+			<input id="startX" name="x" type="hidden" />
+			<input id="startY" name="y" type="hidden" />
+			<input id="width" name="w" type="hidden" />
+			<input id="height" name="h" type="hidden" />
+		</div>
+		<div class="loginHtml">
+			<div class="banner"><img src="img/qinhua.png" class="qinhua" /></div>
+			<div class="main">
+				<a href="#" class="link errorText"></a>
+				<a href="#" class="link classManage"></a>
+				<a href="#" class="link myResource"></a>
+			</div>-->
+			
+			
+			
+			
+		<!--首页内容-->
+		<div class="firstPage">
+			<div class="header">
+				<div class="header-top">
+					<div class="header-topItem">
+						<button class="teacherInto">教师端</button>
+						<button class="studentInto" title="即将上线！">学生端</button>
+					</div>
+					<div class="lesson" id="lesson">查看微课</div>
+					<div class="loginBox">
+						<span class="place login">登录</span>
+						<span>|</span>
+						<span class="place register">注册</span>
+					</div>
+
+				</div>	
+				<div class="header-right">
+					<span>扫码下载app</span>
+					<div>
+						<img src="img/QRcode.png" id="QRcode" />
+					</div>
+					<a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zhl.hometeacher">
+						<button id="android">Android下载</button>
+					</a>
+					<a href="https://itunes.apple.com/cn/app/zhu-wo-xue/id1032158173?mt=8">
+						<button id="ios">iPhone下载</button>
+					</a>
+				</div>
+				<div class="gradient"></div>
+			</div>
+		
+			<div class="section2">
+				
+			</div>
+			<div class="section3">
+				
+			</div>
+			<div class="section4">
+				
+			</div>
+			<div class="footer">
+				<p>联系我们 客服电话：400-051-8958-3(周一至周五 10:00-17:00) 客服QQ:3324624248 手机：13220155438 微信号：zhuwoxue</p>
+				<p>Copyright@2000-2015版权所有：同方知好乐教育科技（北京）有限公司 京ICP备 05045440号</p>
+			</div>
+		</div>
+	</body>
+
+</html>

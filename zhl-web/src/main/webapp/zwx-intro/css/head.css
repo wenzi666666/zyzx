@@ -1,0 +1,482 @@
+body{
+	height:100%;
+}
+div.head {
+	margin:0 auto;
+	background-color:#ffffff;
+	height: 70px;
+	border-bottom:1px solid #eeeeee;
+}
+.head button
+{
+	background-color: #ffffff;
+	outline: none;
+	width:115px;
+	text-align: center;	
+	font-size: 16px;
+	float: left;
+	height: 70px;
+	border-top:none;
+	border-left:none;
+	border-right:none;
+}
+.logo{
+	float: left;
+	width:200px;
+	height: 70px;
+	padding-top:17px;
+}
+.logo img
+{
+	display: block;
+	margin:2px auto;
+}
+.headChild
+{
+	width: 100%;
+	margin:0 auto;
+	height: 70px;
+	position: relative;
+	padding:0 100px;
+}
+.MyAll
+{
+	float: left;
+	 cursor: pointer;
+	 background:rgba(255,255,255,0);
+}
+.tClass
+{
+	position: absolute;
+	display: none;
+	background:#ffffff;
+	width: 115px;
+	top:70px;
+	z-index: 1;
+	box-shadow: 0 0 5px #c7c7c7;
+}
+
+.tClass span
+{
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	text-align: center;	
+	display: inline-block;
+	color: #7a7a7a;
+}
+.tClass span:hover{
+	color: #ffffff;
+	background-color: #86a1fd;
+}
+.myClass
+{
+	color: #fff;
+	background: rgba(255,255,255,0.3);
+}
+.allClass
+{
+	color: #fff;
+	background: rgba(255,255,255,0.3);
+}
+
+.mc
+{
+	color: #E5A248;
+	background: rgba(255,255,255,0.6);
+}
+.ac
+{
+	color: #E5A248;
+	background: rgba(255,255,255,0.6);
+	
+}
+/*我的资源新增模块*/
+.source
+{
+	position: absolute;
+	display: none;
+	background:#ffffff;
+	width: 115px;
+	top:70px;
+	z-index: 1;
+	box-shadow: 0 0 5px #c7c7c7;
+}
+
+.source span{
+	height: 40px;
+	width: 100%;
+	line-height: 40px;
+	text-align: center;	
+	display: inline-block;
+	color: #7a7a7a;
+}
+.sourceBox
+{
+	float: left;
+    cursor: pointer;
+    background: rgba(255,255,255,0);
+}
+.sourceBox span:hover{
+	color: #ffffff;
+	background-color: #86a1fd;
+}
+
+/*我的资源新增模块*/
+
+.shortMessage
+{
+	 float: right;
+	height: 33px;
+	width: 33px;
+	margin-top:18px;
+	margin-left: 10px;
+	background:url(../img/shortMessage.png);
+	cursor: pointer;
+}
+.school
+{  float: left;
+	color: #fff;
+	width:280px;
+	/*微课加入后修改回来*/
+	/*width: 415px;*/
+	height: 25px;
+	letter-spacing: 1.5px;
+	margin-top:10px ;
+	overflow:hidden;
+	text-align: right;
+    text-overflow:ellipsis;
+    -o-text-overflow:ellipsis;
+    white-space:nowrap;
+    
+    
+}
+.teacher
+{
+	margin-left: 10px;
+	float:left;
+	font-size: 14px;
+	color: #5A8EF4;
+	font-weight: bold;
+	width:31px;
+	height: 31px;
+	margin-top:20px ;
+	float: right;
+	text-align: center;
+	overflow:hidden;
+	border-radius: 50%;
+   
+}
+.head_personalInfo{
+	position: relative;
+	display: block;
+}
+.personalInfo
+{
+	position: absolute;
+	top:31px;
+	right:40px;
+	/*微课加入后修改回来*/
+	padding-top: 39px;
+	cursor: pointer;
+	width:40px ;
+	min-height: 15px;
+	z-index: 2;
+	background:rgba(255,255,255,0);
+}
+	
+.personalInfo .rabg
+{
+	color: #E5A248;
+	background: rgba(255,255,255,0.6);
+}
+
+.per{
+	display: none;
+    background: #ffffff;
+    width: 115px;
+    top: 70px;
+    z-index: 1;
+    box-shadow: 0 0 5px #c7c7c7;
+}
+.per span{
+	height: 40px;
+    width: 100%;
+    line-height: 40px;
+    text-align: center;
+    display: inline-block;
+    color: #7a7a7a;
+}
+.per span:hover{
+	color: #ffffff;
+	background-color: #86a1fd;
+}
+.popChangeHead
+{
+	position: fixed;
+	left: 33%;
+	top:22%;
+	width: 400px;
+	height: 423px;
+	background: #fff;
+	z-index: 5;
+	display: none;
+}
+.headTitle
+{
+	width:100%;
+	height: 35px;
+	color: #fff;
+	background: #0094FF;
+	line-height: 35px;
+	font-weight: bold;
+	font-size: 18px;
+	position: relative;
+	text-indent: 10px;
+}
+.frame
+{
+	width:100%;
+	height: 100%;
+	overflow: hidden;
+	
+}
+.frame img{
+	text-align: center;
+	vertical-align: middle;
+	width:309px;
+	height: 314px;
+	display: block;
+	margin:1% auto;
+}
+.headImg
+{
+	height: 320px;
+	margin-top: 20px;
+}
+.headTitle span
+{
+	display: inline-block;
+	height: 30px;
+	width: 30px;
+	position: absolute;left: 90%;
+	top:2px;
+	cursor: pointer;
+	background: url(../uploadify/img/uploadify-cancel.png) no-repeat center center;
+	
+}
+.manInfo
+{
+	
+}
+.changePwd
+{
+	top:80px;
+}
+.exit
+{
+	top:120px;
+}
+.indexhtml
+{
+	position: relative;
+	width: 100%;
+	height:100%;
+	margin:0 auto;
+}
+.cover1
+{
+	position: fixed;
+	display: none;
+	background: rgba(155,155,155,0.4);
+	z-index: 3;
+	width: 100%;
+	height: 500000px;
+}
+.infoPop
+{
+	position: fixed;
+	z-index: 4;
+	width: 315px;
+	background: #fff;
+	left: 33%;
+	top:22%;
+	box-shadow: 0 0 30px #ccc;
+}
+.popManInfo
+{
+	display: none;
+	width: 400px !important;
+}
+.techHead
+{
+	width: 370px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	margin-top: 5px;
+	position: relative;
+}
+i{
+	color: #0094ff;
+	font-weight: bold;
+	margin-left: 20px;
+	margin-right: 5px;
+}
+
+.techHead img
+{
+	margin-left: 100px;
+	width: 52px;
+	height: 52px;
+	outline: none;
+	border-radius: 50%;
+	
+}
+
+.infoPop input
+{
+	background: #E6E6E6;
+	border: 1px solid #0094FF;
+	width: 314px;
+	height: 30px;
+}
+.infoPop select
+{
+	background: #E6E6E6;
+	border: 1px solid #0094FF;
+}
+.infoPop label
+{
+	color: #0094FF;
+	margin:8px 5px;
+	/*margin-left: 10px;*/
+	display: inline-block;
+	width:64px;
+	text-align: right;
+}
+.s
+{
+	width: 314px;
+	height: 30px;	
+}
+.h
+{
+	display: block;
+	width:120px;
+	font-size: 20px;
+	margin:20px auto;
+	text-align: center;
+}
+.action
+{
+	display: block;
+	width:263px;
+	color: #f00;
+	font-size: 12px;
+	line-height: 25px;
+	text-align: right;
+	height: 25px;
+}
+.ibtn
+{
+	display: inline-block;
+	width:155px;
+	height: 35px;
+	background: url(../img/popup.png);
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-top: 20px;
+	margin-bottom: 2px;
+	text-align: center;
+	line-height: 35px;
+	letter-spacing: 5px;
+	color: #fff;
+	cursor: pointer;
+}
+.ibtn1
+{
+	width:198px;
+}
+.address
+{
+	width:102px;
+	height: 30px;
+}
+.popChangePwd
+{
+	left: 35% !important;
+}
+.popChangePwd input
+{
+	width:170px;
+}
+.popChangePwd label
+{
+	width:80px
+}
+.popChangePwd
+{
+	display: none;
+}
+.popSelect
+{
+	position: fixed;
+	left:36%;
+	top:50%;
+	background: #fff;
+	width:202px;
+	height: 60px;
+	box-shadow: 0 0 30px #ccc;
+	z-index: 5;
+	display: none;
+	background: url(../img/tipop.png);
+}
+.tit
+{
+	display: block;
+	width:128px;
+	height: 38px;
+	vertical-align:middle;
+	text-indent: 16px;
+	margin:0px auto;
+	margin-top: 15px;
+	font-size: 12px;
+	color: #fff;
+	margin-left: 64px;
+	text-overflow: ellipsis;
+}
+.head{
+	position: relative;
+}
+.popChange
+{
+	position: fixed;
+	left:40%;
+	top:45%;
+	background: #fff;
+	width:202px;
+	height: 60px;
+	z-index: 5;
+	display: none;
+	background: url(../img/tipop.png);
+}
+.tit2
+{
+	display: block;
+	width:128px;
+	height: 38px;
+	line-height: 25px;
+	text-indent: 14px;
+	vertical-align:middle;
+	margin:0px auto;
+	margin-top: 15px;
+	font-size: 12px;
+	color: #fff;
+	margin-left: 64px;
+	text-overflow: ellipsis;
+}
+.popManInfo select
+{
+	color: #999;
+}
+

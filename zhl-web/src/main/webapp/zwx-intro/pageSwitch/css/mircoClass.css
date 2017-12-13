@@ -1,0 +1,361 @@
+body {}
+
+.smallClassBox {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	margin: 0 auto;
+	background: #e6e6e6;
+	z-index: 102;
+	/*display: none;*/
+	font-size: 18px;
+	margin: 0 auto;
+	width: 100%;
+}
+
+.smallHead {
+	/*border: 1px solid #f00;*/
+}
+
+li {
+	list-style: none;
+}
+
+ul {
+	margin-top: 0;
+	padding: 0;
+}
+
+.term {
+	display: block;
+	height: 35px;
+	width: 140px;
+	display: block;
+	margin: 20px auto;
+}
+
+.subject {
+	margin: 0 auto;
+	overflow: hidden;
+	text-align: center;
+	width: 300px;
+	/*border: 1px solid #f00;*/
+}
+
+.subject li {
+	float: left;
+	border: 1px solid #999;
+	background: #fff;
+	margin: 0 20px;
+	width: 60px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.subject .style {
+	background: #ff9978;
+	color: #fff;
+}
+
+.videoList {
+	margin: 0 auto;
+	margin-top: 20px;
+	text-align: center;
+	width: 300px;
+}
+
+.videoList li {
+	text-align: center;
+	margin-left: 0;
+	width: 300px;
+	margin-bottom: 5px;
+	cursor: pointer;
+	position: relative;
+}
+
+.videoList img {
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+	border: 1px solid #555;
+}
+
+.videoList span {
+	display: block;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-size: 14px;
+	white-space: nowrap;
+	height: 20px;
+}
+
+.play {
+	position: absolute;
+	height: 0px;
+	width: 0px;
+	z-index: 1;
+	left: 50%;
+	top: 25%;
+	/*background: url(../img/play.png) no-repeat center;*/
+	-moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-o-transition: all 0.5s;
+	transition: all 0.5s;
+	background-size: cover;
+}
+
+.videoInfo {
+	overflow: hidden;
+	background: rgb(25, 26, 30);
+	box-shadow: 3px 3px 10px #000;
+	margin: 10px;
+	position: relative;
+}
+
+.mb {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	background: rgba(15, 15, 15, 0.4);
+	z-index: 103;
+	display: none;
+	overflow: hidden;
+	width: 100%;
+}
+
+.off {
+	clear: both;
+	cursor: pointer;
+      float: right;
+	background: url(../img/back.png);
+	width: 26px;
+	height: 26px;
+	display: block;
+	margin-top: 10px;
+	margin-bottom:13px;
+	margin-right: 7px;
+}
+
+.off:hover {
+	background: url(../img/backc.png);
+}
+
+.videos {
+	clear: both;
+	width: 95%;
+	height: 260px;
+	margin: 0 auto;
+	display: block;
+	margin-top: 10px;
+}
+
+.txt {
+	font-size: 14px;
+	color: #fff;
+	margin-top: 15px;
+	text-indent: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.offVideo {
+	font-size: 26px;
+	position: absolute;
+	left: 90%;
+	top: 4px;
+	cursor: pointer;
+	color: #555;
+	font-weight: bold;
+}
+
+.offVideo:hover {
+	color: #f00;
+}
+
+
+
+/*@media all and (orientation : landscape) {
+	body {
+		font-size: 16px;
+	}
+	.videoList li {
+		float: left;
+	}
+}*/
+
+.downloadBox {
+	clear: both;
+	background-color: #8AB8E2;
+	font-family: "微软雅黑";
+	height: 120px;
+	border-bottom: 5px solid #7BA0DB;
+	position: relative;
+}
+
+.downloadBox img {
+	height: 82px;
+	width: 326px;
+	list-style: none;
+	margin-left: 20px;
+	margin-right: 15px;
+	margin-top: 15px;
+	float: left;
+}
+
+.downloadBtn {
+	float: right;
+	width: 120px;
+	height: 35px;
+	margin-top: 30px;
+	margin-right: 20px;
+	background-color: #F9BB4E;
+	border: 1px solid #FFFFFF;
+	color: #FFFFFF;
+	font-size: 20px;
+	letter-spacing: 10px;
+	font-family: "微软雅黑";
+	text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+	.downloadBox {
+		height: 96px;
+	}
+	.downloadBox img {
+		height: 70px;
+		width: 282px;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 12px;
+	}
+	.downloadBtn {
+		width: 80px;
+		height: 30px;
+		line-height: 25px;
+		margin-right: 5px;
+		font-size: 14px;
+		letter-spacing: 5px;
+	}
+}
+@media screen and (max-width: 420px) {
+	.downloadBox {
+		height: 80px;
+	}
+	.downloadBox img {
+		height: 57px;
+		width: 245px;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 12px;
+	}
+	.downloadBtn {
+		width: 73px;
+		height: 30px;
+		line-height: 25px;
+		font-size: 14px;
+		margin-right: 1px;
+	}
+}
+@media screen and (max-width: 400px) {
+	.downloadBox {
+		height: 80px;
+	}
+	.downloadBox img {
+		height: 62px;
+		width: 249px;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 9px;
+	}
+	.downloadBtn {
+		width: 74px;
+		height: 30px;
+		line-height: 25px;
+		font-size: 14px;
+		margin-right: 1px;
+	}
+}
+
+
+@media screen and (max-width: 370px) {
+	.downloadBox {
+		height: 80px;
+	}
+	.downloadBox img {
+		height: 55px;
+		width: 225px;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 14px;
+	}
+	.downloadBtn {
+		width: 60px;
+		height: 30px;
+		line-height: 25px;
+		margin-right: 2px;
+		font-size: 14px;
+	}
+}
+@media screen and (max-width: 350px) {
+	
+	.term {
+		margin: 8px auto;
+	}
+	.videos {
+		height: 190px;
+	}
+	.txt {
+		margin-top: 5px;
+	}
+	
+}
+@media screen and (max-width: 320px) {
+	.downloadBox {
+		height: 80px;
+	}
+	.downloadBox img {
+		height: 53px;
+		width: 213px;
+		margin-left: 2px;
+		margin-right: 5px;
+		margin-top: 14px;
+	}
+	.downloadBtn {
+		width: 64px;
+		height: 30px;
+		line-height: 25px;
+		margin-right: 2px;
+		font-size: 12px;
+	}
+	
+}
+
+@media screen and (min-width: 400px) {
+	.videos {
+		margin-top: 5px;
+	}
+}
+ @media screen and (orientation : landscape) {
+ 	.downloadBox {
+ 		height: 50px;
+	}
+	.downloadBox img {
+		height: 40px;
+		width: 180px;
+		margin-left: 2px;
+		margin-right: 5px;
+		margin-top: 3px;
+		
+	}
+	.downloadBtn {
+		width: 64px;
+		height: 30px;
+		line-height: 25px;
+		margin-right: 2px;
+		font-size: 12px;
+		margin-top: 10px;
+		letter-spacing: 7px;
+	}
+ 	}

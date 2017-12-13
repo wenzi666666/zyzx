@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script type="text/javascript" src="/qrcode/utf.js"></script>
-<script type="text/javascript" src="/qrcode/jquery-1.8.0.js"></script>
-<script type="text/javascript" src="/qrcode/jquery.qrcode.js"></script>
+<script type="text/javascript" src="../qrcode/utf.js"></script>
+<script type="text/javascript" src="../qrcode/jquery-1.8.0.js"></script>
+<script type="text/javascript" src="../qrcode/jquery.qrcode.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
         $("#qrcodeCanvas").qrcode({

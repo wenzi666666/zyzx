@@ -1,0 +1,189 @@
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	
+	p {
+		margin: 0px;
+	}
+	
+	body {
+		font: 14px/1.6 "Microsoft Yahei";
+	}
+	
+	
+	.inner {
+		width: 100%;
+		overflow: hidden;
+	}
+	
+	a {
+		text-decoration: none;
+		color: #fff;
+	}
+	
+	button {
+		outline: none;
+	}
+	
+	.logoBox {
+		padding-left: 10px;
+		padding-top: 5px;
+	}
+	
+	.logoBox img {
+		height: 35px;
+	}
+	
+	.logoBox .logoTitle {
+		height: 40px;
+	}
+	
+	.logo {
+		display: block;
+	}
+	
+	.smallClass {
+		color: #fff;
+		float: right;
+		cursor: pointer;
+		text-decoration: underline;
+		margin-right: 15px;
+		margin-top: 15px;
+		font-size: 16px !important;
+	}
+	.teacherInto {
+		display: block;
+		width: 100px;
+		height: 46px;
+		position: absolute;
+		right: 8px;
+		top: 15px;
+		cursor: pointer;
+		background: url(../img/teacherInto.png) no-repeat;
+		background-size: contain;
+		z-index: 5;
+	}
+	
+	
+	.section1_foot {
+		overflow: hidden;
+		margin: 0 auto;
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+	
+	.foot_left a {
+		display: block;
+		border: 2px solid #fff;
+		border-radius: 15px;
+		color: #fff;
+		padding: 5px;
+		padding-left: 35px;
+		width: 150px;
+		margin: 10px auto;
+	}
+	
+	a:hover {
+		color: #fff;
+	}
+	
+	.android {
+		background: url(../img/android.png) 7px center no-repeat;
+		background-size: contain;
+	}
+	
+	.iphone {
+		background: url(../img/ios.png) 7px center no-repeat;
+		background-size: contain;
+	}
+	
+	.foot_left {
+		width: 160px;
+		text-align: center;
+		margin: 0 auto;
+	}
+	
+	.foot_right {
+		height: 200px;
+		width: 200px;
+		display: block;
+		background: #fff;
+		margin: 0 auto;
+	}
+	
+	.foot_right img {
+		width: 100%;
+	}
+	
+	.firstPage {
+		background: #FF9978;
+	}
+	
+	.secondPage {
+		background: #F9BB4E;
+	}
+	
+	.thirdPage {
+		background: #36E8E3;
+	}
+	
+	.fourPage {
+		background: #69BCF4;
+	}
+	
+	.imgAllL {
+		width: 30%;
+		float: left;
+		margin-top: 38px;
+		margin-bottom: 30px;
+		margin-left: 13.1%;
+		margin-right: 13.1%;
+	}
+	
+	.imgAllR {
+		width: 30%;
+		float: left;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	
+	.companyInfo {
+		clear: both;
+		text-align: center;
+		color: #72313E;
+		line-height: 22px;
+		width: 98%;
+		margin: 20px auto;
+	}
+	
+	@media screen and (orientation : landscape) {
+		.smallClass {
+			font-size: 16px !important;
+		}
+		.foot_left a {
+			font-size: 16px !important;
+		}
+		.foot_left {
+			float: right;
+		}
+		.foot_right {
+			float: left;
+			height: 110px;
+			width: 110px;
+		}
+		.section1_foot {
+			width: 300px;
+			margin-bottom: 30px;
+		}
+		.imgAllL {
+			width: 25%;
+			margin-left: 16.2%;
+			margin-right: 16.2%;
+		}
+		.imgAllR {
+			width: 25%;
+			margin-top: 38px;
+			margin-bottom: 30px;
+		}
+	}
