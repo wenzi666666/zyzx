@@ -23,4 +23,10 @@
             update  m_register set userPwd=#{pwd}  where id =#{id} 
        
   </update>
+  
+  
+  <update id="updateUserVIPEnd">
+              UPDATE j_user  set vipEnd = #{vipEnd} where name = #{userName}
+  </update>
+  
 </mapper>

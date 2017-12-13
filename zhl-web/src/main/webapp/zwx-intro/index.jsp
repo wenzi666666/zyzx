@@ -30,13 +30,16 @@ String pwd = (String)request.getAttribute("pwd");
         
         <script type="text/javascript">
         
+            var u = navigator.userAgent;
 	        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
 	        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-	        
 	        if(isAndroid){
 	        	window.location.href="zwx://zwx.tfedu.net/login?username=<%=userName%>&password=<%=pwd%>";
 	        }
-        
+	        if(isiOS){
+                window.location.href="https://itunes.apple.com/app/id1032158173";
+
+            }
         
         </script>
         

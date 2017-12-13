@@ -390,20 +390,15 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		if (relative == null || relative.getId() == 0) {
 			// 注册时，增加前缀
 			String zhl_username = thirdCode + "_" + form.getUserName();
+			form.setUserName(zhl_username);
 
 			// 是否已经注册了
 			Long _tempId = rMapper.getRegisterIdByName(zhl_username);
 
-//			int i = 1;
-			while (_tempId != null && _tempId > 0) {
-				//如果已经注册了，直接返回
-				return _tempId;
-//				
-//				zhl_username = zhl_username + "" + i;
-//				i++;
-//				_tempId = rMapper.getRegisterIdByName(zhl_username);
-			}
 
+			if(null !=  _tempId && _tempId > 0){
+				return _tempId;
+			}
 			
 			
 			//返回学校id

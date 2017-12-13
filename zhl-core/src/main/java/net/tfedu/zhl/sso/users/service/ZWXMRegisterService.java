@@ -1,6 +1,9 @@
 package net.tfedu.zhl.sso.users.service;
 
+import java.text.ParseException;
+
 import net.tfedu.zhl.core.service.BaseService;
+import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
 import net.tfedu.zhl.sso.users.entity.ZWXMRegister;
 
@@ -18,13 +21,14 @@ import net.tfedu.zhl.sso.users.entity.ZWXMRegister;
 public interface ZWXMRegisterService  extends BaseService<ZWXMRegister>{
 	
 	
+	
+	
 	/**
 	 * 同步用户信息到表：m_register
-	 * @param zhlUserId
-	 * @param userDefaultPwd
 	 * @param form
+	 * @param app
 	 */
-	Long syncMRegister(Long zhlUserId,String userDefaultPwd,RegisterAddForm form);
+	Long syncMRegister(RegisterAddForm form,SApp app)throws ParseException;
 	
 	
 
