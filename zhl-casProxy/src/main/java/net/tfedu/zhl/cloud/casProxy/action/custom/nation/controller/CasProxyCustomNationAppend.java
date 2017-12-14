@@ -22,6 +22,7 @@ import net.tfedu.zhl.cloud.casProxy.action.custom.nation.util.NationCasUtil;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
@@ -206,6 +207,8 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		try {
 			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
 			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
+		} catch (OutOfDateException e) {
+			return "redirect:/common/exception/expired.jsp";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CustomException("同步用户信息失败");
