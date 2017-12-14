@@ -380,6 +380,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 
 	@Override
 	public Long registerOrUpdateUserWithThirdPartyApp(RegisterAddForm form, SApp app) throws Exception {
+		
 
 		// 第三方编码为app中的前缀
 		String thirdCode = app.getPrefix();
@@ -435,8 +436,14 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			//返回学校id
 			long schoolId = getSchoolId(form);
 			
+			SRegister s =  rMapper.selectByPrimaryKey(Long.parseLong(relative.getZhlUserid()));
+			
+			//如果用户已经过期了 
+			if(s.getReendtime().before(Calendar.getInstance().getTime())){
+				throw new OutOfDateException();
+			}
+			
 			if(null != form.getNodeId() && form.getNodeId() > 0 ){
-				SRegister s =  rMapper.selectByPrimaryKey(Long.parseLong(relative.getZhlUserid()));
 				
 				if(s.getNodeid().longValue() != form.getNodeId().longValue()){
 					SRegister temp = new SRegister();
@@ -574,10 +581,6 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			}
 			
 			form.setUserName(relative.getZhlUsername());
-			
-			
-			
-			
 			return user.getId();
 		}
 
