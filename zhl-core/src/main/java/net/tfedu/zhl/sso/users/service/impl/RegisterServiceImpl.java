@@ -431,6 +431,15 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 			return userId;
 		} else {
 
+			SRegister s =  rMapper.selectByPrimaryKey(Long.parseLong(relative.getZhlUserid()));
+			//如果用户已经过期了 
+			if(s.getReendtime().before(Calendar.getInstance().getTime())){
+				throw new OutOfDateException();
+			}
+			
+			
+			
+			
 			// 返回学校id
 			long schoolId = getSchoolId(form);
 
