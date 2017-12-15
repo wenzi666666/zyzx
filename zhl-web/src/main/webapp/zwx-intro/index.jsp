@@ -28,20 +28,7 @@ String pwd = (String)request.getAttribute("pwd");
         <input type="hidden" name="userName" id=userName value="${userName} "></input>
         <input type="hidden" name="pwd" id="pwd" value="${pwd} "></input>
         
-        <script type="text/javascript">
-        
-            var u = navigator.userAgent;
-	        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
-	        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-	        if(isAndroid){
-	        	window.location.href="zwx://zwx.tfedu.net/login?username=<%=userName%>&password=<%=pwd%>";
-	        }
-	        if(isiOS){
-                window.location.href="https://itunes.apple.com/app/id1032158173";
 
-            }
-        
-        </script>
         
     </head>
 
@@ -123,12 +110,7 @@ String pwd = (String)request.getAttribute("pwd");
                     <div>
                         <img src="../zwx-intro/img/QRcode.png" id="QRcode" />
                     </div>
-                    <a href="http://a.app.qq.com/o/simple.jsp?pkgname=com.zhl.hometeacher">
-                        <button id="android">Android下载</button>
-                    </a>
-                    <a href="https://itunes.apple.com/cn/app/zhu-wo-xue/id1032158173?mt=8">
-                        <button id="ios">iPhone下载</button>
-                    </a>
+     
                 </div>
                 <div class="gradient"></div>
             </div>
@@ -148,5 +130,25 @@ String pwd = (String)request.getAttribute("pwd");
             </div>
         </div>
     </body>
-
+        <script type="text/javascript">
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+            if(isAndroid){
+                window.location.href="zwx://zwx.tfedu.net/login?username=<%=userName%>&password=<%=pwd%>";
+            }
+            if(isiOS){
+                
+                alert("因为appstore审核应用需要时间，暂不支持IOS端助我学");
+                <%-- 
+                var isSafari =  u.indexOf('Safari') > -1;
+                if(!isSafari){
+                    alert("请使用原生的浏览器打开");
+                }else{
+                  window.location.href="zhuwoxue://tapindata?username=<%=userName%>&password=<%=pwd%>";
+                } --%>
+                  
+            }
+        
+        </script>
 </html>
