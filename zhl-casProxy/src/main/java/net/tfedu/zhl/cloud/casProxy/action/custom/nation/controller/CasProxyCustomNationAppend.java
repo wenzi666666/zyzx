@@ -149,13 +149,15 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		
 		//获取用户名
 		String userName = userInfo.getUserId();
+		String trueName = userInfo.getName();
 		String pwd_str =  zhlApp.getUserdefaultpwd();
 		String additional_key = "9k8i78jug6hd93kjf84h";
 		// page 学生为1 教师为0
 		String page = ("0".equals(userInfo.getDafaultIdentity())) ? "1" : "0";
 
 		String sign = MD5.MD5("user=" + userName + "&pass=" + pwd_str + "&page=" + page + "&key=" + additional_key);
-		String s = "user=" + userName + "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign;
+//		String s = "user=" + userName+ "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign+"&name="+trueName;
+		String s = "user=" + userName+ "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign+"&name="+URLEncoder.encode(trueName, "utf-8");
 
 		byte[] sbytes = xxtea.encrypt(s.getBytes("utf-8"), additional_key.getBytes());
 		s = Base64.encode(sbytes, 0, sbytes.length);

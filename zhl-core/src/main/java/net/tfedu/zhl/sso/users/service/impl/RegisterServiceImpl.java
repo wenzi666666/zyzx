@@ -673,7 +673,7 @@ public class RegisterServiceImpl extends BaseServiceImpl<SRegister> implements R
 		s.setFlag(false);
 		s.setEmail("");
 		s.setName(userName);
-		s.setNodeid(1);
+		s.setNodeid(null!=form.getNodeId()&& form.getNodeId() >0 ?form.getNodeId().intValue():1);
 		s.setRegistertime(date);
 		s.setRoleid(role);
 		s.setPwd(PWDEncrypt.doEncryptByte(default_pwd));
