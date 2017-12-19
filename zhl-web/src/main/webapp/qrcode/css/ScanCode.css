@@ -1,0 +1,238 @@
+.scan {
+    width: 1000px;
+    margin: 0 auto;
+}
+.head {
+    width: 100%;
+    height: 500px;
+    position: relative;
+}
+.bg {
+    width: 100%;
+    height: 100%;
+}
+.btn {
+    display: block;
+    width: 50%;
+    top: 45%;
+    left: 25%;
+    position: absolute;
+    z-index: 2;
+}
+
+.main {
+    width: 55%;
+    margin: 0 auto;
+    margin-top: 280px;
+    overflow: hidden;
+}
+.main img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+}
+.logo {
+    display: block;
+    margin: 0 auto;
+    margin-top: 270px;
+    width: 35%;
+    margin-bottom: 40px;
+}
+@media screen and (max-width: 800px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 450px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 170px;
+    }
+    .logo {
+        margin-top: 217px;
+        margin-bottom: 20px;
+    }
+}
+@media screen and (max-width: 700px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 350px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 170px;
+    }
+    .logo {
+        margin-top: 155px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 600px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 300px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 140px;
+    }
+    .logo {
+        margin-top: 155px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 540px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 270px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 140px;
+    }
+    .logo {
+        margin-top: 130px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 500px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 250px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 140px;
+    }
+    .logo {
+        margin-top: 139px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 480px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 240px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 135px;
+    }
+    .logo {
+        margin-top: 95px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 450px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 220px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 130px;
+    }
+    .logo {
+        margin-top: 95px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 420px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 188px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 125px;
+    }
+    .logo {
+        margin-top: 95px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 375px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 188px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 110px;
+    }
+    .logo {
+        margin-top: 95px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 350px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 175px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 100px;
+    }
+    .logo {
+        margin-top: 95px;
+        margin-bottom: 10px;
+    }
+}
+@media screen and (max-width: 320px) {
+    .scan {
+        width: 100%;
+    }
+    .head {
+        width: 100%;
+        height: 160px;
+        background: url(../img/head.png);
+        position: relative;
+    }
+    .main {
+        margin-top: 100px;
+    }
+    .logo {
+        margin-top: 60px;
+        margin-bottom: 10px;
+    }
+}

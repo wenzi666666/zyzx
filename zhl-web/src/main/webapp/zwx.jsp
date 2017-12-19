@@ -73,10 +73,12 @@
         <div class="firstPage">
             <div class="header">
                 <div class="header-right">
-                    <span>请用手机扫描下列二维码<br>前往登录或下载页面</span>
+                    <span>请用手机的默认浏览器扫描下方二维码</span>
+                    <span>前往登录或下载页面</span>
                     <div>
                         <div id="qrcodeCanvas"></div>
                     </div>
+                    <span>第一次下载安装之后请重复扫码登录</span>
                 </div>
                 <div class="gradient"></div>
             </div>
