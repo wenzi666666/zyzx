@@ -7,7 +7,7 @@ $(".btn").on("click",function(){
     var isWeChat = (u.toLowerCase().match(/MicroMessenger/i) == "micromessenger");
     
     var urlAndroid = "http://zwx.tfedu.net/apk/zwx.apk";
-    var urliOS = "https://appsto.re/cn/DVxH9.i";
+    var urliOS = "https://itunes.apple.com/app/id1032158173";
     var urlWeChat = "http://a.app.qq.com/o/simple.jsp?pkgname=com.zhl.hometeacher&g_f=991653";
     
     if(isAndroid==true)
