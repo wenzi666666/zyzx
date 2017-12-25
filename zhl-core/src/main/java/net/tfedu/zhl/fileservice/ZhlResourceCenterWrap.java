@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.text.html.HTML;
+
 import net.sf.json.JSONObject;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
@@ -233,6 +235,57 @@ public class ZhlResourceCenterWrap {
 			Boolean IsMultiFile) {
 
 		return getWebPlayUrl(resSerUrl, resPath, IsMultiFile, default_diskOrder);
+	}
+	
+	
+	/**
+	 * 判断资源文件是否为html资源
+	 * @param path
+	 * @return
+	 */
+	public static boolean isHTML(String path){
+		if(null == path){
+			return false ; 
+		}
+		
+		if(path.endsWith(".html") || path.endsWith(".htm")){
+			return true ; 
+		}
+		return false ; 
+	}
+	
+	
+	/**
+	 * 返回 资源的播放路径,检查是否为html资源(.htm或.html类型资源，传入用户和产品标识 )
+	 * 
+	 * @param resSerUrl
+	 *            资源服务器的地址
+	 * @return
+	 */
+	public static String getWebPlayUrlWithHTMLCheck(String resSerUrl, String resPath,
+			Boolean IsMultiFile,long userId,String userName) {
+		
+		if(isHTML(resPath)){
+			return getWebPlayUrlWithIdentity(resSerUrl, resPath, IsMultiFile, userId, userName);
+		}
+		
+		return getWebPlayUrl(resSerUrl, resPath, IsMultiFile, default_diskOrder);
+	}
+
+	/**
+	 * 返回 资源的播放路径
+	 * 
+	 * @param resSerUrl  资源服务器的地址
+	 * @param resPath
+	 * @param IsMultiFile
+	 * @param userId
+	 * @param userName
+	 * @return
+	 */
+	public static String getWebPlayUrlWithIdentity(String resSerUrl, String resPath,
+			Boolean IsMultiFile,long userId,String userName) {
+		
+		return getWebPlayUrlWithIdentity(resSerUrl, resPath, IsMultiFile, userId,userName);
 	}
 
 	/**
@@ -661,4 +714,25 @@ public class ZhlResourceCenterWrap {
 	public static String getMutipleResourceZipPath(String ResCode) {
 		return MUTIPLE_FILE_PATH + "\\" + ResCode + ".zip";
 	}
+	
+	
+	/**
+	 * 课程资源中心的编码
+	 */
+	private static final String RESOURCE_PRODUCT_CODE = "kczyzx";
+	
+	public static String GetResourcePlayURLWithIdentity(String resSerUrl,String FileName, Boolean IsMultiFile, long UserId,
+			String UserName){
+		return GetResourcePlayURLWithIdentity(resSerUrl,FileName, IsMultiFile, UserId, RESOURCE_PRODUCT_CODE, UserName);
+	}
+	
+	public static String GetResourcePlayURLWithIdentity(String resSerUrl,String FileName, Boolean IsMultiFile, long UserId, String ProduceCode,
+			String UserName){
+		
+		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl)
+				.GetResourcePlayURLWithIdentity(FileName, IsMultiFile, UserId, ProduceCode, UserName);
+		
+	}
+	
+	
 }

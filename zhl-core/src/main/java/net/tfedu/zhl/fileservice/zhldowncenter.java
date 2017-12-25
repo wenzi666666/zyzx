@@ -62,12 +62,34 @@ public class zhldowncenter {
      *            下载中心地址
      */
     public zhldowncenter(String CustomerID, String CustomerKey, String DownloadCenterURL) {
-        this.CustomerID = CustomerID;
-        this.CustomerKey = CustomerKey;
-        this.DownloadCenterURL = DownloadCenterURL;
-        if (this.DownloadCenterURL.lastIndexOf('/') != this.DownloadCenterURL.length() - 1)
-            this.DownloadCenterURL += "/";
+    	this(CustomerID, CustomerKey, DownloadCenterURL, DownloadCenterURL);
     }
+    
+    /**
+	 * 知好乐流媒体文件编码器
+	 * 
+	 * @author BoatZhang
+	 * @param CustomerID
+	 *            客服服务号码
+	 * @param CustomerKey
+	 *            客服服务密码
+	 * @param ClientFileServerURL
+	 *            文件服务心客户端访问地址
+	 * @param LocalDownloadCenterURL
+	 *            文件服务本地服务器之间访问地址
+	 */
+	public zhldowncenter(String CustomerID, String CustomerKey, String ClientFileServerURL, String LocalFileServerURL) {
+		this.CustomerID = CustomerID;
+		this.CustomerKey = CustomerKey;
+		this.ClientDownloadCenterURL = ClientFileServerURL;
+		if (this.ClientDownloadCenterURL.lastIndexOf('/') != this.ClientDownloadCenterURL.length() - 1)
+			this.ClientDownloadCenterURL += "/";
+
+		this.LocalDownloadCenterURL = LocalFileServerURL;
+		if (this.LocalDownloadCenterURL.lastIndexOf('/') != this.LocalDownloadCenterURL.length() - 1)
+			this.LocalDownloadCenterURL += "/";
+	}
+    
 
     private String appendParam(String returnStr, String paramId, String paramValue) {
         if (!StringUtil.IsNullOrEmpty(returnStr)) {
@@ -85,8 +107,9 @@ public class zhldowncenter {
 
     private String CustomerID;
     private String CustomerKey;
-    private String DownloadCenterURL;
-
+	private String ClientDownloadCenterURL;
+	private String LocalDownloadCenterURL;
+	
     // 请求方法
     private static String GetMethod = "get.do?";
     private static String ApplyMethod = "app.do?";
@@ -381,7 +404,7 @@ public class zhldowncenter {
             String SerialNumber = "";
 
             String ApplySignCode = GetApplySignCode(FileName, CustomerID, CustomerKey);
-            String ApplyURL = DownloadCenterURL + ApplyMethod + GetApplyQueryString(FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
+            String ApplyURL = LocalDownloadCenterURL + ApplyMethod + GetApplyQueryString(FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
             SerialNumber = HttpUtil.PostHttpWebRequest(ApplyURL);
 
             if (SerialNumber.length() > 0) {
@@ -389,9 +412,9 @@ public class zhldowncenter {
 
                 // 测试，全部使用通用请求是否可行
                 if (IsMultiFile)
-                    return DownloadCenterURL + FileType + "/" + GetFilenameSign(SerialNumber, String.valueOf(PlayerType)) + '/' + MainFile;
+                    return ClientDownloadCenterURL + FileType + "/" + GetFilenameSign(SerialNumber, String.valueOf(PlayerType)) + '/' + MainFile;
                 else
-                    return DownloadCenterURL + FileType + "/" + GetFilenameSign(SerialNumber, String.valueOf(PlayerType)) + strExt;
+                    return ClientDownloadCenterURL + FileType + "/" + GetFilenameSign(SerialNumber, String.valueOf(PlayerType)) + strExt;
 
             }
             else
@@ -431,7 +454,7 @@ public class zhldowncenter {
         String SerialNumber = "tfedu";
         String SignCode = GetSignCode(FileName, SerialNumber, CustomerID, CustomerKey);
 
-        Result = DownloadCenterURL + GetMethod;
+        Result = ClientDownloadCenterURL + GetMethod;
         if (IsDown)
             Result += "down=1&";
 
@@ -465,7 +488,7 @@ public class zhldowncenter {
     public boolean TestFileExist(String FileName, int DiskID) {
         String SerialNumber = "tfedu";
         String SignCode = GetSignCode(FileName, SerialNumber, CustomerID, CustomerKey);
-        return "True".equals(HttpUtil.PostHttpWebRequest(DownloadCenterURL + GetMethod + "check=1&disk=" + DiskID + "&" + GetQueryString(FileName, SerialNumber, SignCode, CustomerID)));
+        return "True".equals(HttpUtil.PostHttpWebRequest(LocalDownloadCenterURL + GetMethod + "check=1&disk=" + DiskID + "&" + GetQueryString(FileName, SerialNumber, SignCode, CustomerID)));
     }
 
     /**
@@ -482,7 +505,7 @@ public class zhldowncenter {
         String Result = "";
 
         String ApplySignCode = GetApplySignCode("fileinfo", FileName, CustomerID, CustomerKey);
-        String ApplyURL = DownloadCenterURL + ApplyMethod + GetApplyQueryString("fileinfo", FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
+        String ApplyURL = LocalDownloadCenterURL + ApplyMethod + GetApplyQueryString("fileinfo", FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
         Result = HttpUtil.PostHttpWebRequest(ApplyURL);
 
         return Result;
@@ -499,17 +522,33 @@ public class zhldowncenter {
     }
 
     public String GetResourcePlayURL(String FileName, Boolean IsMultiFile, int DiskID) {
-        String SerialNumber;
-
-        String ApplySignCode = GetApplySignCode(FileName, CustomerID, CustomerKey);
-        String ApplyURL = DownloadCenterURL + ApplyMethod + GetApplyQueryString(FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
-        SerialNumber = HttpUtil.PostHttpWebRequest(ApplyURL);
-
-        if (IsMultiFile)
-            return DownloadCenterURL + PlayerPage + "uid=" + CustomerID + "&sn=" + SerialNumber + "&multi=1";
-        else
-            return DownloadCenterURL + PlayerPage + "uid=" + CustomerID + "&sn=" + SerialNumber + "&multi=0";
+        
+    	return GetResourcePlayURL(FileName, IsMultiFile, DiskID, null);
     }
+    
+	public String GetResourcePlayURL(String FileName, Boolean IsMultiFile, int DiskID, String Params) {
+		String SerialNumber;
+
+		String ApplySignCode = GetApplySignCode(FileName, CustomerID, CustomerKey);
+		String ApplyURL = LocalDownloadCenterURL + ApplyMethod
+				+ GetApplyQueryString(FileName, ApplySignCode, CustomerID) + "&disk=" + DiskID;
+		SerialNumber = HttpUtil.PostHttpWebRequest(ApplyURL);
+
+		String result;
+		if (IsMultiFile)
+			result = ClientDownloadCenterURL + PlayerPage + "uid=" + CustomerID + "&sn=" + SerialNumber + "&multi=1";
+		else
+			result = ClientDownloadCenterURL + PlayerPage + "uid=" + CustomerID + "&sn=" + SerialNumber + "&multi=0";
+
+		if (Params != null && Params.length() > 0)
+			try {
+				result += "&params=" + URLEncoder.encode(Params, "utf-8");
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+
+		return result;
+	}
 
     /**
      * 获取资源播放地址
@@ -538,7 +577,7 @@ public class zhldowncenter {
     public String GetExePackageURL(String FileName, String FilePath, int DiskID) {
         String sign = GetApplySignCode("exepackage", FileName, CustomerID, CustomerKey);
         try {
-            return DownloadCenterURL + ApplyMethod + GetApplyQueryString("exepackage", FileName, sign, CustomerID) + "&path=" + URLEncoder.encode(FilePath, "utf-8") + "&disk=" + DiskID;
+            return ClientDownloadCenterURL + ApplyMethod + GetApplyQueryString("exepackage", FileName, sign, CustomerID) + "&path=" + URLEncoder.encode(FilePath, "utf-8") + "&disk=" + DiskID;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -565,7 +604,7 @@ public class zhldowncenter {
         String zipcontent = JSONObject.toJSONString(Content);
 
         // Post方式将请求（XML格式）发送到服务器，获取返回XML
-        String ApplyURL = DownloadCenterURL + ZipMethod;
+        String ApplyURL = LocalDownloadCenterURL + ZipMethod;
         String strResult = PostHttpWebRequest(ApplyURL, zipcontent);
         LastError = strResult;
 
@@ -578,7 +617,7 @@ public class zhldowncenter {
         // 获取序列号，序列号20分钟（默认）内使用有效
 
         String ApplySignCode = GetApplySignCode(FilePath, CustomerID, CustomerKey);
-        String ApplyURL = DownloadCenterURL + ApplyMethod + GetApplyQueryString(FilePath, ApplySignCode, CustomerID);
+        String ApplyURL = LocalDownloadCenterURL + ApplyMethod + GetApplyQueryString(FilePath, ApplySignCode, CustomerID);
         SerialNumber = HttpUtil.PostHttpWebRequest(ApplyURL);
 
         if (SerialNumber.length() > 0) {
@@ -596,7 +635,7 @@ public class zhldowncenter {
     }
 
     public String GetUploadURLString(String FilePath, String Extend, String ReturnURL) {
-        return GetUploadURLString(FilePath, DownloadCenterURL, Extend, ReturnURL);
+        return GetUploadURLString(FilePath, ClientDownloadCenterURL, Extend, ReturnURL);
     }
 
     /**
@@ -619,7 +658,7 @@ public class zhldowncenter {
         String content = JSONObject.toJSONString(operate);
 
         // Post方式将请求（XML格式）发送到服务器，获取返回XML
-        String ApplyURL = DownloadCenterURL + FileMethod;
+        String ApplyURL = LocalDownloadCenterURL + FileMethod;
         String strResult = PostHttpWebRequest(ApplyURL, content);
         LastError = strResult;
 
@@ -630,7 +669,7 @@ public class zhldowncenter {
         String sign = GetApplySignCode("convert", FileName, CustomerID, CustomerKey);
         String ApplyURL;
         try {
-            ApplyURL = DownloadCenterURL + ApplyMethod + GetApplyQueryString("convert", FileName, sign, CustomerID) + "&ext=" + URLEncoder.encode(Base64.encode(Extend.getBytes("utf-8")), "utf-8")
+            ApplyURL = LocalDownloadCenterURL + ApplyMethod + GetApplyQueryString("convert", FileName, sign, CustomerID) + "&ext=" + URLEncoder.encode(Base64.encode(Extend.getBytes("utf-8")), "utf-8")
                     + "&ret=" + URLEncoder.encode(ReturnURL, "utf-8");
 
             String strResult = HttpUtil.PostHttpWebRequest(ApplyURL);
@@ -683,7 +722,7 @@ public class zhldowncenter {
         String sign = GetApplySignCode("onlypackage", FileName, CustomerID, CustomerKey);
 
         try {
-            return DownloadCenterURL + ApplyMethod + GetApplyQueryString("onlypackage", FileName, sign, CustomerID) + "&path=" + (FilePath == null ? "" : URLEncoder.encode(FilePath, "utf-8"));
+            return ClientDownloadCenterURL + ApplyMethod + GetApplyQueryString("onlypackage", FileName, sign, CustomerID) + "&path=" + (FilePath == null ? "" : URLEncoder.encode(FilePath, "utf-8"));
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -715,7 +754,7 @@ public class zhldowncenter {
 		String sign = GetApplySignCode("flashpackage", FileName, CustomerID,
 				CustomerKey);
 		try {
-			return DownloadCenterURL
+			return ClientDownloadCenterURL
 					+ ApplyMethod
 					+ GetApplyQueryString("flashpackage", FileName, sign,
 							CustomerID) + "&title="
@@ -743,7 +782,7 @@ public class zhldowncenter {
 		String sign = GetApplySignCode("mp4package", FileName, CustomerID,
 				CustomerKey);
 		try {
-			return DownloadCenterURL
+			return ClientDownloadCenterURL
 					+ ApplyMethod
 					+ GetApplyQueryString("mp4package", FileName, sign,
 							CustomerID) + "&title="
@@ -767,7 +806,7 @@ public class zhldowncenter {
 		String sign = GetApplySignCode("mp4package", FileName, CustomerID,
 				CustomerKey);
 		try {
-			return DownloadCenterURL
+			return ClientDownloadCenterURL
 					+ ApplyMethod
 					+ GetApplyQueryString("mp4package", FileName, sign,
 							CustomerID) + "&title="
@@ -791,6 +830,27 @@ public class zhldowncenter {
 		
 	}
     
+	
+	/**
+	 * 获取资源播放地址，附带用户身份信息
+	 * 
+	 * @param FileName
+	 *            资源文件路径
+	 * @param IsMultiFile
+	 *            是否为多文件
+	 * @param UserId
+	 *            唯一用户ID
+	 * @param ProduceCode
+	 *            产品代码（每个产品一个产品代码，不要混用）
+	 * @param UserName
+	 *            唯一用户名
+	 * @return
+	 */
+	public String GetResourcePlayURLWithIdentity(String FileName, Boolean IsMultiFile, long UserId, String ProduceCode,
+			String UserName) {
+		return GetResourcePlayURL(FileName, IsMultiFile, 1,
+				"userid=" + String.valueOf(UserId) + "&prdcode=" + ProduceCode + "&username=" + UserName);
+	}
     
 
     public static void main(String[] args) {
@@ -800,16 +860,15 @@ public class zhldowncenter {
         String CustomerKey = "JWJ83OPR0985LJL";
 
         // 用客户信息和资源服务器地址初始化接口类实例
-        zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey, "http://219.239.146.213/down");
+        zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey, "http://192.168.111.5/down");
 
-        String url = down.InvokeExePackageTaskURL("test\\wt.mp4", null);
-        System.out.println(url);
-        String result = HttpUtil.PostHttpWebRequest(url);
-        result = result.replace("\\", "\\\\");
-        HashMap obj = JSONObject.parseObject(result, HashMap.class);
 
-        System.out.println(obj.toString());
-        System.out.println(obj.get("filename"));
+        
+		String playurl = down.GetResourcePlayURLWithIdentity("test\\搭配\\index.html", true, 12345, "sktjxpt", "boatzhang");
+		System.out.println(playurl);
+        
+        
+        
 
         // zhldowncenter down = new zhldowncenter(CustomerID, CustomerKey,
         // "http://192.168.111.22:8099/down/");

@@ -184,8 +184,11 @@ public class JPrepareConstant {
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径
      * 
+     * 使用 resetResourceViewUrlNew替换
+     * 
      * @param list
      */
+    @Deprecated
     public static void resetResourceViewUrl(List<ResourceSimpleInfo> list, String resServiceLocal,
             String currentResService,Boolean isEprepare) {
 
@@ -198,6 +201,26 @@ public class JPrepareConstant {
 		}
     	
 
+    }
+    /**
+     * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径，并为
+     * @param list
+     * @param resServiceLocal
+     * @param currentResService
+     * @param isEprepare
+     */
+    public static void resetResourceViewUrlWithIndentity(List<ResourceSimpleInfo> list, String resServiceLocal,
+    		String currentResService,Boolean isEprepare,long userId,String userName) {
+    	
+    	
+    	for (ResourceSimpleInfo resourceSimpleInfo : list) {
+    		if(null == resourceSimpleInfo){
+    			continue;
+    		}
+    		resetResourceViewUrlWithIndentity(resourceSimpleInfo, resServiceLocal, currentResService,isEprepare,userId,userName);
+    	}
+    	
+    	
     }
 
     /**
@@ -213,6 +236,19 @@ public class JPrepareConstant {
     
     
     
+    
+    /**
+     * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径
+     * 
+     * 自建资源、区本、校本 播放原文件或转码后的文件
+     * 
+     * 资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
+     * @param info
+     */
+    @Deprecated
+    public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare) {
+    	resetResourceViewUrlWithIndentity(info, resServiceLocal, currentResService, isEprepare,0,null);
+    }
 
     /**
      * 将 ResourceSimpleInfo 中的path（主文件路径） 切换为 资源的播放路径
@@ -222,7 +258,8 @@ public class JPrepareConstant {
      * 资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
      * @param info
      */
-    public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare) {
+    public static void resetResourceViewUrlWithIndentity(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare
+    		,long userId,String userName) {
 
 //        String rescode = info.getRescode();
         //资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
@@ -265,7 +302,7 @@ public class JPrepareConstant {
     	        path = 
     	        		isEprepare
     	        		?ZhlResourceCenterWrap.getWebPlayUrl_EPREPARE(resServiceLocal, path, isdwj)
-    	        		:ZhlResourceCenterWrap.getWebPlayUrl(resServiceLocal, path, isdwj);
+    	        		:ZhlResourceCenterWrap.getWebPlayUrlWithHTMLCheck(resServiceLocal, path, isdwj,userId,userName);
     		}
             
 

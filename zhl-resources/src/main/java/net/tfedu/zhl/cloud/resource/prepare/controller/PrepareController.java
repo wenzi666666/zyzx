@@ -822,6 +822,10 @@ public class PrepareController {
 	@ResponseBody
 	public ResultJSON getResViewUrl(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
+		
+		
+		
 		String resIds = request.getParameter("resIds");
 		String fromFlags = request.getParameter("fromFlags");
 
@@ -832,6 +836,7 @@ public class PrepareController {
 
 		// 当前登录用户id
 		Long currentUserId = (Long) request.getAttribute("currentUserId");
+		String currentUserName =  (String) request.getAttribute("currentUserName");
 		// 返回
 		Object data = null;
 
@@ -851,8 +856,8 @@ public class PrepareController {
 								currentUserId);
 				// 将原始的path重置为可用的web链接
 
-				JPrepareConstant.resetResourceViewUrl(list, resServiceLocal,
-						currentResPath,"ePrepareClient".equalsIgnoreCase(clientType));
+				JPrepareConstant.resetResourceViewUrlWithIndentity(list, resServiceLocal,
+						currentResPath,"ePrepareClient".equalsIgnoreCase(clientType),currentUserId,currentUserName);
 				data = list;
 			}
 		}
