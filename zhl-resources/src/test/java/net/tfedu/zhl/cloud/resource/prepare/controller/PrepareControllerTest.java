@@ -142,8 +142,8 @@ public class PrepareControllerTest extends BaseControllerTestCase {
  
     @Test
     public void testgetViewUrl() throws Exception {
-        request.addParameter("resIds", "181110105");
-        request.addParameter("fromFlags", "0");
+        request.addParameter("resIds", "392771,169295");
+        request.addParameter("fromFlags", "0,0");
 //        request.addParameter("clientType", "ePrepareClient");
 //        request.addParameter("resIds", "870142");
 //        request.addParameter("fromFlags", "4");
@@ -154,9 +154,9 @@ public class PrepareControllerTest extends BaseControllerTestCase {
         
         result = controller.getResViewUrl(request, response);
         log.info(JSONObject.toJSONString(result));
-        request.addParameter("clientType", "ePrepareClient");
-        result = controller.getResViewUrl(request, response);
-        log.info(JSONObject.toJSONString(result));
+//        request.addParameter("clientType", "ePrepareClient");
+//        result = controller.getResViewUrl(request, response);
+//        log.info(JSONObject.toJSONString(result));
 
         
         

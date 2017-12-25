@@ -284,8 +284,7 @@ public class ZhlResourceCenterWrap {
 	 */
 	public static String getWebPlayUrlWithIdentity(String resSerUrl, String resPath,
 			Boolean IsMultiFile,long userId,String userName) {
-		
-		return getWebPlayUrlWithIdentity(resSerUrl, resPath, IsMultiFile, userId,userName);
+		return  GetResourcePlayURLWithIdentity(resSerUrl, resPath, IsMultiFile, userId, userName);
 	}
 
 	/**
