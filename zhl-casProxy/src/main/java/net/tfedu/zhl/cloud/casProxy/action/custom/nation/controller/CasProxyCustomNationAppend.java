@@ -76,6 +76,9 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	
 	@Resource
 	ZWXMRegisterService mRegisterService;
+	
+	long nodeId_JX = 1700105;
+
 
 	/**
 	 * 获取app
@@ -147,6 +150,26 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		//获取央馆的用户信息
 		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
 		
+		// 同步用户信息
+		try {
+			//将央馆的信息格式化为注册form表单
+			RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
+					DISTRICT_NAME,SCHOOL_NAME);
+
+			//设置jx的节点号
+			form.setNodeId(nodeId_JX);
+
+			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
+			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
+			
+		} catch (OutOfDateException e) {
+			return "redirect:/common/exception/expired.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException("同步用户信息失败");
+		}
+		
+		
 		//获取用户名
 		String userName = userInfo.getUserId();
 		String trueName = userInfo.getName();
@@ -183,7 +206,6 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	public String loginYun(String ticket, String sysCode, HttpServletRequest request, HttpServletResponse response)
 			throws CustomException, Exception {
 
-		long nodeId_JX = 1700105;
 		
 		
 		SApp zhlApp = getApp();
@@ -226,7 +248,7 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	}
 	
 	/**
-	 * 登录云平台接口
+	 * 登录
 	 * 
 	 * @param request
 	 * @param response
@@ -255,6 +277,24 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		
 		//设为学生
 		form.setRole(1L);
+		
+		// 同步用户信息
+		try {
+
+			//设置jx的节点号
+			form.setNodeId(nodeId_JX);
+
+			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
+			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
+			
+		} catch (OutOfDateException e) {
+			return "redirect:/common/exception/expired.jsp";
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CustomException("同步用户信息失败");
+		}
+				
+		
 		
 		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
 		
