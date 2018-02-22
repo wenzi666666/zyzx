@@ -37,7 +37,7 @@
 		select distinct
 		a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname)
 		fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize
-		,p.clicktimes as ClickTimes,p.downloadTimes as DloadTimes,a.speaker,
+		,ifnull(p.clicktimes,0) as ClickTimes,ifnull(p.downloadTimes,0) as DloadTimes,a.speaker,
 		m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))
 		as FileExt,a.resolution,1
 		diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
