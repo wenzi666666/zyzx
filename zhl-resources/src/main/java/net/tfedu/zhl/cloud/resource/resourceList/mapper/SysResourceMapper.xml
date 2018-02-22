@@ -52,7 +52,7 @@
 		and jf.flag = 0
 		left join z_resnav c on a.ResCode=c.ResCode
 		left join j_syscourse d on c.StructCode=d.TFcode
-		left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code
+		left join z_res_medium m on a.id = m.res_Id or a.Rescode = m.res_code
 		LEFT JOIN z_res_disk k on k.rescode = a.rescode
 		LEFT JOIN z_resource_operate_times p on a.rescode = p.rescode
 		where a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in
