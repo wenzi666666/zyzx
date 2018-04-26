@@ -107,7 +107,7 @@
 				<version>${teaching-version}</version>
             </properties>  
 			<activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>          
 		</profile>
 	
@@ -120,7 +120,7 @@
 				<version>${teaching-version}</version>
             </properties>  
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
 	
