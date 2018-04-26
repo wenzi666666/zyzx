@@ -203,7 +203,33 @@ public class CasProxyCustomNation extends CasProxyCustomBase {
 	
 	
 
-	
+	public static void main(String args[]){
+		
+		String oldUserId = "5bdd4e6adbb643d39d4e6adbb6b3d3c9";
+		
+		String userName = oldUserId;
+
+		String thirdCode = "nationWeb";
+		
+		String appKey = "258b4c9c4c90";
+		
+		int appid = 901717;
+
+		long timestamp = Calendar.getInstance().getTimeInMillis();
+
+		String sign = SignUtil.createSignMap(new String[] { "userName", "dockingCode", "appId", "timestamp" },
+				new String[] { userName, thirdCode, String.valueOf(appid), String.valueOf(timestamp) },
+				appKey);
+
+		// 举例：
+		// http://192.168.111.204:8880/resRestAPI/thirdparty/autoLoginDocking
+		String _url = "http://101.201.54.27:8080/resRestAPI/thirdparty/autoLoginDocking" + "?userName=" + userName + "&dockingCode=" + thirdCode
+				+ "&appId=" + appid + "&timestamp=" + timestamp + "&sign=" + sign;
+		System.out.println("------casProxy-------url------:" + _url);
+		
+		
+		
+	}
 	
 	
 	
