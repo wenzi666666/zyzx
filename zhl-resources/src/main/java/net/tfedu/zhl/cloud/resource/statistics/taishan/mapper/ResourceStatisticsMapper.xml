@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+	namespace="net.tfedu.zhl.cloud.resource.statistics.taishan.dao.ResourceStatisticsMapper">
+
+	<!-- 1资源动态 资源上传\资源共享，取最新的三条 -->
+	<select id="getResDynamic" resultType="Map">
+
+		SELECT * FROM (
+		SELECT 'asset' as logtypcode,'create' as
+		opertypecode,a.id,t.userid,t.truename,a.name,a.createtime FROM z_ASset
+		a
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid ,u.TrueName FROM j_user u
+		RIGHT JOIN j_school s on s.id = u.SchoolId
+		WHERE u.flag = false AND
+		s.flag = false
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+		AND u.id > 0
+		) t on a.UserId = t.userid
+		WHERE a.flag = false and
+		a.fileType='A'
+		UNION
+		SELECT 'asset' as logtypcode,'share' as
+		opertypecode,e.id,t2.userid,t2.truename,e.name,r.createtime FROM
+		x_platform_share r
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid
+		,u.TrueName FROM j_user u
+		RIGHT JOIN j_school s on s.id = u.SchoolId
+		WHERE u.flag = false AND s.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+
+		AND u.id > 0
+		) t2 on r.UserId = t2.userid
+		LEFT JOIN z_ASset e on (e.id =
+		r.shareId AND r.sharedType = 1 )
+		WHERE r.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND r.scope ='D'
+			</when>
+			<when test='scope=="D"'>
+				AND r.scope ='C'
+			</when>
+		</choose>
+		)temp_table ORDER BY createtime DESC limit 0,#{number}
+	</select>
+	<!-- 2精品系統资源 按引用次数 排序 -->
+	<select id="getBastSysRes" resultType="Map">
+		SELECT * FROM (
+		SELECT
+		'sysres' AS resType,
+		r.id,r.rescode,r.title,r.FPath,r.fname,r.isDWJ,r.FileExt,1 as fromflag
+		,ttt.downloadtimes,ttt.clicktimes,ttt.collecttimes,m.res_time as
+		restime FROM (
+		SELECT rescode,downloadtimes,clicktimes,collecttimes
+		,(downloadtimes+clicktimes+collecttimes ) alltimes
+		FROM
+		z_resource_operate_times
+		ORDER BY alltimes DESC LIMIT 0,#{number}
+		)ttt
+		LEFT JOIN z_resource r on r.ResCode = ttt.rescode
+		LEFT JOIN
+		z_res_medium m on r.ResCode = m.res_code
+		WHERE r.flag = false
+		)mytempt
+	</select>
+	<!-- 3精品（区）校本资源 按引用次数 排序 -->
+	<select id="getBastScopeRes" resultType="Map">
+
+		SELECT * from (
+		SELECT IF(3=FROMflag,'schoolres','districtres') AS
+		restype,
+		id,rescode,title,fpath,fname,REVERSE(LEFT(REVERSE(Fname),LOCATE('.',REVERSE(Fname))))
+		AS FileExt,isDWJ,fromflag
+		,ClickTimes as clicktimes, DLoadTimes as
+		downloadtimes, SCTimes as collecttimes ,
+		'' as restime
+		FROM
+		z_districts_resource
+
+		<if test='scope == "S" or scope == "D"'>
+
+			WHERE
+			<choose>
+				<when test='scope=="S"'>
+					scope =5
+				</when>
+				<when test='scope=="D"'>
+					scope =4
+				</when>
+			</choose>
+			AND scopeid = #{scopeId}
+			AND State = 6 and flag = false
+
+		</if>
+		ORDER BY (ClickTimes+DLoadTimes+SCTimes) DESC LIMIT 0,#{number}
+		)tt
+	</select>
+
+	<!-- 4资源最新上传（按区或校） -->
+	<select id="getLastAsset" resultType="Map">
+		SELECT * from (
+		SELECT 'asset' as restype,0 as
+		fromflag,a.id,t.userid,t.truename,t.schoolname,a.name,a.createtime,a.islocal
+		,a.AssetPath,IF(IsLocal=1,'.html',REVERSE(LEFT(REVERSE(AssetPath),LOCATE('.',REVERSE(AssetPath)))))
+		AS FileExt
+		FROM z_ASset a
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid
+		,u.TrueName,s.name as schoolName FROM j_user
+		u
+		RIGHT JOIN j_school s on
+		s.id = u.SchoolId
+		WHERE u.flag = false AND s.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+
+		AND u.id > 0
+		) t on a.UserId = t.userid
+		WHERE a.flag = false and
+		a.fileType='A'
+		ORDER BY createtime desc limit 0,#{number}
+		)tt
+
+	</select>
+	<!-- 5、上传资源总量（按校） 指定范围内的全部学校的上传总量的统计 -->
+	<select id="getSchoolAssetStatistics" resultType="Map">
+		SELECT * from (
+		SELECT t.schoolid,t.schoolname,count(1) AS uploads
+		FROM
+		z_ASset a
+		RIGHT JOIN
+		(
+		SELECT DISTINCT u.id AS userid,u.schoolid,s.name
+		AS schoolname FROM j_user u
+		RIGHT JOIN j_school s on s.id = u.SchoolId
+		WHERE u.flag = false AND s.flag = false
+
+		<choose>
+			<when test='scope=="S"'>
+				AND s.id =#{scopeId}
+			</when>
+			<when test='scope=="D"'>
+				AND s.districtId =#{scopeId}
+			</when>
+		</choose>
+		AND u.id > 0
+		) t on a.UserId = t.userid
+		WHERE a.flag = false AND
+		a.fileType='A'
+		GROUP BY schoolid
+		)tt
+	</select>
+
+	<!-- 6、指定学校的校本资源总量 -->
+	<select id="getAllSchoolResCount" resultType="Map">
+		SELECT * from (
+		SELECT count(1) AS allSchoolResCount FROM z_districts_resource t
+		WHERE
+		t.flag = false AND t.State = 6
+		AND t.FROMFlag = 3 AND Scope = 5 AND
+		ScopeId = #{schoolId}
+		)tt
+	</select>
+	<!--6 指定学校的本周和月更新资源（校本+共享） -->
+	<select id="getSchoolUpdateCountForTime" resultType="Map">
+		SELECT * from (
+		SELECT
+		(SELECT count(1) AS num FROM z_districts_resource
+		t
+		WHERE t.flag = false
+		AND t.State = 6
+		AND t.FROMFlag = 3
+		AND Scope = 5
+		AND ScopeId =#{schoolId}
+		<if test="timeDesc!=null and timeDesc!=''">
+	    <![CDATA[  and  DATE_FORMAT(CreateDT, '%Y-%m-%d %H:%m:%s')>  DATE_FORMAT(#{timeDesc}, '%Y-%m-%d %H:%m:%s')   ]]>
+		</if>
+		)
+		+(
+		SELECT
+		count(DISTINCT a.id ) AS num
+		FROM
+		x_platform_share x
+		LEFT JOIN
+		z_ASset a on x.shareId = a.Id
+		WHERE
+		x.flag = FALSE
+		AND x.sharedType = 1
+		AND x.scope = 'D'
+		AND x.scopeId = #{schoolId}
+		AND a.Flag = false
+		<if test="timeDesc!=null and timeDesc!=''">
+	    <![CDATA[  and  DATE_FORMAT(x.createTime, '%Y-%m-%d %H:%m:%s')>  DATE_FORMAT(#{timeDesc}, '%Y-%m-%d %H:%m:%s')   ]]>
+		</if>
+		) AS updatenum
+		FROM DUAL
+		)tt
+	</select>
+	<!-- 7资源达人（学校中按人排序，最少三人） -->
+	<select id="getSchoolUploadTop" resultType="Map">
+		SELECT *
+		FROM(
+		SELECT
+		u.id,u.id as userid,u.name,u.truename,count(a.id) AS
+		resnum FROM
+		j_user
+		u
+		LEFT JOIN z_ASset a on a.userid = u.id
+		WHERE u.flag
+		= false AND
+		u.SchoolId = #{schoolId}
+		GROUP BY u.id
+		) tt
+		ORDER BY resnum
+		DESC LIMIT
+		#{number}
+	</select>
+	<!-- 8指定班级浏览资源次数 -->
+	<select id="getGradeClickTop" resultType="Map">
+		SELECT * FROM(
+		SELECT userid,count(1)number FROM `j_userlog`
+		WHERE flag
+		= false
+		<if test="startTime!=null and startTime!=''">
+	    <![CDATA[  and  DATE_FORMAT(createtime, '%Y-%m-%d %H:%m:%s')>  DATE_FORMAT(#{startTime}, '%Y-%m-%d %H:%m:%s')   ]]>
+		</if>
+		<if test="endTime!=null and endTime!=''">
+	    <![CDATA[  and  DATE_FORMAT(createtime, '%Y-%m-%d %H:%m:%s')<  DATE_FORMAT(#{endTime}, '%Y-%m-%d %H:%m:%s')   ]]>
+		</if>
+		AND userid IN (#{userIds}) AND opertypecode = 'view'
+		GROUP BY userid
+		)
+		tt
+	</select>
+	<!-- 9班级浏览资源日志 -->
+	<select id="getGradeClickLog" resultType="Map">
+		SELECT * FROM (
+		SELECT
+		userid,
+		'res' AS logtypecode,
+		opertypecode,
+		objname AS NAME,
+		createtime
+		FROM
+		`j_userlog`
+		WHERE
+		flag = FALSE
+		AND opertypecode = 'view'
+		AND userid IN (#{userIds})
+		ORDER BY
+		createtime DESC
+		LIMIT #{number}
+		)ttt
+	</select>
+</mapper>
