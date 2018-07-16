@@ -281,6 +281,14 @@ public interface ZAssetMapper extends CoreMapper<ZAsset> {
 	 * @param obj
 	 */
 	public void updateTeachingPlan(@Param("obj")TeachingPlan obj);
+
+	
+	/**
+ 	 * 根据学校id 统计上传信息：全部上传、今日上传
+	 * @param schoolIds
+	 * @return
+	 */
+	public Map<String, Object> statisticsSchoolUpload(@Param("schoolIds")String[] schoolIds);
 	
 	
 	

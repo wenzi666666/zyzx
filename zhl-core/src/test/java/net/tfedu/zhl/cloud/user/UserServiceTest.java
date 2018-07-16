@@ -5,13 +5,13 @@ package net.tfedu.zhl.cloud.user;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.JUserService;
+
 import org.junit.Test;
 import org.springframework.util.Assert;
-
-import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.userlayer.user.entity.JUser;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
-import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * @author wangwr

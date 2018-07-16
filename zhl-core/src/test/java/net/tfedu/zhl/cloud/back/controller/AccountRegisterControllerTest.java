@@ -15,9 +15,9 @@ import com.alibaba.fastjson.JSONObject;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
+import net.tfedu.zhl.sso.user.entity.UserEditForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryForm;
 import net.tfedu.zhl.sso.users.util.CardExcelForm;
-import net.tfedu.zhl.userlayer.user.entity.UserEditForm;
-import net.tfedu.zhl.userlayer.user.entity.UserQueryForm;
 
 /**
  

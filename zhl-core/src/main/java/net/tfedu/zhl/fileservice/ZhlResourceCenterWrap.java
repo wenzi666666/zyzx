@@ -2,8 +2,11 @@ package net.tfedu.zhl.fileservice;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
 import net.tfedu.zhl.core.exception.CustomException;
 /**
  * 访问IIS文件服务器的工具类
@@ -83,7 +86,11 @@ public class ZhlResourceCenterWrap {
 
 	public static final int default_diskOrder = 1;
 	
-	
+	/**
+	 * 多文件打包zip包所在目录
+	 */
+	public static final String MUTIPLE_FILE_PATH = "MultiZIP";
+
 	
 	/**
 	 * 打包文件路径前缀
@@ -106,7 +113,6 @@ public class ZhlResourceCenterWrap {
 	 * 
 	 */
 	public static final String userimage_upload_prefix = "userimage_warehouse";
-	public static final String userimage_upload_prefix_default = "person";
 	
 	
 	
@@ -242,13 +248,11 @@ public class ZhlResourceCenterWrap {
 	}
 
 	/**
+	 * 返回 上传的url
 	 * 
-	 * 获取指定上传路径的上传URL
-	 * 
-	 * @param resSerUrl   	
-	 * 						文件服务器的访问地址（局域网内都是内网地址，等页面中使用时 需要相应替换为外网地址） 
+	 * @param resSerUrl
 	 * @param uploadPath
-	 *            			指定的上传路径
+	 *            指定的上传路径
 	 * @return
 	 */
 	public static String getUploadUrl(String resSerUrl, String uploadPath) {
@@ -598,7 +602,63 @@ public class ZhlResourceCenterWrap {
 		
 	}
 
-
-
+	/**
+	 * （通过GetFileInfo接口）判断指定文件是否存在
+	 * @param resServiceLocal
+	 * @param filePath
+	 * @return
+	 */
+	public static boolean isFileExist(String resServiceLocal,String filePath){
+		// 判断是否存在
+        String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, filePath);
+        if (StringUtils.isNotEmpty(s)) {
+            HashMap m = (HashMap)JSONObject.toBean(JSONObject.fromObject(s), HashMap.class);
+            if (m != null && ((Integer) m.get("FileSize") > 0)) {
+            	return true ;
+            }
+        } 
+        
+        return false ;
+	}
 	
+
+	/**
+	 * 获取教材的封面
+	 * 
+	 * @param ebookpath
+	 * @param tfcode
+	 * @return
+	 */
+	public static String getEBOOkImagePath(String ebookpath, String tfcode,
+			String resSerUrl, String currentResService) {
+
+		String imgpath = ebookpath + "/" + tfcode + ".jpg";
+		String info = GetFileInfo(resSerUrl, imgpath);
+
+		if (info != null && info.trim().length() > 0) {
+
+			HashMap m = (HashMap) JSONObject.toBean(
+					JSONObject.fromObject(info), HashMap.class);
+			if (m != null && ((Integer) m.get("FileSize") > 0)) {
+				// 获取封面的地址（内网）
+				return ZhlResourceCenterWrap
+						.getWebThumbnail(resSerUrl, imgpath).replace(resSerUrl,
+								currentResService);
+			}
+		}
+
+		return "";
+	}
+	
+	
+	
+	/**
+	 * 获取指定资源的路径
+	 * 
+	 * @param ResCode
+	 * @return
+	 */
+	public static String getMutipleResourceZipPath(String ResCode) {
+		return MUTIPLE_FILE_PATH + "\\" + ResCode + ".zip";
+	}
 }

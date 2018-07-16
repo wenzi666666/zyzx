@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 @Service("zAssetService")
 public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAssetService {
@@ -1101,6 +1102,18 @@ public class ZAssetServiceImpl  extends BaseServiceImpl<ZAsset> implements ZAsse
 	@Override
 	public void updateAssetPath(String path, String newPath) {
 		assetMapper.updateAssetPath(path, newPath);
+	}
+
+
+
+
+	@Override
+	public Map<String, Object> statisticsSchoolUpload(String[] schoolIds) {
+		if(schoolIds == null || schoolIds.length==0){
+			return null;
+		}
+		
+		return assetMapper.statisticsSchoolUpload(schoolIds);
 	}
 }
 

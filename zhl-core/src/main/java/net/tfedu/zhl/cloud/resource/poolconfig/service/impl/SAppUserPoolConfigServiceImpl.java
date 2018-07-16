@@ -23,9 +23,9 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.userlayer.funclist.entity.FuncListSimple;
-import net.tfedu.zhl.userlayer.term.dao.JTermMapper;
-import net.tfedu.zhl.userlayer.term.entity.JTerm;
+import net.tfedu.zhl.sso.term.dao.JTermMapper;
+import net.tfedu.zhl.sso.term.entity.JTerm;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 import tk.mybatis.mapper.entity.Example;
 
 /**

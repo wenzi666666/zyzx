@@ -1,6 +1,7 @@
 package net.tfedu.zhl.cloud.resource.poolTypeFormat.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
@@ -111,4 +112,15 @@ public interface ResTypeMapper extends CoreMapper<ResType> {
      * 自建资源 ： 查询全部类型
      */
     public List<FirstLevelResType> getAllResType();
+    
+    
+    /**
+     * 根据指定的id，获取资源类型及其子类型
+     * @param typeId
+     * @return
+     */
+    public List<Integer> getTypeIdsByOne(@Param("typeId") Integer typeId);
+  
+    
+    
 }

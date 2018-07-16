@@ -21,13 +21,13 @@ import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.excel.ExcelExportUtil;
 import net.tfedu.zhl.sso.back.user.entity.SBackUserScope;
+import net.tfedu.zhl.sso.user.entity.UserEditForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryForm;
+import net.tfedu.zhl.sso.user.entity.UserQueryResult;
+import net.tfedu.zhl.sso.user.service.JUserService;
 import net.tfedu.zhl.sso.users.entity.SRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
 import net.tfedu.zhl.sso.users.util.CardExcelForm;
-import net.tfedu.zhl.userlayer.user.entity.UserEditForm;
-import net.tfedu.zhl.userlayer.user.entity.UserQueryForm;
-import net.tfedu.zhl.userlayer.user.entity.UserQueryResult;
-import net.tfedu.zhl.userlayer.user.service.JUserService;
 
 /**
  * 

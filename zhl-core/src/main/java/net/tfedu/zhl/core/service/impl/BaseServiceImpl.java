@@ -186,21 +186,6 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return result;
 	}
 
-	@SuppressWarnings("static-access")
-	@Override
-	public ResultJSON getPageByExample(Example example, int pageNum, int pageSize, String orderPro,
-			Boolean positiveSequence) {
-		
-        PageHelper.startPage(pageNum, pageSize);
-        PageHelper.orderBy(orderPro+" "+(positiveSequence?"ASC":"DESC"));
-
-        List<T> list = mapper.selectByExample(example);
-        
-        result = defaultSuccess(new PaginationHelper<T>().transfer(list));
-
-		return result;
-	}
-
 	
     
     

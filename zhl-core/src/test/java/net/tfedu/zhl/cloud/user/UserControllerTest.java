@@ -2,6 +2,12 @@ package net.tfedu.zhl.cloud.user;
 
 import javax.annotation.Resource;
 
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
+import net.tfedu.zhl.sso.user.controller.UserController;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.alibaba.fastjson.JSONObject;
-
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.helper.UserTokenCacheUtil;
-import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.userlayer.user.controller.UserController;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 
 @Transactional

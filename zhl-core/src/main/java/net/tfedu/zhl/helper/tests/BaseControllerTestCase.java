@@ -15,8 +15,8 @@ import org.springframework.util.Assert;
 import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
-import net.tfedu.zhl.userlayer.user.service.JUserService;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * Controller 单元测试基类

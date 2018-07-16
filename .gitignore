@@ -11,4 +11,5 @@ generatorConfig.xml
 generator.properties
 jdbc.properties
 .mymetadata
+jxl.log
 

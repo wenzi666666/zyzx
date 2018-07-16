@@ -29,7 +29,7 @@
      SELECT b.id 
      from z_res_pooltype a 
      LEFT JOIN x_resourcetype b on a.resTypeId = b.id 
-       <if test="poolId != 0 and MType == 0">
+       <if test="poolId != 0  and MType == 0 ">
          where poolId = #{poolId}
        </if>
         <if test="MType != 0">
@@ -312,5 +312,13 @@
    <select id="getAllResType" resultMap="firstLevelResTypeMap">
   		select id,mtype,code from x_resourcetype where flag =false and flag =false order by displayindex
   </select> 
+  
+  
+  <select id="getTypeIdsByOne">
+    SELECT b.id 
+     from x_resourcetype b
+    where b.id = #{typeId} or b.pid = #{typeId}
+  
+  </select>
   
 </mapper>

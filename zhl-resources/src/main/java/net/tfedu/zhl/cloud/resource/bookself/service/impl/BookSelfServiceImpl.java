@@ -2,17 +2,17 @@ package net.tfedu.zhl.cloud.resource.bookself.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.entity.CourseWareView;
 import net.tfedu.zhl.cloud.resource.bookself.bean.BookSelfView;
 import net.tfedu.zhl.cloud.resource.bookself.dao.JSyscourseUserMapper;
 import net.tfedu.zhl.cloud.resource.bookself.service.BookSelfService;
 import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
-import net.tfedu.zhl.userlayer.user.entity.JUser;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.entity.JUser;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 @Service("bookSelfService")

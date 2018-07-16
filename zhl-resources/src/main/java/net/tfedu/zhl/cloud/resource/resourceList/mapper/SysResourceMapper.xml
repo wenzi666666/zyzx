@@ -37,7 +37,7 @@
 		select distinct
 		a.Id,a.ResCode,a.Title,a.Fname,a.Fpath,CONCAT(a.Fpath,'/',a.Fname)
 		fullpath,a.thumbnailpath,b.MType MType, b.id typeId, a.FSize FSize
-		,p.clicktimes as ClickTimes,p.downloadTimes as DloadTimes,a.speaker,
+		,ifnull(p.clicktimes,0) as ClickTimes,ifnull(p.downloadTimes,0) as DloadTimes,a.speaker,
 		m.res_time,a.UpdateDT,REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))
 		as FileExt,a.resolution,1
 		diskorder,a.isDWJ,jf.orderNum,b.DisplayIndex, 0 as fromFlag,
@@ -52,7 +52,7 @@
 		and jf.flag = 0
 		left join z_resnav c on a.ResCode=c.ResCode
 		left join j_syscourse d on c.StructCode=d.TFcode
-		left join z_res_medium m on a.id = m.res_Id and a.Rescode = m.res_code
+		left join z_res_medium m on a.id = m.res_Id or a.Rescode = m.res_code
 		LEFT JOIN z_res_disk k on k.rescode = a.rescode
 		LEFT JOIN z_resource_operate_times p on a.rescode = p.rescode
 		where a.flag = 0 and c.flag=0 and d.flag=0 and a.fromflag in
@@ -319,6 +319,18 @@
 		UPDATE z_resource_operate_times  set downloadtimes = downloadtimes+1  where rescode =  #{rescode}
 	</update>
 
+
+    <!-- 获取系统资源下载的记录 -->
+    <select id="getDownloadTimes" resultType="Integer">
+        SELECT downloadtimes FROM `z_resource_operate_times` where rescode =#{rescode}
+    </select>
+
+
+
+    <!-- 增加系统资源下载的记录 -->
+    <insert id="insertDownloadRecord" >
+        INSERT z_resource_operate_times(rescode,clicktimes,downloadtimes,collecttimes) VALUES (#{rescode},0,1,0) 
+    </insert>
 
 
 

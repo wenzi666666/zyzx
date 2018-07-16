@@ -26,7 +26,7 @@ public class SignUtil {
 	 * @param app_key
 	 * @return
 	 */
-	public static String createSign(HttpServletRequest request,String separator,String app_key){
+	public static String createSign(HttpServletRequest request,String app_key){
 		Map<String, String> map = SignUtil.getParameterMap(request);
 		if(map==null||map.isEmpty()){
 			return null;
@@ -39,15 +39,6 @@ public class SignUtil {
 		}
 		signSB.append(app_key);
 		return MD5.getMD5Str(signSB.toString());
-	}
-	/**
-	 * 根据参数集合生成校验码
-	 * @param map
-	 * @param app_key
-	 * @return
-	 */
-	public static String createSign(HttpServletRequest request,String app_key){
-		return createSign(request, separator, app_key);
 	}
 
 	/**
@@ -142,16 +133,19 @@ public class SignUtil {
 	
 	public static void main(String[] args) {
 		
-		String appId = "679636";
-		String appKey = "0dd97ecaf1d3";
+		String url = "http://192.168.111.204:8880/baseData/resource/v2.0/login";
+		
+		String appId = "642584";
+		String appKey = "c5f06463d14e";
+		
+		String userName = "csls01";
 		
 		String result =  SignUtil.createSignMap(
-				new String[]{"page","perPage","year","termId","userName","appId","poolId","token"},
-				new String[]{"1","10","2017","0","",appId,"0","F74E13E419FA48DDA00A9BAE82CD18A7"}, appKey);
+				new String[]{"userName","appId"},
+				new String[]{"csls01",appId}, appKey);
 		
 		
-		System.out.println(result);
-		System.out.println("&sign="+result);
+		System.out.println(url+"?userName="+userName+"&appId="+appId+"&sign="+result);
 		
 	}
 	

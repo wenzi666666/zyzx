@@ -30,7 +30,12 @@
       <systemPath>${project.basedir}/lib/ksoap2-android-assembly-2.4-jar-with-dependencies.jar</systemPath>
     </dependency>
     
-		
+	   <dependency>
+        <groupId>net.sf.json-lib</groupId>
+        <artifactId>json-lib</artifactId>
+        <classifier>jdk15</classifier>
+        <version>2.2.3</version>
+        </dependency>
 		
 	</dependencies>
 	

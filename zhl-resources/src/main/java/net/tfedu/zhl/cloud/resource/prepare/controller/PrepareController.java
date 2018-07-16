@@ -46,8 +46,8 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.helper.encryption.EPrepareParamEncrypt;
-import net.tfedu.zhl.userlayer.user.entity.JUser;
-import net.tfedu.zhl.userlayer.user.service.JUserService;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * 备课夹相关接口

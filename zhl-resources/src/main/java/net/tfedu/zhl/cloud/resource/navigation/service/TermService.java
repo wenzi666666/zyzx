@@ -2,7 +2,7 @@ package net.tfedu.zhl.cloud.resource.navigation.service;
 
 import java.util.List;
 
-import net.tfedu.zhl.userlayer.term.entity.JTerm;
+import net.tfedu.zhl.sso.term.entity.JTerm;
 
 /**
  * 查询所有学段 service

@@ -4,16 +4,17 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
-
 import net.tfedu.zhl.cloud.teaching.videoCourses.dao.TVideoCommentsMapper;
 import net.tfedu.zhl.cloud.teaching.videoCourses.entity.TVideoComments;
 import net.tfedu.zhl.cloud.teaching.videoCourses.service.VideoCommentsService;
 import net.tfedu.zhl.helper.PaginationHelper;
-import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 /**
  * 视频课程评论的相关接口

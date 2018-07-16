@@ -56,11 +56,27 @@ public class ResourceWebConfig {
 	 */
 	@Value("#{configProperties['teachingResearchAPIHost']}")
 	public String teachingResearchAPIHost ;
+	
+	/**
+	 * 通过接口获取资源中心数据时，排除多媒体教辅库 (exceptPoolIds = "5")
+	 */
+	@Value("#{configProperties['exceptPoolIds']}")
+	public String exceptPoolIds ;
 
 
 	
 	
 	
+	public String getExceptPoolIds() {
+		return exceptPoolIds;
+	}
+
+
+	public void setExceptPoolIds(String exceptPoolIds) {
+		this.exceptPoolIds = exceptPoolIds;
+	}
+
+
 	public String getTeachingResearchAPIHost() {
 		return teachingResearchAPIHost;
 	}

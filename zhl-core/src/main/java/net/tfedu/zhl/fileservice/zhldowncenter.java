@@ -133,9 +133,7 @@ public class zhldowncenter {
         }
         finally {
             try {
-            	if(buffer!=null){
-            		buffer.close();
-            	}
+                buffer.close();
             }
             catch (IOException e) {
                 e.printStackTrace();
@@ -571,7 +569,7 @@ public class zhldowncenter {
         String strResult = PostHttpWebRequest(ApplyURL, zipcontent);
         LastError = strResult;
 
-        return (strResult != null) && (strResult.indexOf("\"code\":\"zip\"") >= 0 || "OK".equals(strResult));
+        return "OK".equals(strResult);
     }
 
     // 外部调用的公共方法 上传

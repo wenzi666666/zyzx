@@ -89,16 +89,15 @@
            	<bean class="net.tfedu.zhl.helper.CrossDomainInterceptor" />
       
         </mvc:interceptor>
- 
- 
- 
-       <mvc:interceptor>
-        	<mvc:mapping path="/*AutoLogin/v2.0/login"/>
-        	<bean class="net.tfedu.zhl.core.interceptor.RequestParamsMD5CheckInterceptor" />
+
+
+
+ 	<!-- 跨域OPTION接口拦截器   --> 
+        <mvc:interceptor>
+        	<mvc:mapping path="/cloudData_*.action"/>
+           	<bean class="net.tfedu.zhl.helper.CrossDomainInterceptor" />
+      
         </mvc:interceptor>
-        
- 
- 
  
  	<!-- 天台接口 -->
         <mvc:interceptor>
@@ -115,8 +114,7 @@
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/versionsByName" />
         	<mvc:exclude-mapping path="/questionbankajax_*" />
         	<mvc:exclude-mapping path="/realName_login.action" />
-        	<bean class="net.tfedu.zhl.helper.LoginGreenInterceptor" />
-<!--         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" /> -->
+        	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
         </mvc:interceptor>
         
         
@@ -202,7 +200,7 @@
 	 -->
     <!-- 对模型视图添加前后缀 -->
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-          p:prefix="/" p:suffix=".jsp" >
+          p:prefix="/WEB-INF/views/" p:suffix=".jsp" >
      
      </bean>
 

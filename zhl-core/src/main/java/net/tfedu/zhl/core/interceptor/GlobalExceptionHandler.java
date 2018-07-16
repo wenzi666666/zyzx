@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import net.tfedu.zhl.core.exception.APIErrorException;
+import net.tfedu.zhl.core.exception.Custom500Exception;
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.DataAccessException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
@@ -24,7 +25,6 @@ import net.tfedu.zhl.core.exception.NoTokenException;
 import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.core.exception.ParamsException;
 import net.tfedu.zhl.core.exception.PrepareContentExistException;
-import net.tfedu.zhl.core.exception.RepeatOperateException;
 import net.tfedu.zhl.core.exception.UnCustomException;
 import net.tfedu.zhl.core.exception.UnusualErrorException;
 import net.tfedu.zhl.core.exception.WithoutAuthorizationException;
@@ -216,12 +216,12 @@ public class GlobalExceptionHandler {
         result = new ResultJSON(e.getCode(), e.getMessage(), null, null);
         return result;
     }
-    @ResponseStatus(value = HttpStatus.OK)
-    @ExceptionHandler(RepeatOperateException.class)
-    @ResponseBody
-    public ResultJSON handleRepeatOperateException(HttpServletRequest request, HttpServletResponse response,
-    		RepeatOperateException e) {
-    	result = new ResultJSON(e.getCode(), e.getMessage(), null, null);
-    	return result;
+    
+    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(Custom500Exception.class)
+    public void handleCustom500Exception(HttpServletRequest request, HttpServletResponse response,
+    		Custom500Exception e) throws Exception {
+    	request.setAttribute("message", e.getMessage());
+    	throw e;
     }
 }

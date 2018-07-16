@@ -2,6 +2,7 @@ package net.tfedu.zhl.cloud.resource.asset.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import net.tfedu.zhl.cloud.resource.asset.entity.ReviewResultStatis;
 import net.tfedu.zhl.cloud.resource.asset.entity.ZAsset;
@@ -221,5 +222,13 @@ public interface ZAssetService extends BaseService<ZAsset>{
 	 * @param newPath
 	 */
 	public void updateAssetPath(String path,String newPath);
+	
+
+	/**
+	 * 根据学校id 统计上传信息：全部上传、今日上传
+	 * @param schoolIds
+	 * @return
+	 */
+	Map<String,Object> statisticsSchoolUpload(String [] schoolIds);
 	
 }

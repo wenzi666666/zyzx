@@ -6,10 +6,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Service;
-
-import com.github.pagehelper.PageHelper;
-
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetMapper;
 import net.tfedu.zhl.cloud.resource.asset.dao.ZAssetSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.dao.JUserDefaultMapper;
@@ -23,7 +19,11 @@ import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.SysResourceMapper;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.PageInfoToPagination;
 import net.tfedu.zhl.cloud.resource.resourceList.entity.Pagination;
-import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
+
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageHelper;
 
 /**
  * 资源预览的 serviceImpl

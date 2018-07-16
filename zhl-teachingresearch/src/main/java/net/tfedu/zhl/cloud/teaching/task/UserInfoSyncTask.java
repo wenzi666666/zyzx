@@ -17,13 +17,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import net.tfedu.zhl.userlayer.school.entity.JSchool;
-import net.tfedu.zhl.userlayer.school.service.JSchoolService;
-import net.tfedu.zhl.userlayer.subject.entity.JTeacherSubject;
-import net.tfedu.zhl.userlayer.term.entity.JUserTerm;
-import net.tfedu.zhl.userlayer.term.service.JUserTermService;
-import net.tfedu.zhl.userlayer.user.entity.JUser;
-import net.tfedu.zhl.userlayer.user.service.JUserService;
+import net.tfedu.zhl.sso.school.entity.JSchool;
+import net.tfedu.zhl.sso.school.service.JSchoolService;
+import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
+import net.tfedu.zhl.sso.term.entity.JUserTerm;
+import net.tfedu.zhl.sso.term.service.JUserTermService;
+import net.tfedu.zhl.sso.user.entity.JUser;
+import net.tfedu.zhl.sso.user.service.JUserService;
 
 /**
  * 教研平台和jx平台有用户信息同步的要求

@@ -8,7 +8,7 @@ import net.tfedu.zhl.cloud.resource.poolconfig.module.AppUserPoolConfigIndentInf
 import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.userlayer.funclist.entity.FuncListSimple;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  * 

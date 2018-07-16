@@ -11,11 +11,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.dao.ResTypeMapper;
+import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.service.ResTypeService;
 import net.tfedu.zhl.cloud.resource.resourceList.dao.DistrictResMapper;
-import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
+import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
+import net.tfedu.zhl.sso.user.dao.JUserMapper;
 
 /**
  * 资源类型的serviceImpl
@@ -24,7 +26,7 @@ import net.tfedu.zhl.userlayer.user.dao.JUserMapper;
  *
  */
 @Service("resTypeService")
-public class ResTypeServiceImpl implements ResTypeService {
+public class ResTypeServiceImpl extends BaseServiceImpl<ResType>  implements ResTypeService {
 
 	// 资源类型的mapper
     @Resource
@@ -202,4 +204,5 @@ public class ResTypeServiceImpl implements ResTypeService {
     public List<FirstLevelResType> getAllFirstLevelResType() {
         return resTypeMapper.getAllFirstLevelResType();
     }
+
 }

@@ -8,8 +8,7 @@ import org.junit.Test;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseServiceTestCase;
-import net.tfedu.zhl.userlayer.province.entity.Province;
-import net.tfedu.zhl.userlayer.province.service.ProvinceService;
+import net.tfedu.zhl.sso.province.entity.Province;
 
 /**
  

@@ -11,7 +11,7 @@ import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.userlayer.province.entity.Province;
+import net.tfedu.zhl.sso.province.entity.Province;
 
 /**
  

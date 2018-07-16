@@ -7,6 +7,6 @@
   
 <body>  
 <h1>500服务器内部错误（server error）</h1>  
-  
+  ${message }
 </body>  
 </html>

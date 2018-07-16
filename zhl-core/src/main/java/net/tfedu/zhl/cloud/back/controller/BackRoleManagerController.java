@@ -15,7 +15,7 @@ import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.back.role.entity.SProductBackRole;
 import net.tfedu.zhl.sso.back.role.service.SProductBackRoleService;
-import net.tfedu.zhl.userlayer.role.entity.JRole;
+import net.tfedu.zhl.sso.role.entity.JRole;
 import tk.mybatis.mapper.entity.Example;
 import tk.mybatis.mapper.entity.Example.Criteria;
 

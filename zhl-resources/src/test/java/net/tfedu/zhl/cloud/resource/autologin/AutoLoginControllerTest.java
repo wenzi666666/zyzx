@@ -111,7 +111,5 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 		System.out.println(JSONObject.toJSONString(o));
 		
 	}
-	
-	
 
 }

@@ -30,8 +30,8 @@ import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
-import net.tfedu.zhl.userlayer.funclist.entity.FuncListSimple;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+import net.tfedu.zhl.sso.users.entity.FuncListSimple;
 
 /**
  

@@ -5,10 +5,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.transaction.annotation.Transactional;
 
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.helper.sign.SignUtil;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 @Transactional
 public class AutoLoginControllerTest extends BaseControllerTestCase {
@@ -40,29 +37,5 @@ public class AutoLoginControllerTest extends BaseControllerTestCase {
 		String s = controller.login(request, response);
 		System.out.println("result:"+s);
 	}
-	@Test
-	public void testlogin2() throws Exception {
-		String appkey = "9k8i78jug6hd93kjf84h";
 
-		String  userName = "csls01";
-
-		
-		request.setParameter("userName", userName);
-		
-		String sign =  SignUtil.createSign(request, appkey);
-
-		request.setParameter("sign", sign);
-		
-		
-		ResultJSON result =  controller.login2(request, userName);
-		
-		System.out.println("OK".equalsIgnoreCase(result.getCode()));
-		System.out.println(com.alibaba.fastjson.JSONObject.toJSONString(result));
-		
-		UserSimple user = (UserSimple)result.getData();
-		UserSimple _user = controller.getCachedUserSimple(user.getToken());
-		
-		System.out.println(_user);
-
-	}
 }

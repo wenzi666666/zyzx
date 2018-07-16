@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
-import net.tfedu.zhl.userlayer.role.controller.RoleController;
 
 public class RoleControllerTest  extends BaseControllerTestCase{
 

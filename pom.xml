@@ -97,6 +97,103 @@
 
 
 	<profiles>
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>local</id>
+			<properties>
+ 				<package.environment>local</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+				<timeToLive>1</timeToLive>
+			</properties>		
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>   
+		</profile>
+		
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>22Res</id>
+			<properties>
+ 				<package.environment>22Res</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+				<timeToLive>0</timeToLive>
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>suse_local</id>
+			<properties>
+ 				<package.environment>suse_local</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+				
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>suse_product</id>
+			<properties>
+ 				<package.environment>suse_product</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<version>${resource-version}</version>
+				<web.name>resources</web.name>
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
+		<profile>
+			<id>yanshi156</id>
+			<properties>
+                <package.environment>yanshi156</package.environment>
+                <buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+  				<version>${resource-version}</version>
+            </properties>            
+		</profile>
+		
+		<profile>
+			<id>ali_z</id>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<properties>
+                <package.environment>ali_z</package.environment>
+                <buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+ 				<version>${resource-version}</version>
+            </properties>   
+            <activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>           
+		</profile>
+		
+		<profile>
+		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
+			<id>yanqingRes</id>
+			<properties>
+ 				<package.environment>yanqingRes</package.environment>					
+ 				<buss.name>zhl-resources</buss.name>
+				<web.name>resources</web.name>
+				<version>${resource-version}</version>
+			</properties>		
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>   
+		</profile>
 		
 		<profile>
 			<id>teaching</id>
@@ -107,28 +204,135 @@
 				<version>${teaching-version}</version>
             </properties>  
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
-	
-		<profile>
-			<id>casNationQJYY</id>
+	<profile>
+			<id>teachingTest</id>
 			<properties>
-                <package.environment>casNationQJYY</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
+                <package.environment>teachingTest</package.environment>
+                <buss.name>zhl-teachingresearch</buss.name>
+				<web.name>teachingresearch</web.name>
 				<version>${teaching-version}</version>
+				
             </properties>  
+
 			<activation>
 				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
-	
-				
+		
 		<profile>
-			<id>casNationJX</id>
+			<id>teachingProduct</id>
 			<properties>
-                <package.environment>casNationJX</package.environment>
+                <package.environment>teachingProduct</package.environment>
+                <buss.name>zhl-teachingresearch</buss.name>
+				<web.name>teachingresearch</web.name>
+  				<version>${teaching-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		
+		
+		<profile>
+			<id>casLocal</id>
+			<properties>
+                <package.environment>casLocal</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		<profile>
+			<id>cas91yun</id>
+			<properties>
+                <package.environment>cas91yun</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>cas91yun</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		
+		<profile>
+			<id>casLaixi</id>
+			<properties>
+                <package.environment>casLaixi</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		<profile>
+			<id>casHaiYang</id>
+			<properties>
+                <package.environment>casHaiYang</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		<profile>
+			<id>casWeiFang</id>
+			<properties>
+                <package.environment>casWeiFang</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		<profile>
+			<id>casZoucheng</id>
+			<properties>
+                <package.environment>casZoucheng</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+			
+			
+		
+		<profile>
+			<id>casJimo</id>
+			<properties>
+                <package.environment>casJimo</package.environment>
                 <buss.name>zhl-casProxy</buss.name>
 				<web.name>casProxy</web.name>
    				<version>${casProxy-version}</version>
@@ -140,9 +344,9 @@
 		</profile>
 				
 		<profile>
-			<id>casNationZWX</id>
+			<id>casYunzhou</id>
 			<properties>
-                <package.environment>casNationZWX</package.environment>
+                <package.environment>casYunzhou</package.environment>
                 <buss.name>zhl-casProxy</buss.name>
 				<web.name>casProxy</web.name>
    				<version>${casProxy-version}</version>
@@ -152,6 +356,53 @@
 				<activeByDefault>false</activeByDefault>
 			</activation>          
 		</profile>
+		
+				
+		<profile>
+			<id>casWuChang</id>
+			<properties>
+                <package.environment>casWuChang</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+				<web.name>casProxy</web.name>
+   				<version>${casProxy-version}</version>
+            </properties>  
+
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>          
+		</profile>
+		
+		
+		
+        <profile>
+            <id>casNationLocal</id>
+            <properties>
+                <package.environment>casNationLocal</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+                <web.name>casProxy</web.name>
+                <version>${casProxy-version}</version>
+            </properties>  
+
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>          
+        </profile>
+		
+		
+        <profile>
+            <id>casNation</id>
+            <properties>
+                <package.environment>casNation</package.environment>
+                <buss.name>zhl-casProxy</buss.name>
+                <web.name>casProxy</web.name>
+                <version>${casProxy-version}</version>
+            </properties>  
+
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>          
+        </profile>
+		
 		
 	</profiles>
 
@@ -495,6 +746,14 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
+		<dependency>
+		    <groupId>commons-collections</groupId>
+		    <artifactId>commons-collections</artifactId>
+		    <version>3.2.2</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.slf4j</groupId>

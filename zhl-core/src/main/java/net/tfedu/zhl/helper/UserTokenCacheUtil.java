@@ -1,15 +1,15 @@
 package net.tfedu.zhl.helper;
 
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
+import net.tfedu.zhl.core.exception.KickOutTokenException;
+import net.tfedu.zhl.sso.user.entity.UserSimple;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.Cache;
 import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
-
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
-import net.tfedu.zhl.core.exception.KickOutTokenException;
-import net.tfedu.zhl.userlayer.user.entity.UserSimple;
 
 
 /**
@@ -80,7 +80,7 @@ public class UserTokenCacheUtil {
 	private static UserSimple getValueWrapper(CacheManager cacheManager,String token) throws InvalidAccessTokenException{
 		ValueWrapper o = cacheManager.getCache(USERINFO_CACHE_NAMESPACE).get(token);
 		if(null == o ){
-			return null;
+			throw  new InvalidAccessTokenException();
 		}
 		UserSimple us  = (UserSimple)o.get();
 		return us;

@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSONObject;
 
@@ -22,17 +21,13 @@ import net.tfedu.zhl.cloud.casProxy.action.custom.nation.util.NationCasUtil;
 import net.tfedu.zhl.cloud.casProxy.config.ThirdPartyCASConfig;
 import net.tfedu.zhl.config.CommonWebConfig;
 import net.tfedu.zhl.core.exception.CustomException;
-import net.tfedu.zhl.core.exception.OutOfDateException;
 import net.tfedu.zhl.fileservice.Base64;
 import net.tfedu.zhl.fileservice.MD5;
 import net.tfedu.zhl.fileservice.xxtea;
-import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.sso.app.entity.SApp;
 import net.tfedu.zhl.sso.app.service.SAppService;
 import net.tfedu.zhl.sso.users.entity.RegisterAddForm;
-import net.tfedu.zhl.sso.users.entity.ZWXMRegister;
 import net.tfedu.zhl.sso.users.service.RegisterService;
-import net.tfedu.zhl.sso.users.service.ZWXMRegisterService;
 
 /**
  * 央教馆对接
@@ -73,12 +68,6 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 
 	@Resource
 	RegisterService registerService;
-	
-	@Resource
-	ZWXMRegisterService mRegisterService;
-	
-	long nodeId_JX = 1700105;
-
 
 	/**
 	 * 获取app
@@ -150,37 +139,15 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		//获取央馆的用户信息
 		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
 		
-		// 同步用户信息
-		try {
-			//将央馆的信息格式化为注册form表单
-			RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
-					DISTRICT_NAME,SCHOOL_NAME);
-
-			//设置jx的节点号
-			form.setNodeId(nodeId_JX);
-
-			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
-			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
-			
-		} catch (OutOfDateException e) {
-			return "redirect:/common/exception/expired.jsp";
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new CustomException("同步用户信息失败");
-		}
-		
-		
 		//获取用户名
 		String userName = userInfo.getUserId();
-		String trueName = userInfo.getName();
 		String pwd_str =  zhlApp.getUserdefaultpwd();
 		String additional_key = "9k8i78jug6hd93kjf84h";
 		// page 学生为1 教师为0
 		String page = ("0".equals(userInfo.getDafaultIdentity())) ? "1" : "0";
 
 		String sign = MD5.MD5("user=" + userName + "&pass=" + pwd_str + "&page=" + page + "&key=" + additional_key);
-//		String s = "user=" + userName+ "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign+"&name="+trueName;
-		String s = "user=" + userName+ "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign+"&name="+URLEncoder.encode(trueName, "utf-8");
+		String s = "user=" + userName + "&pass=" + pwd_str + "&page=" + page + "&sign=" + sign;
 
 		byte[] sbytes = xxtea.encrypt(s.getBytes("utf-8"), additional_key.getBytes());
 		s = Base64.encode(sbytes, 0, sbytes.length);
@@ -206,8 +173,6 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 	public String loginYun(String ticket, String sysCode, HttpServletRequest request, HttpServletResponse response)
 			throws CustomException, Exception {
 
-		
-		
 		SApp zhlApp = getApp();
 
 		log.debug("----zhlApp---" + JSONObject.toJSONString(zhlApp));
@@ -219,146 +184,29 @@ public class CasProxyCustomNationAppend extends CasProxyCustomBase {
 		//获取央馆的用户信息
 		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
 		//将央馆的信息格式化为注册form表单
-		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
+		RegisterAddForm form = NationCasUtil.formatRegisterForm(userInfo, PROVINCE_NAME, CITY_NAME,
 				DISTRICT_NAME,SCHOOL_NAME);
 
-		//设置jx的节点号
-		form.setNodeId(nodeId_JX);
-		
 		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
 
 		// 同步用户信息
 		try {
 			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
 			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
-		} catch (OutOfDateException e) {
-			return "redirect:/common/exception/expired.jsp";
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CustomException("同步用户信息失败");
 		}
 
-		String _url = casConfig.getTARGET_REDIRECT_URL()+"?user.name="+form.getUserName()
+		String _url = "http://jx.tfedu.net/login_userCheck.action?user.name="+form.getUserName()
 						+"&user.pwd="+zhlApp.getUserdefaultpwd()+"&checkwd=8888&init_Code=8888";
-		System.out.println("------loginYun----" + _url);
 
 		response.sendRedirect(_url);
 
 		return null;
 	}
-	
-	/**
-	 * 登录
-	 * 
-	 * @param request
-	 * @param response
-	 * @throws CustomException
-	 * @throws Exception
-	 */
-	@RequestMapping("/loginZWX")
-	public String loginZWX(String ticket, String sysCode, HttpServletRequest request, HttpServletResponse response)
-			throws CustomException, Exception {
-		
-		SApp zhlApp = getApp();
-		
-		Long mRegisterId = null ;
-		
-		log.debug("----zhlApp---" + JSONObject.toJSONString(zhlApp));
-		
-		if (StringUtils.isEmpty(ticket)) {
-			throw new CustomException("ticket为空");
-		}
-		
-		//获取央馆的用户信息
-		NationUserInfo userInfo = getNationalUserInfo(ticket, sysCode);
-		//将央馆的信息格式化为注册form表单
-		RegisterAddForm form = NationCasUtil.formatRegisterFormWithDefaultTeacherRole(userInfo, PROVINCE_NAME, CITY_NAME,
-				DISTRICT_NAME,SCHOOL_NAME);
-		
-		//设为学生
-		form.setRole(1L);
-		
-		// 同步用户信息
-		try {
-
-			//设置jx的节点号
-			form.setNodeId(nodeId_JX);
-
-			Long zhl_userId = registerService.registerOrUpdateUserWithThirdPartyApp(form, zhlApp);
-			log.debug("---同步用户信息成功--zhl_userId：" + zhl_userId);
-			
-		} catch (OutOfDateException e) {
-			return "redirect:/common/exception/expired.jsp";
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new CustomException("同步用户信息失败");
-		}
-				
-		
-		
-		log.debug("----parseAPI---result-------" + JSONObject.toJSONString(form));
-		
-		// 同步用户信息
-		try {
-			//助我学m_register
-			
-			mRegisterId = mRegisterService.syncMRegister(form,zhlApp);
-			
-			log.debug("---同步用户信息成功--mregister：" + mRegisterId);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw new CustomException("同步用户信息失败");
-		}
-		return "redirect:/casProxyNation/check?mRegisterId="+mRegisterId;
-	}
 
 
-	
-	
-	
-	/**
-	 * 跳转到此方法，提供二维码
-	 * @param mRegisterId
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws CustomException
-	 * @throws Exception
-	 */
-	@RequestMapping("/check")
-	public String check(@RequestParam Integer mRegisterId,HttpServletRequest request, HttpServletResponse response)
-			throws CustomException, Exception {
-		
-		ControllerHelper.checkIntegerEmpty(mRegisterId);
-		
-		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath()+"/";
-		//扫描二位码之后的网址
-		String targetPath = basePath+"/casProxyNation/qrcodeAfter?mRegisterId="+mRegisterId;
-		
-		request.setAttribute("targetPath", targetPath);
-		return "zwx";
-	}
-	
-	/**
-	 * 跳转到此方法，提供二维码
-	 * @param mRegisterId
-	 * @param request
-	 * @param response
-	 * @return
-	 * @throws CustomException
-	 * @throws Exception
-	 */
-	@RequestMapping("/qrcodeAfter")
-	public String qrcodeAfter(@RequestParam Integer mRegisterId,HttpServletRequest request, HttpServletResponse response)
-			throws CustomException, Exception {
-		
-		ControllerHelper.checkIntegerEmpty(mRegisterId);
-		
-		ZWXMRegister reg = (ZWXMRegister) mRegisterService.getByPrimaryKey(mRegisterId).getData();
-		request.setAttribute("userName", reg.getUsername());
-		request.setAttribute("pwd", new String(reg.getUserpwd()));
-		return "zwx-intro/index";
-	}
 	
 	
 

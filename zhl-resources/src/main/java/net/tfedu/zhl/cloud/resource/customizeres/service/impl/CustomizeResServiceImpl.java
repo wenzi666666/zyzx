@@ -10,7 +10,7 @@ import net.tfedu.zhl.cloud.resource.asset.entity.ZAssetView;
 import net.tfedu.zhl.cloud.resource.customizeres.dao.CustomizeResMapper;
 import net.tfedu.zhl.cloud.resource.customizeres.entity.CustomizeResResult;
 import net.tfedu.zhl.cloud.resource.customizeres.service.CustomizeResService;
-import net.tfedu.zhl.userlayer.subject.entity.JSubject;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
 
 
 @Service("customizeResService")
