@@ -115,7 +115,8 @@
         	<mvc:exclude-mapping path="/resRestAPI/v1.0/versionsByName" />
         	<mvc:exclude-mapping path="/questionbankajax_*" />
         	<mvc:exclude-mapping path="/realName_login.action" />
-        	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" />
+        	<bean class="net.tfedu.zhl.helper.LoginGreenInterceptor" />
+<!--         	<bean class="net.tfedu.zhl.helper.LoginStatusCheckInterceptor" /> -->
         </mvc:interceptor>
         
         
