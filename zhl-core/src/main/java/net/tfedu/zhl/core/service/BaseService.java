@@ -3,7 +3,6 @@ package net.tfedu.zhl.core.service;
 import java.util.List;
 
 import net.tfedu.zhl.helper.ResultJSON;
-import tk.mybatis.mapper.entity.Example;
 
 /**
  * demo，请勿删除
@@ -18,35 +17,17 @@ public interface BaseService<T> {
      * @param id
      * @return
      */
-    ResultJSON get(Object id);
-    
-    
-    /**
-     * 根据主键获取
-     * @param key
-     * @return
-     */
-    ResultJSON getByPrimaryKey(Object key);    
+    ResultJSON get(long id);
 
     /**
      * 增加
      */
     ResultJSON insert(T c);
-    
-    /**
-     * 增加
-     */
-    ResultJSON insertSelective(T c);
-    
-    /**
-     * 增加
-     */
-    ResultJSON insertUseGeneratedKeys(T c);
 
     /**
      * 删除
      */
-    ResultJSON delete(Object id);
+    ResultJSON delete(long id);
 
     /**
      * 批量插入
@@ -65,12 +46,6 @@ public interface BaseService<T> {
      */
     ResultJSON getPage(int pageNum, int pageSize);
 
-    
-    /**
-     * 分页查询
-     */
-    ResultJSON getPageByExample(Example example,int pageNum, int pageSize);
-    
     /**
      * 更新部分属性
      */

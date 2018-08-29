@@ -3,7 +3,6 @@ package net.tfedu.zhl.cloud.resource.other;
 
 import javax.annotation.Resource;
 
-import net.tfedu.zhl.cloud.resource.other.controller.AdditionalController;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.tests.BaseControllerTestCase;
 
@@ -64,25 +63,4 @@ public class AdditionalControllerTest extends BaseControllerTestCase{
 		log.info(JSONObject.toJSONString(result));
 	}
 
-	
-	@Test
-	public void testTeachingResearch() throws Exception{
-		result = controller.teachingResearch(request);
-		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
-		log.info(JSONObject.toJSONString(result));
-	}
-
-	
-	@Test
-	public void testdmtbOld() throws Exception{
-		result = controller.dmtbOld(request, response);
-		Assert.isTrue("ok".equalsIgnoreCase(result.getCode()));
-		log.info(JSONObject.toJSONString(result));
-	}
-	
-	
-	
-	
-	
-	
 }

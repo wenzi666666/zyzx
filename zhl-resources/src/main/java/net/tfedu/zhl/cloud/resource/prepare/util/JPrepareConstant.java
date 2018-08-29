@@ -3,12 +3,17 @@ package net.tfedu.zhl.cloud.resource.prepare.util;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import net.tfedu.zhl.cloud.resource.asset.util.AssetTypeConvertConstant;
 import net.tfedu.zhl.cloud.resource.prepare.entity.ResourceSimpleInfo;
+import net.tfedu.zhl.fileservice.HttpUtil;
 import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.fileservice.zhldowncenter;
+
+import com.alibaba.fastjson.JSONObject;
 
 /**
  * （资源中心）备课夹 常量
@@ -124,13 +129,6 @@ public class JPrepareConstant {
      * 区本资源的来源表示
      */
     public static final int fromFlag_districtRes = 4;
-    
-    
-    /**
-     * 资源素材的资源类型
-     */
-    public static final int MTYPEID_VIDEO_Material = 5; 
-    
 
     /**
      * 将fromFlag转换成 备课夹中的conttype 0系统资源，1自建资源，2共享资源,3校本资源,4区本资源
@@ -224,7 +222,7 @@ public class JPrepareConstant {
      */
     public static void resetResourceViewUrl(ResourceSimpleInfo info, String resServiceLocal, String currentResService,Boolean isEprepare) {
 
-//        String rescode = info.getRescode();
+        String rescode = info.getRescode();
         //资源来源0系统资源，1自建资源，2共享资源,3校本资源,4区本资源 
         Integer fromflag = info.getFromflag();
         Boolean isnet = info.getIsnet();
@@ -286,48 +284,35 @@ public class JPrepareConstant {
 public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String resServiceLocal){
     String rescode = info.getRescode();
     Integer fromflag= info.getFromflag();		
-//    Boolean isnet = info.getIsnet();	    
+    Boolean isnet = info.getIsnet();	    
     Boolean isdwj= info.getIsdwj();	    
     String path = info.getPath();
-    int mtypeid = info.getMtypeid();
-
 
     //如果是系统资源 
     if(fromflag==fromFlag_sysRes){
 		String flag = path.substring(path.lastIndexOf("."),path.length());
 		
-		 // 如果是加密swf\mp4的文件
-        if (ZhlResourceCenterWrap.FileType_EXE.equals(info.getFileext()) 
-        		||
-        		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
-        	
+		
+		//如果是加密swf\mp4的文件
+		if(ZhlResourceCenterWrap.FileType_EXE.equals(flag) 
+        		|| ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag)>=0){
             if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
-            	
-            	//如果是视频素材
-            	path = (MTYPEID_VIDEO_Material == mtypeid)
-            			?(zhldowncenter.VIDEO_EXE_PATH+File.separator + rescode + ".exe")
-            			:(zhldowncenter.MP4_EXE_PATH+File.separator+rescode+".exe");
-            }else {
+            	path = zhldowncenter.MP4_EXE_PATH+File.separator+rescode+".exe";
+            }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
             	path = zhldowncenter.FLASH_EXE_PATH+File.separator+rescode+".exe";
             }
-        	
-        	
-        } else {
-            if (isdwj) {
-            	path = zhldowncenter.MUTIPLE_FILE_PATH+File.separator+rescode+".zip";
-            }
-        }
+		}else{
+			if(isdwj){
+//				path = path.substring(0, path.indexOf(rescode))+File.separator+rescode+".zip";
+				path = zhldowncenter.MUTIPLE_FILE_PATH+File.separator+rescode+".zip";
+			}
+		}
     }
 	
     
     //重新赋值path
     info.setPath(path);
 	
-    
-    
-    
-    
-    
 }
 
     /**
@@ -336,20 +321,15 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
      * @param info
      * @param currentResService 
      * @throws UnsupportedEncodingException 
-     * 
-     *   20170322 修改 ： 将系统资源中 的视频素材 下载 修改为从指定目录下获取exe文件
-     *   mtypeid = 5
-     * 
      */
     public static void resetResourceDownLoadUrlWeb(ResourceSimpleInfo info, String resServiceLocal, String currentResService) throws UnsupportedEncodingException {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
-//        Boolean isnet = info.getIsnet();
+        Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
         String title = info.getTitle();
         String fileext = info.getFileext();
-        int mtypeid = info.getMtypeid();
 
         // 如果是系统资源
         if (fromflag == fromFlag_sysRes) {
@@ -359,15 +339,23 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
             if (ZhlResourceCenterWrap.FileType_EXE.equals(fileext) 
             		||
             		ZhlResourceCenterWrap.FileType_encrypt.indexOf(flag) >= 0) {
-            	
+               /* String url = "";
+                if (isdwj) {
+                    String _path = path.replaceAll("\\\\", "/");
+                    String _name = _path.substring(_path.lastIndexOf("/") + 1, _path.length());
+                    _path = _path.substring(0, _path.lastIndexOf("/"));
+                    url = ZhlResourceCenterWrap.InvokeExePackageTaskURL(_name, _path, resServiceLocal);
+                    path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, _name, _path);
+                } else {
+                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
+                }
+                */
                 if(ZhlResourceCenterWrap.FileType_MP4.indexOf(flag)>=0){
-                	
-                	//如果是视频素材
-                	path = (MTYPEID_VIDEO_Material == mtypeid)
-                			?ZhlResourceCenterWrap.GetVideoMaterialExePackageURL(resServiceLocal, rescode,"")
-                			:ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
-                }else {
+                	path = ZhlResourceCenterWrap.GetMp4PackageURL(resServiceLocal, rescode, "");
+                }else if(ZhlResourceCenterWrap.FileType_SWF.indexOf(flag)>=0){
                 	path = ZhlResourceCenterWrap.GetFlashPackageURL(resServiceLocal, rescode, "");
+                }else{
+                	path = ZhlResourceCenterWrap.GetExePackageURL(resServiceLocal, path, "");
                 }
             	
             	
@@ -426,7 +414,7 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     public static void resetResourceDownLoadURLForEPrepareClient(ResourceSimpleInfo info, String resServiceLocal, String currentResService) {
         String rescode = info.getRescode();
         Integer fromflag = info.getFromflag();
-//        Boolean isnet = info.getIsnet();
+        Boolean isnet = info.getIsnet();
         Boolean isdwj = info.getIsdwj();
         String path = info.getPath();
 
@@ -457,23 +445,18 @@ public static void resetResourceDownLoadForZip(ResourceSimpleInfo info,String re
     
     
     public static void main(String[] args) throws UnsupportedEncodingException {
-    	String resServiceLocal = "http://down.tfedu.net/";
-    	String currentResService = "http://down.tfedu.net/";
-    	
-    	ResourceSimpleInfo info = new ResourceSimpleInfo();
-    	info.setFileext("");
-    	info.setFromflag(3);
-    	info.setIsdwj(false);
-    	info.setIsebook(false);    	
-    	info.setIsnet(false);
-    	info.setPath("/SchoolBase/88200411/2017/GZ/WL/xlsx/2017031811380695900-11.xlsx");
-    	
-    	
-    	
-    	resetResourceViewUrl(info, resServiceLocal, currentResService, false);
-    	
-    
-    }
+		String s = "男";
+		String s2 = "女";
+		
+		System.out.println(new String(s.getBytes("utf-8")) );
+		System.out.println(new String(s2.getBytes("utf-8")) );
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		System.out.println(UUID.randomUUID().toString());
+		
+	}
     
     
 }

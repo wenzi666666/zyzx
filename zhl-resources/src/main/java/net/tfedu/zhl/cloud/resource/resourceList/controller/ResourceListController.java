@@ -77,9 +77,8 @@ public class ResourceListController {
 		String resServiceLocal = commonWebConfig.getResServiceLocal();
 		String currentResPath = commonWebConfig.getCurrentResPath(request);
 		
-		logger.debug("---查询系统资源列表---文件服务器地址:"+currentResPath);
-		
-		
+		//e备课排除的资源类型
+		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
 		
 		//判断是否为最新资源的期限
 		int expire = resourceWebConfig.getExpire(request);
@@ -103,25 +102,16 @@ public class ResourceListController {
 		int perPage = ControllerHelper.getIntParameter(request, "perPage");
 		
         if(request.getParameter("isEPrepare") != null){//若当前访问的是 e备课
- 
-    		//e备课排除的资源类型
-    		List<Integer> removeTypeIds = resourceWebConfig.getRemoveTypes(request);
-
         	//模糊查询的关键字
         	String searchWord = request.getParameter("searchWord");
         	//e备课查询系统资源
         	pagination = sysResourceService.getAllSysRes_EPrepare(poolId, mTypeId, fileFormat, tfcode, orderBy, page, perPage, searchWord, removeTypeIds,sys_from,expire);
-        	
-    		logger.debug("---e备课查询系统资源--获取分页信息成功-");
-
         	//生成文件的缩略图路径
             ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);
         } else {
         	 // 查询出的系统资源信息
             pagination = sysResourceService.getAllSysRes(poolId, mTypeId, fileFormat, tfcode, orderBy, page,
                     perPage,sys_from,expire);
-    		logger.debug("---查询系统资源列表---获取分页信息成功--");
-
             //生成文件的缩略图路径
             ResThumbnailPathUtil.convertToPurpos_sys(pagination.getList(), resServiceLocal, currentResPath);   
 		}
@@ -140,7 +130,7 @@ public class ResourceListController {
              logger.debug("查询到的资源总页：" + pagination.getTotal());
              logger.debug("查询到的资源总数：" + pagination.getTotalLines());
         }
-		logger.debug("---查询系统资源列表---返回json数据--");
+        
         return ResultJSON.getSuccess(pagination);
     }
     

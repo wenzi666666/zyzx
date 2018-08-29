@@ -309,60 +309,19 @@ union
      
   </select>
   
+  <!-- 
+  	and a.mtype  in (
+				select p.ID from z_res_pooltype t 
+				LEFT JOIN x_resourcetype p on p.id = t.resTypeId 
+				where poolId =#{respool}  
+				UNION  
+				select p.ID from z_res_pooltype t 
+				LEFT JOIN x_resourcetype p on  p.PId = t.resTypeId
+				where poolId =#{respool}    
+		)
   
   
-  <select id="queryAssets" resultType="HashMap">
-        select 0 as fromflag, z.isfinished,'asset_res' as restype,resourceid as rescode,
-            z.id assetid,concat(z.name) assetname,z.assetpath as fpath,z.assetpath,z.assetdesc,
-            iscourseware as isdwj
-     from Z_ASSET z where  z.id in 
-        <foreach collection="assetIds" item="aid" open="(" close=")" separator=",">
-           #{aid}
-        </foreach>
-              and fileType='A' and z.flag =false
-  </select>
   
-  <select id="querySysResources" resultType="HashMap">
-    select  1 as fromflag,0 as isfinished, 'sys_res' as restype,rescode, 
-            zr.Id assetid,zr.title assetname,zr.fpath,concat(zr.fpath,'\\\\',zr.fname) assetpath,
-            zr.des assetdesc,isdwj 
-     from Z_RESOURCE zr where  zr.id in 
-     <foreach collection="sysResourceIds" item="sid" open="(" close=")" separator=",">
-        #{sid}
-     </foreach>
-     and zr.flag = false
-  
-  
-  </select>
-  
-  <select id="queryDistrcitResources" resultType="HashMap">
-  
-   SELECT
-            zr.fromflag,
-            zr.isFINished AS isfinished,
-        IF (
-            3 = FROMFlag,
-            'school_res',
-            'district_res'
-        ) AS restype,
-         rescode,
-         zr.id assetid,
-         zr.title assetname,
-         zr.fpath,
-         zr.fullpath assetpath,
-         zr.des assetdesc,
-         zr.isdwj
-        FROM
-            z_districts_resource zr
-        WHERE
-            zr.id IN 
-            <foreach collection="districtResIds" item="did" open="(" close=")" separator=",">
-                #{did}
-            </foreach>
-            
-        AND zr.flag = FALSE
-  
-  </select>
- 
+   -->
   
 </mapper>

@@ -16,7 +16,6 @@
       <arg column="Flag" javaType="java.lang.Boolean" jdbcType="BIT" />
       <arg column="reEndTime" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="Pwd" javaType="byte[]" jdbcType="BINARY" />
-      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   
@@ -33,10 +32,5 @@
   	insert into s_register(cardid,roleid,name,pwd,email,registertime,nodeid,flag,reendtime)values(#{register.cardid},#{register.roleid},#{register.name},#{register.pwd},#{register.email},#{register.registertime},#{register.nodeid},#{register.flag},#{register.reendtime})
   </insert>
   
-  
-  
-  <select id="getRegisterIdByName" parameterType="String" resultType="Long">
-  	select id from s_register where name = #{name}
-  </select>
   
 </mapper>

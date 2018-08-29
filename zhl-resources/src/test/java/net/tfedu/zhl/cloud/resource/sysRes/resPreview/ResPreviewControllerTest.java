@@ -22,12 +22,12 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 	/**
 	 * 查询一条资源的详细信息controller单元测试
 	 * @throws Exception
-	 */
+	 *//*
 	@Test
-	public void testPreview() throws Exception {
+	public void testGetOneResController() throws Exception {
 
-		request.setParameter("resId", "871635");
-		request.setParameter("fromFlag", "4");
+		request.setParameter("resId", "870537");
+		request.setParameter("fromFlag", "3");
 		//request.setParameter("isEPrepare", "1");
 		
 		ResultJSON json =  controller.getResPreviewInfo(request, response);
@@ -38,7 +38,7 @@ public class ResPreviewControllerTest extends BaseControllerTestCase{
 		
 	}
 	
-	/**
+	*//**
 	 * 根据resId，查询资源的所有版本目录
 	 * @throws Exception
 	 */

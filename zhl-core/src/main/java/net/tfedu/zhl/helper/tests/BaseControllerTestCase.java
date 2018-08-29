@@ -10,11 +10,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.util.Assert;
 
-import com.alibaba.fastjson.JSONObject;
-
-import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.service.JUserService;
 
@@ -90,17 +86,4 @@ public abstract class BaseControllerTestCase {
         return new MockHttpServletRequest("GET", url);
     }
 
-
-    /**
-     * 断言并打印json结果
-     * @param result
-     */
-	public void assertAndLog(ResultJSON result){
-		if(result!=null){
-			Assert.isTrue("OK".equalsIgnoreCase(result.getCode()));
-			log.info(JSONObject.toJSONString(result));
-		}
-		
-	}
-	
 }

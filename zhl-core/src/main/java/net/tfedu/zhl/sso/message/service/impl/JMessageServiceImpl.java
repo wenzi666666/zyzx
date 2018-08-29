@@ -29,11 +29,11 @@ public class JMessageServiceImpl implements JMessageService {
 	}
 
 	@Override
-	public PageInfo<?> queryMessage(Long userId, Integer page, Integer perPage) {
+	public PageInfo queryMessage(Long userId, Integer page, Integer perPage) {
 		// TODO Auto-generated method stub
 		PageHelper.startPage(page, perPage);
 		List<JMessage> list = mapper.queryMessage(userId);
-		return new PageInfo<JMessage>(list);
+		return new PageInfo(list);
 	}
 
 	@Override

@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-
-
-
-
-
-
-	<modelVersion>4.0.0</modelVersion>
-	<groupId>net.tfedu</groupId>
-	<artifactId>zhl-cloud</artifactId>
-	<version>1.0.0</version>
-	<packaging>pom</packaging>
-
-	<name>zhl-cloud</name>
-	<url>http://yun.tfedu.net</url>
-	<modules>
-		<module>zhl-utils</module>
-		<module>zhl-core</module>
-		<module>${buss.name}</module>
-		<module>zhl-web</module>
-  </modules>
-
-
-
-
-
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<properties>
 		<!-- base setting -->
@@ -53,13 +29,6 @@
 		<jsqlparser.version>0.9.4</jsqlparser.version>
 		<oauth2.version>1.0.1</oauth2.version>
 
-
-		<!-- validation  -->
-		<hibernate-validator.version>5.1.0.Final</hibernate-validator.version>
-		<validation-api.version>1.1.0.Final</validation-api.version>
-		<el.version>2.2.4</el.version>
-		<jxl.version>2.6.3</jxl.version>
-
 		<!-- tools -->
 		<junit.version>4.12</junit.version>
 		<slf4j.version>1.7.12</slf4j.version>
@@ -69,31 +38,34 @@
 		<jaxp.version>1.4.2</jaxp.version>
 		<ehcache.version>2.10.1</ehcache.version>
 		<ehcache-core.version>2.6.11</ehcache-core.version>
-		
-		<!-- ehcahe jgroup 方式集群配置 -->
-		
-		<jgroups.version>3.5.0.Final</jgroups.version>
-		<ehcache-jgroupsreplication.version>1.7</ehcache-jgroupsreplication.version>
-		<timeToLive>32</timeToLive>
-	
-		
-		
 		<commons.fileupload.version>1.3.1</commons.fileupload.version>
 		<commons.beanutils.version>1.8.3</commons.beanutils.version>
 		<httpclient.version>4.5.1</httpclient.version>
-		
-		<maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-		
-		
-		<resource-version>3.1.27</resource-version>
-		<teaching-version>1.0.3</teaching-version>
-		<casProxy-version>1.0.7</casProxy-version>
 	
+	
+	<!-- 
+	
+		<resService>http://192.168.111.22:8099/down/</resService>        
+		<resServiceLocal>http://192.168.111.22:8099/down/</resServiceLocal>        
+		<fdHost>http://fd.zhihaole.net/</fdHost>        
+		<fdHostLocal>http://fd.zhihaole.net/</fdHostLocal>        
+		<isRepeatLogin>false</isRepeatLogin>  
+		<isCloudModel>false</isCloudModel>  
+		
+         题库对接的配置 
+       <tkHost>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHost>  
+       <tkHostLocal>http://tk.tfedu.net/exam/PortalNoLogined/syncLogin.do</tkHostLocal>  
+       情景英语对接的配置 
+       <sceneEnglish>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglish>  
+       <sceneEnglishLocal>http://qjyy.tfedu.net/com/rmlogin.ashx/</sceneEnglishLocal>  
+       forum3.0 
+       <forum3Host>http://chat.tfedu.net:7070/auth/process</forum3Host>  
+       <forum3HostLocal>http://chat.tfedu.net:7070/auth/process</forum3HostLocal>  
+	   <frontWebURL>http://z.tfedu.net/</frontWebURL>
+		
+	   <jnzx_host></jnzx_host>   -->
 		
 	</properties>
-
-
-
 
 
 	<profiles>
@@ -104,31 +76,11 @@
  				<package.environment>local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<version>${resource-version}</version>
-				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>   
 		</profile>
-		
-		
-		<profile>
-		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
-			<id>22Res</id>
-			<properties>
- 				<package.environment>22Res</package.environment>					
- 				<buss.name>zhl-resources</buss.name>
-				<web.name>resources</web.name>
-				<version>${resource-version}</version>
-				<timeToLive>0</timeToLive>
-			</properties>		
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>   
-		</profile>
-		
-		
 		<profile>
 		  <!-- 生产的war的名字 ${web.name}_${package.environment}   -->
 			<id>suse_local</id>
@@ -136,8 +88,6 @@
  				<package.environment>suse_local</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<version>${resource-version}</version>
-				
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -150,7 +100,6 @@
 			<properties>
  				<package.environment>suse_product</package.environment>					
  				<buss.name>zhl-resources</buss.name>
-				<version>${resource-version}</version>
 				<web.name>resources</web.name>
 			</properties>		
 			<activation>
@@ -163,7 +112,6 @@
                 <package.environment>yanshi156</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-  				<version>${resource-version}</version>
             </properties>            
 		</profile>
 		
@@ -174,7 +122,6 @@
                 <package.environment>ali_z</package.environment>
                 <buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
- 				<version>${resource-version}</version>
             </properties>   
             <activation>
 				<activeByDefault>false</activeByDefault>
@@ -188,7 +135,6 @@
  				<package.environment>yanqingRes</package.environment>					
  				<buss.name>zhl-resources</buss.name>
 				<web.name>resources</web.name>
-				<version>${resource-version}</version>
 			</properties>		
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -201,7 +147,6 @@
                 <package.environment>teaching</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
-				<version>${teaching-version}</version>
             </properties>  
 			<activation>
 				<activeByDefault>false</activeByDefault>
@@ -213,8 +158,6 @@
                 <package.environment>teachingTest</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
-				<version>${teaching-version}</version>
-				
             </properties>  
 
 			<activation>
@@ -228,7 +171,6 @@
                 <package.environment>teachingProduct</package.environment>
                 <buss.name>zhl-teachingresearch</buss.name>
 				<web.name>teachingresearch</web.name>
-  				<version>${teaching-version}</version>
             </properties>  
 
 			<activation>
@@ -237,174 +179,25 @@
 		</profile>
 		
 		
-		
-		
-		<profile>
-			<id>casLocal</id>
-			<properties>
-                <package.environment>casLocal</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		<profile>
-			<id>cas91yun</id>
-			<properties>
-                <package.environment>cas91yun</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>cas91yun</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		
-		
-		<profile>
-			<id>casLaixi</id>
-			<properties>
-                <package.environment>casLaixi</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		
-		<profile>
-			<id>casHaiYang</id>
-			<properties>
-                <package.environment>casHaiYang</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		
-		<profile>
-			<id>casWeiFang</id>
-			<properties>
-                <package.environment>casWeiFang</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		<profile>
-			<id>casZoucheng</id>
-			<properties>
-                <package.environment>casZoucheng</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-			
-			
-		
-		<profile>
-			<id>casJimo</id>
-			<properties>
-                <package.environment>casJimo</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-				
-		<profile>
-			<id>casYunzhou</id>
-			<properties>
-                <package.environment>casYunzhou</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-				
-		<profile>
-			<id>casWuChang</id>
-			<properties>
-                <package.environment>casWuChang</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-				<web.name>casProxy</web.name>
-   				<version>${casProxy-version}</version>
-            </properties>  
-
-			<activation>
-				<activeByDefault>false</activeByDefault>
-			</activation>          
-		</profile>
-		
-		
-		
-        <profile>
-            <id>casNationLocal</id>
-            <properties>
-                <package.environment>casNationLocal</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-                <web.name>casProxy</web.name>
-                <version>${casProxy-version}</version>
-            </properties>  
-
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>          
-        </profile>
-		
-		
-        <profile>
-            <id>casNation</id>
-            <properties>
-                <package.environment>casNation</package.environment>
-                <buss.name>zhl-casProxy</buss.name>
-                <web.name>casProxy</web.name>
-                <version>${casProxy-version}</version>
-            </properties>  
-
-            <activation>
-                <activeByDefault>false</activeByDefault>
-            </activation>          
-        </profile>
 		
 		
 	</profiles>
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>net.tfedu</groupId>
+	<artifactId>zhl-cloud</artifactId>
+	<version>1.0.0</version>
+	<packaging>pom</packaging>
+
+	<name>zhl-cloud</name>
+	<url>http://yun.tfedu.net</url>
+	<modules>
+		<module>zhl-utils</module>
+		<module>zhl-core</module>
+		<module>${buss.name}</module>
+		<module>zhl-web</module>
+	</modules>
+
 
 
 
@@ -485,12 +278,12 @@
                     <archive>
                         <addMavenDescriptor>false</addMavenDescriptor>
                     </archive>
-                    <warName>${web.name}_${package.environment}_V${version}_${maven.build.timestamp}</warName>
+                    <warName>${web.name}_${package.environment}</warName>
                     <webResources>
                     	<resource>
                             <directory>src/main/resources</directory>
                             <targetPath>WEB-INF/classes</targetPath>
-                            <!-- --> <filtering>true</filtering>
+                            <!-- <filtering>true</filtering> -->
                         </resource>
                         <resource>
                             <directory>src/main/resources</directory>
@@ -506,9 +299,6 @@
 			<resource>
 				<directory>src/main/java</directory>
 				<filtering>true</filtering>
-<!-- 	-->			<excludes>
-					<exclude>**/*.java</exclude>
-				</excludes> 
 			</resource>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -746,14 +536,6 @@
 			<artifactId>commons-lang</artifactId>
 			<version>2.6</version>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/commons-collections/commons-collections -->
-		<dependency>
-		    <groupId>commons-collections</groupId>
-		    <artifactId>commons-collections</artifactId>
-		    <version>3.2.2</version>
-		</dependency>
-
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -818,91 +600,6 @@
 	</dependency>
 	
 	
-	
-	
-		
-<dependency>
-    <groupId>org.jgroups</groupId>
-    <artifactId>jgroups</artifactId>
-    <version>${jgroups.version}</version>
-</dependency>
-
-<dependency>
-    <groupId>net.sf.ehcache</groupId>
-    <artifactId>ehcache-jgroupsreplication</artifactId>
-    <version>${ehcache-jgroupsreplication.version}</version>
-</dependency>
-		
-	
-	
-	
-
-
-
-<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator-annotation-processor -->
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-validator-annotation-processor</artifactId>
-    <version>${hibernate-validator.version}</version>
-</dependency>
-
-
-<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
-<dependency>
-    <groupId>org.hibernate</groupId>
-    <artifactId>hibernate-validator</artifactId>
-    <version>${hibernate-validator.version}</version>
-</dependency>
-
-
-
-<!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
-<dependency>
-    <groupId>javax.validation</groupId>
-    <artifactId>validation-api</artifactId>
-    <version>${validation-api.version}</version>
-</dependency>
-	<!--  -->
-	<dependency>  
-       <groupId>javax.el</groupId>  
-       <artifactId>javax.el-api</artifactId>  
-       <version>${el.version}</version>  
-       <scope>test</scope>
-   </dependency>  
-     
-   <dependency>  
-       <groupId>org.glassfish.web</groupId>  
-       <artifactId>javax.el</artifactId>  
-       <version>${el.version}</version>  
-       <scope>test</scope>
-   </dependency>  
-	
-    
-    
-    <!-- JExcelAPI library --> 
-    <dependency>
-	<groupId>net.sourceforge.jexcelapi</groupId>
-	<artifactId>jxl</artifactId>
-	<version>${jxl.version}</version>
-	
-    </dependency>
-    
-	    
-	    <!-- https://mvnrepository.com/artifact/org.codehaus.xfire/xfire-all -->
-	<dependency>
-	    <groupId>org.codehaus.xfire</groupId>
-	    <artifactId>xfire-all</artifactId>
-	    <version>1.2.6</version>
-	    <exclusions>
-		<exclusion>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring</artifactId>
-			<!-- <version>1.2.6</version> -->
-		</exclusion>
-	</exclusions>
-	</dependency>
-	    
-    
     
   </dependencies>
 	

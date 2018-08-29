@@ -6,6 +6,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import net.tfedu.zhl.core.exception.ParamsException;
+import net.tfedu.zhl.helper.ResultJSON;
+import net.tfedu.zhl.sso.message.service.JMessageService;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,11 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageInfo;
-
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
-import net.tfedu.zhl.core.exception.ParamsException;
-import net.tfedu.zhl.helper.ResultJSON;
-import net.tfedu.zhl.sso.message.service.JMessageService;
 
 /**
  * 消息
@@ -77,7 +77,7 @@ public class MessageController {
 		if (StringUtils.isNotEmpty(_prePage)) {
 			perPage = Integer.parseInt(_prePage);
 		}
-		PageInfo<?> page_result = jMessageService.queryMessage(currentUserId,
+		PageInfo page_result = jMessageService.queryMessage(currentUserId,
 				page, perPage);
 
 		HashMap<String, Object> map = new HashMap<String, Object>();

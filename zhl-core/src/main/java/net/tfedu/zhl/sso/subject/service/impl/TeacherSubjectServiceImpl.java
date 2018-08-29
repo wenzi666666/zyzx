@@ -1,14 +1,7 @@
 package net.tfedu.zhl.sso.subject.service.impl;
 
-import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import net.tfedu.zhl.core.service.impl.BaseServiceImpl;
-import net.tfedu.zhl.sso.subject.dao.JTeacherSubjectMapper;
-import net.tfedu.zhl.sso.subject.entity.JTeacherSubject;
 import net.tfedu.zhl.sso.subject.service.TeacherSubjectService;
 
 /**
@@ -19,18 +12,6 @@ import net.tfedu.zhl.sso.subject.service.TeacherSubjectService;
 
 */
 @Service("teacherSubjectService")
-public class TeacherSubjectServiceImpl extends BaseServiceImpl<JTeacherSubject> implements TeacherSubjectService {
-
-	@Autowired
-	JTeacherSubjectMapper mapper;
-	
-	
-	@Override
-	public List<Map<String,Object>> getUserSubjects(Long userId) {
-
-		
-		
-		return null;
-	}
+public class TeacherSubjectServiceImpl implements TeacherSubjectService {
 
 }

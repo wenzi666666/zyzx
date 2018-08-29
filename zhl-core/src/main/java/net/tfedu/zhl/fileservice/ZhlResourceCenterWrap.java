@@ -1,13 +1,16 @@
 package net.tfedu.zhl.fileservice;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
-import net.sf.json.JSONObject;
-import net.tfedu.zhl.cloud.utils.datatype.StringUtils;
+import javax.servlet.http.HttpServletRequest;
+
 import net.tfedu.zhl.core.exception.CustomException;
+import net.tfedu.zhl.core.exception.ParamsException;
 /**
  * 访问IIS文件服务器的工具类
  * 
@@ -86,11 +89,7 @@ public class ZhlResourceCenterWrap {
 
 	public static final int default_diskOrder = 1;
 	
-	/**
-	 * 多文件打包zip包所在目录
-	 */
-	public static final String MUTIPLE_FILE_PATH = "MultiZIP";
-
+	
 	
 	/**
 	 * 打包文件路径前缀
@@ -557,20 +556,6 @@ public class ZhlResourceCenterWrap {
 		
 		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).GetMp4PackageURL(ResCode, FileTitle);
 	}
-	
-	
-	/**
-	 * 获取视频素材的exe文件的下载路径
-	 * @param resService  资源服务器的地址
-	 * @param rescode
-	 * @param string
-	 * @return
-	 */
-	public static String GetVideoMaterialExePackageURL(String resService, String rescode, String FileTitle) {
-
-			
-		return new zhldowncenter(CustomerID, CustomerKey, resService).GetVideoMaterialExePackageURL(rescode, FileTitle);
-	}
     
 	  /**
 		 * 获取Flash动画离线限时播放包
@@ -601,64 +586,5 @@ public class ZhlResourceCenterWrap {
 		return new zhldowncenter(CustomerID, CustomerKey, resSerUrl).getMutipleResourceZipURL(ResCode);
 		
 	}
-
-	/**
-	 * （通过GetFileInfo接口）判断指定文件是否存在
-	 * @param resServiceLocal
-	 * @param filePath
-	 * @return
-	 */
-	public static boolean isFileExist(String resServiceLocal,String filePath){
-		// 判断是否存在
-        String s = ZhlResourceCenterWrap.GetFileInfo(resServiceLocal, filePath);
-        if (StringUtils.isNotEmpty(s)) {
-            HashMap m = (HashMap)JSONObject.toBean(JSONObject.fromObject(s), HashMap.class);
-            if (m != null && ((Integer) m.get("FileSize") > 0)) {
-            	return true ;
-            }
-        } 
-        
-        return false ;
-	}
-	
-
-	/**
-	 * 获取教材的封面
-	 * 
-	 * @param ebookpath
-	 * @param tfcode
-	 * @return
-	 */
-	public static String getEBOOkImagePath(String ebookpath, String tfcode,
-			String resSerUrl, String currentResService) {
-
-		String imgpath = ebookpath + "/" + tfcode + ".jpg";
-		String info = GetFileInfo(resSerUrl, imgpath);
-
-		if (info != null && info.trim().length() > 0) {
-
-			HashMap m = (HashMap) JSONObject.toBean(
-					JSONObject.fromObject(info), HashMap.class);
-			if (m != null && ((Integer) m.get("FileSize") > 0)) {
-				// 获取封面的地址（内网）
-				return ZhlResourceCenterWrap
-						.getWebThumbnail(resSerUrl, imgpath).replace(resSerUrl,
-								currentResService);
-			}
-		}
-
-		return "";
-	}
-	
-	
-	
-	/**
-	 * 获取指定资源的路径
-	 * 
-	 * @param ResCode
-	 * @return
-	 */
-	public static String getMutipleResourceZipPath(String ResCode) {
-		return MUTIPLE_FILE_PATH + "\\" + ResCode + ".zip";
-	}
+	;
 }

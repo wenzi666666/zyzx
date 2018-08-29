@@ -2,7 +2,6 @@ package net.tfedu.zhl.sso.user.dao;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -10,8 +9,6 @@ import net.tfedu.zhl.helper.CoreMapper;
 import net.tfedu.zhl.sso.user.entity.JUser;
 import net.tfedu.zhl.sso.user.entity.JUserTeachingQueryEntity;
 import net.tfedu.zhl.sso.user.entity.UserAreaInfo;
-import net.tfedu.zhl.sso.user.entity.UserQueryForm;
-import net.tfedu.zhl.sso.user.entity.UserQueryResult;
 import net.tfedu.zhl.sso.user.entity.UserSimple;
 import net.tfedu.zhl.sso.user.entity.UsersEntity;
 
@@ -121,51 +118,5 @@ public interface JUserMapper extends CoreMapper<JUser> {
 	 * @return    用户地区信息对象
 	 */
 	public UserAreaInfo getUserAreaALLInfo(@Param("userId") long userId);
-	
-	
-	/**
-	 * 获取学校的所有指定的用户
-	 * @param schoolId   学校Id 
-	 * @param roleId     指定的用角色，0 为全部，1 为学生 2为老师     
-	 * @return
-	 */
-	public List<Long> getSchoolUserIds(@Param("schoolId")long schoolId,@Param("roleId")long roleId);
-	
-	/**
-	 * 获取学校的所有指定的用户
-	 * @param districtId 地区id
-	 * @param roleId     指定的用角色，0 为全部，1 为学生 2为老师     
-	 * @return
-	 */
-	public List<Long> getDistrictIdUserIds(@Param("districtId")long districtId,@Param("roleId")long roleId);
-	
-	
-	/**
-	 * 获取用户的真实姓名和学校名称
-	 * @param userId
-	 * @return
-	 */
-	public Map<String,Object>getUserTrueNameAndSchoolName(@Param("userId")long userId);
-	
-	
-	
-	/**
-	 * 根据用户的指定范围（全部、指定区、指定校）查询用户
-	 * 
-	 *   全部范围同时为空时，认为是查询全部
-	 * @param form         查询提交
-	 * @param provinceIds  省级管理员的管理范围
-	 * @param cityIds	         市级管理员的管理范围
-	 * @param districtIds  区级管理员的管理范围
-	 * @param schoolIds    校级管理员的管理范围
-	 * @return
-	 */
-	public List<UserQueryResult> queryUserByForm(@Param("form")UserQueryForm form
-			,@Param("provinceIds") Long[] provinceIds,@Param("cityIds") Long[] cityIds
-			,@Param("districtIds") Long[] districtIds,@Param("schoolIds") Long[] schoolIds);
-	
-	
-	
-	
 
 }

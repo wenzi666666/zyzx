@@ -13,9 +13,7 @@ import com.github.pagehelper.PageInfo;
 
 import net.tfedu.zhl.core.service.BaseService;
 import net.tfedu.zhl.helper.CoreMapper;
-import net.tfedu.zhl.helper.PaginationHelper;
 import net.tfedu.zhl.helper.ResultJSON;
-import tk.mybatis.mapper.entity.Example;
 
 /**
  * 基础服务类
@@ -34,47 +32,21 @@ public class BaseServiceImpl<T> implements BaseService<T> {
     protected ResultJSON result;
     
     @Override
-    public ResultJSON get(Object id) {
+    public ResultJSON get(long id) {
         T data = mapper.selectByPrimaryKey(id);
         result = defaultSuccess(data);
         return result;
     }
 
     @Override
-	public ResultJSON getByPrimaryKey(Object key) {
-        T data = mapper.selectByPrimaryKey(key);
-        result = defaultSuccess(data);
-        return result;
-	}
-    
-    
-    @Override
     public ResultJSON insert(T c) {
         int data = mapper.insert(c);
         result = defaultSuccess(data);
         return result;
-           
     }
 
     @Override
-    public ResultJSON insertSelective(T c) {
-        int data = mapper.insertSelective(c);
-        result = defaultSuccess(data);
-        return result;
-           
-    }
-    
-    @Override
-    public ResultJSON insertUseGeneratedKeys(T c) {
-    	int data =  mapper.insertUseGeneratedKeys(c);
-
-    	result = defaultSuccess(data);
-    	
-    	return result;
-    }
-
-    @Override
-    public ResultJSON delete(Object id) {
+    public ResultJSON delete(long id) {
         int data = mapper.deleteByPrimaryKey(id);
         result = defaultSuccess(data);
         return result;
@@ -167,26 +139,12 @@ public class BaseServiceImpl<T> implements BaseService<T> {
      */
 	@Override
 	public ResultJSON selectAll() {
+		// TODO Auto-generated method stub
 		List<T> data = mapper.selectAll();
         result = defaultSuccess(data);
         return result;
 	}
-
-	@SuppressWarnings("static-access")
-	@Override
-	public ResultJSON getPageByExample(Example example, int pageNum, int pageSize) {
-
-        PageHelper.startPage(pageNum, pageSize);
-        PageHelper.orderBy("id desc");
-        // 这里不能放其它语句
-        List<T> list = mapper.selectByExample(example);
-        
-        result = defaultSuccess(new PaginationHelper<T>().transfer(list));
-
-		return result;
-	}
-
-	
+    
     
     
     

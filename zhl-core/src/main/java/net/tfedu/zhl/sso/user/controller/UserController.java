@@ -31,6 +31,8 @@ import net.tfedu.zhl.fileservice.ZhlResourceCenterWrap;
 import net.tfedu.zhl.helper.ControllerHelper;
 import net.tfedu.zhl.helper.ResultJSON;
 import net.tfedu.zhl.helper.UserTokenCacheUtil;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.subject.service.JSubjectService;
 import net.tfedu.zhl.sso.term.entity.JTerm;
 import net.tfedu.zhl.sso.term.service.JTermService;
 import net.tfedu.zhl.sso.user.UserImageCheckUtil;
@@ -120,37 +122,18 @@ public class UserController {
 					throw new InvalidAccessTokenException();
 				}
 				
-				logger.debug("--controller---用户退出-----userId="+us.getUserId()+"-----token="+token);
-
-				
 				userService.logout(token, isRepeatLogin);
-				
-				//修改状态
-				userService.updateUserStatutToLogout(us.getUserId(), token);
-				
 			}
 		} else {
 			String userName = request.getParameter("user_name");
 			String userPwd = request.getParameter("user_pwd");
-			
-			
-			if(StringUtils.isEmpty(userName)||StringUtils.isEmpty(userPwd)){
-				return ResultJSON.defaultError(new ParamsException());
-			}
-			
-			
 			// 返回用户的信息
 			UserSimple user = null;
 
 			// 用户登录
 			SRegister reg = registerService.login(userName, userPwd);
-			
 			// 获取用户信息
 			user = userService.getUserSimpleById(reg.getId(), model,isRepeatLogin);
-
-			//记录用户的登录状态
-			userService.addUserLoginStatusWeb(reg.getId(), reg.getNodeid(), user.getToken(), request);
-			
 			//检测用户的头像
 			UserImageCheckUtil.checkUserImage(user, commonWebConfig, request);
 			

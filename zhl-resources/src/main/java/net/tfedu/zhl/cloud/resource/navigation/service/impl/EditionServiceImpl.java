@@ -2,7 +2,6 @@ package net.tfedu.zhl.cloud.resource.navigation.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -10,7 +9,6 @@ import net.tfedu.zhl.cloud.resource.navigation.dao.JSyscourseMapper;
 import net.tfedu.zhl.cloud.resource.navigation.entity.JSyscourse;
 import net.tfedu.zhl.cloud.resource.navigation.service.EditionService;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -29,18 +27,11 @@ public class EditionServiceImpl implements EditionService {
      *  根据学段、学科，查询所有版本
      */
     @Override
-    @Cacheable(value="bussinesscache",key="'editions_'+#p0+'_'+#p1")
     public List<JSyscourse> getAllEditionsByTermAndSub(long termId,long subjectId) {
     	HashMap<String, Object> map = new HashMap<String, Object>();
         map.put("termId", termId);
         map.put("subjectId", subjectId);
         return jSyscourseMapper.getAllEditions(map);
     }
-
-	@Override
-	public List<Map<String, Object>> getSyscourseVersion(String proCode,Long termId, Long subjectId) {
-		
-		return null;
-	}
 
 }

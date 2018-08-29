@@ -35,7 +35,7 @@ public class UserTokenCacheUtil {
 	/**
 	 * 缓存用户信息的命名空间
 	 */
-	public static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
+	private static final String USERINFO_CACHE_NAMESPACE = "UserSimpleCache"; 
 	
 	/**
 	 * 缓存用户token的命名空间
@@ -101,7 +101,7 @@ public class UserTokenCacheUtil {
 				throw new KickOutTokenException();
 			}
 			//不是被踢出，则为超时或无效
-			return null ;
+			throw new InvalidAccessTokenException();
 		}
 		UserSimple us  = (UserSimple)o.get();
 		return us;

@@ -2,13 +2,18 @@ package net.tfedu.zhl.sso.user.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
+
+import net.tfedu.zhl.sso.role.entity.JRole;
+import net.tfedu.zhl.sso.school.entity.JSchool;
+import net.tfedu.zhl.sso.subject.entity.JSubject;
+import net.tfedu.zhl.sso.term.entity.JTerm;
 
 /**
  * 用户
@@ -19,11 +24,6 @@ import javax.persistence.Transient;
 @Table(name = "j_user")
 public class JUser implements Serializable {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
      * 非自增的主键id，来保存sso中registerId
      */
     @Id
@@ -141,34 +141,28 @@ public class JUser implements Serializable {
     /**
      * 用户角色
      */
-    @Transient
     private String roleName;
 
     /**
      * 用户学段
      */
-    @Transient
     private String termName;
-    
-    @Transient
+
     private Long termId;
 
     /**
      * 用户学校
      */
-    @Transient
     private String schoolName;
 
     /**
      * 获取用户学科ids
      */
-    @Transient
     private String subjectIds;
 
     /**
      * 获取用户学科
      */
-    @Transient
     private String subjectNames;
 
     public JUser(Long id, String name, String roleid, Long channelid, Long channellimit, Date logintime,

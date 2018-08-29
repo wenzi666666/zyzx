@@ -238,7 +238,7 @@ public class UserSimple implements Serializable {
                 + roleName + ", schoolName=" + schoolName + ", male=" + male + ", termName=" + termName + ", userImage="
                 + userImage + ", roleId=" + roleId + ", token=" + token + ", logintime=" + logintime + ", model="
                 + model + ", subjectIds=" + subjectIds + ", subjectNames=" + subjectNames + ", roleIds=" + roleIds
-                + ", funcList=" + (funcList==null?"":funcList.toString()) + ",thirdParyCode="+thirdParyCode+",logoutTarget="+logoutTarget+"]";
+                + ", funcList=" + funcList.toString() + ",thirdParyCode="+thirdParyCode+",logoutTarget="+logoutTarget+"]";
     }
 
     

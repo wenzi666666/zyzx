@@ -6,15 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-
 import net.tfedu.zhl.core.exception.APIErrorException;
-import net.tfedu.zhl.core.exception.Custom500Exception;
-import net.tfedu.zhl.core.exception.CustomException;
 import net.tfedu.zhl.core.exception.DataAccessException;
 import net.tfedu.zhl.core.exception.InvalidAccessTokenException;
 import net.tfedu.zhl.core.exception.InvalidPasswordException;
@@ -32,6 +24,12 @@ import net.tfedu.zhl.core.exception.WithoutSignError;
 import net.tfedu.zhl.core.exception.WithoutUserException;
 import net.tfedu.zhl.core.exception.WrongPassWordException;
 import net.tfedu.zhl.helper.ResultJSON;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 全局错误处理
@@ -206,22 +204,5 @@ public class GlobalExceptionHandler {
     		WithoutSignError e) {
         result = new ResultJSON(e.getCode(), e.getMessage(), e.toString(), "");
         return result;
-    }
-
-    @ResponseStatus(value = HttpStatus.OK)
-    @ExceptionHandler(CustomException.class)
-    @ResponseBody
-    public ResultJSON handleCustomException(HttpServletRequest request, HttpServletResponse response,
-    		CustomException e) {
-        result = new ResultJSON(e.getCode(), e.getMessage(), null, null);
-        return result;
-    }
-    
-    @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(Custom500Exception.class)
-    public void handleCustom500Exception(HttpServletRequest request, HttpServletResponse response,
-    		Custom500Exception e) throws Exception {
-    	request.setAttribute("message", e.getMessage());
-    	throw e;
     }
 }

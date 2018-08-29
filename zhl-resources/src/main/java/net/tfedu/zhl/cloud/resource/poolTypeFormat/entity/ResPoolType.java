@@ -7,12 +7,11 @@ import javax.persistence.*;
 @Table(name = "z_res_pooltype")
 public class ResPoolType implements Serializable {
     /**
-	 * 序列號
-	 */
-	private static final long serialVersionUID = 1L;
-
-	/**
-     *  主键id
+     * 序列号
+     */
+    private static final long serialVersionUID = 8160030266758656476L;
+    /**
+     * 主键id
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +28,20 @@ public class ResPoolType implements Serializable {
      */
     @Column(name = "resTypeId")
     private Long restypeid;
+
+    /**
+     * 资源库下的资源类型
+     */
+    @Transient
+    private ResType types;
+
+    public ResType getTypes() {
+        return types;
+    }
+
+    public void setTypes(ResType types) {
+        this.types = types;
+    }
 
     /**
      * 删除标记
@@ -49,7 +62,7 @@ public class ResPoolType implements Serializable {
     /**
      * 获取 主键id
      *
-     * @return id -  主键id
+     * @return id - 主键id
      */
     public Long getId() {
         return id;
@@ -58,7 +71,8 @@ public class ResPoolType implements Serializable {
     /**
      * 设置 主键id
      *
-     * @param id  主键id
+     * @param id
+     *            主键id
      */
     public void setId(Long id) {
         this.id = id;
@@ -76,7 +90,8 @@ public class ResPoolType implements Serializable {
     /**
      * 设置系统资源库id
      *
-     * @param poolid 系统资源库id
+     * @param poolid
+     *            系统资源库id
      */
     public void setPoolid(Long poolid) {
         this.poolid = poolid;
@@ -94,7 +109,8 @@ public class ResPoolType implements Serializable {
     /**
      * 设置系统资源类型id
      *
-     * @param restypeid 系统资源类型id
+     * @param restypeid
+     *            系统资源类型id
      */
     public void setRestypeid(Long restypeid) {
         this.restypeid = restypeid;
@@ -112,9 +128,19 @@ public class ResPoolType implements Serializable {
     /**
      * 设置删除标记
      *
-     * @param flag 删除标记
+     * @param flag
+     *            删除标记
      */
     public void setFlag(Boolean flag) {
         this.flag = flag;
+    }
+
+    /**
+     * 重写toString方法，方便单元测试输出
+     */
+    @Override
+    public String toString() {
+
+        return "PoolType [id = " + id + ",poolId = " + poolid + ",types = " + types + "]";
     }
 }

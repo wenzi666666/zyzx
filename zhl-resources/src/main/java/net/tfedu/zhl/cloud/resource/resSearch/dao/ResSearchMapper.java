@@ -1,7 +1,6 @@
 package net.tfedu.zhl.cloud.resource.resSearch.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import net.tfedu.zhl.cloud.resource.resPreview.entity.ResRecommendationEntity;
 import net.tfedu.zhl.cloud.resource.resSearch.entity.ResSearchResultEntity;
@@ -77,38 +76,5 @@ public interface ResSearchMapper extends CoreMapper<ResSearchResultEntity> {
 	public List<ResSearchResultEntity> querySysResource(@Param("sys_from") List<Integer> sys_from,@Param("searchKeyword")String searchKeyword, @Param("respool")int respool);
 	
 	
-	
-
-    /**
-     * 批量查询自建资源的信息
-     * @param assetIds         自建资源id集合
-     * @return 返回的信息以3.0对接云平台的标准为准
-     * 	fromflag, isfinished,'asset_res' as restype,rescode,assetid,assetname,fpath,assetpath,assetdesc,isdwj
-     */
-    public List<Map<String,Object>> queryAssets (@Param("assetIds")Long[] assetIds);
-    
-    
-    
-    /**
-     * 批量查询 系统资源的信息
-     * @param sysResourceIds   系统资源id集合
-     * @return 返回的信息以3.0对接云平台的标准为准
-     * 	fromflag, isfinished,'asset_res' as restype,rescode,assetid,assetname,fpath,assetpath,assetdesc,isdwj
-     */
-    public List<Map<String,Object>> querySysResources (
-    		@Param("sysResourceIds")Long[] sysResourceIds);
-    
-    
-    
-    /**
-     * 批量查询  区校资源的信息
-     * @param districtResIds   区校资源id集合
-     * @return 返回的信息以3.0对接云平台的标准为准
-     * 	fromflag, isfinished,'asset_res' as restype,rescode,assetid,assetname,fpath,assetpath,assetdesc,isdwj
-     */
-    public List<Map<String,Object>> queryDistrcitResources (@Param("districtResIds")Long[] districtResIds);
-    
-    
-    
 	
 }

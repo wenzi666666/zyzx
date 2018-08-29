@@ -2,12 +2,8 @@ package net.tfedu.zhl.cloud.resource.poolTypeFormat.service;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FileFormat;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.FirstLevelResType;
 import net.tfedu.zhl.cloud.resource.poolTypeFormat.entity.ResType;
-import net.tfedu.zhl.core.service.BaseService;
 
 /**
  * 资源类型 service
@@ -15,7 +11,7 @@ import net.tfedu.zhl.core.service.BaseService;
  * @author WeiCuicui
  *
  */
-public interface ResTypeService extends BaseService<ResType> {
+public interface ResTypeService {
 	
 	
 	/**
@@ -47,9 +43,5 @@ public interface ResTypeService extends BaseService<ResType> {
      * 自建资源 ： 查询全部一级资源类型
      */
     public List<FirstLevelResType> getAllFirstLevelResType();
-    
-    
-    
-	
 
 }

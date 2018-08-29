@@ -17,9 +17,6 @@ public class TreeNode implements Serializable {
 
     // 节点名称
     private String label;
-    
-    // 节点名称
-    private String name;
 
     // 是否为叶子节点(即没有子节点)
     private boolean leaf;
@@ -32,16 +29,6 @@ public class TreeNode implements Serializable {
 
     // 结点的tfcode
     private String tfcode;
-    
-    //学段
-    public Long termId;
-    //学科
-    public Long subjectId;
-    //父节点id
-    public Long pNodeId ;
-    
-    
-    
 
     public String getTfcode() {
         return tfcode;
@@ -90,50 +77,13 @@ public class TreeNode implements Serializable {
     public void setI(String i) {
         this.i = i;
     }
-    
-    public Long getTermId() {
-		return termId;
-	}
 
-	public void setTermId(Long termId) {
-		this.termId = termId;
-	}
-
-	public Long getSubjectId() {
-		return subjectId;
-	}
-
-	public void setSubjectId(Long subjectId) {
-		this.subjectId = subjectId;
-	}
-
-	public Long getpNodeId() {
-		return pNodeId;
-	}
-
-	public void setpNodeId(Long pNodeId) {
-		this.pNodeId = pNodeId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
+    /**
      * 提供toString方法，方便单元测试时，直接输出对象。
      */
     @Override
     public String toString() {
-        return "TreeNode [id=" + id + ", label=" + label + ", i=" + i + ", leaf=" + leaf 
-        		+",name="+name
-        		+",termId="+termId
-        		+",subjectId="+subjectId
-        		+",pNodeId="+pNodeId
-        		+ ", children=" + children
+        return "TreeNode [id=" + id + ", label=" + label + ", i=" + i + ", leaf=" + leaf + ", children=" + children
                 + "]";
 
     }

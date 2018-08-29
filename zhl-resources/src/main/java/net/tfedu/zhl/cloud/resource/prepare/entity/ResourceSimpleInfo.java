@@ -58,10 +58,6 @@ public class ResourceSimpleInfo {
     private String fileext;
     
     
-    /**
-     * 资源类型 的id
-     */
-    private Integer mtypeid ; 
     
 
     public Boolean getIsebook() {
@@ -138,18 +134,6 @@ public class ResourceSimpleInfo {
 		this.fileext = fileext;
 	}
 
-	
-	
-	
-	
-	public Integer getMtypeid() {
-		return mtypeid;
-	}
-
-	public void setMtypeid(Integer mtypeid) {
-		this.mtypeid = mtypeid;
-	}
-
 	@Override
     public String toString() {
         return new StringBuffer().append("[\"ResourceSimpleInfo\":{").append("\"resid\":\"" + resid + "\";")
@@ -157,7 +141,6 @@ public class ResourceSimpleInfo {
                 .append("\"fromflag\":\"" + fromflag + "\";").append("\"isnet\":\"" + isnet + "\";")
                 .append("\"isdwj\":\"" + isdwj + "\";")
                 .append("\"isebook\":\"" + isebook + "\";")
-                .append("\"mtypeid\":\"" + mtypeid + "\";")
                 .append("\"path\":\"" + path + "\"").append("}]").toString();
     }
 

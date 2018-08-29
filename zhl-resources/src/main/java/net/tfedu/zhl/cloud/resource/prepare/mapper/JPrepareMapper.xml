@@ -353,27 +353,26 @@
       <result column="path"  property="path" />
       <result column="isebook" property="isebook" />
       <result column="fileext" property="fileext"/>
-      <result column="mtypeid" property="mtypeid"/>
    </resultMap>
   
   
   <!--  获取自建资源的信息 -->
   <select id="getAssetInfo" resultMap="simpleResInfo">
   	select  id as resid,name as title,resourceid as rescode, 1 as fromflag,islocal as isnet,iswjb as isdwj
-  	,assetpath as path,0 as isebook,'' as fileext,unifyTypeId as mtypeid   from z_asset 
+  	,assetpath as path,0 as isebook,'' as fileext   from z_asset 
   	where id = #{0} and filetype = 'A' and flag = false 
   </select>
   <!--  获取系统资源的信息 -->
   <select id="getResourceInfo" resultMap="simpleResInfo">
   	select id as resid,title,rescode,0 as fromflag , 0 isnet ,isdwj,concat(fpath,'/',fname) as path
-  	,IF(fromflag=2 and mtype=40  and LOCATE('.html',fname)>0,1,0) as isebook,fileext,mtype as mtypeid
+  	,IF(fromflag=2 and mtype=40  and LOCATE('.html',fname)>0,1,0) as isebook,fileext
   	from z_resource
   	where flag = false and id = #{0}
   </select>
   <!-- 获取区校本资源的信息 -->
   <select id="getDistrictORSchoolResInfo" resultMap="simpleResInfo">
   	select id as resid,title, rescode,fromflag,!islocal as  isnet,isdwj as isdwj,fullpath as path,0 as isebook 
-  	,'' as fileext ,mtype as mtypeid
+  	,'' as fileext 
   	from z_districts_resource  where flag = false and id = #{0}  
   </select>
   
