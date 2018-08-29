@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="net.tfedu.zhl.sso.th_register.dao.SThirdRegisterRelativeMapper" >
+  <resultMap id="BaseResultMap" type="net.tfedu.zhl.sso.th_register.entity.SThirdRegisterRelative" >
+    <!--
+      WARNING - @mbggenerated
+    -->
+    <constructor >
+      <idArg column="id" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="th_username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="zhl_username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="th_code" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+    <result column="zhl_userid" property="zhlUserid"/>
+  </resultMap>
+  
+  
+  
+  
+  
+  <!--  获取某个第三方系统的userName对接的结果（映射）  -->
+  <select id="getThirdRelativeResult" resultMap="BaseResultMap">
+	  SELECT t.id,t.th_username,t.zhl_username,t.th_code,s.id as zhl_userid FROM s_th_register_relative t 
+		LEFT JOIN s_register s on s.name = t.zhl_username
+		where t.th_username = #{userName}  and t.th_code =#{thirdCode}
+
+  </select>
+  
+</mapper>
