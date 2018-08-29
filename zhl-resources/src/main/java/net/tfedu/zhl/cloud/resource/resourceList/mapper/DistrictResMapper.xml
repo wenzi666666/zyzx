@@ -48,6 +48,8 @@
     
     where a.flag = 0 and c.flag=0 and d.flag=0 and c.StructCode like  CONCAT(#{tfcode},'%')   
     
+    and a.State = 6 
+    
     <if test="fileFormat != '全部'">
          and jf.FileFormat = #{fileFormat}
     </if>
@@ -88,8 +90,8 @@
 	left join j_filetypedetail jf on REVERSE(LEFT(REVERSE(a.Fname),LOCATE('.',REVERSE(a.Fname))))=jf.FormatCode and jf.flag = 0 
 	LEFT JOIN z_districts_resnav c on a.ResCode=c.ResCode 
 	left join j_syscourse d on c.StructCode=d.tfcode 
-    where a.flag = 0 and c.flag=0 and d.flag=0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   
-    
+    where a.flag = 0 and c.flag=0 and d.flag=0 and a.id != #{resId} and c.StructCode like CONCAT(#{tfcode},'%')   11       
+    and a.State = 6     
     and b.id in <foreach item="item" index="index" collection="typeIds" 
                          open="(" separator="," close=")">
                          #{item}
