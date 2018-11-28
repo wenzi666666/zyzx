@@ -25,7 +25,7 @@ public class UsersEntity implements Serializable {
       */
      private String sch_name;
      
-     private Long dist_id;
+     private String dist_id;
 	 
 	 /**
       * 用户学校
@@ -98,11 +98,11 @@ public class UsersEntity implements Serializable {
 		this.sch_name = sch_name;
 	}
 
-	public Long getDist_id() {
+	public String getDist_id() {
 		return dist_id;
 	}
 
-	public void setDist_id(Long dist_id) {
+	public void setDist_id(String dist_id) {
 		this.dist_id = dist_id;
 	}
 
