@@ -114,7 +114,8 @@ public class AdditionalController {
 		s1 = URLEncoder.encode(s1, "utf-8");
 
 		String url = config.getCurrentTkHost(request) + "?args=" + s1 + "&platform=resourcecenter&tfcode="
-				+ (userDefault == null ? "" : userDefault.getTfcode());
+				+ (userDefault == null ? "" : userDefault.getTfcode())
+				;
 		System.out.println("------questionLibrary----" + url);
 		return ResultJSON.getSuccess(url);
 	}

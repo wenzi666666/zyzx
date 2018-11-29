@@ -57,8 +57,8 @@ public class QuestionBankController {
 		String userName = ControllerHelper.getParameter(request, "user_name")
 				.toString().trim();
 
-		return ResultJSON.getSuccess(questionBankService
-				.queryUserBasicInfo(userName));
+		return questionBankService
+				.queryUserBasicInfo(userName);
 	}
 
 	/**
@@ -72,7 +72,7 @@ public class QuestionBankController {
 	public Object getProvince(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		return ResultJSON.getSuccess(questionBankService.queryProvince());
+		return questionBankService.queryProvince();
 	}
 
 	/**
@@ -88,8 +88,8 @@ public class QuestionBankController {
 	public Object queryCityByProvinceId(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		long provinceId = ControllerHelper.getLongParameter(request, "pro_id");
-		return ResultJSON.getSuccess(questionBankService
-				.queryCityByProvinceId(provinceId));
+		return questionBankService
+				.queryCityByProvinceId(provinceId);
 	}
 
 	/**
@@ -105,8 +105,8 @@ public class QuestionBankController {
 	public Object queryDistirctByCityId(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		int cityId = ControllerHelper.getIntParameter(request, "city_id");
-		return ResultJSON.getSuccess(questionBankService
-				.queryDistirctByCityId(cityId));
+		return questionBankService
+				.queryDistirctByCityId(cityId);
 	}
 
 	/**
@@ -122,8 +122,8 @@ public class QuestionBankController {
 	public Object querySchoolByDistrictId(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		int districtId = ControllerHelper.getIntParameter(request, "dist_id");
-		return ResultJSON.getSuccess(questionBankService
-				.querySchoolByDistrictId(districtId));
+		return questionBankService
+				.querySchoolByDistrictId(districtId);
 	}
 
 	/**
@@ -138,7 +138,7 @@ public class QuestionBankController {
 	@ResponseBody
 	public Object queryTerm(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		return ResultJSON.getSuccess(questionBankService.queryTerm());
+		return questionBankService.queryTerm();
 	}
 
 	/**
@@ -154,8 +154,8 @@ public class QuestionBankController {
 	public Object querySubjectByTermId(HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		long termId = ControllerHelper.getLongParameter(request, "term_id");
-		return ResultJSON.getSuccess(questionBankService
-				.querySubjectByTermId(termId));
+		return questionBankService
+				.querySubjectByTermId(termId);
 	}
 
 	/**
@@ -183,7 +183,7 @@ public class QuestionBankController {
 
 		// 根据所属版本和产品编码，查询所有的教材
 		books = bookService.getAllBooks(pnodeId, proCode);
-		return ResultJSON.getSuccess(books);
+		return books;
 	}
 
 	/**

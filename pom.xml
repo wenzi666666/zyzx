@@ -108,7 +108,7 @@
 				<timeToLive>1</timeToLive>
 			</properties>		
 			<activation>
-				<activeByDefault>true</activeByDefault>
+				<activeByDefault>false</activeByDefault>
 			</activation>   
 		</profile>
 		
@@ -177,7 +177,7 @@
  				<version>${resource-version}</version>
             </properties>   
             <activation>
-				<activeByDefault>false</activeByDefault>
+				<activeByDefault>true</activeByDefault>
 			</activation>           
 		</profile>
 		
