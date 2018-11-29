@@ -185,13 +185,15 @@
   ,u.schoolId as sch_id,d.id as dist_id ,d.name as dist_name,s.name as sch_name,t.id as term_id,t.name as term_name 
   ,st.id as subj_id,st.name as subj_name 
   from j_user u left join j_userinfo ui on u.id=ui.userid
+  left join j_teachersubject jts on jts.UserId = u.id 
   left join j_school s on u.schoolId=s.id 
   left join q_district d on s.districtId=d.id 
   left join j_userterm ut on u.id=ut.userId 
   left join j_term t on ut.termId=t.id
   left join j_term_subject ts on t.id=ts.termId
   left join j_subject st on ts.subjectId=st.id
-  where u.flag=0 and u.name = #{userName}
+  
+  where u.flag=0 and u.name = #{userName} and  jts.SubjectId = st.id  
   ) a  
   </select>
   
